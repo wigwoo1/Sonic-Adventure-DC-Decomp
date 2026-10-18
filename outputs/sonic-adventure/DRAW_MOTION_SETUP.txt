@@ -1,0 +1,109 @@
+Native motion setup and recursive base-transform drawing
+17 October 2026 - helper bodies VERIFIED; original drawing PARTIALLY VERIFIED.
+Overall completion: 10% estimated weighted whole-project milestones, not code coverage.
+Goal active on Sol High. No model switch or pause advised.
+
+What changed
+Seven original main-executable bodies now have guarded native C:
+  8c60e5e4..8c60e6da: motion setup, 123 instruction rows.
+  8c60e31c..8c60e3d2: recursive motion object driver, 91 rows.
+  8c60cfc4..8c60cfe2: base position callback, 15 rows.
+  8c60cfe2..8c60cffc: base rotation callback, 13 rows.
+  8c60cffc..8c60d016: base YXZ rotation callback, 13 rows.
+  8c60d016..8c60d034: base scale callback, 15 rows.
+  8c60d034..8c60d054: format-zero callback chain, 16 rows.
+All 286 original rows / 572 instruction bytes are checked against 1ST_READ.BIN.
+Names describe inferred behavior. Temporary Ghidra discovery used read-only
+sessions and discarded changes; the frozen global function index is preserved.
+
+Source: source/sa_draw_motion_setup.c
+Bridge: source/sa_draw_motion_setup_connected.c
+Generator: recover_draw_motion_setup.py
+Connection generator: connect_draw_motion_setup.py
+Build: build_draw_motion_setup.ps1
+Focused checks: verify_draw_motion_setup.py
+Original-model integration: verify_overlay_draw_motion.py
+Registration: register_draw_motion_setup.py
+Proofs: analysis/draw_motion_setup_verification.json
+        analysis/overlay_draw_motion_verification.json
+
+Original behavior retained
+The setup helper checks the supplied frame against the unsigned frame count,
+including the original signed conversion, correction by 2^32, and two distinct
+rounding operations. Rejected frames return before global setup or drawing.
+It sets format/type/interpolation fields, frame, counters and callback slots.
+Null motion preserves the earlier data/count fields while resetting the
+selected type/format/interpolation fields. Unwritten upper halfwords survive.
+Base and animated position/rotation/scale handlers are selected separately;
+the root's rotation-order flag selects the two different rotation callbacks.
+Renderer state save/restore uses the existing native original bodies.
+
+The recursive driver preserves original matrix pushes/pops, optional node
+callback invocation, mesh-skip flag handling, child recursion and sibling loop.
+The format-zero handler calls position, rotation and scale in original order.
+Base helpers retain original explicit-matrix versus FPU-matrix routing and
+register/stack effects, using existing native transformations. The optional
+callback checks use the real native RTS/NOP body at 8c611708 as supplied data.
+This is neither an interpreter hook nor proof of natural callback creation.
+
+Focused verification actually run
+The separate 33-source DLL passes Clang -O2 -Wall -Wextra -Werror without a C
+runtime. 544 comparisons against original instructions pass: 484 complete
+returns, 26 expected unresolved callees, 20 unsupported modes, six RAM guards
+and eight numerical traps. All 286 rows and all 30 branch outcomes execute.
+All 4,688 ordered entries match, along with full 16-MiB RAM, integer registers,
+SR/PR/PC, both FPU banks/FPSCR, FPUL/MACL and reached partial-stop state.
+
+506 cases independently check callback/global selection or base transforms.
+There are 472 independent pre-pop world-matrix checks, using exact dyadic
+arithmetic for supplied zero-rotation single-node and four-node trees. Both
+FPU banks, transform orders, optional callback states, explicit matrix bases,
+frame limits, descriptor types/formats, interpolation bits and guards are
+covered. Matrix instruction comparisons inherit the pinned vector numerical
+reference; the separate exact-dyadic checks do not share that adapter.
+
+Original initialized-object integration
+408 original-state comparisons pass through the same new 33-source DLL:
+344 draw-caller cases and 64 reused-service routing cases. Status totals are
+130 complete returns, 258 expected missing-service stops, eight unsupported
+modes, eight RAM guards and four traps. The complete returns comprise rejected
+draws and direct services; no accepted full model drawing is claimed.
+All 5,050 ordered entries match. 388 cases retain independent global/state/
+stack/spring checks and 200 independently check distance accumulation.
+
+Both motion setup and its dispatcher execute in 152 original-model cases,
+reaching 104 of the newly recovered instruction rows. Those cases now stop at
+format-two callback 8c60d094. The larger draw candidate remains at 421/911
+executed rows, with 490 unexecuted; progress here is within a newly connected
+callee rather than additional parent rows. Other first stops remain:
+  0c90c384: 38 cases; 8c6215d6: 20; 8c0409c0: 16;
+  8c5fde20: 16; 8c041c92: 16.
+Renderer-state pointer records and position records are supplied runtime data;
+native constructor-created shipped models are retained. No game-service
+results are fabricated. Natural renderer/player initialization remains unproved.
+
+Limits and next work
+Interpolation handlers and nonzero format handlers remain explicit -2 stops.
+The motion mesh wrapper at 8c621574 calls 8c617c34. This differs from the
+static mesh renderer at 8c6209a8; substituting it would not recover the original
+behavior. The motion mesh wrapper and renderer are not claimed recovered here.
+Lower exported interpolation/mesh bodies remain analysis proposals only.
+
+Direct complete recursion uses supplied valid acyclic nodes with no rendered
+mesh (or the original skip-mesh flag). Independent world-matrix checks use
+zero rotations. Legacy state/matrix helpers retain their valid-RAM and narrow
+FPU support limits. There is no universal hardware-exception claim.
+
+The large AL_MAIN drawing candidate remains incomplete and unregistered. The
+native primitive/material families were already recovered in a separate bounded
+static mesh chain; this step advances the surrounding motion/control path.
+No physical GPU pixels, complete scene, gameplay, frame scheduling, high-FPS,
+8K, HD texture settings or playable port are validated by this milestone.
+Older source, DLLs and proof files are preserved because new evidence uses them.
+
+How to check without programming
+Open this file for the plain-language report. The two JSON proof files above
+contain case totals and exact remaining stop addresses. Recovered C is in the
+source folder. There is no playable executable for this milestone.
+Continue with Sol High for interpolation/format and motion mesh dependencies.
+Luna Low is suitable for documentation-only changes.

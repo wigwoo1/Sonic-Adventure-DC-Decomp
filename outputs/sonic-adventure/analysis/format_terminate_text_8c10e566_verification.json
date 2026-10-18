@@ -1,0 +1,74 @@
+{
+  "module": "1ST_READ.BIN",
+  "load_address": "0x8c010000",
+  "address": "0x8c10e566",
+  "end_exclusive": "0x8c10e576",
+  "indexed_instruction_bytes": 16,
+  "retail_span_sha256": "5d171f15d39e4366e9f6a5a1796d1552361ebec52a46161ac44848f38ee19b3b",
+  "binary_sha256": "45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a",
+  "source_sha256": "b6b85e582af75c6b216ebdb52c14788d15bc5b2841cd895f7187a9a3ff49bb5a",
+  "cases_passed": 8,
+  "comparison_level": "Complete 16 MiB RAM, all GPR/SR/PR/FPU state compared against retail SH-4 interpretation.",
+  "scope": "Tests mode-1 terminator write, non-terminating modes, stack independence, and register/T-bit effects.",
+  "limitations": [
+    "The formatter context uses synthetic test storage; the caller format engine remains unrecovered."
+  ],
+  "cases": [
+    {
+      "case": 0,
+      "mode": "0x0",
+      "stack_offset": 0,
+      "output_byte": 165,
+      "full_ram_cpu_fpu_match": true
+    },
+    {
+      "case": 1,
+      "mode": "0x0",
+      "stack_offset": 2,
+      "output_byte": 165,
+      "full_ram_cpu_fpu_match": true
+    },
+    {
+      "case": 2,
+      "mode": "0x1",
+      "stack_offset": 0,
+      "output_byte": 0,
+      "full_ram_cpu_fpu_match": true
+    },
+    {
+      "case": 3,
+      "mode": "0x1",
+      "stack_offset": 2,
+      "output_byte": 0,
+      "full_ram_cpu_fpu_match": true
+    },
+    {
+      "case": 4,
+      "mode": "0x2",
+      "stack_offset": 0,
+      "output_byte": 165,
+      "full_ram_cpu_fpu_match": true
+    },
+    {
+      "case": 5,
+      "mode": "0x2",
+      "stack_offset": 2,
+      "output_byte": 165,
+      "full_ram_cpu_fpu_match": true
+    },
+    {
+      "case": 6,
+      "mode": "0xffffffff",
+      "stack_offset": 0,
+      "output_byte": 165,
+      "full_ram_cpu_fpu_match": true
+    },
+    {
+      "case": 7,
+      "mode": "0xffffffff",
+      "stack_offset": 2,
+      "output_byte": 165,
+      "full_ram_cpu_fpu_match": true
+    }
+  ]
+}

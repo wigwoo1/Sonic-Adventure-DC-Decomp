@@ -1,0 +1,21 @@
+from pathlib import Path
+p=Path(__file__).resolve().parent
+s=(p/'verify_backend_readback_native_field5_transfer.py').read_text()
+s=s.replace('cases=0', "field10_get=ctypes.CDLL(str(ROOT/'work/sonic-adventure/build/sound_backend_field10_get.dll')).sa_sound_backend_field10_get;field10_get.argtypes=abi\nlookup=ctypes.CDLL(str(ROOT/'work/sonic-adventure/build/sound_resource_lookup.dll')).sa_sound_resource_lookup;lookup.argtypes=abi\ncases=0")
+s=s.replace('mode,channels in itertools.product', 'mode,channels,fmt in itertools.product').replace('[0,1],[1,2]):','[0,1],[1,2],range(4)):')
+s=s.replace(' payload=int.from_bytes', " struct.pack_into('<I',ram,0xa09000+0xa8+0x55*44,fmt)\n struct.pack_into('<2I',ram,0xa09364,0x12345678,0x87654321)\n ram[(0xa09000+0xa8+0x55*44+7+signed_selector)&0xffffff]=0\n payload=int.from_bytes")
+s=s.replace('mmio={(device+16)&0xffffffff:field4_payload,', "field10_payload=int.from_bytes(bytes((value+24+i)&255 for i in range(4)),'little');mmio={(device+24)&0xffffffff:field10_payload,(device+16)&0xffffffff:field4_payload,")
+s=s.replace('field_reads=[]', 'field_reads=[];lookup_calls=[]')
+s=s.replace('  assert a in dict(specs)', "  if a==0x8c65a900:\n   lookup_calls.append(tuple(r[i] for i in [4,5,6,7]));return lookup(m,f,sr,r,pr,ctypes.byref(fpul),ctypes.byref(macl),None,call)\n  assert a in dict(specs)")
+s=s.replace('  service(a,m,r);return 0', '  if a==0x8c66accc:return field10_get(m,f,sr,r,pr,ctypes.byref(fpul),ctypes.byref(macl),None,call)\n  raise AssertionError(hex(a))')
+s=s.replace('0x8c66babc,0x8c66b9b0]', '0x8c66babc,0x8c66b9b0,0x8c66accc]')
+s=s.replace('for i in [8,4]]', 'for i in [8,4,24]]')
+s=s.replace('  else:output[4+o]=(value+i)&255', "  elif a==0x8c66accc:\n   signed=ctypes.c_int32(field10_payload).value\n   adjusted=(field10_payload*2)&0xffffffff if fmt==1 else (abs(signed)//2*(-1 if signed<0 else 1))&0xffffffff if fmt==2 else field10_payload\n   struct.pack_into('<I',output,4+o,adjusted)\n  else:raise AssertionError(hex(a))")
+s=s.replace('(device+16)&0xffffffff,(device+20)&0xffffffff]', '(device+16)&0xffffffff,(device+24)&0xffffffff,(device+20)&0xffffffff]')
+s=s.replace(' assert not errors', " assert lookup_calls==[(0x52535053,0,0x8cefffcc,0x8cefffd0)],lookup_calls\n assert not errors")
+a=s.index("scope='");z=s.index("\n(p/'analysis/",a)
+s=s[:a]+"scope='448 complete retail RAM/CPU/FPU/SR/PR comparisons of backend readback66adc4 with all ten field readers native,including667150/667188/6671c4/66910c and transfer10d460. Seven selector/payload fixtures,both banks,two transfer context modes,mono/stereo channels,four voice formats. Independent signed addressing,ordered ten MMIO reads,byte lanes,16/32-bit field widths,pan conversion,format doubling/wrap and signed halving,40-byte packet guards,144-byte handle preservation,MACL and diagnostic globals. Native resource lookup65a900 connected with independent tag/index/stack output pointers and distinct table values. Only hardware polling/control services10ee9c/10eee0/10ee20 remain modeled;device data supplied by controlled MMIO. No modeled field readers. Actual hardware and full game integration unverified.'"+s[z:]
+s=s.replace('backend_readback_native_field5_transfer_verification.json','backend_readback_native_all_fields_verification.json')
+(p/'verify_backend_readback_native_all_fields.py').write_text(s)
+reg=(p/'register_backend_readback_native_field5_transfer.py').read_text().replace('native_field5_transfer','native_all_fields').replace('==112','==448').replace("'sa_sound_backend_field5_get'}", "'sa_sound_backend_field5_get','sa_sound_backend_field10_get','sa_sound_resource_lookup'}").replace('native field5 transfer:', 'native all fields:')
+(p/'register_backend_readback_native_all_fields.py').write_text(reg)

@@ -1,0 +1,26 @@
+{
+  "binary_sha256": "45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a",
+  "direct_checks_passed": 7,
+  "configuration_service": "0x8c665a80",
+  "configuration_names": {
+    "0x8c671b2c": "KAMUI",
+    "0x8c671b34": "VideoMode",
+    "0x8c671b40": "DisplayMode"
+  },
+  "mode_selection_source": "0x8c6526bc: mode ID is return value of Display configuration service masked with 3.",
+  "additional_initialization": "0x8c65262c calls configuration service using Video name, then calls 0x8c651384; writes prior configuration return r0 to mode ID in the call delay slot.",
+  "next_work": [
+    "Recover configuration service 0x8c665a80 and its fallback behavior",
+    "Trace caller arguments for Display and Video",
+    "Trace 0x8c651384 hardware initialization"
+  ],
+  "evidence": [
+    "analysis/video-mode-id-references/scheduler_references.tsv",
+    "analysis/instructions/8c65262c.tsv",
+    "analysis/instructions/8c6526bc.tsv"
+  ],
+  "limitations": [
+    "Configuration values and cable/standard interpretation remain unresolved.",
+    "Static initialization path does not establish actual runtime refresh cadence."
+  ]
+}

@@ -1,0 +1,134 @@
+Sonic Adventure Dreamcast Rev A - material/header/colour cache preparation
+
+Overall estimate: 10%, weighted project milestones rather than code coverage.
+Goal active on Sol High. The full renderer/gameplay and playable ports remain
+unfinished. No model switch or pause is recommended for the next recovery task.
+
+Nine complete helpers: 313 original instruction rows / all 32 outcomes.
+Six first registrations: 279 rows / 32 outcomes:
+8c037638 - indexed texture-record selection and header/cache update (27 / 2).
+8c037460 - three-word masked rendering header and queue setup (36 / 0).
+8c0374d4 - three-word raw rendering header and queue setup (32 / 0).
+8c037538 - four-word masked rendering header and queue setup (38 / 0).
+8c0375b0 - four-word raw rendering header and queue setup (34 / 0).
+8c037872 - per-vertex colour/alpha cache preparation (112 / 30).
+Three existing helpers retain their original sources and verification evidence:
+8c037618 - masked flag update (9 / 0).
+8c03767c - paired header mask update (16 / 0).
+8c0376b0 - output cursor finalization using R14 (9 / 0).
+Descriptive roles are inferred. Reused helpers gain zero duplicate credit.
+
+Sources/workflows in this project directory:
+source/sa_draw_material_setup.c
+source/sa_draw_material_setup_connected.c
+recover_draw_material_setup.py / connect_draw_material_setup.py
+build_draw_material_setup.ps1
+verify_draw_material_setup.py
+verify_overlay_draw_material_setup.py
+register_draw_material_setup.py
+analysis/draw_material_setup_translation.json
+analysis/draw_material_setup_connection.json
+analysis/draw_material_setup_verification.json
+analysis/overlay_draw_material_setup_verification.json
+inventory_draw_primitive_frontier.py
+analysis/draw_primitive_frontier_inventory.json
+
+The strict optimized 114-source native library builds with warnings treated as
+errors and no standard library. Separate research DLL under the workspace root:
+work/sonic-adventure/build/draw_material_setup.dll. Earlier source/API/DLLs and
+proofs remain preserved. The public ten-argument API passes live GBR and the
+existing queue bus. Removing just new declarations/routes and the public name
+reproduces the previous bridge exactly. The inherited bounded hierarchy-stall
+research define remains. Both new C files pass default syntax checks too.
+
+All 503 focused comparisons pass: 495 returns, four numeric guards and four
+memory guards. Every exported instruction/conditional outcome is reached, with
+no missing native helper in these direct tests. There are 419 independent cases
+checking whole RAM footprints, header masks/packet values/cursors, texture cache
+hit/miss behavior and colour/alpha cache results. Texture fixtures use four
+synthetic table entries; header fixtures use initialized software queues and RAM
+aliases 0c/8c/ac. Every case separately checks the new DLL's actual GBR initializer
+against original instructions. These are supplied renderer inputs, not natural
+startup/task/camera scheduling proof.
+
+Header helpers configure both QACRs from the real cursor, preserve the original
+three/four stores and PREF, and return the queue cursor plus 32. Untouched words
+reflect the initial queue state; the helper does not synthesize missing packet
+words. Cursor finalization writes the selected cursor slot. Full RAM, registers,
+FPU/FPUL, MACL, GBR, ordered entries and queue events/counters/QACR are compared.
+
+Texture selection preserves its cached identity comparison: an identity hit
+leaves header words untouched. A miss updates the identity, low six header bits
+and texture word from the actual selected record. No texture loader or sampled
+pixels are proven by this helper.
+
+Colour/alpha preparation preserves the original two modes, positive replacement
+and negative additive/clamped fade, numeric conversion and signed byte-load
+comparison. Counts zero/one still write four cache entries when the early-out
+fails; other counts round up in groups of four. White RGB is installed only by
+the original full-word mode. The byte mode preserves the RGB bytes. A signed
+cached alpha >=128 does not equal a positive converted alpha; that behavior is
+retained. Both early-outs, loops, clamping outcomes and numeric-mode guards are
+covered. Independent arithmetic uses explicit binary32 operation boundaries.
+
+The initial invalid-cursor test exposed a reference-harness assertion for a
+non-RAM software queue destination. The new verifier now models the backend's
+explicit -3 return after the PREF event/counter, preserving exact reached partial
+state. Existing executor/backend files are unchanged. This is a bounded software
+bus policy, not a claim about Dreamcast hardware faults or MMU behavior.
+
+Inherited qualified numeric/FSCA/FSRRA/vector/sqrt and MMU-off RAM limits remain.
+No physical GPU pixels, complete frame/gameplay, high-FPS/8K or playable-port
+proof. SUPIR/HD textures, true texture-off vertex/material colours, display/FPS
+settings and all target ports remain pending. Continue Sol High for primitive
+emission and scale sampling; Luna Low is suitable for documentation-only work.
+
+All 210 connected original-model comparisons pass with exactly the prior input
+records: the selected 146 source cases plus 64 existing explicit camera/entity
+profiles. All 64 previously material-blocked cases now pass that boundary.
+Statuses: 92 returns, 112 explicit missing services, two numeric guards, two
+memory/return guards and two traps. There are 19,050 ordered entry comparisons,
+204 independent state/stack/spring cases and 124 distance prefixes. No injected
+game-service returns. Original shipped model/motion/name/lookup records remain.
+
+The callbacks reach 90 of the new proposal rows: flag/texture/mask preparation
+and the four-word masked header at 8c037538. All nine helpers have direct proof;
+the others are not claimed as naturally reached in this callback corpus. Native/
+original initialization preparation is counted separately: 713 new-DLL GBR
+initializer stages across focused/connected tests, plus 64 viewport resets.
+Those viewport inputs and the earlier supplied setup remain explicit fixtures,
+not proof of natural engine initialization or scheduler reachability.
+
+Connected queue totals: 13,704 flushes / 148,096 counted events. The first 4,096
+per invocation are individually compared: 59,584 stored-prefix events; 88,512
+later events are count-only. Final queue/QACR/counters and complete RAM match.
+Direct queues: 63 flushes / 477 individually compared events. The existing
+material boundary disappears. Next observed stops: 8c037990 (64 cases) and
+8c60b462 (48). Parent coverage remains 417/911 rows with 494 unexecuted; the
+AL_MAIN parent, four geometry/view/frame/boot proposals and fifteen earlier
+motion proposals remain partial/unregistered where previously documented.
+
+Ten next read-only primitive/sampling proposals contain 2,037 byte-checked rows.
+Five branches leave individual exported bodies but join other proposals:
+8c037ccc -> 8c0382ac, three 8c037ee0 branches -> 8c037ff4, and
+8c038516 -> 8c037ff4. All annotated static call targets are now inside the family
+or registered, but computed targets/whole CFGs remain unproved. These drafts
+receive zero native recovery credit. Frozen indexes and original binaries stay
+unchanged; temporary function discovery is discarded after read-only export.
+
+Registry: 1,230 entries / 1,227 unique module/address pairs; 1,127 matches in
+10,875 frozen candidate indexes. Another 211 nontexture binaries lack indexes,
+so the game's complete routine count is unknown. Audit: zero evidence errors
+and zero stale source reports. Ninety-nine existing entries gain zero-credit
+integration evidence, including the three preserved original helpers.
+Five generated artifacts reproduce exactly in memory without rewriting live
+proof inputs or the verified DLL. Repeat registration is byte-idempotent.
+Seven focused Python/three PowerShell syntax checks, default C syntax and all
+658 dispatcher pointer-load checks (80 spans / 83 selectors) pass. Historical
+aggregate workflow is extended, not rerun in full.
+
+How to check: open this guide and source/report files listed above. JSON reports
+record every input and comparison result. Status: PARTIALLY VERIFIED at the
+project level; the six new helpers have complete qualified instruction/branch
+proof, while rendering and gameplay remain unfinished. Continue Sol High for
+primitive emission 8c037990 and its cross-body dependencies, then scale sampling.

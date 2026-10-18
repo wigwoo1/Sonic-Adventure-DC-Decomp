@@ -1,0 +1,190 @@
+{
+  "module": "1ST_READ.BIN",
+  "routine": {
+    "address": "0x8c646654",
+    "end_exclusive": "0x8c6467f0",
+    "indexed_body_bytes": 334,
+    "address_span_bytes": 412,
+    "non_instruction_span_bytes": 78
+  },
+  "analysis_basis": [
+    "Ghidra draft pseudocode at analysis/ghidra-all/initial_pseudocode.c",
+    "1ST_READ.BIN function index and current recovered-routines registry",
+    "Current source-entry inventory"
+  ],
+  "source_candidate_warning": "The source-entry inventory is address-only and can mix module origins; these candidates are context only. Only a matching recovered-routines registry entry proves module-specific verification.",
+  "direct_dependencies": [
+    {
+      "address": "0x8c65f1aa",
+      "description": "initial device service function pointer",
+      "relation": "indirect call",
+      "indexed_body_bytes": 66,
+      "index_status": "indexed_only",
+      "verified_registry_entry": true,
+      "registered_source": "source/sa_input_device_submit_begin_8c65f1aa.c",
+      "verification_report": "analysis/input_device_submit_begin_8c65f1aa_verification.json",
+      "source_entry_candidates_address_only": []
+    },
+    {
+      "address": "0x8c65f202",
+      "description": "response processing function pointer",
+      "relation": "indirect call",
+      "indexed_body_bytes": 130,
+      "index_status": "indexed_only",
+      "verified_registry_entry": true,
+      "registered_source": "source/sa_input_device_responses_process.c",
+      "verification_report": "analysis/input_device_dispatcher_discovery_verification.json",
+      "source_entry_candidates_address_only": [
+        {
+          "symbol": "sa_input_device_responses_process",
+          "source": "source/sa_input_device_responses_process.c"
+        }
+      ]
+    },
+    {
+      "address": "0x8c6461ae",
+      "description": "object table compaction helper",
+      "relation": "direct call",
+      "indexed_body_bytes": 66,
+      "index_status": "indexed_only",
+      "verified_registry_entry": true,
+      "registered_source": "source/object_table_compact.c",
+      "verification_report": "analysis/object_table_compact_verification.json",
+      "source_entry_candidates_address_only": [
+        {
+          "symbol": "sa_input_device_status_publish",
+          "source": "source/sa_input_device_status_publish.c"
+        }
+      ]
+    },
+    {
+      "address": "0x8c65f1ec",
+      "description": "device submit rearm function pointer",
+      "relation": "indirect call",
+      "indexed_body_bytes": 22,
+      "index_status": "indexed_only",
+      "verified_registry_entry": true,
+      "registered_source": "source/sa_input_device_submit_rearm.c",
+      "verification_report": "analysis/input_device_submit_rearm_verification.json",
+      "source_entry_candidates_address_only": [
+        {
+          "symbol": "sa_input_device_submit_rearm",
+          "source": "source/sa_input_device_submit_rearm.c"
+        }
+      ]
+    },
+    {
+      "address": "0x8c65f50c",
+      "description": "device record getter function pointer",
+      "relation": "indirect call",
+      "indexed_body_bytes": 10,
+      "index_status": "indexed_only",
+      "verified_registry_entry": true,
+      "registered_source": "source/sa_input_device_record_getters.c",
+      "verification_report": "analysis/input_device_record_getters_verification.json",
+      "source_entry_candidates_address_only": []
+    },
+    {
+      "address": "0x8c64658a",
+      "description": "active-device selection helper",
+      "relation": "direct call",
+      "indexed_body_bytes": 168,
+      "index_status": "indexed_only",
+      "verified_registry_entry": true,
+      "registered_source": "source/sa_input_active_device_select_8c64658a.c",
+      "verification_report": "analysis/input_active_device_select_8c64658a_verification.json",
+      "source_entry_candidates_address_only": [
+        {
+          "symbol": "sa_input_active_device_select_8c64658a",
+          "source": "source/sa_input_active_device_select_8c64658a.c"
+        }
+      ]
+    },
+    {
+      "address": "0x8c65f3f4",
+      "description": "record-match test used by callback loop",
+      "relation": "thunked call",
+      "indexed_body_bytes": 26,
+      "index_status": "indexed_only",
+      "verified_registry_entry": true,
+      "registered_source": "source/sa_input_device_record_status.c",
+      "verification_report": "analysis/input_device_record_status_verification.json",
+      "source_entry_candidates_address_only": [
+        {
+          "symbol": "sa_input_request_completion_impl",
+          "source": "source/sa_input_request_completion_impl.c"
+        }
+      ]
+    },
+    {
+      "address": "0x8c646868",
+      "description": "callback argument/pointer helper",
+      "relation": "direct call",
+      "indexed_body_bytes": 14,
+      "index_status": "indexed_only",
+      "verified_registry_entry": true,
+      "registered_source": "source/sa_input_channel_info_pointer.c",
+      "verification_report": "analysis/input_channel_info_pointer_8c646868_verification.json",
+      "source_entry_candidates_address_only": [
+        {
+          "symbol": "sa_input_channel_info_pointer",
+          "source": "source/sa_input_channel_info_pointer.c"
+        }
+      ]
+    },
+    {
+      "address": "0x8c646856",
+      "description": "record-address helper",
+      "relation": "direct call",
+      "indexed_body_bytes": 18,
+      "index_status": "indexed_only",
+      "verified_registry_entry": true,
+      "registered_source": "source/sa_input_record_address_by_index_8c646856.c",
+      "verification_report": "analysis/sa_input_record_address_by_index_8c646856_verification.json",
+      "source_entry_candidates_address_only": [
+        {
+          "symbol": "sa_input_channel_status_pointer",
+          "source": "source/sa_input_channel_status_pointer.c"
+        }
+      ]
+    }
+  ],
+  "dynamic_callback_table": {
+    "records": 48,
+    "record_stride_words": 3,
+    "callback_pointer_word": 2,
+    "runtime_callbacks": "Each non-null callback is invoked after a record-match check; targets are runtime data and cannot be exhaustively named from this static listing."
+  },
+  "data_dependencies": [
+    {
+      "literal": "0x8c64672c",
+      "value": "0x8c8a83b4",
+      "role": "base pointer cell used for status fields"
+    },
+    {
+      "literal": "0x8c646730",
+      "value": "0x8c893e10",
+      "role": "device object base"
+    },
+    {
+      "literal": "0x8c646734",
+      "value": "0x8c894098",
+      "role": "cleanup/status flag"
+    },
+    {
+      "literal": "0x8c646770",
+      "value": "0x8c893e50",
+      "role": "48-entry callback record table"
+    },
+    {
+      "literal": "0x8c646898",
+      "value": "0x8c893e48",
+      "role": "optional error callback pointer cell"
+    }
+  ],
+  "current_recovery_boundary": "The 0x8c646654 routine is registered and passed 456 full-state retail comparisons across negative exits, successful cleanup, active-device publication, and every callback-table slot. Its external callback implementations remain explicit stubs; this audit does not claim full input-service or game completion.",
+  "recommended_next_work": [
+    "Replace external cleanup callback stubs with verified game-owned callback implementations as their runtime targets are identified.",
+    "Verify the cleanup caller and native input-service integration using the registered cleanup routine rather than an opaque callee stub."
+  ]
+}

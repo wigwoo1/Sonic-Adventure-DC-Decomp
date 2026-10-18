@@ -1,0 +1,30 @@
+{
+  "executable_sha256": "45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a",
+  "scope": "Static binary call candidates, not proof of executable code or startup ordering. Requires instruction/function boundary and intervening register-write validation.",
+  "candidates": [
+    {
+      "target": "0x8c65acc0",
+      "name": "sound_initialize",
+      "kind": "mov.l/jsr",
+      "load": "0x8c643f70",
+      "literal": "0x8c643f8c",
+      "call": "0x8c643f72",
+      "validated": true,
+      "caller": "0x8c643f6c",
+      "evidence": "analysis/instructions/sound_initialize_wrapper.tsv: contiguous 16-instruction wrapper, literal65acc0 and error recorder65acac verified; 24 execution comparisons with initializer modeled"
+    },
+    {
+      "target": "0x8c6510a4",
+      "name": "engine_initialize",
+      "kind": "mov.l/jsr",
+      "load": "0x8c652630",
+      "literal": "0x8c652694",
+      "call": "0x8c652632",
+      "validated": true,
+      "evidence": "analysis/instructions/8c65262c.tsv: consecutive literal load and jsr, Ghidra COMPUTED_CALL target8c6510a4",
+      "caller": "0x8c65262c"
+    }
+  ],
+  "next_action": "Connect sound initializer65acc0 to recovered wrapper643f6c and trace callers of both initialization wrappers; startup ordering remains unproven.",
+  "ghidra_export_status": "Failed: local OSGi bundle cache access denied. No successful reference export claimed."
+}

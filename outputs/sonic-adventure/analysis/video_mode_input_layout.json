@@ -1,0 +1,38 @@
+{
+  "binary_sha256": "45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a",
+  "direct_checks_passed": 8,
+  "routine": "0x8c6582e0",
+  "input_base": "Original caller stack pointer; r4 = callee r15 + 0x10 after saving four words.",
+  "scan_clock_packing": {
+    "destination": "0x8c8a303c",
+    "low_input_byte_offset": "0x08",
+    "high_input_byte_offset": "0x14",
+    "mask": "0x7ff",
+    "expression": "(input_u32[2] & 0x7ff) | ((input_u32[5] & 0x7ff) << 16)"
+  },
+  "other_pair_packing": [
+    {
+      "destination": "0x8c8a3038",
+      "low_input_offset": "0x04",
+      "high_input_offset": "0x00"
+    },
+    {
+      "destination": "0x8c8a3040",
+      "low_input_offset": "0x10",
+      "high_input_offset": "0x0c"
+    }
+  ],
+  "next_work": [
+    "Trace callers of 0x8c6582e0 and stack argument construction",
+    "Recover the complete input layout and video mode-selection branches",
+    "Validate selected scan timing and VBLANK cadence"
+  ],
+  "evidence": [
+    "analysis/instructions/8c6582e0.tsv",
+    "analysis/video-mode-state-references/scheduler_references.tsv"
+  ],
+  "limitations": [
+    "Input offsets established; semantic field names and supplied mode values not yet verified.",
+    "No native mode-programmer source or runtime cadence validation."
+  ]
+}

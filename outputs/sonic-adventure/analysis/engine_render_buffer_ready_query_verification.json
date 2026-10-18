@@ -1,0 +1,160 @@
+{
+  "module": "1ST_READ.BIN",
+  "routine": "0x8c6533e0",
+  "end_exclusive": "0x8c653404",
+  "cases_passed": 20,
+  "cases": [
+    {
+      "ready_global": "0x0",
+      "callback_result": "0x0",
+      "result": "0x11",
+      "callback_count": 1,
+      "stack_and_preserved_state_checked": true
+    },
+    {
+      "ready_global": "0x0",
+      "callback_result": "0x1",
+      "result": "0x0",
+      "callback_count": 1,
+      "stack_and_preserved_state_checked": true
+    },
+    {
+      "ready_global": "0x0",
+      "callback_result": "0x2",
+      "result": "0x11",
+      "callback_count": 1,
+      "stack_and_preserved_state_checked": true
+    },
+    {
+      "ready_global": "0x0",
+      "callback_result": "0x11",
+      "result": "0x11",
+      "callback_count": 1,
+      "stack_and_preserved_state_checked": true
+    },
+    {
+      "ready_global": "0x0",
+      "callback_result": "0xffffffff",
+      "result": "0x11",
+      "callback_count": 1,
+      "stack_and_preserved_state_checked": true
+    },
+    {
+      "ready_global": "0x1",
+      "callback_result": "0x0",
+      "result": "0x0",
+      "callback_count": 0,
+      "stack_and_preserved_state_checked": true
+    },
+    {
+      "ready_global": "0x1",
+      "callback_result": "0x1",
+      "result": "0x0",
+      "callback_count": 0,
+      "stack_and_preserved_state_checked": true
+    },
+    {
+      "ready_global": "0x1",
+      "callback_result": "0x2",
+      "result": "0x0",
+      "callback_count": 0,
+      "stack_and_preserved_state_checked": true
+    },
+    {
+      "ready_global": "0x1",
+      "callback_result": "0x11",
+      "result": "0x0",
+      "callback_count": 0,
+      "stack_and_preserved_state_checked": true
+    },
+    {
+      "ready_global": "0x1",
+      "callback_result": "0xffffffff",
+      "result": "0x0",
+      "callback_count": 0,
+      "stack_and_preserved_state_checked": true
+    },
+    {
+      "ready_global": "0x2",
+      "callback_result": "0x0",
+      "result": "0x11",
+      "callback_count": 1,
+      "stack_and_preserved_state_checked": true
+    },
+    {
+      "ready_global": "0x2",
+      "callback_result": "0x1",
+      "result": "0x0",
+      "callback_count": 1,
+      "stack_and_preserved_state_checked": true
+    },
+    {
+      "ready_global": "0x2",
+      "callback_result": "0x2",
+      "result": "0x11",
+      "callback_count": 1,
+      "stack_and_preserved_state_checked": true
+    },
+    {
+      "ready_global": "0x2",
+      "callback_result": "0x11",
+      "result": "0x11",
+      "callback_count": 1,
+      "stack_and_preserved_state_checked": true
+    },
+    {
+      "ready_global": "0x2",
+      "callback_result": "0xffffffff",
+      "result": "0x11",
+      "callback_count": 1,
+      "stack_and_preserved_state_checked": true
+    },
+    {
+      "ready_global": "0xffffffff",
+      "callback_result": "0x0",
+      "result": "0x11",
+      "callback_count": 1,
+      "stack_and_preserved_state_checked": true
+    },
+    {
+      "ready_global": "0xffffffff",
+      "callback_result": "0x1",
+      "result": "0x0",
+      "callback_count": 1,
+      "stack_and_preserved_state_checked": true
+    },
+    {
+      "ready_global": "0xffffffff",
+      "callback_result": "0x2",
+      "result": "0x11",
+      "callback_count": 1,
+      "stack_and_preserved_state_checked": true
+    },
+    {
+      "ready_global": "0xffffffff",
+      "callback_result": "0x11",
+      "result": "0x11",
+      "callback_count": 1,
+      "stack_and_preserved_state_checked": true
+    },
+    {
+      "ready_global": "0xffffffff",
+      "callback_result": "0xffffffff",
+      "result": "0x11",
+      "callback_count": 1,
+      "stack_and_preserved_state_checked": true
+    }
+  ],
+  "retail_binary_sha256": "45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a",
+  "retail_span_sha256": "982bd9cfcc9fe0f233c9a67377d84d94732b3db135f7e919ce53e63175e180ab",
+  "source": "source/sa_engine_render_buffer_ready_query.c",
+  "instruction_listing": "analysis/instructions/engine_render_buffer_ready_query.tsv",
+  "instruction_listing_sha256": "0dac76d0e17247ca968d00b34365630b3c6827a1b6d7a1ccd64f6b4cedc01b28",
+  "source_sha256": "3fedb234640feab5bb99c1a9f67d9965e437df43ef7904fdddfc7bd363637ff5",
+  "dll_sha256": "907769fb2b6d32c200e56c9caf75019bd34d1f4669ced1a572cabfe30221c1d5",
+  "scope": "20 cases cover ready-global values 0, 1, 2, and 0xffffffff, five callback return classes, exact helper address/argument/PR boundary, R2/R3 effects, return mapping, SR T-bit behavior, saved PR, and unchanged FPU/FPUL/MACL.",
+  "limitations": [
+    "The helper at 0x8c650f78 is represented by a host callback; its linked-list scan and side effects are not verified here.",
+    "Wrapper contract tests do not establish graphics readiness end-to-end or game integration."
+  ]
+}

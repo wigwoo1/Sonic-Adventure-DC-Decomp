@@ -1,0 +1,1264 @@
+{
+  "functions_verified": 2,
+  "total_cases": 176,
+  "comparison_level": "Preserved R8-R15, PR/PC, all RAM outside a 256-byte volatile stack region, bitset writes and callback target/count. Caller-clobbered registers and SR are excluded except where overwritten by the deterministic callback boundary.",
+  "source_sha256": "27ff3b17ebb092aa573303a66f5d4458eb371c3a15c8b4fecb0579ef8a0d4e9b",
+  "scope": "Two input-to-bitset setters: the simple 0x8c0a6992 index mapping wrapper and the ROM-table-driven 0x8c0a69a8 mapping wrapper. Both were checked with callback mode disabled and enabled.",
+  "limitations": [
+    "The callback at 0x8c0115d0 is modeled as a deterministic dispatch boundary in this composition check; its implementation and dependencies have a separate verification record.",
+    "Volatile stack bytes and caller-clobbered registers are not compared byte-for-byte.",
+    "Verification uses the project partial SH-4 interpreter, not Dreamcast hardware or end-to-end game execution."
+  ],
+  "routines": [
+    {
+      "address": "0x8c0a6a88",
+      "end_exclusive": "0x8c0a6a9e",
+      "kind": "index_set",
+      "retail_span_sha256": "dbbc313a316abab82a0d038d7bcdecdf44c6aa9312773d1b33aa0af04560bfba",
+      "cases_passed": 64,
+      "cases": [
+        {
+          "case": 0,
+          "mode": 0,
+          "retail_instructions": 47,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 1,
+          "mode": 5,
+          "retail_instructions": 48,
+          "callback_count": 1,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 2,
+          "mode": 0,
+          "retail_instructions": 47,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 3,
+          "mode": 5,
+          "retail_instructions": 48,
+          "callback_count": 1,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 4,
+          "mode": 0,
+          "retail_instructions": 48,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 5,
+          "mode": 5,
+          "retail_instructions": 49,
+          "callback_count": 1,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 6,
+          "mode": 0,
+          "retail_instructions": 48,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 7,
+          "mode": 5,
+          "retail_instructions": 49,
+          "callback_count": 1,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 8,
+          "mode": 0,
+          "retail_instructions": 48,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 9,
+          "mode": 5,
+          "retail_instructions": 49,
+          "callback_count": 1,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 10,
+          "mode": 0,
+          "retail_instructions": 49,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 11,
+          "mode": 5,
+          "retail_instructions": 50,
+          "callback_count": 1,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 12,
+          "mode": 0,
+          "retail_instructions": 49,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 13,
+          "mode": 5,
+          "retail_instructions": 50,
+          "callback_count": 1,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 14,
+          "mode": 0,
+          "retail_instructions": 49,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 15,
+          "mode": 5,
+          "retail_instructions": 50,
+          "callback_count": 1,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 16,
+          "mode": 0,
+          "retail_instructions": 49,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 17,
+          "mode": 5,
+          "retail_instructions": 50,
+          "callback_count": 1,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 18,
+          "mode": 0,
+          "retail_instructions": 49,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 19,
+          "mode": 5,
+          "retail_instructions": 50,
+          "callback_count": 1,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 20,
+          "mode": 0,
+          "retail_instructions": 49,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 21,
+          "mode": 5,
+          "retail_instructions": 50,
+          "callback_count": 1,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 22,
+          "mode": 0,
+          "retail_instructions": 49,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 23,
+          "mode": 5,
+          "retail_instructions": 50,
+          "callback_count": 1,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 24,
+          "mode": 0,
+          "retail_instructions": 49,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 25,
+          "mode": 5,
+          "retail_instructions": 50,
+          "callback_count": 1,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 26,
+          "mode": 0,
+          "retail_instructions": 49,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 27,
+          "mode": 5,
+          "retail_instructions": 50,
+          "callback_count": 1,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 28,
+          "mode": 0,
+          "retail_instructions": 49,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 29,
+          "mode": 5,
+          "retail_instructions": 50,
+          "callback_count": 1,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 30,
+          "mode": 0,
+          "retail_instructions": 49,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 31,
+          "mode": 5,
+          "retail_instructions": 50,
+          "callback_count": 1,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 32,
+          "mode": 0,
+          "retail_instructions": 49,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 33,
+          "mode": 5,
+          "retail_instructions": 50,
+          "callback_count": 1,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 34,
+          "mode": 0,
+          "retail_instructions": 49,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 35,
+          "mode": 5,
+          "retail_instructions": 50,
+          "callback_count": 1,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 36,
+          "mode": 0,
+          "retail_instructions": 49,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 37,
+          "mode": 5,
+          "retail_instructions": 50,
+          "callback_count": 1,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 38,
+          "mode": 0,
+          "retail_instructions": 49,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 39,
+          "mode": 5,
+          "retail_instructions": 50,
+          "callback_count": 1,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 40,
+          "mode": 0,
+          "retail_instructions": 49,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 41,
+          "mode": 5,
+          "retail_instructions": 50,
+          "callback_count": 1,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 42,
+          "mode": 0,
+          "retail_instructions": 49,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 43,
+          "mode": 5,
+          "retail_instructions": 50,
+          "callback_count": 1,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 44,
+          "mode": 0,
+          "retail_instructions": 49,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 45,
+          "mode": 5,
+          "retail_instructions": 50,
+          "callback_count": 1,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 46,
+          "mode": 0,
+          "retail_instructions": 49,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 47,
+          "mode": 5,
+          "retail_instructions": 50,
+          "callback_count": 1,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 48,
+          "mode": 0,
+          "retail_instructions": 49,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 49,
+          "mode": 5,
+          "retail_instructions": 50,
+          "callback_count": 1,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 50,
+          "mode": 0,
+          "retail_instructions": 49,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 51,
+          "mode": 5,
+          "retail_instructions": 50,
+          "callback_count": 1,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 52,
+          "mode": 0,
+          "retail_instructions": 49,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 53,
+          "mode": 5,
+          "retail_instructions": 50,
+          "callback_count": 1,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 54,
+          "mode": 0,
+          "retail_instructions": 49,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 55,
+          "mode": 5,
+          "retail_instructions": 50,
+          "callback_count": 1,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 56,
+          "mode": 0,
+          "retail_instructions": 49,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 57,
+          "mode": 5,
+          "retail_instructions": 50,
+          "callback_count": 1,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 58,
+          "mode": 0,
+          "retail_instructions": 49,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 59,
+          "mode": 5,
+          "retail_instructions": 50,
+          "callback_count": 1,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 60,
+          "mode": 0,
+          "retail_instructions": 49,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 61,
+          "mode": 5,
+          "retail_instructions": 50,
+          "callback_count": 1,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 62,
+          "mode": 0,
+          "retail_instructions": 49,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 63,
+          "mode": 5,
+          "retail_instructions": 50,
+          "callback_count": 1,
+          "abi_state_and_ram_match_outside_stack": true
+        }
+      ]
+    },
+    {
+      "address": "0x8c0a6ad2",
+      "end_exclusive": "0x8c0a6af0",
+      "kind": "mapping_set",
+      "retail_span_sha256": "5fc54c0dafa82bf83c29578b985b6fb90b71d053419b540db2883f33f50ccf70",
+      "cases_passed": 112,
+      "cases": [
+        {
+          "case": 0,
+          "mode": 0,
+          "retail_instructions": 111,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 1,
+          "mode": 0,
+          "retail_instructions": 142,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 2,
+          "mode": 0,
+          "retail_instructions": 178,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 3,
+          "mode": 0,
+          "retail_instructions": 192,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 4,
+          "mode": 0,
+          "retail_instructions": 203,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 5,
+          "mode": 0,
+          "retail_instructions": 203,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 6,
+          "mode": 0,
+          "retail_instructions": 203,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 7,
+          "mode": 0,
+          "retail_instructions": 203,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 8,
+          "mode": 0,
+          "retail_instructions": 214,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 9,
+          "mode": 0,
+          "retail_instructions": 256,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 10,
+          "mode": 0,
+          "retail_instructions": 290,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 11,
+          "mode": 0,
+          "retail_instructions": 303,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 12,
+          "mode": 0,
+          "retail_instructions": 314,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 13,
+          "mode": 0,
+          "retail_instructions": 351,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 14,
+          "mode": 0,
+          "retail_instructions": 378,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 15,
+          "mode": 0,
+          "retail_instructions": 395,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 16,
+          "mode": 0,
+          "retail_instructions": 406,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 17,
+          "mode": 0,
+          "retail_instructions": 410,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 18,
+          "mode": 0,
+          "retail_instructions": 410,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 19,
+          "mode": 0,
+          "retail_instructions": 406,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 20,
+          "mode": 0,
+          "retail_instructions": 417,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 21,
+          "mode": 0,
+          "retail_instructions": 450,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 22,
+          "mode": 0,
+          "retail_instructions": 450,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 23,
+          "mode": 0,
+          "retail_instructions": 524,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 24,
+          "mode": 0,
+          "retail_instructions": 552,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 25,
+          "mode": 0,
+          "retail_instructions": 561,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 26,
+          "mode": 0,
+          "retail_instructions": 586,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 27,
+          "mode": 0,
+          "retail_instructions": 648,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 28,
+          "mode": 0,
+          "retail_instructions": 676,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 29,
+          "mode": 0,
+          "retail_instructions": 689,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 30,
+          "mode": 0,
+          "retail_instructions": 730,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 31,
+          "mode": 0,
+          "retail_instructions": 763,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 32,
+          "mode": 0,
+          "retail_instructions": 774,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 33,
+          "mode": 0,
+          "retail_instructions": 778,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 34,
+          "mode": 0,
+          "retail_instructions": 778,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 35,
+          "mode": 0,
+          "retail_instructions": 774,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 36,
+          "mode": 0,
+          "retail_instructions": 785,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 37,
+          "mode": 0,
+          "retail_instructions": 785,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 38,
+          "mode": 0,
+          "retail_instructions": 785,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 39,
+          "mode": 0,
+          "retail_instructions": 785,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 40,
+          "mode": 0,
+          "retail_instructions": 796,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 41,
+          "mode": 0,
+          "retail_instructions": 796,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 42,
+          "mode": 0,
+          "retail_instructions": 796,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 43,
+          "mode": 0,
+          "retail_instructions": 910,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 44,
+          "mode": 0,
+          "retail_instructions": 938,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 45,
+          "mode": 0,
+          "retail_instructions": 938,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 46,
+          "mode": 0,
+          "retail_instructions": 938,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 47,
+          "mode": 0,
+          "retail_instructions": 938,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 48,
+          "mode": 0,
+          "retail_instructions": 949,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 49,
+          "mode": 0,
+          "retail_instructions": 949,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 50,
+          "mode": 0,
+          "retail_instructions": 949,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 51,
+          "mode": 0,
+          "retail_instructions": 949,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 52,
+          "mode": 0,
+          "retail_instructions": 960,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 53,
+          "mode": 0,
+          "retail_instructions": 960,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 54,
+          "mode": 0,
+          "retail_instructions": 960,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 55,
+          "mode": 0,
+          "retail_instructions": 960,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 56,
+          "mode": 0,
+          "retail_instructions": 971,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 57,
+          "mode": 0,
+          "retail_instructions": 971,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 58,
+          "mode": 0,
+          "retail_instructions": 971,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 59,
+          "mode": 0,
+          "retail_instructions": 971,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 60,
+          "mode": 0,
+          "retail_instructions": 982,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 61,
+          "mode": 0,
+          "retail_instructions": 982,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 62,
+          "mode": 0,
+          "retail_instructions": 982,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 63,
+          "mode": 0,
+          "retail_instructions": 982,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 64,
+          "mode": 5,
+          "retail_instructions": 64,
+          "callback_count": 1,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 65,
+          "mode": 5,
+          "retail_instructions": 64,
+          "callback_count": 1,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 66,
+          "mode": 5,
+          "retail_instructions": 69,
+          "callback_count": 1,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 67,
+          "mode": 5,
+          "retail_instructions": 69,
+          "callback_count": 1,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 68,
+          "mode": 5,
+          "retail_instructions": 69,
+          "callback_count": 1,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 69,
+          "mode": 5,
+          "retail_instructions": 69,
+          "callback_count": 1,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 70,
+          "mode": 5,
+          "retail_instructions": 73,
+          "callback_count": 1,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 71,
+          "mode": 5,
+          "retail_instructions": 73,
+          "callback_count": 1,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 72,
+          "mode": 5,
+          "retail_instructions": 73,
+          "callback_count": 1,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 73,
+          "mode": 5,
+          "retail_instructions": 73,
+          "callback_count": 1,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 74,
+          "mode": 5,
+          "retail_instructions": 73,
+          "callback_count": 1,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 75,
+          "mode": 5,
+          "retail_instructions": 73,
+          "callback_count": 1,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 76,
+          "mode": 5,
+          "retail_instructions": 72,
+          "callback_count": 1,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 77,
+          "mode": 5,
+          "retail_instructions": 72,
+          "callback_count": 1,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 78,
+          "mode": 5,
+          "retail_instructions": 72,
+          "callback_count": 1,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 79,
+          "mode": 5,
+          "retail_instructions": 72,
+          "callback_count": 1,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 80,
+          "mode": 5,
+          "retail_instructions": 74,
+          "callback_count": 1,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 81,
+          "mode": 5,
+          "retail_instructions": 74,
+          "callback_count": 1,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 82,
+          "mode": 5,
+          "retail_instructions": 72,
+          "callback_count": 1,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 83,
+          "mode": 5,
+          "retail_instructions": 72,
+          "callback_count": 1,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 84,
+          "mode": 5,
+          "retail_instructions": 72,
+          "callback_count": 1,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 85,
+          "mode": 5,
+          "retail_instructions": 72,
+          "callback_count": 1,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 86,
+          "mode": 0,
+          "retail_instructions": 68,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 87,
+          "mode": 5,
+          "retail_instructions": 72,
+          "callback_count": 1,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 88,
+          "mode": 0,
+          "retail_instructions": 410,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 89,
+          "mode": 5,
+          "retail_instructions": 69,
+          "callback_count": 1,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 90,
+          "mode": 0,
+          "retail_instructions": 72,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 91,
+          "mode": 5,
+          "retail_instructions": 73,
+          "callback_count": 1,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 92,
+          "mode": 0,
+          "retail_instructions": 72,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 93,
+          "mode": 5,
+          "retail_instructions": 219,
+          "callback_count": 1,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 94,
+          "mode": 0,
+          "retail_instructions": 63,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 95,
+          "mode": 5,
+          "retail_instructions": 983,
+          "callback_count": 1,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 96,
+          "mode": 0,
+          "retail_instructions": 68,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 97,
+          "mode": 5,
+          "retail_instructions": 775,
+          "callback_count": 1,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 98,
+          "mode": 0,
+          "retail_instructions": 68,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 99,
+          "mode": 5,
+          "retail_instructions": 69,
+          "callback_count": 1,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 100,
+          "mode": 0,
+          "retail_instructions": 68,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 101,
+          "mode": 5,
+          "retail_instructions": 72,
+          "callback_count": 1,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 102,
+          "mode": 0,
+          "retail_instructions": 71,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 103,
+          "mode": 5,
+          "retail_instructions": 204,
+          "callback_count": 1,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 104,
+          "mode": 0,
+          "retail_instructions": 72,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 105,
+          "mode": 5,
+          "retail_instructions": 972,
+          "callback_count": 1,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 106,
+          "mode": 0,
+          "retail_instructions": 68,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 107,
+          "mode": 5,
+          "retail_instructions": 72,
+          "callback_count": 1,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 108,
+          "mode": 0,
+          "retail_instructions": 68,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 109,
+          "mode": 5,
+          "retail_instructions": 939,
+          "callback_count": 1,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 110,
+          "mode": 0,
+          "retail_instructions": 971,
+          "callback_count": 0,
+          "abi_state_and_ram_match_outside_stack": true
+        },
+        {
+          "case": 111,
+          "mode": 5,
+          "retail_instructions": 69,
+          "callback_count": 1,
+          "abi_state_and_ram_match_outside_stack": true
+        }
+      ]
+    }
+  ]
+}

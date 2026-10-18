@@ -1,0 +1,54 @@
+{
+  "drivers": [
+    {
+      "path": "MANATEE.DRV",
+      "candidate_functions": 108,
+      "statuses": {
+        "draft_pseudocode": 108
+      },
+      "instructions": 6152,
+      "decoded_bytes": 24608,
+      "upload_bytes": 33408,
+      "bytes_outside_current_instruction_listing": 8800,
+      "draft_warning_count": 53,
+      "vectors_checked": 8
+    },
+    {
+      "path": "SONICADV/MASARU.DRV",
+      "candidate_functions": 108,
+      "statuses": {
+        "draft_pseudocode": 108
+      },
+      "instructions": 6154,
+      "decoded_bytes": 24616,
+      "upload_bytes": 33376,
+      "bytes_outside_current_instruction_listing": 8760,
+      "draft_warning_count": 53,
+      "vectors_checked": 8
+    }
+  ],
+  "inputs": {
+    "outputs/sonic-adventure/analysis/arm_sound_driver_payloads.json": "44fbece711b553ea5824535bdb3d42759f4462a54d38a8ff0cb41b4294676fd9",
+    "outputs/sonic-adventure/prepare_arm_sound_drivers.py": "c76bdbdaad25f82d4932795d99776c393687ea88f5917d32c03d02e65bcc88d8",
+    "outputs/sonic-adventure/verify_arm_sound_driver_inventory.py": "ae0d69016ccf4e96ea76a2df3692034d9a1aeeb23515a8fcf00a44afd5259631",
+    "outputs/sonic-adventure/ghidra/analyze_arm_sound_drivers.ps1": "e1d0c666e19b5500c345d2f2d4eaca57d60fd5b4392a18c9e51a3c5fe938d194",
+    "outputs/sonic-adventure/ghidra/SeedArmSoundDriver.java": "e7dd32c163e849c9e77a72175579ee9c440a92865404a4c8909ad6e4de6ce6fe",
+    "outputs/sonic-adventure/ghidra/ExportArmSoundDriverEvidence.java": "738cbe9dd1cdafc0b425cf650c689231d28b475ddc315e26ad4f1b82ba9c4ef5",
+    "work/sonic-adventure/toolchain/ghidra_12.1.4_PUBLIC/Ghidra/Extensions/SonicAdventureScripts/ghidra_scripts/ExportInitialDecompilation.java": "ab5f862526e94f31a80097c8bc43c0a57d48df483724d207de1a62bdc0105f89",
+    "work/sonic-adventure/toolchain/ghidra_12.1.4_PUBLIC/Ghidra/Processors/ARM/data/languages/ARM.ldefs": "7882fd4210f4987835c9eddaf1ae00c0391ed11cd5968081965f37490228612f",
+    "work/sonic-adventure/toolchain/ghidra_12.1.4_PUBLIC/Ghidra/Processors/ARM/data/languages/ARM4_le.sla": "41c734c9a41fd076ffafc33ea0d1057b513d239bd0164b7fb86f3a3756d45351"
+  },
+  "outputs": {
+    "outputs/sonic-adventure/analysis/arm-sound-drivers/MANATEE.DRV.arm.bin/program_metadata.tsv": "84b93b4dc210ba3b8377033c51a900ae4557b207e3e6a60adfabb2770f49f65a",
+    "outputs/sonic-adventure/analysis/arm-sound-drivers/MANATEE.DRV.arm.bin/function_index.tsv": "5ef773d5d27fe5205515ead653215b9af1852443338e8336929ba70b6e5796af",
+    "outputs/sonic-adventure/analysis/arm-sound-drivers/MANATEE.DRV.arm.bin/instructions.tsv": "a04079eb81a3d6b0791e4b69379b7c3ab4f6d1bd7656e059ce5b7c33fde8ea54",
+    "outputs/sonic-adventure/analysis/arm-sound-drivers/MANATEE.DRV.arm.bin/initial_pseudocode.c": "3141a82a2e77a6dd69365eed660fce5ed81059b9789a67530d15cd0b0ecab5c1",
+    "outputs/sonic-adventure/analysis/arm-sound-drivers/MASARU.DRV.arm.bin/program_metadata.tsv": "c30238cb8909f59d9891b42499ec847f27f5699ec5404c592075f127c6d5588a",
+    "outputs/sonic-adventure/analysis/arm-sound-drivers/MASARU.DRV.arm.bin/function_index.tsv": "44528248ce520ae35b46923abbc3ab900e109d827da6f064eaf3ff40eaf8b592",
+    "outputs/sonic-adventure/analysis/arm-sound-drivers/MASARU.DRV.arm.bin/instructions.tsv": "7af1fec72b410e1078bc9beab13cd7cd7cd8b63e7100e33ecc880ab6dffb5843",
+    "outputs/sonic-adventure/analysis/arm-sound-drivers/MASARU.DRV.arm.bin/initial_pseudocode.c": "c44d252c4874970ba475fc8fdf72bf8c0c94159fd996771439c79459e1c32b5d"
+  },
+  "ghidra_version": "12.1.4_PUBLIC",
+  "scope": "Both actual SDRV upload spans, all sixteen vector branches, every exported instruction byte, and complete current candidate/draft exports validated against original input hashes.",
+  "limitations": "Draft pseudocode is not buildable recovered source. Function boundaries/code-data separation and indirect targets are incomplete; listing counts are not coverage. No ARM execution or playback verification. Existing SH-4 routine registry and weighted milestone percentage are unchanged."
+}

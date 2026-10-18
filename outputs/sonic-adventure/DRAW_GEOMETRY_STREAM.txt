@@ -1,0 +1,134 @@
+Sonic Adventure Dreamcast Rev A - geometry projection, lighting and viewport
+
+Whole-project estimate: 10%, weighted milestones rather than measured code
+coverage. Goal active on Sol High. The complete renderer and playable ports
+remain unfinished.
+
+Five complete helpers checked, 384 original instructions / all 34 outcomes.
+Four first registrations add 379 rows / 34 outcomes; the existing five-row
+header helper gains integration evidence with zero duplicate credit:
+8c037294 - paired transformed/projected vertex cache (82 rows / 6 outcomes).
+8c60a61a - channel angle sampling and default-angle buffer (120 / 8).
+8c037350 - clamped normal lighting lookup and colour caches (126 / 20).
+8c036ffc - header flags OR 0xc0 (5 / 0).
+8c604d68 - viewport centres, clip rectangle and state reset (51 / 0).
+Descriptive names/roles are inferred from original instructions.
+
+Files in this project directory:
+source/sa_draw_geometry_stream.c
+source/sa_draw_geometry_stream_connected.c
+recover_draw_geometry_stream.py / connect_draw_geometry_stream.py
+build_draw_geometry_stream.ps1
+verify_draw_geometry_stream.py
+verify_overlay_draw_geometry_stream.py
+register_draw_geometry_stream.py
+analysis/draw_geometry_stream_translation.json
+analysis/draw_geometry_stream_connection.json
+analysis/draw_geometry_stream_verification.json
+analysis/overlay_draw_geometry_stream_verification.json
+inventory_draw_material_frontier.py
+analysis/draw_material_frontier_inventory.json
+
+The strict optimized 113-source native DLL builds with warnings treated as errors
+and no standard library. Separate DLL: work/sonic-adventure/build/
+draw_geometry_stream.dll under the workspace root. Earlier source/API/DLLs and
+proofs are preserved. The new bridge preserves the prior public ten-argument
+GBR/bus API. New helpers get the actual live GBR and queue bus. Removing only
+added declarations/routes and the renamed API reproduces the prior bridge text.
+The documented earlier hierarchy-stall research bound remains. Both C files
+also pass default (non-research-define) syntax checks. This is a research library,
+not a playable game executable.
+
+All 912 focused comparisons pass: 823 returns, 32 explicit missing services in
+four partial parent proposals, 28 numeric-mode guards, ten memory/return guards
+and 19 floating-point traps. They check 1,404 ordered native entries, full final
+machine/RAM/GBR and queue state, plus 627 independent cases / 3,570 assertions.
+Across all nine proposals, 497/891 rows and 35 outcomes execute. Only four
+new complete helpers receive registration credit (379 rows / 34 outcomes).
+The already registered header helper keeps its original source and evidence.
+Geometry dispatcher 8c0376d0, view builder 8c604ba0, frame initializer 8c0544e2
+and boot caller 8c10b840 remain partial and unregistered. Fifteen earlier motion
+proposals also remain partial. Whole-game routine count is still unknown.
+
+Direct tests supply synthetic vertex/normal/material records, relocated lighting
+lookup data and screen dimensions. Every direct case runs the real 41-row GBR
+initializer in a separately checked native/original preparation stage. This is
+not proof of natural engine startup or camera/task scheduling. Main comparison
+counts do not silently count preparation as additional independent cases.
+
+Projection retains the original unconditional pair loop: zero/one counts still
+process two vertices, odd counts round up, and lookahead reads remain. Position
+transformation, projected x/y/depth, near-plane count, exact RAM footprint,
+QACR values and queue/cache operation counts have independent checks for aligned
+cache fixtures. Offset cache cases retain original-state/queue comparisons only.
+Direct queue totals: 982 flushes / 9,466 individually compared events.
+
+Normal lighting uses original FIPR, integer conversion, clamp and alternate
+lookup-offset selection. Independent checks cover colour cache, scratch buffer,
+GBR+0x40 and complete RAM footprint. GBR+0x58 is a lighting lookup data pointer;
+GBR+0x38 selects scratch/specular data. These are not callback handlers. The
+previous guide's pointer description has been corrected without changing its
+pinned verifier/source evidence.
+
+Angle sampling uses the existing real linear/cubic angle implementations.
+Both banks/channels, missing tracks, consumed slots and high unsigned frames
+are checked. The 2^31/2^32 path is preserved unsigned conversion. Viewport reset
+uses the original screen structure at 8c88f5e4, centres width/height, writes clip
+bounds and clears three mode fields. Its retained guest-stack rectangle and
+restored stack pointer are checked. Inputs through 7680x4320 test arithmetic;
+they do not establish an 8K framebuffer, PC display setting or rendered pixels.
+
+Inherited qualified scalar/vector/FSCA/FSRRA/sqrt domains remain. Original
+instruction-model numerical agreement is not arbitrary physical SH-4 bit proof.
+Memory/bus proof is the documented MMU-off valid-RAM/software store-queue model,
+not physical GPU/cache/MMU output. No fake game-service result is introduced.
+
+The next read-only material/primitive export contains 13 candidates / 1,022
+byte-checked instruction rows. One branch in 8c037ccc targets 8c0382ac outside
+its exported body and requires boundary investigation. Static annotated targets
+8c037ee0 and 8c038802 remain outside this family. Candidate drafts, nonexhaustive
+static call annotations and temporary read-only discovery carry zero native
+recovery/complete-CFG credit. Frozen function indexes are preserved.
+
+SUPIR HD textures, true texture-off vertex/material colours, render resolution,
+aspect ratio, 60/120/240 FPS, 8K and all playable ports remain pending goals.
+Continue Sol High for lower material/primitive recovery. Luna Low is suitable
+for documentation-only work; no model switch or goal pause is recommended.
+
+All 210 connected original-model comparisons pass: 92 returns, 112 explicit
+missing-service stops, two numeric guards, two memory/return guards and two
+traps. Earlier 146 source cases are retained and rerun, including all 48 affected
+cases, 64 direct-service and twelve label/event profiles. The extra 64 camera/
+animation/position profiles preserve the prior entity inputs but update camera
+preparation to explicit 640x480 dimensions and distance 320, followed by the
+actual native/original 51-row viewport reset and 41-row GBR initialization.
+Original geometry/motion/name records and shipped lighting tables remain.
+
+Connected checks match 18,794 ordered entries, 204 independent state/stack/spring
+cases, 124 distance prefixes and 271 new-proposal rows. Parent coverage remains
+417/911 rows (494 unexecuted); it is unregistered. The old 420-case corpus is
+preserved, not claimed as freshly rerun in full. Real initialization preparation
+is counted separately: 1,122 renderer initializer stages across focused/caller
+checks and 64 additional viewport stages. No natural scheduler/camera proof.
+
+Connected queues: 13,640 flushes / 147,584 counted events. The first 4,096 events
+per call are compared individually: 59,072 stored-prefix events, with 88,512 later
+events count-only. Final queues, QACR, counters and full RAM match. Earlier first
+stops disappear. Next observed services: 8c037618 (64 cases, material flags) and
+8c60b462 (48 cases, next scale sampler). The first is in the new material export;
+the second remains for the next sampling recovery.
+
+Registry: 1,224 entries / 1,221 unique module/address pairs; 1,121 match 10,875
+frozen indexed candidates. Another 211 nontexture binaries lack function indexes.
+Audit finds zero evidence errors/stale source reports. Ninety-five existing
+entries gain integration evidence with zero duplicate credit. Five generated
+artifacts reproduce byte-for-byte. Repeat registration preserves registry/status
+bytes. Seven focused Python/four PowerShell syntax checks, default C syntax and
+all 658 dispatcher pointer-load checks (80 spans / 83 selectors) pass. The
+historical aggregate workflow is extended but not rerun. No rendered pixels,
+complete frame/gameplay, high-FPS or playable-port proof is claimed.
+
+How to check: open this guide and the linked source/report files in the project
+folder. The JSON reports list every input and comparison result. This milestone
+is PARTIALLY VERIFIED at the project level: the four new helpers have complete
+qualified instruction/branch proof, while the renderer/game remains unfinished.

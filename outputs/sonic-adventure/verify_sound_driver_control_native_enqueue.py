@@ -1,0 +1,64 @@
+import ctypes,itertools,json,struct
+from verify_startup import ROOT,State,reference
+from verify_fpu_cleanup_transfer import Fpu
+from verify_tikal_controller import Call,P
+out=ROOT/'outputs/sonic-adventure';binary=(ROOT/'work/sonic-adventure/extracted/1ST_READ.BIN').read_bytes()
+dll=ctypes.CDLL(str(ROOT/'work/sonic-adventure/build/sound_voice_stop_all.dll'))
+abi=[ctypes.POINTER(ctypes.c_uint8),ctypes.POINTER(Fpu),P,P,P,P,P,ctypes.c_void_p,Call]
+helpers={}
+for address,dllname,name in [(0x8c66b28c,'sound_control_setup_request','sa_sound_control_setup_request'),(0x8c66b304,'sound_control_level_request','sa_sound_control_level_request'),(0x8c65a464,'sound_request_commit','sa_sound_request_commit'),(0x8c10cd82,'sound_request_commit','sa_sound_request_copy20'),(0x8c10cd44,'engine_frame_initialize_native','sa_engine_record_copy_loaded_dispatch'),(0x8c669470,'sound_driver_setup_wrapper','sa_sound_driver_setup_wrapper'),(0x8c669488,'sound_driver_level_wrapper','sa_sound_driver_level_wrapper')]:
+ helper=getattr(ctypes.CDLL(str(ROOT/f'work/sonic-adventure/build/{dllname}.dll')),name);helper.argtypes=abi;helpers[address]=helper
+addresses=[int(line.split('\t')[0],16) for line in (out/'analysis/ghidra-all/function_index.tsv').read_text().splitlines()[1:] if line.startswith('8c')]
+def lit(a):return struct.unpack_from('<I',binary,a-0x8c010000)[0]&0xffffff
+cases=0
+for channels,level,cached,bank,answer in itertools.product([0,1,3],[-43,-42,-1,0,1],[0,7],[0,0x200000],[0,123]):
+ sr0=0x70000063;entry=0x8c6682be;handle=0x8ca08000
+ fn=ctypes.CDLL(str(ROOT/'work/sonic-adventure/build/sound_driver_control_6682be.dll')).sa_sound_driver_control_6682be
+ fn.argtypes=[ctypes.POINTER(ctypes.c_uint8),ctypes.POINTER(Fpu),P,P,P,P,P,ctypes.c_void_p,Call]
+ ram=bytearray(16*1024*1024);ram[0x10000:0x10000+len(binary)]=binary
+ struct.pack_into('<I',ram,0xa08008,channels);struct.pack_into('<I',ram,0xa08028,0x8ca0b000);struct.pack_into('<I',ram,0xa08040,cached)
+ setup_target=struct.unpack_from('<I',binary,0x668404-0x10000)[0];level_target=struct.unpack_from('<I',binary,0x66840c-0x10000)[0];error_target=struct.unpack_from('<I',binary,0x668400-0x10000)[0]
+ setup_lower=struct.unpack_from('<I',binary,0x669484-0x10000)[0];level_lower=struct.unpack_from('<I',binary,0x669494-0x10000)[0]
+ for literal in (0x8c66b2e0,0x8c66b354):struct.pack_into('<I',ram,lit(literal),0x8ca09000)
+ ram[0xa0b001]=0x42
+ setup_packet=lit(0x8c66b2ec);level_packet=lit(0x8c66b360)
+ setup_template=bytes(ram[setup_packet:setup_packet+20]);level_template=bytes(ram[level_packet:level_packet+20])
+ ring=0xa09000+struct.unpack_from('<h',binary,0x65a4fa-0x10000)[0]
+ struct.pack_into('<3I',ram,ring,0x8ca20000,0,0);struct.pack_into('<5I',ram,ring+12,0x8ca10000,256,256 if answer else 0,0,0)
+ native=bytearray(ram);view=(ctypes.c_uint8*len(native)).from_buffer(native);errors=[]
+ calls=[];events=[];request_calls=[]
+ @Call
+ def call(ctx,a,m,f,sr,r,pr):
+  if a in (setup_lower,level_lower):request_calls.append((a,r[4],r[5],r[6]))
+  if a in helpers:return helpers[a](m,f,sr,r,pr,ctypes.byref(fpul),ctypes.byref(macl),None,call)
+  calls.append((a,r[4],r[5],r[6]));r[0]=answer;return 0
+ def hook(a):
+  def run(m,r,sr):events.append((a,r[4],r[5],r[6]));r[0]=answer;return sr
+  return run
+ s=State();s.r[:]=[0x22340000+i for i in range(16)];s.r[4]=handle;s.r[5]=7;s.r[6]=level&0xffffffff;s.r[15]=0x8cf00000;s.sr=sr0;s.pr=0x8c000100;s.pc=entry
+ r=(ctypes.c_uint32*16)(*s.r);sr=ctypes.c_uint32(s.sr);pr=ctypes.c_uint32(s.pr);fpul=ctypes.c_uint32();macl=ctypes.c_uint32();f=Fpu();f.fpscr=bank;nf=Fpu.from_buffer_copy(f)
+ special={"macl":0};reference(ram,s,fpu=f,special=special,hooks={a:hook(a) for a in addresses if a not in (entry,*helpers)})
+ assert fn(view,ctypes.byref(nf),ctypes.byref(sr),r,ctypes.byref(pr),ctypes.byref(fpul),ctypes.byref(macl),None,call)==0 and not errors
+ assert ram==native and list(r)==list(s.r) and sr.value==s.sr and pr.value==s.pr and bytes(f)==bytes(nf)
+ converted=-127 if level<-42 else 127 if level>=0 else 2*level-(abs(level)//2)
+ wanted=[]
+ if cached!=7:wanted.extend((setup_lower,0x8ca0b000,7,127) for i in range(channels))
+ wanted.extend((level_lower,0x8ca0b000,ctypes.c_int8(converted).value&0xffffffff,converted&0xffffffff) for i in range(channels))
+ assert calls==events and request_calls==wanted
+ assert struct.unpack_from('<I',native,0xa08040)[0]==7
+ queued=0 if answer else len(wanted)
+ assert struct.unpack_from('<3I',native,ring+20)==(256 if answer else queued,queued,0)
+ expected_records=[]
+ if cached!=7:
+  expected=bytearray(setup_template);struct.pack_into('<I',expected,0,0x29)
+  off=lit(0x8c66b2f0)-setup_packet;expected[off:off+2]=bytes([0x42,7]);expected[lit(0x8c66b2f4)-setup_packet]=(127+struct.unpack_from('<h',binary,0x66b2de-0x10000)[0])&255
+  expected_records.extend([expected]*channels)
+ expected=bytearray(level_template);struct.pack_into('<I',expected,0,0x2a);off=lit(0x8c66b364)-level_packet;expected[off:off+2]=bytes([0x42,(converted+struct.unpack_from('<h',binary,0x66b352-0x10000)[0])&255]);expected_records.extend([expected]*channels)
+ for i,expected in enumerate(expected_records if not answer else []):
+  base=0xa10000+28*i
+  assert native[base:base+20]==expected and struct.unpack_from('<I',native,base+20)[0]==1
+ if answer:assert native[0xa10000:0xa100a8]==bytes(168)
+ assert macl.value==special['macl']
+ cases+=1
+(out/'analysis/sound_driver_control_native_enqueue_verification.json').write_text(json.dumps(dict(cases_passed=cases,scope='Native81-instruction driver control6682be. Channels0/1/3,level threshold-43/-42/-1/0/1,cached control equal/different,banks,lower returns. Full retail state and independent setup-on-change/cache update,integer level conversion,all-channel iteration and error call counts; native setup/level byte wrappers connected and independent lower argument conversion checked; canonical command29/2a builders and commit/copies native; independent command order/records/tags/cursors and full-queue preservation checked; error services modeled, precise game meaning/audio unverified.'),indent=2)+'\n')
+print(cases,'driver control native enqueue comparisons passed')

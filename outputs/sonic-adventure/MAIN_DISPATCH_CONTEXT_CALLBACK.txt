@@ -1,0 +1,92 @@
+Stored context callback: creation, deferred removal and native deletion
+16 October 2026 — VERIFIED within the bounded scope below.
+Whole-project estimate remains 10% weighted milestones, not code coverage.
+
+Discovery and boundaries
+The task callback stored by cancellation/restore is 8c01b358. It was absent
+from the old whole-main-executable function index. A read-only Ghidra session
+seeded the stored address and exported its instructions without changing the
+saved analysis project. It is a six-byte function ending at 8c01b35e:
+  mov.l [8c01b3bc],r3
+  jmp @r3
+  nop (delay slot)
+Its literal target is 8c098786. The preceding indexed function starts at
+8c01b308 and has an 80-byte body, ending exactly at this callback's entry.
+Raw bytes, bounded control flow, stored-address use and native execution
+support this boundary. The original full-index snapshot remains unchanged.
+
+Recovered behavior
+The callback tail-calls the existing removal-request helper at 8c098786,
+preserving PR. That helper changes task +10 (the update callback) to 8c09865c,
+the existing native task deletion routine. It does not delete the task now.
+The next native scheduler pass invokes deletion, unlinks the task, releases its
+work, coalesces the heap and returns the task node to the free pool.
+
+Reused source, not additional function credit
+  8c098786: source/sa_task_remove_request.c (3 rows)
+  8c09878c: source/sa_task_update_list.c (33 rows)
+Their original registry entries and older verification source remain intact.
+New byte/CFG inventory and connected lifecycle proof augment those entries.
+Only callback 8c01b358 is counted as a newly recovered original routine.
+
+Verification actually passed
+Strict Clang DLL build with -Wall -Wextra -Werror. The tiny thunk generator
+omits unused generic memory helpers so the strict warning checks remain enabled.
+33 preliminary smoke comparisons, then 4,908 complete stage comparisons:
+  32 direct callback invocations;
+  1,284 creation-to-callback-to-deletion lifecycles, executing 644 created tasks;
+  512 constructed scheduler scenarios, each with two passes.
+Stage counts: cancellation 640, restore 640, prefix 4, direct callback 32,
+scheduler 3,592. All 3 new rows and all 36 reused rows were reached, along with
+all 8 scheduler conditional outcomes and both call/tail-call sites.
+10,548 ordered boundary states matched. These include CPU registers/special
+state, the active-callback diagnostic and task RAM at callback/removal/deletion
+entries, in addition to complete 16 MiB RAM and final GPR/SR/PR/FPU/FPUL/MACL.
+No external game-service fixtures were used.
+
+Independent assertions prove that the first pass preserves allocated work and
+list membership while changing only the update callback; the next pass frees
+created tasks and restores standalone creation pools/heaps. Existing null-callback
+list entries survive. Mixed immediate/deferred deletion exercises saved-next
+traversal. Tests cover empty lists, level 8 mapping to 7, existing heads, zero
+through three free tasks, insufficient heaps and all eight FPU-mode combinations.
+Empty lists preserve the diagnostic sentinel across both passes. A test-only
+assertion was corrected to track that unchanged value; native/original state
+already matched. No speculative game-code fix was required.
+
+Sources and evidence
+  source/sa_main_dispatch_context_callback.c
+  source/sa_main_dispatch_context_callback_connected.c
+  analysis/main-dispatch-context-callback/*_instructions.tsv
+  analysis/main_dispatch_context_callback_translation.json
+  analysis/main_dispatch_context_callback_verification.json
+Reports pin sources, earlier verification inputs, exact retail spans and DLL
+hashes. Registration validates the evidence before updating the registry.
+Final audit: 1,021 entries / 1,018 unique module-address pairs, zero evidence
+errors and zero stale whole-source reports. 972 entries match the unchanged
+10,875-candidate index snapshot; the newly discovered thunk is explicitly
+outside that old snapshot, not a coverage error. Dispatcher verification passed
+658 original instruction checks over 80 entry spans and 83 selectors.
+Recovery reproduced the exact source/manifest hashes used by the passing tests.
+The completion audit remains 10%.
+
+Repeat from this document's directory with the installed project Python:
+  python recover_main_dispatch_context_callback.py
+  .\build_main_dispatch_context_callback.ps1
+  python verify_main_dispatch_context_callback.py
+  python register_main_dispatch_context_callback.py
+  python map_main_dispatch_cases.py
+  python verify_main_dispatch_case_map.py
+Optional read-only re-export: ghidra/export_main_dispatch_context_callback.ps1.
+The focused stages are in build_and_verify.ps1. Aggregate PowerShell syntax
+passed; the full accumulated suite was not run end-to-end for this checkpoint.
+
+Limits and next work
+The host test orchestrates the separate native scheduler passes over the same
+state. It does not prove the game's complete frame/update driver, timing,
+hardware/MMIO, concurrency, gameplay initialization or playable ports. Context,
+tables and pools are constructed valid fixtures. Earlier cancellation proof is
+preserved; its full 4,284-case suite was not repeated without changes.
+The earlier spawn callback 8c044680 and dynamic setter callback targets remain
+unrecovered dependencies. Continue Sol High with 8c044680 and its callees.
+Keep the entire goal active; no model switch or goal pause is recommended.

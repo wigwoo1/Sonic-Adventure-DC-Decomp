@@ -1,0 +1,408 @@
+address	opcode	instruction	references
+0cb0101c	2fe6	mov.l r14,@-r15	DATA:Stack[-0x4] 
+0cb0101e	2fd6	mov.l r13,@-r15	DATA:Stack[-0x8] 
+0cb01020	2fc6	mov.l r12,@-r15	DATA:Stack[-0xc] 
+0cb01022	2fb6	mov.l r11,@-r15	DATA:Stack[-0x10] 
+0cb01024	2fa6	mov.l r10,@-r15	DATA:Stack[-0x14] 
+0cb01026	2f96	mov.l r9,@-r15	DATA:Stack[-0x18] 
+0cb01028	2f86	mov.l r8,@-r15	DATA:Stack[-0x1c] 
+0cb0102a	4f22	sts.l PR,@-r15	DATA:Stack[-0x20] 
+0cb0102c	7fd4	add #-0x2c,r15	
+0cb0102e	5548	mov.l @(0x20,r4),r5	
+0cb01030	5e49	mov.l @(0x24,r4),r14	
+0cb01032	8458	mov.b @(0x8,r5),r0	
+0cb01034	660c	extu.b r0,r6	
+0cb01036	d026	mov.l 0x0cb010d0,r0	READ:0cb010d0=8c78c608 
+0cb01038	4608	shll2 r6	
+0cb0103a	c6e	mov.l @(r0,r6),r12	
+0cb0103c	d025	mov.l 0x0cb010d4,r0	READ:0cb010d4=8c78c628 
+0cb0103e	2cc8	tst r12,r12	
+0cb01040	36e	mov.l @(r0,r6),r3	
+0cb01042	1f31	mov.l r3,@(0x4,r15)	DATA:Stack[-0x48] 
+0cb01044	8f03	bf/s 0x0cb0104e	CONDITIONAL_JUMP:0cb0104e=21186150 
+0cb01046	e601	_mov #0x1,r6	
+0cb01048	e304	mov #0x4,r3	
+0cb0104a	a019	bra 0x0cb01080	UNCONDITIONAL_JUMP:0cb01080=6df36050 
+0cb0104c	2530	_mov.b r3,@r5	
+0cb0104e	6150	mov.b @r5,r1	
+0cb01050	2118	tst r1,r1	
+0cb01052	8915	bt 0x0cb01080	CONDITIONAL_JUMP:0cb01080=6df36050 
+0cb01054	53cf	mov.l @(0x3c,r12),r3	
+0cb01056	8434	mov.b @(0x4,r3),r0	
+0cb01058	2008	tst r0,r0	
+0cb0105a	8902	bt 0x0cb01062	CONDITIONAL_JUMP:0cb01062=e3348458 
+0cb0105c	e203	mov #0x3,r2	
+0cb0105e	a00f	bra 0x0cb01080	UNCONDITIONAL_JUMP:0cb01080=6df36050 
+0cb01060	2520	_mov.b r2,@r5	
+0cb01062	8458	mov.b @(0x8,r5),r0	
+0cb01064	e334	mov #0x34,r3	
+0cb01066	d11c	mov.l 0x0cb010d8,r1	READ:0cb010d8=8c754c10 
+0cb01068	e201	mov #0x1,r2	
+0cb0106a	600c	extu.b r0,r0	
+0cb0106c	203e	mulu.w r3,r0	
+0cb0106e	4218	shll8 r2	
+0cb01070	1a	sts MACL,r0	
+0cb01072	11e	mov.l @(r0,r1),r1	
+0cb01074	2128	tst r2,r1	
+0cb01076	8902	bt 0x0cb0107e	CONDITIONAL_JUMP:0cb0107e=60502560 
+0cb01078	e002	mov #0x2,r0	
+0cb0107a	a001	bra 0x0cb01080	UNCONDITIONAL_JUMP:0cb01080=6df36050 
+0cb0107c	2500	_mov.b r0,@r5	
+0cb0107e	2560	mov.b r6,@r5	
+0cb01080	6050	mov.b @r5,r0	
+0cb01082	6df3	mov r15,r13	
+0cb01084	d815	mov.l 0x0cb010dc,r8	READ:0cb010dc=8c07af8c 
+0cb01086	ea00	mov #0x0,r10	
+0cb01088	8800	cmp/eq #0x0,r0	
+0cb0108a	f59d	fldi1 fr5	
+0cb0108c	f48d	fldi0 fr4	
+0cb0108e	8d27	bt/s 0x0cb010e0	CONDITIONAL_JUMP:0cb010e0=62e3e058 
+0cb01090	7d20	_add #0x20,r13	
+0cb01092	8801	cmp/eq #0x1,r0	
+0cb01094	8b01	bf 0x0cb0109a	CONDITIONAL_JUMP:0cb0109a=8b018802 
+0cb01096	a07a	bra 0x0cb0118e	UNCONDITIONAL_JUMP:0cb0118e=d34455f1 
+0cb01098	9	_nop	
+0cb0109a	8802	cmp/eq #0x2,r0	
+0cb0109c	8b01	bf 0x0cb010a2	CONDITIONAL_JUMP:0cb010a2=8b018803 
+0cb0109e	a084	bra 0x0cb011aa	UNCONDITIONAL_JUMP:0cb011aa=e010d340 
+0cb010a0	9	_nop	
+0cb010a2	8803	cmp/eq #0x3,r0	
+0cb010a4	8b01	bf 0x0cb010aa	CONDITIONAL_JUMP:0cb010aa=9a176 
+0cb010a6	a0bf	bra 0x0cb01228	UNCONDITIONAL_JUMP:0cb01228=64d35bcf 
+0cb010a8	9	_nop	
+0cb010aa	a176	bra 0x0cb0139a	UNCONDITIONAL_JUMP:0cb0139a=420bd215 
+0cb010ac	9	_nop	
+0cb010e0	e058	mov #0x58,r0	
+0cb010e2	62e3	mov r14,r2	
+0cb010e4	7264	add #0x64,r2	
+0cb010e6	2560	mov.b r6,@r5	
+0cb010e8	3ee	mov.l @(r0,r14),r3	
+0cb010ea	5135	mov.l @(0x14,r3),r1	
+0cb010ec	2212	mov.l r1,@r2	
+0cb010ee	3ee	mov.l @(r0,r14),r3	
+0cb010f0	e068	mov #0x68,r0	
+0cb010f2	5236	mov.l @(0x18,r3),r2	
+0cb010f4	e26	mov.l r2,@(r0,r14)	
+0cb010f6	e058	mov #0x58,r0	
+0cb010f8	3ee	mov.l @(r0,r14),r3	
+0cb010fa	e06c	mov #0x6c,r0	
+0cb010fc	5237	mov.l @(0x1c,r3),r2	
+0cb010fe	63e3	mov r14,r3	
+0cb01100	7370	add #0x70,r3	
+0cb01102	e26	mov.l r2,@(r0,r14)	
+0cb01104	e05c	mov #0x5c,r0	
+0cb01106	2ee	mov.l @(r0,r14),r2	
+0cb01108	5125	mov.l @(0x14,r2),r1	
+0cb0110a	2312	mov.l r1,@r3	
+0cb0110c	3ee	mov.l @(r0,r14),r3	
+0cb0110e	e074	mov #0x74,r0	
+0cb01110	5236	mov.l @(0x18,r3),r2	
+0cb01112	e26	mov.l r2,@(r0,r14)	
+0cb01114	e05c	mov #0x5c,r0	
+0cb01116	3ee	mov.l @(r0,r14),r3	
+0cb01118	e078	mov #0x78,r0	
+0cb0111a	5237	mov.l @(0x1c,r3),r2	
+0cb0111c	63e3	mov r14,r3	
+0cb0111e	e26	mov.l r2,@(r0,r14)	
+0cb01120	e060	mov #0x60,r0	
+0cb01122	2ee	mov.l @(r0,r14),r2	
+0cb01124	737c	add #0x7c,r3	
+0cb01126	5125	mov.l @(0x14,r2),r1	
+0cb01128	2312	mov.l r1,@r3	
+0cb0112a	3ee	mov.l @(r0,r14),r3	
+0cb0112c	7020	add #0x20,r0	
+0cb0112e	5236	mov.l @(0x18,r3),r2	
+0cb01130	e26	mov.l r2,@(r0,r14)	
+0cb01132	e060	mov #0x60,r0	
+0cb01134	3ee	mov.l @(r0,r14),r3	
+0cb01136	7024	add #0x24,r0	
+0cb01138	5237	mov.l @(0x1c,r3),r2	
+0cb0113a	e320	mov #0x20,r3	
+0cb0113c	4318	shll8 r3	
+0cb0113e	e26	mov.l r2,@(r0,r14)	
+0cb01140	e2e0	mov #-0x20,r2	
+0cb01142	4218	shll8 r2	
+0cb01144	1e3a	mov.l r3,@(0x28,r14)	
+0cb01146	1e2b	mov.l r2,@(0x2c,r14)	
+0cb01148	e2e8	mov #-0x18,r2	
+0cb0114a	e304	mov #0x4,r3	
+0cb0114c	4218	shll8 r2	
+0cb0114e	4318	shll8 r3	
+0cb01150	1e3c	mov.l r3,@(0x30,r14)	
+0cb01152	e302	mov #0x2,r3	
+0cb01154	1e2d	mov.l r2,@(0x34,r14)	
+0cb01156	e2e5	mov #-0x1b,r2	
+0cb01158	4218	shll8 r2	
+0cb0115a	4318	shll8 r3	
+0cb0115c	1e3e	mov.l r3,@(0x38,r14)	
+0cb0115e	1e2f	mov.l r2,@(0x3c,r14)	
+0cb01160	e31b	mov #0x1b,r3	
+0cb01162	e048	mov #0x48,r0	
+0cb01164	4318	shll8 r3	
+0cb01166	e2fe	mov #-0x2,r2	
+0cb01168	e36	mov.l r3,@(r0,r14)	
+0cb0116a	e04c	mov #0x4c,r0	
+0cb0116c	d34c	mov.l 0x0cb012a0,r3	READ:0cb012a0=cb00fbe 
+0cb0116e	4218	shll8 r2	
+0cb01170	e508	mov #0x8,r5	
+0cb01172	e26	mov.l r2,@(r0,r14)	
+0cb01174	e040	mov #0x40,r0	
+0cb01176	4518	shll8 r5	
+0cb01178	e6f3	mov #-0xd,r6	
+0cb0117a	e56	mov.l r5,@(r0,r14)	
+0cb0117c	e044	mov #0x44,r0	
+0cb0117e	4618	shll8 r6	
+0cb01180	e66	mov.l r6,@(r0,r14)	
+0cb01182	e050	mov #0x50,r0	
+0cb01184	e56	mov.l r5,@(r0,r14)	
+0cb01186	e054	mov #0x54,r0	
+0cb01188	e66	mov.l r6,@(r0,r14)	
+0cb0118a	a109	bra 0x0cb013a0	UNCONDITIONAL_JUMP:0cb013a0=4f267f2c 
+0cb0118c	1436	_mov.l r3,@(0x18,r4)	DATA:0cb00fbe=e0585449 
+0cb0118e	55f1	mov.l @(0x4,r15),r5	DATA:Stack[-0x48] 
+0cb01190	d344	mov.l 0x0cb012a4,r3	READ:0cb012a4=8c055d4e 
+0cb01192	5558	mov.l @(0x20,r5),r5	
+0cb01194	430b	jsr @r3	COMPUTED_CALL:8c055d4e 
+0cb01196	54c6	_mov.l @(0x18,r12),r4	
+0cb01198	d243	mov.l 0x0cb012a8,r2	READ:0cb012a8=8c07aef8 
+0cb0119a	600b	neg r0,r0	
+0cb0119c	2e02	mov.l r0,@r14	
+0cb0119e	1ea1	mov.l r10,@(0x4,r14)	
+0cb011a0	420b	jsr @r2	COMPUTED_CALL:8c07aef8 
+0cb011a2	64e3	_mov r14,r4	
+0cb011a4	1ea4	mov.l r10,@(0x10,r14)	
+0cb011a6	a0f4	bra 0x0cb01392	UNCONDITIONAL_JUMP:0cb01392=64e3480b 
+0cb011a8	1ea5	_mov.l r10,@(0x14,r14)	
+0cb011aa	d340	mov.l 0x0cb012ac,r3	READ:0cb012ac=8c18b7ec 
+0cb011ac	e010	mov #0x10,r0	
+0cb011ae	65f3	mov r15,r5	
+0cb011b0	7508	add #0x8,r5	
+0cb011b2	6232	mov.l @r3,r2	READ:8c18b7ec 
+0cb011b4	2f22	mov.l r2,@r15	DATA:Stack[-0x4c] 
+0cb011b6	51ce	mov.l @(0x38,r12),r1	
+0cb011b8	5213	mov.l @(0xc,r1),r2	
+0cb011ba	1f21	mov.l r2,@(0x4,r15)	DATA:Stack[-0x48] 
+0cb011bc	ff47	fmov fr4,@(r0,r15)	
+0cb011be	e00c	mov #0xc,r0	
+0cb011c0	ff47	fmov fr4,@(r0,r15)	
+0cb011c2	e008	mov #0x8,r0	
+0cb011c4	d23a	mov.l 0x0cb012b0,r2	READ:0cb012b0=8c078eb0 
+0cb011c6	ff57	fmov fr5,@(r0,r15)	
+0cb011c8	420b	jsr @r2	COMPUTED_CALL:8c078eb0 
+0cb011ca	64c3	_mov r12,r4	
+0cb011cc	63f2	mov.l @r15,r3	DATA:Stack[-0x4c] 
+0cb011ce	62f3	mov r15,r2	
+0cb011d0	7214	add #0x14,r2	
+0cb011d2	64f3	mov r15,r4	
+0cb011d4	5138	mov.l @(0x20,r3),r1	
+0cb011d6	5039	mov.l @(0x24,r3),r0	
+0cb011d8	2212	mov.l r1,@r2	DATA:Stack[-0x38] 
+0cb011da	1201	mov.l r0,@(0x4,r2)	DATA:Stack[-0x34] 
+0cb011dc	513a	mov.l @(0x28,r3),r1	
+0cb011de	d335	mov.l 0x0cb012b4,r3	READ:0cb012b4=8c63a7e4 
+0cb011e0	1212	mov.l r1,@(0x8,r2)	DATA:Stack[-0x30] 
+0cb011e2	55f1	mov.l @(0x4,r15),r5	DATA:Stack[-0x48] 
+0cb011e4	7508	add #0x8,r5	
+0cb011e6	430b	jsr @r3	COMPUTED_CALL:8c63a7e4 
+0cb011e8	7414	_add #0x14,r4	
+0cb011ea	65f3	mov r15,r5	
+0cb011ec	d232	mov.l 0x0cb012b8,r2	READ:0cb012b8=8c056860 
+0cb011ee	64f3	mov r15,r4	
+0cb011f0	66d3	mov r13,r6	
+0cb011f2	7508	add #0x8,r5	
+0cb011f4	420b	jsr @r2	COMPUTED_CALL:8c056860 
+0cb011f6	7414	_add #0x14,r4	
+0cb011f8	63d3	mov r13,r3	
+0cb011fa	7304	add #0x4,r3	
+0cb011fc	7d08	add #0x8,r13	
+0cb011fe	2f32	mov.l r3,@r15	DATA:Stack[-0x4c] 
+0cb01200	6232	mov.l @r3,r2	DATA:Stack[-0x28] 
+0cb01202	622b	neg r2,r2	
+0cb01204	2e22	mov.l r2,@r14	
+0cb01206	d228	mov.l 0x0cb012a8,r2	READ:0cb012a8=8c07aef8 
+0cb01208	1fd1	mov.l r13,@(0x4,r15)	DATA:Stack[-0x48] 
+0cb0120a	63d2	mov.l @r13,r3	DATA:Stack[-0x24] 
+0cb0120c	1e31	mov.l r3,@(0x4,r14)	
+0cb0120e	420b	jsr @r2	COMPUTED_CALL:8c07aef8 
+0cb01210	64e3	_mov r14,r4	
+0cb01212	63f2	mov.l @r15,r3	DATA:Stack[-0x4c] 
+0cb01214	52e2	mov.l @(0x8,r14),r2	
+0cb01216	6132	mov.l @r3,r1	DATA:Stack[-0x28] 
+0cb01218	312c	add r2,r1	
+0cb0121a	1e14	mov.l r1,@(0x10,r14)	
+0cb0121c	53f1	mov.l @(0x4,r15),r3	DATA:Stack[-0x48] 
+0cb0121e	52e3	mov.l @(0xc,r14),r2	
+0cb01220	6132	mov.l @r3,r1	DATA:Stack[-0x24] 
+0cb01222	3128	sub r2,r1	
+0cb01224	a0b5	bra 0x0cb01392	UNCONDITIONAL_JUMP:0cb01392=64e3480b 
+0cb01226	1e15	_mov.l r1,@(0x14,r14)	
+0cb01228	5bcf	mov.l @(0x3c,r12),r11	
+0cb0122a	64d3	mov r13,r4	
+0cb0122c	52ce	mov.l @(0x38,r12),r2	
+0cb0122e	5323	mov.l @(0xc,r2),r3	
+0cb01230	1f31	mov.l r3,@(0x4,r15)	DATA:Stack[-0x48] 
+0cb01232	84b4	mov.b @(0x4,r11),r0	
+0cb01234	600c	extu.b r0,r0	
+0cb01236	8801	cmp/eq #0x1,r0	
+0cb01238	8d06	bt/s 0x0cb01248	CONDITIONAL_JUMP:0cb01248=243253b3 
+0cb0123a	7404	_add #0x4,r4	
+0cb0123c	8802	cmp/eq #0x2,r0	
+0cb0123e	8908	bt 0x0cb01252	CONDITIONAL_JUMP:0cb01252=65f3e010 
+0cb01240	8803	cmp/eq #0x3,r0	
+0cb01242	893d	bt 0x0cb012c0	CONDITIONAL_JUMP:0cb012c0=222852b8 
+0cb01244	a08c	bra 0x0cb01360	UNCONDITIONAL_JUMP:0cb01360=1da224a2 
+0cb01246	9	_nop	
+0cb01248	53b3	mov.l @(0xc,r11),r3	
+0cb0124a	2432	mov.l r3,@r4	DATA:Stack[-0x28] 
+0cb0124c	52b4	mov.l @(0x10,r11),r2	
+0cb0124e	a089	bra 0x0cb01364	UNCONDITIONAL_JUMP:0cb01364=730463d3 
+0cb01250	1d22	_mov.l r2,@(0x8,r13)	DATA:Stack[-0x24] 
+0cb01252	e010	mov #0x10,r0	
+0cb01254	65f3	mov r15,r5	
+0cb01256	ff47	fmov fr4,@(r0,r15)	
+0cb01258	e00c	mov #0xc,r0	
+0cb0125a	ff47	fmov fr4,@(r0,r15)	
+0cb0125c	e008	mov #0x8,r0	
+0cb0125e	d314	mov.l 0x0cb012b0,r3	READ:0cb012b0=8c078eb0 
+0cb01260	7508	add #0x8,r5	
+0cb01262	ff57	fmov fr5,@(r0,r15)	
+0cb01264	430b	jsr @r3	COMPUTED_CALL:8c078eb0 
+0cb01266	64c3	_mov r12,r4	
+0cb01268	53b5	mov.l @(0x14,r11),r3	
+0cb0126a	62f3	mov r15,r2	
+0cb0126c	7214	add #0x14,r2	
+0cb0126e	51b6	mov.l @(0x18,r11),r1	
+0cb01270	2232	mov.l r3,@r2	DATA:Stack[-0x38] 
+0cb01272	64f3	mov r15,r4	
+0cb01274	1211	mov.l r1,@(0x4,r2)	DATA:Stack[-0x34] 
+0cb01276	53b7	mov.l @(0x1c,r11),r3	
+0cb01278	1232	mov.l r3,@(0x8,r2)	DATA:Stack[-0x30] 
+0cb0127a	55f1	mov.l @(0x4,r15),r5	DATA:Stack[-0x48] 
+0cb0127c	d30d	mov.l 0x0cb012b4,r3	READ:0cb012b4=8c63a7e4 
+0cb0127e	7508	add #0x8,r5	
+0cb01280	430b	jsr @r3	COMPUTED_CALL:8c63a7e4 
+0cb01282	7414	_add #0x14,r4	
+0cb01284	a063	bra 0x0cb0134e	UNCONDITIONAL_JUMP:0cb0134e=d22565f3 
+0cb01286	9	_nop	
+0cb012c0	52b8	mov.l @(0x20,r11),r2	
+0cb012c2	2228	tst r2,r2	
+0cb012c4	8903	bt 0x0cb012ce	CONDITIONAL_JUMP:0cb012ce=a04860a3 
+0cb012c6	59b8	mov.l @(0x20,r11),r9	
+0cb012c8	5998	mov.l @(0x20,r9),r9	
+0cb012ca	2998	tst r9,r9	
+0cb012cc	8b02	bf 0x0cb012d4	CONDITIONAL_JUMP:0cb012d4=65f3e010 
+0cb012ce	60a3	mov r10,r0	
+0cb012d0	a048	bra 0x0cb01364	UNCONDITIONAL_JUMP:0cb01364=730463d3 
+0cb012d2	80b4	_mov.b r0,@(0x4,r11)	
+0cb012d4	e010	mov #0x10,r0	
+0cb012d6	65f3	mov r15,r5	
+0cb012d8	ff47	fmov fr4,@(r0,r15)	
+0cb012da	e00c	mov #0xc,r0	
+0cb012dc	ff47	fmov fr4,@(r0,r15)	
+0cb012de	e008	mov #0x8,r0	
+0cb012e0	d337	mov.l 0x0cb013c0,r3	READ:0cb013c0=8c078eb0 
+0cb012e2	7508	add #0x8,r5	
+0cb012e4	ff57	fmov fr5,@(r0,r15)	
+0cb012e6	430b	jsr @r3	COMPUTED_CALL:8c078eb0 
+0cb012e8	64c3	_mov r12,r4	
+0cb012ea	d237	mov.l 0x0cb013c8,r2	READ:0cb013c8=8c639c70 
+0cb012ec	d435	mov.l 0x0cb013c4,r4	READ:0cb013c4=8c67c640 
+0cb012ee	420b	jsr @r2	COMPUTED_CALL:8c639c70 
+0cb012f0	9	_nop	
+0cb012f2	5397	mov.l @(0x1c,r9),r3	
+0cb012f4	2338	tst r3,r3	
+0cb012f6	8d04	bt/s 0x0cb01302	CONDITIONAL_JUMP:0cb01302=23385395 
+0cb012f8	2f32	_mov.l r3,@r15	DATA:Stack[-0x4c] 
+0cb012fa	d334	mov.l 0x0cb013cc,r3	READ:0cb013cc=8c63a1cc 
+0cb012fc	65f2	mov.l @r15,r5	DATA:Stack[-0x4c] 
+0cb012fe	430b	jsr @r3	COMPUTED_CALL:8c63a1cc 
+0cb01300	e400	_mov #0x0,r4	
+0cb01302	5395	mov.l @(0x14,r9),r3	
+0cb01304	2338	tst r3,r3	
+0cb01306	8d04	bt/s 0x0cb01312	CONDITIONAL_JUMP:0cb01312=23385396 
+0cb01308	2f32	_mov.l r3,@r15	DATA:Stack[-0x4c] 
+0cb0130a	d331	mov.l 0x0cb013d0,r3	READ:0cb013d0=8c639ec8 
+0cb0130c	65f2	mov.l @r15,r5	DATA:Stack[-0x4c] 
+0cb0130e	430b	jsr @r3	COMPUTED_CALL:8c639ec8 
+0cb01310	e400	_mov #0x0,r4	
+0cb01312	5396	mov.l @(0x18,r9),r3	
+0cb01314	2338	tst r3,r3	
+0cb01316	8d04	bt/s 0x0cb01322	CONDITIONAL_JUMP:0cb01322=d32c65b3 
+0cb01318	2f32	_mov.l r3,@r15	DATA:Stack[-0x4c] 
+0cb0131a	d32e	mov.l 0x0cb013d4,r3	READ:0cb013d4=8c639f5c 
+0cb0131c	65f2	mov.l @r15,r5	DATA:Stack[-0x4c] 
+0cb0131e	430b	jsr @r3	COMPUTED_CALL:8c639f5c 
+0cb01320	e400	_mov #0x0,r4	
+0cb01322	65b3	mov r11,r5	
+0cb01324	d32c	mov.l 0x0cb013d8,r3	READ:0cb013d8=8c638f28 
+0cb01326	66f3	mov r15,r6	
+0cb01328	7514	add #0x14,r5	
+0cb0132a	7614	add #0x14,r6	
+0cb0132c	430b	jsr @r3	COMPUTED_CALL:8c638f28 
+0cb0132e	e400	_mov #0x0,r4	
+0cb01330	d22a	mov.l 0x0cb013dc,r2	READ:0cb013dc=8c639b98 
+0cb01332	420b	jsr @r2	COMPUTED_CALL:8c639b98 
+0cb01334	e401	_mov #0x1,r4	
+0cb01336	d32a	mov.l 0x0cb013e0,r3	READ:0cb013e0=8c638eac 
+0cb01338	6593	mov r9,r5	
+0cb0133a	64f3	mov r15,r4	
+0cb0133c	7520	add #0x20,r5	
+0cb0133e	430b	jsr @r3	COMPUTED_CALL:8c638eac 
+0cb01340	7414	_add #0x14,r4	
+0cb01342	55f1	mov.l @(0x4,r15),r5	DATA:Stack[-0x48] 
+0cb01344	64f3	mov r15,r4	
+0cb01346	d327	mov.l 0x0cb013e4,r3	READ:0cb013e4=8c63a7e4 
+0cb01348	7508	add #0x8,r5	
+0cb0134a	430b	jsr @r3	COMPUTED_CALL:8c63a7e4 
+0cb0134c	7414	_add #0x14,r4	
+0cb0134e	65f3	mov r15,r5	
+0cb01350	d225	mov.l 0x0cb013e8,r2	READ:0cb013e8=8c056860 
+0cb01352	64f3	mov r15,r4	
+0cb01354	66d3	mov r13,r6	
+0cb01356	7508	add #0x8,r5	
+0cb01358	420b	jsr @r2	COMPUTED_CALL:8c056860 
+0cb0135a	7414	_add #0x14,r4	
+0cb0135c	a002	bra 0x0cb01364	UNCONDITIONAL_JUMP:0cb01364=730463d3 
+0cb0135e	9	_nop	
+0cb01360	24a2	mov.l r10,@r4	DATA:Stack[-0x28] 
+0cb01362	1da2	mov.l r10,@(0x8,r13)	DATA:Stack[-0x24] 
+0cb01364	63d3	mov r13,r3	
+0cb01366	7304	add #0x4,r3	
+0cb01368	7d08	add #0x8,r13	
+0cb0136a	1f31	mov.l r3,@(0x4,r15)	DATA:Stack[-0x48] 
+0cb0136c	6232	mov.l @r3,r2	DATA:Stack[-0x28] 
+0cb0136e	622b	neg r2,r2	
+0cb01370	2e22	mov.l r2,@r14	
+0cb01372	d21e	mov.l 0x0cb013ec,r2	READ:0cb013ec=8c07aef8 
+0cb01374	2fd2	mov.l r13,@r15	DATA:Stack[-0x4c] 
+0cb01376	63d2	mov.l @r13,r3	DATA:Stack[-0x24] 
+0cb01378	1e31	mov.l r3,@(0x4,r14)	
+0cb0137a	420b	jsr @r2	COMPUTED_CALL:8c07aef8 
+0cb0137c	64e3	_mov r14,r4	
+0cb0137e	53f1	mov.l @(0x4,r15),r3	DATA:Stack[-0x48] 
+0cb01380	52e2	mov.l @(0x8,r14),r2	
+0cb01382	6132	mov.l @r3,r1	DATA:Stack[-0x28] 
+0cb01384	312c	add r2,r1	
+0cb01386	1e14	mov.l r1,@(0x10,r14)	
+0cb01388	63f2	mov.l @r15,r3	DATA:Stack[-0x4c] 
+0cb0138a	52e3	mov.l @(0xc,r14),r2	
+0cb0138c	6132	mov.l @r3,r1	DATA:Stack[-0x24] 
+0cb0138e	3128	sub r2,r1	
+0cb01390	1e15	mov.l r1,@(0x14,r14)	
+0cb01392	480b	jsr @r8	COMPUTED_CALL:8c07af8c 
+0cb01394	64e3	_mov r14,r4	
+0cb01396	a003	bra 0x0cb013a0	UNCONDITIONAL_JUMP:0cb013a0=4f267f2c 
+0cb01398	9	_nop	
+0cb0139a	d215	mov.l 0x0cb013f0,r2	READ:0cb013f0=8c098786 
+0cb0139c	420b	jsr @r2	COMPUTED_CALL:8c098786 
+0cb0139e	9	_nop	
+0cb013a0	7f2c	add #0x2c,r15	
+0cb013a2	4f26	lds.l @r15+,PR	DATA:Stack[-0x20] 
+0cb013a4	68f6	mov.l @r15+,r8	DATA:Stack[-0x1c] 
+0cb013a6	69f6	mov.l @r15+,r9	DATA:Stack[-0x18] 
+0cb013a8	6af6	mov.l @r15+,r10	DATA:Stack[-0x14] 
+0cb013aa	6bf6	mov.l @r15+,r11	DATA:Stack[-0x10] 
+0cb013ac	6cf6	mov.l @r15+,r12	DATA:Stack[-0xc] 
+0cb013ae	6df6	mov.l @r15+,r13	DATA:Stack[-0x8] 
+0cb013b0	b	rts	
+0cb013b2	6ef6	_mov.l @r15+,r14	

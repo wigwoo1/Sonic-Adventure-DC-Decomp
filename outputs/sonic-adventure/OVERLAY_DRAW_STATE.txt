@@ -1,0 +1,100 @@
+AL_MAIN accepted-draw state and matrix integration
+17 October 2026 - PARTIALLY VERIFIED original draw callback.
+Overall completion: 10% estimated weighted whole-project milestones, not code coverage.
+Goal active on Sol High. No model switch or pause advised.
+
+What changed
+A new separate draw bridge connects fourteen already recovered services:
+  8c056990 / 8c056986: global longword clear/set masks.
+  8c056926 / 8c056938 / 8c05694a: global-pair save/restore/flag updates.
+  8c608ccc: conditional third-global-pointer store.
+  8c639c70 / 8c639b98: matrix stack push/pop.
+  8c63a804: memory-input translation.
+  8c639ec8 / 8c639f5c / 8c63a1cc: axis rotations.
+  8c63a69c / 8c63a878: completed register-input scale/translation.
+The existing spring, culling and four-float state helpers remain native.
+No game-service fixtures or external fake results are supplied.
+
+Bridge: source/sa_overlay_draw_state_connected.c
+Connection generator: connect_overlay_draw_state.py
+Build: build_overlay_draw_state.ps1
+Verifier: verify_overlay_draw_state.py
+Connection evidence: analysis/overlay_draw_state_connection.json
+Behavior evidence: analysis/overlay_draw_state_verification.json
+This DLL contains 25 compiled sources. The old bridge, DLL, sources and proofs
+are preserved. The reused CPU-only services receive copied complete register
+state and return their original GPR/SR/PR effects to the caller. Matrix services
+use the existing numerical support. No old routine receives duplicate credit.
+
+Build and tests actually run
+The new DLL passes Clang -O2 -Wall -Wextra -Werror without a C runtime.
+244 original-state comparisons pass: 180 draw-entry/caller cases and 64 direct
+service-routing cases (48 CPU-service and 16 matrix-service cases).
+The draw tests use original models initialized by the preserved native
+constructor, with supplied positions, flags, angles, camera and stack limits.
+Both active FPU banks, zero/nonzero pointer stores, full/available matrix stacks,
+rotation branches, main-body and secondary-path flags are exercised.
+
+Results: 130 completed returns (66 rejected-draw paths plus 64 direct services),
+98 expected -2 continuation stops, eight unsupported arithmetic modes,
+four invalid-RAM guards and four numerical traps. Every reached original
+RAM/CPU/FPU/FPUL/MACL state and all 1,506 ordered boundaries match.
+224 cases also pass independent global-field, raw four-float state, saved-matrix,
+matrix-stack pointer/depth and spring-effect checks, where reached/applicable.
+The independent checks do not claim independent complete scene geometry or
+physical Dreamcast vector arithmetic. Vector operations retain the separately
+qualified pinned backend and reference-adapter limitations.
+
+The first old stop at already recovered 8c056990 is removed. Accepted paths
+now execute native state/matrix setup and reach these explicit boundaries:
+  0c90c384: 38 cases, unrecovered AL_MAIN helper.
+  8c640128: 40 cases, unrecovered distance-helper candidate.
+  8c6215d6: 20 cases, already recovered particle draw wrapper not yet connected
+             to this partial draw bridge and its portable vertex bus.
+A -2 boundary is not a rendered frame or successful complete draw return.
+
+Coverage and exact limits
+The 911-row draw candidate now executes 273 rows, up from 86 in the previous
+gate-only proof. 638 remain dynamically unexecuted. The candidate remains
+unregistered and receives zero full-function recovery credit. The registry
+still contains 1,122 entries / 1,119 unique module-address pairs; this checkpoint
+adds integration evidence to 18 existing entries, with zero new routines.
+The 273-row count concerns this one routine, not whole-game code coverage.
+There is no universal ABI, exception-delivery, cache/MMIO timing or GPU/pixel
+claim. Reused legacy matrix bodies retain their qualified narrow-FPU and valid
+original RAM mapping contracts. Natural frame/task ordering is not proved.
+
+Integrity
+Read-only exports of twelve reused services byte-check all 411 listed rows;
+the two register-input helpers retain their separate prior 132-row proof.
+The new generator reproduces C/build/manifest byte-for-byte. Registration is
+repeatable without adding entries and validates each canonical old source hash.
+New Python and PowerShell syntax checks pass. The dispatcher map passes 658
+original pointer-load checks across 80 spans / 83 selectors. Registry audit:
+1,070 matches in 10,875 snapshot candidates, zero evidence errors and zero
+stale source reports. 211 non-texture binaries still lack a complete index.
+The full historical build_and_verify.ps1 sequence was not rerun this turn.
+
+How to check
+Open this guide and analysis/overlay_draw_state_verification.json to inspect
+the recorded input cases, stop targets and file fingerprints. Developers can
+run verify_overlay_draw_state.py --smoke with the bundled Python runtime and
+-B, or omit --smoke for all 244 cases. The ordered reproduction steps are in
+build_and_verify.ps1. Preserved older DLLs should not be rebuilt casually:
+their exact file hashes are part of their existing verification evidence.
+
+Next task and recommended model
+The next distance dependency and signed-square-root tail have read-only
+byte-checked exports, 42 instruction rows total, with zero recovery credit:
+  analysis/overlay-draw-distance-helpers/8c640128_instructions.tsv
+  analysis/overlay-draw-distance-helpers/8c63a9c4_instructions.tsv
+  analysis/overlay_draw_distance_helpers_inventory.json
+An older limited signed-square-root source already exists, with injected
+numerical results in its old proof. Preserve/reuse that work and the existing
+native FSQRT backend while completing the original caller and numerical paths.
+Also recover 0c90c384 and connect existing 8c6215d6/vertex-bus rendering, then
+the remaining unexecuted draw branches and natural object/task scheduling.
+Continue Sol High for this reverse engineering and numerical integration.
+Luna Low is suitable for documentation-only work. Full game decompilation,
+playable PC/Android/3DS/N64/PlayStation ports, high-FPS/8K/display options and
+SUPIR texture preparation remain unfinished.

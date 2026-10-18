@@ -1,0 +1,1176 @@
+{
+  "module": "1ST_READ.BIN",
+  "load_address": "0x8c010000",
+  "address": "0x8c03767c",
+  "end_exclusive": "0x8c03769c",
+  "retail_span_sha256": "6eca5ee1b286d8f7672cb6c89bd0841d23a69bd50afdaf0e1c39fc737a4d3cb8",
+  "source_sha256": "8c08636a593979e4b39ea5fdfd5ffff46397686f2277ef1b86c56f16e36f88c1",
+  "cases_passed": 128,
+  "comparison_level": "complete 16 MiB RAM and all GPR/SR/PR/PC state against the retail SH-4 interpreter",
+  "scope": "Exact 32-byte routine; applies four distinct literal masks to the two words at base and base+8, including the second store in the RTS delay slot.",
+  "limitations": [
+    "The two structure fields and caller-level meaning of R0 remain unidentified.",
+    "Differential verification uses the project SH-4 interpreter, not Dreamcast hardware or whole-game execution."
+  ],
+  "base_pointer": "0x8c890104",
+  "literal_masks": {
+    "0x8c0376a0": "0xfdffff00",
+    "0x8c0376a4": "0xffe7ff3f",
+    "0x8c0376a8": "0x200003f",
+    "0x8c0376ac": "0x1800c0"
+  },
+  "cases": [
+    {
+      "case": 0,
+      "input_r0": "0x0",
+      "initial_words": [
+        "0xbe7a6f37",
+        "0x78a79db1"
+      ],
+      "matched": true
+    },
+    {
+      "case": 1,
+      "input_r0": "0x1",
+      "initial_words": [
+        "0x5d668bf",
+        "0xe200e68"
+      ],
+      "matched": true
+    },
+    {
+      "case": 2,
+      "input_r0": "0xffffffff",
+      "initial_words": [
+        "0x447e2a84",
+        "0x1cbb8873"
+      ],
+      "matched": true
+    },
+    {
+      "case": 3,
+      "input_r0": "0xffffff",
+      "initial_words": [
+        "0xfb262f91",
+        "0xfd3acbb2"
+      ],
+      "matched": true
+    },
+    {
+      "case": 4,
+      "input_r0": "0xff00ff00",
+      "initial_words": [
+        "0xdc6e43d0",
+        "0x7ae1fd42"
+      ],
+      "matched": true
+    },
+    {
+      "case": 5,
+      "input_r0": "0xaaaaaaaa",
+      "initial_words": [
+        "0xde0bc4d2",
+        "0x6e065e1"
+      ],
+      "matched": true
+    },
+    {
+      "case": 6,
+      "input_r0": "0x55555555",
+      "initial_words": [
+        "0xad996745",
+        "0xcc8d0fde"
+      ],
+      "matched": true
+    },
+    {
+      "case": 7,
+      "input_r0": "0x80000000",
+      "initial_words": [
+        "0x27b14f54",
+        "0x4ccca1c5"
+      ],
+      "matched": true
+    },
+    {
+      "case": 8,
+      "input_r0": "0x3f",
+      "initial_words": [
+        "0xbdccdbce",
+        "0xabd770d1"
+      ],
+      "matched": true
+    },
+    {
+      "case": 9,
+      "input_r0": "0x1800c0",
+      "initial_words": [
+        "0x76618732",
+        "0x55ac4e5a"
+      ],
+      "matched": true
+    },
+    {
+      "case": 10,
+      "input_r0": "0x200003f",
+      "initial_words": [
+        "0x340d3e6a",
+        "0x3f44dcea"
+      ],
+      "matched": true
+    },
+    {
+      "case": 11,
+      "input_r0": "0x40000000",
+      "initial_words": [
+        "0x250be856",
+        "0xc987eb1"
+      ],
+      "matched": true
+    },
+    {
+      "case": 12,
+      "input_r0": "0x8f12884a",
+      "initial_words": [
+        "0x17b9d622",
+        "0xcd479849"
+      ],
+      "matched": true
+    },
+    {
+      "case": 13,
+      "input_r0": "0x126befab",
+      "initial_words": [
+        "0xeca93375",
+        "0x51662b76"
+      ],
+      "matched": true
+    },
+    {
+      "case": 14,
+      "input_r0": "0x27a2ad5",
+      "initial_words": [
+        "0x9784fe68",
+        "0xd1e2c7f2"
+      ],
+      "matched": true
+    },
+    {
+      "case": 15,
+      "input_r0": "0x8850880",
+      "initial_words": [
+        "0x2054861c",
+        "0x6591c480"
+      ],
+      "matched": true
+    },
+    {
+      "case": 16,
+      "input_r0": "0xc86f3e20",
+      "initial_words": [
+        "0x71490e8f",
+        "0x5982e9a7"
+      ],
+      "matched": true
+    },
+    {
+      "case": 17,
+      "input_r0": "0xbfbde908",
+      "initial_words": [
+        "0x534f1203",
+        "0x55de9d1"
+      ],
+      "matched": true
+    },
+    {
+      "case": 18,
+      "input_r0": "0x9b57752c",
+      "initial_words": [
+        "0x4082a903",
+        "0x87a5008c"
+      ],
+      "matched": true
+    },
+    {
+      "case": 19,
+      "input_r0": "0xbf555d0d",
+      "initial_words": [
+        "0x5ced9d02",
+        "0x70020ab"
+      ],
+      "matched": true
+    },
+    {
+      "case": 20,
+      "input_r0": "0x8f38f1bc",
+      "initial_words": [
+        "0xaa71a126",
+        "0xcfd98313"
+      ],
+      "matched": true
+    },
+    {
+      "case": 21,
+      "input_r0": "0xdd02a489",
+      "initial_words": [
+        "0x40b4c8f3",
+        "0xae1f1447"
+      ],
+      "matched": true
+    },
+    {
+      "case": 22,
+      "input_r0": "0x188c9f28",
+      "initial_words": [
+        "0x51227efa",
+        "0x40e66d31"
+      ],
+      "matched": true
+    },
+    {
+      "case": 23,
+      "input_r0": "0x4e00e623",
+      "initial_words": [
+        "0x3168d84d",
+        "0x207f2e1"
+      ],
+      "matched": true
+    },
+    {
+      "case": 24,
+      "input_r0": "0x358e2121",
+      "initial_words": [
+        "0x9ba57cbb",
+        "0x6b940e09"
+      ],
+      "matched": true
+    },
+    {
+      "case": 25,
+      "input_r0": "0x1ed2f3ee",
+      "initial_words": [
+        "0xcdd17776",
+        "0x20aefebf"
+      ],
+      "matched": true
+    },
+    {
+      "case": 26,
+      "input_r0": "0x56f70be8",
+      "initial_words": [
+        "0x3804c710",
+        "0xa27ff2f7"
+      ],
+      "matched": true
+    },
+    {
+      "case": 27,
+      "input_r0": "0x3fc6b5d2",
+      "initial_words": [
+        "0xe7357cd2",
+        "0xde0f139b"
+      ],
+      "matched": true
+    },
+    {
+      "case": 28,
+      "input_r0": "0xac2e4599",
+      "initial_words": [
+        "0x1c37c36e",
+        "0x983c7229"
+      ],
+      "matched": true
+    },
+    {
+      "case": 29,
+      "input_r0": "0x8e745069",
+      "initial_words": [
+        "0xec7e6139",
+        "0xe82c5fa6"
+      ],
+      "matched": true
+    },
+    {
+      "case": 30,
+      "input_r0": "0xbab86de4",
+      "initial_words": [
+        "0x1b5df657",
+        "0xdf31e62f"
+      ],
+      "matched": true
+    },
+    {
+      "case": 31,
+      "input_r0": "0xda9f56b5",
+      "initial_words": [
+        "0x6e3ca098",
+        "0xec739d24"
+      ],
+      "matched": true
+    },
+    {
+      "case": 32,
+      "input_r0": "0xdaffe5bb",
+      "initial_words": [
+        "0xb5dd6dc6",
+        "0x29925f02"
+      ],
+      "matched": true
+    },
+    {
+      "case": 33,
+      "input_r0": "0x7d90b378",
+      "initial_words": [
+        "0xc8c23f72",
+        "0xe7ae50c4"
+      ],
+      "matched": true
+    },
+    {
+      "case": 34,
+      "input_r0": "0x7307a613",
+      "initial_words": [
+        "0xe1f7a14f",
+        "0x64a237bc"
+      ],
+      "matched": true
+    },
+    {
+      "case": 35,
+      "input_r0": "0x9f412b14",
+      "initial_words": [
+        "0xc971939b",
+        "0x5a73520e"
+      ],
+      "matched": true
+    },
+    {
+      "case": 36,
+      "input_r0": "0x827993a6",
+      "initial_words": [
+        "0xe5f9d41b",
+        "0x26b52472"
+      ],
+      "matched": true
+    },
+    {
+      "case": 37,
+      "input_r0": "0xbbc4e0b5",
+      "initial_words": [
+        "0xc78ff200",
+        "0xe3f275a1"
+      ],
+      "matched": true
+    },
+    {
+      "case": 38,
+      "input_r0": "0xe30dc0e8",
+      "initial_words": [
+        "0x6894e10f",
+        "0xfc3f4ac8"
+      ],
+      "matched": true
+    },
+    {
+      "case": 39,
+      "input_r0": "0x3ad6927",
+      "initial_words": [
+        "0xc6d50ab3",
+        "0x9376f0b"
+      ],
+      "matched": true
+    },
+    {
+      "case": 40,
+      "input_r0": "0xdc9ad7da",
+      "initial_words": [
+        "0xaf83b575",
+        "0xa6ecee48"
+      ],
+      "matched": true
+    },
+    {
+      "case": 41,
+      "input_r0": "0x58a70482",
+      "initial_words": [
+        "0xf37d404e",
+        "0xca1b059a"
+      ],
+      "matched": true
+    },
+    {
+      "case": 42,
+      "input_r0": "0xec6a5db2",
+      "initial_words": [
+        "0x702781f3",
+        "0xfef9d6ae"
+      ],
+      "matched": true
+    },
+    {
+      "case": 43,
+      "input_r0": "0x89381232",
+      "initial_words": [
+        "0xeecadc50",
+        "0xffb678a0"
+      ],
+      "matched": true
+    },
+    {
+      "case": 44,
+      "input_r0": "0xcf075e75",
+      "initial_words": [
+        "0x9d462674",
+        "0x4f3dd501"
+      ],
+      "matched": true
+    },
+    {
+      "case": 45,
+      "input_r0": "0x4af1366c",
+      "initial_words": [
+        "0xfcbf8905",
+        "0xab9e97ff"
+      ],
+      "matched": true
+    },
+    {
+      "case": 46,
+      "input_r0": "0x57b8abe1",
+      "initial_words": [
+        "0x78dc0d08",
+        "0xfc259e91"
+      ],
+      "matched": true
+    },
+    {
+      "case": 47,
+      "input_r0": "0x3383caf",
+      "initial_words": [
+        "0x6bbd8fef",
+        "0x168bc09"
+      ],
+      "matched": true
+    },
+    {
+      "case": 48,
+      "input_r0": "0xafa16a",
+      "initial_words": [
+        "0x404ad5e2",
+        "0x9e1f88b2"
+      ],
+      "matched": true
+    },
+    {
+      "case": 49,
+      "input_r0": "0x8ced4f77",
+      "initial_words": [
+        "0x29b2cfc8",
+        "0xfe09aa4d"
+      ],
+      "matched": true
+    },
+    {
+      "case": 50,
+      "input_r0": "0xc867c8be",
+      "initial_words": [
+        "0x30223469",
+        "0x772388e2"
+      ],
+      "matched": true
+    },
+    {
+      "case": 51,
+      "input_r0": "0xe7c5254b",
+      "initial_words": [
+        "0x33165c18",
+        "0x3f059737"
+      ],
+      "matched": true
+    },
+    {
+      "case": 52,
+      "input_r0": "0xf1017039",
+      "initial_words": [
+        "0x65570b1d",
+        "0xaaa01abc"
+      ],
+      "matched": true
+    },
+    {
+      "case": 53,
+      "input_r0": "0x82f64ff5",
+      "initial_words": [
+        "0xeef126cd",
+        "0xae6cd9a9"
+      ],
+      "matched": true
+    },
+    {
+      "case": 54,
+      "input_r0": "0xd1b80986",
+      "initial_words": [
+        "0xeca54368",
+        "0xb1ff680a"
+      ],
+      "matched": true
+    },
+    {
+      "case": 55,
+      "input_r0": "0xbcad6ef7",
+      "initial_words": [
+        "0x68441c48",
+        "0x35cfb5bf"
+      ],
+      "matched": true
+    },
+    {
+      "case": 56,
+      "input_r0": "0xff726e01",
+      "initial_words": [
+        "0x15056dcf",
+        "0xdae21dd8"
+      ],
+      "matched": true
+    },
+    {
+      "case": 57,
+      "input_r0": "0xe990974a",
+      "initial_words": [
+        "0x6d227bdd",
+        "0xbd9b9413"
+      ],
+      "matched": true
+    },
+    {
+      "case": 58,
+      "input_r0": "0x84dc49aa",
+      "initial_words": [
+        "0xb2547043",
+        "0x88dd25d5"
+      ],
+      "matched": true
+    },
+    {
+      "case": 59,
+      "input_r0": "0x7f5c87eb",
+      "initial_words": [
+        "0x43fe6579",
+        "0xc2bd3f18"
+      ],
+      "matched": true
+    },
+    {
+      "case": 60,
+      "input_r0": "0xaeabf028",
+      "initial_words": [
+        "0x3b2fccab",
+        "0xef27541f"
+      ],
+      "matched": true
+    },
+    {
+      "case": 61,
+      "input_r0": "0x8ab13bbc",
+      "initial_words": [
+        "0x71cf3eae",
+        "0x44d562f6"
+      ],
+      "matched": true
+    },
+    {
+      "case": 62,
+      "input_r0": "0x17de0f62",
+      "initial_words": [
+        "0x2d5abfe8",
+        "0xb19e7703"
+      ],
+      "matched": true
+    },
+    {
+      "case": 63,
+      "input_r0": "0x9e61645c",
+      "initial_words": [
+        "0x956b946a",
+        "0xb9c81d48"
+      ],
+      "matched": true
+    },
+    {
+      "case": 64,
+      "input_r0": "0x59bf94db",
+      "initial_words": [
+        "0x5a932efc",
+        "0x48162140"
+      ],
+      "matched": true
+    },
+    {
+      "case": 65,
+      "input_r0": "0x95093a1f",
+      "initial_words": [
+        "0xff6b73b1",
+        "0xfc26b186"
+      ],
+      "matched": true
+    },
+    {
+      "case": 66,
+      "input_r0": "0xa8a4aa83",
+      "initial_words": [
+        "0xd37cb317",
+        "0x191abbac"
+      ],
+      "matched": true
+    },
+    {
+      "case": 67,
+      "input_r0": "0xf6e4381a",
+      "initial_words": [
+        "0xfbfe508b",
+        "0xc4c04173"
+      ],
+      "matched": true
+    },
+    {
+      "case": 68,
+      "input_r0": "0xe26887e5",
+      "initial_words": [
+        "0x7e9ad31f",
+        "0x76224fa3"
+      ],
+      "matched": true
+    },
+    {
+      "case": 69,
+      "input_r0": "0x41f606bd",
+      "initial_words": [
+        "0xc1013f87",
+        "0xa4a5d15a"
+      ],
+      "matched": true
+    },
+    {
+      "case": 70,
+      "input_r0": "0xb00ebd1f",
+      "initial_words": [
+        "0x9813c46d",
+        "0x8ec6e69f"
+      ],
+      "matched": true
+    },
+    {
+      "case": 71,
+      "input_r0": "0x188e4744",
+      "initial_words": [
+        "0xb7e37c5",
+        "0xcbcc80b9"
+      ],
+      "matched": true
+    },
+    {
+      "case": 72,
+      "input_r0": "0x215f638",
+      "initial_words": [
+        "0x461ead44",
+        "0x2ca34b87"
+      ],
+      "matched": true
+    },
+    {
+      "case": 73,
+      "input_r0": "0xea043cb3",
+      "initial_words": [
+        "0x6e886ee2",
+        "0x560f084d"
+      ],
+      "matched": true
+    },
+    {
+      "case": 74,
+      "input_r0": "0x20a5f46e",
+      "initial_words": [
+        "0xa1ec2385",
+        "0x6add9fb9"
+      ],
+      "matched": true
+    },
+    {
+      "case": 75,
+      "input_r0": "0xa400407",
+      "initial_words": [
+        "0x435e5a10",
+        "0xeb953bf"
+      ],
+      "matched": true
+    },
+    {
+      "case": 76,
+      "input_r0": "0x6d5839eb",
+      "initial_words": [
+        "0x9e99aac0",
+        "0x896a28ea"
+      ],
+      "matched": true
+    },
+    {
+      "case": 77,
+      "input_r0": "0x840f1d41",
+      "initial_words": [
+        "0x2a754c5a",
+        "0x194a17d0"
+      ],
+      "matched": true
+    },
+    {
+      "case": 78,
+      "input_r0": "0x64e7a9d4",
+      "initial_words": [
+        "0x80343f5e",
+        "0x101e871b"
+      ],
+      "matched": true
+    },
+    {
+      "case": 79,
+      "input_r0": "0xf9cebea",
+      "initial_words": [
+        "0xd2704030",
+        "0x18ac5585"
+      ],
+      "matched": true
+    },
+    {
+      "case": 80,
+      "input_r0": "0x59766f33",
+      "initial_words": [
+        "0xc788b7e1",
+        "0xb375b204"
+      ],
+      "matched": true
+    },
+    {
+      "case": 81,
+      "input_r0": "0xaec73f20",
+      "initial_words": [
+        "0x64b38d76",
+        "0x76f5f112"
+      ],
+      "matched": true
+    },
+    {
+      "case": 82,
+      "input_r0": "0x1b49a971",
+      "initial_words": [
+        "0x4853fcf1",
+        "0xe9539244"
+      ],
+      "matched": true
+    },
+    {
+      "case": 83,
+      "input_r0": "0x4525bb2f",
+      "initial_words": [
+        "0x88f0985a",
+        "0xfaac6ff5"
+      ],
+      "matched": true
+    },
+    {
+      "case": 84,
+      "input_r0": "0xd9c4b982",
+      "initial_words": [
+        "0xff048c1",
+        "0x70914f7d"
+      ],
+      "matched": true
+    },
+    {
+      "case": 85,
+      "input_r0": "0x24f6eb6b",
+      "initial_words": [
+        "0x7118d100",
+        "0x54676c38"
+      ],
+      "matched": true
+    },
+    {
+      "case": 86,
+      "input_r0": "0xbd7a3a83",
+      "initial_words": [
+        "0xf1239365",
+        "0x87d16810"
+      ],
+      "matched": true
+    },
+    {
+      "case": 87,
+      "input_r0": "0xeef70ee8",
+      "initial_words": [
+        "0x8dc1513c",
+        "0x7af9907e"
+      ],
+      "matched": true
+    },
+    {
+      "case": 88,
+      "input_r0": "0x1dcc6a20",
+      "initial_words": [
+        "0xe60fbbc8",
+        "0x97620b25"
+      ],
+      "matched": true
+    },
+    {
+      "case": 89,
+      "input_r0": "0x99f09fc6",
+      "initial_words": [
+        "0x9bb1a03b",
+        "0xfd1b25bd"
+      ],
+      "matched": true
+    },
+    {
+      "case": 90,
+      "input_r0": "0xa6fbd8dd",
+      "initial_words": [
+        "0xf3ccede7",
+        "0x911c864e"
+      ],
+      "matched": true
+    },
+    {
+      "case": 91,
+      "input_r0": "0xd1f37bba",
+      "initial_words": [
+        "0x43c7234d",
+        "0xc003ebcf"
+      ],
+      "matched": true
+    },
+    {
+      "case": 92,
+      "input_r0": "0xac581689",
+      "initial_words": [
+        "0x6cc30a58",
+        "0x3f16b8ea"
+      ],
+      "matched": true
+    },
+    {
+      "case": 93,
+      "input_r0": "0x22a89c46",
+      "initial_words": [
+        "0x12c1ad91",
+        "0x34f11573"
+      ],
+      "matched": true
+    },
+    {
+      "case": 94,
+      "input_r0": "0x1ca954b5",
+      "initial_words": [
+        "0xe31875c5",
+        "0x4bba9c59"
+      ],
+      "matched": true
+    },
+    {
+      "case": 95,
+      "input_r0": "0xd3a8b1ef",
+      "initial_words": [
+        "0x5f4a563a",
+        "0x8f3c3334"
+      ],
+      "matched": true
+    },
+    {
+      "case": 96,
+      "input_r0": "0x5304c006",
+      "initial_words": [
+        "0x4e776bbb",
+        "0xdc8e1eeb"
+      ],
+      "matched": true
+    },
+    {
+      "case": 97,
+      "input_r0": "0xefd6b8ec",
+      "initial_words": [
+        "0x76a3390d",
+        "0x8bb9d193"
+      ],
+      "matched": true
+    },
+    {
+      "case": 98,
+      "input_r0": "0x898feb5b",
+      "initial_words": [
+        "0x931b536d",
+        "0x8e8d1c8f"
+      ],
+      "matched": true
+    },
+    {
+      "case": 99,
+      "input_r0": "0x48dd7f32",
+      "initial_words": [
+        "0xa638ebe0",
+        "0x36e3d5c6"
+      ],
+      "matched": true
+    },
+    {
+      "case": 100,
+      "input_r0": "0x905f1c08",
+      "initial_words": [
+        "0x49dc0dbf",
+        "0xc2da1272"
+      ],
+      "matched": true
+    },
+    {
+      "case": 101,
+      "input_r0": "0x6f4ae3fe",
+      "initial_words": [
+        "0x26213a8f",
+        "0x427ce848"
+      ],
+      "matched": true
+    },
+    {
+      "case": 102,
+      "input_r0": "0x3594abaf",
+      "initial_words": [
+        "0x98ef882e",
+        "0x49d1023e"
+      ],
+      "matched": true
+    },
+    {
+      "case": 103,
+      "input_r0": "0x5833d535",
+      "initial_words": [
+        "0xb3730a60",
+        "0xbedf5931"
+      ],
+      "matched": true
+    },
+    {
+      "case": 104,
+      "input_r0": "0x1fb1a79a",
+      "initial_words": [
+        "0xefeae9c5",
+        "0x24cb3720"
+      ],
+      "matched": true
+    },
+    {
+      "case": 105,
+      "input_r0": "0x1afa7f57",
+      "initial_words": [
+        "0xd4f1dadb",
+        "0x19882288"
+      ],
+      "matched": true
+    },
+    {
+      "case": 106,
+      "input_r0": "0x39e2d235",
+      "initial_words": [
+        "0xdfd47674",
+        "0xdcf26252"
+      ],
+      "matched": true
+    },
+    {
+      "case": 107,
+      "input_r0": "0x3dbc8682",
+      "initial_words": [
+        "0xf64b7b20",
+        "0x10b67f33"
+      ],
+      "matched": true
+    },
+    {
+      "case": 108,
+      "input_r0": "0x2183dd6c",
+      "initial_words": [
+        "0x4723a3db",
+        "0xee700a9"
+      ],
+      "matched": true
+    },
+    {
+      "case": 109,
+      "input_r0": "0x2da26949",
+      "initial_words": [
+        "0xa91a94e8",
+        "0x7e69d8b7"
+      ],
+      "matched": true
+    },
+    {
+      "case": 110,
+      "input_r0": "0x47a62e1d",
+      "initial_words": [
+        "0x6914568a",
+        "0x5e597eda"
+      ],
+      "matched": true
+    },
+    {
+      "case": 111,
+      "input_r0": "0xfbdb1a16",
+      "initial_words": [
+        "0x7737a168",
+        "0xf301e23c"
+      ],
+      "matched": true
+    },
+    {
+      "case": 112,
+      "input_r0": "0x91758229",
+      "initial_words": [
+        "0xb9b96735",
+        "0xbcddd06d"
+      ],
+      "matched": true
+    },
+    {
+      "case": 113,
+      "input_r0": "0x1d23e3ca",
+      "initial_words": [
+        "0xf498bead",
+        "0x9b44523"
+      ],
+      "matched": true
+    },
+    {
+      "case": 114,
+      "input_r0": "0x772aee1d",
+      "initial_words": [
+        "0x874a4e60",
+        "0x9a6a9f11"
+      ],
+      "matched": true
+    },
+    {
+      "case": 115,
+      "input_r0": "0xe09b9bab",
+      "initial_words": [
+        "0x6c666240",
+        "0xeaa554dd"
+      ],
+      "matched": true
+    },
+    {
+      "case": 116,
+      "input_r0": "0xb2fa41e8",
+      "initial_words": [
+        "0x9650bd39",
+        "0xd0d304a2"
+      ],
+      "matched": true
+    },
+    {
+      "case": 117,
+      "input_r0": "0x19e6888e",
+      "initial_words": [
+        "0xee4e24b1",
+        "0xe214ad80"
+      ],
+      "matched": true
+    },
+    {
+      "case": 118,
+      "input_r0": "0xd428bcc9",
+      "initial_words": [
+        "0xc2ef2508",
+        "0x34ede317"
+      ],
+      "matched": true
+    },
+    {
+      "case": 119,
+      "input_r0": "0xc792536a",
+      "initial_words": [
+        "0xba3cf43a",
+        "0x5b68fddf"
+      ],
+      "matched": true
+    },
+    {
+      "case": 120,
+      "input_r0": "0x5c001fc1",
+      "initial_words": [
+        "0x5acb840e",
+        "0x7311fa4a"
+      ],
+      "matched": true
+    },
+    {
+      "case": 121,
+      "input_r0": "0x1677c608",
+      "initial_words": [
+        "0xa46f2272",
+        "0x62b3e7f4"
+      ],
+      "matched": true
+    },
+    {
+      "case": 122,
+      "input_r0": "0xcb16ba56",
+      "initial_words": [
+        "0xf125afc7",
+        "0x7122341b"
+      ],
+      "matched": true
+    },
+    {
+      "case": 123,
+      "input_r0": "0x3ad912cf",
+      "initial_words": [
+        "0x14fd952d",
+        "0x3fbffb2b"
+      ],
+      "matched": true
+    },
+    {
+      "case": 124,
+      "input_r0": "0xc46cd685",
+      "initial_words": [
+        "0xd5326e19",
+        "0x778a78b0"
+      ],
+      "matched": true
+    },
+    {
+      "case": 125,
+      "input_r0": "0x86693027",
+      "initial_words": [
+        "0xd1612970",
+        "0xa222ead7"
+      ],
+      "matched": true
+    },
+    {
+      "case": 126,
+      "input_r0": "0x6042ff5c",
+      "initial_words": [
+        "0x825c2a8c",
+        "0xd3e0f358"
+      ],
+      "matched": true
+    },
+    {
+      "case": 127,
+      "input_r0": "0xa280ea7d",
+      "initial_words": [
+        "0xec24f0ad",
+        "0x687716ab"
+      ],
+      "matched": true
+    }
+  ]
+}

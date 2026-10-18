@@ -1,0 +1,35 @@
+{
+  "cases_passed": 192,
+  "comparison_level": "For each routine, complete 16 MiB RAM and all GPRs, SR, PR, and return PC compared against the retail SH-4 interpreter.",
+  "scope": "Two eight-byte indirect signed-byte getters load the pointer from 0x8c11204c and return sign-extended fields at offsets 9 and 6. Each was tested in 96 states, including fixed retail pointer data, pointer-to-pointer-slot alias cases, mapped variable targets, all signed-byte values by random sampling, and full CPU/RAM equality.",
+  "limitations": [
+    "Uses the project SH-4 interpreter rather than Dreamcast hardware or end-to-end gameplay.",
+    "Higher-level field names and game behavior remain unidentified."
+  ],
+  "binary_sha256": "45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a",
+  "literal_address": "0x8c01b4e0",
+  "literal_value": "0x8c11204c",
+  "source_sha256": "0a10b1825ce9eff5d013c05b636f68d82a508d33468a86633b8317a66e3a3abc",
+  "routines": [
+    {
+      "module": "1ST_READ.BIN",
+      "load_address": "0x8c010000",
+      "address": "0x8c01b406",
+      "end_exclusive": "0x8c01b40e",
+      "retail_span_sha256": "5fa0b8a2b0081df44447e0bcd59d32f964beb5d0addd102fafab2867d5933554",
+      "name": "sa_indirect_byte_get_9_8c01b406",
+      "field_offset": 9,
+      "cases_passed": 96
+    },
+    {
+      "module": "1ST_READ.BIN",
+      "load_address": "0x8c010000",
+      "address": "0x8c01b40e",
+      "end_exclusive": "0x8c01b416",
+      "retail_span_sha256": "4fe267c96aa4e555fc857b5055f8b04ca757466be5949e07cbbad0a81119b8cb",
+      "name": "sa_indirect_byte_get_6_8c01b40e",
+      "field_offset": 6,
+      "cases_passed": 96
+    }
+  ]
+}

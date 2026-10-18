@@ -1,0 +1,175 @@
+{
+  "entry": "8c10dbc4",
+  "end_bound_exclusive": "8c10e304",
+  "reachable_instructions": 878,
+  "source": "source/sa_sound_format_engine.c",
+  "source_sha256": "ad689893605fc403f32fed38cfbd859dd71ba37408527fa6d2c13bd92faa49c4",
+  "strict_object_compile_passed": true,
+  "runtime_verified": false,
+  "direct_call_sites": [
+    {
+      "instruction": "8c10dc4a",
+      "target": "0x8c10e576"
+    },
+    {
+      "instruction": "8c10e030",
+      "target": "0x8c10e304"
+    },
+    {
+      "instruction": "8c10e138",
+      "target": "0x8c10e304"
+    },
+    {
+      "instruction": "8c10e1c4",
+      "target": "0x8c10e50e"
+    },
+    {
+      "instruction": "8c10e1ea",
+      "target": "0x8c10e50e"
+    },
+    {
+      "instruction": "8c10e200",
+      "target": "0x8c10e50e"
+    },
+    {
+      "instruction": "8c10e21a",
+      "target": "0x8c10e50e"
+    },
+    {
+      "instruction": "8c10e23c",
+      "target": "0x8c10e50e"
+    },
+    {
+      "instruction": "8c10e24a",
+      "target": "0x8c10e50e"
+    },
+    {
+      "instruction": "8c10e262",
+      "target": "0x8c10e50e"
+    },
+    {
+      "instruction": "8c10e270",
+      "target": "0x8c10e50e"
+    },
+    {
+      "instruction": "8c10e296",
+      "target": "0x8c10e50e"
+    },
+    {
+      "instruction": "8c10e2c8",
+      "target": "0x8c10e50e"
+    },
+    {
+      "instruction": "8c10e2d4",
+      "target": "0x8c10e576"
+    },
+    {
+      "instruction": "8c10e2e6",
+      "target": "0x8c10e566"
+    }
+  ],
+  "function_valued_literal_candidates": [
+    {
+      "instruction": "8c10dd6c",
+      "literal": "0x8c10dd9c",
+      "value": "0x8c10ca5c",
+      "indexed_function": "FUN_8c10ca5c",
+      "classification": "Function-valued literal; call/data use needs instruction-level audit"
+    },
+    {
+      "instruction": "8c10de2e",
+      "literal": "0x8c10de5c",
+      "value": "0x8c10ca5c",
+      "indexed_function": "FUN_8c10ca5c",
+      "classification": "Function-valued literal; call/data use needs instruction-level audit"
+    },
+    {
+      "instruction": "8c10e034",
+      "literal": "0x8c10e104",
+      "value": "0x8c10d3f0",
+      "indexed_function": "FUN_8c10d3f0",
+      "classification": "Function-valued literal; call/data use needs instruction-level audit"
+    },
+    {
+      "instruction": "8c10e048",
+      "literal": "0x8c10e108",
+      "value": "0x8c10f1a4",
+      "indexed_function": "FUN_8c10f1a4",
+      "classification": "Function-valued literal; call/data use needs instruction-level audit"
+    },
+    {
+      "instruction": "8c10e052",
+      "literal": "0x8c10e104",
+      "value": "0x8c10d3f0",
+      "indexed_function": "FUN_8c10d3f0",
+      "classification": "Function-valued literal; call/data use needs instruction-level audit"
+    },
+    {
+      "instruction": "8c10e0c2",
+      "literal": "0x8c10e104",
+      "value": "0x8c10d3f0",
+      "indexed_function": "FUN_8c10d3f0",
+      "classification": "Function-valued literal; call/data use needs instruction-level audit"
+    },
+    {
+      "instruction": "8c10e13c",
+      "literal": "0x8c10e20c",
+      "value": "0x8c10d3f0",
+      "indexed_function": "FUN_8c10d3f0",
+      "classification": "Function-valued literal; call/data use needs instruction-level audit"
+    }
+  ],
+  "limitations": [
+    "Floating-point formatting paths and FPSCR transitions not execution-verified.",
+    "Full FILE mode and physical output-device behavior remain unverified.",
+    "The parent routine is only partially runtime-verified; listed fixtures do not prove all 878 instructions or all format branches."
+  ],
+  "runtime_verification_status": "Partial: retail execution compared for integer and string/character paths; unsupported modes remain.",
+  "verified_path_reports": [
+    {
+      "report": "analysis/sound_format_engine_verification.json",
+      "cases": 10,
+      "scope": "empty, literal, escaped-percent output"
+    },
+    {
+      "report": "analysis/sound_format_engine_character_verification.json",
+      "cases": 4,
+      "scope": "character conversion"
+    },
+    {
+      "report": "analysis/sound_format_engine_arguments_verification.json",
+      "cases": 10,
+      "scope": "string and character argument retrieval"
+    },
+    {
+      "report": "analysis/sound_format_engine_integer_verification.json",
+      "cases": 70,
+      "scope": "basic integer conversions"
+    },
+    {
+      "report": "analysis/sound_format_engine_width_precision_verification.json",
+      "cases": 130,
+      "scope": "integer width, precision, and dynamic arguments"
+    },
+    {
+      "report": "analysis/sound_format_engine_native_emit_verification.json",
+      "cases": 130,
+      "scope": "native emitter integration"
+    },
+    {
+      "report": "analysis/format_output_helpers_verification.json",
+      "cases": 48,
+      "scope": "native output helper behavior"
+    },
+    {
+      "report": "analysis/sound_format_engine_native_output_verification.json",
+      "cases": 130,
+      "scope": "native buffered integer output"
+    },
+    {
+      "report": "analysis/sound_format_engine_native_mixed_verification.json",
+      "cases": 30,
+      "scope": "mixed string, character, and integer output"
+    }
+  ]
+}

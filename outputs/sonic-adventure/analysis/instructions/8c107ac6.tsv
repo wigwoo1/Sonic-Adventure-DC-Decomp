@@ -1,0 +1,11 @@
+address	opcode	instruction	references
+8c107ac6	d030	mov.l 0x8c107b88,r0	READ:8c107b88=8c5fba60 DATA:8c5fba60=1 
+8c107ac8	6102	mov.l @r0,r1	READ:8c5fba60=1 
+8c107aca	2118	tst r1,r1	
+8c107acc	8903	bt 0x8c107ad6	CONDITIONAL_JUMP:8c107ad6=9000b 
+8c107ace	d329	mov.l 0x8c107b74,r3	READ:8c107b74=8c5fbab0 
+8c107ad0	d126	mov.l 0x8c107b6c,r1	READ:8c107b6c=8c5fbaa8 
+8c107ad2	2142	mov.l r4,@r1	WRITE:8c5fbaa8=ffffffff 
+8c107ad4	2342	mov.l r4,@r3	WRITE:8c5fbab0=ffffffff 
+8c107ad6	b	rts	
+8c107ad8	9	_nop	

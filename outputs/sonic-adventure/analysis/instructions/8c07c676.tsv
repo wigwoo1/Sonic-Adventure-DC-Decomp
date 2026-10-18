@@ -1,0 +1,68 @@
+address	opcode	instruction	references
+8c07c676	4f22	sts.l PR,@-r15	DATA:Stack[-0x4] 
+8c07c678	7fec	add #-0x14,r15	
+8c07c67a	d021	mov.l 0x8c07c700,r0	READ:8c07c700=8c78c608 
+8c07c67c	644c	extu.b r4,r4	
+8c07c67e	4408	shll2 r4	
+8c07c680	34e	mov.l @(r0,r4),r3	DATA:8c78c608 
+8c07c682	6543	mov r4,r5	
+8c07c684	d021	mov.l 0x8c07c70c,r0	READ:8c07c70c=8c78c628 
+8c07c686	1f31	mov.l r3,@(0x4,r15)	DATA:Stack[-0x14] 
+8c07c688	45e	mov.l @(r0,r5),r4	DATA:8c78c628 
+8c07c68a	d01e	mov.l 0x8c07c704,r0	READ:8c07c704=8c78c668 
+8c07c68c	d320	mov.l 0x8c07c710,r3	READ:8c07c710=8c078e40 
+8c07c68e	25e	mov.l @(r0,r5),r2	
+8c07c690	e004	mov #0x4,r0	
+8c07c692	65f3	mov r15,r5	
+8c07c694	7508	add #0x8,r5	
+8c07c696	2f22	mov.l r2,@r15	DATA:Stack[-0x18] 
+8c07c698	f447	fmov fr4,@(r0,r4)	
+8c07c69a	e008	mov #0x8,r0	
+8c07c69c	f457	fmov fr5,@(r0,r4)	
+8c07c69e	e00c	mov #0xc,r0	
+8c07c6a0	f467	fmov fr6,@(r0,r4)	
+8c07c6a2	e008	mov #0x8,r0	
+8c07c6a4	ff47	fmov fr4,@(r0,r15)	
+8c07c6a6	e00c	mov #0xc,r0	
+8c07c6a8	ff57	fmov fr5,@(r0,r15)	
+8c07c6aa	e010	mov #0x10,r0	
+8c07c6ac	ff67	fmov fr6,@(r0,r15)	
+8c07c6ae	430b	jsr @r3	COMPUTED_CALL:8c078e40=4f222fe6 
+8c07c6b0	54f1	_mov.l @(0x4,r15),r4	DATA:Stack[-0x14] 
+8c07c6b2	c718	mova 0x8c07c714,r0	DATA:8c07c714=3a83126e 
+8c07c6b4	f408	fmov.s @r0,fr4	READ:8c07c714=3a83126e 
+8c07c6b6	e008	mov #0x8,r0	
+8c07c6b8	f5f6	fmov.s @(r0,r15),fr5	
+8c07c6ba	f545	fcmp/gt fr4,fr5	
+8c07c6bc	8d06	bt/s 0x8c07c6cc	CONDITIONAL_JUMP:8c07c6cc=f5f6e010 
+8c07c6be	f68d	_fldi0 fr6	
+8c07c6c0	c715	mova 0x8c07c718,r0	DATA:8c07c718=ba83126e 
+8c07c6c2	f308	fmov.s @r0,fr3	READ:8c07c718=ba83126e 
+8c07c6c4	f355	fcmp/gt fr5,fr3	
+8c07c6c6	8901	bt 0x8c07c6cc	CONDITIONAL_JUMP:8c07c6cc=f5f6e010 
+8c07c6c8	e008	mov #0x8,r0	
+8c07c6ca	ff67	fmov fr6,@(r0,r15)	
+8c07c6cc	e010	mov #0x10,r0	
+8c07c6ce	f5f6	fmov.s @(r0,r15),fr5	
+8c07c6d0	f545	fcmp/gt fr4,fr5	
+8c07c6d2	8905	bt 0x8c07c6e0	CONDITIONAL_JUMP:8c07c6e0=720862f3 
+8c07c6d4	c710	mova 0x8c07c718,r0	DATA:8c07c718=ba83126e 
+8c07c6d6	f308	fmov.s @r0,fr3	READ:8c07c718=ba83126e 
+8c07c6d8	f355	fcmp/gt fr5,fr3	
+8c07c6da	8901	bt 0x8c07c6e0	CONDITIONAL_JUMP:8c07c6e0=720862f3 
+8c07c6dc	e010	mov #0x10,r0	
+8c07c6de	ff67	fmov fr6,@(r0,r15)	
+8c07c6e0	62f3	mov r15,r2	
+8c07c6e2	7208	add #0x8,r2	
+8c07c6e4	63f2	mov.l @r15,r3	DATA:Stack[-0x18] 
+8c07c6e6	6122	mov.l @r2,r1	DATA:Stack[-0x10] 
+8c07c6e8	7338	add #0x38,r3	
+8c07c6ea	5021	mov.l @(0x4,r2),r0	DATA:Stack[-0xc] 
+8c07c6ec	2312	mov.l r1,@r3	
+8c07c6ee	1301	mov.l r0,@(0x4,r3)	
+8c07c6f0	5122	mov.l @(0x8,r2),r1	DATA:Stack[-0x8] 
+8c07c6f2	1312	mov.l r1,@(0x8,r3)	
+8c07c6f4	7f14	add #0x14,r15	
+8c07c6f6	4f26	lds.l @r15+,PR	DATA:Stack[-0x4] 
+8c07c6f8	b	rts	
+8c07c6fa	9	_nop	

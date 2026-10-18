@@ -1,0 +1,53 @@
+address	opcode	instruction	references
+8c652dd0	2fe6	mov.l r14,@-r15	DATA:Stack[-0x4] 
+8c652dd2	c727	mova 0x8c652e70,r0	DATA:8c652e70=437f0000 
+8c652dd4	2fd6	mov.l r13,@-r15	DATA:Stack[-0x8] 
+8c652dd6	2fc6	mov.l r12,@-r15	DATA:Stack[-0xc] 
+8c652dd8	2fb6	mov.l r11,@-r15	DATA:Stack[-0x10] 
+8c652dda	2fa6	mov.l r10,@-r15	DATA:Stack[-0x14] 
+8c652ddc	6a43	mov r4,r10	
+8c652dde	2f96	mov.l r9,@-r15	DATA:Stack[-0x18] 
+8c652de0	fffb	fmov.s fr15,@-r15	DATA:Stack[-0x1c] 
+8c652de2	9e3e	mov.w 0x8c652e62,r14	READ:8c652e62=1fc0080 
+8c652de4	4f22	sts.l PR,@-r15	DATA:Stack[-0x20] 
+8c652de6	ff08	fmov.s @r0,fr15	READ:8c652e70=437f0000 
+8c652de8	6ce3	mov r14,r12	
+8c652dea	903b	mov.w 0x8c652e64,r0	READ:8c652e64=20001fc 
+8c652dec	7c7f	add #0x7f,r12	
+8c652dee	d91f	mov.l 0x8c652e6c,r9	READ:8c652e6c=8c653444 
+8c652df0	f3a6	fmov.s @(r0,r10),fr3	
+8c652df2	9b38	mov.w 0x8c652e66,r11	READ:8c652e66=b80200 
+8c652df4	f23c	fmov fr3,fr2	
+8c652df6	f2f2	fmul fr15,fr2	
+8c652df8	f23d	ftrc fr2,FPUL	
+8c652dfa	d5a	sts FPUL,r13	
+8c652dfc	2dc9	and r12,r13	
+8c652dfe	7eff	add #-0x1,r14	
+8c652e00	64d3	mov r13,r4	
+8c652e02	60e3	mov r14,r0	
+8c652e04	4008	shll2 r0	
+8c652e06	f2a6	fmov.s @(r0,r10),fr2	
+8c652e08	f2f2	fmul fr15,fr2	
+8c652e0a	f23d	ftrc fr2,FPUL	
+8c652e0c	d5a	sts FPUL,r13	
+8c652e0e	2dc9	and r12,r13	
+8c652e10	65d3	mov r13,r5	
+8c652e12	4518	shll8 r5	
+8c652e14	254b	or r4,r5	
+8c652e16	64e3	mov r14,r4	
+8c652e18	4408	shll2 r4	
+8c652e1a	655d	extu.w r5,r5	
+8c652e1c	490b	jsr @r9	COMPUTED_CALL:8c653444=343cd31e 
+8c652e1e	34bc	_add r11,r4	
+8c652e20	2ee8	tst r14,r14	
+8c652e22	8bec	bf 0x8c652dfe	CONDITIONAL_JUMP:8c652dfe=64d37eff 
+8c652e24	4f26	lds.l @r15+,PR	DATA:Stack[-0x20] 
+8c652e26	e000	mov #0x0,r0	
+8c652e28	fff9	fmov.s @r15+,fr15	DATA:Stack[-0x1c] 
+8c652e2a	69f6	mov.l @r15+,r9	DATA:Stack[-0x18] 
+8c652e2c	6af6	mov.l @r15+,r10	DATA:Stack[-0x14] 
+8c652e2e	6bf6	mov.l @r15+,r11	DATA:Stack[-0x10] 
+8c652e30	6cf6	mov.l @r15+,r12	DATA:Stack[-0xc] 
+8c652e32	6df6	mov.l @r15+,r13	DATA:Stack[-0x8] 
+8c652e34	b	rts	
+8c652e36	6ef6	_mov.l @r15+,r14	

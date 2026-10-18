@@ -1,0 +1,56 @@
+address	opcode	instruction	references
+8c051810	4f22	sts.l PR,@-r15	DATA:Stack[-0x4] 
+8c051812	7ff8	add #-0x8,r15	
+8c051814	d41b	mov.l 0x8c051884,r4	READ:8c051884=8c754ec0 PARAM:8c754ec0 
+8c051816	6342	mov.l @r4,r3	READ:8c754ec0 
+8c051818	73ff	add #-0x1,r3	
+8c05181a	6233	mov r3,r2	
+8c05181c	2228	tst r2,r2	
+8c05181e	8f27	bf/s 0x8c051870	CONDITIONAL_JUMP:8c051870=430bd31d 
+8c051820	2432	_mov.l r3,@r4	WRITE:8c754ec0 
+8c051822	d22c	mov.l 0x8c0518d4,r2	READ:8c0518d4=8c04f7e0 
+8c051824	420b	jsr @r2	COMPUTED_CALL:8c04f7e0=d10fd20e 
+8c051826	9	_nop	
+8c051828	6403	mov r0,r4	
+8c05182a	d32b	mov.l 0x8c0518d8,r3	READ:8c0518d8=ff00 
+8c05182c	604c	extu.b r4,r0	
+8c05182e	644d	extu.w r4,r4	
+8c051830	81f2	mov.w r0,@(0x4,r15)	DATA:Stack[-0x8] 
+8c051832	e2f8	mov #-0x8,r2	
+8c051834	2439	and r3,r4	
+8c051836	442c	shad r2,r4	
+8c051838	d228	mov.l 0x8c0518dc,r2	READ:8c0518dc=8c760970 
+8c05183a	2f41	mov.w r4,@r15	DATA:Stack[-0xc] 
+8c05183c	6022	mov.l @r2,r0	READ:8c760970 
+8c05183e	8804	cmp/eq #0x4,r0	
+8c051840	8d06	bt/s 0x8c051850	CONDITIONAL_JUMP:8c051850=d32360f1 
+8c051842	6403	_mov r0,r4	
+8c051844	6043	mov r4,r0	
+8c051846	8805	cmp/eq #0x5,r0	
+8c051848	8902	bt 0x8c051850	CONDITIONAL_JUMP:8c051850=d32360f1 
+8c05184a	6043	mov r4,r0	
+8c05184c	8809	cmp/eq #0x9,r0	
+8c05184e	8b0c	bf 0x8c05186a	CONDITIONAL_JUMP:8c05186a=410bd11e 
+8c051850	60f1	mov.w @r15,r0	DATA:Stack[-0xc] 
+8c051852	d323	mov.l 0x8c0518e0,r3	READ:8c0518e0=8c19e3e4 
+8c051854	600d	extu.w r0,r0	
+8c051856	4008	shll2 r0	
+8c051858	4008	shll2 r0	
+8c05185a	4000	shll r0	
+8c05185c	330c	add r0,r3	
+8c05185e	85f2	mov.w @(0x4,r15),r0	DATA:Stack[-0x8] 
+8c051860	600d	extu.w r0,r0	
+8c051862	4008	shll2 r0	
+8c051864	23e	mov.l @(r0,r3),r2	
+8c051866	420b	jsr @r2	
+8c051868	9	_nop	
+8c05186a	d11e	mov.l 0x8c0518e4,r1	READ:8c0518e4=8c643f98 
+8c05186c	410b	jsr @r1	COMPUTED_CALL:8c643f98=4f22d316 
+8c05186e	9	_nop	
+8c051870	d31d	mov.l 0x8c0518e8,r3	READ:8c0518e8=8c602cb8 
+8c051872	430b	jsr @r3	COMPUTED_CALL:8c602cb8=2fd62fe6 
+8c051874	9	_nop	
+8c051876	7f08	add #0x8,r15	
+8c051878	d11c	mov.l 0x8c0518ec,r1	READ:8c0518ec=8c09ce40 
+8c05187a	412b	jmp @r1	COMPUTED_CALL:8c09ce40=4f22d21f 
+8c05187c	4f26	_lds.l @r15+,PR	

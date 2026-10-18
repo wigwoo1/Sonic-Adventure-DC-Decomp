@@ -1,0 +1,46 @@
+import ctypes,itertools,json,struct
+from verify_startup import ROOT,State,reference
+from verify_fpu_cleanup_transfer import Fpu
+from verify_tikal_controller import Call,P
+out=ROOT/'outputs/sonic-adventure';binary=(ROOT/'work/sonic-adventure/extracted/1ST_READ.BIN').read_bytes()
+fn=ctypes.CDLL(str(ROOT/'work/sonic-adventure/build/sound_voice_record_refresh.dll')).sa_sound_voice_record_refresh
+fn.argtypes=[ctypes.POINTER(ctypes.c_uint8),ctypes.POINTER(Fpu),P,P,P,P,P,ctypes.c_void_p,Call]
+selector=ctypes.CDLL(str(ROOT/'work/sonic-adventure/build/sound_voice_record_refresh.dll')).sa_sound_voice_slot_select
+selector.argtypes=fn.argtypes
+lookup=ctypes.CDLL(str(ROOT/'work/sonic-adventure/build/sound_voice_record_refresh.dll')).sa_sound_voice_record_find
+lookup.argtypes=fn.argtypes
+def literal(a):return struct.unpack_from('<I',binary,a-0x8c010000)[0]&0xffffff
+table=literal(0x8c094078);reserved_cursor=literal(0x8c09407c);ordinary_cursor=literal(0x8c094220);cases=0
+ids=[0,1,0x42,0x7c,0x308,0x309,0x30d,0x30e,0x4be,0x4bf,0x4c6,0x4c7,0x4ef,0x4f0,0x4f7,0x4f8,0x4f9]
+for identity,pattern,bank,matched,lifetime in itertools.product(ids,['free','busy','eligible'],[0,0x200000],[False,True],[0,119,0xffffffff]):
+ ram=bytearray(16*1024*1024);ram[0x10000:0x10000+len(binary)]=binary
+ reserved=identity in [0,0x42,0x43,0x7c,0xa1,0xa0,0xef,0x229,0x22a,0x423,0x40f,0x438,0x29b,0x403,0x405,0x4f9] or 0x308<identity<0x30e or 0x4be<identity<0x4c7 or 0x4ef<identity<0x4f8
+ base=32 if reserved else 0
+ struct.pack_into('<I',ram,reserved_cursor,32);struct.pack_into('<I',ram,ordinary_cursor,0)
+ for slot in range(37):struct.pack_into('<2I',ram,table+slot*52,10,0 if pattern=='free' else 1)
+ if pattern=='eligible':struct.pack_into('<I',ram,table+(base+2)*52,1)
+ if matched:
+  struct.pack_into('<I',ram,table+36*52+8,0xabcdef01)
+  struct.pack_into('<I',ram,table+36*52+16,identity)
+ struct.pack_into('<I',ram,0xf00000,lifetime)
+ native=bytearray(ram);view=(ctypes.c_uint8*len(native)).from_buffer(native)
+ s=State();s.r[:]=[0x22340000+i for i in range(16)];s.r[4]=identity;s.r[5]=0xabcdef01;s.r[6]=5;s.r[7]=0x12345678;s.r[15]=0x8cf00000;s.sr=0x70000063;s.pr=0x8c000100;s.pc=0x8c094330
+ r=(ctypes.c_uint32*16)(*s.r);sr=ctypes.c_uint32(s.sr);pr=ctypes.c_uint32(s.pr);fpul=ctypes.c_uint32();macl=ctypes.c_uint32();f=Fpu();f.fpscr=bank;nf=Fpu.from_buffer_copy(f)
+ errors=[]
+ @Call
+ def call(ctx,a,m,f,sr,r,pr):
+  if a==0x8c094280:return lookup(m,f,sr,r,pr,ctypes.byref(fpul),ctypes.byref(macl),None,call)
+  if a==0x8c093f02:return selector(m,f,sr,r,pr,ctypes.byref(fpul),ctypes.byref(macl),None,call)
+  errors.append(a);return -9
+ special={'macl':0}
+ reference(ram,s,fpu=f,special=special)
+ assert fn(view,ctypes.byref(nf),ctypes.byref(sr),r,ctypes.byref(pr),ctypes.byref(fpul),ctypes.byref(macl),None,call)==0 and not errors
+ assert ram==native and list(r)==list(s.r) and sr.value==s.sr and pr.value==s.pr and bytes(f)==bytes(nf)
+ expected=36 if matched else base if pattern=='free' else base+2 if pattern=='eligible' else 0xffffffff
+ assert r[0]==(0xffffffff if expected==0xffffffff else 44),(identity,pattern,r[0],expected)
+ assert macl.value==special['macl']
+ if expected!=0xffffffff:
+  assert struct.unpack_from('<12I',native,table+expected*52)==(5,(lifetime+1)&0xffffffff,0xabcdef01,16 if matched else 17,identity,0,0x12345678,0,0,0,0,0)
+ cases+=1
+(out/'analysis/sound_voice_record_refresh_verification.json').write_text(json.dumps({'cases_passed':cases,'scope':'Native/reference full RAM/CPU/SR/PR/FPU comparisons. Independent reserved/ordinary selection for boundary identities, free/busy/priority eligible tables and both FPU banks. All 37 table entries initialized; valid cursor starts32/0 only. Native59-instruction refresh caller plus native193-instruction selector, independent created12-word record and MACL checks. Function name provisional; Native lookup and selector connected. Existing record reuse/new selection/no slot and lifetime+1 wrap independently checked. Audio playback not exercised.'},indent=2)+'\n')
+print(cases,'sound record refresh comparisons passed')

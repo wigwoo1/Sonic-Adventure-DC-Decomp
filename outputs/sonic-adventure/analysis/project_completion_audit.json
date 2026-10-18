@@ -1,0 +1,202 @@
+{
+  "overall_completion_percent": 10,
+  "method": "Weighted acceptance milestone score v2; completed milestones only. Weights are declared planning choices, not measured effort or code coverage. The native-PC gate includes the optional SUPIR HD texture pack; the FPS/resolution gate includes texture/render/aspect settings. The scope includes the N64 and PlayStation demakes and their model/asset adaptation. Existing weights are preserved. No fractional credit for unfinished work.",
+  "uncertainty": "Not an estimate of remaining time, difficulty or percentage of code recovered. Broad unfinished gates intentionally stay uncredited.",
+  "evidence_basis": "Existing verification artifacts inspected; extraction/decoding not rerun during this audit. Full goal remains active.",
+  "main_binary_draft_inventory": {
+    "summary": "analysis/ghidra-all/export_summary.json",
+    "function_index": "analysis/ghidra-all/function_index.tsv",
+    "indexed_functions": 3637,
+    "draft_pseudocode_functions": 3631,
+    "decompilation_failures": 6,
+    "warnings_in_draft": 3777,
+    "function_index_bytes": 158404,
+    "whole_game_coverage_verified": false,
+    "limitation": "Ghidra pseudocode is preliminary and is not buildable or behavior-verified source; its function index is not a complete executable code/data boundary audit."
+  },
+  "requirements": {
+    "pc_frame_rates": [
+      60,
+      120,
+      240
+    ],
+    "pc_maximum_resolution": [
+      7680,
+      4320
+    ],
+    "future_platforms": [
+      "Android",
+      "Nintendo 3DS"
+    ],
+    "stereoscopic_3d": true,
+    "additional_versions": {
+      "platforms": [
+        "Nintendo 64",
+        "PlayStation"
+      ],
+      "demake_asset_adaptation_required": true,
+      "requirements": [
+        "Adapt or recreate models and other assets to fit each target platform",
+        "Build and verify a playable version for each target platform"
+      ]
+    },
+    "full_game_code_decompilation": true,
+    "decompilation_acceptance": [
+      "Recovered buildable source for all executable game modules, with tracked code/data boundaries and function coverage",
+      "Verified original behavior; playable static recompilation alone is insufficient"
+    ],
+    "hd_textures_and_display": {
+      "status": "planned",
+      "plan_document": "HD_TEXTURE_AND_DISPLAY_PLAN.txt",
+      "upscaler": "SUPIR",
+      "upscaler_source": "https://github.com/Fanghua-Yu/SUPIR",
+      "processing": "Offline preparation of an optional HD texture pack; no AI inference during gameplay",
+      "coverage_target": "All identified game textures, with an identity/coverage manifest and quality review",
+      "original_assets_preserved": true,
+      "settings": {
+        "hd_textures": [
+          "On",
+          "Off"
+        ],
+        "texture_resolution": [
+          "100%",
+          "75%",
+          "50%",
+          "25%",
+          "Off"
+        ],
+        "texture_resolution_meaning": "Percentage of active original/HD texture width and height; Off disables game-texture sampling and uses vertex colours, or existing material colour if vertex colours are absent",
+        "texture_off_overrides_hd_toggle": true,
+        "hd_toggle_meaning": "Select HD versus original assets when textures are enabled; preserve this choice while texture resolution is Off",
+        "render_resolution": "Selectable internal dimensions independent of texture quality and output resolution; retain PC output support through 7680x4320",
+        "render_scale_percentages": [
+          100,
+          75,
+          50,
+          25
+        ],
+        "aspect_ratio": [
+          "Auto",
+          "4:3",
+          "16:9",
+          "16:10",
+          "21:9",
+          "32:9"
+        ],
+        "persist_settings": true
+      },
+      "acceptance": [
+        "Inventory every texture identity, including archives, animation, UI and language variants; preserve source hashes and lookup mapping",
+        "Pin SUPIR/model versions and batch settings; pilot representative assets before full conversion",
+        "Review art-style fidelity, accurate text, alpha/masks, tile seams, atlases, animation and mipmaps",
+        "Track missing/rejected replacements explicitly; retain original fallback without treating fallback as completed HD coverage",
+        "Verify every toggle/percentage, settings persistence, pack failure handling, resource reload and memory budget",
+        "Verify texture Off disables all game-texture sampling and preserves vertex/material colours; returning to a percentage restores the selected original/HD set",
+        "Verify internal dimensions and aspect-correct camera/culling/HUD/movie presentation independently of texture quality and simulation speed"
+      ],
+      "platform_scope": "PC first; adapt options, texture formats and budgets to Android/3DS, and separately adapted assets to N64/PlayStation demakes"
+    },
+    "source_handoff": {
+      "all_recovered_and_authored_source_accessible": true,
+      "documentation_required": true,
+      "intended_publication": "User-managed GitHub upload",
+      "handoff_document": "SOURCE_HANDOFF.txt"
+    },
+    "progress_reporting": {
+      "include_entire_project_completion_percentage_in_updates": true,
+      "standing_instruction": "Report the overall project completion percentage whenever giving a progress update, even when the percentage has not changed.",
+      "requested_by_user": true,
+      "scope": [
+        "Full game-code decompilation and behavior verification",
+        "Playable native PC port",
+        "60/120/240 FPS and up to 8K",
+        "SUPIR HD texture pack for all identified textures and in-game texture/render resolution and aspect-ratio settings",
+        "Android port",
+        "Nintendo 3DS port with stereoscopic 3D",
+        "Nintendo 64 demake with adapted models and assets",
+        "PlayStation demake with adapted models and assets",
+        "Complete source and documentation handoff"
+      ],
+      "method": "audit_project_completion.py: weighted acceptance milestone score v2 covers verified extraction, decoding, full code recovery, native PC including the SUPIR HD texture pack and display settings, mobile ports, Nintendo 64 and PlayStation demakes with adapted models/assets, and final source handoff. Existing fixed planning weights; unfinished milestones earn no credit.",
+      "current_overall_completion_percent": 10,
+      "current_estimate_status": "Conservative weighted acceptance milestone estimate v2; completed milestones only, not code/effort/time coverage.",
+      "audit_report": "analysis/project_completion_audit.json",
+      "update_format": "Every project progress update states overall project completion percentage, newly verified work, and remaining limitations. Percentage covers the entire requested project, including PC with SUPIR HD textures and display settings, Android, Nintendo 3DS, Nintendo 64 and PlayStation versions, and source/documentation handoff."
+    }
+  },
+  "milestones": [
+    {
+      "name": "Disc inventory and verified extraction",
+      "weight_percent": 5,
+      "complete": true,
+      "evidence": "analysis/extraction_verification.json"
+    },
+    {
+      "name": "PRS decoding verified against extracted resources",
+      "weight_percent": 5,
+      "complete": true,
+      "evidence": "analysis/prs_native_verification.json"
+    },
+    {
+      "name": "Complete executable module inventory and code/data boundaries",
+      "weight_percent": 10,
+      "complete": false,
+      "evidence": "analysis/recovery_coverage_audit.json"
+    },
+    {
+      "name": "Full game-code decompilation and original behavior verification",
+      "weight_percent": 24,
+      "complete": false,
+      "evidence": "analysis/recovery_coverage_audit.json"
+    },
+    {
+      "name": "Playable native PC game with renderer/input/audio/assets and optional SUPIR HD texture pack",
+      "weight_percent": 18,
+      "complete": false,
+      "evidence": "project_status.json:milestones; HD_TEXTURE_AND_DISPLAY_PLAN.txt"
+    },
+    {
+      "name": "Verified 60/120/240 FPS, resolution support through 8K and texture/render/aspect settings",
+      "weight_percent": 9,
+      "complete": false,
+      "evidence": "project_status.json:milestones; HD_TEXTURE_AND_DISPLAY_PLAN.txt"
+    },
+    {
+      "name": "Playable Android port",
+      "weight_percent": 7,
+      "complete": false,
+      "evidence": "project_status.json:milestones"
+    },
+    {
+      "name": "Playable Nintendo 3DS port with stereoscopic 3D",
+      "weight_percent": 7,
+      "complete": false,
+      "evidence": "project_status.json:milestones"
+    },
+    {
+      "name": "Nintendo 64 demake with platform-adapted models and assets",
+      "weight_percent": 5,
+      "complete": false,
+      "evidence": "project_status.json:requirements.additional_versions"
+    },
+    {
+      "name": "PlayStation demake with platform-adapted models and assets",
+      "weight_percent": 5,
+      "complete": false,
+      "evidence": "project_status.json:requirements.additional_versions"
+    },
+    {
+      "name": "Complete source/documentation and reproducible final handoff",
+      "weight_percent": 5,
+      "complete": false,
+      "evidence": "SOURCE_HANDOFF.txt"
+    }
+  ],
+  "registry_warning": {
+    "registered_routines": 1176,
+    "indexed_candidates": 10875,
+    "unindexed_non_texture_binaries": 211,
+    "source_c_files": 1572,
+    "note": "Registry is incomplete and candidate indexes are not an exhaustive code inventory; these counts are not coverage."
+  }
+}

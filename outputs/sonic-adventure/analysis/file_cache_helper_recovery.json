@@ -1,0 +1,71 @@
+{
+  "status": "native/reference zero/small and whole-cache paths verified against synthetic cache-tag/MMIO models",
+  "binary_sha256": "45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a",
+  "helpers": [
+    {
+      "name": "invalidate",
+      "entry": "0x8c5fc0d8",
+      "cache_instruction": "ocbi",
+      "literal_values": {
+        "0x8c5fc118": "0x8c5fc32c",
+        "0x8c5fc11c": "0x9fffffe0",
+        "0x8c5fc120": "0x30000",
+        "0x8c5fc124": "0x8c5fc13e",
+        "0x8c5fc158": "0x8c5fc32c"
+      },
+      "small_range_base": "address & 0x9fffffe0",
+      "small_range_count": "((address & 31) + length + 31) >> 5",
+      "whole_cache_threshold": 196608,
+      "zero_and_small_path_exit": "0x8c5fc32c",
+      "whole_cache_path_entry": "0x8c5fc13e",
+      "remaining": "Physical cache effects modeled; mounted driver test covers native helpers, full boot/upload integration remains separate.",
+      "reachable_instruction_addresses": 228,
+      "instruction_tsv": "analysis/instructions/file_cache_invalidate_full.tsv",
+      "instruction_tsv_sha256": "cd6adc011741158134bb69254295962b6a959164dc2a189d846f73aad274497d",
+      "resolved_indirect_jumps": {
+        "0x8c5fc0ea": "0x8c5fc32c",
+        "0x8c5fc0fa": "0x8c5fc13e",
+        "0x8c5fc162": "0xac5fc16c",
+        "0x8c5fc210": "0x8c5fc29e",
+        "0x8c5fc29a": "0x8c5fc318",
+        "0x8c5fc13a": "0x8c5fc32c"
+      },
+      "source": "source/sa_file_cache_invalidate.c",
+      "source_sha256": "8be2c14e998977b400d4915497f3a11bd4c582ee0c5a0a470128f52c78ae0d8f",
+      "compilation": "clang -c -O2 -Wall -Wextra -Werror passed"
+    },
+    {
+      "name": "purge",
+      "entry": "0x8c5fc336",
+      "cache_instruction": "ocbp",
+      "literal_values": {
+        "0x8c5fc36c": "0x8c5fc580",
+        "0x8c5fc370": "0x9fffffe0",
+        "0x8c5fc374": "0x10000",
+        "0x8c5fc378": "0x8c5fc392",
+        "0x8c5fc3ac": "0x8c5fc580"
+      },
+      "small_range_base": "address & 0x9fffffe0",
+      "small_range_count": "((address & 31) + length + 31) >> 5",
+      "whole_cache_threshold": 65536,
+      "zero_and_small_path_exit": "0x8c5fc580",
+      "whole_cache_path_entry": "0x8c5fc392",
+      "remaining": "Physical cache effects modeled; mounted driver test covers native helpers, full boot/upload integration remains separate.",
+      "reachable_instruction_addresses": 228,
+      "instruction_tsv": "analysis/instructions/file_cache_purge_full.tsv",
+      "instruction_tsv_sha256": "c602449cac64a16adf631c5b95f887bb187693f4e7d28586acc4beb5bf1dd729",
+      "resolved_indirect_jumps": {
+        "0x8c5fc348": "0x8c5fc580",
+        "0x8c5fc358": "0x8c5fc392",
+        "0x8c5fc3b6": "0xac5fc3c0",
+        "0x8c5fc464": "0x8c5fc4f2",
+        "0x8c5fc4ee": "0x8c5fc56c",
+        "0x8c5fc38e": "0x8c5fc580"
+      },
+      "source": "source/sa_file_cache_purge.c",
+      "source_sha256": "f19d368c7fe1e41fb3047207727b5cc7b1e47a5f12e1378fb2f2fb704ccf792b",
+      "compilation": "clang -c -O2 -Wall -Wextra -Werror passed"
+    }
+  ],
+  "reproduction": "Run ghidra/recover_file_cache_control_flow.py, then export_known_integer_opcodes.py with each reachable-address JSON."
+}

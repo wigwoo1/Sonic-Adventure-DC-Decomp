@@ -1,0 +1,48 @@
+address	opcode	instruction	references
+8c0932e0	2fe6	mov.l r14,@-r15	DATA:Stack[-0x4] 
+8c0932e2	2fd6	mov.l r13,@-r15	DATA:Stack[-0x8] 
+8c0932e4	2fc6	mov.l r12,@-r15	DATA:Stack[-0xc] 
+8c0932e6	4f22	sts.l PR,@-r15	DATA:Stack[-0x10] 
+8c0932e8	7ffc	add #-0x4,r15	
+8c0932ea	6e43	mov r4,r14	
+8c0932ec	e40f	mov #0xf,r4	
+8c0932ee	3e47	cmp/gt r4,r14	
+8c0932f0	6d53	mov r5,r13	
+8c0932f2	8f01	bf/s 0x8c0932f8	CONDITIONAL_JUMP:8c0932f8=d512e220 
+8c0932f4	ec00	_mov #0x0,r12	
+8c0932f6	ec01	mov #0x1,r12	
+8c0932f8	e220	mov #0x20,r2	
+8c0932fa	d512	mov.l 0x8c093344,r5	READ:8c093344=8c79e3e0 
+8c0932fc	4218	shll8 r2	
+8c0932fe	3d2c	add r2,r13	
+8c093300	d20f	mov.l 0x8c093340,r2	READ:8c093340=8c643c18 
+8c093302	e1f9	mov #-0x7,r1	
+8c093304	63d3	mov r13,r3	
+8c093306	431c	shad r1,r3	
+8c093308	d10f	mov.l 0x8c093348,r1	READ:8c093348=8c79e3ec 
+8c09330a	2f36	mov.l r3,@-r15	DATA:Stack[-0x18] 
+8c09330c	e3e0	mov #-0x20,r3	
+8c09330e	e07f	mov #0x7f,r0	
+8c093310	2e49	and r4,r14	
+8c093312	64c3	mov r12,r4	
+8c093314	633c	extu.b r3,r3	
+8c093316	20d9	and r13,r0	
+8c093318	4408	shll2 r4	
+8c09331a	2f06	mov.l r0,@-r15	DATA:Stack[-0x1c] 
+8c09331c	2e3b	or r3,r14	
+8c09331e	341c	add r1,r4	
+8c093320	2fe6	mov.l r14,@-r15	DATA:Stack[-0x20] 
+8c093322	1f43	mov.l r4,@(0xc,r15)	DATA:8c79e3f0 DATA:Stack[-0x14] 
+8c093324	420b	jsr @r2	COMPUTED_CALL:8c643c18=2fd62fe6 
+8c093326	6442	_mov.l @r4,r4	READ:8c79e3f0 
+8c093328	54f3	mov.l @(0xc,r15),r4	DATA:Stack[-0x14] 
+8c09332a	e600	mov #0x0,r6	
+8c09332c	d505	mov.l 0x8c093344,r5	READ:8c093344=8c79e3e0 
+8c09332e	6442	mov.l @r4,r4	READ:8c79e3f0 
+8c093330	7f10	add #0x10,r15	
+8c093332	4f26	lds.l @r15+,PR	DATA:Stack[-0x10] 
+8c093334	d305	mov.l 0x8c09334c,r3	READ:8c09334c=8c643b9c 
+8c093336	6cf6	mov.l @r15+,r12	DATA:Stack[-0xc] 
+8c093338	6df6	mov.l @r15+,r13	DATA:Stack[-0x8] 
+8c09333a	432b	jmp @r3	COMPUTED_CALL:8c643b9c=2fe6d215 
+8c09333c	6ef6	_mov.l @r15+,r14	

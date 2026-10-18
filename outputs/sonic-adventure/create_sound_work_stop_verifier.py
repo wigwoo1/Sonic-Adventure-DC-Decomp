@@ -1,0 +1,17 @@
+from pathlib import Path
+p=Path(__file__).resolve().parent
+s=(p/'verify_sound_stream_decode_reset.py').read_text()
+s=s.replace("fn=ctypes.CDLL(str(ROOT/'work/sonic-adventure/build/sound_stream_decode_reset.dll')).sa_sound_stream_decode_reset", "fn=ctypes.CDLL(str(ROOT/'work/sonic-adventure/build/sound_work_stop.dll')).sa_sound_work_stop")
+s=s.replace('cases=0', "stream_reset=ctypes.CDLL(str(ROOT/'work/sonic-adventure/build/sound_stream_decode_reset.dll')).sa_sound_stream_decode_reset;stream_reset.argtypes=fn.argtypes\ncases=0")
+s=s.replace('    native=bytearray(ram);',"    ram[0xa80000:0xa80100]=bytes([0x77])*256;ram[0xa80001]=count&255;struct.pack_into('<I',ram,0xa80004,0x8ca60000);work_before=bytes(ram[0xa80000:0xa80100])\n    native=bytearray(ram);")
+s=s.replace('s.r[4:8]=[0x8ca60000,','s.r[4:8]=[0x8ca80000,').replace('s.pc=0x8c66777c','s.pc=0x8c65b78e')
+s=s.replace('        if address==0x8c644c68:', '        if address==0x8c66777c:return stream_reset(mem,fp,srp,r,prp,ctypes.byref(fpul),ctypes.byref(macl),None,call)\n        if address==0x8c644c68:')
+s=s.replace('    cases+=1',"    work_expected=bytearray(work_before);work_expected[1]=0\n    assert native[0xa80000:0xa80100]==work_expected\n    cases+=1")
+s=s.replace('sound_stream_decode_reset_verification','sound_work_stop_verification')
+s=s.replace('of 13-instruction stream reset66777c..667796 connected', 'of work stop65b78e..65b7a8 with native stream reset66777c connected')
+s=s.replace('No modeled calls;', 'Independent entire256-byte work object:state byte1 zero,all other bytes preserved. No modeled calls;')
+(p/'verify_sound_work_stop.py').write_text(s)
+build=(p/'build_sound_work_reset.ps1').read_text().replace('sound_work_reset','sound_work_stop')
+(p/'build_sound_work_stop.ps1').write_text(build)
+s=(p/'register_sound_work_reset.py').read_text().replace('sound_work_reset','sound_work_stop').replace('0x8c65b606','0x8c65b78e').replace('0x8c65b624','0x8c65b7a8').replace('0x64b606:0x64b624','0x64b78e:0x64b7a8').replace('==140','==100')
+(p/'register_sound_work_stop.py').write_text(s)

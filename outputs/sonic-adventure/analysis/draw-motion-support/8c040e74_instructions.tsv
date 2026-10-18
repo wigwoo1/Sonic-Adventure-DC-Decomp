@@ -1,0 +1,67 @@
+address	length	bytes	instruction	flows
+8c040e74	2	e62f	mov.l r14,@-r15	
+8c040e76	2	d62f	mov.l r13,@-r15	
+8c040e78	2	c62f	mov.l r12,@-r15	
+8c040e7a	2	1ced	mov #0x1c,r13	
+8c040e7c	2	63d2	mov.l 0x8c04100c,r2	
+8c040e7e	2	b62f	mov.l r11,@-r15	
+8c040e80	2	a62f	mov.l r10,@-r15	
+8c040e82	2	224f	sts.l PR,@-r15	
+8c040e84	2	5fd3	mov.l 0x8c041004,r3	
+8c040e86	2	fc7f	add #-0x4,r15	
+8c040e88	2	63d0	mov.l 0x8c041018,r0	
+8c040e8a	2	3165	mov.w @r3,r5	
+8c040e8c	2	df25	muls.w r13,r5	
+8c040e8e	2	5d6e	extu.w r5,r14	
+8c040e90	2	1a0d	sts MACL,r13	
+8c040e92	2	de6d	exts.b r13,r13	
+8c040e94	2	2c3d	add r2,r13	
+8c040e96	2	e361	mov r14,r1	
+8c040e98	2	d55c	mov.l @(0x14,r13),r12	
+8c040e9a	2	004e	shll r14	
+8c040e9c	2	1c3e	add r1,r14	
+8c040e9e	2	084e	shll2 r14	
+8c040ea0	2	0c3e	add r0,r14	
+8c040ea2	2	c365	mov r12,r5	
+8c040ea4	2	d150	mov.l @(0x4,r13),r0	
+8c040ea6	2	0845	shll2 r5	
+8c040ea8	2	5e0b	mov.l @(r0,r5),r11	
+8c040eaa	2	b82b	tst r11,r11	
+8c040eac	2	1289	bt 0x8c040ed4	8c040ed4 
+8c040eae	2	f366	mov r15,r6	
+8c040eb0	2	d250	mov.l @(0x8,r13),r0	
+8c040eb2	2	5e0a	mov.l @(r0,r5),r10	
+8c040eb4	2	a365	mov r10,r5	
+8c040eb6	2	d3bd	bsr 0x8c040a60	8c040a60 
+8c040eb8	2	b364	_mov r11,r4	
+8c040eba	2	e367	mov r14,r7	
+8c040ebc	2	f265	mov.l @r15,r5	
+8c040ebe	2	a366	mov r10,r6	
+8c040ec0	2	ccbe	bsr 0x8c040c5c	8c040c5c 
+8c040ec2	2	b364	_mov r11,r4	
+8c040ec4	2	55d4	mov.l 0x8c04101c,r4	
+8c040ec6	2	4fd3	mov.l 0x8c041004,r3	
+8c040ec8	2	4161	mov.w @r4,r1	
+8c040eca	2	3162	mov.w @r3,r2	
+8c040ecc	2	0172	add #0x1,r2	
+8c040ece	2	2b21	or r2,r1	
+8c040ed0	2	08a0	bra 0x8c040ee4	8c040ee4 
+8c040ed2	2	1124	_mov.w r1,@r4	
+8c040ed4	2	2074	add #0x20,r4	
+8c040ed6	2	0c7e	add #0xc,r14	
+8c040ed8	2	49f6	fmov.s @r4+,fr6	
+8c040eda	2	49f5	fmov.s @r4+,fr5	
+8c040edc	2	48f4	fmov.s @r4,fr4	
+8c040ede	2	4bfe	fmov.s fr4,@-r14	
+8c040ee0	2	5bfe	fmov.s fr5,@-r14	
+8c040ee2	2	6bfe	fmov.s fr6,@-r14	
+8c040ee4	2	017c	add #0x1,r12	
+8c040ee6	2	c51d	mov.l r12,@(0x14,r13)	
+8c040ee8	2	047f	add #0x4,r15	
+8c040eea	2	264f	lds.l @r15+,PR	
+8c040eec	2	f66a	mov.l @r15+,r10	
+8c040eee	2	f66b	mov.l @r15+,r11	
+8c040ef0	2	f66c	mov.l @r15+,r12	
+8c040ef2	2	f66d	mov.l @r15+,r13	
+8c040ef4	2	0b00	rts	
+8c040ef6	2	f66e	_mov.l @r15+,r14	

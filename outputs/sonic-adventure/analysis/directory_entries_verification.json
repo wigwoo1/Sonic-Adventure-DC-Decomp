@@ -1,0 +1,38 @@
+{
+  "retail_binary_sha256": "45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a",
+  "source": "source/directory_entries.c",
+  "source_sha256": "d546ed9f51a4369bf3e00a06a8c601460996d8c21ebd44e17abaaa2977201ad6",
+  "dll_sha256": "4a5ed23911952cda1fa75f541ca82f0b2a988cf61aa3d133480f19af6ef7df3c",
+  "routines": [
+    {
+      "name": "string_set_find",
+      "routine_start": "0x8c64541c",
+      "routine_end_exclusive": "0x8c645442",
+      "cases_passed": 106,
+      "retail_instructions_executed": 102416,
+      "scope": "NUL-terminated search-set membership, first-match indexing, no-match length, repeated/high-bit bytes, and both RAM aliases.",
+      "retail_span_sha256": "dd554dd24f258bf950dfca6463fa4a27c38bb03af8fad7cb3cd78bd65ca4ea1d"
+    },
+    {
+      "name": "ascii_name_hash",
+      "routine_start": "0x8c645442",
+      "routine_end_exclusive": "0x8c645468",
+      "cases_passed": 138,
+      "retail_instructions_executed": 60520,
+      "scope": "Seeded ASCII-case-insensitive byte-sum hash across empty, upper/lower, high-bit and deterministic strings under both aliases.",
+      "retail_span_sha256": "9ece93de7b8f3ed34eaf962ca15c3e138353124284a6c867987cddd0f382674c"
+    },
+    {
+      "name": "directory_entry_parse",
+      "routine_start": "0x8c645468",
+      "routine_end_exclusive": "0x8c6454fe",
+      "cases_passed": 176,
+      "retail_instructions_executed": 65351,
+      "scope": "Rejected record lengths, ordinary file names, directory flags, . and .. special-name normalization, return values and full bounded output memory comparison.",
+      "retail_span_sha256": "3426953c5ecf5ab0d9cae1195727020709fa49c63f85df48019514bed819b333"
+    }
+  ],
+  "limitations": [
+    "Malformed records with name lengths below two and the flag-clear path can wrap the native copy count and write address; malformed-pointer exception behavior is excluded."
+  ]
+}

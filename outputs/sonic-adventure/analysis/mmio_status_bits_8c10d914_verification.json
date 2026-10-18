@@ -1,0 +1,912 @@
+{
+  "module": "1ST_READ.BIN",
+  "load_address": "0x8c010000",
+  "address": "0x8c10d914",
+  "end_exclusive": "0x8c10d926",
+  "retail_span_sha256": "8959faf95a19146b3adfe68be247c45b9ec50b32c71c6f8f5d186efe15f7dbca",
+  "source_sha256": "c4dddf78f63879132d8c44871701e362791234b927034c082bb610652d68f37a",
+  "cases_passed": 128,
+  "comparison_level": "complete 16 MiB RAM and all GPR/SR/PR/PC state; MMIO callback and stack write checked",
+  "scope": "Exact 18-byte retail status query including nested MMIO helper call, PR save/restore, SR stack write, and masked bits 8-9.",
+  "limitations": [
+    "The device register hardware semantics and system-level meaning of its two status bits remain unidentified."
+  ],
+  "cases": [
+    {
+      "case": 0,
+      "address": "0xff800030",
+      "mmio_value": "0x0",
+      "status_bits": 0,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 1,
+      "address": "0xff80002e",
+      "mmio_value": "0x1",
+      "status_bits": 0,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 2,
+      "address": "0xff800040",
+      "mmio_value": "0xffff",
+      "status_bits": 3,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 3,
+      "address": "0xff800100",
+      "mmio_value": "0x8000",
+      "status_bits": 0,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 4,
+      "address": "0xff800240",
+      "mmio_value": "0x7fff",
+      "status_bits": 3,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 5,
+      "address": "0xff800078",
+      "mmio_value": "0x300",
+      "status_bits": 3,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 6,
+      "address": "0xff8001f6",
+      "mmio_value": "0x100",
+      "status_bits": 1,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 7,
+      "address": "0xff8007d8",
+      "mmio_value": "0x200",
+      "status_bits": 2,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 8,
+      "address": "0xff800446",
+      "mmio_value": "0x300",
+      "status_bits": 3,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 9,
+      "address": "0xff80078c",
+      "mmio_value": "0xff00",
+      "status_bits": 3,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 10,
+      "address": "0xff8003b0",
+      "mmio_value": "0xff",
+      "status_bits": 0,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 11,
+      "address": "0xff8004c2",
+      "mmio_value": "0x13d7",
+      "status_bits": 3,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 12,
+      "address": "0xff8006ac",
+      "mmio_value": "0x9574",
+      "status_bits": 1,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 13,
+      "address": "0xff80071a",
+      "mmio_value": "0x58b2",
+      "status_bits": 0,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 14,
+      "address": "0xff800030",
+      "mmio_value": "0x4dd5",
+      "status_bits": 1,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 15,
+      "address": "0xff800472",
+      "mmio_value": "0x68b0",
+      "status_bits": 0,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 16,
+      "address": "0xff80043a",
+      "mmio_value": "0x9c2",
+      "status_bits": 1,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 17,
+      "address": "0xff80019c",
+      "mmio_value": "0xb524",
+      "status_bits": 1,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 18,
+      "address": "0xff8005ce",
+      "mmio_value": "0xab6",
+      "status_bits": 2,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 19,
+      "address": "0xff80011e",
+      "mmio_value": "0x3784",
+      "status_bits": 3,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 20,
+      "address": "0xff8000ce",
+      "mmio_value": "0x5119",
+      "status_bits": 1,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 21,
+      "address": "0xff800728",
+      "mmio_value": "0x4f39",
+      "status_bits": 3,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 22,
+      "address": "0xff800500",
+      "mmio_value": "0x51d9",
+      "status_bits": 1,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 23,
+      "address": "0xff8004f2",
+      "mmio_value": "0x7fc1",
+      "status_bits": 3,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 24,
+      "address": "0xff80077c",
+      "mmio_value": "0x15ed",
+      "status_bits": 1,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 25,
+      "address": "0xff800072",
+      "mmio_value": "0xec44",
+      "status_bits": 0,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 26,
+      "address": "0xff80054c",
+      "mmio_value": "0xe070",
+      "status_bits": 0,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 27,
+      "address": "0xff800056",
+      "mmio_value": "0xa506",
+      "status_bits": 1,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 28,
+      "address": "0xff80027e",
+      "mmio_value": "0xefb",
+      "status_bits": 2,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 29,
+      "address": "0xff80071e",
+      "mmio_value": "0xda",
+      "status_bits": 0,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 30,
+      "address": "0xff8005d4",
+      "mmio_value": "0xc1e9",
+      "status_bits": 1,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 31,
+      "address": "0xff8001f4",
+      "mmio_value": "0xc16c",
+      "status_bits": 1,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 32,
+      "address": "0xff800528",
+      "mmio_value": "0x9fcb",
+      "status_bits": 3,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 33,
+      "address": "0xff800192",
+      "mmio_value": "0xa13e",
+      "status_bits": 1,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 34,
+      "address": "0xff800726",
+      "mmio_value": "0x28a0",
+      "status_bits": 0,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 35,
+      "address": "0xff80003e",
+      "mmio_value": "0x854",
+      "status_bits": 0,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 36,
+      "address": "0xff800306",
+      "mmio_value": "0x7673",
+      "status_bits": 2,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 37,
+      "address": "0xff80014e",
+      "mmio_value": "0xe87e",
+      "status_bits": 0,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 38,
+      "address": "0xff8006c8",
+      "mmio_value": "0x3be5",
+      "status_bits": 3,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 39,
+      "address": "0xff8004d6",
+      "mmio_value": "0x56dd",
+      "status_bits": 2,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 40,
+      "address": "0xff80049e",
+      "mmio_value": "0x1c5a",
+      "status_bits": 0,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 41,
+      "address": "0xff80029c",
+      "mmio_value": "0x89dd",
+      "status_bits": 1,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 42,
+      "address": "0xff8003e4",
+      "mmio_value": "0x8c3d",
+      "status_bits": 0,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 43,
+      "address": "0xff800690",
+      "mmio_value": "0x6877",
+      "status_bits": 0,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 44,
+      "address": "0xff8002fc",
+      "mmio_value": "0x3320",
+      "status_bits": 3,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 45,
+      "address": "0xff8002e0",
+      "mmio_value": "0x5c54",
+      "status_bits": 0,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 46,
+      "address": "0xff8007f2",
+      "mmio_value": "0x6f0c",
+      "status_bits": 3,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 47,
+      "address": "0xff800322",
+      "mmio_value": "0x7561",
+      "status_bits": 1,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 48,
+      "address": "0xff8006f6",
+      "mmio_value": "0xf5cb",
+      "status_bits": 1,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 49,
+      "address": "0xff80056e",
+      "mmio_value": "0x267c",
+      "status_bits": 2,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 50,
+      "address": "0xff80046e",
+      "mmio_value": "0x6f72",
+      "status_bits": 3,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 51,
+      "address": "0xff800416",
+      "mmio_value": "0xb7a3",
+      "status_bits": 3,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 52,
+      "address": "0xff800730",
+      "mmio_value": "0x86f0",
+      "status_bits": 2,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 53,
+      "address": "0xff80057e",
+      "mmio_value": "0xacf6",
+      "status_bits": 0,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 54,
+      "address": "0xff8000f8",
+      "mmio_value": "0x599b",
+      "status_bits": 1,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 55,
+      "address": "0xff800196",
+      "mmio_value": "0x872e",
+      "status_bits": 3,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 56,
+      "address": "0xff80067a",
+      "mmio_value": "0x180",
+      "status_bits": 1,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 57,
+      "address": "0xff8001c0",
+      "mmio_value": "0xc609",
+      "status_bits": 2,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 58,
+      "address": "0xff800294",
+      "mmio_value": "0x1917",
+      "status_bits": 1,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 59,
+      "address": "0xff800734",
+      "mmio_value": "0xaa53",
+      "status_bits": 2,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 60,
+      "address": "0xff8006e0",
+      "mmio_value": "0x66f6",
+      "status_bits": 2,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 61,
+      "address": "0xff8005ae",
+      "mmio_value": "0x66e",
+      "status_bits": 2,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 62,
+      "address": "0xff800530",
+      "mmio_value": "0x18da",
+      "status_bits": 0,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 63,
+      "address": "0xff8005a4",
+      "mmio_value": "0xdfde",
+      "status_bits": 3,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 64,
+      "address": "0xff80057e",
+      "mmio_value": "0x39c3",
+      "status_bits": 1,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 65,
+      "address": "0xff8005f6",
+      "mmio_value": "0xd0a6",
+      "status_bits": 0,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 66,
+      "address": "0xff80071a",
+      "mmio_value": "0xdb81",
+      "status_bits": 3,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 67,
+      "address": "0xff8000b0",
+      "mmio_value": "0x90b6",
+      "status_bits": 0,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 68,
+      "address": "0xff800146",
+      "mmio_value": "0xbd27",
+      "status_bits": 1,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 69,
+      "address": "0xff8003c0",
+      "mmio_value": "0x87f",
+      "status_bits": 0,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 70,
+      "address": "0xff80054a",
+      "mmio_value": "0x5c71",
+      "status_bits": 0,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 71,
+      "address": "0xff800210",
+      "mmio_value": "0xa9ee",
+      "status_bits": 1,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 72,
+      "address": "0xff80068a",
+      "mmio_value": "0xe115",
+      "status_bits": 1,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 73,
+      "address": "0xff8000f2",
+      "mmio_value": "0xf78f",
+      "status_bits": 3,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 74,
+      "address": "0xff8007c0",
+      "mmio_value": "0x5024",
+      "status_bits": 0,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 75,
+      "address": "0xff8007b8",
+      "mmio_value": "0x7c5e",
+      "status_bits": 0,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 76,
+      "address": "0xff8002de",
+      "mmio_value": "0xdbb0",
+      "status_bits": 3,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 77,
+      "address": "0xff800690",
+      "mmio_value": "0x582c",
+      "status_bits": 0,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 78,
+      "address": "0xff80072c",
+      "mmio_value": "0xdcd3",
+      "status_bits": 0,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 79,
+      "address": "0xff80020a",
+      "mmio_value": "0x9882",
+      "status_bits": 0,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 80,
+      "address": "0xff80026e",
+      "mmio_value": "0x3e21",
+      "status_bits": 2,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 81,
+      "address": "0xff8003a8",
+      "mmio_value": "0x8fd1",
+      "status_bits": 3,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 82,
+      "address": "0xff800786",
+      "mmio_value": "0xe91f",
+      "status_bits": 1,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 83,
+      "address": "0xff800716",
+      "mmio_value": "0xb9be",
+      "status_bits": 1,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 84,
+      "address": "0xff8005d0",
+      "mmio_value": "0xb14c",
+      "status_bits": 1,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 85,
+      "address": "0xff8007d6",
+      "mmio_value": "0xf7f2",
+      "status_bits": 3,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 86,
+      "address": "0xff800068",
+      "mmio_value": "0xd4e1",
+      "status_bits": 0,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 87,
+      "address": "0xff80032a",
+      "mmio_value": "0x16b7",
+      "status_bits": 2,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 88,
+      "address": "0xff8001a4",
+      "mmio_value": "0x46d7",
+      "status_bits": 2,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 89,
+      "address": "0xff8007e0",
+      "mmio_value": "0x3905",
+      "status_bits": 1,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 90,
+      "address": "0xff8005ba",
+      "mmio_value": "0x7ac3",
+      "status_bits": 2,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 91,
+      "address": "0xff80067a",
+      "mmio_value": "0xc71c",
+      "status_bits": 3,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 92,
+      "address": "0xff8005d4",
+      "mmio_value": "0xb2d8",
+      "status_bits": 2,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 93,
+      "address": "0xff800754",
+      "mmio_value": "0x719e",
+      "status_bits": 1,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 94,
+      "address": "0xff800720",
+      "mmio_value": "0x2850",
+      "status_bits": 0,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 95,
+      "address": "0xff8007f2",
+      "mmio_value": "0x362",
+      "status_bits": 3,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 96,
+      "address": "0xff8005a2",
+      "mmio_value": "0x5c6a",
+      "status_bits": 0,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 97,
+      "address": "0xff80064a",
+      "mmio_value": "0x6cbb",
+      "status_bits": 0,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 98,
+      "address": "0xff80000c",
+      "mmio_value": "0x9ce7",
+      "status_bits": 0,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 99,
+      "address": "0xff80027e",
+      "mmio_value": "0xd7fd",
+      "status_bits": 3,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 100,
+      "address": "0xff8001be",
+      "mmio_value": "0x545e",
+      "status_bits": 0,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 101,
+      "address": "0xff800742",
+      "mmio_value": "0x78d2",
+      "status_bits": 0,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 102,
+      "address": "0xff8004d2",
+      "mmio_value": "0x641f",
+      "status_bits": 0,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 103,
+      "address": "0xff80077e",
+      "mmio_value": "0x43b0",
+      "status_bits": 3,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 104,
+      "address": "0xff800604",
+      "mmio_value": "0x9cbe",
+      "status_bits": 0,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 105,
+      "address": "0xff8004ae",
+      "mmio_value": "0x8c40",
+      "status_bits": 0,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 106,
+      "address": "0xff8003e6",
+      "mmio_value": "0x3e8c",
+      "status_bits": 2,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 107,
+      "address": "0xff80024a",
+      "mmio_value": "0x133a",
+      "status_bits": 3,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 108,
+      "address": "0xff800140",
+      "mmio_value": "0xdb0e",
+      "status_bits": 3,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 109,
+      "address": "0xff800486",
+      "mmio_value": "0x8dfb",
+      "status_bits": 1,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 110,
+      "address": "0xff8001e2",
+      "mmio_value": "0xef23",
+      "status_bits": 3,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 111,
+      "address": "0xff8004e4",
+      "mmio_value": "0x2f8d",
+      "status_bits": 3,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 112,
+      "address": "0xff8005fe",
+      "mmio_value": "0xaaac",
+      "status_bits": 2,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 113,
+      "address": "0xff800478",
+      "mmio_value": "0xdcc3",
+      "status_bits": 0,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 114,
+      "address": "0xff8005a8",
+      "mmio_value": "0x4b24",
+      "status_bits": 3,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 115,
+      "address": "0xff8000dc",
+      "mmio_value": "0x3f57",
+      "status_bits": 3,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 116,
+      "address": "0xff8001a0",
+      "mmio_value": "0xf221",
+      "status_bits": 2,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 117,
+      "address": "0xff800008",
+      "mmio_value": "0x98df",
+      "status_bits": 0,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 118,
+      "address": "0xff800132",
+      "mmio_value": "0xdb4",
+      "status_bits": 1,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 119,
+      "address": "0xff80059a",
+      "mmio_value": "0x5a79",
+      "status_bits": 2,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 120,
+      "address": "0xff800346",
+      "mmio_value": "0xb72a",
+      "status_bits": 3,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 121,
+      "address": "0xff80028e",
+      "mmio_value": "0x5441",
+      "status_bits": 0,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 122,
+      "address": "0xff800092",
+      "mmio_value": "0x9a81",
+      "status_bits": 2,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 123,
+      "address": "0xff800616",
+      "mmio_value": "0xb89a",
+      "status_bits": 0,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 124,
+      "address": "0xff800258",
+      "mmio_value": "0x415d",
+      "status_bits": 1,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 125,
+      "address": "0xff8005ec",
+      "mmio_value": "0xb06a",
+      "status_bits": 0,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 126,
+      "address": "0xff8006ba",
+      "mmio_value": "0xa97b",
+      "status_bits": 1,
+      "ram_cpu_callback_match": true
+    },
+    {
+      "case": 127,
+      "address": "0xff8000d2",
+      "mmio_value": "0xb760",
+      "status_bits": 3,
+      "ram_cpu_callback_match": true
+    }
+  ]
+}

@@ -1,0 +1,141 @@
+Sonic Adventure Dreamcast Rev A - original motion/drawing variants
+
+Overall completion: 10% estimated weighted whole-project milestones, not code
+coverage. The goal remains active on Sol High. The native renderer/game and all
+playable ports remain unfinished.
+
+This milestone follows the previous first missing drawing wrappers at 8c0409c0,
+8c041c92 and 8c5fde20. Forty-three original instruction bodies have native guarded
+C proposals: 2,070 static instructions, including real callback-table dispatch,
+hierarchy traversal and motion sampling. Compilation grants no recovery credit.
+Twelve small bodies qualify separately for registration: 286 instructions and
+all 30 conditional outcomes are exercised. The other 31 proposals stay partial.
+
+Complete primitives (descriptive roles inferred from the original instructions):
+8c03fe1a - single-motion frame acceptance and state setup (35 rows).
+8c03fe60 - primary format/position/rotation/scale callback selection (44 rows).
+8c040b90 - per-channel dual-motion setup (57 rows).
+8c040c02 - per-channel callbacks and shared axis callback selection (45 rows).
+8c04057a/040588/040596/0405a4 - four default-pose matrix adapters (7 rows each).
+8c0414a6/0414cc/0414f0 - default pose channel-buffer copies (19/18/19 rows).
+8c041732 - model data-pointer channel-buffer copy/skip (21 rows).
+
+Source and workflows are retained in this project directory:
+source/sa_draw_motion_variants.c
+source/sa_draw_motion_variants_connected.c
+recover_draw_motion_variants.py / connect_draw_motion_variants.py
+build_draw_motion_variants.ps1
+verify_draw_motion_variants.py
+verify_draw_motion_variants_extended.py
+verify_overlay_draw_motion_variants.py
+register_draw_motion_variants.py
+analysis/draw_motion_variants_translation.json
+analysis/draw_motion_variants_connection.json
+analysis/draw_motion_variants_verification.json
+analysis/draw_motion_variants_extended_verification.json
+analysis/overlay_draw_motion_variants_verification.json
+
+The focused strict native research build compiles 110 sources, with optimization,
+warnings treated as errors and no standard-library dependency. Its separate DLL
+is work/sonic-adventure/build/draw_motion_variants.dll under the workspace root.
+The previous source, DLLs, input hashes and comparison reports remain preserved.
+Default (non-research-define) syntax also passes for both new C source files.
+
+Direct verification: 1,272 baseline plus 498 supplemental comparisons pass.
+The baseline exercises 1,690/2,070 proposed instruction rows and 104 conditional
+outcomes, with 3,119 ordered native/original entries. Some larger-body cases stop
+at the explicitly missing services; these are matched prefixes, not complete
+routine recoveries. Supplemental cases add 570 ordered entries, completing the
+model-pointer helper, with no reached missing service. Combined independent
+checks: 1,035 cases / 3,926 assertions about setup, callback and buffer behaviour.
+
+Baseline statuses: 1,022 returns; 121 explicit missing-service boundaries;
+120 unsupported numeric-mode guards; nine memory/return guards. Supplemental:
+449 returns; 28 floating-point traps; 21 memory/return guards. All compared full
+reached/final RAM and machine state, ordered entries and software queue state.
+Supplemental inputs cover both banks/channels, 0c/8c/ac RAM aliases, all eight
+type-bit combinations, ordinary and masked 16-bit formats/types, special float
+payloads, enabled exceptions and invalid source/stack inputs. Output sentinels
+make missing writes observable. Nonzero model data pointers have an independent
+copy/skip oracle. No host-supplied game-service result is injected.
+
+Tables: a 16-word window was inspected at 8c19ace0 (the first nine primary
+entries are used here); 8c19ad20 has nine secondary entries. 8c19ad44 is a mutable axis
+callback cell, not a third format table. Setup retains the original ff3f mask.
+These windows do not prove a universal accepted format range. Computed callback
+targets come from the actual supplied original memory and remain guarded.
+
+Input scope: controlled sparse motion tracks and finite pose state exercise the
+small helper behaviours. Explicit nonzero track inputs reach actual missing
+interpolation dependencies, with no fabricated sample values. Optional callbacks
+select the existing real empty-return routine at 8c611708. Constructor/renderer
+runtime metadata are supplied as documented by the preceding fade/draw reports;
+original object geometry, motion records and texture names remain preserved in
+the connected-caller suite. Natural resource loading and initialization are not
+proved. Existing scalar/vector/sqrt, MMU-off valid-RAM and legacy mode contracts
+remain. A matched queue/state trace is not physical GPU or rendered-pixel proof.
+
+Next analysis: analysis/draw-motion-next/ holds read-only Ghidra exports for
+8c03718c, 8c040498, 8c041378, 8c60b81c, 8c60b4a8, 8c03feb8, 8c040a60 and
+8c60b596.
+inventory_draw_motion_next.py checks all 804 exported instructions against the
+binary. All direct branch destinations are present; 15 annotated unregistered
+targets remain outside this eight-body proposal. Draft decompiler types are
+untrusted. Temporary discovery was discarded; the frozen indexes stay unchanged.
+These next proposals have zero native recovery credit.
+The 8c03718c proposal reads and writes GBR-relative renderer fields. Its eventual
+native recovery must preserve explicit original special-register state; do not
+substitute a guessed fixed RAM pointer merely to cross the current boundary.
+
+The saved JSON comparison reports and registry integration evidence are the
+authoritative detailed results. Completed connected-caller results are appended below. Continue Sol High for reverse engineering;
+Luna Low suits documentation-only changes. No model switch or goal pause requested.
+
+SUPIR HD textures, texture percentages/HD toggle, render resolution and aspect
+ratio remain planned. Texture Off must disable sampling and use vertex/material
+colours. High-FPS/8K, Android/stereoscopic 3DS and later demakes remain unvalidated.
+
+Connected original initialized-model comparisons: all 420 pass, preserving all
+408 earlier inputs plus the twelve explicit label event profiles. There are
+160,370 matched ordered entries, 400 independent state/stack/spring cases and
+212 independent distance prefixes. The new motion proposals reach 913 rows in
+these callers, without complete-body or registration credit for the other 31.
+The AL_MAIN parent remains at 489/911 rows (422 unexecuted) and unregistered.
+
+All three previous missing wrapper boundaries disappear: 8c0409c0, 8c041c92 and
+8c5fde20. The new first missing services are 8c03feb8, 8c60b596 and 8c040a60,
+16 cases each. They are the next priority. Final statuses: 352 returns,
+48 explicit missing services, eight numeric guards, eight memory/return guards
+and four FP traps. The returned cases and queue totals match the preceding
+fade-connected suite; this milestone advances the motion prefixes rather than
+claiming new complete rendering paths. No original model/motion data are replaced.
+
+Complete setup/selectors run 16/16/32/32 times at 8c03fe1a/03fe60/040b90/040c02.
+Default scale helpers 8c0405a4 and 8c0414f0 run 16 and 32 times. The other completed
+small helpers have direct tests but are not reached in these original callers.
+That distinction is retained rather than claiming natural reachability for all.
+
+Queue totals: 151,886 flushes / 1,670,638 events. The first 4,096 events per case
+are individually compared (681,684 stored-prefix events in total); 988,954 later
+events are counted only. Final queue/QACR/counters and full reached/final RAM match.
+No new GPU pixels or complete frames are proved.
+
+Registration and reproducibility: twelve new entries bring the registry to
+1,188 entries / 1,185 unique module/address pairs. Of 10,875 frozen indexed
+candidates, 1,107 now have matching registered entries. Another 211 nontexture
+binaries still lack a function index. These are candidate snapshots, not the
+complete game's routine count. The audit reports zero evidence errors and zero
+stale whole-source reports. Eighty existing entries receive integration evidence
+with zero duplicate recovery credit. The other 31 proposals and parent remain
+unregistered. All five generated artifacts reproduce byte-for-byte; the verified
+DLL is preserved. Repeated registration leaves registry/status bytes unchanged.
+Eight Python files and five PowerShell files parse; both default C syntax checks
+pass. Dispatch mapping passes all 658 retail pointer-load checks over 80 spans
+and 83 selectors. The historical aggregate suite was extended but not rerun.
+
+How to check: open this file and the three verification JSON files listed above.
+The registered source remains source/sa_draw_motion_variants.c. Build and verify
+scripts use the retained original binaries and local toolchain; the focused
+native DLL is a research harness, not a game executable. Keep Sol High for the
+next missing motion/interpolation/geometry dependency. Documentation-only work
+can use Luna Low; no switch or goal pause is recommended for the next recovery.

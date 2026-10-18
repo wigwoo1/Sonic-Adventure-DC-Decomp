@@ -1,0 +1,17 @@
+address	opcode	instruction	references
+0cb00780	2fe6	mov.l r14,@-r15	DATA:Stack[-0x4] 
+0cb00782	4f22	sts.l PR,@-r15	DATA:Stack[-0x8] 
+0cb00784	5e48	mov.l @(0x20,r4),r14	
+0cb00786	d337	mov.l 0x0cb00864,r3	READ:0cb00864=8c06c5ca 
+0cb00788	84e8	mov.b @(0x8,r14),r0	
+0cb0078a	5449	mov.l @(0x24,r4),r4	
+0cb0078c	430b	jsr @r3	COMPUTED_CALL:8c06c5ca 
+0cb0078e	640c	_extu.b r0,r4	
+0cb00790	d235	mov.l 0x0cb00868,r2	READ:0cb00868=8c0945d0 
+0cb00792	420b	jsr @r2	COMPUTED_CALL:8c0945d0 
+0cb00794	64e3	_mov r14,r4	
+0cb00796	4f26	lds.l @r15+,PR	DATA:Stack[-0x8] 
+0cb00798	d334	mov.l 0x0cb0086c,r3	READ:0cb0086c=8c098ffc 
+0cb0079a	e404	mov #0x4,r4	
+0cb0079c	432b	jmp @r3	COMPUTED_JUMP:8c098ffc 
+0cb0079e	6ef6	_mov.l @r15+,r14	DATA:Stack[-0x4] 

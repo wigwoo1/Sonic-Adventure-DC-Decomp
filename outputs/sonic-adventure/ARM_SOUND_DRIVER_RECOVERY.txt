@@ -1,0 +1,1297 @@
+ARM sound-driver recovery checkpoint
+===================================
+
+The main game code runs on SH-4, while these separately loaded driver payloads
+contain ARM code. Source recovery of the SH-4 upload wrappers does not recover
+the driver payloads themselves. Both original disc images below are preserved
+as separate analysis inputs; their candidate counts are not added to verified
+routine counts or used as whole-game coverage percentages.
+
+Input and upload spans
+---------------------
+The original SDRV header is 32 bytes. Recovered uploader 0x8c643ec6 reads the
+length at header +8; 0x8c643ec8 advances the source by 32 bytes. The rounded
+original disc read is retained when constructing these spans.
+
+MANATEE.DRV: file 33,408 bytes; uploaded span 33,408 bytes starting at +32.
+That span includes 32 actual zero padding bytes beyond the file's declared
+size. SONICADV/MASARU.DRV: file 33,408 bytes; uploaded span 33,376 bytes at +32,
+with no file padding included. The game loader's literal at 0x8c159d60 names
+masaru.drv. Do not substitute MANATEE or assume identical upload lengths.
+
+prepare_arm_sound_drivers.py checks original extraction hashes against the
+actual disc sector reads and saves payload/header/vector hashes in
+analysis/arm_sound_driver_payloads.json. Derived binary payloads are local
+analysis inputs under work/sonic-adventure/arm-sound-drivers.
+
+Analysis outputs and verification
+---------------------------------
+Ghidra 12.1.4_PUBLIC analyzes each upload span at base zero with ARM:LE:32:v4.
+The eight original ARM branch vectors seed entry analysis: reset branches to
+0x100, six exception vectors branch to 0x234, and the last vector branches to
+0x248. Further calls, state/data accesses and indirect targets require review.
+
+analysis/arm-sound-drivers/MANATEE.DRV.arm.bin:
+  108 candidate functions, 108 draft C exports, 6,152 listed instructions.
+  24,608 decoded instruction bytes; 8,800 bytes outside this instruction listing.
+  53 draft warnings.
+analysis/arm-sound-drivers/MASARU.DRV.arm.bin:
+  108 candidate functions, 108 draft C exports, 6,154 listed instructions.
+  24,616 decoded instruction bytes; 8,760 bytes outside this instruction listing.
+  53 draft warnings.
+
+Each directory contains function_index.tsv, initial_pseudocode.c,
+instructions.tsv and program_metadata.tsv. Every listed instruction's full
+four bytes and all sixteen vector branches were checked against the exact
+upload images. Ghidra's loaded image hashes also match. Candidate addresses,
+draft counts, source/tool/script hashes and outputs are pinned in
+analysis/arm_sound_driver_inventory_verification.json.
+
+These are machine-generated drafts, not buildable or behavior-verified source.
+Code/data separation, indirect function discovery and real function boundaries
+remain incomplete; vector thunks can produce duplicate-looking pseudocode.
+Bytes outside the instruction listing include data and possibly undiscovered
+code. None of these numbers measures whole-driver or whole-game completion.
+ARM execution, sound-chip semantics and audible playback are not proven.
+
+Reproduce from outputs/sonic-adventure in PowerShell
+--------------------------------------------------
+1. Run prepare_arm_sound_drivers.py with the project's Python interpreter.
+2. Run ./ghidra/analyze_arm_sound_drivers.ps1 to import/analyze/export both
+   payloads. Existing Ghidra/JDK installations under the project toolchain are
+   required. -RefreshEvidenceOnly re-exports instructions/input metadata from
+   existing projects; the image hashes prevent use with mismatched payloads.
+3. Run verify_arm_sound_driver_inventory.py, then
+   register_arm_sound_driver_inventory.py with the same Python interpreter.
+
+The Ghidra Java scripts compiled/executed and the focused inventory validation
+passed. No native ARM implementation was compiled and no ARM runtime tests
+were performed for this inventory milestone. Overall project remains 10%.
+Native reset/helpers/main-loop checkpoint
+----------------------------------------
+source/sa_arm_sound_boot_native.c now statically recovers 290 original ARM
+instruction sites covering reset control flow, the main-loop branch flow and
+twelve complete leaf helpers. This is compiled C over explicit guest state;
+it does not interpret ARM opcodes at runtime. The two driver variants select
+their original differing call targets. Active ARM/SVC state and two MiB RAM
+are caller contracts, with explicit MMIO and remaining-service callbacks.
+Instruction budgets bound execution; absent/failed services preserve the
+partial instruction state instead of pretending to complete the operation.
+
+build_arm_sound_boot_native.ps1 produces arm_sound_boot_native.dll.
+verify_arm_sound_boot_native.py compares it with original payload execution
+using project-local Unicorn 2.1.4, TI925T CPU model. This is an instruction
+reference, not a Dreamcast sound-chip timing oracle. The dependency is listed
+in ARM_VALIDATION_REQUIREMENTS.txt; setup_arm_validation.ps1 installs it under
+the project's toolchain directory when needed.
+
+Results: 192 complete helper comparisons, four reset-prefix comparisons and
+sixteen main-loop flag combinations passed. Helper coverage includes both
+drivers, two memory fills, four condition-flag patterns and cursor values
+0/47/255/1. Complete low RAM, active registers/CPSR, modeled MMIO state and
+ordered bus events match. The reset vector reaches the first unrecovered
+call entirely in native C; the connected reset-prefix tests reach 0x194 using
+three original ARM subroutines through explicit validation-only callbacks.
+Main-loop tests likewise run unrecovered callees as original ARM code and
+compare exact service entries/state/RAM hashes. Idle, fast/tick flags, their
+priority, and the enabled branch are represented. This does not make the
+remaining callees native C or establish complete native driver execution.
+
+verify_arm_sound_boot_native_guards.py passes nine atomic configuration/entry
+guards, twelve partial instruction-budget comparisons and four failing-MMIO
+read/write comparisons against original instruction stop states.
+Evidence: analysis/arm_sound_boot_native_verification.json and
+analysis/arm_sound_boot_native_guards_verification.json. Source, build, DLL,
+payload/inventory, test and reference-engine hashes are pinned. Registration
+creates analysis/arm_sound_driver_recovered_routines.json with twelve native
+leaf entries per driver (24 module-local entries, mostly shared code), separate
+from the existing SH-4 registry. This is not a whole-game coverage fraction.
+
+The focused native build, comparisons and guards passed. These checks are in
+build_and_verify.ps1; the entire accumulated workflow was not run. Overall
+weighted project completion remains 10%. Next: replace the three remaining
+reset subroutines and main-loop service callbacks with verified native C,
+then connect the driver state to sound-chip behavior and audio output.
+
+Fully native reset checkpoint
+----------------------------
+The three reset callbacks from the prior checkpoint are now native C, including
+their four subordinate routines. source/sa_arm_sound_reset_services.c supplies
+explicit static instruction steps for seven routines per driver:
+  MANATEE: 5d54, 5d78, 6274, 62b0, 6310, 73b4, 7700.
+  MASARU:  5d5c, 5d80, 627c, 62b8, 6318, 73bc, 7708.
+The differing driver addresses are kept separate. The existing boot dispatcher
+now calls these steps before falling back to remaining service boundaries.
+Its single native instruction budget also covers nested reset calls.
+
+Both drivers execute from reset vector zero to main-loop entry 0x194 with a
+null external-service callback. All subordinate reset calls execute in C.
+Four complete reset comparisons span two drivers and zero/0x55 RAM/MMIO fills,
+with initial condition flags and initial FIQ masking represented. Full active
+CPU/CPSR, all low RAM, modeled MMIO and ordered bus events match original ARM
+execution. Native reset leaves SP at 0xb000 and clears the FIQ mask as original.
+
+verify_arm_sound_reset_services.py adds 336 standalone comparisons of the
+seven routines and dependencies: both drivers, two fills, four condition-flag
+patterns and three clear-range cases (zero, one word, four words). Stack/LR,
+conditional restore/decrement paths, zeroed/default structures and bus effects
+are compared to actual original instruction execution with no external ARM
+callbacks. The previous 192 helper and sixteen main-loop comparisons also pass.
+The main-loop callees still use original ARM validation services; native reset
+does not establish complete native driver execution or audio playback.
+
+Guard coverage is now nine atomic checks, twenty-four instruction-budget
+comparisons and eight failing-MMIO comparisons. New cases enter nested reset
+calls, exercise saved LR/stack state and reject the new first MMIO reads/writes
+at the exact original instruction boundary. Total guard comparisons: 41.
+
+The focused build/comparison/guard suites and evidence audits passed; the full
+accumulated workflow was not run. Existing evidence reports are refreshed and
+analysis/arm_sound_reset_services_verification.json records the new standalone
+cases. The separate ARM registry now has 38 verified module-local routine
+entries (nineteen per driver, mostly shared code). These are neither a complete
+code inventory nor a whole-game coverage fraction. Overall remains 10%.
+Next: recover the command and main-loop services currently executed through
+the validation emulator, then integrate sound-chip behavior and native output.
+
+Native queued-command checkpoint
+--------------------------------
+source/sa_arm_sound_commands.c adds the original ring reader, four-command
+intake loop, indexed command-dispatch prefix, type-0 voice-state clearing,
+type-6 pitch updates and their pitch helper. Original no-op handlers for
+types 2/5/7 are preserved. The remaining type-1/3/4 handler entries are explicit
+service boundaries and return -8 when no implementation is supplied; they do
+not report false success. Both driver address variants remain separate.
+The existing boot component routes these static native steps before invoking
+unrecovered services. It continues to count every native instruction against
+the same invocation budget.
+
+verify_arm_sound_commands.py passes 1,080 original-instruction comparisons:
+  720 command cases: types 0/2/5/6/7, two drivers, zero/0x55 fills, condition
+  flags/high-bit command metadata, inactive/active voices, three group/part
+  pairs and three command data values. Full CPU/CPSR/RAM/MMIO and ordered bus
+  events match, with independent voice-clear and cached pitch-delta checks.
+  144 ring-reader cases: empty/nonempty, zero/high-bit words, wrap at 0xffc,
+  unchanged queue data and exact read/write offsets.
+  96 native intake batches: zero to eight queued words, wrap, queued zero
+  words and the original maximum of four consumed words per call.
+  72 unrecovered-handler cases: exact original CPU/RAM at the type-1/3/4
+  boundary, with -8 rejection and no substituted handler behavior.
+  48 standalone pitch-helper cases: original lookup data, positive/high-bit
+  pitch inputs, two source-bias cases and exact register/bus effects.
+
+Supported queued batches run with a null ARM service callback; no emulator
+callee executes inside those native runs. Unicorn is only the separate
+comparison oracle. Existing main-loop validation no longer delegates the
+0x9a4 command-intake call to original ARM execution; other loop services remain
+unrecovered and use explicit validation callbacks.
+
+verify_arm_sound_commands_guards.py passes twenty-two partial budget cases
+through ring reads/batches and four failed-MMIO read/write cases after the
+voice-state mutations preceding the bus operation. Exact partial CPU/RAM and
+bus state match the original stop boundaries. The existing 192 helper,
+336 reset-service, four complete reset, sixteen main-loop and 41 guard cases
+also pass after this connection.
+
+Evidence: analysis/arm_sound_commands_verification.json and
+analysis/arm_sound_commands_guards_verification.json, registered by
+register_arm_sound_commands.py. Build/source/DLL/translation/test and dependent
+boot evidence are pinned. The separate ARM registry now has 42 module-local
+native routines, adding the complete ring reader and pitch helper for each
+driver. Partial dispatcher/intake command paths are tracked as connected flows,
+not falsely registered as fully recovered routines. The focused build/tests
+and evidence audits passed; the full accumulated workflow was not run.
+Overall whole-project milestone completion remains 10%.
+
+Next: recover command types 1/3/4 and remaining tick-loop services, then connect
+the recovered driver behavior to sound-chip synthesis and native audio output.
+
+Native bank/program selection and legacy alignment
+-------------------------------------------------
+source/sa_arm_sound_bank_select.c now executes the complete type-4 bank/program
+selection path. Existing native dispatch/intake reaches it with no ARM service
+callback. MANATEE and MASARU retain their actual different rejection behavior:
+an out-of-range present-bank selection restores MANATEE's old bank pointer,
+while MASARU writes its invalid selection marker and -1 bank pointer. Missing
+MANATEE banks use the original embedded default header. Missing MASARU banks
+retain the original -1 pointer and wrapped reads from low RAM; no invented
+fallback/success validation replaces that behavior.
+
+That MASARU path exposed a concrete instruction-reference gap: Unicorn 2.1.4's
+default TI925T model joins adjacent bytes for the tested unaligned word reads.
+ARM's pre-ARMv6 rule instead aligns the physical word access and rotates a
+single-word load; word stores use the aligned physical address. The native
+components now share source/arm_sound_memory.h for this rule. Byte transfers
+remain byte-addressed. Existing recovered block transfers require an aligned
+stack. Source: ARM Architecture Reference Manual, ARM DDI 0100I, section A2.8:
+https://e2e.ti.com/cfs-file/__key/communityserver-discussions-components-files/1023/ARM-Architecture.pdf
+
+arm_legacy_alignment_reference.py adapts only unaligned single-word accesses
+in the reference run using that documented rule; aligned instructions still
+execute in Unicorn. Correction counts and the adapter hash are recorded.
+verify_arm_sound_alignment.py passes 32 word-load cases with two independent
+hardcoded rotate tables, sixteen word-store cases and sixteen byte-store cases
+across all four address offsets and both payloads. Adjacent bytes, complete
+CPU/RAM and bus events are checked; the raw emulator mismatch is also checked.
+This adapter is not an ARM7 timing or complete exception/hardware model.
+
+verify_arm_sound_bank_select.py passes 1,152 direct command cases and 128 native
+queued cases. Both drivers, two fills/flag states, high-bit command metadata,
+three group/part pairs and bank indices, missing banks, zero/one/three-program
+headers and indices 0/1/2/127 are covered. Exact active CPU/CPSR and all RAM
+match original instructions with the explicit architectural adapter. Separate
+checks validate selected bank/program/data pointers, rejection preservation,
+saved old pointer and wrapped queue consumption. The missing MASARU cases
+account for all 640 reference alignment corrections; no external ARM callback
+is supplied to any native bank-selection run.
+
+verify_arm_sound_bank_select_guards.py adds twenty exact partial-budget cases
+and twelve failing unaligned-MMIO cases. The latter verify the aligned physical
+bus address and unchanged destination state when the callback rejects access.
+Existing helper/reset/main-loop/queue/pitch/error suites also passed after the
+shared-memory change. The earlier 72 rejected-handler cases are now 48 for
+types 1/3; type 4 has moved into the complete native bank-selection suite.
+
+Evidence: analysis/arm_sound_alignment_verification.json,
+analysis/arm_sound_bank_select_verification.json and
+analysis/arm_sound_bank_select_guards_verification.json, pinned by
+register_arm_sound_bank_select.py. The accumulated workflow includes these
+checks; the full accumulated workflow was not run. This completes another
+command subpath, not a separately identified whole function, so the separate
+ARM native registry remains at 42 module-local routines. No whole-project
+milestone credit is added; overall completion remains 10%.
+
+Next: recover the type-1 and type-3 command handlers and remaining tick-loop
+services. Sound-chip synthesis, exception/timing behavior, audio output and
+complete native driver execution remain unfinished.
+
+Native type-3 control-command checkpoint
+----------------------------------------
+source/sa_arm_sound_controls.c now implements the complete type-3 control
+subpath and DSP-configuration helper for both drivers. Its 2,170 driver-local
+static instruction sites are generated reproducibly by
+create_arm_sound_controls.py from the original instruction listing and bytes.
+The generator preserves driver address differences, conditional arithmetic,
+carry/overflow flags, nested reset calls and the original byte/word bus effects.
+No runtime opcode interpreter is used by these native paths.
+
+Testing found nine executable ARM branch words per driver at the secondary
+dispatch table (MANATEE 0x2240, MASARU 0x2248) which Ghidra had classified as
+data. Their exact original bytes and branch destinations are retained in
+analysis/arm_sound_controls_translation.json and checked during registration.
+They are not silently treated as unknown-function successes or added to an
+exhaustive-code-coverage claim.
+
+verify_arm_sound_controls.py passes 6,144 direct control comparisons: every
+index 0..127, data 0/64/127, both driver variants, zero/0x55 fills, two flag/
+high-metadata patterns and empty/four-active-voice states. The input states
+come from verified native reset followed, for active fixtures only, by original
+ARM note commands. The unrecovered note handler is used to PREPARE inputs in
+the reference harness; it is never called inside a native control execution.
+All native control runs use a null ARM-service callback. Full active CPU/CPSR,
+entire low RAM, modeled MMIO and ordered bus events match original execution.
+The same suite passes 512 queued-control calls covering every control index
+with empty and active voices and exact ring consumption.
+
+verify_arm_sound_control_scales.py passes 216 paired-command sequences:
+control 75 selects each mode 0..8, then control 74 executes the corresponding
+secondary branch. Both drivers/fills and empty/active voices, plus three data
+values and exact two-word queue consumption, are checked.
+
+verify_arm_sound_dsp_config.py passes 960 complete helper cases: original
+fallback and constructed headers, bad signature/version/trailer, program
+counts and bounds, absent/low/short allocation, four memory classes and the
+original size-check-bypass flag. Independent success checks validate 128
+configured pointers, packed parameter words, enable flags and preserved error
+state. This is DSP configuration; DSP microprogram execution is separate.
+
+verify_arm_sound_controls_guards.py passes 24 bounded/partial execution cases,
+six failures at actual MMIO reads/writes, and 32 single-instruction ADDS cases
+covering carry, signed overflow, zero and negative results. Tests confirm exact
+partial active CPU/RAM/MMIO state and bus addresses; no hardware data-abort or
+exception-timing equivalence is claimed.
+
+The focused build and all older ARM regression suites passed. Existing command
+frontier cases now cover only type 1 (24 cases); type 3 has moved into its full
+native suite. Source/DLL/generator/translation/test and dependent evidence are
+pinned by register_arm_sound_controls.py. The accumulated workflow includes
+all four new suites; the full accumulated workflow was not run. The separate
+ARM registry now has 44 module-local complete native routines, adding the DSP
+helper per driver. Type-3 remains a subpath of the larger dispatcher and is not
+falsely counted as a separately identified complete function.
+
+Overall weighted project completion remains 10%. Next: recover the type-1
+note/voice-allocation handler and remaining main-loop callees, then connect
+sound-chip synthesis and native audio output. These tests do not prove audible
+playback or complete native driver/game execution.
+
+Complete native command intake and note/allocation checkpoint
+------------------------------------------------------------
+source/sa_arm_sound_notes.c now recovers type-1 note processing and its voice
+allocator for both drivers, including MASARU's additional disabled-program CMN
+check. create_arm_sound_notes.py reuses the static emitter from
+create_arm_sound_controls.py; that emitter can now be imported without running
+the control generator. The note component contains 1,056 driver-local static
+instruction sites and uses the same explicit state, memory and bus contracts.
+
+All eight command types now execute in native C. The 0x9d0 dispatcher and
+0x9a4 four-command intake loop no longer require an ARM-service callback for
+supported original command data. Other main-loop callees and interrupt/timing
+behavior remain separate; this is not complete driver or game execution.
+
+verify_arm_sound_notes.py passes 2,196 comparisons:
+  1,920 note cases across both drivers/fills/flag-metadata patterns, three
+  group/part pairs, five notes and four velocities, starting from empty,
+  four-active, 47-active and full 48-voice pools.
+  40 layer cases cover zero/one/two/four/five source layers, independently
+  confirming the original maximum of four layers per note.
+  128 key/velocity-filter cases exercise both sides and exact endpoints.
+  12 MASARU disabled-program cases verify its original early return.
+  96 native queued-note cases include releases and ring wrap.
+Full active CPU/CPSR, all low RAM, modeled MMIO and ordered bus effects match
+original ARM execution. Separate checks cover velocity-zero matching-note
+release, pool bounds/reuse and layer/filter outcomes. Original ARM commands
+prepare the stressed input pools only; no native note run uses an ARM callback.
+
+verify_arm_sound_command_stream.py passes eight continuous mixed streams:
+256 commands checked at 64 native batch returns. These use the actual embedded
+default-bank data, register that bank in its original table, and combine every
+command type: program changes, notes, controls, pitch, releases, zero/no-op
+words and wraparound. Exact four-word consumption, unchanged queue contents,
+active CPU/RAM/MMIO and ordered bus events match after every batch. The native
+consumer starts with empty voices and creates/updates/releases them in C.
+
+verify_arm_sound_notes_guards.py passes 36 bounded/partial note/allocation
+cases, eight failures at actual MMIO reads/writes and sixteen CMN flag edge
+cases. Note processing also uses original unaligned word reads, so the same
+explicit pre-ARMv6 reference corrections remain enabled and counted; the
+comparison is not falsely described as unmodified Unicorn for those accesses.
+
+The focused native build, new suites and all prior ARM regressions passed.
+The previous rejected-handler frontier cases are now zero: they have moved
+into complete native note/control/bank suites. Evidence is recorded in
+analysis/arm_sound_notes_verification.json,
+analysis/arm_sound_command_stream_verification.json and
+analysis/arm_sound_notes_guards_verification.json, registered by
+register_arm_sound_notes.py. Source/DLL/generator/emitter/translation/reference
+and test hashes are pinned. The accumulated workflow includes these suites;
+the full accumulated workflow was not run.
+
+The separate ARM registry now has 50 module-local complete native routines:
+the two allocation helpers, two full command dispatchers and two full intake
+loops join the previously registered routines. The dispatcher spans multiple
+recovered C components, listed explicitly in its registry entry. Counts are
+not a complete executable inventory or a whole-game coverage fraction.
+Overall weighted project completion remains 10%.
+
+Next: replace remaining main-loop service callbacks with native C, implement
+the driver interrupt/timing connections and connect sound-chip synthesis and
+native audio output. DSP execution, physical timing and audible playback are
+still unproven, and the native PC game/Android/3DS/demakes remain unfinished.
+
+Standalone status recovery checkpoint
+------------------------------------
+create_arm_sound_status.py recovers original routines 0x6d0 and 0x768 for
+both drivers into source/sa_arm_sound_status.c (190 driver-local static
+instruction sites). These calculate status booleans and update shared output
+settings. build_arm_sound_status.ps1 builds a separate bounded test DLL with
+strict compiler warnings. The existing connected driver DLL is unchanged.
+
+verify_arm_sound_status.py compares 1,072 full executions, 24 partial-budget
+executions and four constructed bus-failure cases against original ARM bytes.
+Comparisons cover active registers/CPSR, complete two MiB RAM, modeled MMIO
+and ordered bus events. Independent assertions check the three output status
+booleans. Cases cover all three input flag combinations, boundary positions,
+packed output settings, unchanged/dirty settings, blocked early returns and
+four incoming CPU flag patterns in both drivers and both RAM fills.
+
+Retail output pointers in these routines target shared RAM. Fault fixtures
+explicitly redirect two destinations to modeled MMIO; they prove callback
+failure propagation, not actual retail MMIO activity. An initial fault test
+incorrectly expected retail destinations to use MMIO; inspecting the original
+pointers resolved the fixture assumption without changing production code.
+
+Evidence: analysis/arm_sound_status_verification.json, including hashes of
+the DLL, recovered source, fixture, generator, emitter, memory helper,
+translation and comparison scripts. The accumulated workflow now includes
+the separate build and comparison; the full accumulated workflow was not run.
+Next connect sa_arm_sound_status_step to the main driver and rerun affected
+connected tests/registrations. This standalone checkpoint adds no registry or
+whole-project acceptance credit: connected ARM registry remains 50 routines,
+and estimated weighted whole-project completion remains 10%.
+
+Connected status recovery checkpoint
+------------------------------------
+sa_arm_sound_status_step is now called by sa_arm_sound_boot_native before
+external service dispatch, and the old 0x6d0/0x768 fallback cases are removed.
+The main native build includes the status source. The status verifier supports
+--connected and passes a null service callback to that actual driver DLL.
+Its connected report is analysis/arm_sound_status_connected_verification.json.
+It repeats all 1,072 original-byte comparisons, 24 partial budgets and four
+constructed bus failures through the connected entry point. Standalone
+evidence remains separately reproducible. These changes do not imply that
+remaining main-loop callbacks, interrupts, synthesis or playback are complete.
+
+register_arm_sound_status.py checks current source/build/evidence hashes,
+all 190 translated instruction byte spans against the uploaded payloads, and
+both entry addresses against the original function indexes before recording
+four additional module-local routines. It adds no whole-project milestone
+credit. The status build, standalone and connected comparisons and evidence
+registration are included in build_and_verify.ps1; the full accumulated
+workflow has not been run.
+
+Connected status validation outcome: strict native build passed; 192 helper,
+four reset and 16 main-loop comparisons passed. Reset-service, queue/pitch,
+alignment, bank, control/DSP, note, mixed-stream and their focused guard suites
+all passed against the new connected DLL. Both status modes passed 1,072
+comparisons plus 28 guards each. All ARM evidence registrations passed and
+the separate ARM registry now contains 54 module-local native routines.
+The recovery evidence audit reports zero registry evidence errors and zero
+source-hash refreshes needed. The completion audit remains 10% weighted
+whole-project milestones. The accumulated PowerShell workflow parses; it was
+not executed in full. Next recover the remaining main-loop callees, beginning
+with 0x615c/0x6164 and their already recovered reset-helper dependencies.
+
+Pending-update recovery checkpoint
+---------------------------------
+create_arm_sound_update.py statically recovers 0x615c (MANATEE) and 0x6164
+(MASARU), 66 instruction sites each, into source/sa_arm_sound_update.c.
+The path consumes a pending request, calls the existing reset/configuration
+helpers, copies 0x300 words from the requested descriptor to modeled AICA
+MMIO at 0x803000, copies descriptor fields, and clears its completion gate.
+The native build now calls this step directly before external dispatch; the
+two old service-fallback entries are removed. It uses the same shared native
+instruction budget as the other recovered helpers.
+
+build_arm_sound_update.ps1 also builds a separate fixture linked with the
+existing recovered reset services. verify_arm_sound_update.py supports both
+that fixture and --connected with a null ARM-service callback. Each mode
+passes 128 full comparisons (two drivers, two RAM/MMIO fills, four CPU flag
+patterns, blocked/unblocked, requested/unrequested, zero/nonzero rate), sixteen
+partial-budget comparisons, and six failures at actual retail MMIO writes.
+The fault cases cover the first channel-reset write, first descriptor write
+and a later descriptor write, checking exact pre-instruction CPU/RAM/MMIO and
+previous bus effects. Full comparisons include all active CPU/CPSR, two MiB
+RAM, modeled MMIO and ordered bus events. Separate assertions check descriptor
+and field copies, request consumption, completion gate and side-effect-free
+early returns. The fixture uses a bounded clear-range descriptor.
+
+The initial independent copy assertion incorrectly treated destination
+0x803000 as low RAM. Inspecting the original literal identified the MMIO
+destination; correcting the assertion resolved the fixture failure. No native
+instruction change was needed. An initial generator build also caught an
+incorrect omission of its subtraction-flags helper; restoring that shared
+helper fixed the strict compiler error before comparison tests ran.
+
+Evidence is saved in analysis/arm_sound_update_verification.json and
+analysis/arm_sound_update_connected_verification.json, including source,
+DLL, fixture, generator, emitter, helper, translation and verifier hashes.
+register_arm_sound_update.py additionally checks original payload hashes,
+all translated byte spans, candidate entry addresses and current connected
+build evidence. The accumulated workflow includes both builds/comparison
+modes and registration. The full accumulated workflow has not been run.
+Physical timing, interrupts, sound-chip synthesis and audible playback remain
+unproven; no whole-project acceptance milestone is credited by this recovery.
+
+Pending-update final validation: standalone and connected strict builds and
+all focused ARM regressions passed, including reset/main-loop, queue/pitch,
+bank, controls/DSP, notes, mixed streams, status, alignment and guard cases.
+Current ARM evidence registrations passed; the ARM registry contains 56
+module-local complete native routines. Recovery evidence audit: zero registry
+evidence errors and zero reports requiring source-hash refresh. Whole-project
+completion audit remains 10% weighted milestones. Next recover remaining
+main-loop callees such as 0x63f8/0x6400; physical interrupts/timing/synthesis
+and native audible output remain separate unfinished requirements.
+
+Standalone snapshot recovery checkpoint
+--------------------------------------
+create_arm_sound_snapshot.py recovers 0x63f8 (MANATEE) and 0x6400 (MASARU)
+into source/sa_arm_sound_snapshot.c: 137 original instruction sites per
+driver, covering three output-state loops for eight/eight/sixteen records.
+The loops normalize byte/word fields, retain inactive output fields, combine
+state flags, and calculate active voice positions using either actual modeled
+MMIO reads or the original fixed-width multiply/accumulate formulas.
+
+The routine's single unshifted register ORRS instruction is emitted locally
+with N/Z updates and preserved C/V. The shared control emitter was unchanged,
+so earlier recovery evidence is not invalidated by a generator modification.
+build_arm_sound_snapshot.ps1 passes strict native compilation and creates a
+separate bounded fixture with no external ARM fallback. The connected driver
+and its existing DLL remain unchanged in this checkpoint.
+
+verify_arm_sound_snapshot.py passes 384 whole-routine comparisons across two
+drivers, two RAM fills, four CPU flag patterns, eight field patterns and three
+activity patterns (inactive/active/alternating). It compares all active CPU,
+CPSR, two MiB RAM, modeled MMIO and ordered bus events with original ARM bytes.
+It separately constructs the complete expected RAM from independent formulas
+for every written field in all three output groups, including inactive-field
+preservation, byte/word wrap, selector-dependent shifts and position arithmetic.
+Sixteen budget checks cover partial and completed executions; six actual
+retail MMIO-read failures check exact prior state and committed bus effects.
+Thirty-two single-instruction ORRS vectors separately verify N/Z and preserved
+C/V flags using hard-coded formulas. All comparisons passed.
+
+Evidence: analysis/arm_sound_snapshot_verification.json. Its source, DLL,
+fixture, generator, emitter, memory helper, translation and verifier hashes
+are pinned. register_arm_sound_snapshot.py validates these hashes and all 274
+instruction-byte spans against the original uploaded payloads before recording
+standalone progress. The accumulated workflow includes its build/comparison
+and registration; the full accumulated workflow was not run.
+
+Next integrate sa_arm_sound_snapshot_step into the main driver and rerun its
+affected evidence. No connected registry credit is granted yet: the separate
+ARM registry remains 56 routines and estimated whole-project completion stays
+10%. Interrupts, physical timing, synthesis, playback and the full requested
+game ports remain unfinished.
+
+Connected snapshot checkpoint
+-----------------------------
+sa_arm_sound_boot_native now calls sa_arm_sound_snapshot_step before external
+service dispatch. The 0x63f8/0x6400 fallback entries are removed and the strict
+native build links the recovered snapshot source. The snapshot verifier's
+--connected mode passes a null ARM-service callback to the actual connected
+DLL, repeating all 384 full comparisons, sixteen budget cases, six failures
+on actual retail MMIO reads and thirty-two independent ORRS flag vectors.
+Standalone comparison evidence is retained separately. Reset and all sixteen
+main-loop branch fixtures compare against the original ARM flow with these
+two calls removed from the validation-only service set.
+
+register_arm_sound_snapshot.py now supports --connected, verifies the current
+connected source/build hashes and both original function-index entry points,
+and records two additional module-local routines only after the focused
+comparisons and original instruction-byte checks pass. The accumulated
+workflow includes standalone and connected comparisons/registration. This
+checkpoint does not establish physical timing, sound synthesis or playback;
+the full accumulated workflow has not been run.
+
+Connected snapshot final validation: strict build, 192 helper/four reset/
+sixteen main-loop fixtures, connected snapshot/update/status comparisons and
+all focused ARM command, bank, control/DSP, note, mixed-stream, alignment and
+guard suites passed. Standalone snapshot comparisons also passed. Registration
+and original-byte checks passed; the separate ARM registry now contains 58
+module-local native routines. Recovery evidence audit reports zero registry
+errors and zero source-hash refreshes needed. The accumulated PowerShell
+workflow parses successfully; it was not run in full. Whole-project completion
+remains 10% weighted milestones. Next recover remaining main-loop channel
+updates and their dependencies, including 0x4210/0x4218 and 0x48e8/0x48f0.
+
+Standalone counter and channel-ramp checkpoint
+---------------------------------------------
+Inspection shows the remaining sequence/command dispatchers include indirect
+handler tables and additional dependencies. Four complete main-loop routines
+are now recovered separately: counter 0x6620 and ramps 0x6640/0x66e0/0x6780
+in MANATEE, with corresponding MASARU entries eight bytes higher. These feed
+the snapshot path's channel state. create_arm_sound_ramps.py emits 268 static
+driver-local instruction sites into source/sa_arm_sound_ramps.c; its bounded
+fixture is built by build_arm_sound_ramps.ps1 with strict compiler warnings.
+The connected driver and its DLL are unchanged in this checkpoint.
+
+verify_arm_sound_ramps.py passes 960 full comparisons across two drivers,
+two RAM fills, four CPU flag patterns, four routines and fifteen rotated
+input patterns. Every loop processes eight channels. Inputs cover equal,
+ascending/descending, overshoot/underflow, zero/nonzero reload and delay,
+zero/max steps, byte limits and high 32-bit values. Full active CPU/CPSR,
+two MiB RAM and unchanged modeled MMIO match original ARM execution. An
+independent complete-RAM oracle checks counter wrap, ramp values, countdowns,
+reloads, updated markers, flags and derived word-ramp clock values.
+
+The second byte ramp clears bit 0x10 when target equals current, but sets
+bit 0x04 after updating. This original behavior is retained and independently
+checked. Sixty-four instruction-budget cases compare partial/completed state;
+sixty-four single-instruction vectors independently check carry-clear MOV
+behavior and ADDS N/Z/C/V, including overflow and carry boundaries. All pass.
+These routines use low RAM only; no retail MMIO-failure coverage is claimed.
+
+Local MOVCC generation and an addition-flags helper extend this component
+without changing the shared emitter. The first generator run encountered
+listing rows with no function entry; using exact candidate-entry strings
+corrected that filter before generation/build/tests. No ARM behavior change
+or speculative native fix was needed.
+
+Evidence: analysis/arm_sound_ramps_verification.json with source/DLL/fixture/
+generator/emitter/helper/verifier hashes. register_arm_sound_ramps.py also
+checks all 268 original byte spans, payload hashes and function-index entries.
+The accumulated workflow includes standalone build/comparison/registration;
+the full accumulated workflow was not run. Next connect the ramp step into
+the main driver and check the resulting driver flow. Connected ARM registry
+remains 58 routines and whole-project progress remains 10%; no acceptance
+milestone is credited. Sequence/command dispatchers, physical timing,
+interrupts, synthesis, audible playback and complete game ports remain open.
+
+Connected counter/ramp and persistent snapshot checkpoint
+-------------------------------------------------------
+The native driver now dispatches sa_arm_sound_ramp_step directly; all eight
+counter/ramp fallback addresses across both drivers are removed. The strict
+native build links the recovered ramp source. verify_arm_sound_ramps.py
+supports --connected and passes a null ARM-service callback, repeating all
+960 comparisons and 128 budget/flag vectors through the connected DLL.
+Standalone evidence remains reproducible separately. Original main-loop
+comparison tracing excludes these now-native calls from its validation-only
+service set, and all sixteen loop fixtures match the original ARM flow.
+
+verify_arm_sound_ramp_snapshot_flow.py adds eight persistent input flows:
+two drivers, two RAM/MMIO fills, ascending/descending targets. Each performs
+sixteen explicit cycles of the three ramps, snapshot and counter. All 640
+routine checkpoints match original ARM CPU/CPSR/full two MiB RAM/modeled MMIO
+and accumulated ordered bus effects, with no ARM-service callback. Independent
+assertions confirm byte/word convergence, snapshot output after convergence
+and counter wrapping from 0xfffffff8 to 8 across sixteen cycles.
+
+This fixture calls the recovered routines in an explicit sequence; it does
+not establish complete interrupt/main-loop scheduling or physical timing.
+Its evidence is analysis/arm_sound_ramp_snapshot_flow_verification.json.
+The connected direct suite is analysis/arm_sound_ramps_connected_verification.json.
+register_arm_sound_ramps.py supports --connected and checks both reports'
+current source/build/test hashes, original byte spans, entry addresses and
+the base connected-build evidence before granting registry credit.
+
+The accumulated workflow includes both direct modes, the persistent-flow
+comparison and connected registration; its PowerShell syntax parses. The
+full accumulated workflow has not been run. Physical timing, synthesis,
+audible playback and the complete requested game ports remain unfinished.
+
+Connected ramp final outcome: strict build and all focused ARM regressions
+passed (reset/main-loop, commands, bank, control/DSP, notes, mixed streams,
+status/update/snapshot, alignment and guard suites). Both ramp test modes and
+the persistent-flow test passed. Evidence registration passed and the ARM
+registry now contains 66 module-local complete native routines. Recovery
+evidence audit reports zero registry errors and zero source-hash refreshes
+needed. Whole-project completion audit remains 10% weighted milestones.
+Next recover the remaining channel-update routines and large dispatchers;
+this checkpoint does not prove complete sound-driver or game execution.
+
+Standalone remaining effects checkpoint
+--------------------------------------
+Five more complete routines per driver are recovered in source/
+sa_arm_sound_effects.c: MANATEE 0x684c/0x68f8/0x69a8 (three ramps), 0x6a5c
+(table-based value conversion), 0x6bd4 (apply channel changes to active
+voices). MASARU entries are eight bytes higher. create_arm_sound_effects.py
+emits 600 driver-local static instruction sites. build_arm_sound_effects.ps1
+links the existing recovered pitch helper via sa_arm_sound_commands.c into
+a bounded standalone fixture; no ARM service fallback exists. Strict build
+passes. The connected driver and its DLL are unchanged in this checkpoint.
+
+verify_arm_sound_effects.py passes 1,040 full comparisons across both drivers,
+two RAM/MMIO fills, four CPU flag patterns, five routines and thirteen input
+patterns. Fixtures exercise all eight channel/24 effect/48 voice records,
+inactive and active voices, enabled/disabled update markers, countdowns,
+zero/nonzero reload and delay, 32-bit ramp boundaries and real lookup tables.
+All active CPU/CPSR, two MiB RAM, modeled MMIO and ordered bus effects match
+original ARM bytes. Independent checks cover complete ramp RAM results,
+table conversion outputs/skip preservation, volume saturation, pan encoding,
+voice counters, delayed key-off and cleared channel update markers. Native
+pitch-helper effects are included in the full ARM comparison; independent
+pitch validation remains the earlier dedicated pitch suite.
+
+Sixty budget cases compare exact partial/completed execution. Twelve failures
+at actual retail MMIO reads/writes check exact pre-instruction CPU/RAM/MMIO
+and previously committed bus effects. All comparisons and guards pass.
+
+The 0x684c/0x68f8 descending ramps use MOVCS after subtraction, whereas
+0x69a8 uses MOVCC. The unusual original carry behavior is preserved. Pan
+conversion tests bit 0x80 after clamping negative sums, rather than applying
+a general unsigned upper bound. The first independent pan assertion assumed
+that upper bound and failed on constructed sums above 255; inspecting the
+original instructions corrected the oracle without a native code change.
+
+Evidence: analysis/arm_sound_effects_verification.json, with current source,
+DLL, fixture, pitch source, generator, emitter, memory helper and verifier
+hashes. register_arm_sound_effects.py validates those hashes, all 600 original
+byte spans, original payload hashes and candidate entry addresses before
+recording standalone progress. The accumulated workflow includes its strict
+build, comparison and registration; it has not been run in full.
+
+Next connect these five updates to the main driver and check persistent
+ramp/conversion/voice-application flow. Connected ARM registry remains 66
+routines and estimated whole-project completion remains 10%. No acceptance
+milestone is credited yet. Remaining dispatchers, scheduling/interrupts,
+physical timing, synthesis, audible playback and requested game ports remain
+unfinished.
+
+Connected effects and original main-loop segment checkpoint
+----------------------------------------------------------
+The main native build now includes sa_arm_sound_effects.c and dispatches its
+step directly. All ten effect fallback addresses across both drivers are
+removed. The direct verifier supports --connected with a null ARM-service
+callback and passes 1,040 comparisons, sixty budget cases and twelve actual
+retail MMIO failures through the connected driver. Standalone evidence is
+retained separately. The reset/main-loop verifier excludes these now-native
+calls from its original-ARM validation-only service set.
+
+verify_arm_sound_effect_flow.py validates the actual contiguous main-loop
+segment 0x1ec..0x214 in original order: ten call instructions invoking ramps,
+voice application, snapshot, counter and effect conversion. It stops at each
+original return site, keeping persistent registers, CPSR, low RAM and modeled
+hardware. Eight fixtures (two drivers/fills/directions) each run sixteen
+cycles: all 1,280 checkpoints match original ARM CPU/CPSR/two MiB RAM/MMIO and
+accumulated ordered bus effects with no ARM fallback. Independent assertions
+check ramp convergence, consumed channel markers and counter wrap. The test
+re-enters this segment between cycles; outside scheduling/main-loop paths are
+not exercised by this proof.
+
+Connected direct evidence: analysis/arm_sound_effects_connected_verification.json.
+Persistent original-site evidence: analysis/arm_sound_effect_flow_verification.json.
+register_arm_sound_effects.py supports --connected and verifies current
+source/build/evidence hashes, both reports, original payload bytes and entry
+indexes before adding ten module-local routines. The accumulated workflow
+includes both direct modes, original-site flow and connected registration;
+it has not been run in full. This is not proof of physical timing, interrupts,
+sound-chip synthesis, audible playback or complete game execution.
+
+Connected effects final outcome: strict build and all focused ARM regressions
+passed, including reset/main-loop, commands, bank, controls/DSP, notes, mixed
+streams, status/update/snapshot/ramps, both persistent flows and guard suites.
+Current evidence registration and original-byte checks passed. The separate
+ARM registry contains 76 module-local native routines. Recovery audit reports
+zero registry evidence errors and zero source-hash refreshes needed. The
+whole-project audit remains 10% weighted milestones. Next recover remaining
+main-loop callees 0x70a4/0x70ac, 0x4210/0x4218 and 0x48e8/0x48f0 with their
+indirect handlers/dependencies. Physical timing, interrupts, synthesis and
+audible native output remain unproven. The full accumulated suite was not run.
+
+Standalone 24-stream update checkpoint
+-------------------------------------
+create_arm_sound_stream_update.py recovers main routine 0x70a4 (MANATEE) /
+0x70ac (MASARU), its 24-record envelope/status helpers, pitch conversion tail
+and voice-release cleanup. The component contains 209 original instruction
+sites per driver in source/sa_arm_sound_stream_update.c. Its bounded fixture
+uses no external ARM callbacks and passes strict native compilation through
+build_arm_sound_stream_update.ps1. The connected driver/DLL are unchanged.
+
+MASARU's main stream routines are eight bytes above MANATEE's, but its late
+pitch/release helper region is only four bytes above. An initial range-count
+assertion caught this difference. Inspecting actual branch targets established
+the correct ranges (MASARU pitch tail 0x7d68 and release 0x8180). Generation
+records explicit driver-local spans rather than assuming a uniform offset.
+
+Local emission adds signed GT/LT and carry-clear predicates, reverse subtract
+and MOVS with immediate logical-right shift. The shifted instruction updates
+carry from original bit 14 and retains V. The shared emitter is unchanged.
+verify_arm_sound_stream_update.py passes 576 full comparisons: both drivers,
+two RAM/MMIO fills, four CPU flag patterns, six activity/envelope flag sets
+and six hardware/input patterns. Every full call visits all 24 records,
+including first-eight release handling and sixteen remaining status records.
+All active CPU/CPSR, two MiB RAM, modeled MMIO and ordered bus effects match
+original ARM bytes. Independent checks confirm inactive-record preservation,
+status extraction, release decisions/cleanup and retained release metadata.
+
+Sixteen budget cases and twelve failures at actual retail MMIO reads/writes
+match partial/pre-instruction state and committed bus effects. Six hundred
+forty single-instruction cases cover every incoming N/Z/C/V combination for
+signed GT/LT, carry-clear branch, reverse subtract and shifted MOVS, with
+independent condition/result/carry formulas. All comparisons and guards pass.
+
+Evidence: analysis/arm_sound_stream_update_verification.json. The report pins
+source/DLL/fixture/generator/emitter/helper/verifier hashes. Registration checks
+all 418 original byte spans, uploaded payload hashes and main entry indexes;
+it also proves every immediate branch/call in the selected listing targets
+another selected instruction. Standalone progress is recorded without native
+connected-registry credit. The accumulated workflow includes build/comparison/
+registration and parses successfully; it has not been run in full.
+
+Next connect this stream step to the main driver and validate its interaction
+with channel effects and snapshots. Connected ARM registry remains 76 native
+module-local routines and overall weighted project completion remains 10%.
+The sequence/command dispatchers, complete scheduling/interrupts, physical
+timing, sound synthesis, audible playback and requested game ports remain
+unfinished.
+
+Connected stream update and interaction checkpoint
+-------------------------------------------------
+The main build links sa_arm_sound_stream_update.c and calls its step before
+external dispatch. The two 0x70a4/0x70ac fallback entries are removed. Direct
+--connected comparisons use the actual driver DLL with a null ARM-service
+callback and pass all 576 stream cases, sixteen budgets, twelve real MMIO
+failures and 640 condition/shift vectors. Standalone evidence remains separate.
+Reset and sixteen main-loop fixtures compare with this call excluded from
+the validation-only original-ARM service set.
+
+verify_arm_sound_stream_effect_flow.py adds eight persistent fixtures, each
+running sixteen cycles. It executes the original stream-update call site at
+0x1e4, explicitly skips the unrecovered sequencer call at 0x1e8, then executes
+the ten original channel-update calls at 0x1ec..0x214. All 1,408 original-return
+checkpoints match original ARM active CPU/CPSR/full RAM/modeled MMIO and ordered
+accumulated bus effects, with no ARM callback. Stream hardware uses channels
+48..63; the existing 48 voice channels remain separate. Independent assertions
+check counter wrap, ramp convergence and consumed channel markers.
+
+The skipped sequencer and outside scheduling remain unproven. This fixture
+does not claim a complete main loop, interrupt/timing or sound-synthesis
+implementation. The stream component includes all direct branch/call targets,
+including shared cleanup tails, and retains MASARU's actual late-helper offsets.
+
+Evidence: analysis/arm_sound_stream_update_connected_verification.json and
+analysis/arm_sound_stream_effect_flow_verification.json. Connected registration
+checks current source/DLL/test/build hashes, payload bytes and each of the
+seven function entries per driver against the original indexes before adding
+registry credit. The accumulated workflow includes direct modes, interaction
+test and registration; it has not been run in full.
+
+Connected stream final outcome: strict build, reset/main-loop fixtures,
+direct stream modes, all prior focused ARM command/bank/control/DSP/note/
+status/update/snapshot/ramp/effect suites, their guards and all three existing
+persistent-flow regressions passed. The new stream/effect interaction suite
+also passed. Current source/byte/evidence registrations passed and the separate
+ARM registry now contains 90 module-local complete native routines. The
+recovery audit reports zero registry evidence errors and zero reports needing
+source-hash refresh. PowerShell workflow syntax parses; the full accumulated
+workflow was not executed. Whole-project completion remains 10% weighted
+milestones. Next recover the sequencer and command dispatcher and their
+indirect handlers; physical scheduling/timing, interrupts, synthesis, audible
+playback and complete native game ports remain unfinished.
+
+Standalone sequencer and indirect-handler checkpoint
+---------------------------------------------------
+create_arm_sound_sequencer.py recovers 0x4210/0x4218 and their indirect
+handlers, queue-output helper, duration helper and channel cleanup into
+source/sa_arm_sound_sequencer.c. The component has 405 instruction sites per
+driver, with two seven/sixteen-entry indirect tables per driver verified from
+the original payload. Targets are code addresses; table words are retained
+as data, not falsely translated as instructions. Strict standalone build via
+build_arm_sound_sequencer.ps1 passes. The connected driver/DLL are unchanged.
+
+The initial whole-sequencer run stopped at unhandled PC 0x47fc in native C,
+while original ARM returned normally. Inspection showed queue helper 0x48a0
+advances LR by four after a successful enqueue, skipping its caller's branch.
+That exposes nine executable words per driver absent from the baseline
+instruction listing: 0x4290..0x4298 and 0x47fc..0x4810 (MASARU plus eight).
+ghidra/SeedArmSequencerReturns.java and recover_arm_sequencer_returns.ps1
+seed those exact blocks in the existing Ghidra projects and export separate
+analysis/arm-sequencer-enrichment evidence. Original exported snapshots remain
+unchanged. Both enriched exports loaded the original payload bytes; adding
+these discovered instructions fixed the missing-path failure.
+
+verify_arm_sound_sequencer.py passes 2,056 complete calls: all 256 initial
+opcodes in both drivers/fills and two flag patterns, plus eight paused calls.
+Fixtures use bounded constructed note/control sequences, not real complete
+music files. All active CPU/CPSR/two MiB RAM match original ARM; no modeled
+MMIO accesses or ARM callbacks occur in this component. Forty-eight budget
+cases compare partial/completed state; forty-eight queue cases independently
+check wrap, backpressure and LR's skipped caller instruction. One thousand
+twenty-four MLAS/MVNVS vectors cover all incoming NZCV patterns and numerical
+boundary inputs, checking independent low-word multiply/result/NZ and VS
+selection formulas. All pass.
+
+MLAS flag qualification: ARM DDI 0100I A4.1.34 says V is retained, while C is
+unpredictable before ARMv5. Native code retains C like the TI925T reference;
+that is not proof of a physical ARM7/AICA carry value. Primary reference:
+https://e2e.ti.com/cfs-file/__key/communityserver-discussions-components-files/1023/ARM-Architecture.pdf
+verify_arm_sound_sequencer_carry.py separately forces C to zero and one after
+each MLAS in original reference execution. All 1,024 complete constructed
+sequence comparisons still match native final CPU/RAM/MMIO, covering 1,736
+carry injections. This is finite observability evidence, not a universal
+proof for all sequences or actual ARM7 hardware behavior.
+
+Reports: analysis/arm_sound_sequencer_verification.json and
+analysis/arm_sound_sequencer_carry_verification.json. Registration validates
+current source/DLL/generator/verifier hashes, every translated byte and row,
+the enriched image hashes, both original tables and all immediate branch/call
+targets. A provenance report pins enrichment/script hashes separately.
+The accumulated workflow includes build, both comparisons and registration;
+it has not been run in full. Ghidra enrichment/regeneration are explicit
+preparation steps using the saved scripts and original extracted payloads.
+
+Next integrate this sequencer with the main driver and replace the explicit
+sequencer gap in the persistent stream/effects fixture. Connected ARM registry
+remains 90 routines and overall project completion remains 10% weighted
+milestones. Command dispatcher, physical interrupts/timing, synthesis,
+audible playback and requested complete game ports remain unfinished.
+
+Connected sequencer and closed update-segment checkpoint
+------------------------------------------------------
+The main native build now links sa_arm_sound_sequencer.c and dispatches its
+step directly. The 0x4210/0x4218 fallback entries are removed. The connected
+sequencer suite passes all 2,056 whole calls, 48 budgets, 48 queue cases and
+1,024 MLAS/VS vectors with a null ARM-service callback. The connected
+forced-carry suite also passes 1,024 cases with 1,736 injections; its earlier
+ARMv4 hardware qualification remains applicable. Standalone suites remain
+separately reproducible.
+
+verify_arm_sound_sequence_effect_flow.py closes the prior sequencer gap and
+executes the contiguous original call-site segment 0x1e4..0x214. All twelve
+original calls per cycle execute in native C: stream update, sequencer and
+channel effects/snapshot/counter/conversion. Eight fixtures each run sixteen
+cycles. All 1,536 original-return checkpoints match original ARM active
+CPU/CPSR/two MiB RAM/modeled MMIO and accumulated ordered bus effects. A
+constructed note sequence produces nonempty native command-ring output.
+Independent checks retain counter-wrap, ramp-convergence and marker tests.
+The fixture skips no calls within this segment and uses no ARM callback.
+
+Outer scheduling, the preceding 0x48e8/0x48f0 command dispatcher and subsequent
+command consumption are outside this segment test. Physical interrupts,
+timing, synthesis and audible playback remain unproven. This is not a
+complete driver or game-execution claim.
+
+Connected direct/carry reports are analysis/arm_sound_sequencer_connected_verification.json
+and analysis/arm_sound_sequencer_carry_connected_verification.json. The closed
+interaction report is analysis/arm_sound_sequence_effect_flow_verification.json.
+Connected registration validates current source/build/evidence hashes,
+original rows/bytes/tables/return blocks and four indexed entry points per
+driver (sequencer, duration, queue and cleanup) before granting registry
+credit. Standalone/connected provenance stays separate. The accumulated
+workflow includes both sequencer/carry modes and the closed interaction test;
+it has not been run in full.
+
+Connected sequencer final outcome: strict build and all focused ARM reset,
+main-loop, command, bank, control/DSP, note, stream, effect, ramp, snapshot,
+status/update, alignment and guard regressions passed. Both sequencer/carry
+modes, all prior persistent flows and the new contiguous sequence flow passed.
+Evidence/byte/index registration passed; the separate ARM registry contains
+98 module-local complete native routines. Recovery audit reports zero
+registry evidence errors and zero source-hash refreshes needed. Accumulated
+PowerShell syntax parses; its full workflow was not executed. Whole-project
+audit remains 10% weighted milestones. Next recover 0x48e8/0x48f0 and its
+large command dispatcher/helpers, then address physical timing/interrupts,
+sound synthesis and audible native output. Complete game ports remain open.
+
+Dispatcher overlay baseline checkpoint
+-------------------------------------
+create_arm_sound_dispatcher.py recovers the remaining high-level dispatcher
+and late helpers into source/sa_arm_sound_dispatcher.c: 2,346 MANATEE and
+2,345 MASARU instruction sites. Existing native reset, DSP/control and stream
+helpers are reused rather than duplicated. A separate fixture derived from
+the current native driver adds the dispatcher before external dispatch;
+build_arm_sound_dispatcher.ps1 links a separate overlay DLL. The original
+connected driver source/DLL are unchanged, and no connected registry credit
+is granted by this baseline checkpoint.
+
+The local emitter adds CPSR reads/control+flag writes in SVC mode, reverse
+subtract with flags, arithmetic right shift, negative offsets, pre-index
+writeback, conditional negative byte loads and shifted register addressing.
+Unsupported addressing was catalogued before final generation. The first
+whole-command comparison found a missing direct stop-channel call target at
+0x17b0/0x17bc. A native-case dependency scan identified it as the sole absent
+direct target; recovering that helper's original instructions resolved the
+missing-path failure. No ARM service callback is used by the comparison DLL.
+
+verify_arm_sound_dispatcher.py passes 2,400 single-instruction comparisons
+across both drivers, all sixteen NZCV combinations and five numerical values.
+Independent assertions check pre-index/negative addressing, conditional
+loads, status field masks, signed shifts and reverse-subtract result/flags.
+The suite also passes all 256 zero-argument command baselines for each driver
+and two incoming flag patterns: 1,024 complete calls. Input RAM/hardware are
+prepared by original ARM reset execution, as fixture preparation only.
+Full active CPU/CPSR/two MiB RAM/modeled MMIO/ordered effects match original
+ARM. Two correctly signed hard-reset commands reach the original deliberate
+wait loop and match exact partial state after the shared instruction budget;
+they are not falsely expected to return normally.
+
+These baselines include inactive/invalid-bank guards and unknown command
+handling. They do not establish all successful bank/stream/voice operations:
+valid banks, active voices, varied command arguments and full-driver
+integration remain to be tested. The existing connected registry remains
+98 module-local routines, and whole-project progress remains 10% weighted
+milestones. This is partial dispatcher validation, not completion of the
+dispatcher, physical timing, synthesis, playback or requested game ports.
+
+Evidence: analysis/arm_sound_dispatcher_baseline_verification.json and
+analysis/arm_sound_dispatcher_baseline_provenance.json. Registration checks
+the actual compiled sources/build/test hashes, all 4,691 selected original
+rows/bytes, immediate targets against native cases and both 64/16-entry
+branch tables per driver. Structural case availability is not a substitute
+for testing successful commands. The accumulated workflow includes overlay
+build/comparison/registration; it has not been run in full. Next extend
+positive bank/active-command fixtures before connecting the overlay to the
+main driver and validating a full command-processing loop.
+
+Successful SMSB banks and active replacement checkpoint
+-----------------------------------------------------
+verify_arm_sound_dispatcher_banks.py adds 1,044 sequence-bank/priority cases
+through opcode 1 in the separate dispatcher overlay. Constructed SMSB banks
+have valid signature/version/length/count, three SMSD program headers/bodies,
+relative offset tables and ENDB trailer. The terminal table entry uses the
+original SMSD sentinel to select file-end minus trailer for the last program.
+Cases cover both drivers/flag patterns, parts 0/3/7, bank indexes 0/7/31 and
+all three programs. These are constructed banks, not retail music playback.
+
+There are 756 successful starts/replacements, 108 retained lower-priority
+programs and 180 invalid header/count/program-boundary cases. Independent
+checks validate start/current/end pointers, clock/period/scale initialization,
+active state, priority masking and status delivery. Status is transferred
+from the shared control byte to channel byte 0x29 and then cleared; the
+initial independent rejection assertion expected it to stay in the shared
+byte. Inspecting that protocol corrected the assertion, without native code
+changes. Header-level errors separately accumulate in channel byte 0x2a.
+
+Active replacement fixtures populate matching and other-part pending notes,
+command-ring entries and all 48 voice records. Checks independently confirm
+that only matching records/commands/active flags are cleared and that their
+modeled hardware controls receive the original key-off masks. Equal/higher,
+forced-zero and zero-old-priority policies succeed; lower priority preserves
+the active descriptor, pending/ring data and hardware. Nonzero masked-off
+priority bits are explicitly covered, as are the exact count boundary and
+the terminal program.
+
+All active CPU/CPSR/two MiB RAM/modeled MMIO/ordered effects match original
+ARM execution. The original unaligned word load at group+1 uses the existing
+explicit pre-ARMv6 reference adapter, with corrections counted and its hash
+pinned. This is not falsely described as unmodified Unicorn. Sixteen faults
+at first/last real hardware reads/writes match pre-instruction state and
+prior committed effects; thirty-six budgets compare partial/completed state.
+All comparisons, independent assertions and guards pass.
+
+No production source or connected DLL changed in this checkpoint. Evidence
+is analysis/arm_sound_dispatcher_banks_verification.json; registration pins
+its current source/build/test/adapter hashes alongside existing baseline
+evidence. The accumulated workflow includes the new suite before dispatcher
+registration; its full workflow has not been run. Next cover successful
+streamed-sound/DSP banks, varied active command families and persistent
+command flows before integrating the dispatcher. The connected ARM registry
+remains 98 routines and whole-project completion remains 10% weighted
+milestones. Physical timing, synthesis, audible output and game ports remain
+unfinished.
+
+Mono SOSB and dispatcher DSP configuration checkpoint
+---------------------------------------------------
+verify_arm_sound_dispatcher_streams.py validates opcode 0x11 successful mono
+SOSB starts and opcode 0x84 DSP configuration through the separate dispatcher
+overlay. No production source or connected driver/DLL changed. Native runs
+use no ARM fallback; input preparation uses the established original-reset
+fixture. CPU/CPSR/full two MiB RAM/modeled MMIO and ordered bus effects match
+original ARM, with the explicit legacy-alignment adapter retained and pinned.
+
+1,520 SOSB cases cover both drivers and flag patterns, slots 0/3/7, banks
+0/7/31, two programs, all four release modes, initial allocation, equal/higher
+priority replacement, forced replacement and lower-priority preservation.
+Additional cases exercise one-program headers and malformed signature,
+version, trailer and out-of-range programs. The SOSB helper treats header+0xc
+as an inclusive last program index; its zero value admits program zero,
+unlike SMSB's exclusive count. Both formats' boundaries are now covered.
+
+Constructed SOSD descriptors contain relative/rotated sample addresses and
+packed hardware-register words. Independent checks verify sample pointers,
+ownership table fields, active state, selected register unpacking, final
+key-on bits, neutral-envelope volume, pan lookup encoding, effect controls
+and all release-count formulas. Active lower-priority commands preserve
+the descriptor and allocation table, leave hardware unchanged, and deliver
+error status. These fixtures do not decode or play actual sound samples.
+
+384 SFpB cases exercise opcode 0x84 with both drivers/flags, selectors
+0/1/2 and all four memory classes. Valid descriptors, malformed headers,
+zero/low/short allocation pools and the original explicit size-check bypass
+are tested. Independent assertions confirm selected program pointers,
+configuration words and enable state, or retention of old configuration on
+failure. This is DSP configuration proof, not DSP microprogram execution.
+
+Eight failures at first/last actual SOSB hardware reads/writes match exact
+pre-instruction state and prior bus effects. Last access ordinals are chosen
+from a successful original-comparison fixture rather than assumed counts.
+Thirty-six budget cases compare partial/completed start/replacement/rejection
+state. All 1,520 stream, 384 DSP and 44 fault/budget checks pass.
+
+Evidence: analysis/arm_sound_dispatcher_streams_verification.json, pinned to
+the actual compiled sources, DLL, builder, verifier, reset fixture and
+alignment adapter. Dispatcher registration includes this report alongside
+baseline and SMSB evidence. The accumulated workflow includes the suite;
+its full workflow was not run. Next cover stereo streams, occupied-channel
+allocation/preemption, varied active commands and persistent command flows
+before main-driver integration. Connected registry remains 98 routines and
+whole-project completion remains 10% weighted milestones. Physical timing,
+synthesis, audible output and complete game ports remain unfinished.
+
+Stereo buffer and occupied-pool dispatcher checkpoint
+264 stereo/buffer cases, 88 occupied-pool allocation cases, 8 modeled MMIO
+failure cases and 48 instruction-budget cases passed against the original ARM.
+The reference and C overlay match CPU state, RAM and ordered modeled hardware
+accesses. Independent checks cover formats, length boundaries, paired channels,
+missing buffers, free slots, priority replacement and full ownership-word ties.
+MANATEE stores capped length; MASARU retains requested length while capping the
+hardware loop count. After a complete occupied-pool scan, the original stores
+index 255 even when selecting a valid ownership entry; this quirk is preserved.
+The main native library was unchanged; this suite tests the separate dispatcher
+overlay. No actual sample synthesis, timing, audible output or complete command
+integration is established. Connected registry remains 98 routines and weighted
+whole-project completion remains 10%. Full build_and_verify.ps1 was not run.
+
+Dispatcher-to-effects persistent overlay checkpoint
+Eight flows / 128 cycles / 2176 instruction-return checkpoints passed with
+Service=NULL, comparing CPU/CPSR, all RAM, modeled MMIO and ordered bus effects
+against original ARM execution. Segment 1d0..214 now includes the dispatcher,
+stream update, sequencer and effects. Alternating invalid opcode 7f and missing
+DSP bank opcode 84 are injected into a constructed mailbox each tick.
+Original command-history controls must be initialized. The dispatcher consumes
+the shared word at 13410, which is also the effects tick counter: each cycle
+resets it and then increments it to one. This behavior is independently checked.
+Positive bank/voice commands across this combined segment remain unproven.
+Main library unchanged, overlay only; no new connected registry credit. Overall
+weighted completion remains 10%. Full build workflow was not run.
+
+Successful SOSB dispatcher-to-effects checkpoint
+Eight positive-command flows / 128 cycles / 2176 original return checkpoints
+passed for both drivers, stream slots 0 and 7, and two sample programs. Each
+cycle injects opcode 11 into the constructed mailbox, executes 1d0..214, and
+compares full CPU/CPSR/RAM and modeled MMIO/ordered effects. Repeated equal-
+priority replacements retain the selected sample and ownership; activation
+and mailbox consumption are independently checked. No ARM service callbacks.
+The compiled overlay was unchanged. This is not physical sample playback or
+proof of all positive command families. Main-driver integration remains pending.
+Whole-project milestone estimate remains 10%; connected ARM registry remains98.
+Full build_and_verify.ps1 was not executed for this checkpoint.
+
+
+Main-library dispatcher integration: verification in progress
+The production core now calls sa_arm_sound_dispatch_step and its builder links
+sa_arm_sound_dispatcher.c. The generator handles an already-integrated core
+without duplicate prototypes/calls; regeneration reproduced all source bytes.
+The strict optimized DLL build passed. All 16 initialized original main-loop
+cases now use a null ARM service callback and match original CPU/RAM/MMIO and
+ordered bus effects. Connected baseline instruction/command checks also passed.
+Remaining focused regressions and connected positive/guard suites are running;
+this paragraph alone does not establish that those suites have passed.
+The complete game and physical audio remain unfinished; overall estimate10%.
+
+Main-library dispatcher integration: connected suites passed
+All six connected dispatcher suites passed against arm_sound_boot_native.dll,
+not merely the separate overlay DLL. Counts: 2400 instruction checks, 1024
+zero-argument commands, 2 reset waits; 1044 SMSB cases/16 MMIO faults/36 budgets;
+1520 SOSB and 384 DSP cases/8 faults/36 budgets; 264 stereo and 88 pool cases/
+8 faults/48 budgets; two persistent flow suites each 8 flows/128 cycles/2176
+checkpoints. The selected DLL is recorded by connected=true and pinned hash.
+Both initialized main-loop cases and constructed positive SOSB combined flows
+use null ARM service callbacks. This is bounded integration evidence, not
+complete dispatcher path coverage or sound-device synthesis/timing proof.
+Existing connected sequencer, stream, effects, ramps, snapshots, status,
+commands, note and reset regressions also passed on the updated main DLL.
+Connected registration/provenance is in
+analysis/arm_sound_dispatcher_connected_provenance.json. ARM complete-routine
+registry remains 98; no dispatcher-completeness or overall milestone credit.
+Overall weighted project completion remains 10%. Overlay evidence refresh and
+final audit were still underway when this checkpoint paragraph was written.
+
+Integration checkpoint final result
+The strict main DLL build, all 59 existing focused ARM verification/registration
+stages and six additional connected dispatcher suites completed successfully.
+Final audits reported zero registry-evidence errors and zero stale whole-source
+hash reports; the weighted project milestone estimate remains 10%. The full
+project build_and_verify.ps1 was syntax-checked but not executed end-to-end.
+Physical sound synthesis, timing and audible playback remain unimplemented or
+unproven. The complete game and requested PC/mobile/console ports remain open.
+
+Standalone byte-input parser and ring-producer checkpoint
+New source: source/sa_arm_sound_input.c, generated from exact original exported
+instructions at 1598..1768 (MASARU +12). This includes continuation blocks which
+Ghidra did not assign to a function. Original input port literal is 802808.
+109 static native instruction sites per driver; no runtime opcode interpreter.
+Strict optimized standalone DLL build passed after excluding an unused helper.
+1304 parser cases, 96 direct ring-producer cases, 8 persistent split-input flows
+with 56 checkpoints, 16 exhausted budgets, 12 modeled MMIO read failures and
+9 atomic API guards passed. Full CPU/CPSR/RAM and ordered input-read events
+match original TI925T instruction execution. Independent status, command-word,
+ring-wrap, saved-data and continuation-state checks pass. Every selected site
+executed in at least one constructed test; this is not exhaustive path proof.
+All 128 status bytes, orphan data bytes, partial messages, running status,
+status interruption, reset-like status bytes, wide MMIO words, high producer
+arguments, empty-input returns and 0xffc ring wrap are covered by finite cases.
+The parser and producer remain standalone; main sound-driver integration and
+exception/interrupt state are unfinished. Main library was unchanged here.
+Structural export audit: 188 sites per driver lack main native cases; 109 now
+have standalone input recovery, leaving 79 other exported exception/vector/
+interrupt sites. Case presence is not semantic proof or complete code discovery.
+Connected ARM registry remains 98 routines. Overall weighted estimate10%.
+No physical input delivery, device timing, synthesis or audible output proof.
+Source, reports, provenance and full build workflow steps are saved locally.
+
+Standalone vectors, exception returns and fast interrupt checkpoint
+New native source: source/sa_arm_sound_exception.c; standalone build links the
+previous input parser. All 79 remaining exported vector/exception/FIQ instruction
+sites per driver have static native cases. The fast interrupt branch calls the
+original byte-input parser and produces compact ring commands without ARM code
+callbacks. Main native driver library was unchanged in this checkpoint.
+1052 exception/FIQ comparisons, 54 partial-budget cases, 20 modeled MMIO failures,
+18 resumed flows with 638 checkpoints, and 14 atomic invalid-context guards passed.
+Every selected site executed in at least one constructed fixture. CPU/CPSR,
+SVC/exception bank snapshots, RAM, modeled MMIO and ordered bus effects match
+original TI925T instruction execution. Independent checks cover saved-status
+restoration, interrupted FIQ registers, interrupt counter wrap, timer reload,
+quarter-rate tick flags, four unmerged acknowledgement writes, and input ring
+packing/wrap. These remain finite instruction/state tests, not physical timing.
+
+Exception API context (source/arm_sound_exception.h): caller supplies registers
+AFTER exception entry, the exception SPSR, and the inactive SVC register bank.
+For FIQ return, all saved SVC r8..r14 values are restored. For other exception
+modes returning to SVC, only SVC sp/lr are inactive; shared r8..r12 remain active.
+The generic SVC-to-SVC case retains the original changed SVC stack/link values.
+The returned flag marks completion; the context stores the outgoing exception
+bank snapshot and the resulting SVC r8..r14. Interrupted state remains resumable
+when an instruction budget expires. Only exception-to-SVC/ARM return is supported;
+no automatic interrupt injection, arbitrary mode transitions, nesting, device
+scheduling or main-library integration is established.
+Architecture reference: ARM DDI0100I A4.1.22 LDM (3), exception/register-bank model:
+https://e2e.ti.com/cfs-file/__key/communityserver-discussions-components-files/1023/ARM-Architecture.pdf
+
+Structural export audit now finds native cases for all exported instruction rows
+across main and standalone modules. This is NOT complete code discovery or
+complete decompilation: export warnings, unindexed paths and all-game/platform
+requirements remain. The standalone input/exception modules account for 188 sites
+per driver still absent from the main library. Complete-routine registry remains
+98 ARM entries; whole-project weighted completion remains10%. Physical sound
+synthesis and audible output remain unfinished. Full build workflow not executed.
+
+Shared main-library exception/input/main-loop checkpoint (regressions running)
+The production build now links input, exception and their bounded exported entry
+adapters into arm_sound_boot_native.dll. Main SVC execution and explicit exception
+execution share the same caller-owned RAM/MMIO state. Existing sa_arm_state ABI
+is unchanged; exception calls additionally require sa_arm_exception_banks.
+New combined verifier: verify_arm_sound_interrupt_main_flow.py. Four flows for
+both drivers and complete/split input packets passed 64 cycles, 192 phase return
+checkpoints and 96 produced/consumed control commands. Each cycle explicitly
+enters input FIQ, enters timer FIQ, then runs a full original main-loop iteration.
+Original reset is included. Native calls never invoke an ARM service callback.
+CPU/CPSR, retained FIQ bank, RAM, modeled MMIO and ordered bus events match the
+original ARM reference at each phase. Independent checks confirm input controls
+change part volume/pan state, partial packets persist, ring commands are consumed,
+32 interrupts wrap the interrupt counter, and three full-tick main iterations
+occur per fixture. A legacy unaligned-transfer adapter is included in reference
+main execution where needed.
+Event entry/cadence and initial inactive FIQ register values are supplied by the
+fixture. This does not establish hardware interrupt delivery, reset-derived bank
+state, automatic host event scheduling, real timing, audio synthesis or playback.
+Broader regression refresh remains running; this paragraph alone does not claim
+that every refreshed suite has passed. Overall milestone estimate remains10%.
+
+Shared main-library integration: final result
+Strict optimized main DLL build passed. All 76 focused ARM verification and
+registration stages passed, including main-library input and exception suites
+and the four combined interrupt/input/timer/main flows. A verifier syntax error
+introduced while adding DLL-selection mode was corrected; the chain resumed
+from that failed stage, preserving the 66 already-passed stages. No compiled
+runtime/source changes invalidated those retained checks.
+Final audits: zero registry evidence errors and zero stale whole-source hash
+reports. Full build_and_verify.ps1 syntax passed; the full project workflow was
+not executed end-to-end. Whole-project weighted completion remains10%.
+
+Main DLL entry points now include:
+- sa_arm_sound_boot_native: existing SVC/ARM reset and main execution API.
+- sa_arm_sound_input_native: bounded direct input-parser execution API.
+- sa_arm_sound_exception_native: explicit already-entered exception context API.
+These entry points share caller RAM and modeled MMIO callbacks. The exception
+context preserves an inactive SVC bank and outgoing exception bank snapshot;
+there is no implicit host event scheduler or hardware-time advancement.
+
+Native case presence audit now covers every instruction row in the enriched
+Ghidra export snapshots across the main build's component sources. This does
+not prove complete original code discovery, all runtime paths, a universal
+single-entry CPU implementation or complete decompilation. Export warnings and
+the remaining main-game/physical-device/platform requirements still matter.
+ARM complete-routine registry remains98; no additional routine-completeness or
+whole-game milestone credit was added for this bounded integration evidence.
+Source, verification reports and provenance are saved locally; nothing uploaded.
+
+Draft-warning and release-mode computed dispatch checkpoint
+The original draft warnings are now inventoried by function, source line,
+warning site, exported instruction and conservative triage classification in
+analysis/arm_sound_warning_audit.json. Original draft text remains unchanged.
+Raw ARM B/BL target decoding found no direct branch target absent from the
+current enriched exports. This does not prove that every dynamic target or
+unidentified code region is known. Stack, symbol-alias and indirect-return
+warnings are not automatically missing routines and are not automatically closed.
+The late release-mode pointer table at8210 (MASARU8214) is explicitly checked
+against original bytes. All four targets execute in new main-library tests:
+800 active/inactive/invalid helper cases, 320 direct table-slot cases and40
+budget cases passed. Independent checks cover saved parameters/status and
+32-bit wrapped add/multiply arithmetic before scaling. No MMIO or ARM service
+callbacks occur in this helper. Main compiled source/DLL was unchanged; this
+checkpoint strengthens evidence rather than claiming new code recovery.
+Full build workflow includes these focused checks; full workflow was not run.
+Whole-project weighted estimate remains10%; physical audio and game ports remain
+unfinished. Draft warning triage is not complete decompilation or path coverage.

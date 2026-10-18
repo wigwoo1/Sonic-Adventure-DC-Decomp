@@ -1,0 +1,2504 @@
+{
+  "functions_verified": 1,
+  "total_abi_cases": 276,
+  "comparison_level": "Return register R0, preserved registers R8-R15, PR/PC, and complete RAM outside a reserved 64-byte stack scratch region; caller-clobbered R1-R7, SR, and ephemeral stack bytes are excluded.",
+  "source_sha256": "afc3489839ab0ed43e521c93170a4799c08ed16de36ad6b3b6a9af118fd569cb",
+  "scope": "Translated the table-driven mapping-value routine at 0x8c0a69a8, including its ROM mask and 16-bit lookup-table reads. Differential cases cover all 16 rows for codes 1-14, branch boundaries, negative bank values, and randomized inputs.",
+  "limitations": [
+    "The ROM lookup table and mask are read from their retail addresses; higher-level device mapping and callers remain incomplete.",
+    "Verification uses the project partial SH-4 interpreter, not Dreamcast hardware or end-to-end game execution."
+  ],
+  "routine": {
+    "module": "1ST_READ.BIN",
+    "address": "0x8c0a69a8",
+    "end_exclusive": "0x8c0a6a4a",
+    "retail_span_sha256": "e73cb18a1d3d7d7faf15c4979357aeec28f6b7feb18d149c5df2c451961205d7",
+    "cases_passed": 276,
+    "cases": [
+      {
+        "case": 0,
+        "row": 0,
+        "code": 1,
+        "bank": 0,
+        "retail_instructions": 69,
+        "return_value": "0x0",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 1,
+        "row": 0,
+        "code": 2,
+        "bank": 1,
+        "retail_instructions": 78,
+        "return_value": "0x21",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 2,
+        "row": 0,
+        "code": 3,
+        "bank": 2,
+        "retail_instructions": 87,
+        "return_value": "0x42",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 3,
+        "row": 0,
+        "code": 4,
+        "bank": -1,
+        "retail_instructions": 96,
+        "return_value": "0xffffffe3",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 4,
+        "row": 0,
+        "code": 5,
+        "bank": 0,
+        "retail_instructions": 105,
+        "return_value": "0x4",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 5,
+        "row": 0,
+        "code": 6,
+        "bank": 1,
+        "retail_instructions": 114,
+        "return_value": "0x25",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 6,
+        "row": 0,
+        "code": 7,
+        "bank": 2,
+        "retail_instructions": 123,
+        "return_value": "0x46",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 7,
+        "row": 0,
+        "code": 8,
+        "bank": -1,
+        "retail_instructions": 132,
+        "return_value": "0xffffffe7",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 8,
+        "row": 0,
+        "code": 9,
+        "bank": 0,
+        "retail_instructions": 141,
+        "return_value": "0x8",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 9,
+        "row": 0,
+        "code": 10,
+        "bank": 1,
+        "retail_instructions": 150,
+        "return_value": "0x29",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 10,
+        "row": 0,
+        "code": 11,
+        "bank": 2,
+        "retail_instructions": 150,
+        "return_value": "0x49",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 11,
+        "row": 0,
+        "code": 12,
+        "bank": -1,
+        "retail_instructions": 150,
+        "return_value": "0xffffffe9",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 12,
+        "row": 0,
+        "code": 13,
+        "bank": 0,
+        "retail_instructions": 150,
+        "return_value": "0x9",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 13,
+        "row": 0,
+        "code": 14,
+        "bank": 1,
+        "retail_instructions": 150,
+        "return_value": "0x29",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 14,
+        "row": 1,
+        "code": 1,
+        "bank": 1,
+        "retail_instructions": 161,
+        "return_value": "0x29",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 15,
+        "row": 1,
+        "code": 2,
+        "bank": 2,
+        "retail_instructions": 161,
+        "return_value": "0x49",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 16,
+        "row": 1,
+        "code": 3,
+        "bank": -1,
+        "retail_instructions": 161,
+        "return_value": "0xffffffe9",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 17,
+        "row": 1,
+        "code": 4,
+        "bank": 0,
+        "retail_instructions": 161,
+        "return_value": "0x9",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 18,
+        "row": 1,
+        "code": 5,
+        "bank": 1,
+        "retail_instructions": 161,
+        "return_value": "0x29",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 19,
+        "row": 1,
+        "code": 6,
+        "bank": 2,
+        "retail_instructions": 161,
+        "return_value": "0x49",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 20,
+        "row": 1,
+        "code": 7,
+        "bank": -1,
+        "retail_instructions": 161,
+        "return_value": "0xffffffe9",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 21,
+        "row": 1,
+        "code": 8,
+        "bank": 0,
+        "retail_instructions": 161,
+        "return_value": "0x9",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 22,
+        "row": 1,
+        "code": 9,
+        "bank": 1,
+        "retail_instructions": 161,
+        "return_value": "0x29",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 23,
+        "row": 1,
+        "code": 10,
+        "bank": 2,
+        "retail_instructions": 161,
+        "return_value": "0x49",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 24,
+        "row": 1,
+        "code": 11,
+        "bank": -1,
+        "retail_instructions": 161,
+        "return_value": "0xffffffe9",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 25,
+        "row": 1,
+        "code": 12,
+        "bank": 0,
+        "retail_instructions": 161,
+        "return_value": "0x9",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 26,
+        "row": 1,
+        "code": 13,
+        "bank": 1,
+        "retail_instructions": 161,
+        "return_value": "0x29",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 27,
+        "row": 1,
+        "code": 14,
+        "bank": 2,
+        "retail_instructions": 161,
+        "return_value": "0x49",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 28,
+        "row": 2,
+        "code": 1,
+        "bank": 2,
+        "retail_instructions": 172,
+        "return_value": "0x49",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 29,
+        "row": 2,
+        "code": 2,
+        "bank": -1,
+        "retail_instructions": 197,
+        "return_value": "0xffffffea",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 30,
+        "row": 2,
+        "code": 3,
+        "bank": 0,
+        "retail_instructions": 197,
+        "return_value": "0xa",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 31,
+        "row": 2,
+        "code": 4,
+        "bank": 1,
+        "retail_instructions": 214,
+        "return_value": "0x2b",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 32,
+        "row": 2,
+        "code": 5,
+        "bank": 2,
+        "retail_instructions": 214,
+        "return_value": "0x4b",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 33,
+        "row": 2,
+        "code": 6,
+        "bank": -1,
+        "retail_instructions": 231,
+        "return_value": "0xffffffec",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 34,
+        "row": 2,
+        "code": 7,
+        "bank": 0,
+        "retail_instructions": 231,
+        "return_value": "0xc",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 35,
+        "row": 2,
+        "code": 8,
+        "bank": 1,
+        "retail_instructions": 248,
+        "return_value": "0x2d",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 36,
+        "row": 2,
+        "code": 9,
+        "bank": 2,
+        "retail_instructions": 257,
+        "return_value": "0x4e",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 37,
+        "row": 2,
+        "code": 10,
+        "bank": -1,
+        "retail_instructions": 257,
+        "return_value": "0xffffffee",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 38,
+        "row": 2,
+        "code": 11,
+        "bank": 0,
+        "retail_instructions": 257,
+        "return_value": "0xe",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 39,
+        "row": 2,
+        "code": 12,
+        "bank": 1,
+        "retail_instructions": 257,
+        "return_value": "0x2e",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 40,
+        "row": 2,
+        "code": 13,
+        "bank": 2,
+        "retail_instructions": 257,
+        "return_value": "0x4e",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 41,
+        "row": 2,
+        "code": 14,
+        "bank": -1,
+        "retail_instructions": 257,
+        "return_value": "0xffffffee",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 42,
+        "row": 3,
+        "code": 1,
+        "bank": -1,
+        "retail_instructions": 268,
+        "return_value": "0xffffffee",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 43,
+        "row": 3,
+        "code": 2,
+        "bank": 0,
+        "retail_instructions": 268,
+        "return_value": "0xe",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 44,
+        "row": 3,
+        "code": 3,
+        "bank": 1,
+        "retail_instructions": 268,
+        "return_value": "0x2e",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 45,
+        "row": 3,
+        "code": 4,
+        "bank": 2,
+        "retail_instructions": 309,
+        "return_value": "0x4f",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 46,
+        "row": 3,
+        "code": 5,
+        "bank": -1,
+        "retail_instructions": 318,
+        "return_value": "0xfffffff0",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 47,
+        "row": 3,
+        "code": 6,
+        "bank": 0,
+        "retail_instructions": 327,
+        "return_value": "0x11",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 48,
+        "row": 3,
+        "code": 7,
+        "bank": 1,
+        "retail_instructions": 336,
+        "return_value": "0x32",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 49,
+        "row": 3,
+        "code": 8,
+        "bank": 2,
+        "retail_instructions": 336,
+        "return_value": "0x52",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 50,
+        "row": 3,
+        "code": 9,
+        "bank": -1,
+        "retail_instructions": 353,
+        "return_value": "0xfffffff3",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 51,
+        "row": 3,
+        "code": 10,
+        "bank": 0,
+        "retail_instructions": 353,
+        "return_value": "0x13",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 52,
+        "row": 3,
+        "code": 11,
+        "bank": 1,
+        "retail_instructions": 353,
+        "return_value": "0x33",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 53,
+        "row": 3,
+        "code": 12,
+        "bank": 2,
+        "retail_instructions": 353,
+        "return_value": "0x53",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 54,
+        "row": 3,
+        "code": 13,
+        "bank": -1,
+        "retail_instructions": 353,
+        "return_value": "0xfffffff3",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 55,
+        "row": 3,
+        "code": 14,
+        "bank": 0,
+        "retail_instructions": 353,
+        "return_value": "0x13",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 56,
+        "row": 4,
+        "code": 1,
+        "bank": 0,
+        "retail_instructions": 364,
+        "return_value": "0x13",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 57,
+        "row": 4,
+        "code": 2,
+        "bank": 1,
+        "retail_instructions": 364,
+        "return_value": "0x33",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 58,
+        "row": 4,
+        "code": 3,
+        "bank": 2,
+        "retail_instructions": 364,
+        "return_value": "0x53",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 59,
+        "row": 4,
+        "code": 4,
+        "bank": -1,
+        "retail_instructions": 364,
+        "return_value": "0xfffffff3",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 60,
+        "row": 4,
+        "code": 5,
+        "bank": 0,
+        "retail_instructions": 364,
+        "return_value": "0x13",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 61,
+        "row": 4,
+        "code": 6,
+        "bank": 1,
+        "retail_instructions": 364,
+        "return_value": "0x33",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 62,
+        "row": 4,
+        "code": 7,
+        "bank": 2,
+        "retail_instructions": 364,
+        "return_value": "0x53",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 63,
+        "row": 4,
+        "code": 8,
+        "bank": -1,
+        "retail_instructions": 364,
+        "return_value": "0xfffffff3",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 64,
+        "row": 4,
+        "code": 9,
+        "bank": 0,
+        "retail_instructions": 364,
+        "return_value": "0x13",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 65,
+        "row": 4,
+        "code": 10,
+        "bank": 1,
+        "retail_instructions": 364,
+        "return_value": "0x33",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 66,
+        "row": 4,
+        "code": 11,
+        "bank": 2,
+        "retail_instructions": 364,
+        "return_value": "0x53",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 67,
+        "row": 4,
+        "code": 12,
+        "bank": -1,
+        "retail_instructions": 364,
+        "return_value": "0xfffffff3",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 68,
+        "row": 4,
+        "code": 13,
+        "bank": 0,
+        "retail_instructions": 364,
+        "return_value": "0x13",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 69,
+        "row": 4,
+        "code": 14,
+        "bank": 1,
+        "retail_instructions": 364,
+        "return_value": "0x33",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 70,
+        "row": 5,
+        "code": 1,
+        "bank": 1,
+        "retail_instructions": 375,
+        "return_value": "0x33",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 71,
+        "row": 5,
+        "code": 2,
+        "bank": 2,
+        "retail_instructions": 375,
+        "return_value": "0x53",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 72,
+        "row": 5,
+        "code": 3,
+        "bank": -1,
+        "retail_instructions": 408,
+        "return_value": "0xfffffff4",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 73,
+        "row": 5,
+        "code": 4,
+        "bank": 0,
+        "retail_instructions": 408,
+        "return_value": "0x14",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 74,
+        "row": 5,
+        "code": 5,
+        "bank": 1,
+        "retail_instructions": 408,
+        "return_value": "0x34",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 75,
+        "row": 5,
+        "code": 6,
+        "bank": 2,
+        "retail_instructions": 408,
+        "return_value": "0x54",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 76,
+        "row": 5,
+        "code": 7,
+        "bank": -1,
+        "retail_instructions": 408,
+        "return_value": "0xfffffff4",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 77,
+        "row": 5,
+        "code": 8,
+        "bank": 0,
+        "retail_instructions": 408,
+        "return_value": "0x14",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 78,
+        "row": 5,
+        "code": 9,
+        "bank": 1,
+        "retail_instructions": 408,
+        "return_value": "0x34",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 79,
+        "row": 5,
+        "code": 10,
+        "bank": 2,
+        "retail_instructions": 465,
+        "return_value": "0x55",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 80,
+        "row": 5,
+        "code": 11,
+        "bank": -1,
+        "retail_instructions": 465,
+        "return_value": "0xfffffff5",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 81,
+        "row": 5,
+        "code": 12,
+        "bank": 0,
+        "retail_instructions": 482,
+        "return_value": "0x16",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 82,
+        "row": 5,
+        "code": 13,
+        "bank": 1,
+        "retail_instructions": 482,
+        "return_value": "0x36",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 83,
+        "row": 5,
+        "code": 14,
+        "bank": 2,
+        "retail_instructions": 482,
+        "return_value": "0x56",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 84,
+        "row": 6,
+        "code": 1,
+        "bank": 2,
+        "retail_instructions": 510,
+        "return_value": "0x57",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 85,
+        "row": 6,
+        "code": 2,
+        "bank": -1,
+        "retail_instructions": 519,
+        "return_value": "0xfffffff8",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 86,
+        "row": 6,
+        "code": 3,
+        "bank": 0,
+        "retail_instructions": 519,
+        "return_value": "0x18",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 87,
+        "row": 6,
+        "code": 4,
+        "bank": 1,
+        "retail_instructions": 519,
+        "return_value": "0x38",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 88,
+        "row": 6,
+        "code": 5,
+        "bank": 2,
+        "retail_instructions": 544,
+        "return_value": "0x59",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 89,
+        "row": 6,
+        "code": 6,
+        "bank": -1,
+        "retail_instructions": 544,
+        "return_value": "0xfffffff9",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 90,
+        "row": 6,
+        "code": 7,
+        "bank": 0,
+        "retail_instructions": 544,
+        "return_value": "0x19",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 91,
+        "row": 6,
+        "code": 8,
+        "bank": 1,
+        "retail_instructions": 544,
+        "return_value": "0x39",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 92,
+        "row": 6,
+        "code": 9,
+        "bank": 2,
+        "retail_instructions": 544,
+        "return_value": "0x59",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 93,
+        "row": 6,
+        "code": 10,
+        "bank": -1,
+        "retail_instructions": 585,
+        "return_value": "0xfffffffa",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 94,
+        "row": 6,
+        "code": 11,
+        "bank": 0,
+        "retail_instructions": 585,
+        "return_value": "0x1a",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 95,
+        "row": 6,
+        "code": 12,
+        "bank": 1,
+        "retail_instructions": 602,
+        "return_value": "0x3b",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 96,
+        "row": 6,
+        "code": 13,
+        "bank": 2,
+        "retail_instructions": 602,
+        "return_value": "0x5b",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 97,
+        "row": 6,
+        "code": 14,
+        "bank": -1,
+        "retail_instructions": 602,
+        "return_value": "0xfffffffb",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 98,
+        "row": 7,
+        "code": 1,
+        "bank": -1,
+        "retail_instructions": 630,
+        "return_value": "0xfffffffc",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 99,
+        "row": 7,
+        "code": 2,
+        "bank": 0,
+        "retail_instructions": 630,
+        "return_value": "0x1c",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 100,
+        "row": 7,
+        "code": 3,
+        "bank": 1,
+        "retail_instructions": 647,
+        "return_value": "0x3d",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 101,
+        "row": 7,
+        "code": 4,
+        "bank": 2,
+        "retail_instructions": 647,
+        "return_value": "0x5d",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 102,
+        "row": 7,
+        "code": 5,
+        "bank": -1,
+        "retail_instructions": 647,
+        "return_value": "0xfffffffd",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 103,
+        "row": 7,
+        "code": 6,
+        "bank": 0,
+        "retail_instructions": 647,
+        "return_value": "0x1d",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 104,
+        "row": 7,
+        "code": 7,
+        "bank": 1,
+        "retail_instructions": 647,
+        "return_value": "0x3d",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 105,
+        "row": 7,
+        "code": 8,
+        "bank": 2,
+        "retail_instructions": 688,
+        "return_value": "0x5e",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 106,
+        "row": 7,
+        "code": 9,
+        "bank": -1,
+        "retail_instructions": 688,
+        "return_value": "0xfffffffe",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 107,
+        "row": 7,
+        "code": 10,
+        "bank": 0,
+        "retail_instructions": 688,
+        "return_value": "0x1e",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 108,
+        "row": 7,
+        "code": 11,
+        "bank": 1,
+        "retail_instructions": 688,
+        "return_value": "0x3e",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 109,
+        "row": 7,
+        "code": 12,
+        "bank": 2,
+        "retail_instructions": 721,
+        "return_value": "0x5f",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 110,
+        "row": 7,
+        "code": 13,
+        "bank": -1,
+        "retail_instructions": 721,
+        "return_value": "0xffffffff",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 111,
+        "row": 7,
+        "code": 14,
+        "bank": 0,
+        "retail_instructions": 721,
+        "return_value": "0x1f",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 112,
+        "row": 8,
+        "code": 1,
+        "bank": 0,
+        "retail_instructions": 732,
+        "return_value": "0x1f",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 113,
+        "row": 8,
+        "code": 2,
+        "bank": 1,
+        "retail_instructions": 732,
+        "return_value": "0x3f",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 114,
+        "row": 8,
+        "code": 3,
+        "bank": 2,
+        "retail_instructions": 732,
+        "return_value": "0x5f",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 115,
+        "row": 8,
+        "code": 4,
+        "bank": -1,
+        "retail_instructions": 732,
+        "return_value": "0xffffffff",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 116,
+        "row": 8,
+        "code": 5,
+        "bank": 0,
+        "retail_instructions": 732,
+        "return_value": "0x1f",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 117,
+        "row": 8,
+        "code": 6,
+        "bank": 1,
+        "retail_instructions": 732,
+        "return_value": "0x3f",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 118,
+        "row": 8,
+        "code": 7,
+        "bank": 2,
+        "retail_instructions": 732,
+        "return_value": "0x5f",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 119,
+        "row": 8,
+        "code": 8,
+        "bank": -1,
+        "retail_instructions": 732,
+        "return_value": "0xffffffff",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 120,
+        "row": 8,
+        "code": 9,
+        "bank": 0,
+        "retail_instructions": 732,
+        "return_value": "0x1f",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 121,
+        "row": 8,
+        "code": 10,
+        "bank": 1,
+        "retail_instructions": 732,
+        "return_value": "0x3f",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 122,
+        "row": 8,
+        "code": 11,
+        "bank": 2,
+        "retail_instructions": 732,
+        "return_value": "0x5f",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 123,
+        "row": 8,
+        "code": 12,
+        "bank": -1,
+        "retail_instructions": 732,
+        "return_value": "0xffffffff",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 124,
+        "row": 8,
+        "code": 13,
+        "bank": 0,
+        "retail_instructions": 732,
+        "return_value": "0x1f",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 125,
+        "row": 8,
+        "code": 14,
+        "bank": 1,
+        "retail_instructions": 732,
+        "return_value": "0x3f",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 126,
+        "row": 9,
+        "code": 1,
+        "bank": 1,
+        "retail_instructions": 743,
+        "return_value": "0x3f",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 127,
+        "row": 9,
+        "code": 2,
+        "bank": 2,
+        "retail_instructions": 743,
+        "return_value": "0x5f",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 128,
+        "row": 9,
+        "code": 3,
+        "bank": -1,
+        "retail_instructions": 743,
+        "return_value": "0xffffffff",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 129,
+        "row": 9,
+        "code": 4,
+        "bank": 0,
+        "retail_instructions": 743,
+        "return_value": "0x1f",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 130,
+        "row": 9,
+        "code": 5,
+        "bank": 1,
+        "retail_instructions": 743,
+        "return_value": "0x3f",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 131,
+        "row": 9,
+        "code": 6,
+        "bank": 2,
+        "retail_instructions": 743,
+        "return_value": "0x5f",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 132,
+        "row": 9,
+        "code": 7,
+        "bank": -1,
+        "retail_instructions": 743,
+        "return_value": "0xffffffff",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 133,
+        "row": 9,
+        "code": 8,
+        "bank": 0,
+        "retail_instructions": 743,
+        "return_value": "0x1f",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 134,
+        "row": 9,
+        "code": 9,
+        "bank": 1,
+        "retail_instructions": 743,
+        "return_value": "0x3f",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 135,
+        "row": 9,
+        "code": 10,
+        "bank": 2,
+        "retail_instructions": 743,
+        "return_value": "0x5f",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 136,
+        "row": 9,
+        "code": 11,
+        "bank": -1,
+        "retail_instructions": 743,
+        "return_value": "0xffffffff",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 137,
+        "row": 9,
+        "code": 12,
+        "bank": 0,
+        "retail_instructions": 743,
+        "return_value": "0x1f",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 138,
+        "row": 9,
+        "code": 13,
+        "bank": 1,
+        "retail_instructions": 743,
+        "return_value": "0x3f",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 139,
+        "row": 9,
+        "code": 14,
+        "bank": 2,
+        "retail_instructions": 743,
+        "return_value": "0x5f",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 140,
+        "row": 10,
+        "code": 1,
+        "bank": 2,
+        "retail_instructions": 754,
+        "return_value": "0x5f",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 141,
+        "row": 10,
+        "code": 2,
+        "bank": -1,
+        "retail_instructions": 754,
+        "return_value": "0xffffffff",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 142,
+        "row": 10,
+        "code": 3,
+        "bank": 0,
+        "retail_instructions": 754,
+        "return_value": "0x1f",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 143,
+        "row": 10,
+        "code": 4,
+        "bank": 1,
+        "retail_instructions": 754,
+        "return_value": "0x3f",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 144,
+        "row": 10,
+        "code": 5,
+        "bank": 2,
+        "retail_instructions": 754,
+        "return_value": "0x5f",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 145,
+        "row": 10,
+        "code": 6,
+        "bank": -1,
+        "retail_instructions": 754,
+        "return_value": "0xffffffff",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 146,
+        "row": 10,
+        "code": 7,
+        "bank": 0,
+        "retail_instructions": 754,
+        "return_value": "0x1f",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 147,
+        "row": 10,
+        "code": 8,
+        "bank": 1,
+        "retail_instructions": 754,
+        "return_value": "0x3f",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 148,
+        "row": 10,
+        "code": 9,
+        "bank": 2,
+        "retail_instructions": 754,
+        "return_value": "0x5f",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 149,
+        "row": 10,
+        "code": 10,
+        "bank": -1,
+        "retail_instructions": 754,
+        "return_value": "0xffffffff",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 150,
+        "row": 10,
+        "code": 11,
+        "bank": 0,
+        "retail_instructions": 754,
+        "return_value": "0x1f",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 151,
+        "row": 10,
+        "code": 12,
+        "bank": 1,
+        "retail_instructions": 859,
+        "return_value": "0x40",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 152,
+        "row": 10,
+        "code": 13,
+        "bank": 2,
+        "retail_instructions": 868,
+        "return_value": "0x61",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 153,
+        "row": 10,
+        "code": 14,
+        "bank": -1,
+        "retail_instructions": 868,
+        "return_value": "0x1",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 154,
+        "row": 11,
+        "code": 1,
+        "bank": -1,
+        "retail_instructions": 896,
+        "return_value": "0x2",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 155,
+        "row": 11,
+        "code": 2,
+        "bank": 0,
+        "retail_instructions": 896,
+        "return_value": "0x22",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 156,
+        "row": 11,
+        "code": 3,
+        "bank": 1,
+        "retail_instructions": 896,
+        "return_value": "0x42",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 157,
+        "row": 11,
+        "code": 4,
+        "bank": 2,
+        "retail_instructions": 896,
+        "return_value": "0x62",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 158,
+        "row": 11,
+        "code": 5,
+        "bank": -1,
+        "retail_instructions": 896,
+        "return_value": "0x2",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 159,
+        "row": 11,
+        "code": 6,
+        "bank": 0,
+        "retail_instructions": 896,
+        "return_value": "0x22",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 160,
+        "row": 11,
+        "code": 7,
+        "bank": 1,
+        "retail_instructions": 896,
+        "return_value": "0x42",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 161,
+        "row": 11,
+        "code": 8,
+        "bank": 2,
+        "retail_instructions": 896,
+        "return_value": "0x62",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 162,
+        "row": 11,
+        "code": 9,
+        "bank": -1,
+        "retail_instructions": 896,
+        "return_value": "0x2",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 163,
+        "row": 11,
+        "code": 10,
+        "bank": 0,
+        "retail_instructions": 896,
+        "return_value": "0x22",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 164,
+        "row": 11,
+        "code": 11,
+        "bank": 1,
+        "retail_instructions": 896,
+        "return_value": "0x42",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 165,
+        "row": 11,
+        "code": 12,
+        "bank": 2,
+        "retail_instructions": 896,
+        "return_value": "0x62",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 166,
+        "row": 11,
+        "code": 13,
+        "bank": -1,
+        "retail_instructions": 896,
+        "return_value": "0x2",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 167,
+        "row": 11,
+        "code": 14,
+        "bank": 0,
+        "retail_instructions": 896,
+        "return_value": "0x22",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 168,
+        "row": 12,
+        "code": 1,
+        "bank": 0,
+        "retail_instructions": 907,
+        "return_value": "0x22",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 169,
+        "row": 12,
+        "code": 2,
+        "bank": 1,
+        "retail_instructions": 907,
+        "return_value": "0x42",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 170,
+        "row": 12,
+        "code": 3,
+        "bank": 2,
+        "retail_instructions": 907,
+        "return_value": "0x62",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 171,
+        "row": 12,
+        "code": 4,
+        "bank": -1,
+        "retail_instructions": 907,
+        "return_value": "0x2",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 172,
+        "row": 12,
+        "code": 5,
+        "bank": 0,
+        "retail_instructions": 907,
+        "return_value": "0x22",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 173,
+        "row": 12,
+        "code": 6,
+        "bank": 1,
+        "retail_instructions": 907,
+        "return_value": "0x42",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 174,
+        "row": 12,
+        "code": 7,
+        "bank": 2,
+        "retail_instructions": 907,
+        "return_value": "0x62",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 175,
+        "row": 12,
+        "code": 8,
+        "bank": -1,
+        "retail_instructions": 907,
+        "return_value": "0x2",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 176,
+        "row": 12,
+        "code": 9,
+        "bank": 0,
+        "retail_instructions": 907,
+        "return_value": "0x22",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 177,
+        "row": 12,
+        "code": 10,
+        "bank": 1,
+        "retail_instructions": 907,
+        "return_value": "0x42",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 178,
+        "row": 12,
+        "code": 11,
+        "bank": 2,
+        "retail_instructions": 907,
+        "return_value": "0x62",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 179,
+        "row": 12,
+        "code": 12,
+        "bank": -1,
+        "retail_instructions": 907,
+        "return_value": "0x2",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 180,
+        "row": 12,
+        "code": 13,
+        "bank": 0,
+        "retail_instructions": 907,
+        "return_value": "0x22",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 181,
+        "row": 12,
+        "code": 14,
+        "bank": 1,
+        "retail_instructions": 907,
+        "return_value": "0x42",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 182,
+        "row": 13,
+        "code": 1,
+        "bank": 1,
+        "retail_instructions": 918,
+        "return_value": "0x42",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 183,
+        "row": 13,
+        "code": 2,
+        "bank": 2,
+        "retail_instructions": 918,
+        "return_value": "0x62",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 184,
+        "row": 13,
+        "code": 3,
+        "bank": -1,
+        "retail_instructions": 918,
+        "return_value": "0x2",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 185,
+        "row": 13,
+        "code": 4,
+        "bank": 0,
+        "retail_instructions": 918,
+        "return_value": "0x22",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 186,
+        "row": 13,
+        "code": 5,
+        "bank": 1,
+        "retail_instructions": 918,
+        "return_value": "0x42",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 187,
+        "row": 13,
+        "code": 6,
+        "bank": 2,
+        "retail_instructions": 918,
+        "return_value": "0x62",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 188,
+        "row": 13,
+        "code": 7,
+        "bank": -1,
+        "retail_instructions": 918,
+        "return_value": "0x2",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 189,
+        "row": 13,
+        "code": 8,
+        "bank": 0,
+        "retail_instructions": 918,
+        "return_value": "0x22",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 190,
+        "row": 13,
+        "code": 9,
+        "bank": 1,
+        "retail_instructions": 918,
+        "return_value": "0x42",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 191,
+        "row": 13,
+        "code": 10,
+        "bank": 2,
+        "retail_instructions": 918,
+        "return_value": "0x62",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 192,
+        "row": 13,
+        "code": 11,
+        "bank": -1,
+        "retail_instructions": 918,
+        "return_value": "0x2",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 193,
+        "row": 13,
+        "code": 12,
+        "bank": 0,
+        "retail_instructions": 918,
+        "return_value": "0x22",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 194,
+        "row": 13,
+        "code": 13,
+        "bank": 1,
+        "retail_instructions": 918,
+        "return_value": "0x42",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 195,
+        "row": 13,
+        "code": 14,
+        "bank": 2,
+        "retail_instructions": 918,
+        "return_value": "0x62",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 196,
+        "row": 14,
+        "code": 1,
+        "bank": 2,
+        "retail_instructions": 929,
+        "return_value": "0x62",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 197,
+        "row": 14,
+        "code": 2,
+        "bank": -1,
+        "retail_instructions": 929,
+        "return_value": "0x2",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 198,
+        "row": 14,
+        "code": 3,
+        "bank": 0,
+        "retail_instructions": 929,
+        "return_value": "0x22",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 199,
+        "row": 14,
+        "code": 4,
+        "bank": 1,
+        "retail_instructions": 929,
+        "return_value": "0x42",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 200,
+        "row": 14,
+        "code": 5,
+        "bank": 2,
+        "retail_instructions": 929,
+        "return_value": "0x62",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 201,
+        "row": 14,
+        "code": 6,
+        "bank": -1,
+        "retail_instructions": 929,
+        "return_value": "0x2",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 202,
+        "row": 14,
+        "code": 7,
+        "bank": 0,
+        "retail_instructions": 929,
+        "return_value": "0x22",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 203,
+        "row": 14,
+        "code": 8,
+        "bank": 1,
+        "retail_instructions": 929,
+        "return_value": "0x42",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 204,
+        "row": 14,
+        "code": 9,
+        "bank": 2,
+        "retail_instructions": 929,
+        "return_value": "0x62",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 205,
+        "row": 14,
+        "code": 10,
+        "bank": -1,
+        "retail_instructions": 929,
+        "return_value": "0x2",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 206,
+        "row": 14,
+        "code": 11,
+        "bank": 0,
+        "retail_instructions": 929,
+        "return_value": "0x22",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 207,
+        "row": 14,
+        "code": 12,
+        "bank": 1,
+        "retail_instructions": 929,
+        "return_value": "0x42",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 208,
+        "row": 14,
+        "code": 13,
+        "bank": 2,
+        "retail_instructions": 929,
+        "return_value": "0x62",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 209,
+        "row": 14,
+        "code": 14,
+        "bank": -1,
+        "retail_instructions": 929,
+        "return_value": "0x2",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 210,
+        "row": 15,
+        "code": 1,
+        "bank": -1,
+        "retail_instructions": 940,
+        "return_value": "0x2",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 211,
+        "row": 15,
+        "code": 2,
+        "bank": 0,
+        "retail_instructions": 940,
+        "return_value": "0x22",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 212,
+        "row": 15,
+        "code": 3,
+        "bank": 1,
+        "retail_instructions": 940,
+        "return_value": "0x42",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 213,
+        "row": 15,
+        "code": 4,
+        "bank": 2,
+        "retail_instructions": 940,
+        "return_value": "0x62",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 214,
+        "row": 15,
+        "code": 5,
+        "bank": -1,
+        "retail_instructions": 940,
+        "return_value": "0x2",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 215,
+        "row": 15,
+        "code": 6,
+        "bank": 0,
+        "retail_instructions": 940,
+        "return_value": "0x22",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 216,
+        "row": 15,
+        "code": 7,
+        "bank": 1,
+        "retail_instructions": 940,
+        "return_value": "0x42",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 217,
+        "row": 15,
+        "code": 8,
+        "bank": 2,
+        "retail_instructions": 940,
+        "return_value": "0x62",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 218,
+        "row": 15,
+        "code": 9,
+        "bank": -1,
+        "retail_instructions": 940,
+        "return_value": "0x2",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 219,
+        "row": 15,
+        "code": 10,
+        "bank": 0,
+        "retail_instructions": 940,
+        "return_value": "0x22",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 220,
+        "row": 15,
+        "code": 11,
+        "bank": 1,
+        "retail_instructions": 940,
+        "return_value": "0x42",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 221,
+        "row": 15,
+        "code": 12,
+        "bank": 2,
+        "retail_instructions": 940,
+        "return_value": "0x62",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 222,
+        "row": 15,
+        "code": 13,
+        "bank": -1,
+        "retail_instructions": 940,
+        "return_value": "0x2",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 223,
+        "row": 15,
+        "code": 14,
+        "bank": 0,
+        "retail_instructions": 940,
+        "return_value": "0x22",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 224,
+        "row": 0,
+        "code": -8,
+        "bank": 0,
+        "retail_instructions": 52,
+        "return_value": "0xffffffff",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 225,
+        "row": 15,
+        "code": -8,
+        "bank": -1,
+        "retail_instructions": 940,
+        "return_value": "0x2",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 226,
+        "row": 0,
+        "code": -1,
+        "bank": 0,
+        "retail_instructions": 52,
+        "return_value": "0xffffffff",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 227,
+        "row": 15,
+        "code": -1,
+        "bank": -1,
+        "retail_instructions": 940,
+        "return_value": "0x2",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 228,
+        "row": 0,
+        "code": 0,
+        "bank": 0,
+        "retail_instructions": 21,
+        "return_value": "0x64",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 229,
+        "row": 15,
+        "code": 0,
+        "bank": -1,
+        "retail_instructions": 21,
+        "return_value": "0x5f",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 230,
+        "row": 0,
+        "code": 15,
+        "bank": 0,
+        "retail_instructions": 26,
+        "return_value": "0x0",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 231,
+        "row": 15,
+        "code": 15,
+        "bank": -1,
+        "retail_instructions": 26,
+        "return_value": "0x0",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 232,
+        "row": 0,
+        "code": 34,
+        "bank": 0,
+        "retail_instructions": 26,
+        "return_value": "0x0",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 233,
+        "row": 15,
+        "code": 34,
+        "bank": -1,
+        "retail_instructions": 26,
+        "return_value": "0x0",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 234,
+        "row": 0,
+        "code": 35,
+        "bank": 0,
+        "retail_instructions": 30,
+        "return_value": "0x60",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 235,
+        "row": 15,
+        "code": 35,
+        "bank": -1,
+        "retail_instructions": 30,
+        "return_value": "0x5b",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 236,
+        "row": 0,
+        "code": 36,
+        "bank": 0,
+        "retail_instructions": 30,
+        "return_value": "0x61",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 237,
+        "row": 15,
+        "code": 36,
+        "bank": -1,
+        "retail_instructions": 30,
+        "return_value": "0x5c",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 238,
+        "row": 0,
+        "code": 37,
+        "bank": 0,
+        "retail_instructions": 30,
+        "return_value": "0x62",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 239,
+        "row": 15,
+        "code": 37,
+        "bank": -1,
+        "retail_instructions": 30,
+        "return_value": "0x5d",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 240,
+        "row": 0,
+        "code": 38,
+        "bank": 0,
+        "retail_instructions": 30,
+        "return_value": "0x63",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 241,
+        "row": 15,
+        "code": 38,
+        "bank": -1,
+        "retail_instructions": 30,
+        "return_value": "0x5e",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 242,
+        "row": 0,
+        "code": 39,
+        "bank": 0,
+        "retail_instructions": 29,
+        "return_value": "0x0",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 243,
+        "row": 15,
+        "code": 39,
+        "bank": -1,
+        "retail_instructions": 29,
+        "return_value": "0x0",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 244,
+        "row": 0,
+        "code": 41,
+        "bank": 0,
+        "retail_instructions": 29,
+        "return_value": "0x0",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 245,
+        "row": 15,
+        "code": 41,
+        "bank": -1,
+        "retail_instructions": 29,
+        "return_value": "0x0",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 246,
+        "row": 0,
+        "code": 42,
+        "bank": 0,
+        "retail_instructions": 31,
+        "return_value": "0x6a",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 247,
+        "row": 15,
+        "code": 42,
+        "bank": -1,
+        "retail_instructions": 31,
+        "return_value": "0x69",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 248,
+        "row": 0,
+        "code": 43,
+        "bank": 0,
+        "retail_instructions": 29,
+        "return_value": "0x0",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 249,
+        "row": 15,
+        "code": 43,
+        "bank": -1,
+        "retail_instructions": 29,
+        "return_value": "0x0",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 250,
+        "row": 0,
+        "code": 100,
+        "bank": 0,
+        "retail_instructions": 29,
+        "return_value": "0x0",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 251,
+        "row": 15,
+        "code": 100,
+        "bank": -1,
+        "retail_instructions": 29,
+        "return_value": "0x0",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 252,
+        "row": 15,
+        "code": 42,
+        "bank": -2,
+        "retail_instructions": 31,
+        "return_value": "0x68",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 253,
+        "row": 11,
+        "code": -1,
+        "bank": -2,
+        "retail_instructions": 896,
+        "return_value": "0xffffffe2",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 254,
+        "row": 3,
+        "code": -1,
+        "bank": 2,
+        "retail_instructions": 268,
+        "return_value": "0x4e",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 255,
+        "row": 11,
+        "code": 0,
+        "bank": -2,
+        "retail_instructions": 21,
+        "return_value": "0x5a",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 256,
+        "row": 8,
+        "code": 1,
+        "bank": -1,
+        "retail_instructions": 732,
+        "return_value": "0xffffffff",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 257,
+        "row": 2,
+        "code": 1,
+        "bank": -3,
+        "retail_instructions": 172,
+        "return_value": "0xffffffa9",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 258,
+        "row": 1,
+        "code": 100,
+        "bank": 1,
+        "retail_instructions": 29,
+        "return_value": "0x0",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 259,
+        "row": 2,
+        "code": 100,
+        "bank": -3,
+        "retail_instructions": 29,
+        "return_value": "0x0",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 260,
+        "row": 1,
+        "code": 39,
+        "bank": 2,
+        "retail_instructions": 29,
+        "return_value": "0x0",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 261,
+        "row": 6,
+        "code": 38,
+        "bank": -1,
+        "retail_instructions": 30,
+        "return_value": "0x5e",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 262,
+        "row": 15,
+        "code": 35,
+        "bank": 3,
+        "retail_instructions": 30,
+        "return_value": "0x6f",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 263,
+        "row": 3,
+        "code": 38,
+        "bank": -3,
+        "retail_instructions": 30,
+        "return_value": "0x54",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 264,
+        "row": 1,
+        "code": 35,
+        "bank": -2,
+        "retail_instructions": 30,
+        "return_value": "0x56",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 265,
+        "row": 11,
+        "code": 38,
+        "bank": -1,
+        "retail_instructions": 30,
+        "return_value": "0x5e",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 266,
+        "row": 6,
+        "code": 100,
+        "bank": 0,
+        "retail_instructions": 29,
+        "return_value": "0x0",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 267,
+        "row": 5,
+        "code": -8,
+        "bank": -1,
+        "retail_instructions": 375,
+        "return_value": "0xfffffff3",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 268,
+        "row": 11,
+        "code": 34,
+        "bank": 2,
+        "retail_instructions": 26,
+        "return_value": "0x0",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 269,
+        "row": 4,
+        "code": 42,
+        "bank": -2,
+        "retail_instructions": 31,
+        "return_value": "0x68",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 270,
+        "row": 10,
+        "code": 39,
+        "bank": -3,
+        "retail_instructions": 29,
+        "return_value": "0x0",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 271,
+        "row": 1,
+        "code": -1,
+        "bank": 1,
+        "retail_instructions": 161,
+        "return_value": "0x29",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 272,
+        "row": 11,
+        "code": 1,
+        "bank": -2,
+        "retail_instructions": 896,
+        "return_value": "0xffffffe2",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 273,
+        "row": 10,
+        "code": 38,
+        "bank": 0,
+        "retail_instructions": 30,
+        "return_value": "0x63",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 274,
+        "row": 0,
+        "code": 38,
+        "bank": 1,
+        "retail_instructions": 30,
+        "return_value": "0x68",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      },
+      {
+        "case": 275,
+        "row": 0,
+        "code": 7,
+        "bank": -2,
+        "retail_instructions": 123,
+        "return_value": "0xffffffc6",
+        "abi_state_and_ram_match_outside_volatile_stack_frame": true
+      }
+    ]
+  }
+}

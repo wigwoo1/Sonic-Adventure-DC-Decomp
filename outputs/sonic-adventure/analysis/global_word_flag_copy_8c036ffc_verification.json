@@ -1,0 +1,24 @@
+{
+  "cases_passed": 96,
+  "comparison_level": "Complete 16 MiB RAM and all GPRs, SR, PR, and return PC compared against the retail SH-4 interpreter.",
+  "scope": "The ten-byte routine at 0x8c036ffc loads the global base from its PC-relative literal, reads the longword at base+8, ORs it with 0xc0, and writes the result back to base+8 in the RTS delay slot. Tests cover flag-bit boundaries, pre-set bits, varied unrelated CPU state, and complete RAM equality.",
+  "limitations": [
+    "Uses the project SH-4 interpreter rather than Dreamcast hardware or end-to-end gameplay.",
+    "The global field meaning and higher-level game behavior remain unidentified."
+  ],
+  "binary_sha256": "45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a",
+  "retail_span_sha256": "5a5414943a9df7b27ab48012b001f372dcf3e77f57cadbb0e7d862b3d7b83509",
+  "literal_address": "0x8c037008",
+  "literal_value": "0x8c890104",
+  "source_sha256": "90dc24ffa7c806216cb4e77b8b61016f070f980bb5474ec9603ec71dc4f35348",
+  "routines": [
+    {
+      "module": "1ST_READ.BIN",
+      "load_address": "0x8c010000",
+      "address": "0x8c036ffc",
+      "end_exclusive": "0x8c037006",
+      "retail_span_sha256": "5a5414943a9df7b27ab48012b001f372dcf3e77f57cadbb0e7d862b3d7b83509",
+      "cases_passed": 96
+    }
+  ]
+}

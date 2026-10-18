@@ -1,0 +1,121 @@
+{
+  "module": "1ST_READ.BIN",
+  "load_address": "0x8c010000",
+  "address": "0x8c10d400",
+  "end_exclusive": "0x8c10d422",
+  "indexed_instruction_bytes": 34,
+  "retail_span_sha256": "c04a36807a013d65878657641f34abcf6f20d4690ca7d22f88f183a9908d6785",
+  "binary_sha256": "45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a",
+  "source_sha256": "fb532c5f445dc37850133461feffc21ad36c332c5a0d015adcce6299ef2b0f46",
+  "cases_passed": 6,
+  "comparison_level": "Complete 16 MiB RAM, all GPR/SR/PR/FPU state and downstream formatter arguments/stack values compared against retail SH-4 interpretation.",
+  "scope": "Recovers the wrapper stack frame, fixed mode arguments, forwarding of saved register arguments, formatter call target, and PR/stack restoration.",
+  "limitations": [
+    "The downstream formatter at 0x8c10dbc4 is an explicit no-effect fixture and is not recovered by this routine.",
+    "The runtime function pointer is read from its retail literal cell; the actual formatter behavior is outside this check."
+  ],
+  "cases": [
+    {
+      "case": 0,
+      "stack_offset": 0,
+      "formatter_arguments": [
+        "0x1",
+        "0x0",
+        "0x8ca10000",
+        "0x11223344"
+      ],
+      "stack_words": [
+        "0x8ca20000",
+        "0x8ca10000",
+        "0x11223344",
+        "0x8ca20000"
+      ],
+      "full_state_and_call_trace_match": true
+    },
+    {
+      "case": 1,
+      "stack_offset": 2,
+      "formatter_arguments": [
+        "0x1",
+        "0x0",
+        "0x8ca10020",
+        "0x11223345"
+      ],
+      "stack_words": [
+        "0x8ca20040",
+        "0x8ca10020",
+        "0x11223345",
+        "0x8ca20040"
+      ],
+      "full_state_and_call_trace_match": true
+    },
+    {
+      "case": 2,
+      "stack_offset": 4,
+      "formatter_arguments": [
+        "0x1",
+        "0x0",
+        "0x8ca10040",
+        "0x11223346"
+      ],
+      "stack_words": [
+        "0x8ca20080",
+        "0x8ca10040",
+        "0x11223346",
+        "0x8ca20080"
+      ],
+      "full_state_and_call_trace_match": true
+    },
+    {
+      "case": 3,
+      "stack_offset": 8,
+      "formatter_arguments": [
+        "0x1",
+        "0x0",
+        "0x8ca10060",
+        "0x11223347"
+      ],
+      "stack_words": [
+        "0x8ca200c0",
+        "0x8ca10060",
+        "0x11223347",
+        "0x8ca200c0"
+      ],
+      "full_state_and_call_trace_match": true
+    },
+    {
+      "case": 4,
+      "stack_offset": 12,
+      "formatter_arguments": [
+        "0x1",
+        "0x0",
+        "0x8ca10080",
+        "0x11223340"
+      ],
+      "stack_words": [
+        "0x8ca20100",
+        "0x8ca10080",
+        "0x11223340",
+        "0x8ca20100"
+      ],
+      "full_state_and_call_trace_match": true
+    },
+    {
+      "case": 5,
+      "stack_offset": 16,
+      "formatter_arguments": [
+        "0x1",
+        "0x0",
+        "0x8ca100a0",
+        "0x11223341"
+      ],
+      "stack_words": [
+        "0x8ca20140",
+        "0x8ca100a0",
+        "0x11223341",
+        "0x8ca20140"
+      ],
+      "full_state_and_call_trace_match": true
+    }
+  ]
+}

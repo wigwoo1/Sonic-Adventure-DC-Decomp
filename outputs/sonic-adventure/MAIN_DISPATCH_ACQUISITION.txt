@@ -1,0 +1,94 @@
+Main dispatcher material-header acquisition
+16 October 2026 — VERIFIED within the bounded scope below.
+Whole-project completion remains 10% estimated weighted milestones, not code coverage.
+The goal remains active. Continue Sol High for the next reverse-engineering task.
+
+Cancellation request and existing evidence
+The requested cancellation routine 8c01ae60 and saved-context restore 8c01aae0
+were already recovered. Their strict build and 15 smoke comparisons passed again.
+All inputs to their saved 4,284-case proof still match their recorded hashes;
+that full suite was not rerun for this checkpoint. A rebuild changes the DLL's
+link timestamp; restoring that timestamp reproduced the exact archived DLL hash.
+No cancellation routine is counted a second time. See MAIN_DISPATCH_CANCELLATION.txt
+and the later MAIN_DISPATCH_CONTEXT_CALLBACK.txt for callback execution proof.
+
+New source and behavior
+Recovered 8c605e68..8c605eb4: 38 original instruction rows, zero conditional
+branches and zero function calls. Original address/name meanings are inferred.
+The source contains annotated static C; it does not execute an opcode interpreter.
+The read-only Ghidra export and byte-checked deterministic generator are saved.
+
+The helper reads the output cursor from working header 8c890104+16. It stores
+cursor & fc000000 at 8c890128, programs both QACR registers with
+(cursor >> 24) & 1c, and maps the cursor into the store-queue address window.
+It writes header words 2, 1 and 0 in that order. Word 2 is transformed by
+(word & 03efffff) | 20080000. PREF then transfers the complete 32-byte queue.
+Only three words are written here: the other five retain previous queue values.
+They are not silently zeroed or replaced with an invented full packet.
+Finally, 8c89012c points to header+16 and R0/R4 return the queue cursor plus 32.
+The existing finish helper 8c6069a4 uses that pointer and saved address bits to
+advance the real output cursor. Acquisition itself does not advance header+16.
+
+Portable integration
+The new bridge routes this helper natively through the existing vertex_bus API.
+It retains the previous exported ABI: bus after observer on connected entries.
+Earlier source, DLLs, reports and original game files remain preserved.
+Constructed tests provide valid aligned RAM destinations, including the 8c/ac
+aliases and both queue offsets. In connected draw tests the renderer's STATE_B
+cursor also uses that valid destination; its normal transfer into the working
+header is retained. This fixture is not proof of original startup configuration.
+
+Build and verification actually run
+- Strict Clang shared-library build, -O2 -Wall -Wextra -Werror, passed.
+- 152 focused cases / 792 stage comparisons passed: 128 acquisition sequences,
+  16 connected mesh cases, four draw cases and four primary particle cases.
+- All 38 original rows reached. Full 16 MiB RAM, GPRs, SR, PR, both FPU banks,
+  FPSCR, FPUL and MACL compared against original instruction execution.
+- 320 ordered call boundaries, 1,772 numerical operations, 564 queue transfers
+  and 4,552 queue events matched. Independent checks cover 384 header packets,
+  retained words, untouched other queue, both QACRs, guest return values and
+  acquire/finish/reacquire cursor advancement over three packets.
+- 120 complete particle lifetimes / 984 stage comparisons passed: 23,104
+  boundary comparisons, 89,616 numerical operations, 9,856 queue transfers and
+  110,368 queue events. Existing motion/timer/pause/deferred-deletion/free-pool/
+  heap-coalescing assertions and 46 matrix-translation cases remain checked.
+- The lifetimes now have only 176 external primitive boundaries:
+  8c61ffe4: 160 calls; 8c620428: 16 calls. All 176 acquisitions run natively.
+- Generator reproduction preserves exact source/manifest hashes. Registration
+  validates original spans, all proof inputs and the built DLL before admission.
+The entire accumulated project build_and_verify.ps1 workflow was not run.
+
+Files and repeat commands
+  source/sa_main_dispatch_acquisition.c
+  source/sa_main_dispatch_acquisition_connected.c
+  analysis/main-dispatch-primitives/8c605e68_instructions.tsv
+  analysis/main_dispatch_acquisition_translation.json
+  analysis/main_dispatch_acquisition_verification.json
+  analysis/main_dispatch_acquisition_lifecycle_verification.json
+From this output directory, using the installed project Python:
+  python recover_main_dispatch_acquisition.py
+  .\build_main_dispatch_acquisition.ps1
+  python verify_main_dispatch_acquisition.py
+  python verify_main_dispatch_acquisition_lifecycle.py
+  python register_main_dispatch_acquisition.py
+  python map_main_dispatch_cases.py
+  python verify_main_dispatch_case_map.py
+Optional original re-export: ghidra/export_main_dispatch_primitives.ps1.
+Registration adds one routine: 1,046 entries / 1,043 unique module-address pairs.
+The incomplete function inventory cannot establish whole-game code coverage.
+
+Limits and next task
+Twenty-one acquisition/primitive targets remain test fixtures: three other
+acquisition variants and eighteen primitive emitters. Valid MMU-off/coherent-RAM
+queue behavior is tested; GPU FIFO output, pixels, MMU-on/TLB, physical cache
+timing and hardware exceptions remain unverified. Existing numerical limits
+and host-selected scheduler order remain. Full decompilation and all ports
+remain incomplete. No HD texture or graphics-setting implementation is claimed.
+Continue with 8c61ffe4 and 8c620428. Their read-only original instruction exports
+and draft pseudocode are available in analysis/main-dispatch-primitives/, but
+those exports are not recovered source or behavior-verification credit.
+
+Hardware model reference retained from the vertex-worker checkpoint:
+https://www.renesas.com/en/document/mah/sh7750-sh7750s-sh7750r-group-users-manual-hardware
+Sections 4.7.1–4.7.3, printed pages 142–144, define the two 32-byte store queues
+and MMU-off QACR/PREF mapping. No additional hardware behavior is claimed here.

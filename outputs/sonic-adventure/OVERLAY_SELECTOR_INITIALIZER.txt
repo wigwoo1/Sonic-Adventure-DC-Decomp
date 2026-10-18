@@ -1,0 +1,139 @@
+AL_MAIN initialization caller, native model selector and marker reset
+17 October 2026 - VERIFIED within the bounded scope below.
+Overall completion: 10% estimated weighted whole-project milestones, not code coverage.
+Goal active. Continue Sol High; no model switch or pause advised.
+
+What changed
+Recovered complete AL_MAIN.BIN initializer 0c90fde4..0c90ff46 (145 instruction
+rows) and marker reset 0c909d40..0c909d52 (nine rows), with a separate native bridge
+to the previously recovered selector 0c905548 and empty helper 0c90d210.
+Source: source/sa_overlay_selector_initializer.c
+Bridge: source/sa_overlay_selector_initializer_connected.c
+Descriptive names are inferred. Existing selector/no-op sources, checkpoints,
+disc files and overlays remain preserved. Reused bodies receive no new credit.
+
+The generator translates byte-checked instructions into annotated static C,
+retaining order, branches, delay slots, register effects and FMOV bank/width
+behavior. No runtime opcode decoder is used. The initializer's contiguous span
+is 354 bytes, of which 290 are instruction bytes; literal-pool bytes do not add
+instruction credit. The marker body is 18 instruction bytes; its preset constant
+is read separately from original literal 0c909d6c.
+
+Caller evidence
+Read-only Ghidra references identify selector call sites 0c9001ba, 0c90fe74 and
+0c914320, in functions starting 0c900100, 0c90fde4 and 0c9141a0. Data references
+identify their target literals. These references guide discovery; only the
+middle caller's complete body is recovered/compared in this checkpoint. Its
+original executed indirect call at 0c90fe74 resolves to native selector 0c905548.
+Reference details are saved in analysis/overlay-selector-callers/references.tsv.
+
+Observed initializer behavior
+R4 identifies the incoming task-like record. It reads work through +20 hex and
+an entity-like record through +24. It clears work state bytes/halfwords and two
+work words, clears three entity words at +7c/+80/+84, and copies original
+appearance position words through the entity's +ec pointer into +dc/+e0/+e4.
+It then calls seven initialization services and the native model selector in
+original order, supplying work in R4 and entity in R5 each time.
+
+Two subordinate calls are now native:
+- Existing 0c90d210 returns without other state changes. It is reused from
+  source/retail_return_delay_stubs.c, not registered as a new routine.
+- New 0c909d40 clears the entity halfword at +812 and writes ffff to +816,
+  retaining neighboring halfwords. Its caller supplies the entity in R5.
+
+The selector uses the previously established bit priority 10,08,04,02,01 hex,
+installs the chosen original model pointer, and sets the three scale words to
+3e999999. Bit 10 selects the inventoried AL_MAIN face-strip model. The bridge
+uses the exact existing CPU layouts when calling the selector and no-op helper.
+
+After subordinate initialization, the caller clears bits 0e from entity+60,
+clears bit 0 from the appearance halfword at +36, clears entity+74 and the low
+halfword at +78, and writes original constant 3e4ccccc (approximately 0.2) to
+entity+d8. It chooses a tail call by appearance flags in priority 40,04,08 hex:
+0c90fb82, 0c90fca0 or 0c90fd42. With none set, it returns directly. Tail paths
+restore the incoming PR and saved registers before transferring to the service;
+the restored PR is preserved rather than replaced by a new call return address.
+
+Raw wide FMOV behavior remains original. The final eight-byte literal store at
+entity+d8 also writes companion word 09000900 into +dc, overwriting the earlier
+copied position word. Selector wide stores retain their original overlapping
+scale writes. Tests preserve these effects rather than repairing them; wide
+fixtures do not establish the game's normal entry mode.
+
+Build and tests actually passed
+- Strict Clang -O2 -Wall -Wextra -Werror build of initializer/reset C, bridge,
+  original selector and existing return stub sources into a separate DLL.
+- 2,528 full original RAM/CPU/FPU comparisons with ordered boundaries pass.
+- 2,496 cases complete the tested caller paths. Another 16 match missing-service
+  stops (-2) and 16 match deliberately injected service errors (-17), including
+  partial state. These 32 cases are not completed game initializations.
+- All 154 new instruction rows, six conditional outcomes and 11 call sites
+  covered. All 88 reused selector rows and both reused no-op rows reached.
+- 20,616 ordered boundaries compared: 13,060 explicit service-fixture invocations,
+  2,508 native selector calls, 2,524 native no-op calls and 2,524 marker resets.
+- All 256 selector flag bytes are tested in all eight FR/SZ/PR combinations.
+  Additional tail-flag combinations cover priorities and preserved registers;
+  every remaining service has missing/error cases in both FPU banks.
+- Independent checks validate work/entity reset fields, marker halfwords and
+  neighboring data, position copy and wide overwrite, model priority/scales,
+  stack/return and preserved registers, exact tail-service order, and flag masks.
+  Appearance bit 0 starts set while unrelated high bits start set, checking both
+  the required clearing and preservation rather than only all-zero inputs.
+- The initial extended strict build found an unused parameter in the new marker
+  body; the generator now marks it explicitly unused. Final build and suites pass.
+
+Final integrity checks passed: native C and translation manifest reproduce
+byte-for-byte; both reports match pinned inputs (nine translation, 26 focused).
+Three Python and four PowerShell scripts parse. Repeat registration adds no
+duplicates. Dispatcher checks verify 658 pointer loads, 80 spans and 83 selectors.
+Audits report zero evidence errors and zero stale reports; 1,046 registered
+entries match 10,875 indexed candidates. The app goal remains active.
+
+Remaining explicit dependencies
+These five initialization helpers still use state-mutating test stand-ins:
+  0c90bd40, 0c90853e, 0c904d22, 0c904e80, 0c9048ec
+The three tail-state bodies also remain stand-ins:
+  0c90fb82, 0c90fca0, 0c90fd42
+The tests check exact original caller behavior while these boundaries implement
+specified fixture effects, including volatile-register/FPU mutations. They do not
+prove those eight bodies or complete scene initialization. Object pointers are
+constructed valid fixture data; their real allocation/copy path is next work.
+
+Evidence and a simple check
+Open this guide and SOURCE_HANDOFF.txt. Reports:
+  analysis/overlay_selector_initializer_translation.json
+  analysis/overlay_selector_initializer_verification.json
+The focused report has cases_passed=2528, rows_covered=154,
+caller_rows_covered=145, marker_rows_covered=9, remaining_service_targets of length
+8, and complete_cases=2496. Newly recovered source and bridge are available in
+the source folder for the eventual source-code/GitHub handoff.
+Scripts: recover_overlay_selector_initializer.py,
+build_overlay_selector_initializer.ps1, verify_overlay_selector_initializer.py,
+register_overlay_selector_initializer.py. Read-only exports use
+ExportOverlaySelectorReferences.java, ghidra/export_overlay_selector_callers.ps1
+and ghidra/export_overlay_selector_initializer.ps1. The existing generic export
+script is reused. The aggregate workflow includes the new build/test steps.
+Additional exported scale/draw functions 0c905618 / 0c905666 remain analysis only;
+no recovered-source credit is assigned for those exports.
+
+Limits and next work
+Constructed valid task/work/entity/appearance/object pointers, bounded RAM and
+explicit service effects constrain results. No complete object allocation,
+selector installation by the outer caller, scene traversal/rendering, hardware
+exception/MMIO delivery, full original frame order or gameplay is proved.
+No new rendering pixels or playable application is produced. This strict build
+and suite ran; the historical aggregate/particle lifetime suites were not rerun.
+Their old pinned inputs and evidence remain preserved.
+
+Registry: 1,098 entries / 1,095 unique module-address pairs. The initializer and
+marker receive two new entries; selector and empty helper receive zero new
+credit. Instruction discovery and routine counts are not whole-game code coverage.
+Next: recover object setup 0c904d22, recursive clone 0c90451c and pointer-table
+walk 0c9044e2, replacing the constructed object pointers before connecting the
+selected object's draw path. Sol High is appropriate for these pointer/recursive
+call contracts. Luna can handle routine documentation afterward; no switch or
+pause is advised for the next reverse-engineering task.
+
+Full decompilation, native PC/Android/stereo 3DS ports, 60/120/240 FPS, 8K,
+SUPIR/settings and later N64/PS1 work remain unfinished. Texture Off must disable
+sampling and use vertex colours/material fallback, overriding the HD toggle.

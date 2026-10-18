@@ -1,0 +1,96 @@
+Connected stream-record verification
+====================================
+
+Whole-project weighted milestone score: 10%. This is not a measurement of
+the fraction of game code recovered.
+
+What changed
+------------
+The native allocator at 0x8c65bd46 now exposes the retail callback context:
+R10 = 0, R11 = the object, R13 = the record table, R14 = the selected record,
+and R15 = the caller's stack pointer minus 20 bytes. The existing code saved
+these registers in memory and restored them on return, but left their live
+values incorrect while calling the object's method. Final-return comparisons
+alone therefore missed the defect.
+
+The allocator's standalone verifier now checks complete callback-entry CPU
+state and a hash of the entire 16 MiB RAM image in addition to final state.
+Its occupied-slot markers now include bytes with the sign bit set.
+
+Connected sequence
+------------------
+The linked native test library includes these recovered routines:
+
+  0x8c65bd2c  initialize the 32-record table
+  0x8c65bd46  allocate a stream record
+  0x8c600e7a  update a request's position
+  0x8c65bfa4  original caller: absolute seek followed by a tail-query
+  0x8c65bf42  prepare the stream record using the request query
+  0x8c65bfc2  set the record's stream position
+
+For each of two RAM aliases, the test initializes the table, allocates all
+32 records, updates requests, invokes the original seek/query caller, prepares
+stream records, sets record positions, and checks that
+the 33rd allocation fails, resets the table, and allocates the first record
+again. RAM persists between calls. Full RAM and GPR/SR/PR/PC state are compared
+after every call against the retail SH-4 interpreter.
+
+One object method is the retail subtraction helper at 0x8c602618. The other
+is an explicit test fixture that reads the allocator's saved return address
+through R15 and writes it into the allocated record through R14. Both execute
+through the interpreter on the reference and native-service paths. The second
+fixture makes callback context errors visible in the resulting record data.
+
+Results: 328 calls across two sequences and 66 callback entries matched.
+The standalone allocator suite also passed 64 cases, including every free-slot
+position and a full table.
+
+How to run
+----------
+Open PowerShell in this project's outputs/sonic-adventure folder and run:
+
+  .\build_sound_stream_record_lifecycle.ps1
+  & 'C:\Users\wigwo\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe' .\verify_sound_stream_record_lifecycle.py
+
+Expected final output:
+  328 connected stream steps and 66 callback-entry comparisons passed
+
+The workflow is also included in build_and_verify.ps1. Its source, DLL,
+retail binary, interpreter, and verifier hashes are saved in:
+  analysis/sound_stream_record_lifecycle_verification.json
+
+Original seek/query caller
+-------------------------
+source/sa_stream_request_seek_query_8c65bfa4.c implements the original 24-byte
+caller with its two recovered native callees linked. It takes the incoming R5
+offset, sets origin R6 to zero (absolute seek), and invokes the position updater.
+It restores the caller's return address and R14, then tail-jumps to the query.
+The game return value in R0 is the queried position even when the seek was
+rejected. Null and inactive requests yield the query's zero result.
+
+The focused verifier passed 160 cases with 320 complete callee-entry CPU/RAM
+comparisons. It also ran all 160 cases with the optional read-only observer
+disabled. Signed status values, valid offsets, rejected offsets, null requests,
+and both RAM aliases are covered.
+
+The host function's return code is separate from emulated R0: zero means the
+native dispatch completed, and minus one means a literal-slot target was
+retargeted away from the two original retail services. Both targets are checked
+before any mutation. Two rejection tests confirm that RAM/CPU stay unchanged.
+Other retargetings require further native dispatch implementation.
+
+To run just that caller's test from the same project folder:
+
+  .\build_stream_request_seek_query_8c65bfa4.ps1
+  & 'C:\Users\wigwo\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe' .\verify_stream_request_seek_query_8c65bfa4.py
+
+Its report is analysis/stream_request_seek_query_8c65bfa4_verification.json.
+
+Scope limits
+------------
+The top-level sequence is scripted. The recovered 0x8c65bfa4 caller invokes
+both of its helpers natively; the game's broader caller and scheduler remain
+unrecovered. Allocator object methods remain external services;
+the two selected methods do not prove all game vtable implementations. The
+checks do not constitute hardware, complete sound-system, or playable-port
+verification. The full accumulated project test suite was not run for this fix.

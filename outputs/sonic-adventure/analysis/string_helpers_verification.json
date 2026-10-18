@@ -1,0 +1,65 @@
+{
+  "retail_binary_sha256": "45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a",
+  "source": "source/string_helpers.c",
+  "source_sha256": "a45a33198c3d89ef850d56d04684a29e17a80d7b2ccf6015ed93d1ea689a7bf8",
+  "dll_sha256": "37a598d80f6e17cee09ac1a925b7182d51d95b0e07b4733639c2470d9779c894",
+  "routines": [
+    {
+      "name": "bounded_bytes_equal",
+      "routine_start": "0x8c603bfc",
+      "routine_end_exclusive": "0x8c603c14",
+      "cases_passed": 4296,
+      "retail_instructions_executed": 678896,
+      "scope": "Bounded comparison across nonpositive lengths including INT_MIN, every first-mismatch offset for lengths 1-64, equal data, and cached/uncached aliases.",
+      "retail_span_sha256": "157e2a5fb434d89a0f81b5f5d59d8a6108c5ae4bbb4b2b740cf48adf473fdcd4"
+    },
+    {
+      "name": "strings_equal",
+      "routine_start": "0x8c6453cc",
+      "routine_end_exclusive": "0x8c6453ea",
+      "cases_passed": 96,
+      "retail_instructions_executed": 7022,
+      "scope": "NUL-terminated equality for empty, equal, prefix, mismatch-at-each-position, and high-bit-byte inputs under cached/uncached aliases.",
+      "retail_span_sha256": "063f8dcbb4265e2ee410f5db752d02c36e4bcfce92a0c20d64bd991ba32991a9"
+    },
+    {
+      "name": "string_table_pointer_get",
+      "routine_start": "0x8c645328",
+      "routine_end_exclusive": "0x8c64532e",
+      "cases_passed": 1,
+      "retail_instructions_executed": 3,
+      "scope": "Return value compared with the word loaded from the retail data reference.",
+      "retail_span_sha256": "ac696d9038e9a57170075fbdb8df9042bbf36667041e75be12abae0d0ffd6569"
+    },
+    {
+      "name": "ascii_upper",
+      "routine_start": "0x8c645348",
+      "routine_end_exclusive": "0x8c64535c",
+      "cases_passed": 389,
+      "retail_instructions_executed": 2503,
+      "scope": "All low-byte values, extended integers and deterministic 32-bit values compared with retail ASCII lowercase conversion.",
+      "retail_span_sha256": "7df19797c567b30735dea2a3f149b7a67c6023c05bb84996584760f6fef9502b"
+    },
+    {
+      "name": "forward_copy_positive",
+      "routine_start": "0x8c64535c",
+      "routine_end_exclusive": "0x8c645374",
+      "cases_passed": 88,
+      "retail_instructions_executed": 24336,
+      "scope": "Positive and nonpositive lengths, four overlap directions, cached/uncached aliases, and full bounded-memory comparison.",
+      "retail_span_sha256": "59a4f5c92cf73165e38f567220ddedf18bd6eb26b23f17a4d0055aa7cc104245"
+    },
+    {
+      "name": "case_insensitive_bounded_equal",
+      "routine_start": "0x8c645374",
+      "routine_end_exclusive": "0x8c6453c0",
+      "cases_passed": 300,
+      "retail_instructions_executed": 42312,
+      "scope": "Bounded equality with ASCII case changes, length cutoffs, mismatches, prefixes, high-bit bytes, and both RAM aliases.",
+      "retail_span_sha256": "8f01bf65cac6368aec95abb1c565052f3478b1a434bf3d680cb7d53a448d6c8e"
+    }
+  ],
+  "limitations": [
+    "Unmapped positive-length strings, SH-4 address faults, and unterminated strings are outside the bounded test fixtures."
+  ]
+}

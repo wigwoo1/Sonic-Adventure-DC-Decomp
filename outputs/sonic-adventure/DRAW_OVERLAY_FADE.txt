@@ -1,0 +1,153 @@
+Sonic Adventure Dreamcast Rev A - original fading labels, text and quads
+2026-10-17; overall 10% estimated weighted project milestones; goal active.
+
+Recovered bodies and scope
+0c90c384: fading label/state wrapper, 108 rows / 10 conditional outcomes.
+0c90c274: text layout and rendering, 136 rows / 12 static outcomes.
+0c90bfc0: glyph quad construction, 190 rows / 8 static outcomes.
+0c90c160: alpha backdrop quad, 138 rows / no conditional branches.
+8c605480: render-state selector wrapper, 35 rows / 6 outcomes.
+These five proposed first entries have 607 original instruction rows. Descriptive
+names are inferred; original bytes and executed behavior remain authoritative.
+
+The same source includes a guarded 56-row copy of existing matrix translation
+8c63a804. Its canonical source/model_matrix_translate.c and existing proof are
+preserved. The new connection retains its narrow FPU entry-mode contract and
+checks each original RAM access, publishing the reached stop and partial state.
+A bad position-pointer case exposed the old implementation continuing past the
+modeled RAM boundary; the new copy stops at the same instruction as the reference.
+This is a host guard extension, not hardware exception dispatch or new function
+recovery credit. The five new entries are counted separately from this reuse.
+
+The source retains all 663 original rows. Five glyph signed-remainder fallback
+instructions cannot execute after EXTU.B makes the tested value nonnegative.
+One text conditional outcome is also impossible: the first byte was tested
+nonzero; the only intervening RAM write is at byte +7, which is physically
+distinct in the bounded coherent-RAM model. The second first-byte test therefore
+cannot be zero. Instructions and arithmetic arguments are checked in the verifier.
+All other 658 rows / 36 outcomes execute: 602 rows / 34 outcomes in the five
+new bodies and 56 rows / 2 outcomes in the reused translation helper.
+
+Two deliberate valid-RAM alias fixtures exercise the other text rechecks:
+matrix point output overwrites the scanned text, or an original header-layout
+cache write terminates the scanned text. Original instructions and actual
+callee writes execute throughout. These are data alias tests, not injected
+guest service results and not claims of natural in-game aliasing.
+
+Direct verification
+The strict 109-source native build passes with warnings as errors. All 556
+comparisons pass: 517 normal returns, 20 unsupported numerical stops, 14 access/
+return guards and five numerical traps. There are 10,081 ordered entry checks,
+478 independent cases / 855 checks, 2,475 queue flushes and 21,780 queue events.
+The largest direct event trace has 352 events; all are individually compared.
+Complete reached/final 16 MiB RAM, GPR/SR/PR/PC, FPU/FPUL/MACL and queue state
+match execution of original SH-4 instructions. No guest function result is faked.
+
+Independent checks cover wrapped signed fade/clamp and age behavior, activation
+and decay thresholds, label colour alpha, seven-byte text cap/terminator/order,
+all 256 glyph byte codes, atlas UV coordinates, preserved original quad position
+templates, optional white glyph colour, backdrop alpha with white RGB, render
+selector mappings and exact-dyadic matrix translation. Names use at most seven
+bytes; glyph codes outside 32..191 select the original fallback atlas cell.
+Both FPU banks, reached numerical guards, special values and supported exception
+probe behavior are tested. The direct fixture inherits DN=1; DN=0 is not claimed.
+
+Runtime inputs and preserved assets
+The constructor-based rendering fixture supplies valid runtime view/matrix,
+scratch and texture-descriptor state. The newly selected shipped 22-name list
+0ca540d4 (records 0ca53fcc) has only its runtime descriptor slots supplied,
+using the existing descriptor pool. Texture filenames/attributes and original
+geometry, model/motion data and quad templates remain unchanged. Natural
+texture loading and renderer initialization remain unproved. The earlier
+14-name and 221-name supplied runtime descriptor fixtures remain explicit.
+
+Direct text fixtures use supplied name/colour/position/state inputs. The connected
+suite adds twelve explicit activation/decay inputs to constructor-created objects:
+runtime name bytes, fade value/age and activation flags are supplied saved-state
+test inputs. This does not establish natural name loading or event generation.
+
+Connected model verification
+All 420 comparisons pass: the preserved 408 original-model/routing cases plus
+twelve explicit label events. There are 159,650 ordered entry checks, complete
+reached/final machine/RAM matches, 400 independent state/stack/spring cases and
+212 distance prefixes. Across this six-body family, 590 rows are reached; this
+includes the reused translation helper and is not 590 newly registered rows.
+Label wrapper executes 238 times; text layout 12, glyph construction 60,
+backdrop 12 and render selector 24. The reused translation entry executes
+5,164 times across the full connected suite.
+
+The old 226 baseline label stops are eliminated. The original 408 cases now
+return normally in 340 cases: 226 accepted object-draw callbacks, 50 outer
+rejections and 64 direct services. All twelve added event cases also return.
+Whole-suite statuses: 352 returns, 48 missing-service stops, eight unsupported
+numerical stops, eight access/return guards and four numerical traps. The
+remaining first missing services are 8c0409c0, 8c5fde20 and 8c041c92, sixteen
+cases each. Outer AL_MAIN drawing reaches 489/911 rows (up from 479), leaving
+422 unexecuted. It remains unregistered with zero full-parent recovery credit.
+Returning an accepted object callback does not establish a complete frame/game.
+
+Queue totals match: 151,886 flushes / 1,670,638 counted events. Stored prefixes
+compare 681,684 events individually; 988,954 later events are counted only.
+Final queue/QACR/counters and full reached/final packet RAM match. The preserved
+408 cases retain the preceding milestone's 139,334 flushes / 1,532,974 events.
+The extra twelve profiles contribute 12,552 flushes / 137,664 events, including
+their ordinary model geometry; do not attribute that entire increase to glyphs.
+Direct helper traces separately compare all 21,780 events individually.
+
+Registration and reproducibility
+Five first entries are registered. Seventy-four existing entries receive linked
+integration evidence with zero duplicate credit, including the guarded alternate
+matrix source. Canonical matrix source/proof are unchanged. Incomplete effect
+dispatcher/emitter/material/texture-selector/polygon-array bodies and the outer
+AL_MAIN parent remain unregistered.
+Registry: 1,176 entries / 1,173 unique module-address pairs; 1,103 matches in
+10,875 frozen index candidates. These are not whole-game coverage figures;
+211 nontexture binaries still lack a function index. Audit: zero evidence errors
+and zero stale reports. Five generated source/manifest/bridge/build artifacts
+reproduce exact bytes. Repeated registration changes no registry/status bytes.
+Seven Python/five PowerShell syntax checks and default C syntax pass. Dispatch
+map verification passes 658 original pointer loads / 80 spans / 83 selectors.
+
+Next recovery task
+Ten motion/drawing proposals have 834 byte-checked rows: the three remaining
+boundaries and seven direct dependencies. Their direct branch targets are all
+present. Five further unregistered annotated targets remain outside this family;
+computed targets are not claimed exhaustive. Read
+analysis/draw_motion_variants_inventory.json. The seven fresh exports are in
+analysis/draw-motion-variants. Entry 8c5fdbec required temporary discovery;
+the read-only Ghidra run explicitly discarded database changes. Original root
+snapshots and global indexes are preserved. These proposals get zero native
+recovery credit until their code and reached dependencies are checked.
+
+Source access and reproduction
+Source: source/sa_draw_overlay_fade.c
+Bridge: source/sa_draw_overlay_fade_connected.c
+Generation: recover_draw_overlay_fade.py; connect_draw_overlay_fade.py
+Build: build_draw_overlay_fade.ps1
+Checks: verify_draw_overlay_fade.py; verify_overlay_draw_overlay_fade.py
+Registration: register_draw_overlay_fade.py (five new entries; reused helper zero)
+Original exports: analysis/draw-overlay-fade/*_instructions.tsv
+                  analysis/draw-overlay-fade-main/8c605480_instructions.tsv
+Reused listing: analysis/overlay-draw-state-services/8c63a804_instructions.tsv
+Read-only export scripts: ghidra/export_draw_overlay_fade.ps1
+                          ghidra/export_draw_overlay_fade_main.ps1
+Evidence: analysis/draw_overlay_fade_translation.json
+          analysis/draw_overlay_fade_connection.json
+          analysis/draw_overlay_fade_verification.json
+          analysis/overlay_draw_overlay_fade_verification.json
+The focused steps are in build_and_verify.ps1. Its historical aggregate sequence
+is not rerun for this milestone; earlier sources, DLLs and evidence remain intact.
+
+How to check and remaining limits
+Open this report for the milestone explanation. JSON cases show exact tested
+inputs and coverage; source and scripts remain available for future GitHub handoff.
+There is no playable executable yet. Existing scalar/vector/square-root reference
+and numerical policies remain qualified assumptions, not measured physical
+hardware equivalence. The MMU-off coherent-RAM software queue is not a GPU/cache
+emulator. At most 4096 queue events per case are stored/compared individually;
+later counts, final queue/QACR/counters and full reached/final RAM are compared.
+No physical pixels, full frames/gameplay or high-FPS/8K/playable-port proof.
+Incomplete effect/outer drawing bodies receive no registration credit; the
+older bounded hierarchy-layout research stop remains explicit. SUPIR and display
+settings remain planned; Texture Off will disable sampling and use vertex/material
+colours. Continue Sol High for reverse engineering. Luna Low suits documentation.

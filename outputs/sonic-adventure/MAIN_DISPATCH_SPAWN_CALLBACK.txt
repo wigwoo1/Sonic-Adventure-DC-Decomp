@@ -1,0 +1,106 @@
+Spawn callback, work transform and particle emission
+16 October 2026 — VERIFIED within the bounded scope below.
+Whole-project completion remains 10% estimated weighted milestones, not code coverage.
+
+Recovered original bodies
+  8c044680..8c0446a2: spawn callback, 17 instruction rows.
+  8c0446a2..8c04474a: work transform helper, 84 rows.
+  8c04474a..8c04481a: particle-emission helper, 104 rows.
+The stored callback entry was missing from the old full-function index. A
+read-only Ghidra session seeded and exported it and its two indexed callees,
+without altering the saved project. All 205 rows match the original executable.
+Descriptive names and field meanings are inferred.
+
+Behavior and native dependencies
+The callback reads task +20 once as its work pointer, calls the transform and
+emission helpers with that work, then requests deferred removal of the original
+task. It preserves its saved task pointer even though its callees change R4.
+The transform helper sets work byte 0 to 1, selects an optional descriptor using
+unsigned work byte +8, pushes/replaces a matrix, applies optional Z/X/-Y rotations,
+transforms a local (0,5,0) direction, pops the matrix, and adds descriptor base
+position into work +20/+24/+28. A missing descriptor skips that numerical path.
+The emitter requests up to six flags-2, level-5 tasks, stopping immediately on
+allocation failure. For each successful task it advances the existing LCG once,
+derives integer fields and a flag bit, and copies the parent's position words.
+The child callback is 8c04481a. Its execution is separate unfinished work.
+All matrix/rotation/vector, random, task/heap and removal dependencies used here
+are existing recovered native code. No external game-service fixtures are used.
+They are credited as integration, not counted as new original routines.
+
+Verification actually passed
+- Strict Clang DLL build with -Wall -Wextra -Werror.
+- Eight initial smoke comparisons, then 612 body/caller comparisons:
+  callback 256, transform 80, emitter 276.
+- All 205 original rows, 16 conditional outcomes and 11 call sites reached.
+- 10,512 ordered CPU/special/global boundary states and 470 vector operations
+  compared, plus complete 16 MiB RAM, GPR/SR/PR/FPU/FPSCR/FPUL/MACL state.
+- 554 completed cases passed independent assertions for allocation counts,
+  exact LCG seed updates, 1,622 emitted-task records, callback replacement,
+  matrix-stack restoration and analytically rotated vectors (tolerance 0.001).
+- 58 reached numerical guard/trap cases matched partial state.
+- A reserved-rounding test-adapter omission was corrected: the raw upstream
+  primitive omits a guard applied by the native adapter. All four affected
+  partial-state probes passed, then the complete focused suite passed.
+  No speculative change to recovered game code was required.
+
+Connected lifecycle proof
+Six smoke lifecycles, then 368 full lifecycles / 1,104 stage comparisons passed.
+The actual native spawn helper created 200 parent tasks. Native level-6
+scheduling executed their callback and created 288 particle tasks. The next
+level-6 pass deleted the parent while preserving the level-5 particles and their
+payloads. Each stage runs over the same RAM/CPU/FPU state and is compared with
+original instructions. The suite adds 5,160 ordered boundaries and 128 vector
+operations, independent free-pool/heap/list assertions, and exact particle fields.
+It covers empty/exhausted pools/heaps, zero-valued successful guest returns,
+characters 0/128/255, both FPU banks, extra pool capacity beyond the six-particle
+limit, and rotations. Particle callback bodies are not executed in this proof.
+
+Numerical scope
+FMOV respects FR/SZ at each instruction, including predecrement/postincrement
+and register-pair transfers. Precision/rounding guards occur at reached scalar
+operations; existing matrix routines retain their PR/SZ entry guards. Constructed
+SZ=1 wide-register inputs exercise unsigned-conversion fallback branches without
+changing original literals; this is not a normal-gameplay reachability claim.
+Vector comparisons use the established pinned upstream primitive implementation,
+so they establish integration with shared math, not new Dreamcast hardware
+accuracy. Scalar guard/trap classification uses existing native helper probes;
+ordinary scalar results use the Python reference. Independent integer and
+analytic assertions supply separate evidence. Hardware exception dispatch,
+arbitrary numerical inputs and unsupported modes remain outside the proof.
+
+Sources and evidence
+  source/sa_main_dispatch_spawn_callback.c
+  source/sa_main_dispatch_spawn_callback_connected.c
+  analysis/main-dispatch-spawn-callback/*_instructions.tsv
+  analysis/main_dispatch_spawn_callback_translation.json
+  analysis/main_dispatch_spawn_callback_verification.json
+  analysis/main_dispatch_spawn_callback_lifecycle_verification.json
+Reports pin original spans, source, dependency evidence and DLL hashes.
+The registrar additionally checks the pinned numerical vendor header.
+Final audit passed: 1,024 registry entries / 1,021 unique module-address pairs,
+zero evidence errors and zero stale whole-source reports. 974 entries match
+the unchanged 10,875-candidate index snapshot; these incomplete inventories
+are not whole-game coverage. Dispatcher verification passed 658 original
+instruction checks, accounting for 80 entry spans and 83 selectors.
+Recovery reproduced the exact source/manifest hashes used by the passing tests.
+The completion audit remains 10%.
+
+Repeat from this document's directory with the installed project Python:
+  python recover_main_dispatch_spawn_callback.py
+  .\build_main_dispatch_spawn_callback.ps1
+  python verify_main_dispatch_spawn_callback.py
+  python verify_main_dispatch_spawn_callback_lifecycle.py
+  python register_main_dispatch_spawn_callback.py
+  python map_main_dispatch_cases.py
+  python verify_main_dispatch_case_map.py
+Optional read-only export: ghidra/export_main_dispatch_spawn_callback.ps1.
+Focused stages are included in build_and_verify.ps1. Its syntax passed; the
+entire accumulated suite was not run end-to-end for this checkpoint.
+
+Remaining work
+Host orchestration between scheduler passes is not the complete game/frame
+driver. Fixtures supply valid descriptors, matrices and pools; gameplay lifetime,
+hardware/MMIO, concurrency, full code discovery and playable ports are unproven.
+Continue Sol High with particle callback 8c04481a and its dependencies. Dynamic
+setter callback targets also remain unfinished. Keep the full goal active;
+this checkpoint does not recommend a model switch or pause.

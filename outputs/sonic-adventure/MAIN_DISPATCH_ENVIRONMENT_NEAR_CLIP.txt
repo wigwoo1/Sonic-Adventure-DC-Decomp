@@ -1,0 +1,115 @@
+Environment-map near-plane clipping
+17 October 2026 — VERIFIED within the bounded scope below.
+Overall completion: 10% estimated weighted project milestones, not code coverage.
+Goal active. Continue Sol High with alternate helpers 8c613be2 / 8c6153bc.
+
+Recovered source
+  8c611f24..8c6124c0: all 675 original instruction rows
+  source/sa_main_dispatch_environment_near_clip.c
+  source/sa_main_dispatch_environment_near_clip_connected.c
+The complete byte-checked body is annotated static C, retaining instruction
+order, register effects and delay slots. No runtime opcode decoder is used.
+Names are descriptive inferences. Earlier source, proofs and original game files
+are preserved. The helper has no game-function calls.
+
+Behavior and the two UV quantization steps
+The helper receives three vertex-cache pointers in R4/R5/R6. Before orientation
+rejection it computes and caches their lighting factors, generates UV coordinates
+from their normals and the matrix at the pointer in 8c890238, and reconstructs
+camera coordinates where the inputs have already been projected.
+
+Unlike ordinary environment emission, UV generation here first calculates
+128 + 128*dot(matrix column,normal). The original FMUL/FMAC sequence rounds at
+the original points. FTRC truncates toward zero to an integer, then a 16-bit store
+keeps its low word. Later reads treat that word as signed. These first three UV
+pairs occupy the helper's stack frame at local+18 hex. This quantization and
+possible signed wrapping happen before near-plane clipping.
+
+After orientation acceptance, crossing edges are clipped in camera space.
+Geometry and lighting factors are interpolated. UVs interpolate the already
+quantized signed integer endpoints, use FTRC again, then store another 16-bit
+word. The output UV table is at 8c890268; geometry/factors are at 8c890278.
+For example, endpoints 0 and 256 crossing at about 1/7 produce integer UV 36,
+which becomes 36/256 in the packet. A first generated value of 32768 wraps to
+-32768 before any edge interpolation. Neither step is a clamp to 0..1.
+
+Three- or four-vertex packets contain control, projected x/y/reciprocal depth,
+signed UV/256, interpolated lighting factor and a retained eighth queue word.
+Four-vertex output uses strip order 0,1,3,2. Counters, cursors, factor-cache writes
+and the original orientation-global effects are preserved.
+
+Build and tests actually passed
+- Strict Clang build: -O2 -Wall -Wextra -Werror; separate connected DLL.
+- 614 original-code comparisons: 394 direct helper cases, 114 clipped parent
+  cases, two plain-parent alternate cases, four draws, four particle callbacks
+  and 96 connected meshes. All 675 rows and 14 conditional outcomes covered.
+- All four parent near-helper call sites execute natively:
+  8c61a73a, 8c61aa9c, 8c61aab6 and 8c61ad4c.
+- Full 16 MiB RAM, GPRs/SR/PR, both FPU banks/FPSCR, FPUL/MACL, ordered boundaries
+  and queue contents/events match original execution, including partial state.
+- 1,246 boundary comparisons, 59,806 numerical operations, 1,642 queue transfers
+  and 16,074 ordered queue events. The helper executes 596 times in this suite;
+  its static body contains 675 rows. Four external boundaries belong to alternate
+  helper fixtures; none occurs in the new helper or the 96 connected meshes.
+- 518 cases complete successfully. Another 76 match inherited numeric/precision
+  guards (-1), eight match an unsupported saved-pointer boundary (-3), and 12
+  match enabled floating-point traps (status 1). Both banks, precision/width
+  fixtures and all four rounding-mode patterns are exercised.
+- 372 independent cases include all 96 connected meshes. Checks cover input
+  factor caches, generated signed UV words, initial wrap/truncation, camera-space
+  clipping, output UV re-quantization, projected packets, interpolated lighting,
+  retained words, orientation, counters and cursors. Cases include fractional,
+  zero and large mixed-sign matrix coefficients, all six crossing masks, varied
+  near planes/projection scales/offsets, differing normals and degenerate inputs.
+  Independent UV arithmetic checks use rounding mode 0; other modes have original
+  execution comparisons. Existing scalar-probe/shared-vector-oracle limits apply.
+- All 96 constructed meshes run native material setup, actual projection and
+  classification, primary/secondary extended acquisition, the environment parent,
+  new clipper and finalization. Both queue halves and FPU banks are covered.
+- 120 lifetime regressions / 984 stages passed: 23,264 boundaries, 104,016
+  numerical operations, 10,600 queue transfers and 117,808 queue events. All 880
+  original-model mesh iterations use native existing paths without external game
+  services. These models do not reach the new environment helper; focused meshes
+  provide its coverage. Independent pool/heap/particle checks pass.
+
+Guard and remaining limits
+Wide FMOV fixtures can overwrite the original stack's saved vertex pointers.
+At 8c612136, a host guard returns -3 before a flags load through a saved pointer
+outside modeled RAM. Original partial state is compared up to that boundary;
+physical Dreamcast exception dispatch is not implemented by this guard.
+All-near standalone inputs have original-instruction comparisons only, outside
+the ordinary caller contract. Tests use valid bounded coherent-RAM/MMU-off queues.
+GPU FIFO/pixels, physical cache timing, MMU-on behavior, invalid metadata and
+the complete frame driver remain unverified. Lifetime pass order is host-chosen.
+The full historical project workflow was not rerun for this checkpoint.
+Final integrity checks passed: source/translation regeneration is byte-identical;
+the three new reports and reused lower-helper inventory match pinned inputs;
+re-registration adds no duplicates; four Python and two PowerShell scripts parse.
+Dispatcher mapping verifies 658 original pointer loads, 80 spans and 83 selectors.
+Recovery/completion audits found zero registry evidence errors and zero reports
+needing source-hash refresh. The app goal was checked and remains active.
+
+Evidence and next work
+  recover_main_dispatch_environment_near_clip.py
+  build_main_dispatch_environment_near_clip.ps1
+  verify_main_dispatch_environment_near_clip.py
+  verify_main_dispatch_environment_near_clip_lifecycle.py
+  register_main_dispatch_environment_near_clip.py
+  analysis/main_dispatch_environment_near_clip_translation.json
+  analysis/main_dispatch_environment_near_clip_verification.json
+  analysis/main_dispatch_environment_near_clip_lifecycle_verification.json
+Registry: 1,067 entries / 1,064 unique module-address pairs. There are 1,015
+registry matches among 10,875 currently indexed candidates, with another 211
+non-texture binaries lacking function indexes. These are incomplete discovery
+counts, not whole-game coverage. Two environment alternate helpers remain:
+8c613be2 (250 rows) and 8c6153bc (412 rows), 662 rows total, already exported and
+byte-checked in analysis/main_dispatch_environment_lower_inventory.json. Their
+exports are analysis input, not recovered code. Ten other primitive emitters,
+full gameplay, pixels/texture sampling and all playable ports remain unfinished.
+
+How to check without programming
+Open this guide and SOURCE_HANDOFF.txt. The focused report records
+cases_passed=614, rows_covered=675 and independent_mesh_cases=96. The lifetime
+report records lifecycles_passed=120. There is no playable game to launch yet.
+Recommended next model: Sol High, because the alternate helpers still require
+instruction-level reverse engineering. No model switch or goal pause advised.

@@ -1,0 +1,88 @@
+Main dispatcher: native spawn helper and callback setter
+16 October 2026 — VERIFIED within the bounded scope below.
+Whole-project completion remains 10% estimated weighted milestones, not code coverage.
+
+Result
+Recovered and behavior-verified two original routines from the user's Dreamcast
+Rev A executable and connected them to the existing native notification, task,
+heap, cleanup, sound and prefix code. Original verification baselines remain.
+
+Spawn helper 8c07b320..8c07b346 (19 instruction rows)
+- Calls task creation with flags 2, level 6 and stored callback 8c044680.
+- On success, copies source byte +8 into byte +8 of its zeroed 64-byte task work.
+- Reloads the source after allocation; constructed aliases with the task or its
+  new work area correctly see the constructor/zeroer's earlier memory writes.
+- Guest R0 contains the sign-extended copied byte, including zero on a successful
+  spawn. Do not treat that value as a Boolean allocation result or task pointer.
+- Empty task pool or insufficient heap returns zero without publishing a task;
+  native disposal handles allocation failure and restores the free-list/heap.
+- Tests include an existing level-6 task head and its predecessor links.
+
+Callback setter 8c07b2b8..8c07b2dc (18 instruction rows)
+- Uses the low byte of R4 to select a pointer from table 8c78c668.
+- Returns without writing if the outer pointer or its nested pointer at +70 is null.
+- Otherwise selects a raw callback word from 8c19c32c using wrapped R5*4 and
+  stores it at nested-owner +0c. It does not execute the callback.
+- Tests cover wide input identifiers, 32-bit index wrap, raw zero/high-bit callback
+  values and a destination aliased with the original pointer-table slot.
+
+Verification actually passed
+Strict Clang shared-library build with -Wall -Wextra -Werror.
+14 preliminary smoke comparisons, followed by 2,517 full comparisons:
+  512 standalone spawn cases; 504 standalone setter cases;
+  678 notification, 168 record creation, 72 readiness and 583 prefix cases.
+All 37 original instruction rows, all 6 conditional outcomes and the sole call
+site were reached. 19,094 ordered CPU boundary states matched. Comparison checks
+include complete 16 MiB RAM, GPRs, SR, PR, both floating banks/FPSCR, FPUL and MACL.
+2,185 cases passed independent semantic invariants in addition to comparisons.
+2,221 completed without external game-service fixtures. 268 guard/error cases
+matched partial state, including one injected cancellation-service error.
+Standalone integer helpers were exercised in all eight inherited FPU-mode
+combinations. Native allocation/zeroing/disposal ran instead of spawn fixtures.
+
+Scope and remaining work
+Cancellation 8c01ae60 is the only remaining external game service in the tested
+prefix. Future execution of the stored task callback 8c044680 and dynamic callback
+table values is separate, unfinished work. Existing arithmetic guard limits,
+valid pointer/heap/table preconditions and explicit cancellation fixture remain.
+Synthetic alias/wrapped-index inputs prove instruction semantics, not that the
+game reaches those inputs. Hardware/MMIO, concurrency, live gameplay and full
+decompilation/ports remain unverified. The full accumulated suite was not rerun.
+
+Repeat from this document's directory with the installed project Python:
+  python recover_main_dispatch_spawn_setter.py
+  .\build_main_dispatch_spawn_setter.ps1
+  python verify_main_dispatch_spawn_setter.py
+  python register_main_dispatch_spawn_setter.py
+  python map_main_dispatch_cases.py
+  python verify_main_dispatch_case_map.py
+Use ghidra/export_main_dispatch_spawn_setter.ps1 only when re-exporting the
+checked instructions is needed. The focused steps are in build_and_verify.ps1.
+
+Source and evidence
+  source/sa_main_dispatch_spawn_setter.c
+  source/sa_main_dispatch_spawn_setter_connected.c
+  analysis/main-dispatch-spawn-setter/*_instructions.tsv
+  analysis/main_dispatch_spawn_setter_translation.json
+  analysis/main_dispatch_spawn_setter_verification.json
+Reports pin the original executable, exact instruction spans, generated source,
+build/verification inputs and DLL by SHA256. Registration validates those hashes.
+The registry now has 1,018 entries / 1,015 unique module-address pairs; historical
+duplicate entries remain explicitly audited rather than counted as new routines.
+Final recovery audit: zero registry evidence errors and zero stale whole-source
+reports; 970 entries match the 10,875 indexed candidates. These are incomplete
+inventories, not whole-game coverage. Dispatcher-map verification passed 658
+original pointer-load checks, accounting for 80 entry spans and 83 selectors.
+The completion audit remains 10%. Regenerating the two helpers reproduced the
+exact source and translation-manifest hashes used by the passing comparisons.
+Aggregate PowerShell syntax passed; the full accumulated workflow was not run.
+
+Parallel planning correction
+Texture-resolution Off now means no game-texture sampling and vertex-coloured
+geometry, using existing material colour when vertex colours are absent. It takes
+priority over the remembered original/HD set. This renderer feature is planned,
+not implemented; see HD_TEXTURE_AND_DISPLAY_PLAN.txt.
+
+Recommended next model: keep Sol High for cancellation recovery and eventual
+stored-callback execution. This checkpoint does not recommend a model switch
+or pause the goal; the goal service currently reports usageLimited.

@@ -1,0 +1,25 @@
+{
+  "cases_passed": 128,
+  "comparison_level": "Complete 16 MiB RAM and all GPRs, SR, PR, and return PC compared against the retail SH-4 interpreter.",
+  "scope": "The 38-byte task cursor routine at 0x8c099a1c loads and advances the current task-list cursor through child/sibling-parent links, stores the selected node to 0x8c7a0a08, and returns through PR. Tests cover direct-child selection, the no-child walk, loop continuation, null-parent exit, and mismatch exit.",
+  "limitations": [
+    "Uses the project SH-4 interpreter rather than Dreamcast hardware or end-to-end gameplay.",
+    "Tests exercise representative valid task-link graphs; all higher-level task lifecycle behavior remains outside this routine."
+  ],
+  "binary_sha256": "45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a",
+  "retail_span_sha256": "572726b66426048aba8e170b6b5f4c63f199d73ef331f174a07dc6061477668a",
+  "literal_address": "0x8c099a4c",
+  "global_cursor_slot": "0x8c7a0a08",
+  "source_sha256": "4fb07d8aa351e6c3d327e2143e2f387ead3a2413f3df5e927c937b6eb558d190",
+  "routines": [
+    {
+      "module": "1ST_READ.BIN",
+      "load_address": "0x8c010000",
+      "address": "0x8c099a1c",
+      "end_exclusive": "0x8c099a42",
+      "retail_span_sha256": "572726b66426048aba8e170b6b5f4c63f199d73ef331f174a07dc6061477668a",
+      "cases_passed": 128,
+      "name": "sa_task_cursor_advance_8c099a1c"
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+address	opcode	instruction	references
+8c6604e6	d34a	mov.l 0x8c660610,r3	READ:8c660610=8c6607f4 
+8c6604e8	4f22	sts.l PR,@-r15	DATA:Stack[-0x4] 
+8c6604ea	6032	mov.l @r3,r0	READ:8c6607f4=8c6607f8 
+8c6604ec	401b	tas.b @r0	READ_WRITE:8c6607f8=0 
+8c6604ee	8907	bt 0x8c660500	CONDITIONAL_JUMP:8c660500=2f3653f1 
+8c6604f0	d249	mov.l 0x8c660618,r2	READ:8c660618=8c65f348 
+8c6604f2	d148	mov.l 0x8c660614,r1	READ:8c660614=8c67249c 
+8c6604f4	420b	jsr @r2	COMPUTED_CALL:8c65f348=903dd223 
+8c6604f6	2f16	_mov.l r1,@-r15	DATA:8c67249c=462a2a2a DATA:Stack[-0x8] 
+8c6604f8	7f04	add #0x4,r15	
+8c6604fa	4f26	lds.l @r15+,PR	DATA:Stack[-0x4] 
+8c6604fc	b	rts	
+8c6604fe	e0fe	_mov #-0x2,r0	
+8c660500	53f1	mov.l @(0x4,r15),r3	DATA:Stack[0x0] 
+8c660502	2f36	mov.l r3,@-r15	DATA:Stack[-0x8] 
+8c660504	b008	bsr 0x8c660518	UNCONDITIONAL_CALL:8c660518=4f222fe6 
+8c660506	9	_nop	
+8c660508	7f04	add #0x4,r15	
+8c66050a	d341	mov.l 0x8c660610,r3	READ:8c660610=8c6607f4 
+8c66050c	e100	mov #0x0,r1	
+8c66050e	6232	mov.l @r3,r2	READ:8c6607f4=8c6607f8 
+8c660510	2210	mov.b r1,@r2	WRITE:8c6607f8=0 
+8c660512	4f26	lds.l @r15+,PR	DATA:Stack[-0x4] 
+8c660514	b	rts	
+8c660516	9	_nop	
+8c660518	2fe6	mov.l r14,@-r15	DATA:Stack[-0x4] 
+8c66051a	4f22	sts.l PR,@-r15	DATA:Stack[-0x8] 
+8c66051c	7ff8	add #-0x8,r15	
+8c66051e	4628	shll16 r6	
+8c660520	6ef3	mov r15,r14	
+8c660522	4728	shll16 r7	
+8c660524	2e52	mov.l r5,@r14	DATA:Stack[-0x10] 
+8c660526	53f4	mov.l @(0x10,r15),r3	DATA:Stack[0x0] 
+8c660528	4618	shll8 r6	
+8c66052a	267b	or r7,r6	
+8c66052c	263b	or r3,r6	
+8c66052e	e300	mov #0x0,r3	
+8c660530	1e61	mov.l r6,@(0x4,r14)	DATA:Stack[-0xc] 
+8c660532	2f36	mov.l r3,@-r15	DATA:Stack[-0x14] 
+8c660534	e702	mov #0x2,r7	
+8c660536	66e3	mov r14,r6	
+8c660538	2f36	mov.l r3,@-r15	DATA:Stack[-0x18] 
+8c66053a	b969	bsr 0x8c65f810	UNCONDITIONAL_CALL:8c65f810=2fd62fe6 
+8c66053c	e50b	_mov #0xb,r5	
+8c66053e	7f10	add #0x10,r15	
+8c660540	4f26	lds.l @r15+,PR	DATA:Stack[-0x8] 
+8c660542	b	rts	
+8c660544	6ef6	_mov.l @r15+,r14	
+8c660546	d332	mov.l 0x8c660610,r3	READ:8c660610=8c6607f4 

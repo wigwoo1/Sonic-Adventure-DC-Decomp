@@ -1,0 +1,25 @@
+address	opcode	instruction	references
+8c09da44	2fe6	mov.l r14,@-r15	DATA:Stack[-0x4] 
+8c09da46	4f22	sts.l PR,@-r15	DATA:Stack[-0x8] 
+8c09da48	7ffc	add #-0x4,r15	
+8c09da4a	2f52	mov.l r5,@r15	DATA:Stack[-0xc] 
+8c09da4c	d53c	mov.l 0x8c09db40,r5	READ:8c09db40=cd00000 PARAM:0cd00000 
+8c09da4e	b917	bsr 0x8c09cc80	UNCONDITIONAL_CALL:8c09cc80=4f222fe6 
+8c09da50	9	_nop	
+8c09da52	6e03	mov r0,r14	
+8c09da54	4e11	cmp/pz r14	
+8c09da56	8b03	bf 0x8c09da60	CONDITIONAL_JUMP:8c09da60=d339d23a 
+8c09da58	d33a	mov.l 0x8c09db44,r3	READ:8c09db44=8c04c5e0 
+8c09da5a	d439	mov.l 0x8c09db40,r4	READ:8c09db40=cd00000 PARAM:0cd00000 
+8c09da5c	430b	jsr @r3	COMPUTED_CALL:8c04c5e0=2f862f96 
+8c09da5e	65f2	_mov.l @r15,r5	DATA:Stack[-0xc] 
+8c09da60	d23a	mov.l 0x8c09db4c,r2	READ:8c09db4c=8c5fc0c2 
+8c09da62	d339	mov.l 0x8c09db48,r3	READ:8c09db48=a0000000 
+8c09da64	223b	or r3,r2	
+8c09da66	420b	jsr @r2	COMPUTED_CALL:ac5fc0c2 
+8c09da68	9	_nop	
+8c09da6a	60e3	mov r14,r0	
+8c09da6c	7f04	add #0x4,r15	
+8c09da6e	4f26	lds.l @r15+,PR	DATA:Stack[-0x8] 
+8c09da70	b	rts	
+8c09da72	6ef6	_mov.l @r15+,r14	

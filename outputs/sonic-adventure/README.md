@@ -1,0 +1,197 @@
+# Sonic Adventure Dreamcast Rev A decompilation and ports
+
+This workspace is a continuing reverse-engineering project for the user's Dreamcast Rev A copy. The end goal includes a fully decompiled game, a native PC port with 60/120/240 FPS and resolutions up to 8K, later Android and Nintendo 3DS ports with stereoscopic 3D, and adapted N64 and PlayStation demakes.
+
+**Current whole-project estimate: 10%.** This is a weighted milestone score, not a measure of recovered code. Disc inventory, extraction, and PRS decoding have verification evidence. Game-code recovery is still partial. The PC, Android, Nintendo 3DS, N64, and PlayStation ports are not complete or validated.
+
+Public repository: [wigwoo1/Sonic-Adventure-DC-Decomp](https://github.com/wigwoo1/Sonic-Adventure-DC-Decomp). See `GITHUB_PUBLISHING.txt` for source snapshots, research-build prereleases, exclusions and the daily 18:00 America/Indianapolis update check. Builds are test libraries, not a playable game.
+
+## Project files
+
+- `source/` contains recovered C and support code.
+- `analysis/` contains manifests, instruction exports, audit results, and verification reports.
+- `ghidra/` contains Ghidra export and translation helpers.
+- `build_*.ps1` and `verify_*.py` contain focused build and comparison workflows.
+- `build_and_verify.ps1` runs the broader project test sequence.
+- `project_status.json` records requirements and progress evidence.
+- `HD_TEXTURE_AND_DISPLAY_PLAN.txt` records the planned SUPIR HD texture pack, HD toggle, texture percentages, render resolution, and aspect-ratio settings. These features are pending.
+- `SOURCE_HANDOFF.txt` contains the source-access and handoff notes.
+- `DRAW_FRAME_SEQUENCE.txt` records three packet/context helpers and the complete renderer initializer: 103 context comparisons, six persistent view/initializer/repeated-initializer sequences and two cold-entry guards. Natural boot ordering and visible rendering remain unverified.
+- `DRAW_FRAME_SETUP.txt` records three matrix/screen/camera helpers, 92 comparisons, and the preserved earlier partial initializer proof.
+- `verify_draw_angle_resume.py` reruns all 60 angle boundary cases while preserving the earlier proof report and checking identical results.
+- `OBJECT_DRAW_CLIPPING.txt` records 156 complete original-object caller comparisons, real textured/environment clipping calls and exact queue-trace limits. The outer draw body remains partial at 527/911 rows.
+- `DRAW_VIEW_COMPLETE.txt` records the complete original view builder: 28 comparisons, all 166 rows / six outcomes, 142 register-service comparisons and 18,447 host-backend operations. Physical rendering and natural startup remain unfinished.
+- `DRAW_VIEW_SETUP.txt` preserves the preceding four complete view dependencies: 182 comparisons, all 217 rows / two outcomes, 158 independent assertions, and eight earlier partial view-builder comparisons.
+- `DRAW_MATERIAL_DISPATCH.txt` records the complete material-block dispatcher: 116 comparisons, all 149 rows / 20 outcomes, 336 independent routing/state assertions and real native clipping children. Full rendering remains unfinished.
+- `DRAW_CLIPPING_COMPLETE.txt` records seven complete qualified clipping/primitive bodies: 682 comparisons, all 1,739 rows / 138 outcomes, and 13,220 independent geometry/packet assertions. Natural startup, visible rendering and full gameplay remain unfinished.
+- `DRAW_CLIPPING_STATE.txt` preserves the earlier integer-bank/MACH foundation: 12,868 kernel checks, 2,816 prefix comparisons and eight helper regressions. Its zero-credit prefix evidence is distinct from the later full-body registrations.
+- `DRAW_VECTOR_BLEND.txt` records two complete vector/integer-angle blend helpers, 1,332 focused comparisons, 108 vector-stage and 56 integer-stage caller checks, and 48 newly completed animation callback cases. Full rendering remains unfinished.
+- `CLIPPING_CPU_STATE_PLAN.txt` records completed processor-state and local clipping milestones, with broader model/camera/startup/frame verification still pending.
+- `DRAW_ANGLE_CURVE.txt` records the complete integer-angle helper, 811 focused and 108 connected comparisons, independent arithmetic and conversion checks, and the next dependency at 8c60a1f6. Full rendering remains unfinished.
+- `DRAW_VECTOR_CURVE.txt` records the complete unsigned-label vector helper, 751 focused and 108 targeted connected comparisons, exact staged arithmetic and stack checks, and the next angle continuation. Full rendering remains unfinished.
+- `DRAW_PRIMITIVE_STREAM.txt` records three complete packet/scale helpers, 189 focused and 210 connected comparisons, 156 tested callback returns, partial clipping/state requirements, and the next drawing continuation. Full rendering remains unfinished.
+- `DRAW_MATERIAL_SETUP.txt` records six new texture/header/colour-cache helpers plus three reused helpers, 503 focused and 210 connected-model comparisons, software queue packets and the next primitive/sampling dependencies. Full rendering remains unfinished.
+- `DRAW_GEOMETRY_STREAM.txt` records four new complete projection, angle-sampling, lighting and viewport helpers plus an existing header helper, 912 focused and 210 connected-model comparisons and the next material/primitive dependencies. Full rendering and gameplay remain unfinished.
+- `DRAW_GBR_GEOMETRY.txt` records seven complete renderer/GBR/geometry helpers, 742 direct and 210 connected comparisons, real renderer-initialization stages, explicit register-state and relocation checks, and the next geometry/view dependencies. Full rendering and gameplay remain unfinished.
+- `DRAW_MOTION_SAMPLING.txt` records 25 newly registered key-search/interpolation/sampler/format helpers, 2,440 direct and 146 affected-caller/regression comparisons, exact source provenance and numerical limits, and the next renderer/GBR dependencies. Fifteen motion proposals and the full renderer remain partial.
+- `DRAW_MOTION_VARIANTS.txt` records twelve complete motion/drawing setup, selector and default-pose/buffer helpers, 43 native proposals, focused original-instruction comparisons and the next missing geometry/interpolation services. The renderer remains partial.
+- `DRAW_OVERLAY_FADE.txt` records five complete fade/text/quad/state helpers and a guarded existing matrix helper, 556 direct and 420 connected comparisons, accepted object-callback returns and the remaining motion/drawing boundaries. Visible frames and gameplay remain unfinished.
+- `DRAW_POLYGON_PRIMITIVES.txt` records seven complete clipping/header/projection helpers, 576 direct and 408 connected comparisons, software queue output and the next overlay fade/draw dependency. Visible frames and gameplay remain unfinished.
+- `DRAW_RENDER_HEADERS.txt` records four complete render-state/header/visibility/size helpers, 1,974 direct and 408 connected comparisons, expanded computed branches, and the next polygon clipper boundary. The whole renderer and visible gameplay remain unfinished.
+- `DRAW_OBJECT_EFFECTS.txt` records six complete animation/effect profiles (1,492 instructions / 130 outcomes), 1,720 direct and 408 original-model checks, native dispatcher/render-service prefixes, and the next lower texture/render-state dependencies. Incomplete drawing bodies remain unregistered; visible rendering/gameplay is unfinished.
+- `DRAW_POINT_TRANSFORM.txt` records the complete original point transform, 435 direct and 408 original-model comparisons, independent overlap/arithmetic checks, the next dispatcher boundary, and read-only analysis of its dependency family. Visible rendering and gameplay remain unfinished.
+- `DRAW_HIERARCHY.txt` records five new hierarchy/matrix helpers plus extended bank-save evidence: 595 direct and 408 original-model comparisons, real vector support, exact original-loop/coverage limits, and the next point-transform dependency. The full game and playable rendering remain unfinished.
+- `DRAW_MOTION_MESH.txt` records the distinct motion mesh preprocessing/wrapper, 130 full-state and packet checks, native connection to all nine material families, and initialized-model integration. Natural texture/renderer setup and physical GPU output remain unfinished.
+- `DRAW_MOTION_FORMATS.txt` records fifteen complete animation format, keyframe and linear/cubic interpolation bodies: 400 original comparisons, all 1,042 rows/52 outcomes, independent curve checks and original-model integration. Motion mesh output remains unfinished.
+- `DRAW_MOTION_SETUP.txt` records seven complete motion/control/base-transform bodies, 544 focused original comparisons, independent callback/world-matrix checks and partial original-model integration. Animation handlers and motion mesh output remain explicit boundaries.
+- `DRAW_DISTANCE_HELPERS.txt` records complete distance/signed-sqrt bodies: 578 original checks, 2,112 independent FSQRT checks and 408 partial draw-integration checks, with 421/911 draw rows executed and explicit remaining boundaries.
+- `OVERLAY_DRAW_STATE.txt` records fourteen reused native services, 244 original-state comparisons and expanded partial draw coverage (273/911 rows), with three explicit continuation boundaries and zero new routine credit.
+- `DRAW_PREDICATE_SUPPORT.txt` records three complete draw helpers, 676 focused comparisons, and 100 partial original-draw-entry checks; the compiled 911-row draw candidate remains unregistered with 825 unexecuted rows.
+- `DRAW_MATRIX_REGISTERS.txt` records complete register-input scale/translation: 856 focused checks, 64 real transformed-model caller cases and 120 lifetime regressions, with exact vector-proof and reachability limits.
+- `OVERLAY_PARAMETER_UPDATE.txt` records the native parameter/event and scale helpers: 1,000 focused comparisons and 32 original-model lifecycles / 512 stages. Includes exact morph-request behavior and the remaining draw/caller dependencies.
+- `OVERLAY_INITIALIZER_COMPLETE.txt` records eight new routines, 4,464 focused comparisons and 402 complete-constructor checks with zero game-service fixtures. Documents shared accessory writes and the corrected parameter-update/draw labels.
+- `OVERLAY_MODEL_BLEND.txt` records the native 813-row model morph and full 58-row copy dispatcher, 1,626 focused comparisons, 228 shipped-object initializer checks, and exact coverage/guard limitations. Six outer dependencies remain.
+- `OVERLAY_OBJECT_INITIALIZER.txt` records three native material variants and allocation-through-selector integration: 2,177 material comparisons, 384 guarded-selector checks and 432 combined tests. Documents seven remaining outer dependencies.
+- `OVERLAY_OBJECT_SETUP.txt` covers four native object-preparation routines, 1,552 original-code comparisons, real heap/copy integration, shipped 39-node trees and the exact coverage exclusions. Initializer/appearance-variant integration is next.
+- `MAIN_DISPATCH_SPAWN_SETTER.txt` covers the two newly verified helpers, 2,517 full comparisons, native dependency integration, and the remaining cancellation/callback work.
+- `MAIN_DISPATCH_CANCELLATION.txt` records the later cancellation/restore recovery, 4,284 comparisons, and a tested native prefix chain with no external game-service fixtures; stored callbacks remain pending.
+- `MAIN_DISPATCH_CONTEXT_CALLBACK.txt` covers the subsequently discovered callback at `8c01b358` and 4,908 native creation/scheduling/deletion stage comparisons.
+- `MAIN_DISPATCH_SPAWN_CALLBACK.txt` covers spawn callback `8c044680`, its transform/emission helpers, 612 body comparisons and 368 connected lifecycles; particle callback execution remains pending.
+- `MAIN_DISPATCH_PARTICLE_CALLBACK.txt` records the subsequent particle callback recovery, five new entries, 471 focused comparisons and 120 complete lifetimes; low-level geometry remains a test fixture.
+- `MAIN_DISPATCH_PARTICLE_GEOMETRY.txt` covers the later native geometry preparation/model wrapper: 548 focused comparisons and 120 complete lifetimes passed; recursive model traversal remains a fixture.
+- `MAIN_DISPATCH_MODEL_TRAVERSAL.txt` records subsequent native recursive traversal: 1,494 focused comparisons and 120 complete lifetimes passed; the mesh body remains a fixture.
+- `MAIN_DISPATCH_MESH.txt` covers the later native mesh/material loop and filter wrapper: 663 focused comparisons and 120 complete lifetimes passed; 27 lower services remain fixtures.
+- `MAIN_DISPATCH_MESH_SERVICES.txt` records the next five native filter/material services: 1,416 focused comparisons and 120 lifetimes passed; documents transfer guards and corrected renderer-state semantics.
+- `MAIN_DISPATCH_VERTEX_WORKERS.txt` covers four subsequently recovered vertex workers and native store queues: 265 focused comparisons and 120 lifetimes passed, including 9,680 original-mesh vertex transfers.
+- `MAIN_DISPATCH_ACQUISITION.txt` covers the next native header-acquisition helper: 152 focused cases and 120 lifetimes passed, including retained queue words and real output-cursor advancement. Also records the cancellation recheck.
+- `MAIN_DISPATCH_PRIMITIVES.txt` covers the two subsequent primitive emitters: 546 focused cases and 120 lifetimes passed, with 1,178 reachable rows checked and four rows proven unreachable. The next near-plane clipping dependency remains a fixture.
+- `MAIN_DISPATCH_NEAR_CLIP.txt` records the later native near-plane clipper: 408 focused cases, independent clipped geometry, 24 connected mesh cases and 120 particle lifetimes passed. That tested lifetime path now uses no external game-service substitutes; visible rendering remains unverified.
+- `MAIN_DISPATCH_ALTERNATE_STRIPS.txt` covers the two subsequent alternate strip emitters: 320 focused cases, including 48 connected mesh cases, plus 120 lifetime regressions passed. Existing stub and clipping dependencies are reused; three acquisition variants are inventoried for the next task.
+- `MAIN_DISPATCH_ACQUISITION_VARIANTS.txt` records the subsequent three native header variants: 352 cases / 1,864 stage comparisons, 908 independent packets and 120 lifetime regressions passed. All four material-loop acquisition selectors are now native; sixteen other primitive emitters remain unfinished.
+- `MAIN_DISPATCH_LIT_PRIMITIVES.txt` records the later normal-lit family: 606 original-code comparisons, 1,706 reachable rows, independent RGB/alpha/cache/packet checks, 48 connected meshes and 120 lifetime regressions. Three lower lighting helpers and fourteen other primitive emitters remain unfinished.
+- `MAIN_DISPATCH_LIT_NEAR_CLIP.txt` covers subsequent native near-plane lighting: 566 focused cases, all 564 rows, 48 fully native clipped meshes with independent colour interpolation, and 120 lifetime regressions. Two alternate lighting helpers and fourteen other primitive emitters remain unfinished.
+- `MAIN_DISPATCH_LIT_ALTERNATE_STRIPS.txt` records the later alternate lighting helpers: 392 comparisons, all 760 rows, 96 native connected meshes, independent lit triangles/cache write-back events, and 120 lifetime regressions. Fourteen other primitive emitters remain unfinished.
+- `MAIN_DISPATCH_UV_LIT_PRIMITIVES.txt` covers subsequent signed texture-coordinate/lighting writers: 638 comparisons, all 1,771 reachable rows, 48 connected meshes, retained queue words/UV staging, and 120 lifetime regressions. Three lower UV helpers and twelve other primitive emitters remain unfinished.
+- `MAIN_DISPATCH_UV_NEAR_CLIP.txt` records subsequent native UV near clipping: 614 comparisons, all 616 rows, exact signed UV quantization, 96 fully native connected meshes, and 120 lifetime regressions. Two alternate UV helpers and twelve other primitive emitters remain unfinished.
+- `MAIN_DISPATCH_UV_ALTERNATE_STRIPS.txt` records the subsequent two native UV strip helpers: 512 comparisons, all 839 rows, 192 connected meshes and 120 lifetime regressions. Twelve other primitive emitters remain unfinished; the next pair has 2,153 byte-checked analysis rows.
+- `MAIN_DISPATCH_ENVIRONMENT_PRIMITIVES.txt` records subsequent normal-derived UV primitives: 630 comparisons, 2,149 reachable rows, 48 connected meshes and 120 lifetime regressions. Three lower helpers remain explicit fixtures; their 1,337 exported rows are ready for recovery.
+- `MAIN_DISPATCH_ENVIRONMENT_NEAR_CLIP.txt` records subsequent native environment clipping: 614 comparisons, all 675 rows, two UV quantization steps, 96 native connected meshes and 120 lifetime regressions. The two alternate helpers remain unfinished.
+- `MAIN_DISPATCH_ENVIRONMENT_ALTERNATE_STRIPS.txt` records the subsequent two native environment strip helpers: 544 comparisons, all 662 rows, 224 connected meshes and 120 lifetime regressions. Ten other primitive emitters remain unfinished.
+- `MAIN_DISPATCH_FACE_LIT_PRIMITIVES.txt` records the subsequent face-lit pair and numerical normalizer: 870 comparisons, 1,871 reachable rows and 120 lifetime regressions, with explicit strip-register preconditions, host guards and three lower fixtures.
+- `MAIN_DISPATCH_FACE_NEAR_CLIP.txt` records subsequent native face-colour clipping: 644 comparisons, all 410 rows, 96 native connected meshes and 120 lifetime regressions, with explicit parent/register and host-guard limits.
+- `MAIN_DISPATCH_FACE_ALTERNATE_STRIPS.txt` records subsequent native face-selected strips: 544 comparisons, all 830 rows, 224 connected meshes and 120 lifetime regressions. Ordinary output uses per-vertex lighting; crossings use normalized face colour.
+- `MAIN_DISPATCH_UV_FACE_PRIMITIVES.txt` records the subsequent UV/face-factor pair: 702 comparisons, 2,038 reachable rows and 120 lifetime regressions, with explicit strip-register preconditions, host guards and three lower fixtures.
+- `MAIN_DISPATCH_UV_FACE_NEAR_CLIP.txt` records native signed-UV clipping with supplied face factors: 716 comparisons, all 550 rows, 96 native crossing meshes and 120 lifetime regressions.
+- `MAIN_DISPATCH_UV_FACE_ALTERNATE_STRIPS.txt` records the alternate UV-face helpers: 544 comparisons, all 887 rows, 224 entirely native meshes and 120 lifetime regressions.
+- `MAIN_DISPATCH_UV_CONSTANT_PRIMITIVES.txt` records the constant-factor UV pair: 642 comparisons, all 1,419 reachable rows, 64 connected packet/staging meshes and 120 lifetime regressions, with three lower helpers still fixtures.
+- `MAIN_DISPATCH_UV_CONSTANT_NEAR_CLIP.txt` records native constant-factor UV clipping: 764 comparisons, all 553 rows, 192 fully native crossing meshes and 120 lifetime regressions.
+- `MAIN_DISPATCH_UV_CONSTANT_ALTERNATE_STRIPS.txt` records both alternate helpers: 768 comparisons, all 799 rows, 448 entirely native meshes and 120 lifetime regressions.
+- `MAIN_DISPATCH_ENVIRONMENT_FACE_PRIMITIVES.txt` records generated environment UVs with face lighting: 710 comparisons, all 2,541 reachable rows, 48 native packet/staging meshes and 120 lifetime regressions.
+- `MAIN_DISPATCH_ENVIRONMENT_FACE_NEAR_CLIP.txt` records native environment-UV clipping with supplied face factors: 716 comparisons, all 612 rows, 96 fully native meshes and 120 lifetime regressions.
+- `MAIN_DISPATCH_ENVIRONMENT_FACE_ALTERNATE_STRIPS.txt` records both alternate helpers: 544 comparisons, all 710 rows, 224 entirely native meshes and 120 lifetime regressions.
+- `MAIN_DISPATCH_ENVIRONMENT_CONSTANT_PRIMITIVES.txt` records the final mesh primitive parent pair: 666 comparisons, all 1,785 reachable rows, 96 native packet/staging meshes and 120 lifetime regressions; three lower helpers remain fixtures.
+- `MAIN_DISPATCH_ENVIRONMENT_CONSTANT_NEAR_CLIP.txt` records native constant-factor environment clipping: 764 comparisons, all 611 rows, 192 fully native crossing meshes and 120 lifetime regressions.
+- `MAIN_DISPATCH_ENVIRONMENT_CONSTANT_ALTERNATE_STRIPS.txt` records the final two explicit primitive helpers in this bounded mesh chain: 768 comparisons, all 670 rows, 448 fully native meshes and 120 lifetime regressions; full frame/GPU/gameplay integration is unfinished.
+- `MAIN_DISPATCH_MESH_FAMILIES.txt` records 1,040 comparisons across all nine native material families, original live-register strip behavior and 120 linked lifetime regressions; no new routine credit or hardware/gameplay claim.
+- `MAIN_MODEL_ASSETS.txt` records 860 structural model candidates in the original executable, a bounded model parser and 192 native comparisons using 24 unchanged original models; external assets and actual gameplay reachability remain open.
+- `OVERLAY_MODEL_ASSETS.txt` records 42 mapped overlay scans, 392 native original-model comparisons and one newly recovered AL_MAIN model selector verified in 2,176 cases; scene/gameplay and physical rendering remain unverified.
+- `OVERLAY_SELECTOR_INITIALIZER.txt` records the recovered AL_MAIN initialization caller and marker reset: 2,528 full-state comparisons with native selector/no-op integration; eight other dependencies remain explicit services.
+- `STREAM_RECORD_LIFECYCLE.txt` explains the connected stream tests and the allocator callback-context correction.
+- `STREAM_PENDING_CLEANUP.txt` covers the recovered pending-I/O cleanup caller and its remaining external abort dependency.
+- `REQUEST_ABORT_RECOVERY.txt` documents the native abort control flow, including both wait loops and interrupt masking, and the device/finalizer service gaps.
+- `STREAM_CLEANUP_ABORT_CONNECTED.txt` covers the linked native cleanup/abort chain and propagation of nested host failures.
+- `REQUEST_FINALIZER_RECOVERY.txt` describes native finalization/status, progress-sensitive timeout handling, and the removal of the finalizer fixture from the connected chain.
+- `REQUEST_DEVICE_CALLBACKS.txt` maps default device targets and documents native cancellation down to the external runtime service vector.
+- The same guide covers the recovered original seek/query caller at `0x8c65bfa4`, its native callees, and the expanded 328-step lifecycle suite.
+- `../../work/sonic-adventure/` contains local extracted disc files, analysis data, and generated build products.
+
+## Main executable draft analysis
+
+`analysis/ghidra-all/` contains the full Ghidra draft export for `1ST_READ.BIN`: 3,637 indexed functions, 3,631 draft pseudocode outputs, and six decompilation failures. The report also records 3,777 warnings in the drafts. This is an analysis starting point only; draft pseudocode is not buildable or behavior-verified source, and the index does not finish executable code/data boundaries. `analysis/ghidra/` is a smaller 150-function export and should not be used as the whole-binary draft count. The completion audit reads the full export summary and reports these counts without treating them as recovered code.
+
+The current disc inventory identifies the source directory as `D:\Desktop\Sonic Adventure (USA) (En,Ja,Fr,De,Es) (Rev A)`. Keep the original disc files and generated binaries in the local `work/` area. Review the handoff notes before preparing a source-only GitHub repository.
+
+## Repeating extraction and resource decoding
+
+Use a directory that contains one `.gdi` file and all of its track files. Choose a new or empty output directory so the extraction does not mix with older results. From the project directory, run:
+
+The examples below use the Python 3.12 interpreter bundled on this development workstation. On another computer, replace `$Python` with that computer's Python 3 executable.
+
+```powershell
+$Python = 'C:\Users\wigwo\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe'
+& $Python .\extract_disc.py "D:\path\to\GDI-and-track-files" "..\..\work\sonic-adventure\extracted" --all
+```
+
+The extraction script writes the boot executable, boot header, disc files, and a hash-bearing inventory. To decode extracted `.PRS` resources and create a decode manifest, run:
+
+```powershell
+$Python = 'C:\Users\wigwo\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe'
+& $Python .\decompress_prs.py "..\..\work\sonic-adventure\extracted\files" "..\..\work\sonic-adventure\decoded" ".\analysis\prs_decode_manifest.json"
+```
+
+Compare new extraction and decode results with `analysis/extraction_verification.json` and `analysis/prs_native_verification.json` before relying on them. The existing reports cover the current extracted copy; they do not automatically validate a different disc image.
+
+## Rebuilding and checking the latest cleanup recovery
+
+From this project directory, the focused cleanup routine can be rebuilt and checked with:
+
+```powershell
+$Python = 'C:\Users\wigwo\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe'
+$Workspace = (Resolve-Path ..\..).Path
+.\build_input_service_cleanup_native.ps1 -Workspace $Workspace
+& $Python .\verify_input_service_cleanup_8c646654.py
+```
+
+The verification report is `analysis/input_service_cleanup_8c646654_verification.json`. It records 456 full-state comparisons against the retail interpreter, including every slot in the 48-entry callback table. The callbacks themselves use explicit test stubs, so these checks verify the cleanup routine and its dispatch paths, not every callback's game-specific implementation.
+
+The caller at `0x8c647198` is also checked with the recovered cleanup routine connected as a native callee. Running `build_and_verify.ps1` rebuilds the two native libraries and checks the caller alone plus four integrated scenarios; the integration report is `analysis/input_service_cleanup_integration_verification.json`. Device service and record-writing behavior remain explicit stubs in those scenarios, and the runtime callback records are empty.
+
+The same project test sequence rebuilds and checks the adjacent input-device wait/reset routine at `0x8c65f2a4`. Its four comparisons cover immediate status release, the first timeout, and status release or timeout in the second wait. The timer helper behavior is a deterministic test fixture; see `analysis/input_device_wait_reset_8c65f2a4_verification.json` for its exact limits.
+
+The busy-semaphore path in input-service entry `0x8c647198` now runs the recovered report-callback body at `0x8c65f348` instead of treating that routine itself as a no-effect callback. The callback invokes the recovered forwarding wrapper at `0x8c10d400`; its downstream formatter at `0x8c10dbc4` and optional runtime callback remain no-effect fixtures. Reports for both recovered routines are in `analysis/input_device_report_callback_8c65f348_verification.json` and `analysis/debug_log_forward_8c10d400_verification.json`.
+
+The 16-byte wrapper at `0x8c038dfc` now has a native recovery. It saves PR for its first indirect callback, restores the stack, then tail-calls a second callback. Its verifier checks both callback targets and order plus complete RAM, GPR, SR, PR, and FPU state over 24 cases; see `analysis/callback_pair_tail_8c038dfc_verification.json`.
+
+The formatter at `0x8c10dbc4` now has partially verified native execution. Its parent routine passed retail comparisons for literals, character/string arguments, integer formatting, width/precision, native emission, output buffering, and mixed conversions. The 514 instruction-byte integer-conversion routine at `0x8c10e304` independently passed 288 full-state comparisons; adjacent output helpers at `0x8c10e566`, `0x8c10e576`, and `0x8c10e50e` passed 8, 40, and 42. Floating-point formats, file mode, and real output I/O are still unverified, so this is not a complete formatter recovery. The adapter at `0x8c10e590` calls the 208-byte conversion helper at `0x8c10e5ac`; no native draft is currently registered or treated as recovered because additional double-precision instructions, conversions, and exception behavior remain unverified. The test interpreter now supports finite double-precision FADD/FSUB, FMUL/FDIV, FLOAT, and FCMP/EQ/GT on DR pairs in PR=1 mode; other double instructions, exceptional operands, and full formatter recovery remain pending. See the `sound_format_engine_*_verification.json` reports, `analysis/format_integer_convert_8c10e304_verification.json`, and the `analysis/fpu_double_*_verification.json` reports.
+
+To run the broader accumulated checks, use:
+
+```powershell
+.\build_and_verify.ps1 -Workspace ((Resolve-Path ..\..).Path)
+```
+
+That sequence can take a while. Its current top-level settings refer to the Python and Clang installations on the development workstation; adjust those paths when rebuilding elsewhere. The focused cleanup build also uses the workstation's Visual Studio LLVM Clang path if Clang is not available on `PATH`.
+
+## Current verified cleanup milestone
+
+Routine `0x8c646654` now has recovered C, a native dispatcher, and a repeatable build/test/registration sequence. Its indexed body contains 334 instruction bytes within a 412-byte address span that also includes literal/data bytes. The cleanup dependency audit currently reports all 9 direct dependencies as registered. The full game decompilation and every requested port remain outstanding.
+
+## Latest recovered routine
+
+The aligned string-copy helper at `0x8c10ef20` is implemented in `source/sa_string_copy_aligned_8c10ef20.c`. Its test compares all 16 MiB of emulated RAM and every GPR, SR, PR, and PC value against the retail SH-4 interpreter in 64 cases, including empty and varied strings. This helper is intended for aligned source and destination addresses; overlapping buffers are not characterized. Run `build_string_copy_aligned_8c10ef20.ps1`, `verify_string_copy_aligned_8c10ef20.py`, and `register_string_copy_aligned_8c10ef20.py`, or use the integrated `build_and_verify.ps1` workflow. This is one recovered helper, not evidence that the entire text system or game is decompiled.
+
+The general string-copy wrapper at `0x8c10dacc` is also recovered in `source/sa_string_copy_8c10dacc.c`. It dispatches aligned pointers to the optimized helper and handles other alignments with a byte-copy loop. Its 64 differential cases cover aligned, similarly misaligned, and differently aligned pointers and compare complete emulated RAM and CPU state. Buffer overlap remains uncharacterized. Its build, verifier, and registration steps are part of `build_and_verify.ps1`.
+
+The bounds-check helper at `0x8c10c98c` is recovered in `source/sa_bounds_check_8c10c98c.c`. It checks an index against the 256-entry table limit and an item against the selected entry's bound. Its 96 differential cases cover signed comparisons, negative indices, and limit boundaries, comparing complete emulated RAM and CPU state. Negative indices follow the retail table-address arithmetic; caller-side validity requirements are still unknown. Its build, verifier, and registration steps are included in `build_and_verify.ps1`.
+
+The random-number helper at `0x8c10d334` is recovered in `source/sa_random_u15_8c10d334.c`. It updates the global 32-bit seed with the constants embedded beside the retail routine and returns the masked upper 15 bits. Its 128 differential cases compare all emulated RAM, CPU registers/flags, and MACL state. The test interpreter now covers the MACL stack save/restore instructions used by this routine; a focused check for those instructions runs in `build_and_verify.ps1`. See the [Renesas SH-4 Software Manual](https://www.renesas.com/us/en/node/735531) for the processor instruction reference. Whole-game random sequences and gameplay behavior are not yet validated.
+
+The platform-signature helper at `0x8c10ba1e` is recovered in `source/sa_platform_signature_value_8c10ba1e.c`. It checks for the `AGES` signature and, when present, returns the signed 16-bit value at the associated address. Its 128 tests compare complete emulated RAM and CPU state for matching and nonmatching signatures. The meaning and lifetime of that platform value remain unknown.
+
+The request-slot search helper at `0x8c10c4a4` is recovered in `source/sa_request_slot_find_8c10c4a4.c`. It scans sixteen 40-byte records and returns the first record whose leading byte is zero, or zero when all records are occupied. Its 64 tests compare complete emulated RAM and CPU state, including every possible empty slot, randomized marker bytes, and the full-table case. Run its standalone build and verifier or use the integrated `build_and_verify.ps1` workflow. The broader request lifecycle and the consumers of these records remain to be recovered.
+
+The request-slot acquisition routine at `0x8c10c4ca` is recovered in `source/sa_request_slot_acquire_8c10c4ca.c`. It finds the first free record, marks it allocated, clears selected runtime words, and returns the record address; if the table is full, it returns zero. Its 96 tests compare complete emulated RAM and CPU state for all free-slot positions and full-table cases, including stack traffic and untouched record bytes. The meanings of individual record fields and the rest of the request lifecycle remain under investigation.
+
+The stream-position setter at `0x8c65bfc2` is recovered in `source/sa_stream_position_set_8c65bfc2.c`. Nonnegative inputs are stored directly; negative byte positions are rounded into 2 KiB units with the retail wraparound behavior. Its 128 tests compare complete RAM and CPU state, including signed limits and overflow. Ghidra indexes 32 instruction bytes in two discontiguous blocks (`0x8c65bfc2–0x8c65bfca` and `0x8c65c004–0x8c65c01c`); the registry hashes their enclosing address span while retaining the true instruction-byte count and both body ranges. The caller's range guarantees and broader stream-record meaning remain unknown.
+
+The stream-open preparation helper at `0x8c65bf42` and its indirect request-query callback at `0x8c600ec6` are recovered in `source/sa_stream_request_open_prepare_8c65bf42.c`. The helper marks its record as opening, clears its progress field, queries the request object, and stores the result. Its 128 cases and the callback's 64 cases compare all 16 MiB of RAM and every GPR/SR/PR/PC value against the retail SH-4 interpreter. The verifier includes null, unavailable, and ready requests, callback register effects, and stack writes. This covers only the helper and callback; the wider stream lifecycle is still incomplete.
+
+The sound-buffer initializer at `0x8c65b434` is recovered in `source/sa_audio_buffer_initialize_8c65b434.c`. It clears the 256-byte audio buffer and two related global values, reproducing the register and saved-return-address stack effects of the retail call. All 128 randomized comparisons matched complete RAM and CPU state in the SH-4 interpreter. The broader sound driver remains under analysis.
+
+Four sound-work callback tail thunks at `0x8c65bcb4`, `0x8c65bcc0`, `0x8c65bccc`, and `0x8c65bcd8` are recovered in `source/sa_sound_work_callback_thunks.c`. Each saves the incoming `R4` value to the stack, reads its callback address from a different literal slot, passes the work record's `+4` field in `R4`, then tail-jumps while restoring the stack pointer in the jump delay slot. All 512 randomized cases matched complete RAM and CPU state at the callback entry. The Ghidra draft index reports 16 bytes for each entry, but execution confirms each wrapper's body is 12 bytes and the guessed ranges overlap the next entry by four bytes. Callback bodies remain separate recovery work.
+
+The audio work-buffer initializer at `0x8c65bd2c` is recovered in `source/sa_audio_work_buffer_initialize_8c65bd2c.c`. It clears `0xc80` bytes at `0x8c8a3d90` through the retail byte-fill routine and returns success. Its 96 randomized tests matched complete RAM and CPU state, including the fill callback's register effects and the caller's saved-PR stack write. The rest of the audio stream lifecycle remains incomplete.
+
+The sound-stream record allocator at `0x8c65bd46` is recovered in `source/sa_sound_stream_record_allocate_8c65bd46.c`. It searches the 32-entry table at `0x8c8a3d90`, initializes the first free 100-byte record, rounds the initial stream position, invokes the record object's vtable method, and returns the new record; it returns zero if all entries are occupied. Its 64 tests cover each free slot, full-table failure, randomized field bytes, signed position boundaries, callback effects, stack writes, and complete RAM/CPU state. The indirect vtable method is an explicit native callback dependency; the test uses the retail two-argument subtract helper, so other object method behavior remains outside the allocator verifier.
+
+The request-position updater at `0x8c600e7a` is recovered in `source/sa_stream_request_position_update_8c600e7a.c`. It rejects null or inactive requests, supports absolute/current/end-relative positions, checks signed lower and upper bounds, and updates the position only when accepted. All 128 randomized and boundary-focused cases matched complete RAM and CPU state in the retail interpreter, including signed request-status and SR.T behavior. Its callers and the full request lifecycle are still being mapped.

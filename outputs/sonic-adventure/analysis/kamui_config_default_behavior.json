@@ -1,0 +1,25 @@
+{
+  "binary_sha256": "45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a",
+  "direct_checks_passed": 3,
+  "helper_chain": [
+    "0x8c10d3c8",
+    "0x8c10db1c"
+  ],
+  "comparison_behavior": "Compare strings, with aligned word path and byte fallback; return difference at first unequal byte or terminator. Pointer registers advance.",
+  "configuration_behavior": "If comparison of first argument with HARDWARE is nonzero, return saved original r6. This covers KAMUI calls, since KAMUI differs from HARDWARE at the first character.",
+  "correction": "DisplayMode and VideoMode are call-site labels; this routine does not establish that they are read from external configuration. For KAMUI, supplied fallback/default is returned.",
+  "next_work": [
+    "Trace supplied r6/default at mode-selector call sites",
+    "Recover string-comparison routine with register effects for verification",
+    "Check HARDWARE-specific branch separately"
+  ],
+  "evidence": [
+    "analysis/instructions/8c10d3c8.tsv",
+    "analysis/instructions/8c10db1c.tsv",
+    "analysis/instructions/8c665a80.tsv"
+  ],
+  "limitations": [
+    "No original-instruction execution comparison for string helper yet.",
+    "Actual mode default, video cadence and native ports remain unfinished."
+  ]
+}

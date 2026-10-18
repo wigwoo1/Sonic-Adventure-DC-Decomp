@@ -1,0 +1,125 @@
+Sonic Adventure Dreamcast Rev A - unsigned-label vector interpolation
+
+Overall estimate: 10%, weighted whole-project milestones rather than measured
+code coverage. Goal active on Sol High. Full rendering/gameplay and playable
+ports remain unfinished. No model switch or pause is recommended for recovery.
+
+The original helper at 8c609cb0 covers 92 instructions / four conditional
+outcomes. Its inferred role is per-channel vector interpolation with unsigned
+frame labels. Native copy 8c10cd38/tail 8c10cd8e and remainder 8c10cc80 are actual
+dependencies; no game-service return is fabricated.
+
+Source and workflows in this project directory:
+source/sa_draw_vector_curve.c
+source/sa_draw_vector_curve_connected.c
+recover_draw_vector_curve.py / connect_draw_vector_curve.py
+build_draw_vector_curve.ps1
+verify_draw_vector_curve.py
+verify_overlay_draw_vector_curve.py
+register_draw_vector_curve.py
+analysis/draw_vector_curve_translation.json
+analysis/draw_vector_curve_connection.json
+analysis/draw_vector_curve_verification.json
+analysis/overlay_draw_vector_curve_verification.json
+
+The strict optimized 116-source native library builds with warnings treated as
+errors and no standard library. Its separate DLL is under the workspace root:
+work/sonic-adventure/build/draw_vector_curve.dll. Old source/API/DLLs/proofs are
+preserved. The existing ten-argument GBR/queue public API is retained. Removing
+the one declaration/route and renamed public entry reproduces the prior bridge
+text exactly. The inherited bounded hierarchy-stall research define remains.
+Both new C files also pass default non-research syntax checks.
+
+All 751 focused comparisons pass: 733 returns, seven numeric-mode guards, five
+memory/return guards and six floating-point traps. Every exported row and branch
+outcome executes. Full reached/final machine/RAM/GBR and ordered entries match;
+no missing direct helper remains. There are 3,001 ordered entries and zero queue
+events. Every case separately checks the new DLL's real 41-row renderer/GBR
+initializer against original instructions; preparation is counted separately.
+
+Independent checks cover 728 cases / 4,368 assertions. A formula-level oracle
+uses exact rational arithmetic and separate nearest-even binary32 quantization,
+including the original rounded next-key product followed by fused multiply-add.
+It shares neither the instruction executor nor native arithmetic implementation.
+Five explicit rounding anchors check nearest-even ties, thirds and subnormal
+halfway behavior. Output values, whole RAM footprint, saved caller/dependency
+stack words, restored R13/R14/PR/SP and absence of queue traffic are checked.
+Signed-zero details remain covered by exact original-state comparisons rather
+than the rational value oracle.
+
+Tests include both FPU banks, both motion channels, precision/width modes,
+ordinary/high/negative frame inputs, duplicate/descending/wrapped labels,
+single-key tracks, aliases 0c/8c/ac, invalid key/output/stack pointers and special
+floats/enabled traps. Sixty-four deterministic random unsigned-label cases
+exercise conversion/rounding edges. Input arrays are bounded and nonempty;
+malformed zero key counts are not claimed as a supported domain.
+
+An initial independent footprint check omitted the real remainder helper's
+retained saved R3/R4 words. The oracle now includes those writes at SP-24/-28.
+An ideal real-number interpolation formula also failed at huge extrapolated
+frames, including a single-key track: binary32 cancellation changes the result.
+The exact staged formula now verifies that original behavior. Native/original
+state matched throughout; original game bytes/native code were not altered to
+make those oracle checks pass. No clamping or idealized constant-track rewrite.
+
+The native helper converts current unsigned labels and unsigned differences
+through the original signed-FLOAT plus 2^32 path. It uses the computed span only
+when the signed difference is positive; otherwise it selects the copied fallback
+denominator. The next key uses the real modulo helper. All conversion, fallback
+and arithmetic ordering is preserved. Original numerical/valid-RAM/MMU-off queue
+and legacy qualifications remain; no arbitrary hardware-bit proof is claimed.
+
+Connected verification targets all 48 previously blocked cases plus 60 unchanged
+regressions from the previous 210-case report: 28 direct-service/bank pairs,
+twelve labels/events, sixteen camera/entity pairs and four ordinary inputs.
+These are 108 fresh cases, not a fresh full 210/420-corpus run. The earlier full
+reports and every source index/input remain preserved. Original shipped model/
+motion/name/lookup records, real viewport reset and GBR initialization remain.
+Supplied camera/setup fixtures are distinct from natural engine startup.
+
+The three pending primitive clippers, four geometry/view/frame/boot proposals,
+fifteen earlier motion proposals and the full AL_MAIN draw parent remain partial
+where documented. MACH/banked-register work and the isolated product kernel are
+retained for later clipping completion. Physical GPU output, full gameplay,
+60/120/240 FPS, 8K, SUPIR/HD/true texture-off settings and all ports remain pending.
+
+All 108 connected comparisons pass: 60 unchanged regression returns and 48
+explicit next-service stops at 8c609d68. Every previously blocked case advances
+past the new vector helper, which is reached 48 times across 83 original rows.
+The rest of its 92-row/four-outcome proof comes from focused tests. There are
+37,500 ordered native entries, 108 independent state/stack/spring cases and
+76 distance prefixes. All selected prior inputs/source indices are retained;
+unaffected statuses are unchanged. No game-service result is injected.
+
+Selected parent coverage is 527/911 rows (384 unexecuted), so the parent stays
+unregistered. The previous larger 210-case corpus covered 538 rows. This is a
+different corpus, not a claim of behavior loss or a fresh full-corpus rerun.
+Real initializer preparation is counted separately: 859 new-DLL GBR stages
+across focused/caller tests plus 48 viewport resets. Supplied setup remains
+distinct from natural engine startup, loader/camera scheduling or full gameplay.
+
+Connected queues: 32,990 flushes / 337,426 counted events. The first 4,096 per
+invocation are individually compared: 114,688 stored-prefix events; 222,738 later
+events count-only. Complete final RAM/queue/QACR/counters match. The vector curve
+itself has no queue traffic; these are retained renderer regression/integration
+outputs, not physical GPU pixels.
+
+Registry: 1,234 entries / 1,231 unique module/address pairs; 1,129 matches in
+10,875 frozen candidate indexes. Another 211 nontexture binaries lack indexes,
+so the entire game's routine count remains unknown. Audit: zero evidence errors
+and zero stale source reports. 103 existing entries gain zero-credit integration
+evidence. Five generated artifacts reproduce exactly in memory without rewriting
+live proof inputs/DLL. Registration is byte-idempotent. Seven focused Python/four
+PowerShell syntax checks, default C syntax and all 658 dispatcher pointer-load
+checks (80 spans / 83 selectors) pass. Aggregate workflow extended, not rerun.
+
+The next observed angle continuation 8c609d68 has a read-only 105-row export and
+draft in analysis/draw-angle-frontier/. Its bytes/direct branches are checked;
+static annotated callees are registered, with no exhaustive computed-call claim.
+The draft receives zero native credit. Continue its recovery on Sol High.
+
+How to check: open this guide and the source/reports above. JSON reports include
+each input, source selection and comparison result. Status: PARTIALLY VERIFIED
+at project level. The new vector helper has complete qualified instruction/branch
+proof, while the full renderer/game remains unfinished. Luna Low suits
+documentation-only work; no recovery model switch or goal pause is advised.

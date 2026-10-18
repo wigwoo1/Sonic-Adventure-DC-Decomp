@@ -1,0 +1,35 @@
+{
+  "binary_sha256": "45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a",
+  "direct_binary_checks_passed": 8,
+  "handler_entry": "0x8c652210",
+  "registration_caller": "0x8c651520",
+  "registration_argument_load": "0x8c651524",
+  "callback_wrapper": "0x8c652554",
+  "wrapper_end_exclusive": "0x8c6525b6",
+  "wrapper_behavior": [
+    "Push original FPSCR; clear bit 20 (SZ).",
+    "Push active FR0 through FR15 as individual 32-bit transfers.",
+    "Invoke callback token r4 with argument r5 moved to r4.",
+    "Pop floating-point registers using FPSCR as left by callback; then restore original FPSCR."
+  ],
+  "verification_risks": [
+    "If callback changes FR, restoration targets a different bank.",
+    "If callback leaves SZ=1, restore transfer sizes and stack layout change.",
+    "PR changes may affect instruction validity; actual entry/callback mode invariants remain unproven."
+  ],
+  "status_mapping_next_dependency": "0x8c651bc0 invoked for input status bit 0x8",
+  "next_work": [
+    "Export registration caller 0x8c651520",
+    "Trace status helper 0x8c651bc0 to callback slot 1 pending bit",
+    "Extend original-instruction reference harness before recovering FPU wrapper source"
+  ],
+  "evidence": [
+    "analysis/instructions/8c652210.tsv",
+    "analysis/instructions/8c652554.tsv",
+    "analysis/handler-registration-references/scheduler_references.tsv"
+  ],
+  "limitations": [
+    "Exported/analyzed instructions are not a verified native routine.",
+    "No timing cadence, frame-rate mode or full game completion established."
+  ]
+}

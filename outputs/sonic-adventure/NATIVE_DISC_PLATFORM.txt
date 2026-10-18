@@ -1,0 +1,524 @@
+Native disc platform support
+============================
+Whole-project weighted milestone score: 10%; full decompilation and ports unfinished.
+
+Current checkpoint (2026-10-15)
+--------------------------------
+The original backend installer now invokes context initialization and completes
+its original mount tailcall in
+directory discovery and all four file lifecycles. Native interrupt callback
+construction/primary installation, drive INIT/status/version, volume validation/
+field decoding, directory loading, lookups, read submission and completion are
+connected to actual user-disc bytes. The original public named-file open path
+now resolves names and allocates handles before the reads. Assertions verify mounted
+state, all 768 root records, callback/handle ownership and original file hashes.
+Full retail RAM/GPR/SR/PR/FPU and modeled interrupt masks match at the relevant
+initialization/read boundaries; cleanup also compares PC and timers.
+
+Boot-selector coverage now includes root, SONICADV, lowercase sonicadv and a
+missing directory. Host buffers, interface
+arguments and interrupt bootstrap/VBR/MMIO state are supplied explicitly.
+Hardware cache services are coherent host no-ops; physical interrupts, DMA,
+complete engine startup and arbitrary nested path traversal are unverified.
+The native platform service policies are not original firmware decompilation.
+Full accumulated project suite was not run. Main evidence:
+analysis/native_file_request_lifecycle_verification.json
+
+The game's lower wrappers read an external target from runtime word 0x8c0000bc.
+Retail instruction tests establish operation selectors 0 (request), 1 (status),
+2 (process), and 8 (abort). KallistiOS's independent platform documentation
+describes GD-ROM command submission/status/server execution/abort interfaces:
+https://kos-docs.dreamcast.wiki/syscalls_8h.html
+https://kos-docs.dreamcast.wiki/syscalls_8h_source.html
+This supports identifying the boundary as the platform GD-ROM interface. It
+does not establish the exact original firmware implementation or its timing.
+The original firmware body has not been recovered from 1ST_READ.BIN.
+
+source/native_disc_sector_reader.c starts the native port's replacement data
+path. It is newly written platform code and earns no game-routine credit.
+It reads 2048-byte data sectors from a configured cooked-2048 or raw-2352
+MODE1 track using a host read-at callback. The caller supplies the track's
+base LBA, sector count, file offset and layout. The track reader does not
+parse a GDI or translate firmware FAD requests; those belong to later layers.
+
+All input spans, output capacity and 64-bit file-offset arithmetic are checked
+before I/O. Completed-sector counts permit a caller to distinguish partial
+progress from a host error. Earlier sectors remain delivered after an I/O
+failure; the callback may have touched the failing sector's bytes. There is
+no global state. The host callback must fill every requested byte or return
+an error. Concurrent file access requires a suitable read-at implementation.
+
+Verification passed 25 synthetic layout/offset cases and 11 host guards.
+Coverage includes cooked/raw payload positions, nonzero track-file offsets,
+multiple sectors, zero-length reads, untouched output canaries, invalid ranges,
+insufficient capacity, unavailable services, overflow, 64-bit offsets and
+partial progress after I/O failure.
+
+Four actual user-disc files match the hashes in disc_inventory.json, including
+the entire 1ST_READ.BIN. The native C computes offsets and reads sector data
+through a real host file callback in the verifier. Evidence records each
+file's size, sectors and hash, plus source/DLL/verifier/inventory hashes:
+analysis/native_disc_sector_reader_verification.json
+
+Reproduce from outputs/sonic-adventure in PowerShell:
+  .\build_native_disc_sector_reader.ps1
+  & 'C:\Users\wigwo\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe' .\verify_native_disc_sector_reader.py
+
+build_and_verify.ps1 includes the build, test and hash-checked progress record.
+The full accumulated suite was not run for this milestone.
+
+Native request ownership and queue
+----------------------------------
+source/native_disc_queue.c and source/native_disc_queue.h add an eight-slot
+host request queue over the sector reader. This is new platform code with its
+own explicit API, not a claim of firmware ABI or timing equivalence.
+Submit takes an LBA/count and borrowed output buffer. Status returns queued,
+complete, cancelled or failed, completed-sector count and any host I/O error.
+Each step services at most one sector, round-robin across requests. Cancellation
+keeps already delivered sectors. Terminal slots remain owned until release;
+handles are never reused during a session and exhaustion is rejected.
+Zero-length requests complete without I/O. Transport errors belong to the
+request, so processing other requests can continue. Each queue owns its state.
+Step/cancel/release/submit reject mutation during a read callback.
+
+Initialize each queue before use. Reinitialization starts a new session and
+invalidates old handles; do not reinitialize while requests or callbacks use it.
+The API is single-threaded. Callers retain valid output buffers until release;
+they must serialize access and ensure separate requests do not overlap buffers.
+
+Nine verified scenario groups cover round-robin progress/partial cancellation,
+slot capacity/release, stale handles, zero-length reads, invalid inputs,
+separate queues, transport failure, callback reentry and original-disc reads.
+Four simultaneous requests reproduce original-disc file hashes, including the
+entire 1ST_READ.BIN, through 3304 native queue steps.
+Evidence: analysis/native_disc_queue_verification.json with source/header/DLL/
+verifier/inventory hashes. build_and_verify.ps1 includes the focused workflow.
+Reproduce with build_native_disc_queue.ps1 then verify_native_disc_queue.py.
+
+Read-command integration
+-------------------------
+source/native_disc_read_command.c now accepts the recovered formatter's command
+16/17 parameter words: FAD, count, guest destination and reserved zero. FAD is
+translated to image LBA by subtracting 150. Parameter/destination spans and the
+physical/cached/uncached RAM regions are validated before queuing. Invalid
+commands leave the queue, guest RAM and output handle unchanged. The host RAM
+allocation must remain stable until each queued request is released.
+
+24 integration cases execute the original native read formatter at 0x8c644ff6
+and request tail at 0x8c10d938. Full RAM/GPR/SR/PR/FPU match retail execution at
+submission return. The real native queue then fills guest RAM and reproduces
+the original 1ST_READ.BIN and one resource file hash, through both commands,
+three RAM aliases, and aligned/unaligned buffers. Seven rejection cases cover
+unsupported commands, invalid parameter spans, FAD underflow, destination
+overflow/invalid regions and nonzero reserved parameters. Cache helper calls
+remain explicit no-op host services in this test; hardware DMA/cache semantics
+are not being verified. Request completion and firmware status mapping remain
+separate from this submission-only integration.
+
+Evidence: analysis/native_disc_read_command_verification.json. Reproduce with
+build_native_disc_queue.ps1 then verify_native_disc_read_command.py. The native
+queue regression suite and source/hash registration also run in the accumulated
+workflow. No new recovered game routine or whole-project score credit is given.
+
+Runtime-service subset
+-----------------------
+sa_disc_service in source/native_disc_read_command.c now adapts operations
+0 (submit commands 16/17), 1 (status), 2 (one queue step), 3 (host startup
+validation) and 8 (cancel).
+It writes the four-word status detail block: error 1, error 2, transferred byte
+count and ATA status. Invalid guest status spans fail before any mutation.
+Unsupported operations return a host error, not fabricated successful output.
+
+Documented platform status values are -1 failure, 0 not found, 1 processing,
+2 completed, 3 streaming and 4 busy. This reader implements no streaming.
+Reference: KallistiOS dc/syscalls.h, cd_cmd_chk and cd_cmd_chk_status:
+https://kos-docs.dreamcast.wiki/syscalls_8h_source.html
+
+Host policy choices, not proven original firmware behavior: one sector per
+process call; cancellation reports failure with error 1 = 0; I/O failure reports
+generic error 1 = 8 and the host error as detail; a terminal status consumes its
+handle and releases its slot. Later polling reports not found. This prevents
+slot leaks in callers that never invoke the new host API's explicit release.
+Transferred bytes remain available in the first terminal response.
+Operation 3 validates the already configured host queue is idle with no owned
+slots. It does not discard pending or terminal requests or reset handle identity.
+Four tests cover empty success, queued rejection without mutation, unreleased
+terminal rejection, and success after terminal status releases ownership.
+
+21 real-disc scenarios run native submit/process/cancel/status through the
+original device-status formatter and lower tail. Pending, partial, complete,
+cancel-before-progress, partial-cancel, transport-error and missing-request cases
+cover three RAM aliases. Full RAM/GPR/SR/PR/FPU match retail formatter execution
+given independently specified raw responses. These comparisons prove caller
+compatibility for the declared policies, not original firmware equivalence.
+42 guards check invalid status spans and unsupported operations. Tests separately
+assert delivered data, untouched pending bytes, status mapping and terminal
+handle consumption. Evidence: analysis/native_disc_service_verification.json.
+Reproduce with build_native_disc_queue.ps1 then verify_native_disc_service.py.
+
+Cleanup/abort/completion integration
+------------------------------------
+source/native_disc_service_bridge.c now connects the recovered native chain to
+the new disc-service subset. It routes the configured runtime-vector target to
+sa_disc_service and forwards timer context. Unknown targets or nonzero R6 are
+rejected. The caller initializes a queue, stable RAM and its vector word first.
+The separate stream_cleanup_disc_native.dll contains this connection. The
+original stream_cleanup_abort_native.dll retains its focused service interface.
+
+12 prepared-context scenarios across cached/uncached RAM aliases match the
+retail game instructions with independent native host queues on both sides.
+These cover natural completion, precompleted reads, cancellation before and
+after partial progress, I/O error and missing handles. Complete 16 MiB RAM and
+GPR/SR/PR/PC match at 256 service boundaries and return. Timer reads, runtime
+operation order and host read-at requests also match. Independent raw-track
+reads confirm the delivered bytes and untouched remainder. Retail abort clears
+terminal state reached during its readiness wait while retaining error detail;
+explicit cancellation retains mode 5 with the declared host cancellation error.
+
+Two guards reject missing platform services atomically and an unexpected vector
+at the exact retail boundary with pending cleanup preserved. Evidence:
+analysis/stream_cleanup_disc_native_verification.json. Both paths share the
+declared host service policy; this is not independent proof of original firmware.
+The contexts are prepared by tests, not produced by full game startup.
+
+Reproduce in PowerShell:
+  .\build_stream_cleanup_abort_native.ps1 -WithDiscPlatform -OutputName stream_cleanup_disc_native.dll
+  & 'C:\Users\wigwo\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe' .\verify_stream_cleanup_disc_native.py
+
+Original request lifecycle
+---------------------------
+The native queue build now also links the recovered handle-open initializer
+(0x8c600464), aligned read (0x8c601084), and original lower pump wrapper.
+verify_native_file_request_lifecycle.py calls the real initializer and aligned
+reader. They create the request fields, submit through the original device read
+formatter/request tail, establish driver ownership and issue the first pump.
+The test no longer writes request token, pending status or progress fields.
+
+Four lifecycles cover cached/uncached request aliases and the complete original
+1ST_READ.BIN plus one resource file. Native initialization/read match full
+retail RAM/GPR/SR/PR/FPU. The host pumps remaining queued sectors, verifies file
+hashes, then invokes original cleanup/abort/completion on that actual request.
+Full RAM/GPR/SR/PR/PC and timers match retail cleanup using an independent queue.
+Independent assertions check owner removal, completed byte count, terminal
+state clearing and pending cleanup flag clearing.
+
+File extents now come from native conversion and lookup of actual root-directory
+data, as described below. Driver storage/table bindings and read-mode
+configuration are still supplied by the test. Driver-context allocation and
+full startup have not been connected. Submission
+dispatch glue currently lives in the verifier; the cleanup platform bridge is C.
+Evidence: analysis/native_file_request_lifecycle_verification.json. It hashes
+the source, queue DLL, cleanup DLL/evidence, binary, verifier and inventory.
+Reproduce after both native builds with verify_native_file_request_lifecycle.py.
+
+Directory discovery integration
+--------------------------------
+native_disc_directory.py drives volume/root reads through the native disc queue.
+The original directory loader now walks sector/record boundaries and calls the
+native record converter, byte-copy, checksum and uppercase helpers. Exact/folded
+name-comparison/lookup also executes natively. Full loader execution and each
+lookup are compared with retail instructions for complete RAM/GPR/SR/PR/FPU.
+The actual root has 768 records. Whole-loader execution, cached reload and three
+lookups replace the earlier individual host-driven record comparisons. Lowercase
+1st_read.bin resolves to record 4, ADVLOGOBK.GIF to record
+6, and __MISSING_FILE__ returns no match. Extents/sizes from those records now
+feed all four request lifecycles. Extraction-manifest locations are checked
+after discovery as an independent oracle and are not used to choose read LBAs.
+Whole-file hashes remain independent extraction comparisons.
+
+The original mount now reads and decodes the PVD and invokes the original
+directory loader at 0x8c6454fe, connected to the original mount-sector caller
+at 0x8c5ffc98, reserved-handle initializer at 0x8c600d82, sector reader at
+0x8c600f1e, aligned reader, device request/pump and native finalizer/completion.
+Runtime vector operations reach the real native queue and user-disc bytes.
+The original loader receives FAD (root LBA + 150); observed mount-sector calls
+must cover the PVD followed by that directory range. The native adapter converts back to LBA.
+Original reserved-handle initialization and read submission populate per-sector
+request fields; they are no longer bypassed by the synchronous host reader.
+No raw directory records are preloaded into the loader's scratch buffer.
+Root-volume mounting is now connected; subdirectory boot selection and complete
+engine/context-buffer allocation remain unfinished. Host PVD/directory parsing
+is retained only as an independent verification oracle. It supplies no mounted
+state. All 768 records' extents, sizes, names and checksums are checked independently.
+The helper and linked loader/parser/lookup source hashes are preserved and
+validated in lifecycle evidence.
+
+Six complete retail/native comparisons cover context initialization, directory
+loading, cached reload and three lookups. Cached reload must preserve the parsed table
+and issue no further mount-sector calls. Full RAM/GPR/SR/PR/FPU are compared.
+The reference executes the original game code with its own native host queue;
+both sides share declared host policies, not original firmware execution.
+
+The synchronous guest-sector service borrows guest RAM and uses/reclaims its
+own queue request. Fifteen focused cases verify partial I/O failure, untouched
+pending output, release across twelve successive failures (exceeding queue
+capacity), invalid destination rejection before mutation and zero-length reads.
+Evidence is included in analysis/native_disc_service_verification.json.
+
+Original context initialization
+--------------------------------
+Both directory discovery and all four file lifecycles now invoke the original
+context initializer at 0x8c600038. It acquires the original interface, executes
+native device initialization and lower operation-3 wrapper, initializes directory
+storage, assigns backend/interface pointers, and clears/links the handle pool.
+The original handle-open initializer activates its reserved handle. Lifecycles
+then use the nonreserved handle pointer from the initialized driver context,
+open its extent and read through the existing native path. Test assertions check
+all three handle-parent links, interface/backend bindings and reserved state.
+Full retail RAM/GPR/SR/PR/FPU match after context initialization as well as read.
+
+The host still allocates stable guest buffers and passes capacity, directory
+storage, backend interface and read-mode configuration as initializer arguments.
+The initializer's volume-mount tailcall at 0x8c5ffd28 now executes completely in
+directory discovery and every file lifecycle. It sets mounted state, validates
+and decodes the volume, and loads the root directory through the native platform.
+Full engine boot remains unverified; host PVD inspection is an independent oracle.
+No context fields or handle-parent links are hand-filled in these native paths.
+
+Mount-service prerequisites
+----------------------------
+The original mount routine additionally needs queued command 24 (drive INIT)
+and runtime operation 4 (drive check). Both are now implemented as explicit
+read-only-image policies in native_disc_read_command.c. Command 24 requires a
+null parameter pointer, obtains a queue handle, transfers no bytes, and completes
+when pumped. It does not reset other requests. Operation 4 validates an eight-
+byte guest output span and reports standby/GD-ROM (2,0x80) for a configured
+nonempty track, or no-disc (7,0) for empty configuration. Callback reentry reports
+busy drive status. This is a host image service, not physical-drive emulation.
+
+18 retail/native wrapper comparisons cover the original INIT, drive-info and
+driver-version wrappers/lower tails, through physical/cached/uncached
+aliases and image-present/empty configurations. Complete RAM/GPR/SR/PR/FPU match
+independently specified raw responses. Queued INIT requires processing, writes
+zero transferred bytes, consumes terminal status and issues no file I/O.
+42 guards reject invalid output spans, version parameters and nonnull INIT parameters without losing
+ownership or touching guest data. Evidence:
+analysis/native_disc_mount_services_verification.json. Reproduce after the queue
+build with verify_native_disc_mount_services.py. The accumulated workflow includes
+hash-checked registration; no new recovered game routine is counted.
+
+Queued driver-version metadata
+-------------------------------
+Command 40 now queues a metadata job using the original request wrapper at
+0x8c64530a. Parameters are guest destination and reserved zero. On processing,
+the queue writes exactly sixteen bytes: SA-NATIVE v 1.00. This identifies the
+new native platform; it is not a copied or claimed original BIOS version.
+The buffer stays unchanged until processing. Status reports zero transferred
+bytes while pending and sixteen on completion, then consumes the handle.
+Cancellation leaves the buffer untouched and reports zero bytes. No disc I/O
+is issued for this metadata request. The queue stores an explicit job kind;
+sector-completion counts remain separate from metadata byte counts.
+Tests cover all three RAM aliases, present/empty image configurations, queued
+INIT/version ordering, output canaries and invalid span/reserved parameters.
+
+Mount callback-constructor connection
+--------------------------------------
+Original mount at 0x8c5ffd28 now has a focused connection to the native interrupt
+constructor at 0x8c64594c, compiled in file_mount_registration.dll. The verifier
+executes the original mount prefix and stops at reserved-handle acquisition
+(0x8c600d82) before device initialization. Host status -100 is the deliberate
+observed stop; it is not reported as mount success.
+
+32 cases compare complete 16 MiB RAM and GPR/SR/PR/PC/FPU at that boundary,
+constructor entry frames, handler-install call arguments and modeled mask words.
+Both RAM aliases, SR masks, FPU banks, cached registrations and exhausted/free
+callback pools are covered. The mount's events are 0x900 and 0xa40. Fresh success
+produces handles 1/2; cached paths preserve handles 7/8; pool exhaustion returns
+zero handles. Independent assertions verify callback records, event-list heads
+and the interrupt mask bit. The constructor and primary handler installation
+now execute natively. sa_interrupt_handler_primary.c (0x8c64135a) calls the
+byte-checked driver-enable leaf at 0x8c658c20, then sa_interrupt_handler_set.c
+(0x8c6412c2). The native setter writes callback 0x8c645b1e and argument zero
+into slot 1 of supplied interrupt-driver storage. Independent assertions check
+those words. No handler-install service fixture remains in these mount cases.
+The secondary installer is not exercised by events 0x900/0xa40. VBR, driver
+storage and mask words remain supplied platform state; real interrupt delivery
+and complete engine initialization remain unverified.
+
+Evidence: analysis/file_mount_registration_verification.json. Reproduce with
+build_file_mount_registration.ps1 then verify_file_mount_registration.py.
+The full accumulated workflow includes the focused build/test/hash record.
+This isolated prefix test still stops deliberately; complete mount coverage is
+provided separately by native_file_request_lifecycle_verification.json.
+
+Boot-directory selector verification
+-------------------------------------
+The same original mount path now executes boot selector 1 with the supplied
+12-byte padded directory name at guest 0x8c0080f0. Root selection, SONICADV and
+lowercase sonicadv are compared against the original instructions for full
+RAM/GPR/SR/PR/FPU and modeled interrupt masks. The selected directory's complete
+records are independently checked for extents, sizes, names and checksums.
+Observed sector calls must cover PVD, root, then the selected directory exactly.
+Cached reload must issue no further reads and preserve the table.
+
+Lookup finds selected assets by name and native queue reads reproduce the
+extraction hashes for SONICADV/ACTION_0.PVR and ACTION_1.PVR; root checks retain
+1ST_READ.BIN and ADVLOGOBK.GIF. The manifest is an independent size/extent/hash
+oracle, not an input supplying the selected directory to game code.
+Missing boot directory __MISSING__ returns mount error -4 and leaves mounted
+state clear. The original selector returns -8 internally, translated by the
+mount caller at 0x8c5fffe6; no synthetic root fallback is introduced.
+
+Evidence: analysis/native_boot_directory_verification.json. Four scenarios pass
+using the existing native builds. Reproduce with verify_native_boot_directory.py
+after the native file lifecycle verification. Source/helper/DLL/interpreter and
+dependent cleanup/lifecycle evidence hashes are checked during registration.
+The accumulated workflow includes this focused suite; the full suite was not run.
+
+Original public named-file open
+--------------------------------
+The four file lifecycles now begin at backend installer 0x8c601618, which sets
+the original public interface pointer and supplies the backend argument to
+context initialization. The test no longer injects that stack argument.
+Public open dispatcher 0x8c6016d6 calls backend open 0x8c6004d4, which performs
+native filename lookup, selects the first free handle, initializes its fields
+from the actual directory record and sets the original error word.
+No file extent or size is supplied as an open argument. Lowercase names select
+1ST_READ.BIN and ADVLOGOBK.GIF through the mounted default directory.
+
+All four install/mount/named-open/read/cleanup lifecycles match retail state;
+MACL is also compared after install/open/read because lookup/open uses multiply.
+Twelve additional checks exercise missing-file error -8, a second successful
+handle allocation and pool-exhaustion error -9. Failed opens must preserve the
+entire handle pool. The read bytes still match extraction hashes.
+
+These checks found and corrected overlapping test buffers: a full executable
+read at guest 0x800000 would overwrite directory storage at 0xb00000. Lifecycle
+directory storage now begins at 0x680000, above retail code and below file data.
+The complete parsed table must remain unchanged after read, cleanup and further
+opens. This is test host-memory allocation, not a change to recovered game code.
+Evidence remains analysis/native_file_request_lifecycle_verification.json.
+
+Original close and handle reuse
+------------------------------
+The platform bridge now connects close 0x8c600df4 to the recovered native
+abort/completion chain. The original active flag is cleared only after that
+chain returns successfully. No new routine-recovery credit is claimed.
+The lifecycle suite compares full guest RAM and CPU state with the original
+SH-4 instructions for 28 closes, including null/already-closed handles and
+pending requests. Twelve open/read/close reuse cycles prove the released first
+handle is selected again while the second live handle and all 768 directory
+records remain unchanged. Both guest memory aliases and both retail files
+are covered. This extends the existing lifecycle evidence file.
+
+Original sound-bank file consumer
+---------------------------------
+Sound-bank loader 0x8c0939b0 now has a focused integration build and comparison
+suite: build_sound_bank_file_consumer.ps1 and
+verify_native_sound_bank_file_consumer.py. The build reuses recovered loader
+and size-getter source without changing their game behavior.
+Four cases mount SONICADV through the original backend installer, then enter
+the loader with a lowercase basename. Public open, size lookup, synchronous
+sector read, native disc queue/completion and original close execute before
+the deliberate stop at audio downloader 0x8c093ce0. The game read/wait code
+pumps the file data; the host does not pre-complete the request.
+
+E_00B7.MLT (13,120 bytes) and E_0001.MLT (223,648 bytes) match extraction SHA256
+hashes in both cached/uncached memory aliases. Full guest RAM, GPR/SR/PR,
+FPU/MMIO and MACL match original instructions at the stop boundary. Handle
+ownership is released, the pending pointer clears, and the selected-directory
+table remains intact. Completion leaves mode 1; original close clears the
+ownership flag without resetting that completed mode.
+
+Evidence: analysis/native_sound_bank_file_consumer_verification.json, validated
+by register_native_sound_bank_file_consumer.py. DLL/source/helper/interpreter,
+fixture and dependent lifecycle hashes are pinned. No new routine count or
+whole-project milestone credit is claimed. The accumulated workflow includes
+this build/test/registration; only this focused suite was run for this change.
+Dispatch glue remains in the verifier. This does not establish native audio
+download/playback or complete sound-bank loader execution.
+
+Native C sound-bank file dispatch
+--------------------------------
+source/native_sound_bank_file_consumer.c now supplies per-invocation native
+dispatch for the complete verified mount/file consumer path. The isolated
+build_native_sound_bank_file_consumer.ps1 produces
+work/sonic-adventure/build/native_sound_bank_file_consumer.dll without replacing
+any prior DLL. It links existing recovered routines and the native disc queue.
+No game filename lookup/read/wait/completion/close dispatch is performed by
+Python in this integration; Python remains the comparison/host-I/O harness.
+
+Export: sa_sound_bank_file_consumer_native. The caller supplies guest RAM and
+CPU/FPU/special-register state, a stable initialized queue, runtime vector,
+timer callback, interrupt bootstrap/MMIO callbacks, optional observer, audio
+boundary callback and dispatch budget. Accepted root entries are backend
+installer 0x8c601618 and sound-bank loader 0x8c0939b0. The same native component
+executes both calls; the host supplies the original arguments between calls.
+Internal finalizer/abort dispatch uses the existing recovered State ABI core.
+The original device-start wrapper is used for legacy calls. Cache maintenance
+retains the explicitly documented coherent-host policy.
+
+verify_sound_bank_file_consumer_native.py passes four actual-disc cases for
+the two MLT files and two aliases. At all 1,652 disc-service entries it compares
+complete guest-RAM SHA256, all GPRs, SR and PR with the original instructions;
+final RAM/state/FPU/MMIO/MACL and independent file hashes also match. These
+counts include original mount and selected-directory I/O, not just file data.
+verify_sound_bank_file_consumer_native_guards.py passes thirteen atomic
+missing-service, unsupported-root and zero-budget checks. Missing configuration
+rejects before execution; errors after execution begins preserve partial state.
+Native functions require valid guest pointers and stable caller-owned memory.
+
+Evidence: analysis/sound_bank_file_consumer_native_verification.json and
+analysis/sound_bank_file_consumer_native_guards_verification.json, validated by
+register_sound_bank_file_consumer_native.py. Both suites are included in the
+accumulated workflow. The focused build/tests and evidence audits passed; the
+full accumulated workflow was not run. No new routine or milestone credit.
+
+Complete native sound-bank loading with modeled audio memory
+----------------------------------------------------------
+The earlier file-consumer build still deliberately stops before audio download.
+A separate native_sound_bank_load.dll now continues through the complete
+original sound-bank loader and downloader. Its source is
+source/native_sound_bank_load.c and its isolated builder is
+build_native_sound_bank_load.ps1. It reuses recovered engine/object/transfer,
+sound-bank configuration/multi-unit download and file/disc routines. Previous
+DLLs and their verified behavior are preserved.
+
+Export: sa_sound_bank_load_native. In addition to the file component's memory,
+CPU/FPU/special-register, queue/timer and interrupt-bootstrap arguments, it takes
+sa_input_io read/write callbacks for modeled engine/audio MMIO. Root entries
+are engine-context initializer 0x8c6510a4, transfer initializer 0x8c10d5a8, frame
+initializer 0x8c65acc0, file backend installer 0x8c601618 and complete bank loader
+0x8c0939b0. The host invokes the initializers in that order before the loader.
+The file-only component's audio-boundary callback is not needed by this API.
+Each invocation has its own dispatch context and budget. Caller-owned memory
+and valid guest pointers remain required; coherent cache and hardware readiness
+are explicit platform policies.
+
+verify_sound_bank_load_native.py passes four E_00B7.MLT cases spanning cached/
+uncached aliases and engine modes 0/1 (both FPU register banks are represented).
+All five entry returns match original guest RAM/GPR/SR/PR/PC/FPU/MMIO/MACL.
+The original loader returns zero after native named open, size, synchronous
+disc read/wait, close, temporary object allocation, section configuration,
+multi-unit payload transfers and object release. All 1,240 disc-service entries
+also match full RAM SHA256 and CPU registers. Independent checks validate the
+disc file hash, every section allocation/table pair, all four real payloads in
+modeled audio memory, both temporary-object release fields, file ownership and
+the intact selected-directory table. No file-read or audio-download success
+stub substitutes for those recovered routines.
+
+verify_sound_bank_load_native_guards.py passes fifteen missing-service,
+unsupported-entry and zero-budget checks with unchanged execution/platform
+state. Evidence: analysis/sound_bank_load_native_verification.json and
+analysis/sound_bank_load_native_guards_verification.json, validated by
+register_sound_bank_load_native.py. Builder/DLL/source/helper/fixture and
+original-binary hashes are recorded. Focused build/comparison/guard suites and
+evidence audits passed; the full accumulated workflow was not run. These steps
+are included in build_and_verify.ps1. No new routine or whole-project milestone
+credit is claimed.
+
+This establishes complete loading of this bank into modeled audio memory, not
+ARM7 sound-driver execution or audible playback. Other banks, streaming, native
+sound synthesis and complete game startup still need integration/verification.
+Next: connect the loaded audio state to sound-driver execution and a native
+audio output backend while retaining original behavior checks.
+
+The first ARM payload recovery inventory is documented separately in
+ARM_SOUND_DRIVER_RECOVERY.txt. Both original driver upload spans now have
+validated instruction listings and draft C exports. This is prerequisite
+analysis, not verified ARM execution or playback. In particular MANATEE's
+upload span includes 32 disc-padding bytes, unlike MASARU's span.
+Complete startup, other commands, streaming and full firmware semantics remain
+unfinished. The full accumulated suite was not run for this milestone.
+Streaming/DMA callbacks, audio, MODE2, firmware timing, full game execution,
+native rendering and all target ports remain unfinished.

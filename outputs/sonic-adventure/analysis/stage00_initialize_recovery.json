@@ -1,0 +1,59 @@
+{
+  "module": "STG00.BIN",
+  "routine": "0x0c900d00",
+  "end_exclusive": "0x0c900d72",
+  "cases_passed": 6,
+  "original_instructions_executed": 342,
+  "cases": [
+    {
+      "query_result": 0,
+      "direct_calls_and_arguments_match": true,
+      "caller_and_created_work_records_match": true,
+      "executed_original_instructions": 57
+    },
+    {
+      "query_result": 1,
+      "direct_calls_and_arguments_match": true,
+      "caller_and_created_work_records_match": true,
+      "executed_original_instructions": 57
+    },
+    {
+      "query_result": 118,
+      "direct_calls_and_arguments_match": true,
+      "caller_and_created_work_records_match": true,
+      "executed_original_instructions": 57
+    },
+    {
+      "query_result": 305420031,
+      "direct_calls_and_arguments_match": true,
+      "caller_and_created_work_records_match": true,
+      "executed_original_instructions": 57
+    },
+    {
+      "query_result": 2147483648,
+      "direct_calls_and_arguments_match": true,
+      "caller_and_created_work_records_match": true,
+      "executed_original_instructions": 57
+    },
+    {
+      "query_result": 4294967295,
+      "direct_calls_and_arguments_match": true,
+      "caller_and_created_work_records_match": true,
+      "executed_original_instructions": 57
+    }
+  ],
+  "decoded_module_sha256": "cb5eefd82d7606ca71025af8889cfd016a087da702c0d884af8f13db08bcaa9a",
+  "retail_span_sha256": "cbf25a7e8992d3b8a679f67aa2b4ac19c6092b8561ba79043990141d3aae7e78",
+  "source": "source/stage00_initialize.c",
+  "instruction_listing": "analysis/instructions/0c900d00.tsv",
+  "instruction_listing_sha256": "8766ebea842eb3a605a3f51f978a5ea3304c422b3acd2ea3c77abb9b3707f052",
+  "source_sha256": "3c61bcd0db12214a521f1b04dd3da26363abfcb50cf90dafb8c1089d05c8e496",
+  "dll_sha256": "5064295ef85283a2a49441be538a5fb584464316520a4641bbe3a60cac868f89",
+  "scope": "Six getter return patterns compare direct call order and observed arguments, caller and newly created work records, and FPU zero arguments against original SH-4 execution. External routines are call-boundary hooks. Their service behavior, full volatile register effects, and playable stage behavior remain outside scope.",
+  "limitations": [
+    "External service implementations remain unresolved.",
+    "The host C interface does not emulate all SH-4 register/FPU side effects.",
+    "The final main routine 0x8c04c680 is a call-boundary hook.",
+    "Stage runtime and whole-game playability are unverified."
+  ]
+}

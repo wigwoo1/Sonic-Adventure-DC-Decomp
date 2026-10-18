@@ -1,0 +1,108 @@
+Recursive model traversal and mesh-call wrapper
+16 October 2026 -- VERIFIED within the bounded scope below.
+Whole-project completion remains 10% estimated weighted milestones.
+Goal active; continue Sol High for the mesh body and its dependencies.
+
+Recovered native source
+  source/sa_main_dispatch_model_traversal.c
+    sa_model_traversal_8c62113c: 514 static original instruction rows.
+    sa_model_mesh_wrapper_8c6215ba: 14 original instruction rows.
+  source/sa_main_dispatch_model_traversal_connected.c
+Both bodies are generated from byte-checked original instruction exports.
+Traversal has literal gaps 8c621234..8c62125c and 8c6214ac..8c6214b8;
+these contribute to span hashes but not the 528 static instruction rows.
+Names, flags and field descriptions are inferred from the instructions.
+
+Behavior and native dependencies
+Flags &7 choose eight combinations of translation, rotation and scale. Types
+0..6 push a matrix, apply the selected transforms and later pop one level.
+Type 7 uses the current matrix without that push/pop. Flag 0x20 selects between
+the two rotation orders. The code publishes the matrix pointer and writes the
+alternate floating-register bank to matrix RAM using FRCHG and FMOV transfers.
+Flag 8 suppresses the node's mesh call; flag 0x10 suppresses its child traversal.
+Otherwise child +2c is visited through the R8-preserving model wrapper, then
+sibling +30 continues the loop. Mesh argument +4 goes through wrapper 8c6215ba,
+which preserves R8 and calls 8c6209a8. That mesh body remains a fixture.
+
+Existing native push/pop, scale, both rotation orders, and implicit register-
+input translation are reused. The latter only implements the R4=0 branch;
+every traversal call explicitly passes R4=0. Reusing it here does not recover
+its explicit-matrix branch. These transform sources receive integration
+evidence without new routine credit or duplicate registry entries.
+
+Unreachable code accounting
+After flags &7, the selector can only be 0..7. Comparisons test all eight values
+without an intervening call or write to R0. The final comparison cannot be false.
+Consequently rows 8c621194/8c621196 and outcome 8c62118e->8c621194 cannot be
+reached for any 32-bit flag word. They remain in the translated source and byte
+inventory. The manifest records the proof over all low-byte values; higher
+bits are discarded by &7. Tests exercise 526 reachable rows and 57 reachable
+conditional outcomes, rather than treating these impossible paths as tested.
+
+Build and focused verification
+The strict Clang build passed with -Wall -Wextra -Werror after suppressing one
+unused generic integer-load helper; no game behavior was changed by that fix.
+Twelve smoke comparisons and then all 1,494 focused comparisons passed:
+  traversal 1,136; model wrapper 160; mesh wrapper 38;
+  original particle primary/secondary/work/draw/geometry paths 32 each.
+All 526 reachable new rows, 57 reachable outcomes and 41 call sites were reached.
+Complete 16 MiB RAM, GPR/SR/PR, both FPU banks, FPSCR/FPUL and MACL were compared,
+with 6,138 ordered call boundaries and 10,340 scalar/vector operations.
+530 completed cases passed independent depth-first mesh-order and applicable
+matrix-stack restoration assertions. 964 reached numerical-guard or service-
+error cases matched partial state. There were 690 calls to the mesh fixture.
+Cases include all node types and control flags, both rotation orders, child and
+sibling graphs, both FPU banks, PR/SZ modes, normal/reserved rounding, capacity
+limits, bank-changing callbacks and missing/failed mesh services. Original
+particle nodes 8c19fed8 and 8c1a00a4 are used unmodified in connected tests.
+
+Full linked lifetime verification
+Six smoke lifetimes and 120 complete lifetimes / 984 stage comparisons passed.
+Native spawn/emission, particle state updates, geometry preparation, recursive
+traversal and deferred deletion share unchanged linked state between passes.
+Totals: 19,584 ordered boundaries, 44,800 numerical operations, 64 parents,
+80 particles, 54 paused passes and 880 mesh-fixture calls. Independent checks
+confirm movement/expiration, empty scheduler lists, exact final free-task order
+and complete heap coalescing. Existing translation retained 46-case/56-row
+native regression coverage. Host pass scheduling is still explicit test setup.
+
+Evidence and reproduction
+  analysis/main-dispatch-model-traversal/*_instructions.tsv
+  analysis/main_dispatch_model_traversal_translation.json
+  analysis/main_dispatch_model_traversal_verification.json
+  analysis/main_dispatch_model_traversal_lifecycle_verification.json
+Reports pin original spans, source, dependency evidence, tools and tested DLL.
+The registrar verifies metrics, input hashes and unreachable-path accounting.
+Run from this document's directory using the installed project Python:
+  python -B recover_main_dispatch_model_traversal.py
+  .\build_main_dispatch_model_traversal.ps1
+  python -B verify_main_dispatch_model_traversal.py
+  python -B verify_main_dispatch_model_traversal_lifecycle.py
+  python -B register_main_dispatch_model_traversal.py
+  python -B map_main_dispatch_cases.py
+  python -B verify_main_dispatch_case_map.py
+Optional read-only Ghidra export: ghidra/export_main_dispatch_model_traversal.ps1.
+Focused stages are in build_and_verify.ps1. Its syntax passed; the entire
+accumulated project workflow was not rerun end-to-end for this checkpoint.
+
+Final audit and limits
+1,034 registry entries / 1,031 unique module-address pairs; zero evidence errors
+and zero stale source reports. 982 entries match the unchanged 10,875 candidate
+snapshot. There remain 211 non-texture modules without a function index. These
+incomplete inventories do not provide a whole-game recovered-code percentage.
+Dispatcher verification passed 658 retail pointer checks, 80 spans, 83 selectors.
+Whole-project milestone audit remains 10%; full decompilation and all ports
+remain unfinished. Texture Off retains the planned vertex-coloured requirement.
+
+Mesh body 8c6209a8 is an explicit register-mutating test substitute. This proof
+does not establish mesh decoding/submission, textures, GPU/MMIO or visible pixels.
+Constructed graphs are valid and acyclic with bounded depth; arbitrary cycles,
+invalid pointers, concurrency, hardware exceptions and original frame ordering
+remain unverified. Vectors use the established shared pinned numerical oracle;
+scalar guard classification uses native probes. No new hardware accuracy claim.
+
+Next dependency
+Inspect/export mesh body 8c6209a8 and resolve its branch/call targets from original
+bytes. Its Ghidra draft contains unresolved indirect-transfer warnings and cannot
+be used as finished source. Preserve the current verified bodies and reports.
+Continue Sol High for this reverse-engineering work; no model switch or pause.

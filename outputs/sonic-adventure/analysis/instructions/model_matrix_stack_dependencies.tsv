@@ -1,0 +1,96 @@
+address	opcode	instruction	references
+8c639b98	d503	mov.l 0x8c639ba8,r5	READ:8c639ba8=8c88f69c 
+8c639b9a	e201	mov #0x1,r2	
+8c639b9c	6352	mov.l @r5,r3	READ:8c88f69c 
+8c639b9e	3348	sub r4,r3	
+8c639ba0	3322	cmp/hs r2,r3	
+8c639ba2	8903	bt 0x8c639bac	CONDITIONAL_JUMP:8c639bac=25324408 
+8c639ba4	b	rts	
+8c639ba6	e000	_mov #0x0,r0	
+8c639bac	4408	shll2 r4	
+8c639bae	2532	mov.l r3,@r5	WRITE:8c88f69c 
+8c639bb0	4408	shll2 r4	
+8c639bb2	d508	mov.l 0x8c639bd4,r5	READ:8c639bd4=8c88f5f8 
+8c639bb4	4408	shll2 r4	
+8c639bb6	6152	mov.l @r5,r1	READ:8c88f5f8 
+8c639bb8	3148	sub r4,r1	
+8c639bba	2512	mov.l r1,@r5	WRITE:8c88f5f8 
+8c639bbc	f3fd	fschg	
+8c639bbe	f119	fmov.s @r1+,fr1	
+8c639bc0	f319	fmov.s @r1+,fr3	
+8c639bc2	f519	fmov.s @r1+,fr5	
+8c639bc4	f719	fmov.s @r1+,fr7	
+8c639bc6	f919	fmov.s @r1+,fr9	
+8c639bc8	fb19	fmov.s @r1+,fr11	
+8c639bca	fd19	fmov.s @r1+,fr13	
+8c639bcc	ff19	fmov.s @r1+,fr15	
+8c639bce	f3fd	fschg	
+8c639bd0	b	rts	
+8c639bd2	e001	_mov #0x1,r0	
+8c639bdc	d30f	mov.l 0x8c639c1c,r3	READ:8c639c1c=8c88f5e4 
+8c639bde	2448	tst r4,r4	
+8c639be0	8b22	bf 0x8c639c28	CONDITIONAL_JUMP:8c639c28=fb9df859 
+8c639be2	f459	fmov.s @r5+,fr4	
+8c639be4	f79d	fldi1 fr7	
+8c639be6	f559	fmov.s @r5+,fr5	
+8c639be8	f658	fmov.s @r5,fr6	
+8c639bea	f5fd	ftrv xmtrx,fv4	
+8c639bec	f79d	fldi1 fr7	
+8c639bee	f763	fdiv fr6,fr7	
+8c639bf0	f238	fmov.s @r3,fr2	READ:8c88f5e4 
+8c639bf2	f242	fmul fr4,fr2	
+8c639bf4	f272	fmul fr7,fr2	
+8c639bf6	d20a	mov.l 0x8c639c20,r2	READ:8c639c20=8c88f618 
+8c639bf8	f128	fmov.s @r2,fr1	READ:8c88f618 
+8c639bfa	f212	fmul fr1,fr2	
+8c639bfc	e00c	mov #0xc,r0	
+8c639bfe	f136	fmov.s @(r0,r3),fr1	READ:8c88f5f0 
+8c639c00	f210	fadd fr1,fr2	
+8c639c02	f338	fmov.s @r3,fr3	READ:8c88f5e4 
+8c639c04	f352	fmul fr5,fr3	
+8c639c06	f372	fmul fr7,fr3	
+8c639c08	d206	mov.l 0x8c639c24,r2	READ:8c639c24=8c88f61c 
+8c639c0a	f128	fmov.s @r2,fr1	READ:8c88f61c 
+8c639c0c	f312	fmul fr1,fr3	
+8c639c0e	e010	mov #0x10,r0	
+8c639c10	f136	fmov.s @(r0,r3),fr1	READ:8c88f5f4 
+8c639c12	f310	fadd fr1,fr3	
+8c639c14	e004	mov #0x4,r0	
+8c639c16	f62a	fmov.s fr2,@r6	
+8c639c18	b	rts	
+8c639c1a	f637	_fmov fr3,@(r0,r6)	
+8c639c28	f859	fmov.s @r5+,fr8	
+8c639c2a	fb9d	fldi1 fr11	
+8c639c2c	f959	fmov.s @r5+,fr9	
+8c639c2e	fa58	fmov.s @r5,fr10	
+8c639c30	e010	mov #0x10,r0	
+8c639c32	f048	fmov.s @r4,fr0	
+8c639c34	f146	fmov.s @(r0,r4),fr1	
+8c639c36	e020	mov #0x20,r0	
+8c639c38	f246	fmov.s @(r0,r4),fr2	
+8c639c3a	e030	mov #0x30,r0	
+8c639c3c	f346	fmov.s @(r0,r4),fr3	
+8c639c3e	f2ed	fipr fv8,fv0	
+8c639c40	f43c	fmov fr3,fr4	
+8c639c42	e004	mov #0x4,r0	
+8c639c44	f046	fmov.s @(r0,r4),fr0	
+8c639c46	e014	mov #0x14,r0	
+8c639c48	f146	fmov.s @(r0,r4),fr1	
+8c639c4a	e024	mov #0x24,r0	
+8c639c4c	f246	fmov.s @(r0,r4),fr2	
+8c639c4e	e034	mov #0x34,r0	
+8c639c50	f346	fmov.s @(r0,r4),fr3	
+8c639c52	f2ed	fipr fv8,fv0	
+8c639c54	f53c	fmov fr3,fr5	
+8c639c56	e008	mov #0x8,r0	
+8c639c58	f046	fmov.s @(r0,r4),fr0	
+8c639c5a	e018	mov #0x18,r0	
+8c639c5c	f146	fmov.s @(r0,r4),fr1	
+8c639c5e	e028	mov #0x28,r0	
+8c639c60	f246	fmov.s @(r0,r4),fr2	
+8c639c62	e038	mov #0x38,r0	
+8c639c64	f346	fmov.s @(r0,r4),fr3	
+8c639c66	f2ed	fipr fv8,fv0	
+8c639c68	afc0	bra 0x8c639bec	UNCONDITIONAL_JUMP:8c639bec=f763f79d 
+8c639c6a	f63c	_fmov fr3,fr6	
+8c639c70	d103	mov.l 0x8c639c80,r1	READ:8c639c80=8c88f698 

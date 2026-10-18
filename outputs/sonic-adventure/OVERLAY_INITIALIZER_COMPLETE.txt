@@ -1,0 +1,177 @@
+AL_MAIN initializer: animation, appearance, accessories and final tails
+17 October 2026 - VERIFIED within the bounded constructor contract below.
+Overall completion: 10% estimated weighted whole-project milestones, not code coverage.
+Goal active on Sol High. No model switch or pause advised.
+
+What changed
+Eight new AL_MAIN.BIN bodies and one checked guarded representation of an
+already recovered setter are included in static native C:
+  0c90bd40..0c90bdb6: animation start, 59 instruction rows.
+  0c90853e..0c908676: appearance selection, 134 rows.
+  0c9048ec..0c904aea: accessory installation, 237 rows.
+  0c90fb82..0c90fc54: final palette/material helper, 105 rows.
+  0c90fca0..0c90fd42: final material ID 158 helper, 81 rows.
+  0c90fd42..0c90fde4: final material ID 161 helper, 81 rows.
+  0c9084e6..0c9084fc: appearance mode setter, 11 rows.
+  0c9084fc..0c908520: appearance pair setter, 18 rows.
+  0c908530..0c90853e: existing appearance link setter, seven rows (zero credit).
+Total: 733 byte-checked instruction rows / 1,466 instruction bytes. Literal
+pool gaps are not instruction credit. New credit is eight routines / 726 rows;
+the seven-row existing setter adds no credit. Descriptive names and field purposes
+are inferred from the original operations.
+Source: source/sa_overlay_initializer_finish.c
+Direct bridge: source/sa_overlay_initializer_finish_connected.c
+Complete initializer bridge: source/sa_overlay_initializer_complete_connected.c
+
+The new complete bridge routes the original initializer and all its reached
+game callees to native bodies. It has no external game-service callback in its
+public API. Existing model morph/copy, recursive clone/table walks, three inner
+material variants, selector, marker, no-op, heap/copy and RNG are reused. The
+existing RNG receives no new recovery credit. All earlier source, binaries,
+DLLs, reports and bounded verification scopes remain preserved.
+
+Animation setup
+Entity+11e/+120/+122 halfwords are cleared, entity+138 receives the original
+animation table 0ca514d4, entity+118 receives its first record's halfword at +4,
+and entity+134 receives raw 1.0 under ordinary narrow transfers. The helper
+reads record start/end floats 0.0 and 8.0 and calls existing main RNG 8c10d334.
+The original LCG updates the seed by multiplier 1103515245 and addend 12345,
+then returns bits 16..30. Using original FLOAT/FMUL/FMAC order and constant
+2^-15, the helper writes the random position to entity+124. For the shipped
+first record this is exactly RNG_output/4096. It clears the low six bits of
+entity+11a while retaining the other bits and neighboring halfwords. MACL is
+saved/restored by the reused RNG, with its original visible stack write.
+Wide stores can overwrite the animation-table pointer. Invalid reached reads
+are guarded before effects, and PR=1 stops at the original FLDI1. Numerical
+traps in the JSR delay slot stop before the RNG is invoked while retaining the
+already updated PR. No invented random advancement is added on those stops.
+
+Appearance selection
+The three signed bytes at appearance+5c/+5d/+5e are classified as:
+  less than -35: category 0
+  -35 through +34: category 1
+  +35 or greater: category 2
+The original 27-entry tables use index 3*categoryX + 9*categoryY + categoryZ.
+The helper installs original mode/pair bytes and pointer words, calls all three
+lower setters natively, and writes ffffffff to entity+7d0/+7d4/+7d8. The lower
+setters update entity+804, +808/+80a halfwords and +7f0/+800 words, retaining
+neighboring fields. It also installs links at +7e4/+7e8/+7f4. These raw offsets
+and table contents are verified; names do not assert complete game semantics.
+
+Accessory installation and shared data
+Appearance type 6 skips accessory installation. Type 0 selects table 0c91b890;
+other types use 0c91be30. Each table contains 15 original records of 96 bytes.
+Seven appearance selection bytes at +4c..+52 use ff for no accessory. The first
+three operations replace mesh pointers on nodes 28/29/30. Nine further
+operations replace child pointers on nodes 19/21/35/37/2/5/8/10/12, according
+to the original slot/kind maps. Null asset entries are skipped.
+The routine then whites the B/G/R bytes of each selected source material.
+Alpha, material IDs, flags and other bytes are retained. These writes affect
+shared original accessory materials in AL_MAIN RAM; they are not limited to
+the newly allocated clone. The independent oracle predicts every permitted
+shared-data byte change and installed pointer. The original disc/decoded file
+bytes are never modified; only per-test/runtime RAM changes.
+The test domain uses no accessory (ff) or original IDs 0..14. Invalid arbitrary
+IDs are not presented as a supported gameplay contract.
+
+Final material tails
+The three outer tail bodies perform their own original list/stack operations.
+They select material IDs from palette [217,218,219,220] (appearance+192 values
+above 3 clamp to palette index 0), or IDs 158/161, then OR flag 00400000 into
+the selected material flags. These helpers share behavior with the previously
+recovered inner variants, but are distinct original bodies/addresses and are
+byte-checked and tested independently. The caller restores its own saved PR
+and registers before tail transfer; nested and outer helper orders are retained.
+
+Verification design
+Focused tests execute unchanged original instructions, native lower setters
+and the original main RNG with no game-service fixtures. Comparisons include
+all 16 MiB RAM, integer registers, SR/PR/PC, both FPU banks/FPSCR, FPUL/MACL and
+ordered entries. Independent data algorithms check the LCG/timer/reset/mask,
+signed categories and original lookup-table results, every installed accessory
+pointer and shared-material change, and final material ID/flag updates.
+All 256 values on each signed appearance axis, all 27 category combinations,
+all 256 palette bytes, both banks and transfer modes, zero/multiple materials,
+empty-list data fixtures, original accessory IDs and no-accessory branches are
+represented. Empty/zero-material fixtures modify data only, not instructions.
+Numerical/memory/return guards retain exact reached partial state; they do not
+deliver hardware CPU exceptions. No numerical backend source is changed.
+
+Complete constructor validation
+The combined verifier executes the whole initializer with original assets and
+all native callees, including seed advancement and shared accessory writes.
+There are no interpreter game hooks or state-mutating service stand-ins in
+this path. An observer records boundaries only. Independent checks cover the
+animation and appearance fields, cloned 39-node tables, inner material changes,
+accessory/shared-data changes, selected model, outer tail material changes,
+reset/copy/mask preservation and original call order.
+Wide/unsupported numeric states and allocation failures are partial-state tests,
+not completed initializations. The earlier 15 morph rows/seven outcomes and
+other reused-body coverage exclusions remain documented in their original
+reports; this integration does not award new coverage to those paths.
+
+Build and tests actually passed
+- Both separate Clang -O2 -Wall -Wextra -Werror native DLL builds passed.
+- 4,464 focused comparisons passed: 4,364 normal returns, 56 unsupported
+  numerical/precision stops, 40 invalid-address stops and four modeled numeric
+  trap stops. Full RAM/CPU/FPU/FPUL/MACL and 9,748 ordered entries match.
+- All 733 included rows and 64 conditional outcomes execute. Independent
+  algorithms validate every normal case, including 3,708 predicted shared-
+  material byte writes across cases (not a count of unique assets).
+- The complete native initializer passes 402 comparisons: 378 normal paths,
+  eight unsupported-numeric/precision stops, 12 invalid-pointer stops and four
+  modeled arithmetic-trap stops. All 214,076 ordered boundaries match, with
+  2,393 mapped native rows, 167 outcomes and 45 call sites reached. The RNG
+  is called 386 times, including allocation-failure paths after animation start.
+- Every completed constructor case passes the independent data checks. All
+  eight appearance types, signs, all 27 appearance category combinations,
+  accessory IDs and source profiles, inner/outer material choices, selector
+  priorities, seed behavior, bank/mode cases and bounded allocation failures
+  are represented. Wide/numeric failure cases remain partial-state tests.
+- Original decoded file bytes remain unchanged; runtime shared accessory
+  material changes are predicted and checked rather than incorrectly rejected.
+- Native source, translation and caller inventory reproduce byte-for-byte.
+  All 17 translation / 58 focused / 114 complete / nine caller-inventory input
+  hashes match. Five new Python and five PowerShell scripts parse. Repeat
+  registration adds no duplicates and preserves the canonical existing setter.
+- Dispatcher checks pass 658 pointer loads, 80 spans and 83 selectors. Audits
+  report 1,115 entries / 1,112 unique module-address pairs, 1,063 matches in
+  10,875 snapshot candidates, zero evidence errors and zero stale source reports.
+  There remain 211 non-texture binaries without a function index; snapshots
+  are not an exhaustive game-code inventory or a whole-game code percentage.
+The entire historical aggregate was not rerun. Focused builds/tests, new
+registration, dispatcher verification and the project/coverage audits were run.
+The credit audit identified an already recovered setter; accounting was
+corrected to eight new entries and all final reports were rerun with that
+classification. No duplicate routine credit is assigned to its guarded form.
+
+What remains
+This is a bounded native constructor, not a complete scene or playable game.
+Task/entity/appearance records and the heap are supplied by the verifier; the
+natural creation/scheduling path is not yet proven. The next 236-row helper 0c905666 clamps/updates parameters and conditionally
+tail-branches to morph 0c904e80. Its older inferred draw label was incorrect;
+reference 0c900a4a identifies caller 0c9009d0. Recover this update/caller path
+and identify actual drawing before connecting the existing renderer. GPU pixels,
+input/audio, game scheduling, full gameplay, frame-rate/resolution settings,
+HD texture options and all playable ports remain unfinished. The next read-only caller/update inventory is saved in
+analysis/overlay_object_update_callers_inventory.json: 1,554 caller rows plus
+236 update-helper rows, analysis only, with no recovered-code credit. Reproduce
+with inventory_overlay_object_update_callers.py; original exports use
+ghidra/export_overlay_object_update_callers.ps1. The full project goal remains active. Continue Sol High for caller/draw integration; Luna Low
+can handle documentation-only changes.
+
+How to check
+Read this guide and SOURCE_HANDOFF.txt. Recovered C is in source/.
+Reports:
+  analysis/overlay_initializer_finish_translation.json
+  analysis/overlay_initializer_finish_verification.json
+  analysis/overlay_initializer_complete_verification.json
+Focused reproduction from PowerShell in the project folder:
+  python -B recover_overlay_initializer_finish.py
+  ./build_overlay_initializer_finish.ps1
+  python -B verify_overlay_initializer_finish.py
+  ./build_overlay_initializer_complete.ps1
+  python -B verify_overlay_initializer_complete.py
+  python -B register_overlay_initializer_complete.py
+Lower-setter read-only export: ghidra/export_overlay_initializer_finish.ps1.
+The other six bodies remain in the earlier initializer-dependency exports.

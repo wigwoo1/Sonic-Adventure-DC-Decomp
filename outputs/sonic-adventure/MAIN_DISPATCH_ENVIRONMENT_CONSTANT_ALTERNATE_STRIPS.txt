@@ -1,0 +1,112 @@
+Environment-constant alternate triangle strips
+17 October 2026 - VERIFIED within the bounded scope below.
+Overall completion: 10% estimated weighted whole-project milestones, not code coverage.
+Goal active. Continue Sol High; no model switch or pause advised.
+
+Recovered source
+  8c614796..8c6149b4: 254 original instruction rows
+  8c616844..8c616bc4: 416 original instruction rows
+  source/sa_main_dispatch_environment_constant_alternate_strips.c
+  source/sa_main_dispatch_environment_constant_alternate_strips_connected.c
+Both complete helpers are byte-checked annotated static C. They preserve original
+instruction order, delay slots, registers and RAM effects without runtime opcode
+decoding. Names are descriptive inferences. Existing source, original disc files,
+proof reports and pinned checkpoint DLLs are preserved.
+
+Behavior recovered
+The helpers walk bounded indexed triangle-strip streams, alternate orientation,
+reject back-facing triangles, emit queue packets and maintain grouping/input/
+output counters. The clipped helper also rejects common screen-outside flags and
+calls native near clipper 8c61295a for near-plane crossings. Both call the original
+four-byte empty stub 8c611708, reused with no additional recovery credit.
+
+Ordinary output transforms cached normals with the prepared inactive FPU-bank
+matrix. The parent scales the first two matrix columns by one half and installs
+one-half UV offsets. The FTRV result supplies U and V; explicit FLDI1 replaces the
+factor with 1.0 for every emitted vertex. Lighting/ambient values do not supply
+that factor. No normalizer is called. Original matrix-bank behavior is retained.
+
+Crossing output instead uses the clipper's published memory matrix through
+8c890238. Initial normal-derived UVs are quantized to signed low 16-bit integers;
+intersections interpolate and quantize again, then scale by 1/256. These are two
+distinct original UV paths. Every clipped output factor is also exactly 1.0.
+Quadrilaterals use strip order 0,1,3,2; the last vertex carries f0000000. The final
+packet word remains untouched. Inputs are preserved; these helpers do not issue
+cache writeback operations. Original queue/counter/cursor side effects remain.
+
+Build and tests actually passed
+- Separate connected DLL compiled with Clang -O2 -Wall -Wextra -Werror.
+- 768 original-code comparisons: 128 ordinary helpers, 176 clipped helpers,
+  eight ordinary parents, eight clipped parents and 448 connected meshes.
+- All 670 instruction rows, 40 conditional outcomes and three call sites covered:
+  8c6147b0 -> 8c611708, 8c616860 -> 8c611708, 8c616b32 -> 8c61295a.
+- Full 16 MiB RAM, CPU/SR/PR, both FPU banks/FPSCR, FPUL/MACL, ordered call
+  boundaries, queue words and queue events agree with original execution.
+- 712 cases complete. Another 56 match original partial state at numerical or
+  precision guards (-1); these do not establish completed draws in those modes.
+- 5,470 ordered boundaries, 63,072 numerical operations, 3,278 queue transfers
+  and 36,054 queue events compared. Native stub invoked 748 times and native
+  near clipper 226 times; normalizer and external game services invoked zero times.
+- All new instructions and outcomes covered; 2,482 FTRV instructions were observed
+  over the whole linked traces, including previously recovered parent/worker code.
+- 648 independent cases validate triangle sets, prepared-matrix UVs, clipped
+  geometry and quantized UVs, exact factors, retained words, cache preservation,
+  counters and cursors. Precision modes excluded from this separate mathematical
+  oracle retain the original-instruction comparison evidence above.
+- All 448 connected meshes complete without external game services, using native
+  material setup, projection/classification, headers, parent, new alternate helper,
+  clipper when needed and finalizer. Of these, 384 cover six near-crossing masks;
+  64 cover ordinary/back-facing cases. Both windings/strip flips, both FPU banks,
+  both cursor halves and material values 2600000/2700000/3600000/3700000 hex
+  cover primary/secondary queues and header variants.
+- Direct inputs additionally include multiple strip lengths/groups, common screen
+  flags, both orientations, ambient variations and zero/identity/mixed matrices.
+- 120 lifetime regressions / 984 stages passed with zero external game services:
+  23,264 boundaries, 104,016 numerical operations, 10,600 queue transfers and
+  117,808 queue events. Independent motion, pool, heap and callback checks passed.
+  The unchanged original-model fixtures do not reach this new pair; these are
+  regression checks of the linked flat paths, not extra new-family coverage.
+- Generated C and translation report reproduce byte-for-byte; translation,
+  focused and lifecycle reports match their pinned inputs. Four Python scripts
+  and the new build/aggregate PowerShell scripts parse. Repeat registration adds
+  zero duplicates. Dispatcher mapping checks 658 pointer loads, 80 spans and 83
+  selectors. Coverage audit reports zero evidence errors and zero stale reports.
+
+Limits and next work
+No explicit primitive fixture targets remain in this bounded mesh chain. This
+means this chain's previously listed native dependencies are connected, not that
+all renderer/game code has been recovered. The dynamic setter table and other
+runtime paths require their own contracts. Earlier face-family near-strip paths
+still have live-register caller preconditions established only by controlled
+body tests; this constant-factor family does not resolve those earlier contracts.
+
+Positive bounded strip counts/lengths and retained lookahead indices constrain
+fixtures. Invalid pointer/count loops, physical exception dispatch, MMU-on queues,
+physical cache timing, actual GPU FIFO/pixels, the full original frame driver and
+playable gameplay remain unverified. Inherited numerical and saved-pointer guards
+still apply. Lifetime pass order is selected by the host. The new linked build and
+focused/lifetime suites were run; the whole historical workflow was not rerun.
+
+Registry: 1,095 entries / 1,092 unique module-address pairs; 1,043 matches among
+10,875 indexed candidates. Another 211 non-texture binaries have no function
+index. These discovery counts are not whole-game code-coverage measurements.
+Next: combined mesh-family integration and resolve the face-family strip caller
+contracts before broader native frame/renderer integration. Continue Sol High
+because these tasks require instruction-level reverse engineering and cross-call
+register tracing. Luna can handle routine documentation after that work, but is
+not recommended for the next reverse-engineering task.
+Full decompilation, native PC/Android/stereo 3DS ports, 60/120/240 FPS, 8K,
+SUPIR/settings and later N64/PS1 work remain unfinished. Texture Off must disable
+sampling and use vertex colours/material fallback, overriding the HD toggle.
+
+Evidence and a simple check
+Open this guide or SOURCE_HANDOFF.txt. The focused report at
+analysis/main_dispatch_environment_constant_alternate_strips_verification.json
+has cases_passed=768, rows_covered=670, conditional_edges_covered=40,
+independent_mesh_cases=448 and external_service_boundaries=0. The linked lifetime
+report has lifecycles_passed=120 and stage_comparisons=984. No playable game yet.
+Scripts: recover_main_dispatch_environment_constant_alternate_strips.py,
+build_main_dispatch_environment_constant_alternate_strips.ps1,
+verify_main_dispatch_environment_constant_alternate_strips.py,
+verify_main_dispatch_environment_constant_alternate_strips_lifecycle.py,
+register_main_dispatch_environment_constant_alternate_strips.py.

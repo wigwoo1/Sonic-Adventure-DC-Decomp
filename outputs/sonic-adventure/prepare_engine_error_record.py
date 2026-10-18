@@ -1,0 +1,18 @@
+from pathlib import Path
+p=Path(__file__).resolve().parent
+s=(p/'build_sound_linear_source_capacity.ps1').read_text().replace('sound_linear_source_capacity','engine_error_record').replace('Sound source query build failed','Engine error record build failed')
+(p/'build_engine_error_record.ps1').write_text(s)
+reg=(p/'register_sound_linear_source_query.py').read_text();a=reg.index('for stem,start,end in [');z=reg.index('\n',a);reg=reg[:a]+"for stem,start,end in [('engine_error_record',0x8c65acac,0x8c65acb6)]:"+reg[z:];reg=reg.replace('==800','==216')
+(p/'register_engine_error_record.py').write_text(reg)
+s=(p/'verify_sound_subordinate_pan_native_enqueue.py').read_text()
+s=s.replace("[(0x8c66837c","[(0x8c65acac,'engine_error_record','sa_engine_error_record'),(0x8c66837c",1)
+s=s.replace('calls=[];events=[];canonical_calls=[]','calls=[];events=[];canonical_calls=[];diagnostics=[]')
+s=s.replace('  if a==0x8c66b374:',"  if a==0x8c65acac:diagnostics.append((r[4],r[5]))\n  if a==0x8c66b374:")
+s=s.replace(' special={"macl":0};reference(ram,s,fpu=f,special=special,hooks={error_target:hook(error_target)})',' special={"macl":0};reference(ram,s,fpu=f,special=special,hooks={})')
+s=s.replace(' native=bytearray(ram)'," struct.pack_into('<2I',ram,0x67c1c8,0x12345678,0x9abcdef0)\n native=bytearray(ram)",1)
+s=s.replace(' cases+=1'," assert not calls and not events\n assert bool(diagnostics)==bool(capacity)\n assert struct.unpack_from('<2I',native,0x67c1c8)==(diagnostics[-1] if diagnostics else (0x12345678,0x9abcdef0))\n cases+=1")
+s=s.replace('Only queue diagnostic65acac modeled.','Queue diagnostic recorder65acac executes natively;independent last diagnostic word/userdata stores and no-diagnostic preservation. No modeled calls.')
+s=s.replace('sound_subordinate_pan_native_enqueue_verification','sound_subordinate_pan_native_diagnostics_verification')
+(p/'verify_sound_subordinate_pan_native_diagnostics.py').write_text(s)
+reg=(p/'register_sound_subordinate_pan_native_enqueue.py').read_text().replace('_native_enqueue','_native_diagnostics').replace(' native enqueue:',' native diagnostics:').replace("'sa_signed_division'","'sa_engine_error_record','sa_signed_division'")
+(p/'register_sound_subordinate_pan_native_diagnostics.py').write_text(reg)

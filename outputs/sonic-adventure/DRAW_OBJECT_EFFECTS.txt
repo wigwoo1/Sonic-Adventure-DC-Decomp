@@ -1,0 +1,154 @@
+Original object-effect profiles and partial drawing services
+17 October 2026 - six profiles and bounded integration VERIFIED; renderer/game partial.
+Overall completion: 10% estimated weighted whole-project milestones, not code coverage.
+Goal active on Sol High. No model switch or pause advised.
+
+What changed
+source/sa_draw_object_effects.c statically retains 2,425 byte-checked rows:
+the twelve previously exported original bodies (2,421 rows), plus a four-row
+adapter for the already registered phase helper at 8c63a9b8. Names describe
+inferred behavior. Six profiles have complete direct behavior evidence:
+  0c908f3e - selector 0 profile, 80 rows / 4 conditional outcomes.
+  0c909054 - selectors 1, 2, 3 profile, 280 rows / 26 outcomes.
+  0c9092da - selector 4 profile, 283 rows / 26 outcomes.
+  0c909560 - selector 5 profile, 278 rows / 26 outcomes.
+  0c9097e4 - selector 6 profile, 274 rows / 24 outcomes.
+  0c909aa0 - selector 7 profile, 297 rows / 24 outcomes.
+Together they retain all 1,492 instructions / 130 conditional outcomes.
+
+These profiles initialize effect state, advance phases, update spring values
+and retain the original 16-bit countdown/state transitions. The phase-zero
+initializer resets its phase before adding 0xc00. In primary state 2, countdown
+zero wraps to ffff and advances the state; other unsigned values decrement
+while retaining the state. Completion can reset the secondary state before
+its dispatch, so the independent paired-scale formula has an explicit primary-
+state domain. Original behavior is retained rather than normalized.
+
+Six other new bodies are compiled partial code and receive zero registration
+credit: dispatcher 0c909d80, emitters 0c908b00/0c908d80, and main services
+8c605628/8c608d14/8c63d414. Their per-body coverage and missing rows/outcomes
+are listed in analysis/draw_object_effects_verification.json. Missing lower
+calls remain reached -2 boundaries. The AL_MAIN parent also stays unregistered.
+
+Original switch tables and reused services
+The dispatcher has a bounded ten-selector signed-offset BRAF table. The main
+material service has twelve selectors. The generator independently decodes
+their original table bytes and emits the original load/branch behavior with
+finite proposal-target guards (-3 outside the exported CFG). No arbitrary
+mutated-table or self-modifying-code behavior is claimed.
+
+The existing phase wrapper is represented by four canonical byte-checked
+instructions and uses the real shared FSCA core. Its old polynomial source/
+exhaustive mathematical-error-bound proof remain unchanged, with zero duplicate
+credit. New tests compare its reached state, including the RTS delay slot,
+and independently check selected phases against the documented 2^-21 absolute
+error bound. Bit-exact physical SH7091 values have not been measured.
+
+The existing random helper is reused through the existing lower adapter. Its
+15 original instruction rows are exported read-only and its old source/proof
+are preserved. Six extra seed cases independently check the LCG result and
+MACL stack save. It retains its documented valid-RAM/stack contract and receives
+zero new credit. Neither vector results nor random results are injected.
+
+Build and direct verification actually run
+build_draw_object_effects.ps1 compiles 106 sources with Clang -O2 -Wall -Wextra
+-Werror and no C runtime. verify_draw_object_effects.py passes 1,720 comparisons
+against the original instructions: 1,506 complete returns, 41 RAM/computed-jump
+guards, 33 explicit missing-service stops, 60 unsupported-mode/domain stops and
+80 numerical traps. All 2,352 ordered entries match, together with full 16-MiB
+RAM, all integer registers, SR/PR/PC, both FPU banks/FPSCR, FPUL/MACL and stop
+state. All six profile rows/outcomes execute; partial bodies are not inferred
+complete from successful compilation or prefix checks.
+
+The default C syntax check and six Python/four PowerShell syntax checks pass,
+including the new lower-dependency inventory/export. The historical aggregate
+test sequence was not rerun.
+
+707 cases contain 777 independent checks of initialization, phase reset/advance,
+unsigned countdowns, paired-scale output, selected FSCA phases and six LCG seeds.
+Cases cover both banks, PR/SZ/FR combinations, profile/control states, timer
+thresholds, zero/one/high-bit/maximum countdowns, invalid spans and a mutated
+switch target. Scalar opcode values use the existing independent interpreter;
+numerical trap classification and vector operations retain shared qualified
+support. The direct fixture defaults to DN=1; no new blanket DN=0 claim.
+
+Original initialized-model integration
+All 408 original-model/routing comparisons pass: 344 caller cases and 64 direct
+service cases. There are 114 complete returns (50 rejected draws and 64 direct
+services), 274 missing-service stops, eight unsupported modes, eight RAM guards
+and four numerical traps. Full accepted drawing remains unfinished. All 140,794
+ordered entries and full reached machine/RAM state match, with 388 independent
+state/stack/spring cases and 200 distance-prefix checks.
+
+The original caller enters the dispatcher and selector-zero profile 132 times
+each, the regular emitter 118 times, special emitter 14 times, texture selector
+118 times, material-mode service 14 times and reused random helper 28 times.
+It reaches 599 rows of the new source. Other five profiles and the phase adapter
+are checked directly rather than claimed naturally reached in this first-draw
+suite. Parent coverage stays 476/911, with 435 unexecuted rows and zero parent
+registration credit. The old 0c909d80 entry stop is gone; its deeper first missing
+services are 8c655620 (118 cases) and 8c654e60 (14). Other first stops remain
+0c90c384 (94), 8c0409c0 (16), 8c5fde20 (16) and 8c041c92 (16).
+
+Software queue totals remain 138,384 flushes / 1,524,614 counted events.
+632,532 stored-prefix events match individually; 892,082 beyond the 4,096-event
+per-call cap are counted, not individually stored/compared. Final queue/QACR/
+counters and all reached/final RAM, including packet output, still match.
+
+The newly reached emitters select shipped NJS_TEXLIST 0c91c7b0: fourteen name
+records at 0c91c6ec. Their on-disc runtime descriptor slots are zero. This
+fixture populates only those fourteen slots with the existing supplied runtime
+descriptors, retaining original names, attributes, geometry and motion records.
+This extends the preceding 221-name runtime fixture; real texture loading and
+natural renderer/scene initialization remain unproved.
+
+Next lower-service analysis
+Three next proposals (8c654e60, 8c655620, 8c64f5bc) have 916 byte-checked
+instruction rows exported read-only in analysis/draw-effect-lower. Their static
+transfers are inventoried by inventory_draw_effect_lower.py. These drafts and
+the inventory grant zero native-source or complete computed-target credit.
+In particular, 8c654e60 contains two BRAF tables with incomplete static target
+annotations. Their original selector/table bounds and CFG must be expanded
+and checked before treating the exported proposal as a complete function.
+The independent table decode finds twelve selectors / eleven distinct targets
+per table, with nine missing case heads in each (eighteen missing heads total).
+
+Registration and reproduction
+Only six first profile entries are registered. Six incomplete dispatcher/
+renderer bodies and the outer AL_MAIN parent remain unregistered. The registry
+now has 1,160 entries / 1,157 unique module-address pairs; 1,087 match the 10,875
+frozen index candidates. These are not whole-game coverage numbers; 211
+nontexture binaries still lack a function index. Evidence audit: zero errors
+and zero stale source reports.
+
+All six generated artifacts reproduce byte for byte, including the four-row
+phase listing. Repeated registration adds zero entries and leaves registry/
+status bytes unchanged. Frozen DLLs and older source/proofs remain unchanged.
+Dispatch-map verification passes 658 original pointer loads / 80 spans /
+83 selectors. The historical aggregate test sequence was not rerun.
+
+Reproducible source and evidence
+Source: source/sa_draw_object_effects.c
+Top bridge: source/sa_draw_object_effects_connected.c
+Generator: recover_draw_object_effects.py
+Connection: connect_draw_object_effects.py
+Build: build_draw_object_effects.ps1
+Direct checks: verify_draw_object_effects.py
+Original-caller checks: verify_overlay_draw_object_effects.py
+Registration: register_draw_object_effects.py (six profiles only)
+Reports: analysis/draw_object_effects_translation.json
+         analysis/draw_object_effects_connection.json
+         analysis/draw_object_effects_verification.json
+         analysis/overlay_draw_object_effects_verification.json
+The phase annotation is generated from its preserved canonical eight-byte
+span; the reused RNG listing is from ghidra/export_draw_effect_rng.ps1 (-readOnly).
+The frozen global function indexes are not regenerated by these exports.
+
+How to check without programming
+Open this report for the milestone explanation. The JSON reports list tested
+inputs, each body's exact coverage, and remaining service boundaries. All source
+and reproduction scripts remain in this project folder. There is no playable
+executable yet. Physical GPU pixels, complete accepted drawing, frames/gameplay,
+high-FPS/8K/SUPIR settings and all playable ports remain unfinished. Texture Off
+remains planned as disabled sampling with vertex/material colours. Continue
+Sol High for the lower rendering dependencies; Luna Low suits documentation only.

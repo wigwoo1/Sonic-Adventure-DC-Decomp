@@ -1,0 +1,126 @@
+Native vertex workers and portable store queues
+16 October 2026 -- VERIFIED within the bounded scope below.
+Whole-project completion remains 10% estimated weighted milestones.
+Goal active. Continue Sol High with acquisition and primitive routines.
+
+Recovered original source
+  source/sa_main_dispatch_vertex_workers.c
+    8c611060..8c61111e projection with normal words: 84 instruction rows.
+    8c611122..8c6111d2 projection without normals: 78 rows.
+    8c6111d6..8c6112de classification with normals: 118 rows.
+    8c6112e2..8c6113de classification without normals: 112 rows.
+  source/sa_main_dispatch_vertex_workers_connected.c
+All 392 original rows and 20 conditional outcomes are covered. These bodies
+make no original function calls; memory/cache operations use the portable bus.
+Exact span hashes include literal pools, which receive no instruction credit.
+Names/record-field meanings are inferred from the instructions.
+
+Behavior
+The workers transform the input positions, compute perspective coordinates and
+reciprocal absolute depth, write vertex-record words, and optionally copy three
+normal words. Classification variants build six clip bits and publish combined
+AND/OR masks through the record. Depth below the near limit follows the original
+non-projection path. Both normal and no-normal streams are supported.
+Each iteration consumes a vertex and preloads the next position, including a
+lookahead beyond the last processed vertex; test buffers preserve that padding.
+The recovered instruction order, delay slots, FPU bank/width handling and reached
+numeric guards remain explicit. This is static C, with no runtime opcode decoding.
+
+Portable native memory interface
+  source/vertex_bus.h
+  source/vertex_bus.c
+Workers keep RAM accesses direct and route non-RAM accesses plus OCBI/PREF through
+a supplied bus. The connected DLL's exported functions take a final bus pointer;
+older DLL interfaces and their reports remain unchanged. sa_vertex_bus_init
+initializes queue/register/counter state and binds RAM plus native callbacks.
+The C backend models two store queues, their address-control registers and
+MMU-off transfers into coherent RAM. Cache invalidation and ordinary prefetch
+are logged rather than timing-emulated. The diagnostic trace retains 4,096
+events and counts later dropped entries; filling the trace never stops processing.
+This adapter is authored support code and receives no original-routine credit.
+
+Hardware reference used for the bounded model
+Renesas SH7750/SH7750S/SH7750R Hardware Manual, section 4.7.1-4.7.3,
+printed pages 142-144:
+https://www.renesas.com/en/document/mah/sh7750-sh7750s-sh7750r-group-users-manual-hardware
+The manual defines queue selection by address bit 5, word placement in the queue,
+and aligned 32-byte transfers from PREF using queue address-control registers.
+The tests compare the C model with a separately written Python implementation.
+This establishes the stated software contract, not hardware timing or GPU fidelity.
+
+Build and focused verification
+Strict Clang DLL compilation passed with -Wall -Wextra -Werror.
+Eight smoke cases and 265 final comparisons passed. All 392 rows and all 20
+outcomes were reached. Full 16 MiB RAM, GPR/SR/PR, both FPU banks, FPSCR/FPUL
+and MACL match original instructions, as do queue/register state and ordered
+bus events. There are 72 native call boundaries, 8,773 numerical operations,
+940 queue flushes and 9,403 queue/cache/register events in the focused suite.
+161 completed cases pass independent analytic projections, reciprocal depth,
+normal-word copying and clip-mask checks. 104 partial cases match: 96 numeric
+mode guards and eight missing-bus cases.
+Counts: projection 57, projection+normals 56, classification 68,
+classification+normals 68, connected filter core 8 and connected mesh 8.
+Cases cover empty/one/multiple vertices, both queue starts and RAM aliases,
+negative depth, all clip directions, FPU banks, rounding/PR/SZ modes, missing
+bus, and connected filter/material callers. A 600-vertex case completes all
+600 transfers after the diagnostic log fills. Initialization is also checked
+from deliberately dirty state.
+
+Reference-adapter changes are process-local: PREF handling and predecrement
+MOV.L stores use the explicit queue/MMIO map. Earlier executor files and proof
+reports are unchanged. A smoke-stage analytic expectation initially used a
+nonzero screen offset despite the fixture's zero offset; correcting that test
+expectation resolved it. Original/native data already agreed.
+
+Complete particle lifetimes
+Six smoke lifetimes and 120 complete lifetimes / 984 stage comparisons passed
+with native vertex workers and queues connected. Across the original particle
+meshes, there are 880 filter/worker invocations and 9,680 vertex-record transfers.
+Full state and bus events match at every stage: 23,104 ordered call boundaries,
+89,616 numerical operations and 109,136 queue/cache/register events. Independent
+checks retain motion/expiration, renderer-state transfers, exact final task-pool
+order, empty scheduler lists and full heap coalescing. There are 64 parents,
+80 particles, 54 paused passes, and the existing 46-case translation regression.
+The real classification produces 176 accepted and 704 rejected mesh iterations
+for these fixtures, replacing the earlier forced-acceptance worker substitutes.
+Remaining external calls total 352: acquisition 8c605e68 (176), primitive path
+8c61ffe4 (160) and primitive path 8c620428 (16). Those routines are still fixtures.
+
+Limits
+Twenty-two acquisition/primitive routines remain substitutes. Actual drawing,
+visible pixels, textures, GPU/MMIO beyond the stated queue registers, real cache
+timing/coherence, MMU-on/TLB behavior and hardware alignment/exception dispatch
+remain unverified. Constructed bounded streams and the original particle inputs
+do not prove arbitrary bad metadata or concurrent mutation. The shared vector
+numerical oracle and prior scalar guard limitations remain. Host scheduler-pass
+ordering is not the complete original frame driver. Full decompilation and all
+requested ports remain unfinished; display/SUPIR settings are still planned.
+
+Evidence and reproduction
+  analysis/main-dispatch-vertex-workers/*_instructions.tsv
+  analysis/main_dispatch_vertex_workers_translation.json
+  analysis/main_dispatch_vertex_workers_verification.json
+  analysis/main_dispatch_vertex_workers_lifecycle_verification.json
+Reports pin original spans, source, bus implementation, tooling, dependencies
+and the tested DLL. The registrar checks metrics and original-mesh transfer totals.
+From this document's directory using the installed project Python:
+  python -B recover_main_dispatch_vertex_workers.py
+  .\build_main_dispatch_vertex_workers.ps1
+  python -B verify_main_dispatch_vertex_workers.py
+  python -B verify_main_dispatch_vertex_workers_lifecycle.py
+  python -B register_main_dispatch_vertex_workers.py
+  python -B map_main_dispatch_cases.py
+  python -B verify_main_dispatch_case_map.py
+Optional read-only export: ghidra/export_main_dispatch_vertex_workers.ps1.
+Focused stages are included in build_and_verify.ps1. PowerShell syntax passed;
+the entire accumulated project workflow was not rerun end-to-end.
+
+Final audits and next task
+1,045 entries / 1,042 unique module-address pairs; zero evidence errors or stale
+source reports. 993 entries match the unchanged 10,875-candidate snapshot; 211
+non-texture modules still lack a function index. These incomplete counts are
+not whole-game decompilation coverage. Dispatcher verification passed 658
+original pointer checks, 80 spans and 83 selectors. Milestone audit remains 10%.
+Next inspect acquisition 8c605e68 and primitive paths 8c61ffe4/8c620428, check for
+existing source, and recover their original dependencies. Keep Sol High for
+reverse engineering. No model switch or pause is recommended.

@@ -1,0 +1,917 @@
+{
+  "module": "1ST_READ.BIN",
+  "load_address": "0x8c010000",
+  "address": "0x8c05f210",
+  "end_exclusive": "0x8c05f21a",
+  "retail_span_sha256": "1d722f2faa0a63a722fe34e19cde7ce07e78d74ceab6d469edc71641f348c4d0",
+  "source_sha256": "8ac3ddbae8f948beff6e40d326c7513ad0dc5f32e64ec824684f3af32aa1c94f",
+  "cases_passed": 128,
+  "comparison_level": "complete 16 MiB RAM and all GPR/SR/PR/PC state against retail SH-4 interpreter at tail-call target",
+  "scope": "Load callback and destination pointer through literals, set R3=1, store it at *R2 in the JMP delay slot, and transfer control preserving PR.",
+  "limitations": [
+    "Behavior of the callback at the transfer target is outside this ten-byte wrapper.",
+    "Differential verification uses the project SH-4 interpreter, not Dreamcast hardware or whole-game execution."
+  ],
+  "literals": {
+    "callback": "0x8c05f234",
+    "global_pointer": "0x8c05f23c"
+  },
+  "cases": [
+    {
+      "case": 0,
+      "callback": "0x8c702262",
+      "target": "0x8c71ebd0",
+      "initial": "30d93933",
+      "matched": true
+    },
+    {
+      "case": 1,
+      "callback": "0x8c70da8e",
+      "target": "0x8c7121b8",
+      "initial": "ef079dee",
+      "matched": true
+    },
+    {
+      "case": 2,
+      "callback": "0x8c707bda",
+      "target": "0x8c71c4e4",
+      "initial": "b632fb15",
+      "matched": true
+    },
+    {
+      "case": 3,
+      "callback": "0x8c70fde8",
+      "target": "0x8c7173cc",
+      "initial": "0ca4aeae",
+      "matched": true
+    },
+    {
+      "case": 4,
+      "callback": "0x8c7057b6",
+      "target": "0x8c71d13c",
+      "initial": "73595ad3",
+      "matched": true
+    },
+    {
+      "case": 5,
+      "callback": "0x8c704782",
+      "target": "0x8c71357c",
+      "initial": "b3b8d89f",
+      "matched": true
+    },
+    {
+      "case": 6,
+      "callback": "0x8c701342",
+      "target": "0x8c71814c",
+      "initial": "1c172c27",
+      "matched": true
+    },
+    {
+      "case": 7,
+      "callback": "0x8c701552",
+      "target": "0x8c717b64",
+      "initial": "2734c6f5",
+      "matched": true
+    },
+    {
+      "case": 8,
+      "callback": "0x8c70e374",
+      "target": "0x8c719014",
+      "initial": "94497483",
+      "matched": true
+    },
+    {
+      "case": 9,
+      "callback": "0x8c702922",
+      "target": "0x8c71cd54",
+      "initial": "9b56f682",
+      "matched": true
+    },
+    {
+      "case": 10,
+      "callback": "0x8c703ca2",
+      "target": "0x8c718a0c",
+      "initial": "7cacf875",
+      "matched": true
+    },
+    {
+      "case": 11,
+      "callback": "0x8c706802",
+      "target": "0x8c712a2c",
+      "initial": "cd3bac92",
+      "matched": true
+    },
+    {
+      "case": 12,
+      "callback": "0x8c701cea",
+      "target": "0x8c71ba98",
+      "initial": "83fb348d",
+      "matched": true
+    },
+    {
+      "case": 13,
+      "callback": "0x8c70a2c4",
+      "target": "0x8c71cb40",
+      "initial": "027455a8",
+      "matched": true
+    },
+    {
+      "case": 14,
+      "callback": "0x8c70a3c4",
+      "target": "0x8c716ed4",
+      "initial": "0ca3a449",
+      "matched": true
+    },
+    {
+      "case": 15,
+      "callback": "0x8c701922",
+      "target": "0x8c713fd4",
+      "initial": "40b9b32f",
+      "matched": true
+    },
+    {
+      "case": 16,
+      "callback": "0x8c707ad2",
+      "target": "0x8c712ab8",
+      "initial": "572c9880",
+      "matched": true
+    },
+    {
+      "case": 17,
+      "callback": "0x8c70878c",
+      "target": "0x8c718b78",
+      "initial": "6f665f55",
+      "matched": true
+    },
+    {
+      "case": 18,
+      "callback": "0x8c70a350",
+      "target": "0x8c71920c",
+      "initial": "275ea676",
+      "matched": true
+    },
+    {
+      "case": 19,
+      "callback": "0x8c70a8d2",
+      "target": "0x8c7115e8",
+      "initial": "bf99e33a",
+      "matched": true
+    },
+    {
+      "case": 20,
+      "callback": "0x8c70f8f0",
+      "target": "0x8c71755c",
+      "initial": "485837fb",
+      "matched": true
+    },
+    {
+      "case": 21,
+      "callback": "0x8c7062c8",
+      "target": "0x8c713c7c",
+      "initial": "9178cee4",
+      "matched": true
+    },
+    {
+      "case": 22,
+      "callback": "0x8c70067e",
+      "target": "0x8c71ad80",
+      "initial": "543b2131",
+      "matched": true
+    },
+    {
+      "case": 23,
+      "callback": "0x8c70b7d8",
+      "target": "0x8c715784",
+      "initial": "8f00f507",
+      "matched": true
+    },
+    {
+      "case": 24,
+      "callback": "0x8c702940",
+      "target": "0x8c719e6c",
+      "initial": "f770afd1",
+      "matched": true
+    },
+    {
+      "case": 25,
+      "callback": "0x8c708f1e",
+      "target": "0x8c71936c",
+      "initial": "70866ae0",
+      "matched": true
+    },
+    {
+      "case": 26,
+      "callback": "0x8c7090da",
+      "target": "0x8c71b2e4",
+      "initial": "68a267b6",
+      "matched": true
+    },
+    {
+      "case": 27,
+      "callback": "0x8c705d48",
+      "target": "0x8c7111a8",
+      "initial": "fb3bf722",
+      "matched": true
+    },
+    {
+      "case": 28,
+      "callback": "0x8c70df8e",
+      "target": "0x8c71518c",
+      "initial": "0de4e68c",
+      "matched": true
+    },
+    {
+      "case": 29,
+      "callback": "0x8c70573a",
+      "target": "0x8c717d74",
+      "initial": "82eea9ab",
+      "matched": true
+    },
+    {
+      "case": 30,
+      "callback": "0x8c702a62",
+      "target": "0x8c717550",
+      "initial": "82f0b1b4",
+      "matched": true
+    },
+    {
+      "case": 31,
+      "callback": "0x8c70fc7a",
+      "target": "0x8c7156f4",
+      "initial": "64c46355",
+      "matched": true
+    },
+    {
+      "case": 32,
+      "callback": "0x8c70c1fa",
+      "target": "0x8c717294",
+      "initial": "0af2ca01",
+      "matched": true
+    },
+    {
+      "case": 33,
+      "callback": "0x8c70e4aa",
+      "target": "0x8c7192a4",
+      "initial": "314ee3d0",
+      "matched": true
+    },
+    {
+      "case": 34,
+      "callback": "0x8c70cdec",
+      "target": "0x8c71c4ec",
+      "initial": "8f602be9",
+      "matched": true
+    },
+    {
+      "case": 35,
+      "callback": "0x8c7094ae",
+      "target": "0x8c719e20",
+      "initial": "a091cb31",
+      "matched": true
+    },
+    {
+      "case": 36,
+      "callback": "0x8c708e08",
+      "target": "0x8c7183a8",
+      "initial": "b4ba5c26",
+      "matched": true
+    },
+    {
+      "case": 37,
+      "callback": "0x8c700198",
+      "target": "0x8c710d78",
+      "initial": "e4335764",
+      "matched": true
+    },
+    {
+      "case": 38,
+      "callback": "0x8c70364c",
+      "target": "0x8c71a0ac",
+      "initial": "6d35c07c",
+      "matched": true
+    },
+    {
+      "case": 39,
+      "callback": "0x8c703c16",
+      "target": "0x8c715318",
+      "initial": "2056e43c",
+      "matched": true
+    },
+    {
+      "case": 40,
+      "callback": "0x8c70e06e",
+      "target": "0x8c71cf58",
+      "initial": "13b92a0e",
+      "matched": true
+    },
+    {
+      "case": 41,
+      "callback": "0x8c70d812",
+      "target": "0x8c712518",
+      "initial": "f73bd762",
+      "matched": true
+    },
+    {
+      "case": 42,
+      "callback": "0x8c70d524",
+      "target": "0x8c712960",
+      "initial": "d0c2410a",
+      "matched": true
+    },
+    {
+      "case": 43,
+      "callback": "0x8c70863e",
+      "target": "0x8c7165ac",
+      "initial": "ec69f2fc",
+      "matched": true
+    },
+    {
+      "case": 44,
+      "callback": "0x8c702be2",
+      "target": "0x8c71b11c",
+      "initial": "d79eb47a",
+      "matched": true
+    },
+    {
+      "case": 45,
+      "callback": "0x8c70e372",
+      "target": "0x8c710a88",
+      "initial": "29e6541c",
+      "matched": true
+    },
+    {
+      "case": 46,
+      "callback": "0x8c70be64",
+      "target": "0x8c719b58",
+      "initial": "0f3559e3",
+      "matched": true
+    },
+    {
+      "case": 47,
+      "callback": "0x8c70f736",
+      "target": "0x8c71d22c",
+      "initial": "48b50551",
+      "matched": true
+    },
+    {
+      "case": 48,
+      "callback": "0x8c708b78",
+      "target": "0x8c71095c",
+      "initial": "dbeffe74",
+      "matched": true
+    },
+    {
+      "case": 49,
+      "callback": "0x8c7097bc",
+      "target": "0x8c7119cc",
+      "initial": "693898a5",
+      "matched": true
+    },
+    {
+      "case": 50,
+      "callback": "0x8c706e02",
+      "target": "0x8c71ad84",
+      "initial": "5d5cd9fd",
+      "matched": true
+    },
+    {
+      "case": 51,
+      "callback": "0x8c70a9f0",
+      "target": "0x8c71f480",
+      "initial": "f82432bb",
+      "matched": true
+    },
+    {
+      "case": 52,
+      "callback": "0x8c7027d4",
+      "target": "0x8c7177a4",
+      "initial": "1d8e0d1e",
+      "matched": true
+    },
+    {
+      "case": 53,
+      "callback": "0x8c709c0a",
+      "target": "0x8c71d758",
+      "initial": "4a15f6ba",
+      "matched": true
+    },
+    {
+      "case": 54,
+      "callback": "0x8c70d682",
+      "target": "0x8c71f2ac",
+      "initial": "390ead75",
+      "matched": true
+    },
+    {
+      "case": 55,
+      "callback": "0x8c70b974",
+      "target": "0x8c7186dc",
+      "initial": "d193bcb8",
+      "matched": true
+    },
+    {
+      "case": 56,
+      "callback": "0x8c709700",
+      "target": "0x8c7148e4",
+      "initial": "e81065a5",
+      "matched": true
+    },
+    {
+      "case": 57,
+      "callback": "0x8c701990",
+      "target": "0x8c71f220",
+      "initial": "a76c5eba",
+      "matched": true
+    },
+    {
+      "case": 58,
+      "callback": "0x8c709ce0",
+      "target": "0x8c712bf8",
+      "initial": "8e9aba23",
+      "matched": true
+    },
+    {
+      "case": 59,
+      "callback": "0x8c70ca38",
+      "target": "0x8c71a844",
+      "initial": "08a61d8b",
+      "matched": true
+    },
+    {
+      "case": 60,
+      "callback": "0x8c702482",
+      "target": "0x8c71abf8",
+      "initial": "6b6c2c2e",
+      "matched": true
+    },
+    {
+      "case": 61,
+      "callback": "0x8c70e62e",
+      "target": "0x8c71c890",
+      "initial": "35fc4304",
+      "matched": true
+    },
+    {
+      "case": 62,
+      "callback": "0x8c70551c",
+      "target": "0x8c71da78",
+      "initial": "7c4cb94f",
+      "matched": true
+    },
+    {
+      "case": 63,
+      "callback": "0x8c7008ca",
+      "target": "0x8c7152fc",
+      "initial": "e3e984de",
+      "matched": true
+    },
+    {
+      "case": 64,
+      "callback": "0x8c700e1c",
+      "target": "0x8c7131ac",
+      "initial": "349567d7",
+      "matched": true
+    },
+    {
+      "case": 65,
+      "callback": "0x8c708adc",
+      "target": "0x8c713aa8",
+      "initial": "91576464",
+      "matched": true
+    },
+    {
+      "case": 66,
+      "callback": "0x8c705c74",
+      "target": "0x8c711654",
+      "initial": "afe07590",
+      "matched": true
+    },
+    {
+      "case": 67,
+      "callback": "0x8c70e132",
+      "target": "0x8c719dec",
+      "initial": "f762a221",
+      "matched": true
+    },
+    {
+      "case": 68,
+      "callback": "0x8c705f14",
+      "target": "0x8c71aa0c",
+      "initial": "39694f20",
+      "matched": true
+    },
+    {
+      "case": 69,
+      "callback": "0x8c70c5fc",
+      "target": "0x8c719768",
+      "initial": "5bacd3bb",
+      "matched": true
+    },
+    {
+      "case": 70,
+      "callback": "0x8c70cd5e",
+      "target": "0x8c7125c0",
+      "initial": "17d9daaa",
+      "matched": true
+    },
+    {
+      "case": 71,
+      "callback": "0x8c7088aa",
+      "target": "0x8c718d90",
+      "initial": "96c083c4",
+      "matched": true
+    },
+    {
+      "case": 72,
+      "callback": "0x8c705a04",
+      "target": "0x8c718edc",
+      "initial": "48cb421d",
+      "matched": true
+    },
+    {
+      "case": 73,
+      "callback": "0x8c706d02",
+      "target": "0x8c71ae14",
+      "initial": "82069187",
+      "matched": true
+    },
+    {
+      "case": 74,
+      "callback": "0x8c704caa",
+      "target": "0x8c716bc8",
+      "initial": "ae4f232c",
+      "matched": true
+    },
+    {
+      "case": 75,
+      "callback": "0x8c70c8c6",
+      "target": "0x8c719600",
+      "initial": "62772650",
+      "matched": true
+    },
+    {
+      "case": 76,
+      "callback": "0x8c706cb8",
+      "target": "0x8c71a91c",
+      "initial": "1d054563",
+      "matched": true
+    },
+    {
+      "case": 77,
+      "callback": "0x8c70d116",
+      "target": "0x8c71d6a8",
+      "initial": "6737f96e",
+      "matched": true
+    },
+    {
+      "case": 78,
+      "callback": "0x8c700e86",
+      "target": "0x8c71934c",
+      "initial": "f0e0a8ba",
+      "matched": true
+    },
+    {
+      "case": 79,
+      "callback": "0x8c70a5ea",
+      "target": "0x8c719d28",
+      "initial": "cb9c9b9a",
+      "matched": true
+    },
+    {
+      "case": 80,
+      "callback": "0x8c7035b4",
+      "target": "0x8c711b48",
+      "initial": "26390053",
+      "matched": true
+    },
+    {
+      "case": 81,
+      "callback": "0x8c7018b0",
+      "target": "0x8c71e150",
+      "initial": "520b60a8",
+      "matched": true
+    },
+    {
+      "case": 82,
+      "callback": "0x8c70848e",
+      "target": "0x8c719124",
+      "initial": "fbe41d64",
+      "matched": true
+    },
+    {
+      "case": 83,
+      "callback": "0x8c707d84",
+      "target": "0x8c71a538",
+      "initial": "276f993c",
+      "matched": true
+    },
+    {
+      "case": 84,
+      "callback": "0x8c70d1d8",
+      "target": "0x8c71cfdc",
+      "initial": "66f47cc9",
+      "matched": true
+    },
+    {
+      "case": 85,
+      "callback": "0x8c708c2a",
+      "target": "0x8c7170c0",
+      "initial": "f6b0f602",
+      "matched": true
+    },
+    {
+      "case": 86,
+      "callback": "0x8c7081d6",
+      "target": "0x8c71445c",
+      "initial": "ed305d88",
+      "matched": true
+    },
+    {
+      "case": 87,
+      "callback": "0x8c70363c",
+      "target": "0x8c719cc8",
+      "initial": "4613c14b",
+      "matched": true
+    },
+    {
+      "case": 88,
+      "callback": "0x8c704ebc",
+      "target": "0x8c71343c",
+      "initial": "17d7cde6",
+      "matched": true
+    },
+    {
+      "case": 89,
+      "callback": "0x8c70597a",
+      "target": "0x8c71a440",
+      "initial": "ae9b7b41",
+      "matched": true
+    },
+    {
+      "case": 90,
+      "callback": "0x8c707124",
+      "target": "0x8c71e388",
+      "initial": "546797d6",
+      "matched": true
+    },
+    {
+      "case": 91,
+      "callback": "0x8c706a32",
+      "target": "0x8c716a04",
+      "initial": "29c5d8df",
+      "matched": true
+    },
+    {
+      "case": 92,
+      "callback": "0x8c709f06",
+      "target": "0x8c711c00",
+      "initial": "e26c4f07",
+      "matched": true
+    },
+    {
+      "case": 93,
+      "callback": "0x8c70b81e",
+      "target": "0x8c717d3c",
+      "initial": "a572c4cb",
+      "matched": true
+    },
+    {
+      "case": 94,
+      "callback": "0x8c701024",
+      "target": "0x8c71c6b8",
+      "initial": "5a481127",
+      "matched": true
+    },
+    {
+      "case": 95,
+      "callback": "0x8c709a6a",
+      "target": "0x8c71f7ec",
+      "initial": "4efc1035",
+      "matched": true
+    },
+    {
+      "case": 96,
+      "callback": "0x8c70236e",
+      "target": "0x8c713504",
+      "initial": "5f14200e",
+      "matched": true
+    },
+    {
+      "case": 97,
+      "callback": "0x8c709cf0",
+      "target": "0x8c71c0d8",
+      "initial": "0124d711",
+      "matched": true
+    },
+    {
+      "case": 98,
+      "callback": "0x8c701b18",
+      "target": "0x8c71d384",
+      "initial": "a486e273",
+      "matched": true
+    },
+    {
+      "case": 99,
+      "callback": "0x8c704b52",
+      "target": "0x8c717094",
+      "initial": "bbb04a74",
+      "matched": true
+    },
+    {
+      "case": 100,
+      "callback": "0x8c708e44",
+      "target": "0x8c718f2c",
+      "initial": "99b1bc24",
+      "matched": true
+    },
+    {
+      "case": 101,
+      "callback": "0x8c702d98",
+      "target": "0x8c719b90",
+      "initial": "1a435730",
+      "matched": true
+    },
+    {
+      "case": 102,
+      "callback": "0x8c705050",
+      "target": "0x8c71e3bc",
+      "initial": "0a343df0",
+      "matched": true
+    },
+    {
+      "case": 103,
+      "callback": "0x8c701e00",
+      "target": "0x8c7199a8",
+      "initial": "42f1a13b",
+      "matched": true
+    },
+    {
+      "case": 104,
+      "callback": "0x8c700952",
+      "target": "0x8c710bcc",
+      "initial": "8d667f6c",
+      "matched": true
+    },
+    {
+      "case": 105,
+      "callback": "0x8c70c3ac",
+      "target": "0x8c716718",
+      "initial": "c51e1290",
+      "matched": true
+    },
+    {
+      "case": 106,
+      "callback": "0x8c7067c6",
+      "target": "0x8c71f074",
+      "initial": "f2be53b7",
+      "matched": true
+    },
+    {
+      "case": 107,
+      "callback": "0x8c7038be",
+      "target": "0x8c71d370",
+      "initial": "b4da9193",
+      "matched": true
+    },
+    {
+      "case": 108,
+      "callback": "0x8c70f514",
+      "target": "0x8c71e9f8",
+      "initial": "a5362cb6",
+      "matched": true
+    },
+    {
+      "case": 109,
+      "callback": "0x8c705e26",
+      "target": "0x8c71e6a8",
+      "initial": "3c05f60b",
+      "matched": true
+    },
+    {
+      "case": 110,
+      "callback": "0x8c70ab8c",
+      "target": "0x8c71d3dc",
+      "initial": "d5f0b80f",
+      "matched": true
+    },
+    {
+      "case": 111,
+      "callback": "0x8c709980",
+      "target": "0x8c716d34",
+      "initial": "3555f714",
+      "matched": true
+    },
+    {
+      "case": 112,
+      "callback": "0x8c70dc20",
+      "target": "0x8c7143a0",
+      "initial": "9901428e",
+      "matched": true
+    },
+    {
+      "case": 113,
+      "callback": "0x8c70d46a",
+      "target": "0x8c71e1a0",
+      "initial": "203358ab",
+      "matched": true
+    },
+    {
+      "case": 114,
+      "callback": "0x8c707772",
+      "target": "0x8c711d28",
+      "initial": "d578b90a",
+      "matched": true
+    },
+    {
+      "case": 115,
+      "callback": "0x8c70e584",
+      "target": "0x8c719254",
+      "initial": "c631890f",
+      "matched": true
+    },
+    {
+      "case": 116,
+      "callback": "0x8c70392a",
+      "target": "0x8c71e208",
+      "initial": "5528a8ae",
+      "matched": true
+    },
+    {
+      "case": 117,
+      "callback": "0x8c70939a",
+      "target": "0x8c71ecf4",
+      "initial": "b3e7dfbb",
+      "matched": true
+    },
+    {
+      "case": 118,
+      "callback": "0x8c703fb2",
+      "target": "0x8c718958",
+      "initial": "9021fd41",
+      "matched": true
+    },
+    {
+      "case": 119,
+      "callback": "0x8c7072d4",
+      "target": "0x8c71b5c0",
+      "initial": "7d3fbac6",
+      "matched": true
+    },
+    {
+      "case": 120,
+      "callback": "0x8c70af96",
+      "target": "0x8c717834",
+      "initial": "c95a74c7",
+      "matched": true
+    },
+    {
+      "case": 121,
+      "callback": "0x8c70260e",
+      "target": "0x8c71357c",
+      "initial": "bfb5808b",
+      "matched": true
+    },
+    {
+      "case": 122,
+      "callback": "0x8c70de02",
+      "target": "0x8c7188b0",
+      "initial": "e78575fe",
+      "matched": true
+    },
+    {
+      "case": 123,
+      "callback": "0x8c70895e",
+      "target": "0x8c7179a4",
+      "initial": "8f460c2a",
+      "matched": true
+    },
+    {
+      "case": 124,
+      "callback": "0x8c70928e",
+      "target": "0x8c71dfe4",
+      "initial": "52b87ba4",
+      "matched": true
+    },
+    {
+      "case": 125,
+      "callback": "0x8c702a2c",
+      "target": "0x8c713b38",
+      "initial": "92aa3bd6",
+      "matched": true
+    },
+    {
+      "case": 126,
+      "callback": "0x8c702bb2",
+      "target": "0x8c71f444",
+      "initial": "74f51afb",
+      "matched": true
+    },
+    {
+      "case": 127,
+      "callback": "0x8c70c636",
+      "target": "0x8c71a020",
+      "initial": "464923e4",
+      "matched": true
+    }
+  ]
+}

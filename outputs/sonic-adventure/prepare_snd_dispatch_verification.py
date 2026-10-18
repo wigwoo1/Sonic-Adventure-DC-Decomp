@@ -1,0 +1,20 @@
+from pathlib import Path
+p=Path(__file__).resolve().parent
+b=(p/'build_sound_aiff_transfer_dispatch.ps1').read_text().replace('aiff_transfer8_step','snd_transfer8_step').replace('aiff_transfer_step','snd_transfer16_step').replace('aiff_transfer_dispatch','snd_transfer_dispatch')
+b=b.replace("-o (Join-Path", "(Join-Path $PSScriptRoot 'source/sa_sound_snd_table_transfer_step.c') -o (Join-Path")
+(p/'build_sound_snd_transfer_dispatch.ps1').write_text(b)
+s=(p/'verify_sound_aiff_transfer_dispatch.py').read_text().replace('sound_aiff_transfer_dispatch','sound_snd_transfer_dispatch')
+s=s.replace("(0x8c669af2,'sa_sound_aiff_transfer8_step'),(0x8c6699d4,'sa_sound_aiff_transfer_step')", "(0x8c66a13c,'sa_sound_snd_transfer8_step'),(0x8c66a01c,'sa_sound_snd_transfer16_step'),(0x8c66a244,'sa_sound_snd_table_transfer_step')")
+s=s.replace('format_flag,phase,channels,frames,ready,bank','format_flag,phase,channels,frames,ready,bank,capacity')
+s=s.replace('[0,1,3],[0,1],[0,0x200000]):','[0,1,3,128],[0,1],[0,0x200000],[2,128]):')
+s=s.replace('(0x54,2)','(0x54,capacity)').replace('(0x6c,8)','(0x6c,256)')
+s=s.replace('samples=[0x00ff,0x8001,0x1234,0xffff,0xabcd,0x0100]', 'samples=([0x00ff,0x8001,0x1234,0xffff,0xabcd,0x0100]*43)[:256]')
+s=s.replace('if format_flag==1:samples=[0,127,128,255,1,254]','if format_flag in (1,2):samples=list(range(256))')
+s=s.replace("data=bytes(samples) if format_flag==1 else struct.pack('>6H',*samples)","data=bytes(samples) if format_flag in (1,2) else struct.pack('>256H',*samples)")
+s=s.replace('0xa40040','0xa40400').replace('bytes([0x55])*64','bytes([0x55])*1024').replace('bytearray([0x55])*64','bytearray([0x55])*1024')
+s=s.replace('s.pc=0x8c669bfc','s.pc=0x8c66a348').replace('n=min(frames,2)','n=min(frames,capacity)')
+s=s.replace("(samples[channels*i]<<8) if format_flag==1 else samples[channels*i]", "convert(samples[channels*i])").replace("(samples[2*i+1]<<8) if format_flag==1 else samples[2*i+1]", "convert(samples[2*i+1])")
+s=s.replace('target=bytearray([0x55])*1024', "target=bytearray([0x55])*1024\n def convert(value):\n  if format_flag==2:return struct.unpack_from('<H',binary,0x66c3ec+value*2)[0]\n  return value<<8 if format_flag==1 else value")
+s=s.replace('2*(9+i)','2*(257+i)').replace('n*channels*2,n','n*channels*(1 if format_flag in (1,2) else 2),n')
+s=s[:s.index("(out/'analysis/")]+"(out/'analysis/sound_snd_transfer_dispatch_verification.json').write_text(json.dumps(dict(cases_passed=cases,scope='Native14-instruction SND dispatcher66a348 with native130-instruction table transfer66a244,125-instruction8-bit66a13c,137-instruction16-bit66a01c and file pending getter.1280 full retail RAM/CPU/FPU/SR/PR/MACL and callback-trace comparisons: selector0/1/2/ffff/8001,phases0..3,mono/stereo,frames0/1/3/128,pending0/1,banks,capacity2/128. Independent exact output using separately read retail table67c3ec for selector2,raw byte shift for1,BE16 conversion otherwise. All256 table indexes exercised by stereo128-frame fixture. Offset1,separation256,buffer/source guards,phase/count/submission-length checks. Query/submission callbacks modeled; physical audio/fullgame unverified.'),indent=2)+'\\n')\nprint(cases,'SND dispatch comparisons passed')\n"
+(p/'verify_sound_snd_transfer_dispatch.py').write_text(s)

@@ -1,0 +1,14 @@
+{
+  "address": "0x8c669014",
+  "end_exclusive": "0x8c66906e",
+  "instruction_count": 45,
+  "source": "source/sa_sound_buffer_read.c",
+  "strict_build_passed": true,
+  "behavior_verified": false,
+  "observed_behavior": "Checks R5 destination and R6 byte length alignment; calls G2 read10d460 with sourceR4+A0800000,stride4,word count,stack flags1/1; stores lower return and returns own alignment status.",
+  "next_action": "Verify alignment rejection and native G2 read/arm/wait/release with simulated MMIO; integrate into buffered transfer.",
+  "limits": [
+    "Earlier buffered-transfer verifier used a synthetic RAM copy at669014; it proves caller control/arguments under modeled service,not G2 read semantics.",
+    "Actual sound memory read and full game unverified."
+  ]
+}

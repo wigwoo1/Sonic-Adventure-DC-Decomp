@@ -1,0 +1,62 @@
+address	opcode	instruction	references
+8c644b6e	2fe6	mov.l r14,@-r15	DATA:Stack[-0x4] 
+8c644b70	2fd6	mov.l r13,@-r15	DATA:Stack[-0x8] 
+8c644b72	2fc6	mov.l r12,@-r15	DATA:Stack[-0xc] 
+8c644b74	4f22	sts.l PR,@-r15	DATA:Stack[-0x10] 
+8c644b76	7ffc	add #-0x4,r15	
+8c644b78	d548	mov.l 0x8c644c9c,r5	READ:8c644c9c=8c890680 
+8c644b7a	ec34	mov #0x34,r12	
+8c644b7c	e408	mov #0x8,r4	
+8c644b7e	ee00	mov #0x0,r14	
+8c644b80	ec7	mul.l r12,r14	
+8c644b82	31a	sts MACL,r3	
+8c644b84	335c	add r5,r3	
+8c644b86	6232	mov.l @r3,r2	READ:8c8906b4 
+8c644b88	2228	tst r2,r2	
+8c644b8a	8902	bt 0x8c644b92	CONDITIONAL_JUMP:8c644b92=880860e3 
+8c644b8c	7e01	add #0x1,r14	
+8c644b8e	3e43	cmp/ge r4,r14	
+8c644b90	8bf6	bf 0x8c644b80	CONDITIONAL_JUMP:8c644b80=31a0ec7 
+8c644b92	60e3	mov r14,r0	
+8c644b94	8808	cmp/eq #0x8,r0	
+8c644b96	8b01	bf 0x8c644b9c	CONDITIONAL_JUMP:8c644b9c=d3400ec7 
+8c644b98	a01f	bra 0x8c644bda	UNCONDITIONAL_JUMP:8c644bda=4f267f04 
+8c644b9a	e000	_mov #0x0,r0	
+8c644b9c	ec7	mul.l r12,r14	
+8c644b9e	d340	mov.l 0x8c644ca0,r3	READ:8c644ca0=8c10d31c 
+8c644ba0	e634	mov #0x34,r6	
+8c644ba2	d1a	sts MACL,r13	
+8c644ba4	3d5c	add r5,r13	
+8c644ba6	e500	mov #0x0,r5	
+8c644ba8	430b	jsr @r3	COMPUTED_CALL:8c10d31c=6373e700 
+8c644baa	64d3	_mov r13,r4	
+8c644bac	e201	mov #0x1,r2	
+8c644bae	67d3	mov r13,r7	
+8c644bb0	e300	mov #0x0,r3	
+8c644bb2	2d22	mov.l r2,@r13	WRITE:8c8906e8 
+8c644bb4	7730	add #0x30,r7	
+8c644bb6	6233	mov r3,r2	
+8c644bb8	d53a	mov.l 0x8c644ca4,r5	READ:8c644ca4=ac44 
+8c644bba	946e	mov.w 0x8c644c9a,r4	READ:8c644c9a=68001f4 
+8c644bbc	1de1	mov.l r14,@(0x4,r13)	WRITE:8c8906ec 
+8c644bbe	1d32	mov.l r3,@(0x8,r13)	WRITE:8c8906f0 
+8c644bc0	1d33	mov.l r3,@(0xc,r13)	WRITE:8c8906f4 
+8c644bc2	d339	mov.l 0x8c644ca8,r3	READ:8c644ca8=8c65adc0 
+8c644bc4	2f72	mov.l r7,@r15	DATA:Stack[-0x14] 
+8c644bc6	7702	add #0x2,r7	
+8c644bc8	430b	jsr @r3	COMPUTED_CALL:8c65adc0=4f22ffcb 
+8c644bca	66f2	_mov.l @r15,r6	DATA:Stack[-0x14] 
+8c644bcc	d234	mov.l 0x8c644ca0,r2	READ:8c644ca0=8c10d31c 
+8c644bce	64d3	mov r13,r4	
+8c644bd0	e608	mov #0x8,r6	
+8c644bd2	e500	mov #0x0,r5	
+8c644bd4	420b	jsr @r2	COMPUTED_CALL:8c10d31c=6373e700 
+8c644bd6	7428	_add #0x28,r4	
+8c644bd8	60d3	mov r13,r0	DATA:8c8906e8 
+8c644bda	7f04	add #0x4,r15	
+8c644bdc	4f26	lds.l @r15+,PR	DATA:Stack[-0x10] 
+8c644bde	6cf6	mov.l @r15+,r12	DATA:Stack[-0xc] 
+8c644be0	6df6	mov.l @r15+,r13	DATA:Stack[-0x8] 
+8c644be2	b	rts	
+8c644be4	6ef6	_mov.l @r15+,r14	
+8c644be6	7ff4	add #-0xc,r15	

@@ -1,0 +1,68 @@
+address	opcode	instruction	references
+8c65adc0	ffcb	fmov.s fr12,@-r15	DATA:Stack[-0x4] 
+8c65adc2	4f22	sts.l PR,@-r15	DATA:Stack[-0x8] 
+8c65adc4	7ff0	add #-0x10,r15	
+8c65adc6	f39d	fldi1 fr3	
+8c65adc8	f330	fadd fr3,fr3	
+8c65adca	c75e	mova 0x8c65af44,r0	DATA:8c65af44=40c90fda 
+8c65adcc	1f43	mov.l r4,@(0xc,r15)	DATA:Stack[-0xc] 
+8c65adce	1f52	mov.l r5,@(0x8,r15)	DATA:Stack[-0x10] 
+8c65add0	1f61	mov.l r6,@(0x4,r15)	DATA:Stack[-0x14] 
+8c65add2	f36d	fsqrt fr3	
+8c65add4	2f72	mov.l r7,@r15	DATA:Stack[-0x18] 
+8c65add6	53f3	mov.l @(0xc,r15),r3	DATA:Stack[-0xc] 
+8c65add8	f108	fmov.s @r0,fr1	READ:8c65af44=40c90fda 
+8c65adda	435a	lds r3,FPUL	
+8c65addc	53f2	mov.l @(0x8,r15),r3	DATA:Stack[-0x10] 
+8c65adde	f22d	float FPUL,fr2	
+8c65ade0	435a	lds r3,FPUL	
+8c65ade2	d359	mov.l 0x8c65af48,r3	READ:8c65af48=8c10f90c 
+8c65ade4	f02d	float FPUL,fr0	
+8c65ade6	f212	fmul fr1,fr2	
+8c65ade8	fc3c	fmov fr3,fr12	
+8c65adea	f42c	fmov fr2,fr4	
+8c65adec	430b	jsr @r3	COMPUTED_CALL:8c10f90c=7ffc4f22 
+8c65adee	f403	_fdiv fr0,fr4	
+8c65adf0	f39d	fldi1 fr3	
+8c65adf2	f330	fadd fr3,fr3	
+8c65adf4	f29d	fldi1 fr2	
+8c65adf6	fc01	fsub fr0,fr12	
+8c65adf8	f24d	fneg fr2	
+8c65adfa	c754	mova 0x8c65af4c,r0	DATA:8c65af4c=46000000 
+8c65adfc	53f1	mov.l @(0x4,r15),r3	DATA:Stack[-0x14] 
+8c65adfe	f36d	fsqrt fr3	
+8c65ae00	f1cc	fmov fr12,fr1	
+8c65ae02	f0cc	fmov fr12,fr0	
+8c65ae04	f5cc	fmov fr12,fr5	
+8c65ae06	f43c	fmov fr3,fr4	
+8c65ae08	f420	fadd fr2,fr4	
+8c65ae0a	f3cc	fmov fr12,fr3	
+8c65ae0c	f141	fsub fr4,fr1	
+8c65ae0e	f340	fadd fr4,fr3	
+8c65ae10	f312	fmul fr1,fr3	
+8c65ae12	f36d	fsqrt fr3	
+8c65ae14	f031	fsub fr3,fr0	
+8c65ae16	f34c	fmov fr4,fr3	
+8c65ae18	f40c	fmov fr0,fr4	
+8c65ae1a	f433	fdiv fr3,fr4	
+8c65ae1c	f308	fmov.s @r0,fr3	READ:8c65af4c=46000000 
+8c65ae1e	c74c	mova 0x8c65af50,r0	DATA:8c65af50=45800000 
+8c65ae20	f14c	fmov fr4,fr1	
+8c65ae22	f132	fmul fr3,fr1	
+8c65ae24	f13d	ftrc fr1,FPUL	
+8c65ae26	f14c	fmov fr4,fr1	
+8c65ae28	f142	fmul fr4,fr1	
+8c65ae2a	25a	sts FPUL,r2	
+8c65ae2c	2321	mov.w r2,@r3	
+8c65ae2e	63f2	mov.l @r15,r3	DATA:Stack[-0x18] 
+8c65ae30	f008	fmov.s @r0,fr0	READ:8c65af50=45800000 
+8c65ae32	f102	fmul fr0,fr1	
+8c65ae34	f14d	fneg fr1	
+8c65ae36	f13d	ftrc fr1,FPUL	
+8c65ae38	25a	sts FPUL,r2	
+8c65ae3a	2321	mov.w r2,@r3	
+8c65ae3c	7f10	add #0x10,r15	
+8c65ae3e	4f26	lds.l @r15+,PR	DATA:Stack[-0x8] 
+8c65ae40	b	rts	
+8c65ae42	fcf9	_fmov.s @r15+,fr12	
+8c65ae44	2fe6	mov.l r14,@-r15	DATA:Stack[-0x4] 

@@ -1,0 +1,42 @@
+{
+  "binary_sha256": "45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a",
+  "direct_byte_checks_passed": 7,
+  "primary_dispatch_callers": [
+    "0x8c09a420",
+    "0x8c08f780",
+    "0x8c08f28a",
+    "0x8c04e714",
+    "0x8c04da20",
+    "0x8c04ca40"
+  ],
+  "secondary_dispatch_callers": [
+    "0x8c04ecd0",
+    "0x8c04eb7e"
+  ],
+  "confirmed_path": [
+    "0x8c04ea4a loop calls 0x8c04e714 at 0x8c04ea90",
+    "0x8c04e714 calls all-level primary dispatcher 0x8c0988a4 at 0x8c04e732"
+  ],
+  "loop_observations": {
+    "iteration_counter": "0x8c754ec8",
+    "base_iteration_limit": "0x8c754ec4",
+    "dynamic_extra_iterations_register": "r12",
+    "float_comparison_constant_bits": "0x44e74000",
+    "float_comparison_constant_value": 1850.0,
+    "inter_iteration_helper": "0x8c0517f6",
+    "final_helper": "0x8c08a4ba"
+  },
+  "limitations": [
+    "Callers are references in the current analyzed project; completeness is unproven.",
+    "Float comparison constant is not yet established as a time unit or frame duration.",
+    "Timing helper bodies, hardware interaction, entry FPSCR, and full loop behavior remain unrecovered.",
+    "No FPS mode implemented or measured."
+  ],
+  "evidence": [
+    "analysis/instructions/scheduler_references.tsv",
+    "analysis/instructions/8c04e714.tsv",
+    "analysis/instructions/8c04ea4a.tsv",
+    "analysis/instructions/8c04eb7e.tsv",
+    "analysis/instructions/8c04ecd0.tsv"
+  ]
+}

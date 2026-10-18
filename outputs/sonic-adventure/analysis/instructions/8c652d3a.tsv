@@ -1,0 +1,15 @@
+address	opcode	instruction	references
+8c652d3a	4f22	sts.l PR,@-r15	DATA:Stack[-0x4] 
+8c652d3c	7ffc	add #-0x4,r15	
+8c652d3e	65f3	mov r15,r5	
+8c652d40	d317	mov.l 0x8c652da0,r3	READ:8c652da0=7fffffff 
+8c652d42	d216	mov.l 0x8c652d9c,r2	READ:8c652d9c=8c653444 
+8c652d44	ff4a	fmov.s fr4,@r15	DATA:Stack[-0x8] 
+8c652d46	6552	mov.l @r5,r5	DATA:Stack[-0x8] 
+8c652d48	2539	and r3,r5	
+8c652d4a	420b	jsr @r2	COMPUTED_CALL:8c653444=343cd31e 
+8c652d4c	e478	_mov #0x78,r4	
+8c652d4e	7f04	add #0x4,r15	
+8c652d50	4f26	lds.l @r15+,PR	DATA:Stack[-0x4] 
+8c652d52	b	rts	
+8c652d54	e000	_mov #0x0,r0	

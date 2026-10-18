@@ -1,0 +1,112 @@
+Environment UV / constant-factor primitive family
+17 October 2026 - VERIFIED within the bounded scope below.
+Overall completion: 10% estimated weighted project milestones, not code coverage.
+Goal active. Continue Sol High with lower near-plane clipper 8c61295a.
+
+Recovered source
+  8c61f108..8c61f7ac: 818 original instruction rows
+  8c61f7c8..8c61ffb4: 971 original instruction rows
+  source/sa_main_dispatch_environment_constant_primitives.c
+  source/sa_main_dispatch_environment_constant_primitives_connected.c
+Both complete bodies are byte-checked annotated static C, retaining instruction
+order, register effects and delay slots without runtime opcode decoding. Names
+are descriptive inferences. Prior sources, reports, DLLs and disc files remain.
+
+Observed behavior
+The material loop selects this pair for layouts 2600000 or 3600000 hex, with
+secondary-header selection handled separately. UVs are generated from each cached
+normal and the matrix published through 8c890238. In ordinary single precision:
+  U = 0.5 + 0.5 * dot(normal, matrix column 0)
+  V = 0.5 + 0.5 * dot(normal, matrix column 1)
+The original multiply/FMAC order is retained; segment UV tables are not used.
+
+Every emitted ordinary vertex receives factor 1.0, including the first two. No
+lighting normalizer executes. Packets contain control, projected x/y/reciprocal
+depth, U/V, factor 1.0 and an untouched final word. Direct input caches remain
+unchanged. Triangle, quad and strip loops retain original winding/rejection,
+counters and cursor effects.
+
+Near crossings stage three vertex pointers to lower helper 8c61295a. Alternate
+topology c000 delegates to 8c614796 / 8c616844 after the parent's original matrix/
+bank preparation. These three lower bodies remain explicit fixtures in this
+checkpoint; their output beyond those boundaries is not yet proved.
+With this pair recovered, all primitive parent targets in the tested mesh chain
+have C bodies. This is a bounded code-recovery checkpoint, not complete visible
+rendering or a playable port.
+
+Build and tests actually passed
+- Strict Clang build: -O2 -Wall -Wextra -Werror; separate connected DLL.
+- 666 original-code comparisons: 224 plain, 338 clipped, four draws, four particle
+  callbacks and 96 connected meshes.
+- All 1,785 reachable rows, 72 conditional outcomes and six call sites covered.
+  Four additional switch rows/two outcomes have exact-byte checks and exhaustive
+  proofs over all 65,536 input words under the c000 mask.
+- Full 16 MiB RAM, GPRs/SR/PR, both FPU banks/FPSCR, FPUL/MACL, ordered boundaries
+  and queue contents/events agree with original execution, including partial state.
+- 468 cases complete, 192 match numeric/precision guards (-1), three match missing
+  lower services (-2) and three propagate deliberately injected lower errors (-17).
+  Guarded/error cases compare partial state rather than completed draws.
+- 1,224 ordered boundaries, 12,256 numerical operations, 928 queue transfers and
+  9,856 queue events checked. No normalizer executes. There are 184 external
+  boundaries for the three lower fixtures.
+- 192 independent cases verify normal-derived UVs, exact factor 1.0 on every
+  emitted triangle vertex, retained padding, direct cache preservation, published
+  matrix contents, counters/cursors and/or near-helper vertex-pointer staging.
+- Inputs include identity and mixed/negative matrix coefficients, distinct
+  normals, successive faces with changing indices/winding, accepted/rejected and
+  degenerate inputs, both FPU banks/queue halves and inherited precision/rounding
+  variants. Independent packet math excludes unsupported precision modes; those
+  retain original-instruction comparisons. Inherited numerical oracle limits remain.
+- All 96 meshes use native material setup, real projection/classification,
+  primary/secondary extended headers, a new parent and finalization. Both material
+  layouts, windings, banks and cursor halves are covered. Thirty-two ordinary and
+  32 screen-rejected cases stay native throughout; 32 near crossings check pointer
+  staging to a fixture, not its clipped output.
+- 120 lifetime regressions / 984 stages passed: 23,264 boundaries, 104,016 numerical
+  operations, 10,600 queue transfers, 117,808 queue events and zero external game
+  services. Unchanged original models do not reach this new pair. Existing native
+  flat paths and independent particle/pool/heap checks are regression evidence.
+- Final integrity checks passed: generated C/manifest are byte-identical, three
+  reports match pinned inputs, repeat registration adds zero duplicates, four
+  Python and two PowerShell scripts parse. Dispatcher mapping verifies 658
+  pointer loads, 80 spans and 83 selectors. Audits find zero evidence errors and
+  zero reports needing source-hash refresh. The app goal remains active.
+
+Limits and next work
+Return guards at 8c61f7a8 / 8c61ffb0 stop before RTS delay-slot effects if a saved
+return address differs from its incoming value. They retain the host unsupported-
+transfer policy; this suite did not trigger them. Physical fault dispatch and
+arbitrary indirect returns remain unimplemented.
+Constructed streams, coherent RAM, MMU-off queues and inherited numerical guards
+bound results. GPU FIFO/pixels, MMU-on behavior, physical cache timing, complete
+frame driving, full gameplay and playable ports remain unverified. Earlier
+face-family live-register caller contracts remain unresolved. Lifetime pass order
+is host-selected. The whole historical workflow was not rerun; the new linked
+build and focused/lifetime suites were run.
+
+Registry: 1,092 entries / 1,089 unique module-address pairs, with 1,040 matches
+among 10,875 indexed candidates. Another 211 non-texture binaries lack function
+indexes. These discovery counts do not measure whole-game code coverage.
+Next helpers: 8c61295a (611 rows), 8c614796 (254 rows), 8c616844 (416 rows).
+Their 1,281 exported rows are byte-checked as analysis in
+analysis/main_dispatch_environment_constant_lower_inventory.json. Exports and
+draft pseudocode are not recovered C or runtime proof. These three lower helpers
+are the remaining explicit primitive fixtures in this tested mesh chain.
+Full decompilation, playable PC/Android/stereo 3DS ports, 60/120/240 FPS, 8K,
+SUPIR/settings and later N64/PS1 work remain unfinished. Texture Off must disable
+sampling and use vertex colours/material fallback, including when HD is enabled.
+
+Evidence and simple check
+Open this guide and SOURCE_HANDOFF.txt. Focused report
+analysis/main_dispatch_environment_constant_primitives_verification.json has
+cases_passed=666, rows_covered=1785, conditional_edges_covered=72 and
+call_sites_covered=6. Linked lifetime report
+analysis/main_dispatch_environment_constant_primitives_lifecycle_verification.json
+has lifecycles_passed=120 and stage_comparisons=984. No playable game exists yet.
+Scripts: recover_main_dispatch_environment_constant_primitives.py,
+build_main_dispatch_environment_constant_primitives.ps1,
+verify_main_dispatch_environment_constant_primitives.py,
+verify_main_dispatch_environment_constant_primitives_lifecycle.py,
+register_main_dispatch_environment_constant_primitives.py.
+Recommended next model: Sol High; lower clipping and alternate helpers still need
+instruction-level reverse engineering. No model switch or pause advised.

@@ -1,0 +1,58 @@
+address	opcode	instruction	references
+8c10fb5c	2f26	mov.l r2,@-r15	DATA:Stack[-0x4] 
+8c10fb5e	2f36	mov.l r3,@-r15	DATA:Stack[-0x8] 
+8c10fb60	2f46	mov.l r4,@-r15	DATA:Stack[-0xc] 
+8c10fb62	8800	cmp/eq #0x0,r0	
+8c10fb64	8912	bt 0x8c10fb8c	CONDITIONAL_JUMP:8c10fb8c=63f664f6 
+8c10fb66	6423	mov r2,r4	
+8c10fb68	340c	add r0,r4	
+8c10fb6a	6024	mov.b @r2+,r0	
+8c10fb6c	2100	mov.b r0,@r1	
+8c10fb6e	3426	cmp/hi r2,r4	
+8c10fb70	8b0c	bf 0x8c10fb8c	CONDITIONAL_JUMP:8c10fb8c=63f664f6 
+8c10fb72	6024	mov.b @r2+,r0	
+8c10fb74	8011	mov.b r0,@(0x1,r1)	
+8c10fb76	3426	cmp/hi r2,r4	
+8c10fb78	8b08	bf 0x8c10fb8c	CONDITIONAL_JUMP:8c10fb8c=63f664f6 
+8c10fb7a	6024	mov.b @r2+,r0	
+8c10fb7c	8012	mov.b r0,@(0x2,r1)	
+8c10fb7e	3426	cmp/hi r2,r4	
+8c10fb80	8b04	bf 0x8c10fb8c	CONDITIONAL_JUMP:8c10fb8c=63f664f6 
+8c10fb82	6024	mov.b @r2+,r0	
+8c10fb84	8013	mov.b r0,@(0x3,r1)	
+8c10fb86	3426	cmp/hi r2,r4	
+8c10fb88	7104	add #0x4,r1	
+8c10fb8a	89ee	bt 0x8c10fb6a	CONDITIONAL_JUMP:8c10fb6a=21006024 
+8c10fb8c	64f6	mov.l @r15+,r4	DATA:Stack[-0xc] 
+8c10fb8e	63f6	mov.l @r15+,r3	DATA:Stack[-0x8] 
+8c10fb90	b	rts	
+8c10fb92	62f6	_mov.l @r15+,r2	
+8c10fb94	f64c	fmov fr4,fr6	
+8c10fb96	f642	fmul fr4,fr6	
+8c10fb98	d506	mov.l 0x8c10fbb4,r5	READ:8c10fbb4=8c1603a4 
+8c10fb9a	e405	mov #0x5,r4	
+8c10fb9c	f559	fmov.s @r5+,fr5	READ:8c1603a4=bdba2de9 
+8c10fb9e	f359	fmov.s @r5+,fr3	READ:8c1603a8=3de38e38 READ:8c1603ac=be124925 
+8c10fba0	74ff	add #-0x1,r4	
+8c10fba2	f06c	fmov fr6,fr0	
+8c10fba4	4415	cmp/pl r4	
+8c10fba6	f35e	fmac fr0,fr5,fr3	
+8c10fba8	8df9	bt/s 0x8c10fb9e	CONDITIONAL_JUMP:8c10fb9e=74fff359 
+8c10fbaa	f53c	_fmov fr3,fr5	
+8c10fbac	f04c	fmov fr4,fr0	
+8c10fbae	f65c	fmov fr5,fr6	
+8c10fbb0	b	rts	
+8c10fbb2	f062	_fmul fr6,fr0	
+8c10fbb8	2fe6	mov.l r14,@-r15	DATA:Stack[-0x4] 
+8c10fbba	7fe4	add #-0x1c,r15	
+8c10fbbc	66f3	mov r15,r6	
+8c10fbbe	7618	add #0x18,r6	
+8c10fbc0	d536	mov.l 0x8c10fc9c,r5	READ:8c10fc9c=7f800000 
+8c10fbc2	6ef3	mov r15,r14	
+8c10fbc4	7e14	add #0x14,r14	
+8c10fbc6	f64a	fmov.s fr4,@r6	DATA:Stack[-0x8] 
+8c10fbc8	fe5a	fmov.s fr5,@r14	DATA:Stack[-0xc] 
+8c10fbca	67f3	mov r15,r7	
+8c10fbcc	6362	mov.l @r6,r3	DATA:Stack[-0x8] 
+8c10fbce	2359	and r5,r3	
+8c10fbd0	3350	cmp/eq r5,r3	

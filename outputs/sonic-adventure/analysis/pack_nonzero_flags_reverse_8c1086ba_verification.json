@@ -1,0 +1,100 @@
+{
+  "module": "1ST_READ.BIN",
+  "load_address": "0x8c010000",
+  "address": "0x8c1086ba",
+  "end_exclusive": "0x8c108706",
+  "retail_span_sha256": "b150ad9597ece08b98095617497b4ce8dc3714d04046c0ca42e58530284973b6",
+  "source_sha256": "9853b7aac7bb38edaec2460a803ea2b5f279256bc67d1b040bd58c5d3baf7378",
+  "cases_passed": 12,
+  "comparison_level": "complete 16 MiB RAM and all GPR/SR/PR/PC state",
+  "scope": "Exact 76-byte fixed-size reverse byte order/LSB-first flag packer; tests all-zero/all-nonzero/patterned data, overlap, stack saves, and CPU outputs.",
+  "limitations": [
+    "Caller-specific meaning of the 0x600 input flag array remains unidentified."
+  ],
+  "cases": [
+    {
+      "case": 0,
+      "source": "0x8c740000",
+      "destination": "0x8c750000",
+      "input_pattern": 0,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 1,
+      "source": "0x8c742000",
+      "destination": "0x8c742000",
+      "input_pattern": 1,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 2,
+      "source": "0x8c744000",
+      "destination": "0x8c744001",
+      "input_pattern": 2,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 3,
+      "source": "0x8c746000",
+      "destination": "0x8c745fff",
+      "input_pattern": 3,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 4,
+      "source": "0x8c748000",
+      "destination": "0x8c750800",
+      "input_pattern": 4,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 5,
+      "source": "0x8c74a000",
+      "destination": "0x8c74a000",
+      "input_pattern": 5,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 6,
+      "source": "0x8c74c000",
+      "destination": "0x8c74c001",
+      "input_pattern": 6,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 7,
+      "source": "0x8c74e000",
+      "destination": "0x8c74dfff",
+      "input_pattern": 7,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 8,
+      "source": "0x8c750000",
+      "destination": "0x8c751000",
+      "input_pattern": 8,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 9,
+      "source": "0x8c752000",
+      "destination": "0x8c752000",
+      "input_pattern": 9,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 10,
+      "source": "0x8c754000",
+      "destination": "0x8c754001",
+      "input_pattern": 10,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 11,
+      "source": "0x8c756000",
+      "destination": "0x8c755fff",
+      "input_pattern": 11,
+      "ram_and_cpu_match": true
+    }
+  ]
+}

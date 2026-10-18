@@ -1,0 +1,63 @@
+import ctypes,itertools,json,hashlib,struct
+from verify_startup import ROOT,State,reference
+from verify_fpu_cleanup_transfer import Fpu
+from verify_tikal_controller import Call,P
+Vector=ctypes.CFUNCTYPE(ctypes.c_int,ctypes.c_void_p,ctypes.c_uint32,ctypes.POINTER(Fpu))
+def main():
+ out=ROOT/'outputs/sonic-adventure';module=(ROOT/'work/sonic-adventure/decoded/SONICADV/TIKAL_PROG.BIN').read_bytes();binary=(ROOT/'work/sonic-adventure/extracted/1ST_READ.BIN').read_bytes()
+ ram=bytearray(16*1024*1024);ram[0x10000:0x10000+len(binary)]=binary;ram[0xb00000:0xb00000+len(module)]=module;native=bytearray(ram);view=(ctypes.c_uint8*len(native)).from_buffer(native)
+ fn=ctypes.CDLL(str(ROOT/'work/sonic-adventure/build/tikal_position_rotations.dll')).sa_tikal_position_rotations
+ fn.argtypes=[ctypes.POINTER(ctypes.c_uint8),ctypes.POINTER(Fpu),P,P,P,P,P,ctypes.c_void_p,Call,Vector]
+ events=[];actual=[];ve=[];va=[];errors=[]
+ def effect(mem,r,sr,fp,target,pr):
+  trace=(target,tuple(r[4:8]),r[15],pr)
+  if mutate:struct.pack_into('<I',mem,0xa00138,0x8ca00d00)
+  r[0]=0x76543210;r[1]=0x11223344;r[2]=0x22334455;r[3]=0x33445566
+  return trace,sr^0x31
+ @Call
+ def call(ctx,target,m,fp,sr,r,pr):
+  try:trace,sr[0]=effect(native,r,sr[0],fp.contents,target,pr[0]);events.append(trace)
+  except Exception as ex:errors.append(str(ex));return -9
+  return 0
+ def hook(t):
+  def body(mem,r,sr):
+   trace,sr=effect(mem,r,sr,f,t,s.pr);actual.append(trace);return sr
+  return body
+ def arithmetic(word,fp,trace):
+  trace.append((word,bytes(fp)[:132]));bank=(fp.fpscr>>21)&1
+  if word==0xf0fd:fp.banks[bank][0:2]=[0x3f000001,0x3f800002]
+  elif word in [0xf1fd,0xf5fd]:
+   start=(word>>8)&12
+   for i,v in enumerate([0x3e800000,0xbf000000,0x3f800000,0]):fp.banks[bank][start+i]=v
+  elif word in [0xf0ed,0xf37d]:fp.banks[bank][3]=0x3f800000
+  else:raise AssertionError(hex(word))
+ @Vector
+ def vector(ctx,word,fp):
+  try:arithmetic(word,fp.contents,ve)
+  except Exception as ex:errors.append(str(ex));return -9
+  return 0
+ count=0
+ for bank,rm,sr0,angles,normalize,mutate,phase in itertools.product(range(2),range(2),[0,0x700083f3],[(0,0,0),(1,0,0),(0,1,0),(0,0,1),(0x80000000,0xffffffff,0x1234)],range(2),[0],[0,0x3f800000,0xbf800000]):
+  for mem in (ram,native):
+   mem[0xa00000:0xa01000]=bytes(4096);mem[0xf00000-64:0xf00000]=bytes(64);mem[0xa08000:0xa08200]=bytes(512)
+   struct.pack_into('<I',mem,0xa00138,0x8ca00b00);struct.pack_into('<I',mem,0xa00b0c,0x8ca00c00)
+   struct.pack_into('<3I',mem,0xa00114,*angles);struct.pack_into('<3I',mem,0xa00120,0x3f800000,0xbf800000,0x80000000)
+   struct.pack_into('<I',mem,0xa0031c,phase);struct.pack_into('<2I',mem,0x88f698,16,2);struct.pack_into('<I',mem,0x88f5f8,0x8ca08000);struct.pack_into('<I',mem,0x890070,normalize)
+   for i in range(16):struct.pack_into('<I',mem,0x67c640+i*4,0x3f800000 if i%5==0 else 0)
+  f=Fpu();f.fpscr=0x7f07c|(bank<<21)|rm;f.fpul=0x12345678
+  for b in range(2):
+   for i in range(16):f.banks[b][i]=0x3f800000+i*37
+  nf=Fpu.from_buffer_copy(f);s=State();s.r[:]=[0x12340000+i for i in range(16)];s.r[4]=0x8ca00100;s.r[5]=0x8ca00380;s.r[6]=0x8ca00200;s.r[15]=0x8cf00000;s.pc=0xcb007a0;s.pr=0x8c000100;s.sr=sr0
+  r=(ctypes.c_uint32*16)(*s.r);sr=ctypes.c_uint32(s.sr);pr=ctypes.c_uint32(s.pr);fpul=ctypes.c_uint32(f.fpul);macl=ctypes.c_uint32();events.clear();actual.clear();ve.clear();va.clear()
+  reference(ram,s,{t:hook(t) for t in []},f,vector_instruction=lambda w,fp:arithmetic(w,fp,va))
+  assert fn(view,ctypes.byref(nf),ctypes.byref(sr),r,ctypes.byref(pr),ctypes.byref(fpul),ctypes.byref(macl),None,call,vector)==0
+  nf.fpul=fpul.value
+  assert events==actual and ve==va,(bank,rm,sr0,angles,normalize,mutate,phase,'calls')
+  assert list(r)==list(s.r) and sr.value==s.sr and pr.value==s.pr and bytes(nf)==bytes(f) and ram==native,(bank,rm,sr0,angles,normalize,mutate,phase)
+  count+=1
+ assert not errors,errors
+ report=dict(cases_passed=count,module_sha256=hashlib.sha256(module).hexdigest(),source_sha256=hashlib.sha256((out/'source/tikal_position.c').read_bytes()).hexdigest(),scope='Whole position helper with native axis rotation, matrix push/pop and direction transform, original unhooked bodies executed. All registers/SR/PR/FPU/FPUL/stack/RAM/calls compared. Axis rotation helper bodies native; FSCA/FTRV/FIPR/FSRRA numerical outputs injected, scalar add/multiply native. Zero/mixed/high angles, normalize branches, phase +/-1/0, banks/RM0/1, cached node pointer maintained. PR=SZ=0 finite scalar scope; controller connection pending.')
+ report['dependency_source_sha256']={name:hashlib.sha256((out/'source'/name).read_bytes()).hexdigest() for name in ['sa_matrix_rotate_x.c','sa_matrix_rotate_y.c','sa_matrix_rotate_z.c','tikal_position_rotations.c', 'tikal_position.c', 'model_matrix_stack_push.c', 'model_matrix_stack_pop.c', 'model_direction_transform.c', 'sh4_add_sub.c', 'sh4_multiply.c', 'sh4_fmac.c']}
+ report['dll_sha256']=hashlib.sha256((ROOT/'work/sonic-adventure/build/tikal_position_rotations.dll').read_bytes()).hexdigest()
+ (out/'analysis/tikal_position_rotations_verification.json').write_text(json.dumps(report,indent=2)+'\n');print(count,'Tikal native-position comparisons passed')
+if __name__=='__main__':main()

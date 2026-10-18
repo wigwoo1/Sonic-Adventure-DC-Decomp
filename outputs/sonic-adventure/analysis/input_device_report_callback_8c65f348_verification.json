@@ -1,0 +1,52 @@
+{
+  "module": "1ST_READ.BIN",
+  "load_address": "0x8c010000",
+  "address": "0x8c65f348",
+  "end_exclusive": "0x8c65f390",
+  "indexed_instruction_bytes": 72,
+  "retail_span_sha256": "e7b61af401d18742e29fd46f18f5a596c813e125e9abe1decc8fe0176ca61eea",
+  "binary_sha256": "45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a",
+  "source_sha256": "555670e447030561efd0763518e0ea6666dec6f5d1ad95bf2ca71d2224917769",
+  "cases_passed": 5,
+  "comparison_level": "Complete 16 MiB RAM, all GPR/SR/PR/FPU state and external call arguments/order compared against retail SH-4 interpretation.",
+  "scope": "Recovers the report-condition gate, stack-alignment selection, report-service call, optional callback, and saved-register/PR effects.",
+  "limitations": [
+    "The wrapper at 0x8c10d400 is recovered and executed; its downstream formatter at 0x8c10dbc4 and the optional runtime callback are explicit no-effect fixtures.",
+    "This verifies the callback wrapper and stack ABI in synthetic object state, not report rendering or complete game behavior."
+  ],
+  "cases": [
+    {
+      "name": "report condition clear",
+      "calls": [],
+      "full_ram_gpr_sr_pr_fpu_and_call_trace_match": true
+    },
+    {
+      "name": "report with no optional callback",
+      "calls": [
+        "0x8c10dbc4"
+      ],
+      "full_ram_gpr_sr_pr_fpu_and_call_trace_match": true
+    },
+    {
+      "name": "report and optional callback",
+      "calls": [
+        "0x8c10dbc4",
+        "0x8c600200"
+      ],
+      "full_ram_gpr_sr_pr_fpu_and_call_trace_match": true
+    },
+    {
+      "name": "condition clear despite callback",
+      "calls": [],
+      "full_ram_gpr_sr_pr_fpu_and_call_trace_match": true
+    },
+    {
+      "name": "alternate stack alignment",
+      "calls": [
+        "0x8c10dbc4",
+        "0x8c600200"
+      ],
+      "full_ram_gpr_sr_pr_fpu_and_call_trace_match": true
+    }
+  ]
+}

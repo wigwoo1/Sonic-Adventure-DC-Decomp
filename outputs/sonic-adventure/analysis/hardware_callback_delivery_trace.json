@@ -1,0 +1,28 @@
+{
+  "binary_sha256": "45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a",
+  "direct_binary_checks_passed": 5,
+  "driver_entry_candidate": "0x8c652210",
+  "entry_evidence": "Register-save prologue following RTS/delay slot at 0x8c65220c..0e; original decoded flow reaches delivery loop.",
+  "status_register_address": "0xa05f6900",
+  "pending_callback_bits": "0x8c8a2ffc",
+  "callback_delivery_service": "0x8c652554",
+  "delivery_loop": [
+    "0x8c652494",
+    "0x8c6524bc"
+  ],
+  "behavior": "For pending indexed bit, clear pending flag, load callback argument from eight-byte table entry, call service with callback and argument; visit indices until index reaches nine.",
+  "evidence": [
+    "analysis/instructions/driver_entry_region.tsv",
+    "analysis/instructions/driver_reader_region.tsv"
+  ],
+  "next_work": [
+    "Seed and export entry candidate 0x8c652210",
+    "Recover status bit to pending callback bit mapping",
+    "Inspect callback service 0x8c652554 including FPU/SR handling",
+    "Trace installation of driver entry and verify event cadence"
+  ],
+  "limitations": [
+    "Entry is a candidate until registration/branch references confirm it.",
+    "No measured refresh rate or complete native timing behavior."
+  ]
+}

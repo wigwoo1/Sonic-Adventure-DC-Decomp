@@ -1,0 +1,121 @@
+Native distance and signed-square-root helpers
+17 October 2026 - helper bodies VERIFIED; original drawing PARTIALLY VERIFIED.
+Overall completion: 10% estimated weighted whole-project milestones, not code coverage.
+Goal active on Sol High. No model switch or pause advised.
+
+What changed
+Two original main-executable helpers now have complete guarded native bodies:
+  8c640128..8c640168: point distance, 32 instruction rows.
+  8c63a9c4..8c63a9d8: signed-square-root tail, ten rows.
+All 42 rows / 84 instruction bytes are checked against 1ST_READ.BIN. Both
+addresses receive their first registry entries. The previous limited signed-
+sqrt source/proof and unchanged native integer FSQRT backend are preserved;
+there is no duplicate credit for those earlier implementations.
+
+Source: source/sa_draw_distance_helpers.c
+Direct bridge: source/sa_draw_distance_helpers_connected.c
+Generator: recover_draw_distance_helpers.py
+Build: build_draw_distance_helpers.ps1
+Verifier: verify_draw_distance_helpers.py
+Proof: analysis/draw_distance_helpers_verification.json
+
+Original arithmetic and state
+R4/R5 point to three-coordinate records. The helper saves/restores its original
+registers and computes separately rounded differences dy, dx and dz. It squares
+dy first, then uses two fused multiply-add instructions: dx*dx+accumulator,
+then dz*dz+accumulator. These must not be replaced by reordered independent
+products/additions. It restores FR13/FR14/FR15 and R13/R14 before tail transfer,
+places the squared accumulation in FR4 and retains the original caller PR.
+
+The tail initializes FR0 to zero, compares 0>FR4 and copies FR4 to FR0. Negative
+inputs use FABS, FSQRT and FNEG; other inputs use FSQRT directly in the return
+delay slot. Raw wide moves, both bank selections, signed zero, comparison/FPSCR
+effects and reached arithmetic/memory/return guards are retained.
+The unchanged FSQRT primitive uses integer arithmetic for supported positive
+normal inputs, signed zero and positive infinity. Unsupported operands/modes
+and its inherited enabled-exception policy are explicit partial-state stops.
+The wrapper's original sign handling remains separate from primitive support.
+No physical CPU exception delivery or complete hardware-numerical claim is made.
+
+Focused build and verification actually run
+The new DLL passes Clang -O2 -Wall -Wextra -Werror without a C runtime.
+578 original-instruction comparisons pass: 278 complete, 272 unsupported
+precision/rounding/operand boundaries, 16 numerical traps and 12 RAM guards.
+All 42 rows and both conditional outcomes execute; 736 ordered entries match.
+Full 16-MiB RAM, integer registers, SR/PR/PC, both FPU banks/FPSCR, FPUL/MACL
+and reached stops match. 218 completed cases independently check the rounded
+distance accumulation/final root, or signed roots and unchanged RAM.
+
+Another 2,112 independent checks validate the unchanged FSQRT primitive's
+results/status/flags/destination preservation across normal boundaries, 256
+seeded normal values, signed zero/infinity, RM0/1, enables and sticky flags.
+The numerical reference finds exact rational lower-square brackets and midpoint
+rounding. Only oracle functions are extracted from the old verification script;
+its old top-level tests/report are not executed or overwritten. Mathematical
+results are independently checked; the previously qualified exception support
+policy is preserved rather than claimed as a new hardware measurement.
+
+Original draw integration
+A separate 27-source DLL connects both helpers to the native original draw
+candidate and all previously connected state/matrix services:
+  source/sa_overlay_draw_distance_connected.c
+  connect_overlay_draw_distance.py
+  build_overlay_draw_distance.ps1
+  verify_overlay_draw_distance.py
+  analysis/overlay_draw_distance_verification.json
+
+408 original-state comparisons pass: 344 caller cases and 64 direct reused
+service-routing cases. All eight appearance types, both FPU banks, supplied
+positions/angles, animation flag and appearance-tail states are included.
+The position record reached through global 8c18b7ec is supplied runtime data;
+null records are tested separately. This does not prove natural player/task
+creation or that every constructed combination occurs during gameplay.
+
+There are 130 completed returns (66 rejected draws plus 64 direct services),
+258 expected unconnected-service stops, eight unsupported modes, eight RAM
+guards and four traps. All 4,442 ordered boundaries and full reached state
+match. 388 cases pass independent global/raw-state/stack/spring checks where
+applicable; 200 distance-to-sqrt boundaries also independently match the
+original rounded accumulation. There are 204 distance calls / 200 sqrt calls;
+four null-record cases stop before the sqrt tail.
+
+Draw coverage grows from 273 to 421 of the candidate's 911 instruction rows.
+490 remain dynamically unexecuted. It stays unregistered with zero complete-
+function credit. Explicit stops are 0c90c384 (38), existing but unwired particle
+wrapper 8c6215d6 (20), 8c60e5e4 (152), 8c0409c0 (16), 8c5fde20 (16),
+8c041c92 (16). These are integration boundaries, not rendered frames.
+No game-service fixtures, GPU pixels, natural frame scheduling, full gameplay
+or high-FPS behavior are claimed. Legacy narrow-FPU/valid-RAM limits remain.
+
+Previously unindexed targets
+A read-only Ghidra session temporarily discovered CFG proposals at 8c60e5e4
+and 8c5fde20, exported their instruction/draft evidence and reported discarding
+the temporary project changes. All 400 exported instruction rows match original
+bytes. The frozen global function index remains unchanged. Computed transfers,
+callee targets and complete code/data ownership still require verification.
+These proposals add zero recovered-source or exhaustive-boundary credit.
+See analysis/overlay_draw_unindexed_targets_inventory.json and
+ghidra/export_overlay_draw_unindexed_targets.ps1.
+
+Integrity and progress
+The new generators reproduce source/build/manifests byte-for-byte. Registration
+repeats without duplicate entries, preserves prior source hashes and refuses
+to register the incomplete draw candidate. New Python/PowerShell syntax passes.
+The dispatcher map passes 658 original pointer-load checks across 80 spans /
+83 selectors. Registry audit: 1,124 entries / 1,121 unique module-address pairs,
+1,072 matches in 10,875 frozen snapshot candidates, zero evidence errors and
+zero stale source reports. 211 non-texture binaries lack a complete function
+index. Counts do not establish whole-game recovered-code coverage.
+The full historical build_and_verify.ps1 sequence was not rerun this turn.
+
+How to check and next model
+Open this guide and the two behavior JSON reports above for recorded inputs,
+results and pinned files. Developers can run verify_draw_distance_helpers.py
+--smoke and verify_overlay_draw_distance.py --smoke with bundled Python and -B;
+omit --smoke for the full suites. Ordered reproduction is in build_and_verify.ps1.
+Next: recover newly reached motion/render services (especially 8c60e5e4 and its
+computed tails), 0c90c384, 8c0409c0/8c041c92 and 8c5fde20; connect existing
+8c6215d6 and portable vertex-bus drawing, then remaining draw/task/frame paths.
+Stay on Sol High for reverse engineering/numerical integration. Luna Low suits
+documentation-only work. Full decompilation, playable PC/Android/3DS/N64/PS1
+ports, 60/120/240 FPS, 8K/display options and SUPIR texture work remain unfinished.

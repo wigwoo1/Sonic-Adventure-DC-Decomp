@@ -1,0 +1,1552 @@
+{
+  "module": "1ST_READ.BIN",
+  "load_address": "0x8c010000",
+  "address": "0x8c0548e0",
+  "end_exclusive": "0x8c0548f4",
+  "retail_span_sha256": "67a7e30d2e4d30790f8596d9f9f44221eca9f09afca8c59ac719cd98913ccdc1",
+  "source_sha256": "443b183a9c97bafad2ee3af680a3f7cd218f116bf5afcdf4dc97f7c8476a8b6a",
+  "cases_passed": 256,
+  "comparison_level": "all GPRs, SR, PR, and return PC; full RAM unchanged",
+  "scope": "Exact 20-byte signed-to-unsigned-byte clamp; boundary and randomized inputs compared against the retail interpreter.",
+  "limitations": [
+    "The caller-specific semantic meaning of the clamped value remains unknown."
+  ],
+  "cases": [
+    {
+      "case": 0,
+      "input": "0x0",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 1,
+      "input": "0x1",
+      "return_value": "0x1",
+      "cpu_match": true
+    },
+    {
+      "case": 2,
+      "input": "0xfe",
+      "return_value": "0xfe",
+      "cpu_match": true
+    },
+    {
+      "case": 3,
+      "input": "0xff",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 4,
+      "input": "0x100",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 5,
+      "input": "0x101",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 6,
+      "input": "0x7fffffff",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 7,
+      "input": "0x80000000",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 8,
+      "input": "0xffffff00",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 9,
+      "input": "0xffffffff",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 10,
+      "input": "0xecb141b1",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 11,
+      "input": "0x301650a6",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 12,
+      "input": "0xcddefc22",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 13,
+      "input": "0x11664bad",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 14,
+      "input": "0x7e500262",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 15,
+      "input": "0xf3c67073",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 16,
+      "input": "0xb721e8d8",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 17,
+      "input": "0x2a2ad913",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 18,
+      "input": "0x1cc3c775",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 19,
+      "input": "0x854e8387",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 20,
+      "input": "0xc0917123",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 21,
+      "input": "0x9f5d5652",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 22,
+      "input": "0x76bc1c99",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 23,
+      "input": "0xa8225c23",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 24,
+      "input": "0x5e75a579",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 25,
+      "input": "0xc28cd168",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 26,
+      "input": "0xe2e503a9",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 27,
+      "input": "0x74f476b1",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 28,
+      "input": "0x793658b2",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 29,
+      "input": "0xf9b3e3e7",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 30,
+      "input": "0x85454f7a",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 31,
+      "input": "0xc904a5e9",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 32,
+      "input": "0xd915615b",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 33,
+      "input": "0x103bd530",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 34,
+      "input": "0x40867446",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 35,
+      "input": "0x481a35d7",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 36,
+      "input": "0x2c68c2b",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 37,
+      "input": "0x206101be",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 38,
+      "input": "0x80ca42c8",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 39,
+      "input": "0x1e9f8cad",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 40,
+      "input": "0x69ec3d3a",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 41,
+      "input": "0xa617493b",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 42,
+      "input": "0xdff63bc2",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 43,
+      "input": "0x8f53cd12",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 44,
+      "input": "0xe271387e",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 45,
+      "input": "0x2460bc0",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 46,
+      "input": "0xe8fcdcd1",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 47,
+      "input": "0xe90d9799",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 48,
+      "input": "0x236dd002",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 49,
+      "input": "0x72478e2b",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 50,
+      "input": "0xa2c58220",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 51,
+      "input": "0x5ddb4221",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 52,
+      "input": "0xf080c155",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 53,
+      "input": "0xfdf82a55",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 54,
+      "input": "0x62ac0d2a",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 55,
+      "input": "0xe298912",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 56,
+      "input": "0x510bd851",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 57,
+      "input": "0xe92c3158",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 58,
+      "input": "0x9c35eebf",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 59,
+      "input": "0x3f1d9fbd",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 60,
+      "input": "0x9807df69",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 61,
+      "input": "0x7811433c",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 62,
+      "input": "0x515c4021",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 63,
+      "input": "0x2058db7a",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 64,
+      "input": "0xdf514c1d",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 65,
+      "input": "0x6b2ce80d",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 66,
+      "input": "0xd92b062",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 67,
+      "input": "0xd612cd9b",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 68,
+      "input": "0x2da8f293",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 69,
+      "input": "0x8064fa3e",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 70,
+      "input": "0x901055ec",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 71,
+      "input": "0xacacf283",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 72,
+      "input": "0xd4167c53",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 73,
+      "input": "0x9b105545",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 74,
+      "input": "0xf0a9976a",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 75,
+      "input": "0xd58372e4",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 76,
+      "input": "0x6013217f",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 77,
+      "input": "0x4c3fd17d",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 78,
+      "input": "0x2de50337",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 79,
+      "input": "0x1e34586f",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 80,
+      "input": "0x6a5f903",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 81,
+      "input": "0x722e258b",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 82,
+      "input": "0x79e45061",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 83,
+      "input": "0xa322416",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 84,
+      "input": "0xc32206cd",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 85,
+      "input": "0xf84e2e3a",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 86,
+      "input": "0xc3448f8c",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 87,
+      "input": "0x967fd532",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 88,
+      "input": "0x1023d8e2",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 89,
+      "input": "0xb8086232",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 90,
+      "input": "0x15f703fa",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 91,
+      "input": "0x489aec04",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 92,
+      "input": "0x415f936",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 93,
+      "input": "0xfe0ba3a4",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 94,
+      "input": "0xe0dce1e7",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 95,
+      "input": "0x76dcb5d4",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 96,
+      "input": "0xe72e196d",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 97,
+      "input": "0xcef2ce35",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 98,
+      "input": "0x4101010a",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 99,
+      "input": "0x3454a802",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 100,
+      "input": "0x5489672f",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 101,
+      "input": "0xe3983d76",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 102,
+      "input": "0x28b30587",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 103,
+      "input": "0xe00de638",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 104,
+      "input": "0x16bd6719",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 105,
+      "input": "0xb4c72312",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 106,
+      "input": "0x410318e4",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 107,
+      "input": "0x3fcfe902",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 108,
+      "input": "0xea9af995",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 109,
+      "input": "0xd1f57a34",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 110,
+      "input": "0x6fe169ff",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 111,
+      "input": "0xb583ce",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 112,
+      "input": "0x1549f737",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 113,
+      "input": "0x67baf35d",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 114,
+      "input": "0x9656576f",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 115,
+      "input": "0x654be87f",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 116,
+      "input": "0xb2efba66",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 117,
+      "input": "0x3b927a85",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 118,
+      "input": "0xb84e98bd",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 119,
+      "input": "0x685da75b",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 120,
+      "input": "0x7fc51375",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 121,
+      "input": "0xffcd0645",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 122,
+      "input": "0xf3264226",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 123,
+      "input": "0x94954c53",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 124,
+      "input": "0x3e5f23f0",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 125,
+      "input": "0xe2d9df3",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 126,
+      "input": "0xabefc843",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 127,
+      "input": "0x47a17a3b",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 128,
+      "input": "0x598d6fca",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 129,
+      "input": "0x22b6a7a",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 130,
+      "input": "0xf502abf6",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 131,
+      "input": "0x234cfe66",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 132,
+      "input": "0xc0c38cd",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 133,
+      "input": "0x7a63e633",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 134,
+      "input": "0xeefc0ff9",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 135,
+      "input": "0xd962972",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 136,
+      "input": "0xe00230d9",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 137,
+      "input": "0xe40a1300",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 138,
+      "input": "0xa109d9eb",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 139,
+      "input": "0xfca96083",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 140,
+      "input": "0xf52383ce",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 141,
+      "input": "0xc6dc43f2",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 142,
+      "input": "0xf69b20",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 143,
+      "input": "0x5053efb3",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 144,
+      "input": "0xe84fa9e2",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 145,
+      "input": "0xcd522cb",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 146,
+      "input": "0x137dd067",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 147,
+      "input": "0x2a79ba6e",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 148,
+      "input": "0x16d062b4",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 149,
+      "input": "0x8a9052e2",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 150,
+      "input": "0x95c2e66e",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 151,
+      "input": "0x50617392",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 152,
+      "input": "0x3c547c25",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 153,
+      "input": "0xb636a307",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 154,
+      "input": "0x36dc5f79",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 155,
+      "input": "0xda66bfca",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 156,
+      "input": "0x635eeace",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 157,
+      "input": "0xa1ab6e16",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 158,
+      "input": "0x19af4632",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 159,
+      "input": "0x33d6edda",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 160,
+      "input": "0x71072b56",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 161,
+      "input": "0x8b8c791f",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 162,
+      "input": "0xcce16096",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 163,
+      "input": "0x64553e2c",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 164,
+      "input": "0xb50afdf8",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 165,
+      "input": "0x26785c7d",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 166,
+      "input": "0x14729048",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 167,
+      "input": "0x65aff909",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 168,
+      "input": "0x61c5f2d9",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 169,
+      "input": "0xcf30cd54",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 170,
+      "input": "0x8916988d",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 171,
+      "input": "0x1eff66b8",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 172,
+      "input": "0xad48ab10",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 173,
+      "input": "0x389e3ee5",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 174,
+      "input": "0x314879ac",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 175,
+      "input": "0x1318a4e1",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 176,
+      "input": "0x290fc7c3",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 177,
+      "input": "0x55952bfd",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 178,
+      "input": "0xa2e682b7",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 179,
+      "input": "0x7ddf94a1",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 180,
+      "input": "0x34510a2b",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 181,
+      "input": "0x43d1abad",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 182,
+      "input": "0x117f0b63",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 183,
+      "input": "0x35a57dd8",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 184,
+      "input": "0xf28ba868",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 185,
+      "input": "0x5b0f9c3",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 186,
+      "input": "0x6b104427",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 187,
+      "input": "0xa0a027b6",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 188,
+      "input": "0xa3cfedb3",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 189,
+      "input": "0x62660723",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 190,
+      "input": "0x5c629e2a",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 191,
+      "input": "0x5e83f9f4",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 192,
+      "input": "0x7eae9205",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 193,
+      "input": "0x8beb1244",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 194,
+      "input": "0xea5fb9f5",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 195,
+      "input": "0xa4b519ca",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 196,
+      "input": "0x1b258035",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 197,
+      "input": "0xd3fb4bd0",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 198,
+      "input": "0x6256e057",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 199,
+      "input": "0x793240e8",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 200,
+      "input": "0x3427a9fe",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 201,
+      "input": "0xa86b6edf",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 202,
+      "input": "0x53932cfa",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 203,
+      "input": "0x16d0df90",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 204,
+      "input": "0x70c34efe",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 205,
+      "input": "0x41b593c",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 206,
+      "input": "0x7465fa19",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 207,
+      "input": "0x1d6f148f",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 208,
+      "input": "0x993c5b03",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 209,
+      "input": "0x1409b0bc",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 210,
+      "input": "0x9f09cc8e",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 211,
+      "input": "0x18c21489",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 212,
+      "input": "0x383efb66",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 213,
+      "input": "0x9c0db6b5",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 214,
+      "input": "0xe8ecebf5",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 215,
+      "input": "0x2f312817",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 216,
+      "input": "0x42d3c9b4",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 217,
+      "input": "0x30cd0c11",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 218,
+      "input": "0xbf31d72c",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 219,
+      "input": "0xdc64af7f",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 220,
+      "input": "0x3325c9b1",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 221,
+      "input": "0x4314dce5",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 222,
+      "input": "0x53c89f51",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 223,
+      "input": "0xfe5d41f9",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 224,
+      "input": "0x3e667f01",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 225,
+      "input": "0x1192ae2c",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 226,
+      "input": "0x84319999",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 227,
+      "input": "0xc90a6bff",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 228,
+      "input": "0xc92dfe4e",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 229,
+      "input": "0xa72a920f",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 230,
+      "input": "0x455054a7",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 231,
+      "input": "0x62bbf2e7",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 232,
+      "input": "0xa9fed46e",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 233,
+      "input": "0x1dbb1f1c",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 234,
+      "input": "0x3ad53902",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 235,
+      "input": "0x4f3dfe07",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 236,
+      "input": "0xa328a80f",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 237,
+      "input": "0x2f6517b0",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 238,
+      "input": "0x10891c14",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 239,
+      "input": "0xf5d109a0",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 240,
+      "input": "0x991fe51c",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 241,
+      "input": "0x86075534",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 242,
+      "input": "0x778745de",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 243,
+      "input": "0xe191ed27",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 244,
+      "input": "0xd9dec8b6",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 245,
+      "input": "0x609c1b8c",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 246,
+      "input": "0xde690770",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 247,
+      "input": "0x171cdfbb",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 248,
+      "input": "0x9897b1da",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 249,
+      "input": "0xe63c0b7",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 250,
+      "input": "0x75bca702",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 251,
+      "input": "0x7d2aed6c",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 252,
+      "input": "0x7ce60bf1",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 253,
+      "input": "0x465cd39e",
+      "return_value": "0xff",
+      "cpu_match": true
+    },
+    {
+      "case": 254,
+      "input": "0xa588d942",
+      "return_value": "0x0",
+      "cpu_match": true
+    },
+    {
+      "case": 255,
+      "input": "0x5d3471f3",
+      "return_value": "0xff",
+      "cpu_match": true
+    }
+  ]
+}

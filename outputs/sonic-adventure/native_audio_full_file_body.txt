@@ -1,0 +1,75 @@
+  def execute(entry,args):
+   for index,value in enumerate(args,4):s.r[index]=value;r[index]=value
+   s.pc=entry;reference(ram,s,fpu=f,special=special,vector_instruction=sqrt_service)
+   target_fn=lower.get(entry,completion_helpers.get(entry))
+   assert target_fn(view,ctypes.byref(nf),ctypes.byref(sr),r,ctypes.byref(pr),ctypes.byref(fpul),ctypes.byref(macl),None,call)==0
+   nf.fpul=fpul.value
+   assert native==ram and list(r)==list(s.r) and sr.value==s.sr and pr.value==s.pr and bytes(f)==bytes(nf) and macl.value==special['macl']
+  file_cursor=4096;update_index=1
+  while True:
+   for channel,obj in enumerate([0x8a65e8,0x8a6618]):
+    count=struct.unpack_from('<I',native,obj+0xc)[0];before=bytes(native[obj:obj+48]);reader=struct.unpack_from('<I',before,0x18)[0]
+    descriptor=0x8caa1000+channel*16
+    execute(0x8c65e4b8,[0x8c000000|obj,1,count,descriptor])
+    assert struct.unpack_from('<2I',native,descriptor&0xffffff)==(0x8ca40008+channel*0x10000+reader,count)
+    execute(0x8c65e58a,[0x8c000000|obj,0,descriptor])
+    wanted=bytearray(before)
+    for off,value in [(0xc,0),(0x10,1024),(0x18,(reader+count)%1024)]:struct.pack_into('<I',wanted,off,value)
+    assert native[obj:obj+48]==wanted
+   if struct.unpack_from('<I',native,0x8a3944)[0]==total_samples:break
+   while file_cursor<len(full_data) and struct.unpack_from('<I',native,0x8a65c8)[0]>0:
+    before=bytes(native[0x8a65b8:0x8a65e8]);ring_before=bytes(native[0xa10000:0xa12040]);ready,free,writer,reader=struct.unpack_from('<4I',before,0xc)
+    requested=min(4096,len(full_data)-file_cursor)
+    execute(0x8c65e4b8,[0x8c8a65b8,0,requested,0x8caa1100])
+    pointer,count=struct.unpack_from('<2I',native,0xaa1100);assert count>0 and pointer==0x8ca10000+writer
+    part=full_data[file_cursor:file_cursor+count];ram[0xaa2000:0xaa2000+count]=part;native[0xaa2000:0xaa2000+count]=part
+    execute(0x8c10d25c,[pointer,0x8caa2000,count]);execute(0x8c65e58a,[0x8c8a65b8,1,0x8caa1100])
+    wanted=bytearray(before)
+    for off,value in [(0xc,ready+count),(0x10,free-count),(0x14,(writer+count)%8192)]:struct.pack_into('<I',wanted,off,value)
+    assert native[0x8a65b8:0x8a65e8]==wanted
+    wanted_ring=bytearray(ring_before);wanted_ring[writer:writer+count]=part
+    if writer<64:
+     copied=min(count,64-writer);wanted_ring[8192+writer:8192+writer+copied]=part[:copied]
+    if writer+count>8192:
+     copied=writer+count-8192;wanted_ring[:copied]=part[-copied:]
+    assert native[0xa10000:0xa12040]==wanted_ring
+    file_cursor+=count
+   history=[struct.unpack_from('<2h',native,0x8906a8+channel*4) for channel in range(2)]
+   sample_before=[bytes(native[base:base+2048]) for base in [0xa40008,0xa50008]]
+   cursors=[struct.unpack_from('<I',native,obj+0x14)[0] for obj in [0x8a65e8,0x8a6618]]
+   prior=struct.unpack_from('<I',native,0x8a3944)[0]
+   request_limit=min(256,(1024-cursors[0])//2)
+   if cursors[0]==0 and total_samples-prior<=512:request_limit=512
+   execute(0x8c65b774,[0x8c8a3910,request_limit])
+   ready=struct.unpack_from('<I',native,0x8a65c4)[0];input_cursor=struct.unpack_from('<I',native,0x8a65d0)[0]
+   input_pairs=min(ready,8192-input_cursor+64)//36
+   execute(0x8c65bb88,[0x8c8a3910])
+   published=min(request_limit,total_samples-prior,input_pairs*32)
+   assert published>0,(update_index,ready,input_cursor)
+   actual_published=struct.unpack_from('<I',native,0x8a3944)[0]-prior
+   if actual_published!=published:
+    diagnostic=dict(asset=asset['path'],bank=bank,update_index=update_index,prior_samples=prior,total_samples=total_samples,expected_published=published,actual_published=actual_published,file_cursor=file_cursor,input_ready=ready,input_cursor=input_cursor,input_pairs=input_pairs,request_limit=request_limit,work_words=list(struct.unpack_from('<36I',native,0x8a3910)),stream_words=list(struct.unpack_from('<43I',native,state)),handle_words=list(struct.unpack_from('<13I',native,0x890680)),source_words=list(struct.unpack_from('<12I',native,0x8a65b8)),status='Full-file independent count oracle failed; native state still matched retail. Not registered as verified.')
+    diagnostic['terminal_trace']=terminal_trace
+    (out/'analysis/native_audio_full_file_diagnostic.json').write_text(json.dumps(diagnostic,indent=2)+'\n')
+   assert struct.unpack_from('<I',native,0x8a3944)[0]==prior+published,(asset['path'],update_index,prior,struct.unpack_from('<I',native,0x8a3944)[0])
+   payload=full_data[header_length+(prior//32)*36:header_length+(prior//32)*36+((published+31)//32)*36]
+   for channel,base in enumerate([0xa40008,0xa50008]):
+    newest,older=[raw(float(value*65536)) for value in history[channel]];samples=[]
+    pairs=(published+31)//32
+    for pair in range(pairs):
+     block=payload[(pair*2+channel)*18:(pair*2+channel+1)*18];assert len(block)==18 and not (block[0]&128)
+     scale=(int.from_bytes(block[:2],'big')&8191)+1
+     for packed in block[2:]:
+      for nibble in (packed>>4,packed&15):
+       prediction=multiply_add(coefficients[0],newest,multiply(coefficients[1],older)[0])[0]
+       sample=multiply_add(raw(float(scale)),raw(float((nibble-16 if nibble&8 else nibble)*65536)),prediction)[0]
+       samples.append((truncate_i32(sample)[0]>>16)&65535);older,newest=newest,sample
+    offset=cursors[channel];encoded=struct.pack('<'+str(len(samples))+'H',*samples);wanted=bytearray(sample_before[channel]);wanted[offset:offset+len(encoded)]=encoded
+    published_bytes=published*2;wanted[1024+offset:1024+offset+published_bytes]=encoded[:published_bytes]
+    assert native[base:base+2048]==wanted,(asset['path'],update_index,channel)
+    assert native[base-8:base]==bytes([0x5a])*8 and native[base+2048:base+2296]==bytes([0x5a])*248
+    assert native[0x8906a8+channel*4:0x8906ac+channel*4]==struct.pack('<2H',(truncate_i32(newest)[0]>>16)&65535,(truncate_i32(older)[0]>>16)&65535)
+   update_index+=1
+   assert update_index<10000
+  execute(0x8c65bb88,[0x8c8a3910])
+  assert native[0x8a3911]==3 and struct.unpack_from('<I',native,0x8a3944)[0]==total_samples

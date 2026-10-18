@@ -1,0 +1,18 @@
+address	opcode	instruction	references
+8c10fb94	f64c	fmov fr4,fr6	
+8c10fb96	f642	fmul fr4,fr6	
+8c10fb98	d506	mov.l 0x8c10fbb4,r5	READ:8c10fbb4=8c1603a4 
+8c10fb9a	e405	mov #0x5,r4	
+8c10fb9c	f559	fmov.s @r5+,fr5	READ:8c1603a4=bdba2de9 
+8c10fb9e	f359	fmov.s @r5+,fr3	READ:8c1603a8=3de38e38 READ:8c1603ac=be124925 
+8c10fba0	74ff	add #-0x1,r4	
+8c10fba2	f06c	fmov fr6,fr0	
+8c10fba4	4415	cmp/pl r4	
+8c10fba6	f35e	fmac fr0,fr5,fr3	
+8c10fba8	8df9	bt/s 0x8c10fb9e	CONDITIONAL_JUMP:8c10fb9e=74fff359 
+8c10fbaa	f53c	_fmov fr3,fr5	
+8c10fbac	f04c	fmov fr4,fr0	
+8c10fbae	f65c	fmov fr5,fr6	
+8c10fbb0	b	rts	
+8c10fbb2	f062	_fmul fr6,fr0	
+8c10fbb8	2fe6	mov.l r14,@-r15	DATA:Stack[-0x4] 

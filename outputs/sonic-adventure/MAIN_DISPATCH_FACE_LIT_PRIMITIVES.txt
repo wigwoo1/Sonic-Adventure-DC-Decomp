@@ -1,0 +1,126 @@
+Face-lit primitive pair and native vector normalization
+17 October 2026 — VERIFIED within the bounded scope below.
+Overall completion: 10% estimated weighted project milestones, not code coverage.
+Goal active. Continue Sol High with the lower clipping/alternate helpers.
+
+Recovered source
+  8c61ae3c..8c61b444: 742 original instruction rows
+  8c61b488..8c61be02: 1,117 original instruction rows
+  8c63a94c..8c63a96c: 16 original instruction rows
+  source/sa_main_dispatch_face_lit_primitives.c
+  source/sa_main_dispatch_face_lit_primitives_connected.c
+All three complete bodies are byte-checked annotated static C, preserving
+instruction order, register effects and delay slots without runtime decoding.
+Names and face-lighting interpretation are descriptive inferences. The normalizer
+listing is a format conversion of the archived instruction TSV, with all 16 words
+rechecked against the original binary. Its older source/fixture evidence remains
+preserved; this new bridge calls the new body with numerical FIPR/FSRRA services.
+Three routine entries are newly registered, without double-counting old fixtures.
+
+Observed behavior
+The material loop selects the pair for layout 1000000 hex. The routines sum
+vertex normals for a face and normalize the result. The normalizer uses FIPR
+for squared magnitude, FSRRA for reciprocal root and scalar multiplies to write
+the unit vector in place. FR0 also receives squared magnitude times reciprocal
+root. Numerical operations use the existing pinned vector/scalar backend.
+
+Lighting is base minus the normalized face normal/light dot product. Material
+alpha stays unchanged and RGB is multiplied by this factor, without clamping.
+For triangles, the original packet writer supplies the new RGBA on the final
+vertex. The first two vertices retain the corresponding queue's colour words.
+The tests preserve this provoking-vertex behavior; they do not rewrite every
+vertex to a uniform colour. Geometry/control words, input cache-factor retention,
+counters, cursors and the selected header slot are preserved. Near crossings
+stage vertex pointers and the calculated RGBA block to lower clipper 8c6178c6.
+That helper remains an explicit fixture, so its clipped output is not yet proved.
+
+An important original strip-path precondition
+At the near-crossing strip branch, original instructions jump to 8c61bc98 before
+the ordinary-path initialization of R12/R14/R13. Code at 8c61bca2 then reads a
+normal through R14. Arbitrary inherited register values therefore do not form
+valid vertex inputs. Forty-eight controlled cases explicitly seed these registers
+with valid cache pointers and cover this branch, loop and rejection outcomes.
+This is controlled body coverage, not proof that the complete game caller supplies
+these values. Ordinary random-register fixtures stop before an unsupported read.
+The earlier working hypothesis that this boundary only came from wide FMOV was
+incomplete; normal-width strip-crossing inputs can also reach it.
+
+Build and tests actually passed
+- Strict Clang build: -O2 -Wall -Wextra -Werror; separate connected DLL.
+- 870 comparisons: 238 plain face-lit, 400 clipped face-lit, four draws, four
+  particle callbacks, 32 connected meshes and 192 standalone normalizer cases.
+- All 1,871 reachable rows, 72 conditional outcomes and 15 game-call sites
+  covered. Four additional default-switch rows/two outcomes have exact-byte
+  proofs plus exhaustive checks of all 65,536 input words under the c000 mask.
+- Full 16 MiB RAM, GPRs/SR/PR, both FPU banks/FPSCR, FPUL/MACL, ordered boundaries
+  and queues match original execution, including matched partial state.
+- 510 cases complete, 320 match inherited numeric/precision guards (-1), 34 match
+  unsupported pointer/return boundaries (-3), three match missing lower services
+  (-2) and three propagate deliberately injected lower-service errors (-17).
+- 872 ordered boundaries, 10,544 numerical operations, 700 queue transfers and
+  6,244 queue events checked. The native normalizer executes 436 times in the
+  complete suite. There are 196 external boundaries for the three lower fixtures.
+- 166 independent cases check finite unit vectors, summed-normal face lighting,
+  final-vertex RGB/unchanged alpha, retained earlier colour words, positions,
+  counters/cursors, unchanged input factors and/or lower clipper pointer/colour
+  staging. Unit-vector/RGB comparisons use a 2e-5 tolerance for the approximate
+  reciprocal-root backend. Both banks, rounding/precision variants, signed axes,
+  zero vectors and small finite vectors have original execution comparisons.
+  The zero-vector path has original comparison evidence without an invented
+  normalized-vector fallback. The shared vector oracle is not independent
+  hardware precision proof; independent finite-vector checks are tolerance-based.
+- All 32 meshes execute real material setup, normal projection/classification,
+  acquisition, the selected new parent and finalization. Sixteen ordinary cases
+  stay native throughout; 16 crossing cases independently verify RGBA/pointer
+  staging to the lower clipper fixture. Primary/secondary queues and both queue
+  halves are covered. These cases do not prove the unfinished clipper's output.
+- 120 lifetime regressions / 984 stages passed: 23,264 boundaries, 104,016
+  numerical operations, 10,600 queue transfers and 117,808 queue events. All 880
+  original-model mesh iterations run existing native paths without external
+  services. These models do not reach the new face-lit/normalizer bodies; focused
+  tests provide that coverage. Independent pool, heap and particle checks pass.
+
+Host boundaries and limitations
+The guard at 8c61bca2 returns -3 before an unsupported R14 normal read outside
+modeled RAM. Guards at parent RTS sites 8c61b440 / 8c61bdfe stop before delay-slot
+effects if overwritten stack data changed the incoming return address. These
+guards compare original partial state; they do not implement Dreamcast fault or
+arbitrary indirect-transfer handling. No unsupported fixture is counted as a
+successful native gameplay completion.
+Bounded constructed inputs, numerical/backend limitations and coherent-RAM/
+MMU-off queues remain the verification scope. GPU FIFO/pixels, physical cache
+timing, MMU-on behavior and the complete frame driver are unverified. Lifetime
+passes are host-selected. The entire historical workflow was not rerun.
+Final integrity checks passed: regenerated source/translation are byte-identical;
+all four new reports match pinned inputs; re-registration adds zero duplicates;
+five Python and three PowerShell scripts parse. Dispatcher mapping verifies 658
+original pointer loads, 80 spans and 83 selectors. Recovery/completion audits find
+zero evidence errors and zero reports needing source-hash refresh. The app goal
+was checked and remains active.
+
+Evidence and next work
+  recover_main_dispatch_face_lit_primitives.py
+  build_main_dispatch_face_lit_primitives.ps1
+  verify_main_dispatch_face_lit_primitives.py
+  verify_main_dispatch_face_lit_primitives_lifecycle.py
+  register_main_dispatch_face_lit_primitives.py
+  analysis/main_dispatch_face_lit_primitives_translation.json
+  analysis/main_dispatch_face_lit_primitives_verification.json
+  analysis/main_dispatch_face_lit_primitives_lifecycle_verification.json
+Registry: 1,072 entries / 1,069 unique module-address pairs, with 1,020 matches
+among 10,875 currently indexed candidates. Another 211 non-texture binaries lack
+function indexes. These incomplete discovery counts are not whole-game coverage.
+Next lower helpers: 8c6178c6 (410 rows), 8c613dfa (300 rows), 8c61572c (530 rows).
+Their 1,240 read-only exported rows are checked against the original binary but
+are not recovered source: analysis/main_dispatch_face_lit_lower_inventory.json.
+Eight other primitive emitters also remain unfinished. Full gameplay, visible
+rendering/texture sampling, all playable ports, high frame rates/8K/stereo output,
+SUPIR settings and later N64/PS1 work remain unfinished. Texture Off remains
+specified to disable sampling and use vertex colours/material fallback.
+
+How to check without programming
+Open this guide and SOURCE_HANDOFF.txt. The focused report has cases_passed=870,
+rows_covered=1871 and call_sites_covered=15; the lifetime report has
+lifecycles_passed=120. There is no new playable build to launch yet.
+Recommended next model: Sol High; the lower clipping/alternate bodies require
+instruction-level reverse engineering. No model switch or goal pause advised.

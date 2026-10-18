@@ -1,0 +1,123 @@
+Sonic Adventure Rev A - clipping processor-state foundation
+
+Historical foundation report. The later full-body milestone is documented in
+DRAW_CLIPPING_COMPLETE.txt: seven qualified bodies, 682 comparisons, all 1,739
+rows / 138 outcomes and seven registrations. The counts below retain the earlier
+prefix-only scope; that stage still grants zero full-body credit.
+
+Overall estimate: 10%, weighted whole-project milestones rather than measured
+code coverage. Goal continues on Sol High. Status: PARTIALLY VERIFIED. The new
+state operations and scoped original sequences pass; complete clippers, geometry,
+exception-vector delivery, natural game startup and playable ports remain pending.
+No game routine is newly registered by this milestone.
+
+New source/workflows:
+source/sh4_integer_state.c / source/sh4_integer_state.h
+build_sh4_integer_state.ps1 / verify_sh4_integer_state.py
+source/sa_draw_clipping_state.c / source/sa_draw_clipping_state_connected.c
+recover_draw_clipping_state.py / connect_draw_clipping_state.py
+build_draw_clipping_state.ps1 / verify_draw_clipping_state.py
+record_draw_clipping_state.py
+analysis/sh4_integer_state_verification.json
+analysis/draw_clipping_state_translation.json
+analysis/draw_clipping_state_connection.json
+analysis/draw_clipping_state_verification.json
+analysis/sh4_integer_state_architecture_reference.json
+
+The extra state contains MACH and eight inactive integer registers (36 bytes).
+The existing visible R0-R15/SR/PR/PC layout remains intact. On a bank change, the
+new control kernel swaps only R0-R7 with inactive storage; R8-R15 stay common.
+It captures the LDC operand before selecting the next bank and masks SR writes
+with the documented valid-bit mask. In user mode the visible bank is always 0.
+Inactive-bank control-register access and both words of signed 32x32 products
+are explicit. Floating FR banks remain a separate existing subsystem.
+
+The operation API reports mutation-free privilege (-4), illegal-slot (-5) and
+invalid host bank-index (-6) stops. These are pre-trap signals. It does not yet
+perform the engine's exception-vector dispatch, interrupt acceptance or timing.
+The inherited floating kernels do not prove CPU-level SR.FD exception delivery.
+Local sequence probes contain no FPU instructions; blend-helper regressions use
+their existing numerical-model domain. Full clipping fixtures must use valid
+FPU-enabled CPU states and keep exception-domain limits explicit.
+User-mode instructions are not treated as successful privileged operations.
+The caller retains faulting PC/state and must eventually deliver the appropriate
+guest exception. Memory LDC/STC forms and unrelated system registers are outside
+this new kernel's coverage. This is not a complete SH-4 emulator claim.
+
+A separate optimized standalone kernel build passes 12,868 comparisons against
+an independent canonical model that stores physical bank 0 and bank 1 separately;
+the oracle does not reproduce the native bank-swap implementation. The tests
+check full visible/inactive/common-register, SR, MACH and MACL state after every
+operation, plus host memory canaries. They include all sixteen source/destination
+registers, MD/RB combinations, reserved-bit masking, same-bank and cross-bank
+writes, source-before-switch aliasing, inactive-bank loads/stores, faults and
+signed extrema. Sixty-four persistent sequences each have 132 operations;
+8,192 additional bank-selector checks pass. Standalone statuses: 10,372 successes,
+928 privilege faults, 1,056 slot faults and 512 host-argument rejections.
+
+The separately retained 122-source draw DLL includes four full original clipping
+proposals: 8c037ee0 (131 rows), 8c037ff4 (327), 8c038516 (160), 8c038802 (389).
+They total 1,007 original instruction rows. Static translation includes the real
+conditional tail transfers between bodies, MACH/MACL products, bank-aware SR
+operations and FLDS. Descriptive names are inferred. Compilation and local
+sequence proofs do not register these full bodies or prove clipped polygons.
+
+The extended production interface appends the explicit extra state pointer.
+The old ten-argument APIs/DLLs remain preserved. The same compiled body also has
+a separate restricted probe interface: 24 mapped interior sequences may stop
+at their explicit checkpoint with host status 2. This is not a guest function
+return and is never counted as a completed clipper. Production dispatch excludes
+those interior entries. Three checks cover this separation, invalid checkpoint
+pairs and missing extra state. No missing game-service return is fabricated.
+
+All 2,816 original-sequence comparisons pass. These execute the actual eight SR
+mask sequences and sixteen DMULS/STS MACL pairs from the original binary using
+the compiled full-body proposals. The independent byte-level reference keeps
+canonical physical banks. Normal sequences reach their explicit checkpoint
+(2,688 cases); 128 user-mode SR cases stop at the original privileged instruction.
+Full endpoint/entry integer banks, registers, MACH/MACL, SR/PR/PC, FPU/FPUL, RAM,
+GBR and absent queue traffic match. Float state is deliberately varied even
+though these sequences do not execute FPU instructions.
+
+These branch-free local paths cover 98 original rows. The other 909 proposal
+rows and all complete clipping/geometry behavior remain unverified. Checkpoints
+bypass ordinary prologues and other body paths, so they cannot establish whole
+function ABI, complete conditional outcomes or caller/setup correctness. Fault
+signals likewise do not prove exception-vector delivery. No recovery credit is
+assigned to the four proposals, remaining three primitive parents or draw parent.
+
+Eight existing vector/integer-angle helper regressions use the new production
+API across both FPU banks and both privileged integer banks. They match original
+RAM/machine/GBR and independent staged arithmetic, preserve the extra state and
+separately check real renderer/GBR initialization. These are direct helper cases,
+not a rerun of earlier 108/56 full caller suites. Their older DLL proofs remain.
+The compiled-source comment audit finds LDC SR only in the new clipping source;
+that limited audit is not a proof about all possible SR writes.
+
+Strict optimized standalone and 122-source builds pass warnings as errors and
+use no standard library. Default non-research C syntax passes. Five generated
+artifacts reproduce exactly in memory. Progress recording is byte-idempotent.
+The broader workflow is extended, not rerun. Source/API/DLL/proof history is kept.
+Registry remains 1,237 entries / 1,234 unique module/address pairs; 1,129 matches
+in 10,875 frozen candidate indexes. Audit: zero evidence errors/stale reports.
+Another 211 nontexture binaries remain unindexed; whole-game routine count is
+still unknown. This milestone changes processor support, not recovery counts.
+
+The architecture basis is Renesas SH-4 Software Manual Rev. 6.00,
+https://www.renesas.com/en/document/mas/sh-4-software-manual
+Sections 2.2.2, 9.20, 9.34 and 9.50 plus illegal-instruction exception descriptions
+are recorded in analysis/sh4_integer_state_architecture_reference.json. No
+physical hardware execution or arbitrary FPU bit-accuracy proof is claimed.
+
+Next: determine which inactive-bank values are read before being overwritten
+and trace their actual initialization where necessary. Build complete clipper
+fixtures, verify all original outcomes and independent geometry/colour/UV/queue
+results, then connect the primitive callers with persistent explicit state.
+Do not replace live-ins with guessed zeros or infer whole-body correctness from
+the local probes. CLIPPING_CPU_STATE_PLAN.txt tracks these remaining milestones.
+
+How to check: open this guide and the source/reports listed above. Keep Sol High
+for bank/clipper integration; Luna Low is suitable for documentation-only work.
+No model switch or goal pause is recommended. Full renderer/startup/gameplay,
+60/120/240 FPS, 8K, SUPIR HD and true texture-Off/display settings, Android/stereo
+3DS and later demakes remain unfinished requirements of the active goal.

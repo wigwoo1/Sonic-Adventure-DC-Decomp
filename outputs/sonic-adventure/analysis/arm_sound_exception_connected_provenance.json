@@ -1,0 +1,41 @@
+{
+  "connected": true,
+  "verification": "analysis/arm_sound_exception_connected_verification.json",
+  "verification_sha256": "3ff4202b1814a64cd1058b4106f1fa8b8ed4e12e0e19f3298fc4fc1feaa955b1",
+  "instruction_sites_per_driver": 79,
+  "branch_tables": [
+    {
+      "driver": 0,
+      "base": 644,
+      "count": 8,
+      "targets": [
+        676,
+        676,
+        680,
+        676,
+        676,
+        808,
+        676,
+        676
+      ]
+    },
+    {
+      "driver": 1,
+      "base": 644,
+      "count": 8,
+      "targets": [
+        676,
+        676,
+        680,
+        676,
+        676,
+        808,
+        676,
+        676
+      ]
+    }
+  ],
+  "architecture_reference": "ARM DDI0100I A4.1.22 LDM (3), A2 exception/register-bank model: https://e2e.ti.com/cfs-file/__key/communityserver-discussions-components-files/1023/ARM-Architecture.pdf",
+  "classification": "Selected-library native vectors/generic exception/FIQ handler plus input call. Explicit already-entered exception context and SVC/ARM return bank snapshots. All selected sites exercised; finite timer/input/register-preservation/acknowledgement assertions, budgets, faults, resumptions and atomic guards. No automatic IRQ injection, nesting, hardware timing, complete host event scheduling, synthesis or complete-game proof; no connected routine credit.",
+  "selected_library": "Main native sound driver"
+}

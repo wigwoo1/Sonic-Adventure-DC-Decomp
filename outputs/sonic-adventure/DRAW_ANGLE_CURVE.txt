@@ -1,0 +1,142 @@
+Sonic Adventure Dreamcast Rev A - integer-angle interpolation
+
+Latest replay (2026-10-18): this helper was already recovered; no duplicate
+entry is added. verify_draw_angle_resume.py freshly passes all 60 retained
+boundary cases, 240 ordered boundaries and 360 independent assertions. It checks
+identical results against the preserved boundary report, normalizing only input
+path spelling. Existing main/caller proofs remain hash-current; the earlier
+751 focused and 108 caller comparisons were not freshly rerun in this replay.
+The 1,235-entry registry and next-dependency discussion below are historical.
+Current registry: 1,257 entries / 1,254 unique pairs; audit has zero errors/stale
+sources. Later renderer initialization is documented in DRAW_FRAME_SEQUENCE.txt.
+The next project dependency is actual boot/loading through 8c10b840. Overall
+estimate remains 10%; no model switch or goal pause is recommended.
+
+Overall estimate: 10%, weighted whole-project milestones rather than measured
+code coverage. Continuing on Sol High. Full rendering, gameplay and playable
+ports remain unfinished. No model switch or goal pause is recommended.
+
+The original helper at 8c609d68 has 105 exported instructions / four conditional
+outcomes, ending at 8c609e3a. Its inferred role is per-channel interpolation of
+three signed 32-bit angle values. Labels use the original unsigned conversion
+path and wrapped 32-bit differences. The next index uses the actual remainder
+helper 8c10cc80; setup uses real copy 8c10cd38 / tail 8c10cd8e. No game-service
+return is fabricated. An empty key array is outside the claimed test domain.
+
+The original code converts each signed integer payload with FLOAT, rounds the
+next-key product with FMUL, combines it with FMAC, then truncates with FTRC.
+There is no shortest-arc adjustment or modulo-angle normalization in this body.
+Out-of-range finite conversions saturate within the checked masked-exception
+backend. The unsigned span is used as denominator only when its signed value is
+positive; the other path uses the copied 1.0 fallback. Operation order matters.
+
+Source and reproducible workflows in this project directory:
+source/sa_draw_angle_curve.c
+source/sa_draw_angle_curve_connected.c
+recover_draw_angle_curve.py / connect_draw_angle_curve.py
+build_draw_angle_curve.ps1
+verify_draw_angle_curve.py / verify_draw_angle_boundaries.py
+verify_overlay_draw_angle_curve.py
+register_draw_angle_curve.py
+analysis/draw_angle_curve_translation.json
+analysis/draw_angle_curve_connection.json
+analysis/draw_angle_curve_verification.json
+analysis/draw_angle_boundaries_verification.json
+analysis/overlay_draw_angle_curve_verification.json
+
+The strict optimized 117-source native library builds with warnings treated as
+errors and no standard library. Its separate DLL is under the workspace root:
+work/sonic-adventure/build/draw_angle_curve.dll
+SHA256: d588c9eb5765ce5d599527a16b9cf95a80448d7bbe12d53fa3a351e1dcce4485
+Older source/API/DLLs/proofs are preserved. The existing ten-argument GBR/queue
+public API and inherited bounded hierarchy-stall research define are retained.
+Both new C files also pass default non-research syntax checks.
+
+All 751 main focused comparisons pass: 733 returns, nine explicit numerical-mode
+or special-value guards, three memory guards and six earlier floating-point
+traps. Every exported instruction and all four branch outcomes execute. Full
+reached/final machine, FPU/FPUL, MACL, GBR, RAM and ordered entries match the
+original instruction model. There are 3,001 ordered entries, no missing direct
+helper and no queue events. Each case separately checks the new DLL's actual
+41-row renderer/GBR initialization against the original instructions.
+
+Another 60 boundary cases pass with explicit payloads: 65535/0, signed 16-bit
+crossings, signed 32-bit limits, integer-to-float rounding and positive/negative
+conversion saturation. Fractional, interior and extrapolated frames run in both
+FPU banks. They add 240 ordered entries and 60 independently checked cases.
+
+Combined focused proof: 811 cases / 3,241 ordered entries. Independent arithmetic
+and footprint checks cover 788 cases / 4,728 assertions. The formula oracle uses
+exact rational arithmetic and separate nearest-even binary32 quantization at
+each original operation, followed by signed truncation and range saturation.
+Five rounding anchors cover thirds, ties and the smallest subnormal midpoint.
+Output, whole-RAM footprint, retained dependency/caller stack words, restored
+R13/R14/PR/SP and absence of queue traffic are checked. Signed-zero details are
+covered by exact original-state comparisons rather than rational value equality.
+
+Tests also include both motion channels, duplicate/descending/high unsigned
+labels, single-key tracks, aliases 0c/8c/ac, invalid pointers, numerical modes,
+special frames and 64 deterministic random unsigned-label cases. These remain
+bounded supplied fixtures, not natural engine startup or universal ABI proof.
+
+An attempted supplemental enabled-invalid-trap case stopped in the inherited
+instruction model: its add/sub executor rejects enabled FPU traps before FTRC.
+No native mismatch was observed. Supplemental verification therefore explicitly
+covers masked invalid conversions only; it does not claim enabled-FTRC paths.
+The six earlier FLOAT traps in the main report are separate. The initial failed
+harness log is preserved as draw_angle_boundaries_unsupported_trap.log. There
+was no change to the original instructions or native arithmetic for this limit.
+
+All 108 retained caller comparisons pass. These rerun the complete preceding
+108-case vector-helper corpus: all 48 previously blocked cases plus 60 unchanged
+regressions (28 direct service/bank pairs, twelve labels/events, sixteen camera/
+entity pairs and four ordinary profiles). The original larger 210/420 reports
+remain preserved; they are not claimed as fresh runs. Every selected input and
+source index is retained, and every unaffected status is unchanged.
+
+All 48 affected cases advance to the explicit next missing target 8c60a1f6.
+The other 60 return successfully. The new angle helper executes 96 times across
+96 of its rows in these callers; focused tests cover all 105 rows/four outcomes.
+There are 38,364 ordered native-entry comparisons, 108 independent state/stack/
+spring cases and 76 distance prefixes. Original model/motion/name/lookup records
+and real native/original viewport and GBR preparation remain. No supplied
+missing-game-service result is injected. Initializers are counted separately:
+919 GBR stages across focused/supplemental/caller cases plus 48 viewport resets.
+
+Connected queues: 32,990 flushes / 337,426 counted events. The first 4,096 per
+invocation are individually compared: 114,688 stored-prefix events; 222,738
+later events count-only. Complete final RAM/queue/QACR/counters match. This is
+software packet/state evidence, not physical GPU output. The new helper itself
+produces no queue traffic. Supplied camera/setup fixtures remain distinct from
+natural startup, camera/scheduler behavior and complete gameplay.
+
+Selected AL_MAIN draw-parent coverage remains 527/911 rows, 384 unexecuted. The
+parent remains unregistered, as do the previously documented fifteen motion,
+three clipping and four geometry/view proposals. The independent product kernel
+and required MACH/integer-bank clipping work are preserved. FPS, 8K, SUPIR HD
+textures, true texture-Off vertex colours, display settings and ports are pending.
+
+Registry: 1,235 entries / 1,232 unique module/address pairs; 1,129 matches in
+10,875 frozen candidate indexes. Another 211 nontexture binaries remain without
+function indexes, so the entire game's routine count is still unknown. Audit:
+zero evidence errors and zero stale source reports. The new complete helper is
+registered once; 104 existing entries gain integration evidence with zero new
+recovery credit. Removing the one declaration/route and renamed public entry
+reproduces the previous bridge text exactly. Registration is byte-idempotent.
+
+Five generated artifacts reproduce exactly in memory using absolute script
+paths. Python, PowerShell and default C syntax checks pass, as do all 658 retail
+dispatcher pointer-load checks (80 spans / 83 selectors). The broader aggregate
+workflow is extended; historical DLLs are preserved rather than rebuilt.
+
+The next dependency 8c60a1f6 has a read-only 27-row export/draft under
+analysis/draw-post-angle-frontier/. Original bytes and direct branch targets are
+checked; no direct branch leaves the proposal and no static outside callee is
+unregistered. These annotations are not exhaustive computed-call proof. The
+draft receives zero native-recovery credit. Continue its recovery on Sol High.
+
+How to check: open this guide and the source/reports listed above. Each report
+records its inputs, comparison results and hashes. Project status: PARTIALLY
+VERIFIED. The new angle helper has complete qualified instruction/branch proof;
+the full renderer/game remains unfinished. Luna Low is suitable for documentation
+only; no model switch or goal pause is recommended for the next recovery task.

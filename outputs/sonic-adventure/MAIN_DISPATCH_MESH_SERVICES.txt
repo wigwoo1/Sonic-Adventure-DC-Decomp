@@ -1,0 +1,117 @@
+Native mesh filter and material/header services
+16 October 2026 -- VERIFIED within the bounded scope below.
+Overall completion: 10% estimated weighted milestones, not recovered-code coverage.
+Goal active; continue Sol High for the lower vertex/filter workers.
+
+Five recovered bodies
+  source/sa_main_dispatch_mesh_services.c
+    8c611444..8c6116e8 filter/projection preparation: 292 instruction rows.
+    8c606c56..8c606c68 material flags: 9 rows.
+    8c606a08..8c606a5a shader/header state: 41 rows.
+    8c606a88..8c606ae0 texture-state lookup/cache: 44 rows.
+    8c6069a4..8c6069b6 command finalization: 9 rows.
+  source/sa_main_dispatch_mesh_services_connected.c
+All 395 rows match original bytes. Literal pools remain in exact span hashes
+but receive no instruction credit. Names/field descriptions are inferred.
+
+Behavior
+The filter optionally tests a transformed bounding sphere against depth and
+projected screen limits, prepares a transformed/normalized normal vector,
+publishes work counters, and calls one of four vertex/filter workers. Its seven
+indirect jumps retain internal acceptance/rejection flow. Native scalar divide,
+multiply-add and the existing vector backend are connected at reached operations.
+The material-flags helper updates selected header bits with two masks. Shader
+setup combines material/environment flags, updates three header words, and
+publishes the argument through a destination pointer. Texture setup follows
+the table/descriptor chain, caches two descriptor words, updates texture fields
+and checks an address field. A failed address check returns guest R0=-1 after
+its preceding cache/header effects; host execution can still complete normally.
+Command finalization combines the low 26 argument bits with a global word and
+writes the result through the command destination pointer. It is not a heap
+free routine; earlier reports used a release-service substitute at this boundary.
+
+Renderer-state terminology correction
+The earlier routines named render_state_save/restore transfer nine state words
+between renderer structures and the working header. Real material services
+intentionally change that header. The final transfer therefore publishes the
+updated state rather than invariably restoring the pre-draw values. Earlier
+preservation assertions were valid only for their stated substitute behavior.
+The connected lifetime test now independently checks the actual nine-word
+transfer/mapping after a draw, and unchanged renderer words on an idle pass.
+Recovered game instructions and the older immutable proof reports are preserved.
+
+Reached adapter guards
+Constructed SZ=1 inputs can overwrite the filter's saved mesh pointer or return
+address through the original wide-FMOV stack layout. Instead of following an
+unsupported address, the native adapter returns host -3 at a reached boundary:
+  8c6114f8, 8c6115a6, 8c61162e: saved-pointer dereference outside modeled RAM;
+  8c6116e4: changed return address, before its RTS delay-slot instruction.
+The reference stops at the same boundary and compares partial state. This is
+an explicit adapter limit, not physical Dreamcast memory-fault/exception emulation.
+Normal single-width execution remains unchanged. These guards are recorded in
+the translation manifest and registry; there are 24 such cases in the final suite.
+
+Build and focused proof
+Strict Clang DLL build passed with -Wall -Wextra -Werror. Two unused SR parameters
+required annotations in the generated C; no guest instructions changed there.
+Nine smoke comparisons passed. Final focused suite: 1,416 comparisons passed,
+covering all 395 original rows, 38 conditional outcomes and four call sites.
+Counts: filter core 368; flags/shader/finalization 192 each; texture setup 288;
+mesh 108; mesh wrapper 64; primary/draw/geometry connected paths 4 each.
+Full 16 MiB RAM, GPR/SR/PR, both FPU banks, FPSCR/FPUL and MACL are compared,
+with 2,734 ordered boundaries and 10,112 numerical operations. 1,192 completed
+cases passed independent mask/cache/command/culling-result assertions.
+224 partial cases matched: 120 unsupported numeric modes, 28 numeric traps,
+24 pointer/return guards, and 26 missing plus 26 failed external-service cases.
+All 26 remaining service targets were reached; 1,000 external boundaries checked.
+Inputs include bounds acceptance and all six rejection directions, clipped and
+unclipped workers, normals present/absent, output masks, both FPU banks, rounding,
+PR/SZ modes, texture cache hit/miss and address boundaries, and material masks.
+
+Connected lifetime proof
+Six smoke lifetimes and 120 complete lifetimes / 984 stage comparisons passed.
+Native spawning, callbacks, geometry, traversal, mesh loop, filter and the four
+header services share unchanged linked state across scheduler passes. There are
+26,624 ordered boundaries, 66,800 numerical operations, 64 parents, 80 particles
+and 54 paused passes. 880 original particle-mesh iterations reach the remaining
+vertex worker, acquisition and primitive boundaries: 2,640 calls in total.
+Independent checks retain motion/expiration, exact final task-pool order, empty
+lists, complete heap coalescing and the corrected renderer-state transfer rule.
+Existing translation regression coverage remains 46 cases / 56 rows.
+
+Limits and remaining work
+Four vertex/filter workers (8c611060, 8c611122, 8c6111d6, 8c6112e2) and 22
+acquisition/primitive routines remain explicit substitutes. Their arguments,
+ordering and error propagation are checked; their actual bodies are unproven.
+No visible pixels, GPU/MMIO, arbitrary invalid pointers, physical exceptions,
+concurrency or complete frame-driver ordering are claimed. Numerical evidence
+inherits the shared vector oracle and native scalar guard-probe limitations.
+Projection, texture tables, headers and command destinations use constructed
+valid test data. Full game decompilation and every requested port remain unfinished.
+SUPIR/display settings remain planned; texture Off retains vertex-coloured drawing.
+
+Source/evidence and reproduction
+  analysis/main-dispatch-mesh-services/*_instructions.tsv
+  analysis/main_dispatch_mesh_services_translation.json
+  analysis/main_dispatch_mesh_services_verification.json
+  analysis/main_dispatch_mesh_services_lifecycle_verification.json
+Original spans, source, tools, dependencies and tested DLL are hash-pinned.
+From this document's directory with the installed project Python:
+  python -B recover_main_dispatch_mesh_services.py
+  .\build_main_dispatch_mesh_services.ps1
+  python -B verify_main_dispatch_mesh_services.py
+  python -B verify_main_dispatch_mesh_services_lifecycle.py
+  python -B register_main_dispatch_mesh_services.py
+  python -B map_main_dispatch_cases.py
+  python -B verify_main_dispatch_case_map.py
+Optional read-only export: ghidra/export_main_dispatch_mesh_services.ps1.
+Focused stages are in build_and_verify.ps1. PowerShell syntax passed; the full
+accumulated workflow was not rerun end-to-end for this checkpoint.
+
+Final audit
+1,041 entries / 1,038 unique module-address pairs; zero evidence errors or stale
+source reports. 989 entries match the unchanged 10,875-candidate snapshot; 211
+non-texture modules still lack a function index. These are incomplete inventories,
+not whole-game coverage. Dispatcher checks: 658 pointer loads, 80 spans, 83 selectors.
+Whole-project milestone audit remains 10%. Keep the goal active on Sol High;
+next recover the original vertex/filter workers and their dependencies.

@@ -1,0 +1,15 @@
+from pathlib import Path
+p=Path(__file__).resolve().parent
+s=(p/'verify_backend_readback_native_field14_transfer.py').read_text()
+s=s.replace('cases=0', "field4_get=ctypes.CDLL(str(ROOT/'work/sonic-adventure/build/sound_backend_field4_get.dll')).sa_sound_backend_field4_get;field4_get.argtypes=abi\ncases=0")
+s=s.replace('mmio={(device+28)&0xffffffff:field14_payload,', "field4_payload=int.from_bytes(bytes((value+20+i)&255 for i in range(4)),'little');mmio={(device+16)&0xffffffff:field4_payload,(device+28)&0xffffffff:field14_payload,")
+s=s.replace('  service(a,m,r);return 0', '  if a==0x8c66babc:return field4_get(m,f,sr,r,pr,ctypes.byref(fpul),ctypes.byref(macl),None,call)\n  service(a,m,r);return 0')
+s=s.replace('0x8c66bd44,0x8c66ba2c]', '0x8c66bd44,0x8c66ba2c,0x8c66babc]')
+s=s.replace('for i in [1,2]]', 'for i in [1,2,16]]')
+s=s.replace('  else:output[4+o]=(value+i)&255', '  elif a==0x8c66babc:output[4+o]=(value+20)&255\n  else:output[4+o]=(value+i)&255')
+s=s.replace('(device+4)&0xffffffff,(device+20)&0xffffffff]', '(device+4)&0xffffffff,(device+16)&0xffffffff,(device+20)&0xffffffff]')
+s=s.replace('Polling/control services and three other field readers modeled', 'Native byte reader66babc connected through667188,66910c and transfer;independent device address+16,single packet byte+4,ordered eight MMIO reads and neighbor preservation. Polling/control services and two other field readers modeled')
+s=s.replace('backend_readback_native_field14_transfer_verification.json', 'backend_readback_native_field4_transfer_verification.json')
+(p/'verify_backend_readback_native_field4_transfer.py').write_text(s)
+reg=(p/'register_backend_readback_native_field14_transfer.py').read_text().replace('native_field14_transfer','native_field4_transfer').replace("'sa_sound_backend_field14_get'}", "'sa_sound_backend_field14_get','sa_sound_backend_field4_get'}").replace('native field14 transfer:', 'native field4 transfer:')
+(p/'register_backend_readback_native_field4_transfer.py').write_text(reg)

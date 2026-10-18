@@ -1,0 +1,27 @@
+address	opcode	instruction	references
+8c098842	2fe6	mov.l r14,@-r15	DATA:Stack[-0x4] 
+8c098844	2fd6	mov.l r13,@-r15	DATA:Stack[-0x8] 
+8c098846	2fc6	mov.l r12,@-r15	DATA:Stack[-0xc] 
+8c098848	4f22	sts.l PR,@-r15	DATA:Stack[-0x10] 
+8c09884a	5e43	mov.l @(0xc,r4),r14	
+8c09884c	2ee8	tst r14,r14	
+8c09884e	890d	bt 0x8c09886c	CONDITIONAL_JUMP:8c09886c=6cf64f26 
+8c098850	5de5	mov.l @(0x14,r14),r13	
+8c098852	2dd8	tst r13,r13	
+8c098854	8d02	bt/s 0x8c09885c	CONDITIONAL_JUMP:8c09885c=233853e3 
+8c098856	6ce2	_mov.l @r14,r12	
+8c098858	4d0b	jsr @r13	
+8c09885a	64e3	_mov r14,r4	
+8c09885c	53e3	mov.l @(0xc,r14),r3	
+8c09885e	2338	tst r3,r3	
+8c098860	8901	bt 0x8c098866	CONDITIONAL_JUMP:8c098866=2ee86ec3 
+8c098862	bfee	bsr 0x8c098842	UNCONDITIONAL_CALL:8c098842=2fd62fe6 
+8c098864	64e3	_mov r14,r4	
+8c098866	6ec3	mov r12,r14	
+8c098868	2ee8	tst r14,r14	
+8c09886a	8bf1	bf 0x8c098850	CONDITIONAL_JUMP:8c098850=2dd85de5 
+8c09886c	4f26	lds.l @r15+,PR	DATA:Stack[-0x10] 
+8c09886e	6cf6	mov.l @r15+,r12	DATA:Stack[-0xc] 
+8c098870	6df6	mov.l @r15+,r13	DATA:Stack[-0x8] 
+8c098872	b	rts	
+8c098874	6ef6	_mov.l @r15+,r14	

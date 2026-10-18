@@ -1,0 +1,7 @@
+$ErrorActionPreference = 'Stop'
+$workspace = Split-Path (Split-Path $PSScriptRoot -Parent) -Parent
+$clang = 'C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\VC\Tools\Llvm\x64\bin\clang.exe'
+$env:TMP = Join-Path $workspace 'work/sonic-adventure/build/tmp'
+$env:TEMP = $env:TMP
+& $clang -shared -O2 -Wall -Wextra -Werror -fuse-ld=lld -nostdlib '-Wl,/noentry' (Join-Path $PSScriptRoot 'source/sa_sound_snd_header_detect.c') (Join-Path $PSScriptRoot 'source/sa_sound_spsd_header_detect.c') (Join-Path $PSScriptRoot 'source/sa_sound_wave_header_detect.c') (Join-Path $PSScriptRoot 'source/sa_memory_compare_bytes.c') -o (Join-Path $workspace 'work/sonic-adventure/build/sound_header_detectors.dll')
+if ($LASTEXITCODE -ne 0) { throw 'Audio header detector build failed' }

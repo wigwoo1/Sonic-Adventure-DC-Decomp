@@ -1,0 +1,25 @@
+address	opcode	instruction	references
+8c0945a0	e108	mov #0x8,r1	
+8c0945a2	d757	mov.l 0x8c094700,r7	
+8c0945a4	4118	shll8 r1	
+8c0945a6	71b8	add #-0x48,r1	
+8c0945a8	6573	mov r7,r5	
+8c0945aa	317c	add r7,r1	
+8c0945ac	6673	mov r7,r6	
+8c0945ae	3512	cmp/hs r1,r5	
+8c0945b0	e000	mov #0x0,r0	
+8c0945b2	8d0b	bt/s 0x8c0945cc	
+8c0945b4	e710	mov #0x10,r7	
+8c0945b6	5254	mov.l @(0x10,r5),r2	
+8c0945b8	3240	cmp/eq r4,r2	
+8c0945ba	8b03	bf 0x8c0945c4	
+8c0945bc	1601	mov.l r0,@(0x4,r6)	
+8c0945be	5263	mov.l @(0xc,r6),r2	
+8c0945c0	227b	or r7,r2	
+8c0945c2	1623	mov.l r2,@(0xc,r6)	
+8c0945c4	7534	add #0x34,r5	
+8c0945c6	3512	cmp/hs r1,r5	
+8c0945c8	8ff5	bf/s 0x8c0945b6	
+8c0945ca	7634	add #0x34,r6	
+8c0945cc	b	rts	
+8c0945ce	9	nop	

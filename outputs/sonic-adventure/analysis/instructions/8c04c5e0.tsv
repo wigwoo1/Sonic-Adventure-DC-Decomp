@@ -1,0 +1,75 @@
+address	opcode	instruction	references
+8c04c5e0	2f96	mov.l r9,@-r15	DATA:Stack[-0x4] 
+8c04c5e2	2f86	mov.l r8,@-r15	DATA:Stack[-0x8] 
+8c04c5e4	9904	mov.w 0x8c04c5f0,r9	READ:8c04c5f0=e000ff00 
+8c04c5e6	9804	mov.w 0x8c04c5f2,r8	READ:8c04c5f2=6144e000 
+8c04c5e8	6644	mov.b @r4+,r6	
+8c04c5ea	e709	mov #0x9,r7	
+8c04c5ec	a005	bra 0x8c04c5fa	UNCONDITIONAL_JUMP:8c04c5fa=8f034710 
+8c04c5ee	6353	_mov r5,r3	
+8c04c5f4	6144	mov.b @r4+,r1	
+8c04c5f6	2510	mov.b r1,@r5	
+8c04c5f8	7501	add #0x1,r5	
+8c04c5fa	4710	dt r7	
+8c04c5fc	8f03	bf/s 0x8c04c606	CONDITIONAL_JUMP:8c04c606=471089f5 
+8c04c5fe	4601	_shlr r6	
+8c04c600	6644	mov.b @r4+,r6	
+8c04c602	e708	mov #0x8,r7	
+8c04c604	4601	shlr r6	
+8c04c606	89f5	bt 0x8c04c5f4	CONDITIONAL_JUMP:8c04c5f4=25106144 
+8c04c608	4710	dt r7	
+8c04c60a	8f03	bf/s 0x8c04c614	CONDITIONAL_JUMP:8c04c614=e0008919 
+8c04c60c	4601	_shlr r6	
+8c04c60e	6644	mov.b @r4+,r6	
+8c04c610	e708	mov #0x8,r7	
+8c04c612	4601	shlr r6	
+8c04c614	8919	bt 0x8c04c64a	CONDITIONAL_JUMP:8c04c64a=61446044 
+8c04c616	e000	mov #0x0,r0	
+8c04c618	4710	dt r7	
+8c04c61a	8f03	bf/s 0x8c04c624	CONDITIONAL_JUMP:8c04c624=47104024 
+8c04c61c	4601	_shlr r6	
+8c04c61e	6644	mov.b @r4+,r6	
+8c04c620	e708	mov #0x8,r7	
+8c04c622	4601	shlr r6	
+8c04c624	4024	rotcl r0	
+8c04c626	4710	dt r7	
+8c04c628	8f03	bf/s 0x8c04c632	CONDITIONAL_JUMP:8c04c632=40246244 
+8c04c62a	4601	_shlr r6	
+8c04c62c	6644	mov.b @r4+,r6	
+8c04c62e	e708	mov #0x8,r7	
+8c04c630	4601	shlr r6	
+8c04c632	6244	mov.b @r4+,r2	
+8c04c634	4024	rotcl r0	
+8c04c636	229b	or r9,r2	
+8c04c638	7002	add #0x2,r0	
+8c04c63a	325c	add r5,r2	
+8c04c63c	6124	mov.b @r2+,r1	
+8c04c63e	4010	dt r0	
+8c04c640	2510	mov.b r1,@r5	
+8c04c642	8ffb	bf/s 0x8c04c63c	CONDITIONAL_JUMP:8c04c63c=40106124 
+8c04c644	7501	_add #0x1,r5	
+8c04c646	afd8	bra 0x8c04c5fa	UNCONDITIONAL_JUMP:8c04c5fa=8f034710 
+8c04c648	9	_nop	
+8c04c64a	6044	mov.b @r4+,r0	
+8c04c64c	6144	mov.b @r4+,r1	
+8c04c64e	620c	extu.b r0,r2	
+8c04c650	4118	shll8 r1	
+8c04c652	221b	or r1,r2	
+8c04c654	2228	tst r2,r2	
+8c04c656	890a	bt 0x8c04c66e	CONDITIONAL_JUMP:8c04c66e=69f668f6 
+8c04c658	4209	shlr2 r2	
+8c04c65a	4201	shlr r2	
+8c04c65c	c907	and #0x7,r0	
+8c04c65e	2008	tst r0,r0	
+8c04c660	8fea	bf/s 0x8c04c638	CONDITIONAL_JUMP:8c04c638=325c7002 
+8c04c662	228b	_or r8,r2	
+8c04c664	6044	mov.b @r4+,r0	
+8c04c666	325c	add r5,r2	
+8c04c668	600c	extu.b r0,r0	
+8c04c66a	afe7	bra 0x8c04c63c	UNCONDITIONAL_JUMP:8c04c63c=40106124 
+8c04c66c	7001	_add #0x1,r0	
+8c04c66e	68f6	mov.l @r15+,r8	DATA:Stack[-0x8] 
+8c04c670	69f6	mov.l @r15+,r9	DATA:Stack[-0x4] 
+8c04c672	6053	mov r5,r0	
+8c04c674	b	rts	
+8c04c676	3038	_sub r3,r0	

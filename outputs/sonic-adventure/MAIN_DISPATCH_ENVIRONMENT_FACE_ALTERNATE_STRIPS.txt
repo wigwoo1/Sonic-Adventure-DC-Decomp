@@ -1,0 +1,117 @@
+Alternate environment-UV / face-selected strip primitives
+17 October 2026 - VERIFIED within the bounded scope below.
+Overall completion: 10% estimated weighted project milestones, not code coverage.
+Goal active. Continue Sol High with primitive pair 8c61f108 / 8c61f7c8.
+
+Recovered source
+  8c614580..8c614796: 250 original instruction rows
+  8c616474..8c616844: 460 original instruction rows
+  source/sa_main_dispatch_environment_face_alternate_strips.c
+  source/sa_main_dispatch_environment_face_alternate_strips_connected.c
+Both complete bodies are byte-checked annotated static C, retaining instruction
+order, register effects and delay slots without runtime opcode decoding. Names
+are descriptive inferences. Prior sources, reports, DLLs and original files remain.
+
+Observed behavior
+The environment-face parent delegates alternate topology c000 to these helpers.
+Strip metadata controls lengths, winding and output restarts. Ordinary accepted
+vertices use FTRV with a prepared inactive-bank matrix: matrix columns 0/1 are
+scaled for environment UVs, offsets are 0.5, the lighting column contains negative
+light coefficients and its offset contains ambient intensity. Ordinary factors
+are per-vertex; input caches and the final packet word remain unchanged.
+
+For accepted near-plane crossings, the clipped helper sums three normals, calls
+existing native normalizer 8c63a94c and calculates one face-lighting factor. It
+stages vertex pointers and active FR4 to native clipper 8c6173ba, which generates
+signed integer UVs through the separately published matrix, interpolates and
+quantizes them again, and emits the clipped polygon. The first two emitted
+vertices retain earlier queue factors; the third and, for quadrilaterals, fourth
+copy the supplied face factor. Padding remains untouched. Four-vertex output
+uses strip order 0,1,3,2.
+Ordinary prepared-register UVs and crossing published-memory UVs are checked as
+separate data paths. Existing empty stub, normalizer and clipper are reused without
+additional routine credit. The tested parent/helper chain is native; visible GPU
+output remains unfinished.
+
+Build and tests actually passed
+- Strict Clang build: -O2 -Wall -Wextra -Werror; separate connected DLL.
+- 544 original-code comparisons: 128 plain alternate, 176 clipped alternate,
+  eight plain parents, eight clipped parents and 224 connected meshes.
+- All 710 instruction rows, 40 conditional outcomes and four call sites covered.
+- Full 16 MiB RAM, GPRs/SR/PR, both FPU banks/FPSCR, FPUL/MACL, ordered boundaries
+  and queue contents/events agree with original execution, including partial state.
+- 488 cases complete; 56 match numeric/precision guards (-1), comparing partial
+  state rather than completed draws.
+- 3,040 ordered boundaries, 39,268 numerical operations, 1,998 queue transfers
+  and 21,426 queue events checked. Complete paths include 1,538 FTRV instructions,
+  524 stub calls, 130 normalizer calls and 130 native environment-face clipper calls.
+- Zero external game-service boundaries and zero cache write-back events.
+- 424 independent cases include all 224 fully native meshes: 192 crossings and
+  32 ordinary/rejected cases. Checks cover prepared-matrix UVs, per-vertex
+  lighting triangles, generated/wrapped/re-quantized crossing UVs, shared face
+  factors, exact early-factor/padding retention, direct cache preservation and
+  grouping/counters/cursors.
+- Inputs include lengths 3..6, multiple strips, accepted/rejected and degenerate
+  triangles, winding flips, both FPU banks, zero/identity/mixed-negative matrices,
+  ambient variants, primary/secondary extended headers and queue halves.
+  The independent ordinary matrix dot products use exact dyadic fixtures; clipped
+  face factors use 2e-5 tolerance for the approximate reciprocal-root backend.
+  Unsupported precision modes and direct near-crossing fixtures retain original-
+  instruction comparison evidence; connected crossings have independent polygons.
+- All 224 meshes use native material setup, real projection/classification,
+  headers, parents, alternate strips and finalization. Accepted crossings also
+  use native normalization and clipping. These paths need no special live
+  vertex-register seeding.
+- 120 lifetime regressions / 984 stages passed: 23,264 boundaries, 104,016 numerical
+  operations, 10,600 queue transfers, 117,808 queue events and zero external game
+  services. Unchanged original models do not reach the new helpers. Existing
+  native flat paths and independent particle/pool/heap checks are regression proof.
+- Final integrity checks passed: generated C/manifest are byte-identical, four
+  reports match pinned inputs, repeat registration adds zero duplicates, five
+  Python and three PowerShell scripts parse. Dispatcher mapping verifies 658
+  pointer loads, 80 spans and 83 selectors. Audits find zero evidence errors and
+  zero reports needing source-hash refresh. The app goal remains active.
+
+Limits and next work
+Valid positive strip counts, lengths >=3 and original lookahead indices bound
+tests. Inherited numerical and pointer/return guards remain; this focused suite's
+partial cases stop at numeric guards. Invalid loops/pointers, physical exception
+dispatch, arbitrary hardware numerical precision, MMU-on behavior, physical cache
+timing, GPU FIFO/pixels and full gameplay remain unverified. Queue modeling assumes
+coherent RAM and MMU-off transfers.
+The separate non-alternate parent's crossing branch still has a live-register
+precondition established only by controlled fixtures. These alternate helpers
+initialize their own vertex pointers; their recovery does not resolve that
+different caller contract. Lifetime pass order is host-selected; the complete
+frame driver remains incomplete. The whole historical workflow was not rerun;
+the new linked build and focused/lifetime suites were run.
+
+Registry: 1,090 entries / 1,087 unique module-address pairs, with 1,038 matches
+among 10,875 indexed candidates. Another 211 non-texture binaries lack function
+indexes. These discovery counts do not measure whole-game code coverage.
+Next primitive pair: 8c61f108 (818 rows) / 8c61f7c8 (971 rows), already exported and
+byte-checked as analysis in analysis/main_dispatch_remaining_primitives_inventory.json.
+Their 1,789 rows are not recovered C. Their three lower helpers also have 1,281
+byte-checked analysis rows in
+analysis/main_dispatch_environment_constant_lower_inventory.json:
+  8c61295a: 611 rows; 8c614796: 254 rows; 8c616844: 416 rows
+These exports and draft pseudocode establish no runtime behavior or recovery credit.
+The two parent emitters remain fixtures in this mesh chain. Full decompilation,
+playable PC/Android/stereo 3DS ports, 60/120/240 FPS, 8K, SUPIR/settings and later
+N64/PS1 work remain unfinished. Texture Off must disable sampling and use vertex
+colours/material fallback, including when HD is enabled.
+
+Evidence and simple check
+Open this guide and SOURCE_HANDOFF.txt. Focused report
+analysis/main_dispatch_environment_face_alternate_strips_verification.json has
+cases_passed=544, rows_covered=710, conditional_edges_covered=40,
+call_sites_covered=4 and external_service_boundaries=0. Linked lifetime report
+analysis/main_dispatch_environment_face_alternate_strips_lifecycle_verification.json
+has lifecycles_passed=120 and stage_comparisons=984. No playable game exists yet.
+Scripts: recover_main_dispatch_environment_face_alternate_strips.py,
+build_main_dispatch_environment_face_alternate_strips.ps1,
+verify_main_dispatch_environment_face_alternate_strips.py,
+verify_main_dispatch_environment_face_alternate_strips_lifecycle.py,
+register_main_dispatch_environment_face_alternate_strips.py.
+Recommended next model: Sol High; the next primitive family and its dependencies
+still need instruction-level reverse engineering. No model switch or pause advised.

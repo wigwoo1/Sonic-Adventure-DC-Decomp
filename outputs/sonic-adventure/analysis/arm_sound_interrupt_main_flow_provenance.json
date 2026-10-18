@@ -1,0 +1,13 @@
+{
+  "verification": "analysis/arm_sound_interrupt_main_flow_verification.json",
+  "verification_sha256": "dd5f437108d274ef3866ad94b2cfd144e5b39eb9bab1dbf9956c1ef0ce906ae3",
+  "connected_input_exception_evidence": {
+    "analysis\\arm_sound_input_connected_verification.json": "5117f9a127652bef871ca4ca32677a753d964706eaf84166ac38f1fb5fde165e",
+    "analysis\\arm_sound_exception_connected_verification.json": "3ff4202b1814a64cd1058b4106f1fa8b8ed4e12e0e19f3298fc4fc1feaa955b1"
+  },
+  "flows": 4,
+  "cycles": 64,
+  "checkpoints": 192,
+  "commands_produced_and_consumed": 96,
+  "classification": "Shared main DLL and RAM across explicit FIQ event entry, input parsing, timer flags, command-ring production/consumption and complete main iterations. CPU/CPSR/banks/RAM/MMIO/ordered effects match original ARM. Independently checked volume/pan state, interrupted registers, 32-interrupt counter wrap and three full-tick iterations per fixture. No automatic host interrupt scheduler, physical timing, synthesis, all command families or complete-game proof; no new complete-routine credit."
+}

@@ -1,0 +1,120 @@
+Main dispatcher remaining command-acquisition variants
+16 October 2026 — VERIFIED within the bounded scope below.
+Overall completion remains 10% estimated weighted milestones, not code coverage.
+The goal stays active. Continue Sol High for remaining primitive-family recovery.
+
+Recovered source
+  8c605f3c..8c605f80: 34 original rows
+  8c6064b0..8c606518: 52 original rows
+  8c6065b0..8c606610: 48 original rows
+  source/sa_main_dispatch_acquisition_variants.c
+  source/sa_main_dispatch_acquisition_variants_connected.c
+All three complete bodies are byte-checked, annotated static C, without runtime
+opcode decoding. There are no conditional branches or function calls. Names are
+descriptive inferences. Earlier code, original assets and proof reports remain.
+
+Behavior and data contract
+All four original material-loop acquisition targets are now native, including
+the previously recovered 8c605e68. They use working header 8c890104 and the same
+QACR/store-queue interface, saved cursor address bits and finalization helper.
+
+  8c605e68: primary cursor at header+16, three header words; transform word 2.
+  8c605f3c: secondary cursor at header+20, three original header words.
+  8c6064b0: primary cursor, eight words; transform word 2, then copy four data words.
+  8c6065b0: secondary cursor, eight original words, including four data words.
+
+The word-2 transform is (value & 03efffff) | 20080000. Eight-word packets contain
+header words 0..3 and the four words addressed by incoming R4, in normal final
+packet order. The code reads/stores in its original reverse order. Three-word
+variants retain the selected queue's other five words; they are not zero-filled.
+All paths transfer a complete 32-byte queue with PREF. QACR0/QACR1 receive
+(cursor >> 24) & 1c; saved high address bits are cursor & fc000000.
+The published finalization slot points to the active cursor word, header+16 or
+header+20. Acquisition returns the next queue cursor in R0 but does not update
+that header cursor until native finish 8c6069a4 runs. The eight-word variants
+preserve incoming R4 and also return the queue cursor in R5. The secondary
+three-word variant returns it in R4. Other register effects remain original.
+
+Build and verification actually passed
+- Strict Clang shared-library build: -O2 -Wall -Wextra -Werror.
+- 352 cases / 1,864 stage comparisons: 100 cases per new variant, four mixed
+  acquisition histories, and 48 connected mesh cases. Every one of 134 rows
+  reached; zero new conditional outcomes/call sites.
+- Complete 16 MiB RAM, GPRs/SR/PR, both FPU banks/FPSCR, FPUL and MACL match
+  original instruction execution. All stages complete successfully. Cases cover
+  both queue offsets, 8c/ac RAM aliases, differing header patterns, all inherited
+  precision/bank combinations and all four rounding-mode bit patterns. These
+  integer-only helpers leave FPU state opaque.
+- 704 ordered boundary comparisons, 3,648 inherited numerical operations,
+  1,196 queue transfers and 12,332 ordered queue events checked.
+- 908 independent packets check every emitted word, untouched queue contents,
+  both QACRs, pointer slots, guest return registers and finalization advancement.
+  Repeated acquire/finish sequences test continued cursor movement. Mixed
+  histories switch between all four helpers and both independent cursor slots.
+- Each new acquisition body executes 324 times; the earlier 8c605e68 executes
+  32 times in this suite, including caller integration.
+
+Connected mesh selection and material reuse
+With otherwise zero material flags, test values 0 / 100000 / 200000 / 300000
+select the primary three-word / secondary three-word / primary eight-word /
+secondary eight-word paths respectively. All four selections execute natively.
+The fixtures include normals, both banks and material sequences (0), (0,0,1)
+and (0,1,0). The original caller reuses a header for consecutive equal materials
+and acquires again on material changes. Independent call/cursor assertions count
+those transitions rather than incorrectly requiring a header per segment.
+The final header packet is checked against the resulting native material state.
+There are still 112 external primitive-emitter boundaries in these constructed
+mesh cases; none is an acquisition substitute. Their fake primitive effects do
+not prove complete rendering for those sixteen remaining emitters.
+
+Lifetime regression
+The linked build passes 120 unchanged original-model particle lifetimes / 984
+stage comparisons: 23,264 ordered boundaries, 104,016 numerical operations,
+10,600 queue transfers and 117,808 queue events, with zero external game services.
+These original-model lifetimes reach the previously recovered primary acquisition
+and do not reach the three new variants; the harness asserts that explicitly.
+New-variant behavior is verified by the packet histories and connected mesh cases.
+Existing motion/timer/pause/deferred-deletion/task-pool/heap-coalescing assertions
+and 46 matrix-translation regression cases remain checked. Host-selected pass
+ordering does not establish the complete original frame driver.
+
+Files and repetition
+  analysis/main-dispatch-acquisition-variants/*_instructions.tsv
+  analysis/main_dispatch_acquisition_variants_translation.json
+  analysis/main_dispatch_acquisition_variants_verification.json
+  analysis/main_dispatch_acquisition_variants_lifecycle_verification.json
+From this output directory with the installed project Python:
+  python recover_main_dispatch_acquisition_variants.py
+  .\build_main_dispatch_acquisition_variants.ps1
+  python verify_main_dispatch_acquisition_variants.py
+  python verify_main_dispatch_acquisition_variants_lifecycle.py
+  python register_main_dispatch_acquisition_variants.py
+  python inventory_main_dispatch_primitive_families.py
+  python map_main_dispatch_cases.py
+  python verify_main_dispatch_case_map.py
+These focused stages are included in build_and_verify.ps1. The full accumulated
+workflow was not run end-to-end. Registration checks source/DLL/proof hashes and
+original spans before adding three entries. Registry: 1,054 entries / 1,051 unique
+module-address pairs. The incomplete function inventory is not code coverage.
+Final audits found zero registry evidence errors and zero stale source reports.
+The dispatcher map passed 658 original pointer-load checks over 80 spans and 83
+selectors. Source/manifest regeneration reproduced identical hashes, registration
+reran with zero added entries, and all three PowerShell syntax checks passed.
+
+Remaining work and next task
+Sixteen other primitive emitters remain substitutes. Prioritize 8c617e46,
+reached by these constructed meshes, and its clipped counterpart 8c6184f0.
+The read-only export and inventory check 1,710 original rows but grant zero new
+behavior/recovered-source credit:
+  analysis/main-dispatch-primitive-families/
+  analysis/main_dispatch_primitive_families_inventory.json
+Flow hints identify lower calls to 8c6136c0 / 8c612e64 / 8c614bb0. Search existing
+sources and verify their boundaries before counting or recovering dependencies.
+Optional re-export: ghidra/export_main_dispatch_primitive_families.ps1.
+
+Only valid bounded payloads and aligned coherent-RAM/MMU-off destinations are
+tested. GPU FIFO output, visible pixels, MMU-on/TLB, cache timing, physical faults,
+full decompilation/gameplay and playable ports remain unfinished. Existing numeric
+guard/oracle limits remain. No HD/display setting implementation is claimed.
+Keep Sol High for the remaining floating-point primitive families; no model
+switch or goal pause is recommended at this checkpoint.

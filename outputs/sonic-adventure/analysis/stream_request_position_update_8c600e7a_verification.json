@@ -1,0 +1,1042 @@
+{
+  "module": "1ST_READ.BIN",
+  "load_address": "0x8c010000",
+  "address": "0x8c600e7a",
+  "end_exclusive": "0x8c600ec6",
+  "indexed_instruction_bytes": 76,
+  "retail_span_sha256": "10fde6a87f849d99bf9c82e45c77ffd75d12db75ae8c4bab5843b6e131f94cc0",
+  "source_sha256": "dbf7201798136862d5375032d2630f020689e60bf36592693bc5d60bcffeb8e8",
+  "cases_passed": 128,
+  "comparison_level": "complete 16 MiB RAM and all GPR/SR/PR/PC state against the retail SH-4 interpreter",
+  "scope": "Reject null or inactive requests, apply absolute/current/end-relative positions, check signed lower and upper bounds, and update the request position only when in range.",
+  "limitations": [
+    "The meanings of all request fields and the callers that choose the three origin modes remain under investigation.",
+    "Differential verification uses the project SH-4 interpreter, not Dreamcast hardware or whole-game execution."
+  ],
+  "cases": [
+    {
+      "case": 0,
+      "request": "0x0",
+      "origin": 0,
+      "delta": "0x0",
+      "return": "0xfffffff6",
+      "matched": true
+    },
+    {
+      "case": 1,
+      "request": "0x8c780000",
+      "origin": 1,
+      "delta": "0x0",
+      "return": "0xfffffff6",
+      "matched": true
+    },
+    {
+      "case": 2,
+      "request": "0x8c780000",
+      "origin": 2,
+      "delta": "0x0",
+      "return": "0x0",
+      "matched": true
+    },
+    {
+      "case": 3,
+      "request": "0x8c780000",
+      "origin": 3,
+      "delta": "0x0",
+      "return": "0xfffffff0",
+      "matched": true
+    },
+    {
+      "case": 4,
+      "request": "0x8c780000",
+      "origin": 0,
+      "delta": "0x0",
+      "return": "0x0",
+      "matched": true
+    },
+    {
+      "case": 5,
+      "request": "0x8c780000",
+      "origin": 1,
+      "delta": "0x1",
+      "return": "0x0",
+      "matched": true
+    },
+    {
+      "case": 6,
+      "request": "0x8c780000",
+      "origin": 2,
+      "delta": "0x1",
+      "return": "0xffffffef",
+      "matched": true
+    },
+    {
+      "case": 7,
+      "request": "0x8c780000",
+      "origin": 3,
+      "delta": "0x1",
+      "return": "0xfffffff0",
+      "matched": true
+    },
+    {
+      "case": 8,
+      "request": "0x8c780000",
+      "origin": 0,
+      "delta": "0x1",
+      "return": "0xffffffef",
+      "matched": true
+    },
+    {
+      "case": 9,
+      "request": "0x8c780000",
+      "origin": 1,
+      "delta": "0x1",
+      "return": "0xffffffef",
+      "matched": true
+    },
+    {
+      "case": 10,
+      "request": "0x8c780000",
+      "origin": 2,
+      "delta": "0x7fffffff",
+      "return": "0xffffffef",
+      "matched": true
+    },
+    {
+      "case": 11,
+      "request": "0x8c780000",
+      "origin": 3,
+      "delta": "0x7fffffff",
+      "return": "0xfffffff0",
+      "matched": true
+    },
+    {
+      "case": 12,
+      "request": "0x8c780000",
+      "origin": 0,
+      "delta": "0x7fffffff",
+      "return": "0xffffffef",
+      "matched": true
+    },
+    {
+      "case": 13,
+      "request": "0x8c780000",
+      "origin": 1,
+      "delta": "0x7fffffff",
+      "return": "0xffffffef",
+      "matched": true
+    },
+    {
+      "case": 14,
+      "request": "0x8c780000",
+      "origin": 2,
+      "delta": "0x7fffffff",
+      "return": "0xffffffef",
+      "matched": true
+    },
+    {
+      "case": 15,
+      "request": "0x8c780000",
+      "origin": 3,
+      "delta": "0x80000000",
+      "return": "0xfffffff0",
+      "matched": true
+    },
+    {
+      "case": 16,
+      "request": "0x0",
+      "origin": 0,
+      "delta": "0x80000000",
+      "return": "0xfffffff6",
+      "matched": true
+    },
+    {
+      "case": 17,
+      "request": "0x8c780000",
+      "origin": 1,
+      "delta": "0x80000000",
+      "return": "0xfffffff6",
+      "matched": true
+    },
+    {
+      "case": 18,
+      "request": "0x8c780000",
+      "origin": 2,
+      "delta": "0x80000000",
+      "return": "0xffffffef",
+      "matched": true
+    },
+    {
+      "case": 19,
+      "request": "0x8c780000",
+      "origin": 3,
+      "delta": "0x80000000",
+      "return": "0xfffffff0",
+      "matched": true
+    },
+    {
+      "case": 20,
+      "request": "0x8c780000",
+      "origin": 0,
+      "delta": "0xffffffff",
+      "return": "0xffffffef",
+      "matched": true
+    },
+    {
+      "case": 21,
+      "request": "0x8c780000",
+      "origin": 1,
+      "delta": "0xffffffff",
+      "return": "0xffffffef",
+      "matched": true
+    },
+    {
+      "case": 22,
+      "request": "0x8c780000",
+      "origin": 2,
+      "delta": "0xffffffff",
+      "return": "0x0",
+      "matched": true
+    },
+    {
+      "case": 23,
+      "request": "0x8c780000",
+      "origin": 3,
+      "delta": "0xffffffff",
+      "return": "0xfffffff0",
+      "matched": true
+    },
+    {
+      "case": 24,
+      "request": "0x8c780000",
+      "origin": 0,
+      "delta": "0xffffffff",
+      "return": "0xffffffef",
+      "matched": true
+    },
+    {
+      "case": 25,
+      "request": "0x8c780000",
+      "origin": 1,
+      "delta": "0xfffffff6",
+      "return": "0x0",
+      "matched": true
+    },
+    {
+      "case": 26,
+      "request": "0x8c780000",
+      "origin": 2,
+      "delta": "0xfffffff6",
+      "return": "0xffffffef",
+      "matched": true
+    },
+    {
+      "case": 27,
+      "request": "0x8c780000",
+      "origin": 3,
+      "delta": "0xfffffff6",
+      "return": "0xfffffff0",
+      "matched": true
+    },
+    {
+      "case": 28,
+      "request": "0x8c780000",
+      "origin": 0,
+      "delta": "0xfffffff6",
+      "return": "0xffffffef",
+      "matched": true
+    },
+    {
+      "case": 29,
+      "request": "0x8c780000",
+      "origin": 1,
+      "delta": "0xfffffff6",
+      "return": "0xffffffef",
+      "matched": true
+    },
+    {
+      "case": 30,
+      "request": "0x8c780000",
+      "origin": 2,
+      "delta": "0xffffffef",
+      "return": "0xffffffef",
+      "matched": true
+    },
+    {
+      "case": 31,
+      "request": "0x8c780000",
+      "origin": 3,
+      "delta": "0xffffffef",
+      "return": "0xfffffff0",
+      "matched": true
+    },
+    {
+      "case": 32,
+      "request": "0x0",
+      "origin": 0,
+      "delta": "0xffffffef",
+      "return": "0xfffffff6",
+      "matched": true
+    },
+    {
+      "case": 33,
+      "request": "0x8c780000",
+      "origin": 1,
+      "delta": "0xffffffef",
+      "return": "0xfffffff6",
+      "matched": true
+    },
+    {
+      "case": 34,
+      "request": "0x8c780000",
+      "origin": 2,
+      "delta": "0xffffffef",
+      "return": "0x0",
+      "matched": true
+    },
+    {
+      "case": 35,
+      "request": "0x8c780000",
+      "origin": 3,
+      "delta": "0x64",
+      "return": "0xfffffff0",
+      "matched": true
+    },
+    {
+      "case": 36,
+      "request": "0x8c780000",
+      "origin": 0,
+      "delta": "0x64",
+      "return": "0xffffffef",
+      "matched": true
+    },
+    {
+      "case": 37,
+      "request": "0x8c780000",
+      "origin": 1,
+      "delta": "0x64",
+      "return": "0xffffffef",
+      "matched": true
+    },
+    {
+      "case": 38,
+      "request": "0x8c780000",
+      "origin": 2,
+      "delta": "0x64",
+      "return": "0xffffffef",
+      "matched": true
+    },
+    {
+      "case": 39,
+      "request": "0x8c780000",
+      "origin": 3,
+      "delta": "0x64",
+      "return": "0xfffffff0",
+      "matched": true
+    },
+    {
+      "case": 40,
+      "request": "0x8c780000",
+      "origin": 0,
+      "delta": "0x63",
+      "return": "0xffffffef",
+      "matched": true
+    },
+    {
+      "case": 41,
+      "request": "0x8c780000",
+      "origin": 1,
+      "delta": "0x63",
+      "return": "0xffffffef",
+      "matched": true
+    },
+    {
+      "case": 42,
+      "request": "0x8c780000",
+      "origin": 2,
+      "delta": "0x63",
+      "return": "0xffffffef",
+      "matched": true
+    },
+    {
+      "case": 43,
+      "request": "0x8c780000",
+      "origin": 3,
+      "delta": "0x63",
+      "return": "0xfffffff0",
+      "matched": true
+    },
+    {
+      "case": 44,
+      "request": "0x8c780000",
+      "origin": 0,
+      "delta": "0x63",
+      "return": "0x0",
+      "matched": true
+    },
+    {
+      "case": 45,
+      "request": "0x8c780000",
+      "origin": 1,
+      "delta": "0x65",
+      "return": "0x0",
+      "matched": true
+    },
+    {
+      "case": 46,
+      "request": "0x8c780000",
+      "origin": 2,
+      "delta": "0x65",
+      "return": "0xffffffef",
+      "matched": true
+    },
+    {
+      "case": 47,
+      "request": "0x8c780000",
+      "origin": 3,
+      "delta": "0x65",
+      "return": "0xfffffff0",
+      "matched": true
+    },
+    {
+      "case": 48,
+      "request": "0x0",
+      "origin": 0,
+      "delta": "0x65",
+      "return": "0xfffffff6",
+      "matched": true
+    },
+    {
+      "case": 49,
+      "request": "0x8c780000",
+      "origin": 1,
+      "delta": "0x65",
+      "return": "0xfffffff6",
+      "matched": true
+    },
+    {
+      "case": 50,
+      "request": "0x8c780000",
+      "origin": 2,
+      "delta": "0x0",
+      "return": "0xffffffef",
+      "matched": true
+    },
+    {
+      "case": 51,
+      "request": "0x8c780000",
+      "origin": 3,
+      "delta": "0x0",
+      "return": "0xfffffff0",
+      "matched": true
+    },
+    {
+      "case": 52,
+      "request": "0x8c780000",
+      "origin": 0,
+      "delta": "0x0",
+      "return": "0xffffffef",
+      "matched": true
+    },
+    {
+      "case": 53,
+      "request": "0x8c780000",
+      "origin": 1,
+      "delta": "0x0",
+      "return": "0xffffffef",
+      "matched": true
+    },
+    {
+      "case": 54,
+      "request": "0x8c780000",
+      "origin": 2,
+      "delta": "0x0",
+      "return": "0x0",
+      "matched": true
+    },
+    {
+      "case": 55,
+      "request": "0x8c780000",
+      "origin": 3,
+      "delta": "0x1",
+      "return": "0xfffffff0",
+      "matched": true
+    },
+    {
+      "case": 56,
+      "request": "0x8c780000",
+      "origin": 0,
+      "delta": "0x1",
+      "return": "0x0",
+      "matched": true
+    },
+    {
+      "case": 57,
+      "request": "0x8c780000",
+      "origin": 1,
+      "delta": "0x1",
+      "return": "0xffffffef",
+      "matched": true
+    },
+    {
+      "case": 58,
+      "request": "0x8c780000",
+      "origin": 2,
+      "delta": "0x1",
+      "return": "0xffffffef",
+      "matched": true
+    },
+    {
+      "case": 59,
+      "request": "0x8c780000",
+      "origin": 3,
+      "delta": "0x1",
+      "return": "0xfffffff0",
+      "matched": true
+    },
+    {
+      "case": 60,
+      "request": "0x8c780000",
+      "origin": 0,
+      "delta": "0x7fffffff",
+      "return": "0xffffffef",
+      "matched": true
+    },
+    {
+      "case": 61,
+      "request": "0x8c780000",
+      "origin": 1,
+      "delta": "0x7fffffff",
+      "return": "0xffffffef",
+      "matched": true
+    },
+    {
+      "case": 62,
+      "request": "0x8c780000",
+      "origin": 2,
+      "delta": "0x7fffffff",
+      "return": "0xffffffef",
+      "matched": true
+    },
+    {
+      "case": 63,
+      "request": "0x8c780000",
+      "origin": 3,
+      "delta": "0x7fffffff",
+      "return": "0xfffffff0",
+      "matched": true
+    },
+    {
+      "case": 64,
+      "request": "0x0",
+      "origin": 0,
+      "delta": "0x397fe65f",
+      "return": "0xfffffff6",
+      "matched": true
+    },
+    {
+      "case": 65,
+      "request": "0x8c780000",
+      "origin": 1,
+      "delta": "0xaea001e3",
+      "return": "0xfffffff6",
+      "matched": true
+    },
+    {
+      "case": 66,
+      "request": "0x8c780000",
+      "origin": 2,
+      "delta": "0x1691c1da",
+      "return": "0xffffffef",
+      "matched": true
+    },
+    {
+      "case": 67,
+      "request": "0x8c780000",
+      "origin": 3,
+      "delta": "0x2c0a0417",
+      "return": "0xfffffff0",
+      "matched": true
+    },
+    {
+      "case": 68,
+      "request": "0x8c780000",
+      "origin": 0,
+      "delta": "0x468b22c8",
+      "return": "0x0",
+      "matched": true
+    },
+    {
+      "case": 69,
+      "request": "0x8c780000",
+      "origin": 1,
+      "delta": "0x5c759fd8",
+      "return": "0xffffffef",
+      "matched": true
+    },
+    {
+      "case": 70,
+      "request": "0x8c780000",
+      "origin": 2,
+      "delta": "0xd094c89f",
+      "return": "0xffffffef",
+      "matched": true
+    },
+    {
+      "case": 71,
+      "request": "0x8c780000",
+      "origin": 3,
+      "delta": "0xf05e4843",
+      "return": "0xfffffff0",
+      "matched": true
+    },
+    {
+      "case": 72,
+      "request": "0x8c780000",
+      "origin": 0,
+      "delta": "0xeabec3cd",
+      "return": "0xffffffef",
+      "matched": true
+    },
+    {
+      "case": 73,
+      "request": "0x8c780000",
+      "origin": 1,
+      "delta": "0x599022b",
+      "return": "0xffffffef",
+      "matched": true
+    },
+    {
+      "case": 74,
+      "request": "0x8c780000",
+      "origin": 2,
+      "delta": "0x8376655c",
+      "return": "0xffffffef",
+      "matched": true
+    },
+    {
+      "case": 75,
+      "request": "0x8c780000",
+      "origin": 3,
+      "delta": "0xba5af21b",
+      "return": "0xfffffff0",
+      "matched": true
+    },
+    {
+      "case": 76,
+      "request": "0x8c780000",
+      "origin": 0,
+      "delta": "0xce0598de",
+      "return": "0xffffffef",
+      "matched": true
+    },
+    {
+      "case": 77,
+      "request": "0x8c780000",
+      "origin": 1,
+      "delta": "0x7c7e97fe",
+      "return": "0xffffffef",
+      "matched": true
+    },
+    {
+      "case": 78,
+      "request": "0x8c780000",
+      "origin": 2,
+      "delta": "0xb7cad62d",
+      "return": "0x0",
+      "matched": true
+    },
+    {
+      "case": 79,
+      "request": "0x8c780000",
+      "origin": 3,
+      "delta": "0xc125e491",
+      "return": "0xfffffff0",
+      "matched": true
+    },
+    {
+      "case": 80,
+      "request": "0x0",
+      "origin": 0,
+      "delta": "0x223b5f",
+      "return": "0xfffffff6",
+      "matched": true
+    },
+    {
+      "case": 81,
+      "request": "0x8c780000",
+      "origin": 1,
+      "delta": "0x2247d9d2",
+      "return": "0xfffffff6",
+      "matched": true
+    },
+    {
+      "case": 82,
+      "request": "0x8c780000",
+      "origin": 2,
+      "delta": "0x61cdb41c",
+      "return": "0xffffffef",
+      "matched": true
+    },
+    {
+      "case": 83,
+      "request": "0x8c780000",
+      "origin": 3,
+      "delta": "0xa479714a",
+      "return": "0xfffffff0",
+      "matched": true
+    },
+    {
+      "case": 84,
+      "request": "0x8c780000",
+      "origin": 0,
+      "delta": "0x60019d32",
+      "return": "0xffffffef",
+      "matched": true
+    },
+    {
+      "case": 85,
+      "request": "0x8c780000",
+      "origin": 1,
+      "delta": "0xcb88c94d",
+      "return": "0xffffffef",
+      "matched": true
+    },
+    {
+      "case": 86,
+      "request": "0x8c780000",
+      "origin": 2,
+      "delta": "0x2d33cd20",
+      "return": "0xffffffef",
+      "matched": true
+    },
+    {
+      "case": 87,
+      "request": "0x8c780000",
+      "origin": 3,
+      "delta": "0x7505528a",
+      "return": "0xfffffff0",
+      "matched": true
+    },
+    {
+      "case": 88,
+      "request": "0x8c780000",
+      "origin": 0,
+      "delta": "0xdf1d3b51",
+      "return": "0xffffffef",
+      "matched": true
+    },
+    {
+      "case": 89,
+      "request": "0x8c780000",
+      "origin": 1,
+      "delta": "0x1810d496",
+      "return": "0xffffffef",
+      "matched": true
+    },
+    {
+      "case": 90,
+      "request": "0x8c780000",
+      "origin": 2,
+      "delta": "0x95ed1f6d",
+      "return": "0xffffffef",
+      "matched": true
+    },
+    {
+      "case": 91,
+      "request": "0x8c780000",
+      "origin": 3,
+      "delta": "0x6343b7b3",
+      "return": "0xfffffff0",
+      "matched": true
+    },
+    {
+      "case": 92,
+      "request": "0x8c780000",
+      "origin": 0,
+      "delta": "0x43ee8a22",
+      "return": "0xffffffef",
+      "matched": true
+    },
+    {
+      "case": 93,
+      "request": "0x8c780000",
+      "origin": 1,
+      "delta": "0xa5131704",
+      "return": "0xffffffef",
+      "matched": true
+    },
+    {
+      "case": 94,
+      "request": "0x8c780000",
+      "origin": 2,
+      "delta": "0x373a87ef",
+      "return": "0xffffffef",
+      "matched": true
+    },
+    {
+      "case": 95,
+      "request": "0x8c780000",
+      "origin": 3,
+      "delta": "0xc23bdc7d",
+      "return": "0xfffffff0",
+      "matched": true
+    },
+    {
+      "case": 96,
+      "request": "0x0",
+      "origin": 0,
+      "delta": "0x3d713f16",
+      "return": "0xfffffff6",
+      "matched": true
+    },
+    {
+      "case": 97,
+      "request": "0x8c780000",
+      "origin": 1,
+      "delta": "0xf62100dc",
+      "return": "0xfffffff6",
+      "matched": true
+    },
+    {
+      "case": 98,
+      "request": "0x8c780000",
+      "origin": 2,
+      "delta": "0x28d83a73",
+      "return": "0xffffffef",
+      "matched": true
+    },
+    {
+      "case": 99,
+      "request": "0x8c780000",
+      "origin": 3,
+      "delta": "0x91e309b9",
+      "return": "0xfffffff0",
+      "matched": true
+    },
+    {
+      "case": 100,
+      "request": "0x8c780000",
+      "origin": 0,
+      "delta": "0xae4249f8",
+      "return": "0xffffffef",
+      "matched": true
+    },
+    {
+      "case": 101,
+      "request": "0x8c780000",
+      "origin": 1,
+      "delta": "0xd77cb826",
+      "return": "0xffffffef",
+      "matched": true
+    },
+    {
+      "case": 102,
+      "request": "0x8c780000",
+      "origin": 2,
+      "delta": "0xa347e1d6",
+      "return": "0xffffffef",
+      "matched": true
+    },
+    {
+      "case": 103,
+      "request": "0x8c780000",
+      "origin": 3,
+      "delta": "0x5e279c58",
+      "return": "0xfffffff0",
+      "matched": true
+    },
+    {
+      "case": 104,
+      "request": "0x8c780000",
+      "origin": 0,
+      "delta": "0xe77363fe",
+      "return": "0xffffffef",
+      "matched": true
+    },
+    {
+      "case": 105,
+      "request": "0x8c780000",
+      "origin": 1,
+      "delta": "0x67d4bca3",
+      "return": "0x0",
+      "matched": true
+    },
+    {
+      "case": 106,
+      "request": "0x8c780000",
+      "origin": 2,
+      "delta": "0x12586f4d",
+      "return": "0xffffffef",
+      "matched": true
+    },
+    {
+      "case": 107,
+      "request": "0x8c780000",
+      "origin": 3,
+      "delta": "0x7ae684fc",
+      "return": "0xfffffff0",
+      "matched": true
+    },
+    {
+      "case": 108,
+      "request": "0x8c780000",
+      "origin": 0,
+      "delta": "0x3c123c28",
+      "return": "0xffffffef",
+      "matched": true
+    },
+    {
+      "case": 109,
+      "request": "0x8c780000",
+      "origin": 1,
+      "delta": "0x9f6194cb",
+      "return": "0xffffffef",
+      "matched": true
+    },
+    {
+      "case": 110,
+      "request": "0x8c780000",
+      "origin": 2,
+      "delta": "0x6a086787",
+      "return": "0xffffffef",
+      "matched": true
+    },
+    {
+      "case": 111,
+      "request": "0x8c780000",
+      "origin": 3,
+      "delta": "0xa9604672",
+      "return": "0xfffffff0",
+      "matched": true
+    },
+    {
+      "case": 112,
+      "request": "0x0",
+      "origin": 0,
+      "delta": "0xb78c0a45",
+      "return": "0xfffffff6",
+      "matched": true
+    },
+    {
+      "case": 113,
+      "request": "0x8c780000",
+      "origin": 1,
+      "delta": "0xcd6133e2",
+      "return": "0xfffffff6",
+      "matched": true
+    },
+    {
+      "case": 114,
+      "request": "0x8c780000",
+      "origin": 2,
+      "delta": "0xf3c7e41",
+      "return": "0xffffffef",
+      "matched": true
+    },
+    {
+      "case": 115,
+      "request": "0x8c780000",
+      "origin": 3,
+      "delta": "0x192b0516",
+      "return": "0xfffffff0",
+      "matched": true
+    },
+    {
+      "case": 116,
+      "request": "0x8c780000",
+      "origin": 0,
+      "delta": "0xd28ef9ba",
+      "return": "0xffffffef",
+      "matched": true
+    },
+    {
+      "case": 117,
+      "request": "0x8c780000",
+      "origin": 1,
+      "delta": "0x11c9be16",
+      "return": "0xffffffef",
+      "matched": true
+    },
+    {
+      "case": 118,
+      "request": "0x8c780000",
+      "origin": 2,
+      "delta": "0x93e494b3",
+      "return": "0xffffffef",
+      "matched": true
+    },
+    {
+      "case": 119,
+      "request": "0x8c780000",
+      "origin": 3,
+      "delta": "0x4f97dc31",
+      "return": "0xfffffff0",
+      "matched": true
+    },
+    {
+      "case": 120,
+      "request": "0x8c780000",
+      "origin": 0,
+      "delta": "0x410c5658",
+      "return": "0x0",
+      "matched": true
+    },
+    {
+      "case": 121,
+      "request": "0x8c780000",
+      "origin": 1,
+      "delta": "0x4e24693f",
+      "return": "0xffffffef",
+      "matched": true
+    },
+    {
+      "case": 122,
+      "request": "0x8c780000",
+      "origin": 2,
+      "delta": "0x5b64eb8c",
+      "return": "0xffffffef",
+      "matched": true
+    },
+    {
+      "case": 123,
+      "request": "0x8c780000",
+      "origin": 3,
+      "delta": "0xc24c75db",
+      "return": "0xfffffff0",
+      "matched": true
+    },
+    {
+      "case": 124,
+      "request": "0x8c780000",
+      "origin": 0,
+      "delta": "0xb88f0d14",
+      "return": "0xffffffef",
+      "matched": true
+    },
+    {
+      "case": 125,
+      "request": "0x8c780000",
+      "origin": 1,
+      "delta": "0xcfa8786f",
+      "return": "0xffffffef",
+      "matched": true
+    },
+    {
+      "case": 126,
+      "request": "0x8c780000",
+      "origin": 2,
+      "delta": "0xff4f983d",
+      "return": "0xffffffef",
+      "matched": true
+    },
+    {
+      "case": 127,
+      "request": "0x8c780000",
+      "origin": 3,
+      "delta": "0x4904913c",
+      "return": "0xfffffff0",
+      "matched": true
+    }
+  ]
+}

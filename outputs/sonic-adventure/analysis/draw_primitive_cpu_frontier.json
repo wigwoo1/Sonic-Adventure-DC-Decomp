@@ -1,0 +1,206 @@
+{
+  "routines": [
+    {
+      "entry": "0x8c037ee0",
+      "state_dependency_instructions": [
+        {
+          "address": "0x8c037ef0",
+          "instruction": "ldc r0,SR",
+          "bytes": "0e40"
+        },
+        {
+          "address": "0x8c037fde",
+          "instruction": "ldc r0,SR",
+          "bytes": "0e40"
+        }
+      ],
+      "native_recovery_credit": 0
+    },
+    {
+      "entry": "0x8c037ff4",
+      "state_dependency_instructions": [
+        {
+          "address": "0x8c038076",
+          "instruction": "dmuls.l r14,r13",
+          "bytes": "ed3d"
+        },
+        {
+          "address": "0x8c03808e",
+          "instruction": "dmuls.l r14,r13",
+          "bytes": "ed3d"
+        },
+        {
+          "address": "0x8c0380aa",
+          "instruction": "dmuls.l r14,r13",
+          "bytes": "ed3d"
+        },
+        {
+          "address": "0x8c0380c6",
+          "instruction": "dmuls.l r14,r13",
+          "bytes": "ed3d"
+        },
+        {
+          "address": "0x8c0380e8",
+          "instruction": "dmuls.l r14,r13",
+          "bytes": "ed3d"
+        },
+        {
+          "address": "0x8c038100",
+          "instruction": "dmuls.l r14,r13",
+          "bytes": "ed3d"
+        },
+        {
+          "address": "0x8c03811c",
+          "instruction": "dmuls.l r14,r13",
+          "bytes": "ed3d"
+        },
+        {
+          "address": "0x8c038138",
+          "instruction": "dmuls.l r14,r13",
+          "bytes": "ed3d"
+        },
+        {
+          "address": "0x8c03814c",
+          "instruction": "flds fr8,FPUL",
+          "bytes": "1df8"
+        },
+        {
+          "address": "0x8c03828c",
+          "instruction": "ldc r0,SR",
+          "bytes": "0e40"
+        }
+      ],
+      "native_recovery_credit": 0
+    },
+    {
+      "entry": "0x8c038516",
+      "state_dependency_instructions": [
+        {
+          "address": "0x8c038526",
+          "instruction": "ldc r0,SR",
+          "bytes": "0e40"
+        },
+        {
+          "address": "0x8c03864a",
+          "instruction": "ldc r0,SR",
+          "bytes": "0e40"
+        }
+      ],
+      "native_recovery_credit": 0
+    },
+    {
+      "entry": "0x8c038802",
+      "state_dependency_instructions": [
+        {
+          "address": "0x8c038810",
+          "instruction": "ldc r0,SR",
+          "bytes": "0e40"
+        },
+        {
+          "address": "0x8c0388ce",
+          "instruction": "ldc r0,SR",
+          "bytes": "0e40"
+        },
+        {
+          "address": "0x8c038962",
+          "instruction": "dmuls.l r14,r13",
+          "bytes": "ed3d"
+        },
+        {
+          "address": "0x8c03897a",
+          "instruction": "dmuls.l r14,r13",
+          "bytes": "ed3d"
+        },
+        {
+          "address": "0x8c038996",
+          "instruction": "dmuls.l r14,r13",
+          "bytes": "ed3d"
+        },
+        {
+          "address": "0x8c0389b2",
+          "instruction": "dmuls.l r14,r13",
+          "bytes": "ed3d"
+        },
+        {
+          "address": "0x8c0389d4",
+          "instruction": "dmuls.l r14,r13",
+          "bytes": "ed3d"
+        },
+        {
+          "address": "0x8c0389ec",
+          "instruction": "dmuls.l r14,r13",
+          "bytes": "ed3d"
+        },
+        {
+          "address": "0x8c038a08",
+          "instruction": "dmuls.l r14,r13",
+          "bytes": "ed3d"
+        },
+        {
+          "address": "0x8c038a24",
+          "instruction": "dmuls.l r14,r13",
+          "bytes": "ed3d"
+        },
+        {
+          "address": "0x8c038a38",
+          "instruction": "flds fr11,FPUL",
+          "bytes": "1dfb"
+        },
+        {
+          "address": "0x8c038b24",
+          "instruction": "ldc r0,SR",
+          "bytes": "0e40"
+        }
+      ],
+      "native_recovery_credit": 0
+    }
+  ],
+  "dmuls_instructions": 16,
+  "sr_load_instructions": 8,
+  "native_recovery_credit": 0,
+  "architecture_reference": {
+    "source": "Renesas SH-4 Software Manual",
+    "revision": "Rev. 6.00, September 13, 2006, REJ09B0318-0600",
+    "url": "https://www.renesas.com/en/document/mas/sh-4-software-manual",
+    "accessed": "2026-10-17",
+    "sections": [
+      {
+        "section": "2.2.1 and 2.2.2",
+        "printed_pages": "6-10",
+        "pdf_page_indices": [
+          27,
+          28,
+          29,
+          30,
+          31
+        ],
+        "paraphrase": "User mode always exposes bank 0 for R0-R7. Privileged mode exposes bank 1 only when SR.RB is set; R8-R15 stay common."
+      },
+      {
+        "section": "9.20 DMULS.L",
+        "printed_pages": "244-245",
+        "pdf_page_indices": [
+          265,
+          266
+        ],
+        "paraphrase": "The signed 32-bit operands produce a full 64-bit result split between MACH and MACL."
+      }
+    ],
+    "implementation_status": "Signed product kernel independently qualified but unconnected. Explicit MACH/bank state, SR-load privilege behavior and original/native clipper comparisons remain unfinished.",
+    "newly_recovered_game_entries": 0
+  },
+  "scope": "Static dependency/proof-gap inventory only. Current native bridge publishes MACL/GBR but no MACH or alternate integer-bank array. Renesas documents the missing state semantics; implementation and native/original bank/privilege proof remain pending. Ghidra explicitly says its integer-banking simulation is incomplete, so its pseudocode alone is insufficient evidence for clipping completion.",
+  "next_task": "Add caller-owned MACH and integer-bank state to a new preserved native ABI and original executor, verify signed product halves and bank transitions independently, then recover/verify the four remaining clipper bodies. Preserve old ABIs/DLLs/proofs.",
+  "sha256": {
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\inventory_draw_primitive_cpu.py": "f9c6d4ff9df35c345d6d383d1a3419f563ed850038f50f409c6f798307eba62a",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\work\\sonic-adventure\\extracted\\1ST_READ.BIN": "45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\work\\sonic-adventure\\toolchain\\ghidra_12.1.4_PUBLIC\\Ghidra\\Processors\\SuperH4\\data\\languages\\SuperH4.sinc": "73c932ac6e3670607b4ad9509d0b8680f6e34c9e6c903c322632ebba1d714be2",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\analysis\\sh4_clipping_architecture_reference.json": "084a096f2a554b43f5cce7cef22a52435e953aea4516d343cf0cd105b7eeef26",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\verify_startup.py": "e1dbae17f07354a51fe7b05258895f980bda38d65b615ff2e8fb9b65dabc75e8",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\source\\sa_draw_primitive_stream_connected.c": "9542fdcc3932512df4767b4166bf111d44601a7406afcff633a7d51891cfe0f7",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\analysis\\draw-primitive-frontier\\8c037ee0_instructions.tsv": "a3b192917f9326f3fb873de6e205d7dd99963e0a4ca62b82e5bbcf6e74c0c5b2",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\analysis\\draw-primitive-frontier\\8c037ff4_instructions.tsv": "8fbd9579ed3efee82d09e3b9ceecc2ea68744d35fc51dc9012a125bc0c32f15a",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\analysis\\draw-primitive-frontier\\8c038516_instructions.tsv": "4310b3179e8375d6e37de123029ea5921267d60f5899ae530c062a01172d95d1",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\analysis\\draw-primitive-frontier\\8c038802_instructions.tsv": "b7d4d4ac8ac78d4dde2798f33d8bb4f5f631c986d0a3ba83296a71599b192b06"
+  }
+}

@@ -1,0 +1,163 @@
+address	opcode	instruction	references
+8c65f390	e22c	mov #0x2c,r2	
+8c65f392	d311	mov.l 0x8c65f3d8,r3	READ:8c65f3d8=8c8a83b4 
+8c65f394	427	mul.l r2,r4	
+8c65f396	6032	mov.l @r3,r0	READ:8c8a83b4 
+8c65f398	7028	add #0x28,r0	
+8c65f39a	41a	sts MACL,r4	
+8c65f39c	b	rts	
+8c65f39e	304c	_add r4,r0	
+8c65f3a0	e278	mov #0x78,r2	
+8c65f3a2	d30d	mov.l 0x8c65f3d8,r3	READ:8c65f3d8=8c8a83b4 
+8c65f3a4	427	mul.l r2,r4	
+8c65f3a6	9110	mov.w 0x8c65f3ca,r1	READ:8c65f3ca=260e044c 
+8c65f3a8	6032	mov.l @r3,r0	READ:8c8a83b4 
+8c65f3aa	41a	sts MACL,r4	
+8c65f3ac	301c	add r1,r0	
+8c65f3ae	b	rts	
+8c65f3b0	304c	_add r4,r0	
+8c65f3b2	d309	mov.l 0x8c65f3d8,r3	READ:8c65f3d8=8c8a83b4 
+8c65f3b4	4408	shll2 r4	
+8c65f3b6	4400	shll r4	
+8c65f3b8	6032	mov.l @r3,r0	READ:8c8a83b4 
+8c65f3ba	7004	add #0x4,r0	
+8c65f3bc	b	rts	
+8c65f3be	304c	_add r4,r0	
+8c65f3f4	4f22	sts.l PR,@-r15	DATA:Stack[-0x4] 
+8c65f3f6	7ffc	add #-0x4,r15	
+8c65f3f8	bfca	bsr 0x8c65f390	UNCONDITIONAL_CALL:8c65f390=d311e22c 
+8c65f3fa	2f52	_mov.l r5,@r15	DATA:Stack[-0x8] 
+8c65f3fc	6403	mov r0,r4	
+8c65f3fe	5348	mov.l @(0x20,r4),r3	
+8c65f400	62f2	mov.l @r15,r2	DATA:Stack[-0x8] 
+8c65f402	3320	cmp/eq r2,r3	
+8c65f404	29	movt r0	
+8c65f406	7f04	add #0x4,r15	
+8c65f408	4f26	lds.l @r15+,PR	DATA:Stack[-0x4] 
+8c65f40a	b	rts	
+8c65f40c	9	_nop	
+8c65f40e	4f22	sts.l PR,@-r15	DATA:Stack[-0x4] 
+8c65f410	bfbe	bsr 0x8c65f390	UNCONDITIONAL_CALL:8c65f390=d311e22c 
+8c65f412	9	_nop	
+8c65f414	4f26	lds.l @r15+,PR	DATA:Stack[-0x4] 
+8c65f416	6403	mov r0,r4	
+8c65f418	844c	mov.b @(0xc,r4),r0	
+8c65f41a	b	rts	
+8c65f41c	600c	_extu.b r0,r0	
+8c65f41e	4f22	sts.l PR,@-r15	DATA:Stack[-0x4] 
+8c65f420	bfb6	bsr 0x8c65f390	UNCONDITIONAL_CALL:8c65f390=d311e22c 
+8c65f422	9	_nop	
+8c65f424	4f26	lds.l @r15+,PR	DATA:Stack[-0x4] 
+8c65f426	6403	mov r0,r4	
+8c65f428	e001	mov #0x1,r0	
+8c65f42a	b	rts	
+8c65f42c	804d	_mov.b r0,@(0xd,r4)	
+8c65f42e	d240	mov.l 0x8c65f530,r2	READ:8c65f530=8c8a83b4 
+8c65f430	4428	shll16 r4	
+8c65f432	9070	mov.w 0x8c65f516,r0	READ:8c65f516=10c410c0 
+8c65f434	6322	mov.l @r2,r3	READ:8c8a83b4 
+8c65f436	b	rts	
+8c65f438	346	_mov.l r4,@(r0,r3)	
+8c65f43a	d33d	mov.l 0x8c65f530,r3	READ:8c65f530=8c8a83b4 
+8c65f43c	916b	mov.w 0x8c65f516,r1	READ:8c65f516=10c410c0 
+8c65f43e	6032	mov.l @r3,r0	READ:8c8a83b4 
+8c65f440	1e	mov.l @(r0,r1),r0	
+8c65f442	4029	shlr16 r0	
+8c65f444	600f	exts.w r0,r0	
+8c65f446	b	rts	
+8c65f448	600d	_extu.w r0,r0	
+8c65f44a	d239	mov.l 0x8c65f530,r2	READ:8c65f530=8c8a83b4 
+8c65f44c	e101	mov #0x1,r1	
+8c65f44e	9063	mov.w 0x8c65f518,r0	READ:8c65f518=10cc10c4 
+8c65f450	2419	and r1,r4	
+8c65f452	6322	mov.l @r2,r3	READ:8c8a83b4 
+8c65f454	b	rts	
+8c65f456	346	_mov.l r4,@(r0,r3)	
+8c65f458	d335	mov.l 0x8c65f530,r3	READ:8c65f530=8c8a83b4 
+8c65f45a	915d	mov.w 0x8c65f518,r1	READ:8c65f518=10cc10c4 
+8c65f45c	6032	mov.l @r3,r0	READ:8c8a83b4 
+8c65f45e	b	rts	
+8c65f460	1e	_mov.l @(r0,r1),r0	
+8c65f462	d233	mov.l 0x8c65f530,r2	READ:8c65f530=8c8a83b4 
+8c65f464	9059	mov.w 0x8c65f51a,r0	READ:8c65f51a=10d010cc 
+8c65f466	6322	mov.l @r2,r3	READ:8c8a83b4 
+8c65f468	b	rts	
+8c65f46a	346	_mov.l r4,@(r0,r3)	
+8c65f46c	d330	mov.l 0x8c65f530,r3	READ:8c65f530=8c8a83b4 
+8c65f46e	9154	mov.w 0x8c65f51a,r1	READ:8c65f51a=10d010cc 
+8c65f470	6032	mov.l @r3,r0	READ:8c8a83b4 
+8c65f472	b	rts	
+8c65f474	1e	_mov.l @(r0,r1),r0	
+8c65f476	d22e	mov.l 0x8c65f530,r2	READ:8c65f530=8c8a83b4 
+8c65f478	9050	mov.w 0x8c65f51c,r0	READ:8c65f51c=10c810d0 
+8c65f47a	6322	mov.l @r2,r3	READ:8c8a83b4 
+8c65f47c	b	rts	
+8c65f47e	346	_mov.l r4,@(r0,r3)	
+8c65f480	d32b	mov.l 0x8c65f530,r3	READ:8c65f530=8c8a83b4 
+8c65f482	914b	mov.w 0x8c65f51c,r1	READ:8c65f51c=10c810d0 
+8c65f484	6032	mov.l @r3,r0	READ:8c8a83b4 
+8c65f486	b	rts	
+8c65f488	1e	_mov.l @(r0,r1),r0	
+8c65f4a2	d223	mov.l 0x8c65f530,r2	READ:8c65f530=8c8a83b4 
+8c65f4a4	903b	mov.w 0x8c65f51e,r0	READ:8c65f51e=10d810c8 
+8c65f4a6	6322	mov.l @r2,r3	READ:8c8a83b4 
+8c65f4a8	b	rts	
+8c65f4aa	346	_mov.l r4,@(r0,r3)	
+8c65f4ac	d320	mov.l 0x8c65f530,r3	READ:8c65f530=8c8a83b4 
+8c65f4ae	9136	mov.w 0x8c65f51e,r1	READ:8c65f51e=10d810c8 
+8c65f4b0	6032	mov.l @r3,r0	READ:8c8a83b4 
+8c65f4b2	b	rts	
+8c65f4b4	1e	_mov.l @(r0,r1),r0	
+8c65f4b6	d21e	mov.l 0x8c65f530,r2	READ:8c65f530=8c8a83b4 
+8c65f4b8	9032	mov.w 0x8c65f520,r0	READ:8c65f520=10e010d8 
+8c65f4ba	6322	mov.l @r2,r3	READ:8c8a83b4 
+8c65f4bc	b	rts	
+8c65f4be	346	_mov.l r4,@(r0,r3)	
+8c65f4c0	d31b	mov.l 0x8c65f530,r3	READ:8c65f530=8c8a83b4 
+8c65f4c2	912d	mov.w 0x8c65f520,r1	READ:8c65f520=10e010d8 
+8c65f4c4	6032	mov.l @r3,r0	READ:8c8a83b4 
+8c65f4c6	b	rts	
+8c65f4c8	1e	_mov.l @(r0,r1),r0	
+8c65f4ca	d519	mov.l 0x8c65f530,r5	READ:8c65f530=8c8a83b4 
+8c65f4cc	9029	mov.w 0x8c65f522,r0	READ:8c65f522=10e410e0 
+8c65f4ce	6352	mov.l @r5,r3	READ:8c8a83b4 
+8c65f4d0	346	mov.l r4,@(r0,r3)	
+8c65f4d2	7004	add #0x4,r0	
+8c65f4d4	6352	mov.l @r5,r3	READ:8c8a83b4 
+8c65f4d6	b	rts	
+8c65f4d8	346	_mov.l r4,@(r0,r3)	
+8c65f4da	d315	mov.l 0x8c65f530,r3	READ:8c65f530=8c8a83b4 
+8c65f4dc	9122	mov.w 0x8c65f524,r1	READ:8c65f524=10b010e4 
+8c65f4de	6032	mov.l @r3,r0	READ:8c8a83b4 
+8c65f4e0	b	rts	
+8c65f4e2	1e	_mov.l @(r0,r1),r0	
+8c65f4ee	d210	mov.l 0x8c65f530,r2	READ:8c65f530=8c8a83b4 
+8c65f4f0	901a	mov.w 0x8c65f528,r0	READ:8c65f528=fac10dc 
+8c65f4f2	6322	mov.l @r2,r3	READ:8c8a83b4 
+8c65f4f4	b	rts	
+8c65f4f6	346	_mov.l r4,@(r0,r3)	
+8c65f4f8	d30d	mov.l 0x8c65f530,r3	READ:8c65f530=8c8a83b4 
+8c65f4fa	9115	mov.w 0x8c65f528,r1	READ:8c65f528=fac10dc 
+8c65f4fc	6032	mov.l @r3,r0	READ:8c8a83b4 
+8c65f4fe	b	rts	
+8c65f500	1e	_mov.l @(r0,r1),r0	
+8c65f502	d20b	mov.l 0x8c65f530,r2	READ:8c65f530=8c8a83b4 
+8c65f504	9011	mov.w 0x8c65f52a,r0	READ:8c65f52a=fb00fac 
+8c65f506	6322	mov.l @r2,r3	READ:8c8a83b4 
+8c65f508	b	rts	
+8c65f50a	346	_mov.l r4,@(r0,r3)	
+8c65f50c	d308	mov.l 0x8c65f530,r3	READ:8c65f530=8c8a83b4 
+8c65f50e	910d	mov.w 0x8c65f52c,r1	READ:8c65f52c=fb0 
+8c65f510	6032	mov.l @r3,r0	READ:8c8a83b4 
+8c65f512	b	rts	
+8c65f514	1e	_mov.l @(r0,r1),r0	
+8c65f53c	d205	mov.l 0x8c65f554,r2	READ:8c65f554=8c8a83b4 
+8c65f53e	9007	mov.w 0x8c65f550,r0	READ:8c65f550=fbc 
+8c65f540	6322	mov.l @r2,r3	READ:8c8a83b4 
+8c65f542	b	rts	
+8c65f544	346	_mov.l r4,@(r0,r3)	
+8c65f546	d303	mov.l 0x8c65f554,r3	READ:8c65f554=8c8a83b4 
+8c65f548	9102	mov.w 0x8c65f550,r1	READ:8c65f550=fbc 
+8c65f54a	6032	mov.l @r3,r0	READ:8c8a83b4 
+8c65f54c	b	rts	
+8c65f54e	1e	_mov.l @(r0,r1),r0	

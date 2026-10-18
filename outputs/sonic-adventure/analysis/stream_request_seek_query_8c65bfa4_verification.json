@@ -1,0 +1,1636 @@
+{
+  "module": "1ST_READ.BIN",
+  "load_address": "0x8c010000",
+  "address": "0x8c65bfa4",
+  "end_exclusive": "0x8c65bfbc",
+  "indexed_instruction_bytes": 24,
+  "retail_span_sha256": "03b5391c1e104ac40331f2e90e2004e334e5bdeec8b91adef60b4a2839686775",
+  "binary_sha256": "45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a",
+  "source_sha256": "26ab08e00d20298a71ad64c9287c5183504ac910e15793be84398ad367f493eb",
+  "sources": {
+    "source/sa_stream_request_seek_query_8c65bfa4.c": "26ab08e00d20298a71ad64c9287c5183504ac910e15793be84398ad367f493eb",
+    "source/sa_stream_request_position_update_8c600e7a.c": "dbf7201798136862d5375032d2630f020689e60bf36592693bc5d60bcffeb8e8",
+    "source/sa_stream_request_open_prepare_8c65bf42.c": "f071207afc2fb4fabe7b38a46b9e9c3fda75655048c67e2c1143cb31bfa12168"
+  },
+  "dll_sha256": "8f6edfee075260749a6e098184407392d3ae38ea36d7d0e4a6c4ec5efd07e0aa",
+  "interpreter_sha256": "e1dbae17f07354a51fe7b05258895f980bda38d65b615ff2e8fb9b65dabc75e8",
+  "verifier_sha256": "06420a2a1ca3819944b26de9ec22cbcd4f7c6c7cff3828da06bc72b5b3639418",
+  "cases_passed": 160,
+  "callee_entries_compared": 320,
+  "uninstrumented_cases_passed": 160,
+  "unsupported_target_cases_passed": 2,
+  "seek_status_distribution": {
+    "0xfffffff6": 52,
+    "0xffffffef": 88,
+    "0x0": 20
+  },
+  "comparison_level": "Complete 16 MiB RAM and GPR/SR/PR/PC after return and at both native callee entries; also checked without instrumentation.",
+  "scope": "Original 0x8c65bfa4 caller invokes the recovered native absolute-position updater and tail-query helper, preserving stack effects and querying even after seek rejection.",
+  "limitations": [
+    "Both callees run natively; literal-slot targets must match the original retail functions. Other retargetings return host status -1 without mutation.",
+    "The wrapper return in R0 is the queried position, not the preceding seek status; the host return code is separate.",
+    "Interpreter differential evidence is not Dreamcast hardware or whole-game execution."
+  ],
+  "cases": [
+    {
+      "case": 0,
+      "request": "0x0",
+      "status": 0,
+      "maximum": "0x0",
+      "offset": "0x0",
+      "seek_status": "0xfffffff6",
+      "returned_position": "0x0",
+      "matched": true
+    },
+    {
+      "case": 1,
+      "request": "0xac790000",
+      "status": 0,
+      "maximum": "0x0",
+      "offset": "0x1",
+      "seek_status": "0xfffffff6",
+      "returned_position": "0x0",
+      "matched": true
+    },
+    {
+      "case": 2,
+      "request": "0x8c790000",
+      "status": 1,
+      "maximum": "0x0",
+      "offset": "0x63",
+      "seek_status": "0xffffffef",
+      "returned_position": "0x1199e374",
+      "matched": true
+    },
+    {
+      "case": 3,
+      "request": "0xac790000",
+      "status": 1,
+      "maximum": "0x0",
+      "offset": "0x64",
+      "seek_status": "0xffffffef",
+      "returned_position": "0xb9a9f7ac",
+      "matched": true
+    },
+    {
+      "case": 4,
+      "request": "0x8c790000",
+      "status": 65535,
+      "maximum": "0x1",
+      "offset": "0x65",
+      "seek_status": "0xffffffef",
+      "returned_position": "0x68dc6520",
+      "matched": true
+    },
+    {
+      "case": 5,
+      "request": "0xac790000",
+      "status": 65535,
+      "maximum": "0x1",
+      "offset": "0x7fffffff",
+      "seek_status": "0xffffffef",
+      "returned_position": "0x87f942ae",
+      "matched": true
+    },
+    {
+      "case": 6,
+      "request": "0x8c790000",
+      "status": 32768,
+      "maximum": "0x1",
+      "offset": "0x80000000",
+      "seek_status": "0xffffffef",
+      "returned_position": "0xeb0a04b6",
+      "matched": true
+    },
+    {
+      "case": 7,
+      "request": "0xac790000",
+      "status": 32768,
+      "maximum": "0x1",
+      "offset": "0xffffffff",
+      "seek_status": "0xffffffef",
+      "returned_position": "0x92996640",
+      "matched": true
+    },
+    {
+      "case": 8,
+      "request": "0x8c790000",
+      "status": 0,
+      "maximum": "0x63",
+      "offset": "0x0",
+      "seek_status": "0xfffffff6",
+      "returned_position": "0x0",
+      "matched": true
+    },
+    {
+      "case": 9,
+      "request": "0xac790000",
+      "status": 0,
+      "maximum": "0x63",
+      "offset": "0x1",
+      "seek_status": "0xfffffff6",
+      "returned_position": "0x0",
+      "matched": true
+    },
+    {
+      "case": 10,
+      "request": "0x0",
+      "status": 1,
+      "maximum": "0x63",
+      "offset": "0x63",
+      "seek_status": "0xfffffff6",
+      "returned_position": "0x0",
+      "matched": true
+    },
+    {
+      "case": 11,
+      "request": "0xac790000",
+      "status": 1,
+      "maximum": "0x63",
+      "offset": "0x64",
+      "seek_status": "0xffffffef",
+      "returned_position": "0x90b55e09",
+      "matched": true
+    },
+    {
+      "case": 12,
+      "request": "0x8c790000",
+      "status": 65535,
+      "maximum": "0x64",
+      "offset": "0x65",
+      "seek_status": "0xffffffef",
+      "returned_position": "0x32ae8980",
+      "matched": true
+    },
+    {
+      "case": 13,
+      "request": "0xac790000",
+      "status": 65535,
+      "maximum": "0x64",
+      "offset": "0x7fffffff",
+      "seek_status": "0xffffffef",
+      "returned_position": "0x8c87bb46",
+      "matched": true
+    },
+    {
+      "case": 14,
+      "request": "0x8c790000",
+      "status": 32768,
+      "maximum": "0x64",
+      "offset": "0x80000000",
+      "seek_status": "0xffffffef",
+      "returned_position": "0xc8997b55",
+      "matched": true
+    },
+    {
+      "case": 15,
+      "request": "0xac790000",
+      "status": 32768,
+      "maximum": "0x64",
+      "offset": "0xffffffff",
+      "seek_status": "0xffffffef",
+      "returned_position": "0xa3ddbb4d",
+      "matched": true
+    },
+    {
+      "case": 16,
+      "request": "0x8c790000",
+      "status": 0,
+      "maximum": "0x65",
+      "offset": "0x0",
+      "seek_status": "0xfffffff6",
+      "returned_position": "0x0",
+      "matched": true
+    },
+    {
+      "case": 17,
+      "request": "0xac790000",
+      "status": 0,
+      "maximum": "0x65",
+      "offset": "0x1",
+      "seek_status": "0xfffffff6",
+      "returned_position": "0x0",
+      "matched": true
+    },
+    {
+      "case": 18,
+      "request": "0x8c790000",
+      "status": 1,
+      "maximum": "0x65",
+      "offset": "0x63",
+      "seek_status": "0x0",
+      "returned_position": "0x63",
+      "matched": true
+    },
+    {
+      "case": 19,
+      "request": "0xac790000",
+      "status": 1,
+      "maximum": "0x65",
+      "offset": "0x64",
+      "seek_status": "0x0",
+      "returned_position": "0x64",
+      "matched": true
+    },
+    {
+      "case": 20,
+      "request": "0x0",
+      "status": 65535,
+      "maximum": "0x7fffffff",
+      "offset": "0x65",
+      "seek_status": "0xfffffff6",
+      "returned_position": "0x0",
+      "matched": true
+    },
+    {
+      "case": 21,
+      "request": "0xac790000",
+      "status": 65535,
+      "maximum": "0x7fffffff",
+      "offset": "0x7fffffff",
+      "seek_status": "0x0",
+      "returned_position": "0x7fffffff",
+      "matched": true
+    },
+    {
+      "case": 22,
+      "request": "0x8c790000",
+      "status": 32768,
+      "maximum": "0x7fffffff",
+      "offset": "0x80000000",
+      "seek_status": "0xffffffef",
+      "returned_position": "0xc0edfdc9",
+      "matched": true
+    },
+    {
+      "case": 23,
+      "request": "0xac790000",
+      "status": 32768,
+      "maximum": "0x7fffffff",
+      "offset": "0xffffffff",
+      "seek_status": "0xffffffef",
+      "returned_position": "0xd2164aae",
+      "matched": true
+    },
+    {
+      "case": 24,
+      "request": "0x8c790000",
+      "status": 0,
+      "maximum": "0x80000000",
+      "offset": "0x0",
+      "seek_status": "0xfffffff6",
+      "returned_position": "0x0",
+      "matched": true
+    },
+    {
+      "case": 25,
+      "request": "0xac790000",
+      "status": 0,
+      "maximum": "0x80000000",
+      "offset": "0x1",
+      "seek_status": "0xfffffff6",
+      "returned_position": "0x0",
+      "matched": true
+    },
+    {
+      "case": 26,
+      "request": "0x8c790000",
+      "status": 1,
+      "maximum": "0x80000000",
+      "offset": "0x63",
+      "seek_status": "0xffffffef",
+      "returned_position": "0xea1e2f23",
+      "matched": true
+    },
+    {
+      "case": 27,
+      "request": "0xac790000",
+      "status": 1,
+      "maximum": "0x80000000",
+      "offset": "0x64",
+      "seek_status": "0xffffffef",
+      "returned_position": "0xaa5007fc",
+      "matched": true
+    },
+    {
+      "case": 28,
+      "request": "0x8c790000",
+      "status": 65535,
+      "maximum": "0xffffffff",
+      "offset": "0x65",
+      "seek_status": "0xffffffef",
+      "returned_position": "0x4312314",
+      "matched": true
+    },
+    {
+      "case": 29,
+      "request": "0xac790000",
+      "status": 65535,
+      "maximum": "0xffffffff",
+      "offset": "0x7fffffff",
+      "seek_status": "0xffffffef",
+      "returned_position": "0x81ba9c19",
+      "matched": true
+    },
+    {
+      "case": 30,
+      "request": "0x0",
+      "status": 32768,
+      "maximum": "0xffffffff",
+      "offset": "0x80000000",
+      "seek_status": "0xfffffff6",
+      "returned_position": "0x0",
+      "matched": true
+    },
+    {
+      "case": 31,
+      "request": "0xac790000",
+      "status": 32768,
+      "maximum": "0xffffffff",
+      "offset": "0xffffffff",
+      "seek_status": "0xffffffef",
+      "returned_position": "0x2f9999d7",
+      "matched": true
+    },
+    {
+      "case": 32,
+      "request": "0x8c790000",
+      "status": 0,
+      "maximum": "0x0",
+      "offset": "0x0",
+      "seek_status": "0xfffffff6",
+      "returned_position": "0x0",
+      "matched": true
+    },
+    {
+      "case": 33,
+      "request": "0xac790000",
+      "status": 0,
+      "maximum": "0x0",
+      "offset": "0x1",
+      "seek_status": "0xfffffff6",
+      "returned_position": "0x0",
+      "matched": true
+    },
+    {
+      "case": 34,
+      "request": "0x8c790000",
+      "status": 1,
+      "maximum": "0x0",
+      "offset": "0x63",
+      "seek_status": "0xffffffef",
+      "returned_position": "0xfe05132",
+      "matched": true
+    },
+    {
+      "case": 35,
+      "request": "0xac790000",
+      "status": 1,
+      "maximum": "0x0",
+      "offset": "0x64",
+      "seek_status": "0xffffffef",
+      "returned_position": "0x80b6157c",
+      "matched": true
+    },
+    {
+      "case": 36,
+      "request": "0x8c790000",
+      "status": 65535,
+      "maximum": "0x1",
+      "offset": "0x65",
+      "seek_status": "0xffffffef",
+      "returned_position": "0x506a20a1",
+      "matched": true
+    },
+    {
+      "case": 37,
+      "request": "0xac790000",
+      "status": 65535,
+      "maximum": "0x1",
+      "offset": "0x7fffffff",
+      "seek_status": "0xffffffef",
+      "returned_position": "0xfd0b2be1",
+      "matched": true
+    },
+    {
+      "case": 38,
+      "request": "0x8c790000",
+      "status": 32768,
+      "maximum": "0x1",
+      "offset": "0x80000000",
+      "seek_status": "0xffffffef",
+      "returned_position": "0x89b3b42f",
+      "matched": true
+    },
+    {
+      "case": 39,
+      "request": "0xac790000",
+      "status": 32768,
+      "maximum": "0x1",
+      "offset": "0xffffffff",
+      "seek_status": "0xffffffef",
+      "returned_position": "0xdb5757bd",
+      "matched": true
+    },
+    {
+      "case": 40,
+      "request": "0x0",
+      "status": 0,
+      "maximum": "0x63",
+      "offset": "0x0",
+      "seek_status": "0xfffffff6",
+      "returned_position": "0x0",
+      "matched": true
+    },
+    {
+      "case": 41,
+      "request": "0xac790000",
+      "status": 0,
+      "maximum": "0x63",
+      "offset": "0x1",
+      "seek_status": "0xfffffff6",
+      "returned_position": "0x0",
+      "matched": true
+    },
+    {
+      "case": 42,
+      "request": "0x8c790000",
+      "status": 1,
+      "maximum": "0x63",
+      "offset": "0x63",
+      "seek_status": "0x0",
+      "returned_position": "0x63",
+      "matched": true
+    },
+    {
+      "case": 43,
+      "request": "0xac790000",
+      "status": 1,
+      "maximum": "0x63",
+      "offset": "0x64",
+      "seek_status": "0xffffffef",
+      "returned_position": "0x18614672",
+      "matched": true
+    },
+    {
+      "case": 44,
+      "request": "0x8c790000",
+      "status": 65535,
+      "maximum": "0x64",
+      "offset": "0x65",
+      "seek_status": "0xffffffef",
+      "returned_position": "0xd37ed7b0",
+      "matched": true
+    },
+    {
+      "case": 45,
+      "request": "0xac790000",
+      "status": 65535,
+      "maximum": "0x64",
+      "offset": "0x7fffffff",
+      "seek_status": "0xffffffef",
+      "returned_position": "0xd2c600fd",
+      "matched": true
+    },
+    {
+      "case": 46,
+      "request": "0x8c790000",
+      "status": 32768,
+      "maximum": "0x64",
+      "offset": "0x80000000",
+      "seek_status": "0xffffffef",
+      "returned_position": "0xee38ac46",
+      "matched": true
+    },
+    {
+      "case": 47,
+      "request": "0xac790000",
+      "status": 32768,
+      "maximum": "0x64",
+      "offset": "0xffffffff",
+      "seek_status": "0xffffffef",
+      "returned_position": "0x9b242648",
+      "matched": true
+    },
+    {
+      "case": 48,
+      "request": "0x8c790000",
+      "status": 0,
+      "maximum": "0x65",
+      "offset": "0x0",
+      "seek_status": "0xfffffff6",
+      "returned_position": "0x0",
+      "matched": true
+    },
+    {
+      "case": 49,
+      "request": "0xac790000",
+      "status": 0,
+      "maximum": "0x65",
+      "offset": "0x1",
+      "seek_status": "0xfffffff6",
+      "returned_position": "0x0",
+      "matched": true
+    },
+    {
+      "case": 50,
+      "request": "0x0",
+      "status": 1,
+      "maximum": "0x65",
+      "offset": "0x63",
+      "seek_status": "0xfffffff6",
+      "returned_position": "0x0",
+      "matched": true
+    },
+    {
+      "case": 51,
+      "request": "0xac790000",
+      "status": 1,
+      "maximum": "0x65",
+      "offset": "0x64",
+      "seek_status": "0x0",
+      "returned_position": "0x64",
+      "matched": true
+    },
+    {
+      "case": 52,
+      "request": "0x8c790000",
+      "status": 65535,
+      "maximum": "0x7fffffff",
+      "offset": "0x65",
+      "seek_status": "0x0",
+      "returned_position": "0x65",
+      "matched": true
+    },
+    {
+      "case": 53,
+      "request": "0xac790000",
+      "status": 65535,
+      "maximum": "0x7fffffff",
+      "offset": "0x7fffffff",
+      "seek_status": "0x0",
+      "returned_position": "0x7fffffff",
+      "matched": true
+    },
+    {
+      "case": 54,
+      "request": "0x8c790000",
+      "status": 32768,
+      "maximum": "0x7fffffff",
+      "offset": "0x80000000",
+      "seek_status": "0xffffffef",
+      "returned_position": "0x51f809a5",
+      "matched": true
+    },
+    {
+      "case": 55,
+      "request": "0xac790000",
+      "status": 32768,
+      "maximum": "0x7fffffff",
+      "offset": "0xffffffff",
+      "seek_status": "0xffffffef",
+      "returned_position": "0x49ae1e5",
+      "matched": true
+    },
+    {
+      "case": 56,
+      "request": "0x8c790000",
+      "status": 0,
+      "maximum": "0x80000000",
+      "offset": "0x0",
+      "seek_status": "0xfffffff6",
+      "returned_position": "0x0",
+      "matched": true
+    },
+    {
+      "case": 57,
+      "request": "0xac790000",
+      "status": 0,
+      "maximum": "0x80000000",
+      "offset": "0x1",
+      "seek_status": "0xfffffff6",
+      "returned_position": "0x0",
+      "matched": true
+    },
+    {
+      "case": 58,
+      "request": "0x8c790000",
+      "status": 1,
+      "maximum": "0x80000000",
+      "offset": "0x63",
+      "seek_status": "0xffffffef",
+      "returned_position": "0xd93c47f",
+      "matched": true
+    },
+    {
+      "case": 59,
+      "request": "0xac790000",
+      "status": 1,
+      "maximum": "0x80000000",
+      "offset": "0x64",
+      "seek_status": "0xffffffef",
+      "returned_position": "0x212226ef",
+      "matched": true
+    },
+    {
+      "case": 60,
+      "request": "0x0",
+      "status": 65535,
+      "maximum": "0xffffffff",
+      "offset": "0x65",
+      "seek_status": "0xfffffff6",
+      "returned_position": "0x0",
+      "matched": true
+    },
+    {
+      "case": 61,
+      "request": "0xac790000",
+      "status": 65535,
+      "maximum": "0xffffffff",
+      "offset": "0x7fffffff",
+      "seek_status": "0xffffffef",
+      "returned_position": "0x6b35cc94",
+      "matched": true
+    },
+    {
+      "case": 62,
+      "request": "0x8c790000",
+      "status": 32768,
+      "maximum": "0xffffffff",
+      "offset": "0x80000000",
+      "seek_status": "0xffffffef",
+      "returned_position": "0x8e6e070a",
+      "matched": true
+    },
+    {
+      "case": 63,
+      "request": "0xac790000",
+      "status": 32768,
+      "maximum": "0xffffffff",
+      "offset": "0xffffffff",
+      "seek_status": "0xffffffef",
+      "returned_position": "0x403bc239",
+      "matched": true
+    },
+    {
+      "case": 64,
+      "request": "0x8c790000",
+      "status": 0,
+      "maximum": "0x0",
+      "offset": "0x0",
+      "seek_status": "0xfffffff6",
+      "returned_position": "0x0",
+      "matched": true
+    },
+    {
+      "case": 65,
+      "request": "0xac790000",
+      "status": 0,
+      "maximum": "0x0",
+      "offset": "0x1",
+      "seek_status": "0xfffffff6",
+      "returned_position": "0x0",
+      "matched": true
+    },
+    {
+      "case": 66,
+      "request": "0x8c790000",
+      "status": 1,
+      "maximum": "0x0",
+      "offset": "0x63",
+      "seek_status": "0xffffffef",
+      "returned_position": "0xe7979042",
+      "matched": true
+    },
+    {
+      "case": 67,
+      "request": "0xac790000",
+      "status": 1,
+      "maximum": "0x0",
+      "offset": "0x64",
+      "seek_status": "0xffffffef",
+      "returned_position": "0x81f4f714",
+      "matched": true
+    },
+    {
+      "case": 68,
+      "request": "0x8c790000",
+      "status": 65535,
+      "maximum": "0x1",
+      "offset": "0x65",
+      "seek_status": "0xffffffef",
+      "returned_position": "0x4ae6ad84",
+      "matched": true
+    },
+    {
+      "case": 69,
+      "request": "0xac790000",
+      "status": 65535,
+      "maximum": "0x1",
+      "offset": "0x7fffffff",
+      "seek_status": "0xffffffef",
+      "returned_position": "0xad4c2ecb",
+      "matched": true
+    },
+    {
+      "case": 70,
+      "request": "0x0",
+      "status": 32768,
+      "maximum": "0x1",
+      "offset": "0x80000000",
+      "seek_status": "0xfffffff6",
+      "returned_position": "0x0",
+      "matched": true
+    },
+    {
+      "case": 71,
+      "request": "0xac790000",
+      "status": 32768,
+      "maximum": "0x1",
+      "offset": "0xffffffff",
+      "seek_status": "0xffffffef",
+      "returned_position": "0xc82dc7f5",
+      "matched": true
+    },
+    {
+      "case": 72,
+      "request": "0x8c790000",
+      "status": 0,
+      "maximum": "0x63",
+      "offset": "0x0",
+      "seek_status": "0xfffffff6",
+      "returned_position": "0x0",
+      "matched": true
+    },
+    {
+      "case": 73,
+      "request": "0xac790000",
+      "status": 0,
+      "maximum": "0x63",
+      "offset": "0x1",
+      "seek_status": "0xfffffff6",
+      "returned_position": "0x0",
+      "matched": true
+    },
+    {
+      "case": 74,
+      "request": "0x8c790000",
+      "status": 1,
+      "maximum": "0x63",
+      "offset": "0x63",
+      "seek_status": "0x0",
+      "returned_position": "0x63",
+      "matched": true
+    },
+    {
+      "case": 75,
+      "request": "0xac790000",
+      "status": 1,
+      "maximum": "0x63",
+      "offset": "0x64",
+      "seek_status": "0xffffffef",
+      "returned_position": "0xa8f5abe3",
+      "matched": true
+    },
+    {
+      "case": 76,
+      "request": "0x8c790000",
+      "status": 65535,
+      "maximum": "0x64",
+      "offset": "0x65",
+      "seek_status": "0xffffffef",
+      "returned_position": "0xe8a5366d",
+      "matched": true
+    },
+    {
+      "case": 77,
+      "request": "0xac790000",
+      "status": 65535,
+      "maximum": "0x64",
+      "offset": "0x7fffffff",
+      "seek_status": "0xffffffef",
+      "returned_position": "0xe7d368da",
+      "matched": true
+    },
+    {
+      "case": 78,
+      "request": "0x8c790000",
+      "status": 32768,
+      "maximum": "0x64",
+      "offset": "0x80000000",
+      "seek_status": "0xffffffef",
+      "returned_position": "0x6b335ea2",
+      "matched": true
+    },
+    {
+      "case": 79,
+      "request": "0xac790000",
+      "status": 32768,
+      "maximum": "0x64",
+      "offset": "0xffffffff",
+      "seek_status": "0xffffffef",
+      "returned_position": "0x47fb0e1d",
+      "matched": true
+    },
+    {
+      "case": 80,
+      "request": "0x0",
+      "status": 0,
+      "maximum": "0x65",
+      "offset": "0x0",
+      "seek_status": "0xfffffff6",
+      "returned_position": "0x0",
+      "matched": true
+    },
+    {
+      "case": 81,
+      "request": "0xac790000",
+      "status": 0,
+      "maximum": "0x65",
+      "offset": "0x1",
+      "seek_status": "0xfffffff6",
+      "returned_position": "0x0",
+      "matched": true
+    },
+    {
+      "case": 82,
+      "request": "0x8c790000",
+      "status": 1,
+      "maximum": "0x65",
+      "offset": "0x63",
+      "seek_status": "0x0",
+      "returned_position": "0x63",
+      "matched": true
+    },
+    {
+      "case": 83,
+      "request": "0xac790000",
+      "status": 1,
+      "maximum": "0x65",
+      "offset": "0x64",
+      "seek_status": "0x0",
+      "returned_position": "0x64",
+      "matched": true
+    },
+    {
+      "case": 84,
+      "request": "0x8c790000",
+      "status": 65535,
+      "maximum": "0x7fffffff",
+      "offset": "0x65",
+      "seek_status": "0x0",
+      "returned_position": "0x65",
+      "matched": true
+    },
+    {
+      "case": 85,
+      "request": "0xac790000",
+      "status": 65535,
+      "maximum": "0x7fffffff",
+      "offset": "0x7fffffff",
+      "seek_status": "0x0",
+      "returned_position": "0x7fffffff",
+      "matched": true
+    },
+    {
+      "case": 86,
+      "request": "0x8c790000",
+      "status": 32768,
+      "maximum": "0x7fffffff",
+      "offset": "0x80000000",
+      "seek_status": "0xffffffef",
+      "returned_position": "0xe75e0ed8",
+      "matched": true
+    },
+    {
+      "case": 87,
+      "request": "0xac790000",
+      "status": 32768,
+      "maximum": "0x7fffffff",
+      "offset": "0xffffffff",
+      "seek_status": "0xffffffef",
+      "returned_position": "0xeb8b8e49",
+      "matched": true
+    },
+    {
+      "case": 88,
+      "request": "0x8c790000",
+      "status": 0,
+      "maximum": "0x80000000",
+      "offset": "0x0",
+      "seek_status": "0xfffffff6",
+      "returned_position": "0x0",
+      "matched": true
+    },
+    {
+      "case": 89,
+      "request": "0xac790000",
+      "status": 0,
+      "maximum": "0x80000000",
+      "offset": "0x1",
+      "seek_status": "0xfffffff6",
+      "returned_position": "0x0",
+      "matched": true
+    },
+    {
+      "case": 90,
+      "request": "0x0",
+      "status": 1,
+      "maximum": "0x80000000",
+      "offset": "0x63",
+      "seek_status": "0xfffffff6",
+      "returned_position": "0x0",
+      "matched": true
+    },
+    {
+      "case": 91,
+      "request": "0xac790000",
+      "status": 1,
+      "maximum": "0x80000000",
+      "offset": "0x64",
+      "seek_status": "0xffffffef",
+      "returned_position": "0x47215d07",
+      "matched": true
+    },
+    {
+      "case": 92,
+      "request": "0x8c790000",
+      "status": 65535,
+      "maximum": "0xffffffff",
+      "offset": "0x65",
+      "seek_status": "0xffffffef",
+      "returned_position": "0xf6d63c88",
+      "matched": true
+    },
+    {
+      "case": 93,
+      "request": "0xac790000",
+      "status": 65535,
+      "maximum": "0xffffffff",
+      "offset": "0x7fffffff",
+      "seek_status": "0xffffffef",
+      "returned_position": "0x9d19cb77",
+      "matched": true
+    },
+    {
+      "case": 94,
+      "request": "0x8c790000",
+      "status": 32768,
+      "maximum": "0xffffffff",
+      "offset": "0x80000000",
+      "seek_status": "0xffffffef",
+      "returned_position": "0x161fd6df",
+      "matched": true
+    },
+    {
+      "case": 95,
+      "request": "0xac790000",
+      "status": 32768,
+      "maximum": "0xffffffff",
+      "offset": "0xffffffff",
+      "seek_status": "0xffffffef",
+      "returned_position": "0xb8057318",
+      "matched": true
+    },
+    {
+      "case": 96,
+      "request": "0x8c790000",
+      "status": 0,
+      "maximum": "0x0",
+      "offset": "0x0",
+      "seek_status": "0xfffffff6",
+      "returned_position": "0x0",
+      "matched": true
+    },
+    {
+      "case": 97,
+      "request": "0xac790000",
+      "status": 0,
+      "maximum": "0x0",
+      "offset": "0x1",
+      "seek_status": "0xfffffff6",
+      "returned_position": "0x0",
+      "matched": true
+    },
+    {
+      "case": 98,
+      "request": "0x8c790000",
+      "status": 1,
+      "maximum": "0x0",
+      "offset": "0x63",
+      "seek_status": "0xffffffef",
+      "returned_position": "0xc5f3d207",
+      "matched": true
+    },
+    {
+      "case": 99,
+      "request": "0xac790000",
+      "status": 1,
+      "maximum": "0x0",
+      "offset": "0x64",
+      "seek_status": "0xffffffef",
+      "returned_position": "0xf683ffe5",
+      "matched": true
+    },
+    {
+      "case": 100,
+      "request": "0x0",
+      "status": 65535,
+      "maximum": "0x1",
+      "offset": "0x65",
+      "seek_status": "0xfffffff6",
+      "returned_position": "0x0",
+      "matched": true
+    },
+    {
+      "case": 101,
+      "request": "0xac790000",
+      "status": 65535,
+      "maximum": "0x1",
+      "offset": "0x7fffffff",
+      "seek_status": "0xffffffef",
+      "returned_position": "0x19858de7",
+      "matched": true
+    },
+    {
+      "case": 102,
+      "request": "0x8c790000",
+      "status": 32768,
+      "maximum": "0x1",
+      "offset": "0x80000000",
+      "seek_status": "0xffffffef",
+      "returned_position": "0x2f1f4e77",
+      "matched": true
+    },
+    {
+      "case": 103,
+      "request": "0xac790000",
+      "status": 32768,
+      "maximum": "0x1",
+      "offset": "0xffffffff",
+      "seek_status": "0xffffffef",
+      "returned_position": "0xb0ecffd",
+      "matched": true
+    },
+    {
+      "case": 104,
+      "request": "0x8c790000",
+      "status": 0,
+      "maximum": "0x63",
+      "offset": "0x0",
+      "seek_status": "0xfffffff6",
+      "returned_position": "0x0",
+      "matched": true
+    },
+    {
+      "case": 105,
+      "request": "0xac790000",
+      "status": 0,
+      "maximum": "0x63",
+      "offset": "0x1",
+      "seek_status": "0xfffffff6",
+      "returned_position": "0x0",
+      "matched": true
+    },
+    {
+      "case": 106,
+      "request": "0x8c790000",
+      "status": 1,
+      "maximum": "0x63",
+      "offset": "0x63",
+      "seek_status": "0x0",
+      "returned_position": "0x63",
+      "matched": true
+    },
+    {
+      "case": 107,
+      "request": "0xac790000",
+      "status": 1,
+      "maximum": "0x63",
+      "offset": "0x64",
+      "seek_status": "0xffffffef",
+      "returned_position": "0x98c3e197",
+      "matched": true
+    },
+    {
+      "case": 108,
+      "request": "0x8c790000",
+      "status": 65535,
+      "maximum": "0x64",
+      "offset": "0x65",
+      "seek_status": "0xffffffef",
+      "returned_position": "0x84704cc2",
+      "matched": true
+    },
+    {
+      "case": 109,
+      "request": "0xac790000",
+      "status": 65535,
+      "maximum": "0x64",
+      "offset": "0x7fffffff",
+      "seek_status": "0xffffffef",
+      "returned_position": "0xc2a776a7",
+      "matched": true
+    },
+    {
+      "case": 110,
+      "request": "0x0",
+      "status": 32768,
+      "maximum": "0x64",
+      "offset": "0x80000000",
+      "seek_status": "0xfffffff6",
+      "returned_position": "0x0",
+      "matched": true
+    },
+    {
+      "case": 111,
+      "request": "0xac790000",
+      "status": 32768,
+      "maximum": "0x64",
+      "offset": "0xffffffff",
+      "seek_status": "0xffffffef",
+      "returned_position": "0x61764d9d",
+      "matched": true
+    },
+    {
+      "case": 112,
+      "request": "0x8c790000",
+      "status": 0,
+      "maximum": "0x65",
+      "offset": "0x0",
+      "seek_status": "0xfffffff6",
+      "returned_position": "0x0",
+      "matched": true
+    },
+    {
+      "case": 113,
+      "request": "0xac790000",
+      "status": 0,
+      "maximum": "0x65",
+      "offset": "0x1",
+      "seek_status": "0xfffffff6",
+      "returned_position": "0x0",
+      "matched": true
+    },
+    {
+      "case": 114,
+      "request": "0x8c790000",
+      "status": 1,
+      "maximum": "0x65",
+      "offset": "0x63",
+      "seek_status": "0x0",
+      "returned_position": "0x63",
+      "matched": true
+    },
+    {
+      "case": 115,
+      "request": "0xac790000",
+      "status": 1,
+      "maximum": "0x65",
+      "offset": "0x64",
+      "seek_status": "0x0",
+      "returned_position": "0x64",
+      "matched": true
+    },
+    {
+      "case": 116,
+      "request": "0x8c790000",
+      "status": 65535,
+      "maximum": "0x7fffffff",
+      "offset": "0x65",
+      "seek_status": "0x0",
+      "returned_position": "0x65",
+      "matched": true
+    },
+    {
+      "case": 117,
+      "request": "0xac790000",
+      "status": 65535,
+      "maximum": "0x7fffffff",
+      "offset": "0x7fffffff",
+      "seek_status": "0x0",
+      "returned_position": "0x7fffffff",
+      "matched": true
+    },
+    {
+      "case": 118,
+      "request": "0x8c790000",
+      "status": 32768,
+      "maximum": "0x7fffffff",
+      "offset": "0x80000000",
+      "seek_status": "0xffffffef",
+      "returned_position": "0x608ad6bc",
+      "matched": true
+    },
+    {
+      "case": 119,
+      "request": "0xac790000",
+      "status": 32768,
+      "maximum": "0x7fffffff",
+      "offset": "0xffffffff",
+      "seek_status": "0xffffffef",
+      "returned_position": "0x14dedc9f",
+      "matched": true
+    },
+    {
+      "case": 120,
+      "request": "0x0",
+      "status": 0,
+      "maximum": "0x80000000",
+      "offset": "0x0",
+      "seek_status": "0xfffffff6",
+      "returned_position": "0x0",
+      "matched": true
+    },
+    {
+      "case": 121,
+      "request": "0xac790000",
+      "status": 0,
+      "maximum": "0x80000000",
+      "offset": "0x1",
+      "seek_status": "0xfffffff6",
+      "returned_position": "0x0",
+      "matched": true
+    },
+    {
+      "case": 122,
+      "request": "0x8c790000",
+      "status": 1,
+      "maximum": "0x80000000",
+      "offset": "0x63",
+      "seek_status": "0xffffffef",
+      "returned_position": "0x9adff8d",
+      "matched": true
+    },
+    {
+      "case": 123,
+      "request": "0xac790000",
+      "status": 1,
+      "maximum": "0x80000000",
+      "offset": "0x64",
+      "seek_status": "0xffffffef",
+      "returned_position": "0x9235d214",
+      "matched": true
+    },
+    {
+      "case": 124,
+      "request": "0x8c790000",
+      "status": 65535,
+      "maximum": "0xffffffff",
+      "offset": "0x65",
+      "seek_status": "0xffffffef",
+      "returned_position": "0xd7456e20",
+      "matched": true
+    },
+    {
+      "case": 125,
+      "request": "0xac790000",
+      "status": 65535,
+      "maximum": "0xffffffff",
+      "offset": "0x7fffffff",
+      "seek_status": "0xffffffef",
+      "returned_position": "0xb86f6905",
+      "matched": true
+    },
+    {
+      "case": 126,
+      "request": "0x8c790000",
+      "status": 32768,
+      "maximum": "0xffffffff",
+      "offset": "0x80000000",
+      "seek_status": "0xffffffef",
+      "returned_position": "0x3d7a8d04",
+      "matched": true
+    },
+    {
+      "case": 127,
+      "request": "0xac790000",
+      "status": 32768,
+      "maximum": "0xffffffff",
+      "offset": "0xffffffff",
+      "seek_status": "0xffffffef",
+      "returned_position": "0xf4f6ef67",
+      "matched": true
+    },
+    {
+      "case": 128,
+      "request": "0x8c790000",
+      "status": 0,
+      "maximum": "0x54ce20cd",
+      "offset": "0x29517fd9",
+      "seek_status": "0xfffffff6",
+      "returned_position": "0x0",
+      "matched": true
+    },
+    {
+      "case": 129,
+      "request": "0xac790000",
+      "status": 0,
+      "maximum": "0x665639a5",
+      "offset": "0x2f9bf02a",
+      "seek_status": "0xfffffff6",
+      "returned_position": "0x0",
+      "matched": true
+    },
+    {
+      "case": 130,
+      "request": "0x0",
+      "status": 1,
+      "maximum": "0xe6559f3",
+      "offset": "0x19835783",
+      "seek_status": "0xfffffff6",
+      "returned_position": "0x0",
+      "matched": true
+    },
+    {
+      "case": 131,
+      "request": "0xac790000",
+      "status": 1,
+      "maximum": "0x9283bc2f",
+      "offset": "0x5fa6feda",
+      "seek_status": "0xffffffef",
+      "returned_position": "0xc0034df2",
+      "matched": true
+    },
+    {
+      "case": 132,
+      "request": "0x8c790000",
+      "status": 65535,
+      "maximum": "0x76f87277",
+      "offset": "0x1dd18888",
+      "seek_status": "0x0",
+      "returned_position": "0x1dd18888",
+      "matched": true
+    },
+    {
+      "case": 133,
+      "request": "0xac790000",
+      "status": 65535,
+      "maximum": "0x37acab05",
+      "offset": "0x3abb01fc",
+      "seek_status": "0xffffffef",
+      "returned_position": "0x39f75014",
+      "matched": true
+    },
+    {
+      "case": 134,
+      "request": "0x8c790000",
+      "status": 32768,
+      "maximum": "0xb95a15d8",
+      "offset": "0xa04df300",
+      "seek_status": "0xffffffef",
+      "returned_position": "0x42591404",
+      "matched": true
+    },
+    {
+      "case": 135,
+      "request": "0xac790000",
+      "status": 32768,
+      "maximum": "0xc5dd6de3",
+      "offset": "0x747966d7",
+      "seek_status": "0xffffffef",
+      "returned_position": "0x894feee1",
+      "matched": true
+    },
+    {
+      "case": 136,
+      "request": "0x8c790000",
+      "status": 0,
+      "maximum": "0x764a484e",
+      "offset": "0xe402f754",
+      "seek_status": "0xfffffff6",
+      "returned_position": "0x0",
+      "matched": true
+    },
+    {
+      "case": 137,
+      "request": "0xac790000",
+      "status": 0,
+      "maximum": "0x912c7c56",
+      "offset": "0x12325c6e",
+      "seek_status": "0xfffffff6",
+      "returned_position": "0x0",
+      "matched": true
+    },
+    {
+      "case": 138,
+      "request": "0x8c790000",
+      "status": 1,
+      "maximum": "0x6644a21f",
+      "offset": "0x2a69db6d",
+      "seek_status": "0x0",
+      "returned_position": "0x2a69db6d",
+      "matched": true
+    },
+    {
+      "case": 139,
+      "request": "0xac790000",
+      "status": 1,
+      "maximum": "0xa141ba97",
+      "offset": "0x5dff32c5",
+      "seek_status": "0xffffffef",
+      "returned_position": "0x6f520b3a",
+      "matched": true
+    },
+    {
+      "case": 140,
+      "request": "0x0",
+      "status": 65535,
+      "maximum": "0x269464b2",
+      "offset": "0x994f94f8",
+      "seek_status": "0xfffffff6",
+      "returned_position": "0x0",
+      "matched": true
+    },
+    {
+      "case": 141,
+      "request": "0xac790000",
+      "status": 65535,
+      "maximum": "0xdde171c8",
+      "offset": "0xe93e84f4",
+      "seek_status": "0xffffffef",
+      "returned_position": "0xa983c03",
+      "matched": true
+    },
+    {
+      "case": 142,
+      "request": "0x8c790000",
+      "status": 32768,
+      "maximum": "0xde0148ce",
+      "offset": "0xd392b7c8",
+      "seek_status": "0xffffffef",
+      "returned_position": "0x4b8177c1",
+      "matched": true
+    },
+    {
+      "case": 143,
+      "request": "0xac790000",
+      "status": 32768,
+      "maximum": "0x2f5f4858",
+      "offset": "0xcf9f6b5e",
+      "seek_status": "0xffffffef",
+      "returned_position": "0x2d9cf26d",
+      "matched": true
+    },
+    {
+      "case": 144,
+      "request": "0x8c790000",
+      "status": 0,
+      "maximum": "0x732da4f8",
+      "offset": "0x1c114e37",
+      "seek_status": "0xfffffff6",
+      "returned_position": "0x0",
+      "matched": true
+    },
+    {
+      "case": 145,
+      "request": "0xac790000",
+      "status": 0,
+      "maximum": "0xbe5f3db5",
+      "offset": "0xe8fe1064",
+      "seek_status": "0xfffffff6",
+      "returned_position": "0x0",
+      "matched": true
+    },
+    {
+      "case": 146,
+      "request": "0x8c790000",
+      "status": 1,
+      "maximum": "0x4db5a19a",
+      "offset": "0xfc8f1f38",
+      "seek_status": "0xffffffef",
+      "returned_position": "0x8a90c9dd",
+      "matched": true
+    },
+    {
+      "case": 147,
+      "request": "0xac790000",
+      "status": 1,
+      "maximum": "0xd97395d9",
+      "offset": "0x8a184f37",
+      "seek_status": "0xffffffef",
+      "returned_position": "0xf24c47aa",
+      "matched": true
+    },
+    {
+      "case": 148,
+      "request": "0x8c790000",
+      "status": 65535,
+      "maximum": "0x3b56a6e8",
+      "offset": "0xf8c0c68c",
+      "seek_status": "0xffffffef",
+      "returned_position": "0xc1b4bc09",
+      "matched": true
+    },
+    {
+      "case": 149,
+      "request": "0xac790000",
+      "status": 65535,
+      "maximum": "0xbe65885e",
+      "offset": "0x5d861e0",
+      "seek_status": "0xffffffef",
+      "returned_position": "0xe2d70862",
+      "matched": true
+    },
+    {
+      "case": 150,
+      "request": "0x0",
+      "status": 32768,
+      "maximum": "0x552c5c30",
+      "offset": "0x6c916403",
+      "seek_status": "0xfffffff6",
+      "returned_position": "0x0",
+      "matched": true
+    },
+    {
+      "case": 151,
+      "request": "0xac790000",
+      "status": 32768,
+      "maximum": "0xe181ffa1",
+      "offset": "0xd7e8d289",
+      "seek_status": "0xffffffef",
+      "returned_position": "0x419831c3",
+      "matched": true
+    },
+    {
+      "case": 152,
+      "request": "0x8c790000",
+      "status": 0,
+      "maximum": "0xc5e7a039",
+      "offset": "0x34fc4fce",
+      "seek_status": "0xfffffff6",
+      "returned_position": "0x0",
+      "matched": true
+    },
+    {
+      "case": 153,
+      "request": "0xac790000",
+      "status": 0,
+      "maximum": "0x86d3cd60",
+      "offset": "0x53ed4fee",
+      "seek_status": "0xfffffff6",
+      "returned_position": "0x0",
+      "matched": true
+    },
+    {
+      "case": 154,
+      "request": "0x8c790000",
+      "status": 1,
+      "maximum": "0xc345a914",
+      "offset": "0x59c3e124",
+      "seek_status": "0xffffffef",
+      "returned_position": "0xeb1f2203",
+      "matched": true
+    },
+    {
+      "case": 155,
+      "request": "0xac790000",
+      "status": 1,
+      "maximum": "0xcab60187",
+      "offset": "0xe86960d",
+      "seek_status": "0xffffffef",
+      "returned_position": "0xaebf58ec",
+      "matched": true
+    },
+    {
+      "case": 156,
+      "request": "0x8c790000",
+      "status": 65535,
+      "maximum": "0x3275b1e0",
+      "offset": "0xd442cc1",
+      "seek_status": "0x0",
+      "returned_position": "0xd442cc1",
+      "matched": true
+    },
+    {
+      "case": 157,
+      "request": "0xac790000",
+      "status": 65535,
+      "maximum": "0xadeb8952",
+      "offset": "0xbed7502e",
+      "seek_status": "0xffffffef",
+      "returned_position": "0x6b4c4208",
+      "matched": true
+    },
+    {
+      "case": 158,
+      "request": "0x8c790000",
+      "status": 32768,
+      "maximum": "0x9b6c6662",
+      "offset": "0x4f859c84",
+      "seek_status": "0xffffffef",
+      "returned_position": "0xf409b455",
+      "matched": true
+    },
+    {
+      "case": 159,
+      "request": "0xac790000",
+      "status": 32768,
+      "maximum": "0x1cdfbb84",
+      "offset": "0xbc1752c2",
+      "seek_status": "0xffffffef",
+      "returned_position": "0xb1e6599c",
+      "matched": true
+    }
+  ]
+}

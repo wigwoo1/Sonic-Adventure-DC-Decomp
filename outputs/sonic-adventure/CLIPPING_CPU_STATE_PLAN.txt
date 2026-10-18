@@ -1,0 +1,92 @@
+Sonic Adventure Rev A - next clipping CPU-state milestones
+
+Overall project estimate remains 10%, weighted milestones rather than code
+coverage. Continue on Sol High. The processor-state foundation and seven local
+clipping/primitive bodies are now qualified. Broader model/camera/startup/frame
+behavior remains unfinished. No pause is recommended. Read DRAW_CLIPPING_STATE.txt
+for the earlier foundation and DRAW_CLIPPING_COMPLETE.txt for complete-body proof.
+
+Evidence:
+analysis/draw_primitive_cpu_frontier.json inventories sixteen signed full-width
+DMULS instructions and eight SR loads in the remaining clipper family.
+analysis/draw_primitive_sr_transitions.json byte-checks the actual local masks:
+three sites clear SR.RB and five set it, using 0x20 shifted left by 0x18 to form
+0x20000000. They preserve MD. Under privileged MD=1 execution, these really
+select different R0-R7 banks; R8-R15 remain common. There are 2,104 independent
+mask-arithmetic checks. This is static evidence, not a bank/privilege emulator.
+The earlier signed-product kernel retains its 2,217-case standalone proof. It
+is now used by the separate 122-source clipper proposals, with full MACH/MACL
+checks on the real product pairs. The new control kernel passes 12,868 operations
+and 2,816 original local sequence comparisons. That earlier stage proved only
+98/1,007 rows and granted zero body credit. A separate full-body stage now passes
+682 comparisons and all 1,739 rows / 138 outcomes for the four clippers and three
+primitive parents. Seven qualified entries are registered. Both state banks and
+pre-trap privilege signals are implemented; exception-vector delivery, interrupts
+and timing remain open.
+
+Milestone 1 - explicit state and instruction semantics (operation layer verified)
+Represent MACH and both integer register banks through the reached native and
+original-model call chain. Keep integer banks distinct from floating FR banks.
+Preserve common R8-R15 and exact active/inactive contents at every SR transition.
+Model privileged writes and the supported SR-bit rules explicitly; do not treat
+unprivileged LDC as a successful ordinary assignment. Define any remaining
+exception-domain limits openly. Preserve existing public APIs/DLL proofs, using
+a separately versioned extended state interface where necessary.
+
+Milestone 2 - prove the state primitives (kernel and local sequences verified)
+Connect signed DMULS to both MACL and MACH, including signed extrema. Independently
+check SR/RB transitions, repeated clear/set operations, preserved common registers,
+round trips and input/output values at each boundary. An active-bank-only array
+or clearing the inactive bank cannot stand in for the original machine state.
+
+Milestone 3 - recover the original clipping family (qualified local bodies verified)
+Recover 8c037ee0, 8c037ff4, 8c038516 and 8c038802 using their original byte-checked
+listings and cross-body branches. These four bodies and parent emitters 8c037ccc,
+8c038668 and 8c0382ac now match every exported row/outcome in the qualified domains.
+The shared writer retains its actual tail-continuation frame. Keep all remaining
+partial renderer/motion proposals unregistered; do not extend local credit to them.
+
+Milestone 4 - prove caller setup and clipping results (primitive layer verified)
+Real native primitive parents construct helper inputs from supplied descriptors,
+projected caches, viewport and normal records. Full state/RAM and ordered queues
+match; 554 cases add 13,220 independent assertions and 854 captured clipper entries.
+No initial inactive-bank value was read before overwrite in tested bank-1 paths
+with varied nonzero bank contents. This is dynamic evidence, not exhaustive static
+liveness. Any future observed live-in must be traced to actual game initialization.
+All 31,369 queue events fit individually checked traces. Geometry cases use valid
+FPU-enabled CPU states; inherited numerical kernels do not prove SR.FD exceptions.
+Natural upstream object/camera preparation remains pending, distinct from these
+supplied-input tests. Do not fabricate missing service returns for integration.
+
+Milestone 5 - broaden renderer and gameplay evidence
+Material dispatcher 8c0376d0 is now qualified with 116 comparisons, all 149 rows
+and 20 outcomes through real native clipping children. Independent routing keeps
+overridden header flags distinct from original primitive flags. Read
+DRAW_MATERIAL_DISPATCH.txt. The remaining geometry proposals are now the view
+builder, frame initializer and boot caller (three at that milestone). The early
+object smoke inputs did not exercise this clipping family. The later 156-case
+caller suite now passes with real textured/environment clipping; read
+OBJECT_DRAW_CLIPPING.txt for its separate DLL, parent-coverage and trace limits.
+Four subsequent view dependencies are now qualified: all 217 rows/two outcomes,
+182 comparisons and 158 independent assertions. Eight real view-builder prefixes
+match 117/166 rows and stop at the original FR4 register wrapper 8c652d3a. Read
+DRAW_VIEW_SETUP.txt. Full view/frame/boot and natural startup remain incomplete.
+Later milestone: DRAW_VIEW_COMPLETE.txt now proves all 166 view-builder rows and
+six outcomes, with 28 comparisons and explicit software register effects. Its
+qualified normal paths return; frame initializer and boot caller remain partial.
+This register store does not execute the GPU or establish natural startup.
+Later milestone: DRAW_FRAME_SETUP.txt qualifies three setup helpers (131 rows,
+92 comparisons). DRAW_FRAME_SEQUENCE.txt qualifies three context helpers (166 rows,
+ten outcomes, 103 comparisons) and all 141 initializer rows. Six persistent real
+view -> initializer -> repeated-initializer sequences pass 18 stages, carrying
+all state and comparing 1,578 register writes. Two cold-entry guards demonstrate
+the missing original view-produced pointer. This establishes a valid tested
+sequence; natural boot order, loading and scheduler behavior remain unproved.
+The remaining geometry proposal is boot caller 8c10b840. Thirty-three compiled
+math/state dependency proposals retain incomplete qualification. Continue real
+startup recovery on Sol High; no model switch or goal pause is recommended.
+Expand original-model/camera/material cases and natural startup/scheduler/frame
+execution. Bounded callback returns are not proof of visible GPU frames or a
+playable native game. Full code/module inventories and the PC 60/120/240 FPS,
+8K, HD/texture-Off/display settings, Android/stereo-3DS and later demakes remain
+separate unfinished requirements of the active whole-project goal.

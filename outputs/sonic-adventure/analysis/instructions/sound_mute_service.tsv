@@ -1,0 +1,25 @@
+address	opcode	instruction	references
+8c107bf2	d321	mov.l 0x8c107c78,r3	
+8c107bf4	4f22	sts.l PR,@-r15	
+8c107bf6	6432	mov.l @r3,r4	
+8c107bf8	2448	tst r4,r4	
+8c107bfa	8905	bt 0x8c107c08	
+8c107bfc	e5fc	mov #-0x4,r5	
+8c107bfe	d11f	mov.l 0x8c107c7c,r1	
+8c107c00	4518	shll8 r5	
+8c107c02	7540	add #0x40,r5	
+8c107c04	410b	jsr @r1	
+8c107c06	9	nop	
+8c107c08	d317	mov.l 0x8c107c68,r3	
+8c107c0a	6432	mov.l @r3,r4	
+8c107c0c	2448	tst r4,r4	
+8c107c0e	8905	bt 0x8c107c1c	
+8c107c10	e5fc	mov #-0x4,r5	
+8c107c12	d11a	mov.l 0x8c107c7c,r1	
+8c107c14	4518	shll8 r5	
+8c107c16	7540	add #0x40,r5	
+8c107c18	412b	jmp @r1	
+8c107c1a	4f26	lds.l @r15+,PR	
+8c107c1c	4f26	lds.l @r15+,PR	
+8c107c1e	b	rts	
+8c107c20	9	nop	

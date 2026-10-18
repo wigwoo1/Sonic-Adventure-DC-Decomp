@@ -1,0 +1,25 @@
+{
+  "binary_sha256": "45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a",
+  "direct_checks_passed": 15,
+  "finding": "Both initialization paths supply incoming flags & 0xfff as DisplayMode default; selector reduces this to flags & 3 for the constructor selection.",
+  "initialization_paths": [
+    "0x8c604702",
+    "0x8c6049c0"
+  ],
+  "upstream_sources": {
+    "0x8c010180": "incoming r4 forwarded unchanged",
+    "0x8c10b8a6": [
+      "global 0x8c7a7fe0 when input r4 is zero",
+      "global 0x8c7a7fec otherwise"
+    ]
+  },
+  "evidence": [
+    "analysis/instructions/8c604702.tsv",
+    "analysis/instructions/8c6049c0.tsv"
+  ],
+  "limitations": [
+    "Static instruction checks, not runtime execution.",
+    "Actual game caller flags remain to be established.",
+    "No additional native routines recovered by this trace."
+  ]
+}

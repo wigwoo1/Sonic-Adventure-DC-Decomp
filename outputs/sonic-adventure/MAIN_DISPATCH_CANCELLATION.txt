@@ -1,0 +1,91 @@
+Main dispatcher cancellation and saved-context restore
+16 October 2026 — VERIFIED within the bounded scope described here.
+Whole-project estimate remains 10% weighted acceptance milestones, not code coverage.
+
+What changed
+Recovered cancellation 8c01ae60..8c01af06 (83 original instruction rows) and
+its direct restore dependency 8c01aae0..8c01abdc (126 rows). Connected both to
+native task creation, allocation/zeroing, disposal and the existing notification,
+spawn, setter, sound and prefix code. Earlier source/reports remain intact.
+The tested prefix no longer uses any external game-service fixtures.
+
+Cancellation behavior
+Reads the global context pointer at 8c11204c. When context byte +8 is 2,
+restores saved fields from +34/+3e/+76/+4c/+7c/+64/+20 into the current fields,
+looks up a byte using the signed character index, publishes context word 0=1,
+clears context/peer +14, and requests a level-6 task with flags 8 and stored
+callback 8c01b358. It reloads the context after task creation.
+If restored byte +8 is zero and the full resume-ID word at 8c6b7084 is not
+ffffffff, it calls the recovered restore dependency with that word and the
+parameter at 8c6b7088. It clears the flag at 8c6b707c on normal completion,
+including the inactive-context path and failed task/heap allocation.
+Descriptive routine/field names are inferred, not original source symbols.
+
+Restore behavior
+Acts only when context byte +8 is zero. Saves current fields into backup slots,
+handles the old signed-word -1 sentinel, resolves signed table indices, installs
+the requested ID/parameter, applies the lookup flag bit, clears peer +14 and
+publishes context word 0=1. Its last instruction is a tail JMP to task creation:
+it must preserve PR rather than create a new return address. It requests the
+same flags-8, level-6 task and stored callback. Its guest R0 is the task pointer
+or zero on allocation failure; inactive restore returns the signed mode byte.
+Cancellation's guest R0 is not a Boolean status. Host 0 means the native body
+completed; exact guest registers remain part of the original behavior.
+
+Verification actually run
+- Read-only Ghidra export plus exact retail bytes and control-flow inventory.
+- Strict Clang shared-library build: -Wall -Wextra -Werror.
+- 15 preliminary smoke cases, followed by 4,284 full comparisons:
+  cancellation 648; restore 832; prefix 870; spawn 512; setter 504;
+  notification 678; record creation 168; readiness query 72.
+- All 209 original rows, all 12 conditional outcomes and all 3 call/tail-call
+  sites reached; 30,484 ordered CPU boundary states compared.
+- Complete 16 MiB RAM, GPRs, SR, PR, both floating banks/FPSCR, FPUL and MACL
+  compared against the original instruction executor.
+- 3,761 cases also passed independent context/table/list/work/result invariants.
+- 3,897 completed without external game-service calls. All 387 partial exits
+  matched inherited prefix arithmetic guard state; no game-service fixtures used.
+- Tests exercise signed byte/word limits, ID truncation, unsigned parameter
+  lookup versus signed flag lookup, disabled resume, high lookup bits, existing
+  task heads, context/peer aliasing, 0/1/2/3 free tasks, small/exhausted heaps,
+  both one-task and two-task paths, and all eight inherited FPU-mode combinations.
+- Corrected a test-only backward-link assertion after two task insertions.
+  Native execution already matched original instructions; no speculative change
+  to the recovered routine was needed.
+
+Source/evidence and repetition
+  source/sa_main_dispatch_cancellation.c
+  source/sa_main_dispatch_cancellation_connected.c
+  analysis/main-dispatch-cancellation/*_instructions.tsv
+  analysis/main_dispatch_cancellation_translation.json
+  analysis/main_dispatch_cancellation_verification.json
+From this directory with the installed project Python:
+  python recover_main_dispatch_cancellation.py
+  .\build_main_dispatch_cancellation.ps1
+  python verify_main_dispatch_cancellation.py
+  python register_main_dispatch_cancellation.py
+  python map_main_dispatch_cases.py
+  python verify_main_dispatch_case_map.py
+Optional instruction re-export: ghidra/export_main_dispatch_cancellation.ps1.
+The focused stages are included in build_and_verify.ps1; its PowerShell syntax
+passed, but the entire accumulated workflow was not run end-to-end.
+The new report pins source, build/verifier inputs, original binary and DLL hashes;
+registration checks them before adding the two original routines.
+Final audits passed: 1,020 registered entries / 1,017 unique module-address pairs,
+zero evidence errors, zero stale whole-source reports, and 658 dispatcher-map
+instruction checks accounting for 80 entry spans and 83 selectors. 972 entries
+match 10,875 indexed candidates; this incomplete inventory is not code coverage.
+Re-running recovery reproduced the exact verified source and manifest hashes.
+The completion audit remains 10%.
+
+Limitations and next task
+Constructed valid global/context/table/heap fixtures do not establish normal
+gameplay initialization or lifetime. Existing floating-point guards remain in
+the prefix. Hardware/MMIO, concurrency, full executable discovery, live gameplay
+and playable ports remain unfinished. Stored callbacks are data in these tests:
+8c01b358, the earlier spawn callback 8c044680, and dynamic setter table values
+still require separate recovery/execution proof. Prioritize the stored callback
+at 8c01b358 after checking its instruction boundaries: it is absent from the
+current exported function index and must not be treated as a known complete
+function based only on the stored address. Keep Sol High for that
+reverse-engineering work. No model switch or goal pause is recommended here.

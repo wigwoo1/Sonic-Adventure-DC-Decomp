@@ -1,0 +1,32 @@
+{
+  "binary_sha256": "45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a",
+  "exports": [
+    {
+      "entry": "0x8c64ddc0",
+      "instruction_count": 124,
+      "export_sha256": "5066acaddf3c1ea1794210dc3ea04c24ff1af6c8d5b186332f1324de308263e5"
+    },
+    {
+      "entry": "0x8c64f206",
+      "instruction_count": 20,
+      "export_sha256": "6719da82b9da854f4f8332b8954d95c1402340b8eb17f31f06ea1727064ee33b"
+    },
+    {
+      "entry": "0x8c653d68",
+      "instruction_count": 18,
+      "export_sha256": "a6844278a47f8b4fc3dc1fd88997f5ea218519b0aa5f244f51b1e1656066ed9e"
+    },
+    {
+      "entry": "0x8c64e720",
+      "instruction_count": 65,
+      "export_sha256": "1241d567863078d6ac99f61b70701b7ff3b66ccf0966a9592b25ce6a3cc71b5c"
+    }
+  ],
+  "validated_literals": 12,
+  "recovery_status": "Instruction evidence only; these four functions have not yet been registered as recovered source.",
+  "observations": {
+    "8c64ddc0": "Tests resource+0x10 bit 1; calls type classifier with (resource+0x18 >>16)&0xff00. Classifier result 1 scans 68-byte records at global 8c673484, count 8c673488, matching resource identifier. Other types decrement a nonzero halfword counter at +0x40. Clearing active bit uses flags & ~2. Final error path writes 1 to 8c88f7b0 and returns -1; other terminal paths return 1. Nested calls and branch-specific SR effects require source verification.",
+    "8c64f206": "Exact equality classifier for 0x500,0x600,0x700,0x800; returns 1 or 0.",
+    "8c64e720": "Clears descriptor fields and sets identifiers to -1, then computes its 68-byte table index using another service. Full downstream behavior still unrecovered."
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "logical_request_mapping": [
+    1,
+    2,
+    7,
+    8,
+    13,
+    14,
+    19,
+    20
+  ],
+  "meaning": "The active memory-device request layer addresses subdevices, not primary controllers. Primary discovery indices 0/18 do not map to these logical requests.",
+  "initial_integration": "verify_input_backend_discovered_lifecycle.py is incomplete and deliberately not included in build_and_verify.ps1; it stops when no primary raw index exists in the retail subdevice mapping.",
+  "new_recoveries": [
+    {
+      "name": "sa_input_device_port_response_mask",
+      "entry": "8c65fd4e",
+      "instructions": 88
+    },
+    {
+      "name": "sa_input_device_responses_process",
+      "entry": "8c65f202",
+      "instructions": 65
+    }
+  ],
+  "scope": "Initial translations compile with Clang -O2 -Wall -Wextra -Werror. No runtime verification yet.",
+  "next": "Verify port mask and complete response-processing dispatcher, then execute native subdevice discovery before the game request.",
+  "verified_connection": "Superseded incomplete primary-device prototype with verify_input_backend_vmu_discovered.py: 48 discovered VMU request lifecycle cases passed."
+}

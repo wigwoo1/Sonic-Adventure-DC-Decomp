@@ -1,0 +1,787 @@
+{
+  "module": "1ST_READ.BIN",
+  "load_address": "0x8c010000",
+  "address": "0x8c055cde",
+  "end_exclusive": "0x8c055cf8",
+  "retail_span_sha256": "d9d7941762016827da2fdc1f0d705169f5187962841a13fe0b6f793dc1d903b5",
+  "source_sha256": "c2a1d1bcaa76dd0ed7c9a131c9a23eec69bc741b1850ef40e055ec30902b51d3",
+  "cases_passed": 128,
+  "comparison_level": "complete 16 MiB RAM and all GPR/SR/PR/PC state against the retail SH-4 interpreter",
+  "scope": "Exact 26-byte bounded append helper; covers counts below, at, and above eight, count overflow values, array-slot writes, count increments, and branch T-bit effects.",
+  "limitations": [
+    "The global count and array are identified by retail pointer literals; higher-level owner semantics remain unknown.",
+    "Differential verification uses the project SH-4 interpreter, not Dreamcast hardware or whole-game execution."
+  ],
+  "count_address": "0x8c788c34",
+  "array_base": "0x8c788c14",
+  "cases": [
+    {
+      "case": 0,
+      "initial_count": 0,
+      "argument": "0xffffffff",
+      "matched": true
+    },
+    {
+      "case": 1,
+      "initial_count": 1,
+      "argument": "0x847cd743",
+      "matched": true
+    },
+    {
+      "case": 2,
+      "initial_count": 6,
+      "argument": "0x0",
+      "matched": true
+    },
+    {
+      "case": 3,
+      "initial_count": 7,
+      "argument": "0xf6c8d5d8",
+      "matched": true
+    },
+    {
+      "case": 4,
+      "initial_count": 8,
+      "argument": "0x0",
+      "matched": true
+    },
+    {
+      "case": 5,
+      "initial_count": 9,
+      "argument": "0x97f920ce",
+      "matched": true
+    },
+    {
+      "case": 6,
+      "initial_count": 4294967295,
+      "argument": "0x1",
+      "matched": true
+    },
+    {
+      "case": 7,
+      "initial_count": 2147483648,
+      "argument": "0x1",
+      "matched": true
+    },
+    {
+      "case": 8,
+      "initial_count": 1,
+      "argument": "0xffffffff",
+      "matched": true
+    },
+    {
+      "case": 9,
+      "initial_count": 11,
+      "argument": "0x0",
+      "matched": true
+    },
+    {
+      "case": 10,
+      "initial_count": 9,
+      "argument": "0xffffffff",
+      "matched": true
+    },
+    {
+      "case": 11,
+      "initial_count": 6,
+      "argument": "0xedff4ee6",
+      "matched": true
+    },
+    {
+      "case": 12,
+      "initial_count": 12,
+      "argument": "0x0",
+      "matched": true
+    },
+    {
+      "case": 13,
+      "initial_count": 4,
+      "argument": "0x1",
+      "matched": true
+    },
+    {
+      "case": 14,
+      "initial_count": 0,
+      "argument": "0xffffffff",
+      "matched": true
+    },
+    {
+      "case": 15,
+      "initial_count": 3,
+      "argument": "0x31f59cbd",
+      "matched": true
+    },
+    {
+      "case": 16,
+      "initial_count": 1,
+      "argument": "0x2540da2",
+      "matched": true
+    },
+    {
+      "case": 17,
+      "initial_count": 3,
+      "argument": "0xffffffff",
+      "matched": true
+    },
+    {
+      "case": 18,
+      "initial_count": 1,
+      "argument": "0xffffffff",
+      "matched": true
+    },
+    {
+      "case": 19,
+      "initial_count": 12,
+      "argument": "0x1",
+      "matched": true
+    },
+    {
+      "case": 20,
+      "initial_count": 2,
+      "argument": "0x0",
+      "matched": true
+    },
+    {
+      "case": 21,
+      "initial_count": 7,
+      "argument": "0xa290a81",
+      "matched": true
+    },
+    {
+      "case": 22,
+      "initial_count": 12,
+      "argument": "0x717808ba",
+      "matched": true
+    },
+    {
+      "case": 23,
+      "initial_count": 9,
+      "argument": "0xffffffff",
+      "matched": true
+    },
+    {
+      "case": 24,
+      "initial_count": 5,
+      "argument": "0xffffffff",
+      "matched": true
+    },
+    {
+      "case": 25,
+      "initial_count": 7,
+      "argument": "0xffffffff",
+      "matched": true
+    },
+    {
+      "case": 26,
+      "initial_count": 7,
+      "argument": "0x95137ba5",
+      "matched": true
+    },
+    {
+      "case": 27,
+      "initial_count": 0,
+      "argument": "0x1",
+      "matched": true
+    },
+    {
+      "case": 28,
+      "initial_count": 6,
+      "argument": "0xffffffff",
+      "matched": true
+    },
+    {
+      "case": 29,
+      "initial_count": 8,
+      "argument": "0xffffffff",
+      "matched": true
+    },
+    {
+      "case": 30,
+      "initial_count": 7,
+      "argument": "0x0",
+      "matched": true
+    },
+    {
+      "case": 31,
+      "initial_count": 5,
+      "argument": "0x0",
+      "matched": true
+    },
+    {
+      "case": 32,
+      "initial_count": 8,
+      "argument": "0xa3d15d8f",
+      "matched": true
+    },
+    {
+      "case": 33,
+      "initial_count": 11,
+      "argument": "0x1",
+      "matched": true
+    },
+    {
+      "case": 34,
+      "initial_count": 3,
+      "argument": "0xa02708c8",
+      "matched": true
+    },
+    {
+      "case": 35,
+      "initial_count": 4,
+      "argument": "0xcc77ab91",
+      "matched": true
+    },
+    {
+      "case": 36,
+      "initial_count": 3,
+      "argument": "0x0",
+      "matched": true
+    },
+    {
+      "case": 37,
+      "initial_count": 5,
+      "argument": "0x0",
+      "matched": true
+    },
+    {
+      "case": 38,
+      "initial_count": 12,
+      "argument": "0x1",
+      "matched": true
+    },
+    {
+      "case": 39,
+      "initial_count": 4,
+      "argument": "0x42817e8b",
+      "matched": true
+    },
+    {
+      "case": 40,
+      "initial_count": 10,
+      "argument": "0x0",
+      "matched": true
+    },
+    {
+      "case": 41,
+      "initial_count": 12,
+      "argument": "0xffffffff",
+      "matched": true
+    },
+    {
+      "case": 42,
+      "initial_count": 6,
+      "argument": "0xffffffff",
+      "matched": true
+    },
+    {
+      "case": 43,
+      "initial_count": 1,
+      "argument": "0x1",
+      "matched": true
+    },
+    {
+      "case": 44,
+      "initial_count": 9,
+      "argument": "0x0",
+      "matched": true
+    },
+    {
+      "case": 45,
+      "initial_count": 10,
+      "argument": "0x0",
+      "matched": true
+    },
+    {
+      "case": 46,
+      "initial_count": 2,
+      "argument": "0xffffffff",
+      "matched": true
+    },
+    {
+      "case": 47,
+      "initial_count": 8,
+      "argument": "0xffffffff",
+      "matched": true
+    },
+    {
+      "case": 48,
+      "initial_count": 11,
+      "argument": "0x0",
+      "matched": true
+    },
+    {
+      "case": 49,
+      "initial_count": 9,
+      "argument": "0x1",
+      "matched": true
+    },
+    {
+      "case": 50,
+      "initial_count": 9,
+      "argument": "0xbb62c245",
+      "matched": true
+    },
+    {
+      "case": 51,
+      "initial_count": 12,
+      "argument": "0x1",
+      "matched": true
+    },
+    {
+      "case": 52,
+      "initial_count": 8,
+      "argument": "0x9fc8498e",
+      "matched": true
+    },
+    {
+      "case": 53,
+      "initial_count": 10,
+      "argument": "0x0",
+      "matched": true
+    },
+    {
+      "case": 54,
+      "initial_count": 2,
+      "argument": "0x72d69dd1",
+      "matched": true
+    },
+    {
+      "case": 55,
+      "initial_count": 4,
+      "argument": "0xffffffff",
+      "matched": true
+    },
+    {
+      "case": 56,
+      "initial_count": 9,
+      "argument": "0xffffffff",
+      "matched": true
+    },
+    {
+      "case": 57,
+      "initial_count": 9,
+      "argument": "0xffffffff",
+      "matched": true
+    },
+    {
+      "case": 58,
+      "initial_count": 2,
+      "argument": "0xffffffff",
+      "matched": true
+    },
+    {
+      "case": 59,
+      "initial_count": 3,
+      "argument": "0x1",
+      "matched": true
+    },
+    {
+      "case": 60,
+      "initial_count": 7,
+      "argument": "0x14f78f16",
+      "matched": true
+    },
+    {
+      "case": 61,
+      "initial_count": 5,
+      "argument": "0x1",
+      "matched": true
+    },
+    {
+      "case": 62,
+      "initial_count": 5,
+      "argument": "0xffffffff",
+      "matched": true
+    },
+    {
+      "case": 63,
+      "initial_count": 6,
+      "argument": "0x1",
+      "matched": true
+    },
+    {
+      "case": 64,
+      "initial_count": 7,
+      "argument": "0x7e0ab770",
+      "matched": true
+    },
+    {
+      "case": 65,
+      "initial_count": 11,
+      "argument": "0xe64f58df",
+      "matched": true
+    },
+    {
+      "case": 66,
+      "initial_count": 12,
+      "argument": "0x0",
+      "matched": true
+    },
+    {
+      "case": 67,
+      "initial_count": 2,
+      "argument": "0x2da47d6d",
+      "matched": true
+    },
+    {
+      "case": 68,
+      "initial_count": 12,
+      "argument": "0x1",
+      "matched": true
+    },
+    {
+      "case": 69,
+      "initial_count": 0,
+      "argument": "0xcedff4dc",
+      "matched": true
+    },
+    {
+      "case": 70,
+      "initial_count": 0,
+      "argument": "0xffffffff",
+      "matched": true
+    },
+    {
+      "case": 71,
+      "initial_count": 7,
+      "argument": "0x0",
+      "matched": true
+    },
+    {
+      "case": 72,
+      "initial_count": 1,
+      "argument": "0xffffffff",
+      "matched": true
+    },
+    {
+      "case": 73,
+      "initial_count": 3,
+      "argument": "0x1",
+      "matched": true
+    },
+    {
+      "case": 74,
+      "initial_count": 0,
+      "argument": "0x1",
+      "matched": true
+    },
+    {
+      "case": 75,
+      "initial_count": 7,
+      "argument": "0x1",
+      "matched": true
+    },
+    {
+      "case": 76,
+      "initial_count": 10,
+      "argument": "0x0",
+      "matched": true
+    },
+    {
+      "case": 77,
+      "initial_count": 1,
+      "argument": "0x1",
+      "matched": true
+    },
+    {
+      "case": 78,
+      "initial_count": 0,
+      "argument": "0x75376346",
+      "matched": true
+    },
+    {
+      "case": 79,
+      "initial_count": 8,
+      "argument": "0xffffffff",
+      "matched": true
+    },
+    {
+      "case": 80,
+      "initial_count": 2,
+      "argument": "0xffffffff",
+      "matched": true
+    },
+    {
+      "case": 81,
+      "initial_count": 6,
+      "argument": "0x0",
+      "matched": true
+    },
+    {
+      "case": 82,
+      "initial_count": 1,
+      "argument": "0x0",
+      "matched": true
+    },
+    {
+      "case": 83,
+      "initial_count": 7,
+      "argument": "0x0",
+      "matched": true
+    },
+    {
+      "case": 84,
+      "initial_count": 1,
+      "argument": "0x1",
+      "matched": true
+    },
+    {
+      "case": 85,
+      "initial_count": 4,
+      "argument": "0x0",
+      "matched": true
+    },
+    {
+      "case": 86,
+      "initial_count": 9,
+      "argument": "0xc83d2c46",
+      "matched": true
+    },
+    {
+      "case": 87,
+      "initial_count": 10,
+      "argument": "0xffffffff",
+      "matched": true
+    },
+    {
+      "case": 88,
+      "initial_count": 0,
+      "argument": "0xffffffff",
+      "matched": true
+    },
+    {
+      "case": 89,
+      "initial_count": 7,
+      "argument": "0x46bb3e19",
+      "matched": true
+    },
+    {
+      "case": 90,
+      "initial_count": 3,
+      "argument": "0x0",
+      "matched": true
+    },
+    {
+      "case": 91,
+      "initial_count": 12,
+      "argument": "0x0",
+      "matched": true
+    },
+    {
+      "case": 92,
+      "initial_count": 4,
+      "argument": "0x0",
+      "matched": true
+    },
+    {
+      "case": 93,
+      "initial_count": 7,
+      "argument": "0x1",
+      "matched": true
+    },
+    {
+      "case": 94,
+      "initial_count": 5,
+      "argument": "0xffffffff",
+      "matched": true
+    },
+    {
+      "case": 95,
+      "initial_count": 0,
+      "argument": "0xffffffff",
+      "matched": true
+    },
+    {
+      "case": 96,
+      "initial_count": 9,
+      "argument": "0xffffffff",
+      "matched": true
+    },
+    {
+      "case": 97,
+      "initial_count": 4,
+      "argument": "0x3af345f4",
+      "matched": true
+    },
+    {
+      "case": 98,
+      "initial_count": 9,
+      "argument": "0xffffffff",
+      "matched": true
+    },
+    {
+      "case": 99,
+      "initial_count": 9,
+      "argument": "0x20f068ff",
+      "matched": true
+    },
+    {
+      "case": 100,
+      "initial_count": 12,
+      "argument": "0xffffffff",
+      "matched": true
+    },
+    {
+      "case": 101,
+      "initial_count": 6,
+      "argument": "0xd15e250a",
+      "matched": true
+    },
+    {
+      "case": 102,
+      "initial_count": 1,
+      "argument": "0xffffffff",
+      "matched": true
+    },
+    {
+      "case": 103,
+      "initial_count": 0,
+      "argument": "0xdafb648d",
+      "matched": true
+    },
+    {
+      "case": 104,
+      "initial_count": 4,
+      "argument": "0x1",
+      "matched": true
+    },
+    {
+      "case": 105,
+      "initial_count": 7,
+      "argument": "0x0",
+      "matched": true
+    },
+    {
+      "case": 106,
+      "initial_count": 10,
+      "argument": "0x1",
+      "matched": true
+    },
+    {
+      "case": 107,
+      "initial_count": 1,
+      "argument": "0xffffffff",
+      "matched": true
+    },
+    {
+      "case": 108,
+      "initial_count": 8,
+      "argument": "0x344d3578",
+      "matched": true
+    },
+    {
+      "case": 109,
+      "initial_count": 5,
+      "argument": "0xffffffff",
+      "matched": true
+    },
+    {
+      "case": 110,
+      "initial_count": 5,
+      "argument": "0x0",
+      "matched": true
+    },
+    {
+      "case": 111,
+      "initial_count": 7,
+      "argument": "0x0",
+      "matched": true
+    },
+    {
+      "case": 112,
+      "initial_count": 12,
+      "argument": "0x0",
+      "matched": true
+    },
+    {
+      "case": 113,
+      "initial_count": 12,
+      "argument": "0x1",
+      "matched": true
+    },
+    {
+      "case": 114,
+      "initial_count": 9,
+      "argument": "0x0",
+      "matched": true
+    },
+    {
+      "case": 115,
+      "initial_count": 9,
+      "argument": "0x0",
+      "matched": true
+    },
+    {
+      "case": 116,
+      "initial_count": 10,
+      "argument": "0x1",
+      "matched": true
+    },
+    {
+      "case": 117,
+      "initial_count": 11,
+      "argument": "0x1",
+      "matched": true
+    },
+    {
+      "case": 118,
+      "initial_count": 9,
+      "argument": "0x0",
+      "matched": true
+    },
+    {
+      "case": 119,
+      "initial_count": 2,
+      "argument": "0x10307727",
+      "matched": true
+    },
+    {
+      "case": 120,
+      "initial_count": 9,
+      "argument": "0xffffffff",
+      "matched": true
+    },
+    {
+      "case": 121,
+      "initial_count": 5,
+      "argument": "0x0",
+      "matched": true
+    },
+    {
+      "case": 122,
+      "initial_count": 7,
+      "argument": "0x0",
+      "matched": true
+    },
+    {
+      "case": 123,
+      "initial_count": 4,
+      "argument": "0x0",
+      "matched": true
+    },
+    {
+      "case": 124,
+      "initial_count": 7,
+      "argument": "0x1",
+      "matched": true
+    },
+    {
+      "case": 125,
+      "initial_count": 10,
+      "argument": "0xf42429bc",
+      "matched": true
+    },
+    {
+      "case": 126,
+      "initial_count": 1,
+      "argument": "0x0",
+      "matched": true
+    },
+    {
+      "case": 127,
+      "initial_count": 10,
+      "argument": "0xffffffff",
+      "matched": true
+    }
+  ]
+}

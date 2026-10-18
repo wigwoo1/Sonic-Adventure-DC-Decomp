@@ -1,0 +1,104 @@
+Signed UV / supplied face-factor near-plane clipping
+17 October 2026 - VERIFIED within the bounded scope below.
+Overall completion: 10% estimated weighted project milestones, not code coverage.
+Goal active. Continue Sol High with alternate UV-face helpers 8c614076 / 8c615b84.
+
+Recovered source
+  8c616f18..8c6173ba: 550 original instruction rows
+  source/sa_main_dispatch_uv_face_near_clip.c
+  source/sa_main_dispatch_uv_face_near_clip_connected.c
+The complete helper is byte-checked annotated static C, retaining instruction
+order, register effects and delay slots without runtime opcode decoding. Names
+are descriptive inferences. Previous source, reports, DLLs and disc files remain.
+
+Observed behavior
+R4/R5/R6 identify three cached vertices; R7 identifies six signed 16-bit UV words.
+Active FR4 supplies the face lighting factor; the helper does not calculate it.
+It reconstructs camera coordinates where required, clips against the near plane
+and interpolates signed integer UVs using the original FMAC/FTRC sequence before
+scaling them by 1/256. Input UV words and the input vertex cache remain unchanged.
+The helper uses UV scratch 8c890268, camera scratch 8c890278 and orientation
+8c8902fc. Input UVs from the connected parent are staged at 8c890304.
+
+Output packets contain control, projected x/y/reciprocal depth, U/V, lighting
+factor and a retained final word. The first two vertices retain the selected
+queue's prior factor word; the third and, for quadrilaterals, fourth receive the
+supplied FR4 factor. The final word remains untouched. Quadrilaterals emit in
+strip order 0,1,3,2. No normalizer call, factor-cache write or game call occurs.
+
+Build and tests actually passed
+- Strict Clang build: -O2 -Wall -Wextra -Werror; separate connected DLL.
+- 716 original-code comparisons: 448 direct helper, 162 clipped parents, two
+  alternate-topology plain parents, four draws, four callbacks and 96 meshes.
+- All 550 instruction rows and 14 conditional outcomes covered. All four parent
+  call sites reached: 8c61c790, 8c61cad2, 8c61caf0 and 8c61ced4.
+- Full 16 MiB RAM, GPRs/SR/PR, both FPU banks/FPSCR, FPUL/MACL, ordered boundaries
+  and queue contents/events agree with original execution, including partial state.
+- 594 cases complete, 76 match numeric/precision guards (-1), 34 match inherited
+  unsupported pointer/return boundaries (-3), 12 match enabled floating-point
+  traps (1). These expected guarded outcomes are compared, not successful draws.
+- 1,446 ordered boundaries, 42,536 numerical operations, 1,730 queue transfers
+  and 16,154 queue events checked. The new helper executes 662 times.
+- 426 independent cases check polygons, quantized signed UVs, supplied factors,
+  retained factor/padding words, counters, scratch/cursors and input preservation.
+  Tests include extreme/negative/mixed/zero UVs, signed zero and NaN payload
+  factors copied exactly, culling, different near planes/projections, queue halves
+  and inherited rounding/precision/exception variants. Independent UV math is
+  restricted to supported default-precision nearest rounding; other modes retain
+  original-instruction comparisons.
+- All 96 meshes use native material setup, projection/classification, primary or
+  secondary extended-header acquisition, UV-face parent, new clipper and finalizer,
+  with zero external game services. They cover six crossing masks, both windings,
+  FPU banks, header choices and cursor halves. Connected lighting is independently
+  checked with 2e-5 tolerance for the approximate reciprocal-root backend.
+- Four remaining external boundaries are the two alternate UV-face fixtures.
+- 120 lifetime regressions / 984 stages passed: 23,264 boundaries, 104,016 numerical
+  operations, 10,600 queue transfers and 117,808 queue events; zero external game
+  services. These unchanged original models do not reach the new helper. Their
+  existing native flat paths and independent particle/pool/heap checks regress.
+- Generated C and translation manifest reproduce byte-for-byte. Evidence hashes,
+  script parsing, repeat registration and dispatcher/coverage audits are checked
+  in the checkpoint's final integrity pass. All passed: four Python and two
+  PowerShell scripts parse; repeat registration adds zero duplicates; dispatcher
+  verification checks 658 pointer loads, 80 spans and 83 selectors; audits report
+  zero registry evidence errors and zero reports needing hash refresh. The app
+  goal was checked directly and remains active.
+
+Limits and next work
+Wide FMOV can overwrite saved vertex pointers in the original stack layout.
+Guard 8c617080 returns host -3 before an unsupported flags read; the original
+partial state is compared to that boundary. This is not physical fault dispatch.
+The parent's separate non-alternate crossing strip branch needs live R12/R14/R13
+pointers before ordinary-path initialization. Forty-eight controlled parent
+fixtures seed these pointers; they do not establish the full game caller contract.
+Parent pointer/return guards are retained. All-near direct inputs have only
+original-instruction comparison evidence, outside the normal caller contract.
+Coherent RAM, MMU-off store queues, inherited numerical guards and constructed
+streams bound these results. GPU FIFO/pixels, MMU-on behavior, cache timing and the
+full frame driver are unverified. Lifetime pass order is host-selected. The whole
+historical workflow was not rerun; the new linked build and focused/lifetime suites
+were run. A playable game, full decompilation and ports remain unfinished.
+
+Registry: 1,078 entries / 1,075 unique module-address pairs, with 1,026 matches
+among 10,875 indexed candidates. Another 211 non-texture binaries lack function
+indexes. These discovery counts do not measure whole-game code coverage.
+Next: 8c614076 (315 rows) / 8c615b84 (572 rows), already exported and byte-checked
+as analysis in analysis/main_dispatch_uv_face_lower_inventory.json. They are not
+yet recovered C. Six other primitive emitters also remain unfinished.
+PC 60/120/240 FPS, 8K, Android, stereo 3DS, SUPIR/settings and later N64/PS1 work
+remain planned. Texture Off must disable sampling and use vertex colours/material
+fallback, including when the HD toggle is enabled.
+
+Evidence and simple check
+Open this guide and SOURCE_HANDOFF.txt. The focused report
+analysis/main_dispatch_uv_face_near_clip_verification.json has cases_passed=716,
+rows_covered=550 and conditional_edges_covered=14. The linked lifetime report
+analysis/main_dispatch_uv_face_near_clip_lifecycle_verification.json has
+lifecycles_passed=120 and stage_comparisons=984. No playable game is available yet.
+Scripts: recover_main_dispatch_uv_face_near_clip.py,
+build_main_dispatch_uv_face_near_clip.ps1,
+verify_main_dispatch_uv_face_near_clip.py,
+verify_main_dispatch_uv_face_near_clip_lifecycle.py,
+register_main_dispatch_uv_face_near_clip.py.
+Recommended next model: Sol High; the alternate helpers still need instruction-
+level reverse engineering. No model switch or pause advised.

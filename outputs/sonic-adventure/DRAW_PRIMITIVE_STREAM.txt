@@ -1,0 +1,140 @@
+Sonic Adventure Dreamcast Rev A - indexed primitive packets and scale buffer
+
+Overall estimate: 10%, weighted whole-project milestones rather than code
+coverage. Goal active on Sol High. Full rendering/gameplay and all playable ports
+remain unfinished. No model switch or pause is recommended for the next task.
+
+Three complete entries: 298 original instruction rows / all 26 outcomes:
+8c037990 - indexed UV/environment-coordinate vertex packets (197 / 18).
+8c037c3c - indexed solid vertex packets (66 / 8).
+8c60b462 - channel default scale-buffer copy (35 / 0).
+Names and roles are inferred from original instructions. Three further clipping
+proposals are connected but incomplete: 8c037ccc, 8c038668 and 8c0382ac. They
+retain explicit missing callees and receive zero registration credit. Extending
+processor state and recovering those bodies remain required project work.
+
+Sources/workflows in this project directory:
+source/sa_draw_primitive_stream.c
+source/sa_draw_primitive_stream_connected.c
+recover_draw_primitive_stream.py / connect_draw_primitive_stream.py
+build_draw_primitive_stream.ps1
+verify_draw_primitive_stream.py
+verify_overlay_draw_primitive_stream.py
+register_draw_primitive_stream.py
+analysis/draw_primitive_stream_translation.json
+analysis/draw_primitive_stream_connection.json
+analysis/draw_primitive_stream_verification.json
+analysis/overlay_draw_primitive_stream_verification.json
+inventory_draw_primitive_cpu.py
+analysis/draw_primitive_cpu_frontier.json
+source/sh4_signed_product.c / source/sh4_signed_product.h
+build_sh4_signed_product.ps1 / verify_sh4_signed_product.py
+analysis/sh4_signed_product_verification.json
+
+Strict optimized 115-source native DLL build passes with warnings treated as
+errors and no standard library. Separate research DLL under workspace root:
+work/sonic-adventure/build/draw_primitive_stream.dll. Old sources/APIs/DLLs/proofs
+are retained. The ten-argument public ABI passes live GBR and the existing queue
+bus. Removing added routes/declarations and the renamed API reproduces the
+previous bridge text exactly. The inherited hierarchy-stall research bound is
+retained. Both new C files also pass default non-research syntax checks.
+
+All 189 focused comparisons pass: 146 returns, 18 explicit missing services in
+partial clipping proposals, sixteen numeric guards and nine memory/return guards.
+They compare 211 ordered entries, full final machine/RAM/GBR and ordered queues.
+Across all six proposals, 915/1,030 rows and 103 branch outcomes execute. Only
+three completed entries (298 rows / 26 outcomes) receive registration credit.
+There are 81 independent cases / 387 assertions for packet/cursor/stack/RAM and
+default scale-buffer results. Direct queues: 393 flushes / 3,585 individually
+compared events. Every case separately checks the new DLL's renderer initializer
+against original instructions. Preparation is counted separately from main cases.
+
+Direct fixtures supply indexed strips, projected vertex caches, signed UV words,
+specular words and unit transform matrices. Both software queue windows initially
+use QACR 12, matching the separately verified real header setup. Connected tests
+retain real header writes rather than injecting a game-service result. Direct
+strips have two through six vertices and include multiple strips, negative length
+prefixes, explicit count overrides, both FPU banks, environment coordinates,
+width/precision modes and invalid-pointer reached partial states. Zero/one-length
+malformed strip behavior is not established by the intended-input packet oracle.
+
+The UV emitter retains per-vertex x/y/inverse depth, colour/specular words, signed
+UV conversion or original environment transform, complete 32-byte queue records
+and the final strip control word. The solid emitter preserves unused queue words.
+Independent checks cover every packet word and the complete RAM footprint,
+including the retained saved word on guest stack, restored stack/R3 and advanced
+R0/R14 cursors. Default scale copy preserves original channel-index and FMOV width/
+bank semantics; independent scalar checks cover the exact scale-buffer footprint.
+
+The independent UV formula initially assumed ideal 1/255 scaling. The game stores
+a slightly different original binary32 constant at 8c038f10. The oracle now uses
+that exact input constant, preserving the original numeric operation boundary.
+Original binaries, instructions and native code were unchanged by this correction.
+Native/original full-state comparisons already matched before that oracle fix.
+
+The next clipping inventory byte-checks sixteen DMULS instructions and eight LDC
+SR instructions in 8c037ee0/37ff4/38516/38802. Current bridge exposes MACL/GBR but
+not MACH or alternate integer-bank state. The local Ghidra instruction definition
+confirms DMULS writes both product halves and explicitly notes incomplete integer
+bank simulation. Its pseudocode alone is insufficient proof of bank behavior.
+These clipping routines remain required and unregistered; no fake return or
+silent dropped product/state is introduced to cross their missing boundaries.
+
+An isolated full signed-product kernel now compiles and passes 2,217 independent
+Python arbitrary-precision comparisons: 169 boundary pairs and 2,048 deterministic
+random pairs. Both MACL and MACH are checked. This helper is not connected to game
+code yet and earns zero game-routine credit. Next steps include independent bank/
+status semantics, explicit caller-owned state, preserved old ABIs, and full
+clipping integration. The existing scalar/vector/MMU-off numerical and RAM/bus
+qualifications remain. Physical GPU output, complete frames/gameplay, 60/120/240
+FPS, 8K, SUPIR/HD/true texture-off settings and playable ports remain pending.
+
+All 210 connected comparisons pass with the same prior input records. Returns
+increase from 92 to 156: the 64 existing camera/entity profiles now complete the
+tested callback. The remaining 48 missing-service cases advance to 8c609cb0.
+Two numeric guards, two memory/return guards and two traps remain unchanged.
+No injected game-service return is used. Original model/motion/name/lookup data
+and real header/queue configuration are retained. The earlier 420-case corpus
+is preserved; this run retests the selected 146 plus 64 existing camera profiles.
+
+Connected checks compare 95,608 ordered native entries, 204 independent state/
+stack/spring cases and 124 distance prefixes. They reach 292 new-proposal rows:
+UV packets 1,328 invocations, solid packets 64 and scale copy 96. The three partial
+clippers are checked directly but not claimed as reached in these callback cases.
+AL_MAIN parent coverage rises from 417 to 538/911 rows (373 still unexecuted), so
+the parent remains unregistered. Natural startup, actual task/camera scheduling,
+physical GPU output and a playable full game are still unproved.
+
+Native/original initializer preparation is counted separately: 399 renderer GBR
+stages across focused/caller tests, plus 64 viewport resets. Connected queues
+record 94,304 flushes / 936,712 counted events. The first 4,096 per call are
+individually compared: 311,296 stored-prefix events; 625,416 later events are
+count-only. Complete final queue/QACR/counters and RAM match. Full callback
+returns describe the tested software pipeline, not pixels or full game completion.
+
+Registry: 1,233 entries / 1,230 unique module/address pairs; 1,129 matches in
+10,875 frozen indexed candidates. Another 211 nontexture binaries lack indexes,
+so the whole game's routine count remains unknown. Audit: zero evidence errors
+and zero stale source reports. 109 existing entries gain zero duplicate credit.
+Five generated artifacts reproduce exactly in memory, and repeat registration
+preserves registry/status bytes. Nine Python/five PowerShell syntax checks,
+default C syntax and all 658 dispatcher pointer-load checks (80 spans / 83
+selectors) pass. Historical aggregate workflow is extended, not rerun in full.
+
+The next observed boundary 8c609cb0 has a read-only, byte-checked 92-row export
+and draft in analysis/draw-continuation-frontier/. It receives zero native credit.
+Its static annotated callees are registered, but computed targets are not assumed
+exhaustive. Recover this remaining animation/draw continuation on Sol High.
+The full clipping-state/body work remains required afterward.
+
+Official architecture reference: Renesas SH-4 Software Manual, Rev. 6.00,
+REJ09B0318-0600, sections 2.2.1-2.2.2 and 9.20:
+https://www.renesas.com/en/document/mas/sh-4-software-manual
+Reference notes: analysis/sh4_clipping_architecture_reference.json. This confirms
+needed state semantics; it is not an implemented bank model or hardware proof.
+
+How to check: open this guide and source/reports listed above. The JSON reports
+record every tested input and result. Status: PARTIALLY VERIFIED at project level.
+The three new bodies have complete qualified instruction/branch coverage; the
+full renderer and game remain unfinished. Stay on Sol High for the next recovery;
+Luna Low is suitable for documentation-only work. Goal remains active at 10%.

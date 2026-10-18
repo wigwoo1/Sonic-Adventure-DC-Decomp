@@ -1,0 +1,21 @@
+{
+  "entry": "8c65fe14",
+  "evidence": "analysis/instructions/input_device_completion_postqueue.tsv",
+  "confirmed_transition": [
+    {
+      "pc": "8c65fe86",
+      "effect": "Read submitted token at device record +1c"
+    },
+    {
+      "pc": "8c65fe88",
+      "effect": "Write token to device record +20"
+    },
+    {
+      "pc": "8c65fe8a",
+      "effect": "Clear submitted token at +1c"
+    }
+  ],
+  "condition": "Submitted token nonzero; record calculated from global 8c8a83b4 +28 +channel*44.",
+  "scope": "Instruction evidence and initial C translation only; not runtime verified yet.",
+  "next": "Verify entire routine and replace completion update fixture in backend lifecycle."
+}

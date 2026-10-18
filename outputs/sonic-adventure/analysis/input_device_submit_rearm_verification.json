@@ -1,0 +1,530 @@
+{
+  "module": "1ST_READ.BIN",
+  "load_address": "0x8c010000",
+  "address": "0x8c65f1ec",
+  "end_exclusive": "0x8c65f202",
+  "retail_span_sha256": "5d416119be2a8b7073091821e6a5e37ec2d658b6d08bcba28df4492bc712f15b",
+  "binary_sha256": "45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a",
+  "source_sha256": "4f16b9a92f3df3a0e7f0da7adcf1d5574867930585813435ba38230ec1156929",
+  "cases_passed": 64,
+  "comparison_level": "Complete 16 MiB RAM and all GPR/SR/PR/FPU state against retail SH-4 execution.",
+  "scope": "Sets a signed-offset request word to one, clears the device lock byte, and returns zero. Tests cover literal offset, signed boundaries, random offsets, bases and prior lock values.",
+  "limitations": [
+    "This verifies the 22-byte helper in isolation, not the 334-byte cleanup routine or full input subsystem.",
+    "Synthetic interpreter comparisons are not full-game validation."
+  ],
+  "cases": [
+    {
+      "case": 0,
+      "signed_offset": 4032,
+      "object_base": "0x8ca00000",
+      "lock_byte_in": 244,
+      "target_bytes_before": "f4dc8429",
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 1,
+      "signed_offset": 0,
+      "object_base": "0x8ca10000",
+      "lock_byte_in": 220,
+      "target_bytes_before": "09a100f9",
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 2,
+      "signed_offset": 1,
+      "object_base": "0x8ca20000",
+      "lock_byte_in": 132,
+      "target_bytes_before": "87824dea",
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 3,
+      "signed_offset": 32767,
+      "object_base": "0x8ca30000",
+      "lock_byte_in": 41,
+      "target_bytes_before": "fc679f20",
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 4,
+      "signed_offset": -32768,
+      "object_base": "0x8ca40000",
+      "lock_byte_in": 125,
+      "target_bytes_before": "8adb767e",
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 5,
+      "signed_offset": -1,
+      "object_base": "0x8ca50000",
+      "lock_byte_in": 183,
+      "target_bytes_before": "1a3a336a",
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 6,
+      "signed_offset": -23814,
+      "object_base": "0x8ca60000",
+      "lock_byte_in": 210,
+      "target_bytes_before": "3fdbb586",
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 7,
+      "signed_offset": 19900,
+      "object_base": "0x8ca70000",
+      "lock_byte_in": 153,
+      "target_bytes_before": "c5bf2a78",
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 8,
+      "signed_offset": -1276,
+      "object_base": "0x8ca80000",
+      "lock_byte_in": 12,
+      "target_bytes_before": "3b356c98",
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 9,
+      "signed_offset": -8263,
+      "object_base": "0x8ca90000",
+      "lock_byte_in": 69,
+      "target_bytes_before": "3f29791c",
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 10,
+      "signed_offset": 25344,
+      "object_base": "0x8caa0000",
+      "lock_byte_in": 198,
+      "target_bytes_before": "28ebaa96",
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 11,
+      "signed_offset": -30779,
+      "object_base": "0x8cab0000",
+      "lock_byte_in": 98,
+      "target_bytes_before": "9ff7b0f6",
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 12,
+      "signed_offset": 22820,
+      "object_base": "0x8cac0000",
+      "lock_byte_in": 219,
+      "target_bytes_before": "78431540",
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 13,
+      "signed_offset": -6108,
+      "object_base": "0x8cad0000",
+      "lock_byte_in": 128,
+      "target_bytes_before": "a45eee9e",
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 14,
+      "signed_offset": 28199,
+      "object_base": "0x8cae0000",
+      "lock_byte_in": 252,
+      "target_bytes_before": "26a96d08",
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 15,
+      "signed_offset": -25338,
+      "object_base": "0x8caf0000",
+      "lock_byte_in": 169,
+      "target_bytes_before": "f7bd0fa5",
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 16,
+      "signed_offset": -25213,
+      "object_base": "0x8ca00000",
+      "lock_byte_in": 95,
+      "target_bytes_before": "75b432e6",
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 17,
+      "signed_offset": 29964,
+      "object_base": "0x8ca10000",
+      "lock_byte_in": 120,
+      "target_bytes_before": "86cd3d21",
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 18,
+      "signed_offset": 2901,
+      "object_base": "0x8ca20000",
+      "lock_byte_in": 196,
+      "target_bytes_before": "a31c2c3a",
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 19,
+      "signed_offset": 25430,
+      "object_base": "0x8ca30000",
+      "lock_byte_in": 27,
+      "target_bytes_before": "29fcd2ea",
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 20,
+      "signed_offset": 19120,
+      "object_base": "0x8ca40000",
+      "lock_byte_in": 80,
+      "target_bytes_before": "64e67cd9",
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 21,
+      "signed_offset": 26439,
+      "object_base": "0x8ca50000",
+      "lock_byte_in": 215,
+      "target_bytes_before": "7189faaa",
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 22,
+      "signed_offset": 32135,
+      "object_base": "0x8ca60000",
+      "lock_byte_in": 121,
+      "target_bytes_before": "1eb2b238",
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 23,
+      "signed_offset": 21338,
+      "object_base": "0x8ca70000",
+      "lock_byte_in": 159,
+      "target_bytes_before": "803ecd5e",
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 24,
+      "signed_offset": -32624,
+      "object_base": "0x8ca80000",
+      "lock_byte_in": 188,
+      "target_bytes_before": "e51b2fed",
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 25,
+      "signed_offset": 6797,
+      "object_base": "0x8ca90000",
+      "lock_byte_in": 35,
+      "target_bytes_before": "0ab75883",
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 26,
+      "signed_offset": -13050,
+      "object_base": "0x8caa0000",
+      "lock_byte_in": 58,
+      "target_bytes_before": "4ae7d3c5",
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 27,
+      "signed_offset": 12872,
+      "object_base": "0x8cab0000",
+      "lock_byte_in": 234,
+      "target_bytes_before": "dbff564e",
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 28,
+      "signed_offset": -14438,
+      "object_base": "0x8cac0000",
+      "lock_byte_in": 117,
+      "target_bytes_before": "990390d1",
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 29,
+      "signed_offset": -26067,
+      "object_base": "0x8cad0000",
+      "lock_byte_in": 236,
+      "target_bytes_before": "5ed027c4",
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 30,
+      "signed_offset": 9266,
+      "object_base": "0x8cae0000",
+      "lock_byte_in": 48,
+      "target_bytes_before": "36b219b3",
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 31,
+      "signed_offset": -10598,
+      "object_base": "0x8caf0000",
+      "lock_byte_in": 119,
+      "target_bytes_before": "4e49a7b2",
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 32,
+      "signed_offset": 13562,
+      "object_base": "0x8ca00000",
+      "lock_byte_in": 36,
+      "target_bytes_before": "30439a0c",
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 33,
+      "signed_offset": 8558,
+      "object_base": "0x8ca10000",
+      "lock_byte_in": 78,
+      "target_bytes_before": "7bb7947e",
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 34,
+      "signed_offset": -23673,
+      "object_base": "0x8ca20000",
+      "lock_byte_in": 123,
+      "target_bytes_before": "c1e10346",
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 35,
+      "signed_offset": 28028,
+      "object_base": "0x8ca30000",
+      "lock_byte_in": 40,
+      "target_bytes_before": "d46d8a08",
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 36,
+      "signed_offset": 14211,
+      "object_base": "0x8ca40000",
+      "lock_byte_in": 126,
+      "target_bytes_before": "64d98c2e",
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 37,
+      "signed_offset": 17890,
+      "object_base": "0x8ca50000",
+      "lock_byte_in": 86,
+      "target_bytes_before": "0eb20aa8",
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 38,
+      "signed_offset": 12645,
+      "object_base": "0x8ca60000",
+      "lock_byte_in": 159,
+      "target_bytes_before": "073afa11",
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 39,
+      "signed_offset": -4087,
+      "object_base": "0x8ca70000",
+      "lock_byte_in": 240,
+      "target_bytes_before": "a0a13b11",
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 40,
+      "signed_offset": -7522,
+      "object_base": "0x8ca80000",
+      "lock_byte_in": 30,
+      "target_bytes_before": "ed0279e9",
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 41,
+      "signed_offset": 31859,
+      "object_base": "0x8ca90000",
+      "lock_byte_in": 248,
+      "target_bytes_before": "ff89aad7",
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 42,
+      "signed_offset": 22065,
+      "object_base": "0x8caa0000",
+      "lock_byte_in": 113,
+      "target_bytes_before": "9a9c8f72",
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 43,
+      "signed_offset": -7249,
+      "object_base": "0x8cab0000",
+      "lock_byte_in": 55,
+      "target_bytes_before": "47ba8bd5",
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 44,
+      "signed_offset": -19782,
+      "object_base": "0x8cac0000",
+      "lock_byte_in": 74,
+      "target_bytes_before": "ca368cb4",
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 45,
+      "signed_offset": -24151,
+      "object_base": "0x8cad0000",
+      "lock_byte_in": 143,
+      "target_bytes_before": "fd03a492",
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 46,
+      "signed_offset": 14817,
+      "object_base": "0x8cae0000",
+      "lock_byte_in": 80,
+      "target_bytes_before": "6f758474",
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 47,
+      "signed_offset": 11074,
+      "object_base": "0x8caf0000",
+      "lock_byte_in": 224,
+      "target_bytes_before": "a8bdadcb",
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 48,
+      "signed_offset": -26386,
+      "object_base": "0x8ca00000",
+      "lock_byte_in": 227,
+      "target_bytes_before": "cd172518",
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 49,
+      "signed_offset": 21979,
+      "object_base": "0x8ca10000",
+      "lock_byte_in": 191,
+      "target_bytes_before": "a1329004",
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 50,
+      "signed_offset": -27437,
+      "object_base": "0x8ca20000",
+      "lock_byte_in": 54,
+      "target_bytes_before": "4006183b",
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 51,
+      "signed_offset": -25233,
+      "object_base": "0x8ca30000",
+      "lock_byte_in": 173,
+      "target_bytes_before": "67bf5303",
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 52,
+      "signed_offset": 4122,
+      "object_base": "0x8ca40000",
+      "lock_byte_in": 93,
+      "target_bytes_before": "3b6b9fcf",
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 53,
+      "signed_offset": 30043,
+      "object_base": "0x8ca50000",
+      "lock_byte_in": 14,
+      "target_bytes_before": "268c29eb",
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 54,
+      "signed_offset": -22184,
+      "object_base": "0x8ca60000",
+      "lock_byte_in": 218,
+      "target_bytes_before": "2aad070d",
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 55,
+      "signed_offset": 1240,
+      "object_base": "0x8ca70000",
+      "lock_byte_in": 219,
+      "target_bytes_before": "dad98d71",
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 56,
+      "signed_offset": 27629,
+      "object_base": "0x8ca80000",
+      "lock_byte_in": 108,
+      "target_bytes_before": "f0a17142",
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 57,
+      "signed_offset": -26763,
+      "object_base": "0x8ca90000",
+      "lock_byte_in": 170,
+      "target_bytes_before": "f7e70210",
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 58,
+      "signed_offset": -24481,
+      "object_base": "0x8caa0000",
+      "lock_byte_in": 100,
+      "target_bytes_before": "4fe25a11",
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 59,
+      "signed_offset": -24315,
+      "object_base": "0x8cab0000",
+      "lock_byte_in": 38,
+      "target_bytes_before": "747b918d",
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 60,
+      "signed_offset": 22468,
+      "object_base": "0x8cac0000",
+      "lock_byte_in": 9,
+      "target_bytes_before": "8d51e541",
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 61,
+      "signed_offset": -19674,
+      "object_base": "0x8cad0000",
+      "lock_byte_in": 139,
+      "target_bytes_before": "3fdfb8d3",
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 62,
+      "signed_offset": -18991,
+      "object_base": "0x8cae0000",
+      "lock_byte_in": 230,
+      "target_bytes_before": "810488d1",
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 63,
+      "signed_offset": 20427,
+      "object_base": "0x8caf0000",
+      "lock_byte_in": 31,
+      "target_bytes_before": "2ca96db3",
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    }
+  ]
+}

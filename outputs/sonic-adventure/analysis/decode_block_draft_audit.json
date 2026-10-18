@@ -1,0 +1,76 @@
+{
+  "routines": [
+    {
+      "name": "sa_sound_decode_block_mono",
+      "address": "0x8c65b120",
+      "end_exclusive": "0x8c65b222",
+      "instruction_count": 129,
+      "retail_span_sha256": "ccc66729e2720a0828971f47fdbc1791d36b7b4d800ce22d9615c4eaab1aeb22",
+      "source": "source/sa_sound_decode_block_mono.c",
+      "source_sha256": "45edb1f875eb6d6d35601b6a9cfba3ab86374cdf8173d4ebee72cacfe4aad7ad",
+      "registry_status": "Compiled and matched within report scope",
+      "verification": "analysis/sound_decode_block_mono_verification.json",
+      "verification_evidence": [
+        {
+          "path": "analysis/sound_decode_block_mono_verification.json",
+          "cases_passed": 1152,
+          "original_files": null
+        },
+        {
+          "path": "analysis/sound_decode_mono_scales_verification.json",
+          "cases_passed": 180,
+          "original_files": null
+        },
+        {
+          "path": "analysis/sound_decode_mono_retail_verification.json",
+          "cases_passed": 218,
+          "original_files": 109
+        }
+      ]
+    },
+    {
+      "name": "sa_sound_decode_block_stereo",
+      "address": "0x8c65b238",
+      "end_exclusive": "0x8c65b428",
+      "instruction_count": 238,
+      "retail_span_sha256": "9d7fa76308f71df04732014aa5633d64bb9361531042a848f4ab8714a1d9e196",
+      "source": "source/sa_sound_decode_block_stereo.c",
+      "source_sha256": "43136b3f852a509ce5790a8078a75ae06463b2c7e8df91fd8be8d91a31d218e4",
+      "registry_status": "Compiled and matched within report scope",
+      "verification": "analysis/sound_decode_stereo_samples_verification.json",
+      "verification_evidence": [
+        {
+          "path": "analysis/sound_decode_stereo_samples_verification.json",
+          "cases_passed": 1152,
+          "original_files": null
+        },
+        {
+          "path": "analysis/sound_decode_stereo_scales_verification.json",
+          "cases_passed": 180,
+          "original_files": null
+        },
+        {
+          "path": "analysis/sound_decode_stereo_retail_verification.json",
+          "cases_passed": 218,
+          "original_files": 109
+        },
+        {
+          "path": "analysis/sound_decode_stereo_prefix_verification.json",
+          "cases_passed": 218,
+          "original_files": 109
+        },
+        {
+          "path": "analysis/sound_decode_stereo_odd_verification.json",
+          "cases_passed": 48,
+          "original_files": null
+        },
+        {
+          "path": "analysis/sound_decode_stereo_termination_verification.json",
+          "cases_passed": 96,
+          "original_files": null
+        }
+      ]
+    }
+  ],
+  "scope": "Both block decoders are registered, compile together, and are behaviorally verified. 367 exported opcodes match retail including RTS delay slots. Mono: 1,152 differential cases, 180 scale cases, and 218 comparisons across 109 original files. Stereo: 1,152 differential cases, 180 scale cases, 218 original-file comparisons, 218 original-prefix comparisons, 48 odd-count cases, and 96 termination cases. Full games and playback remain outside these decoder-level checks."
+}

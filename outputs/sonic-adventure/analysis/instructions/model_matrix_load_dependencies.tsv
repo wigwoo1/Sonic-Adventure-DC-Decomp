@@ -1,0 +1,90 @@
+address	opcode	instruction	references
+8c639c70	d103	mov.l 0x8c639c80,r1	READ:8c639c80=8c88f698 
+8c639c72	d604	mov.l 0x8c639c84,r6	READ:8c639c84=8c88f69c 
+8c639c74	6312	mov.l @r1,r3	READ:8c88f698 
+8c639c76	6262	mov.l @r6,r2	READ:8c88f69c 
+8c639c78	3233	cmp/ge r3,r2	
+8c639c7a	8b05	bf 0x8c639c88	CONDITIONAL_JUMP:8c639c88=d1127201 
+8c639c7c	b	rts	
+8c639c7e	e000	_mov #0x0,r0	
+8c639c88	7201	add #0x1,r2	
+8c639c8a	d112	mov.l 0x8c639cd4,r1	READ:8c639cd4=8c88f5f8 
+8c639c8c	2622	mov.l r2,@r6	WRITE:8c88f69c 
+8c639c8e	6512	mov.l @r1,r5	READ:8c88f5f8 
+8c639c90	2448	tst r4,r4	
+8c639c92	5c3	movca.l r0,@r5	
+8c639c94	7520	add #0x20,r5	
+8c639c96	5c3	movca.l r0,@r5	
+8c639c98	7520	add #0x20,r5	
+8c639c9a	f3fd	fschg	
+8c639c9c	f5fb	fmov.s fr15,@-r5	
+8c639c9e	f5db	fmov.s fr13,@-r5	
+8c639ca0	f5bb	fmov.s fr11,@-r5	
+8c639ca2	f59b	fmov.s fr9,@-r5	
+8c639ca4	f57b	fmov.s fr7,@-r5	
+8c639ca6	f55b	fmov.s fr5,@-r5	
+8c639ca8	f53b	fmov.s fr3,@-r5	
+8c639caa	f51b	fmov.s fr1,@-r5	
+8c639cac	f3fd	fschg	
+8c639cae	7540	add #0x40,r5	
+8c639cb0	8f12	bf/s 0x8c639cd8	CONDITIONAL_JUMP:8c639cd8=f149f3fd 
+8c639cb2	2152	_mov.l r5,@r1	WRITE:8c88f5f8 
+8c639cb4	5c3	movca.l r0,@r5	
+8c639cb6	7520	add #0x20,r5	
+8c639cb8	5c3	movca.l r0,@r5	
+8c639cba	7520	add #0x20,r5	
+8c639cbc	f3fd	fschg	
+8c639cbe	f5fb	fmov.s fr15,@-r5	
+8c639cc0	f5db	fmov.s fr13,@-r5	
+8c639cc2	f5bb	fmov.s fr11,@-r5	
+8c639cc4	f59b	fmov.s fr9,@-r5	
+8c639cc6	f57b	fmov.s fr7,@-r5	
+8c639cc8	f55b	fmov.s fr5,@-r5	
+8c639cca	f53b	fmov.s fr3,@-r5	
+8c639ccc	f51b	fmov.s fr1,@-r5	
+8c639cce	f3fd	fschg	
+8c639cd0	b	rts	
+8c639cd2	e001	_mov #0x1,r0	
+8c639cd8	f3fd	fschg	
+8c639cda	f149	fmov.s @r4+,fr1	
+8c639cdc	f349	fmov.s @r4+,fr3	
+8c639cde	f549	fmov.s @r4+,fr5	
+8c639ce0	f749	fmov.s @r4+,fr7	
+8c639ce2	f949	fmov.s @r4+,fr9	
+8c639ce4	fb49	fmov.s @r4+,fr11	
+8c639ce6	fd49	fmov.s @r4+,fr13	
+8c639ce8	ff49	fmov.s @r4+,fr15	
+8c639cea	f3fd	fschg	
+8c639cec	b	rts	
+8c639cee	e001	_mov #0x1,r0	
+8c639cf4	2448	tst r4,r4	
+8c639cf6	8b40	bf 0x8c639d7a	CONDITIONAL_JUMP:8c639d7a=8d332778 
+8c639cf8	2778	tst r7,r7	
+8c639cfa	8d13	bt/s 0x8c639d24	CONDITIONAL_JUMP:8c639d24=8d122668 
+8c639cfc	475a	_lds r7,FPUL	
+8c639cfe	f38d	fldi0 fr3	
+8c639d00	f0fd	fsca FPUL,dr0	
+8c639d02	f68d	fldi0 fr6	
+8c639d04	f78d	fldi0 fr7	
+8c639d06	f20c	fmov fr0,fr2	
+8c639d08	f01c	fmov fr1,fr0	
+8c639d0a	f12c	fmov fr2,fr1	
+8c639d0c	f28d	fldi0 fr2	
+8c639d0e	f50c	fmov fr0,fr5	
+8c639d10	f41c	fmov fr1,fr4	
+8c639d12	f44d	fneg fr4	
+8c639d14	f1fd	ftrv xmtrx,fv0	
+8c639d16	f5fd	ftrv xmtrx,fv4	
+8c639d18	f3fd	fschg	
+8c639d1a	f10c	fmov fr0,fr1	
+8c639d1c	f32c	fmov fr2,fr3	
+8c639d1e	f54c	fmov fr4,fr5	
+8c639d20	f76c	fmov fr6,fr7	
+8c639d22	f3fd	fschg	
+8c639d24	2668	tst r6,r6	
+8c639d26	8d12	bt/s 0x8c639d4e	CONDITIONAL_JUMP:8c639d4e=8d112558 
+8c639d28	465a	_lds r6,FPUL	
+8c639d2a	f38d	fldi0 fr3	
+8c639d2c	f0fd	fsca FPUL,dr0	
+8c639d2e	f58d	fldi0 fr5	
+8c639d30	f78d	fldi0 fr7	

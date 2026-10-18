@@ -1,0 +1,29 @@
+{
+  "subsystem": "Dreamcast sound-driver host command/transfer infrastructure",
+  "context_global": "0x8c67c1d0",
+  "context_address": "0x8c8d3400",
+  "evidence": [
+    {
+      "routine": "8c643970",
+      "embedded_string_identifiers": [
+        "(*(code *)PTR_FUN_8c643a7c)(PTR_s_Enter__s_8c643a84,PTR_s_sd_multi_unit_download__c_8c643a80);",
+        "(*(code *)puVar1)(PTR_s_Exit___s__08X__8c643ab8,PTR_s_sd_multi_unit_download__c_8c643a80,iVar2);"
+      ]
+    },
+    {
+      "routine": "8c65aaf4",
+      "embedded_string_identifiers": [
+        "(*(code *)PTR_FUN_8c65ab6c)(PTR_s_Enter__s_8c65ab74,PTR_s_sd_drv_get_info__c_8c65ab70);",
+        "(*(code *)puVar2)(PTR_s_Exit___s_8c65aca8,PTR_s_sd_drv_get_info__c_8c65aca4);"
+      ]
+    }
+  ],
+  "interpretation": "The recovered pool, transfer-object, request/packed-work and completion callback routines use this shared context. Legacy engine_frame and queue_consume symbol/file names are provisional historical names; they do not establish a gameplay frame scheduler.",
+  "verified_behavior_preserved": true,
+  "not_proven": [
+    "gameplay frame scheduling",
+    "audio synthesis/playback",
+    "requested frame rates/resolutions",
+    "full decompilation/playable ports"
+  ]
+}

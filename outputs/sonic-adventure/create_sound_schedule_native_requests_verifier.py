@@ -1,0 +1,18 @@
+from pathlib import Path
+root=Path(__file__).resolve().parent
+text=(root/'verify_sound_stream_decode_schedule.py').read_text()
+text=text.replace('cases=0;counts=set()', "mono=load('sound_stream_mono_request.dll','sa_sound_stream_mono_request');stereo=load('sound_stream_stereo_request.dll','sa_sound_stream_stereo_request')\nmono_setup=load('file_decode_mono_request.dll','sa_file_decode_mono_request');stereo_setup=load('file_decode_stereo_request.dll','sa_file_decode_stereo_request');activate=load('file_decode_request_activate.dll','sa_file_decode_request_activate')\ncases=0;counts=set()")
+text=text.replace('position,unit,bank in itertools.product(', 'position,unit,bank,phase in itertools.product(').replace('[1,2],[0,1]):','[1,2],[0,1],[0,2]):')
+text=text.replace('    before=bytes(ram[0xa70000:0xa70100]);', "    struct.pack_into('<I',ram,0xa70008,0x8ca60000);struct.pack_into('<I',ram,0xa70050,0x8ca10000);struct.pack_into('<I',ram,0xa70064,0x8ca30000);struct.pack_into('<I',ram,0xa7006c,128)\n    ram[0xa60000:0xa60040]=bytes([0x55])*64;struct.pack_into('<I',ram,0xa6000c,phase);handle_before=bytes(ram[0xa60000:0xa60040])\n    before=bytes(ram[0xa70000:0xa70100]);")
+text=text.replace("if address in [0x8c6677e2,0x8c66780e]:actual.append((address,r[4],r[5]));return 0", "if address in [0x8c6677e2,0x8c66780e]:actual.append((address,r[4],r[5]))\n        target={0x8c6677e2:mono,0x8c66780e:stereo,0x8c644c1a:mono_setup,0x8c644c38:stereo_setup,0x8c644c56:activate}.get(address)\n        if target:return target(mem,fp,srp,r,prp,ctypes.byref(fpul),ctypes.byref(macl),None,call)")
+text=text.replace("reference(ram,s,{a:hook(a) for a in [0x8c6677e2,0x8c66780e]},fpu=f,special=special)", 'reference(ram,s,fpu=f,special=special)').replace(' and actual==expected','')
+text=text.replace('    counts.add(chosen);cases+=1', "    wanted=bytearray(handle_before)\n    if phase==0:\n        left=0x8ca30000+offset*2;right=left+256 if channels==2 else 0\n        struct.pack_into('<2I',wanted,12,1,0);struct.pack_into('<5I',wanted,20,channels,0x8ca10000,(chosen*channels)&0xffffffff,left,right)\n    assert native[0xa60000:0xa60040]==wanted\n    counts.add(chosen);cases+=1")
+start=text.index("(out/'analysis/sound_stream_decode_schedule_verification.json')")
+text=text[:start]+"""(out/'analysis/sound_schedule_native_requests_verification.json').write_text(json.dumps(dict(cases_passed=cases,selected_counts=sorted(counts),scope='768 full retail RAM/CPU/FPU/SR/PR/MACL connected scheduler comparisons with native division/remainder, mono/stereo stream wrappers, request setup and activation; no modeled calls. Same384 scheduling fixtures crossed with idle/busy decoder handles. Independent signed count oracle, wrapper selection trace, output offsets, doubled stereo block count, full64-byte handle oracle, stream immutability and stack checks. Actual sample decoding, negative/overflow/zero divisors, continuous playback/fullgame unverified.'),indent=2)+'\\n')
+print(cases,'native scheduled request comparisons passed')
+"""
+(root/'verify_sound_schedule_native_requests.py').write_text(text)
+text=(root/'register_sound_stream_decode_pipeline.py').read_text().replace('sound_stream_decode_pipeline','sound_schedule_native_requests').replace('==218','==768')
+start=text.index('names=');end=text.index(';found=set()',start)
+text=text[:start]+"names={'sa_sound_stream_decode_schedule','sa_sound_stream_mono_request','sa_sound_stream_stereo_request','sa_file_decode_mono_request','sa_file_decode_stereo_request','sa_file_decode_request_activate'}"+text[end:]
+text=text.replace('Native stream decode pipeline:','Native scheduled audio requests:');(root/'register_sound_schedule_native_requests.py').write_text(text)

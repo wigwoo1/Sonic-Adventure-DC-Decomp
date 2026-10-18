@@ -1,0 +1,140 @@
+UV-aware near-plane clipping
+16 October 2026 — VERIFIED within the bounded scope below.
+Overall completion: 10% estimated weighted project milestones, not code coverage.
+Goal active. Continue Sol High with the two alternate-strip UV helpers.
+
+Recovered source
+  8c611a14..8c611f24: all 616 original instruction rows
+  source/sa_main_dispatch_uv_near_clip.c
+  source/sa_main_dispatch_uv_near_clip_connected.c
+The complete body is byte-checked and translated to annotated static C, retaining
+original instruction order, register effects and delay slots. No runtime opcode
+decoder is used. Names are descriptive inferences, not original developer names.
+Earlier source, proof reports and original game files are preserved.
+
+Behavior
+The helper takes three vertex-cache pointers in R4/R5/R6 and a six-word signed
+UV table in R7. Original callers stage UVs at 8c890304. It computes and caches
+each input lighting factor at vertex+1c before orientation rejection. It then
+reconstructs camera-space coordinates for projected vertices, uses raw camera
+positions for near-flagged vertices, and clips crossing edges at the near plane.
+Geometry and lighting factors are interpolated along those camera-space edges.
+
+UVs have a distinct quantization step. For each crossing edge, the code converts
+signed integer UV endpoints/differences to float, interpolates with FMAC, then
+uses FTRC to truncate back toward zero and stores a 16-bit word. It later reads
+that word as signed and scales by 1/256 for output. For example, interpolating
+0 toward 256 by about 1/7 produces integer 36 before scaling, rather than keeping
+the fractional 36.57 value. Negative values follow the same truncation rule.
+The quantized output UV table is at 8c890268; geometry/factors are at 8c890278.
+The input UV table remains unchanged in the verified ordinary paths.
+
+Three- or four-vertex packets contain control, projected x/y/reciprocal depth,
+scaled U/V, the lighting factor, and a retained eighth queue word. Four-vertex
+strip output uses polygon order 0,1,3,2, preserving the UV/factor association.
+Original output counters, cursor changes, input cache writes and orientation
+global effects remain intact. This helper contains no game-function calls.
+
+Build and tests actually passed
+- Strict Clang build: -O2 -Wall -Wextra -Werror; new separate linked DLL.
+- 614 original-code comparisons: 394 direct helper cases, 114 clipped parent
+  cases, two plain-parent alternate cases, four draws, four particle callbacks
+  and 96 connected meshes. All 616 rows and 14 conditional outcomes covered.
+  All four original near-helper call sites in 8c619310 execute natively.
+- Full 16 MiB RAM, GPRs/SR/PR, both FPU banks/FPSCR, FPUL/MACL and ordered
+  boundaries match original execution, including matched partial state.
+- 1,246 ordered boundary comparisons, 46,538 numerical operations, 1,642 queue
+  transfers and 16,074 ordered queue events checked. The new helper executes
+  596 times across this suite; this is separate from its 616 static rows.
+- 518 cases complete successfully. Another 76 match inherited unsupported
+  numeric/precision guards (-1), eight stop at the saved-pointer boundary (-3),
+  and 12 match enabled floating-point traps (status 1). Both banks, inherited
+  precision/width combinations and all four rounding-mode patterns exercised.
+- 372 independent cases check input lighting caches, camera-space clipping,
+  projected output, exact quantized UV scratch/packet words, retained queue
+  words, lighting interpolation and/or counters/cursors and orientation culling.
+  Inputs include signed UV extremes -32768/32767, mixed signs, zeros, differing
+  near planes/projection scales/offsets, degenerate triangles, and negative or
+  >1 lighting factors. UV quantization is checked independently for rounding
+  mode 0; other modes have original-code comparison, not an independent UV
+  quantization claim. Existing numerical-probe/shared-vector limits remain.
+
+Connected coverage and remaining substitutes
+All 96 constructed meshes execute real material setup, normal projection/
+classification, extended header acquisition, the UV clipped parent, the new
+native clipper and finalization. All six mixed-near masks, both windings/banks,
+primary/secondary cursors and both queue offsets are covered. Distinct normals
+make interpolated lighting observable. Every mesh is independently checked for
+its final geometry/UV/factor/counter/cursor result, including rejection.
+There are zero external game-service substitutes on these mesh paths.
+
+Four external service boundaries remain in the whole focused suite, from explicit
+alternate-parent tests. Two alternate UV helpers, 8c61394a and 8c614f70, remain
+fixtures alongside twelve other unfinished primitive emitters. No recovery credit
+is granted for those substitutes or for exported draft pseudocode.
+
+Saved-pointer guard and input limits
+Wide FMOV fixtures can overwrite a saved vertex-pointer slot in the original
+stack frame. At reached instruction 8c611b9a, native/reference paths stop with
+host status -3 before a flags load through a pointer outside modeled RAM. This
+preserves a clear unsupported-transfer boundary; it is not physical SH-4 fault
+or exception-handler emulation. All-near standalone inputs are outside the usual
+parent contract and receive original-code comparison evidence only; no valid
+polygon-output claim is made for them. Independent UV arithmetic uses bounded
+finite inputs whose binary32 interpolation product fits the binary64 calculation
+before a single binary32 rounding and integer truncation. It does not prove all
+possible floating-point inputs, flags, aliases or overlapping metadata layouts.
+
+Lifetime regression
+The new linked build passed 120 unchanged original-model particle lifetimes /
+984 stage comparisons, 23,264 boundaries, 104,016 numerical operations, 10,600
+queue transfers and 117,808 queue events, with zero external game services on
+those paths. Motion/timer, pause, deferred deletion, pool/heap and 46 matrix-
+translation checks remain verified. These original models do not call the UV
+family/helper; the harness explicitly asserts that. Their results are regression
+evidence; focused/constructed cases provide new-helper coverage. Host-selected
+scheduler ordering does not establish the complete original frame driver.
+
+How to inspect or repeat
+Read this guide, source and saved evidence:
+  analysis/main_dispatch_uv_near_clip_translation.json
+  analysis/main_dispatch_uv_near_clip_verification.json
+  analysis/main_dispatch_uv_near_clip_lifecycle_verification.json
+From this output directory with the installed project Python:
+  python recover_main_dispatch_uv_near_clip.py
+  .\build_main_dispatch_uv_near_clip.ps1
+  python verify_main_dispatch_uv_near_clip.py
+  python verify_main_dispatch_uv_near_clip_lifecycle.py
+  python register_main_dispatch_uv_near_clip.py
+  python map_main_dispatch_cases.py
+  python verify_main_dispatch_case_map.py
+  python audit_recovery_coverage.py
+  python audit_project_completion.py
+These focused steps are included in build_and_verify.ps1. The entire accumulated
+suite was not rerun. Rebuilding changes DLL timestamps/hashes, requiring fresh
+focused/lifetime reports before registration.
+
+Registry and next task
+1,062 entries / 1,059 unique module-address pairs; 1,010 match the unchanged
+10,875-candidate snapshots, and 211 non-texture modules still lack function
+indexes. These incomplete counts do not establish whole-game code coverage.
+Next: recover 8c61394a (315 rows) and 8c614f70 (524 rows), reusing native UV near
+clipping and existing empty stub 8c611708. Their 839 exported original rows are
+byte-checked analysis input, not recovered source:
+  analysis/main-dispatch-uv-lower/
+  analysis/main_dispatch_uv_lower_inventory.json
+Enclosing spans may contain literal pools and are not recovered-code byte counts.
+
+Physical GPU FIFO, pixels/texture sampling, MMU-on/TLB, cache timing/faults,
+full frame driver, full game-code recovery/gameplay and playable ports remain
+unfinished. HD/display settings remain planned; Texture Off will disable sampling
+and use vertex colours/material fallback. Keep Sol High for alternate-strip
+floating-point recovery; no model downgrade or goal pause is recommended.
+
+Final integrity: zero registry evidence errors and zero stale source reports.
+Canonical source/translation regeneration reproduced saved hashes; registration
+reran with zero additions. Dispatcher verification passed 658 original pointer-
+load checks across 80 spans and 83 selectors. New-build and aggregate PowerShell
+scripts parsed; all four new Python scripts parsed. All current proof hashes
+and the remaining UV-helper input inventory passed. Whole-project milestone
+completion remains 10%; the full goal is active and unfinished.

@@ -1,0 +1,68 @@
+{
+  "cases_passed": 6,
+  "routine_start": "0x8c011828",
+  "routine_end_exclusive": "0x8c01184a",
+  "instruction_bytes": 34,
+  "retail_span_sha256": "28daade05249f1c60d4f6944546db0171136a6e0098ed99f060a84d46fc7869a",
+  "source_sha256": "0b967a94ee1dba77b7be5a77d68c6a4fe5294fac15163596e77dc2af9e4d63c3",
+  "dll_sha256": "065052d88c4a42877aa198d68e1fc6abded5575178bfdbba46a7b6a8fc5600c1",
+  "callback_targets": [
+    "0x8c602f5c",
+    "0x8c010fcc"
+  ],
+  "cases": [
+    {
+      "case": 0,
+      "service_result": 0,
+      "helper_result": 0,
+      "callback_count": 2,
+      "retail_instructions_executed": 17,
+      "full_state_and_memory_match": true
+    },
+    {
+      "case": 1,
+      "service_result": 1,
+      "helper_result": 0,
+      "callback_count": 2,
+      "retail_instructions_executed": 17,
+      "full_state_and_memory_match": true
+    },
+    {
+      "case": 2,
+      "service_result": -1,
+      "helper_result": 0,
+      "callback_count": 2,
+      "retail_instructions_executed": 17,
+      "full_state_and_memory_match": true
+    },
+    {
+      "case": 3,
+      "service_result": 0,
+      "helper_result": 1,
+      "callback_count": 2,
+      "retail_instructions_executed": 17,
+      "full_state_and_memory_match": true
+    },
+    {
+      "case": 4,
+      "service_result": 7,
+      "helper_result": -3,
+      "callback_count": 2,
+      "retail_instructions_executed": 17,
+      "full_state_and_memory_match": true
+    },
+    {
+      "case": 5,
+      "service_result": -9,
+      "helper_result": 2147483647,
+      "callback_count": 2,
+      "retail_instructions_executed": 17,
+      "full_state_and_memory_match": true
+    }
+  ],
+  "scope": "Complete 34-byte indexed body; full 16 MiB RAM, GPR/SR/PR/PC, two call boundaries, callback clobbers, local stack buffer and context restoration compared.",
+  "limitations": [
+    "The service at 0x8c602f5c and recovered helper at 0x8c010fcc are deterministic callbacks in this wrapper comparison; helper internals are covered by their separate recovery report.",
+    "The partial SH-4 interpreter validates selected retail states, not hardware or end-to-end game behavior."
+  ]
+}

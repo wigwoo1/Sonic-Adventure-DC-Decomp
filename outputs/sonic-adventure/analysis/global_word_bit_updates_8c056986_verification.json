@@ -1,0 +1,34 @@
+{
+  "functions_verified": 2,
+  "total_full_state_cases": 256,
+  "comparison_level": "For each routine, complete 16 MiB RAM and all GPRs, SR, PR, and return PC compared against the retail SH-4 interpreter.",
+  "scope": "The ten-byte OR-mask routine and twelve-byte NOT/AND clear-mask routine update the longword reached through literal 0x8c0569bc, storing in the RTS delay slot. Each is tested in 128 cases with edge masks, the retail pointer, literal self-alias, randomized mapped RAM, and the final aligned longword in RAM.",
+  "limitations": [
+    "Uses the project SH-4 interpreter rather than Dreamcast hardware or end-to-end gameplay.",
+    "The global word\u2019s higher-level ownership and game meaning remain unidentified."
+  ],
+  "binary_sha256": "45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a",
+  "literal_address": "0x8c0569bc",
+  "retail_pointer_value": "0x8c88f62c",
+  "source_sha256": "81ecd7f52d8311ff2bcb893ee7661eb5cec4f3825a536869763275b7636cd463",
+  "routines": [
+    {
+      "module": "1ST_READ.BIN",
+      "load_address": "0x8c010000",
+      "address": "0x8c056986",
+      "end_exclusive": "0x8c056990",
+      "retail_span_sha256": "ec22e0960166da29a713ada168d52005f10356c8eb0f4f7a56fe69a1cc0be4ca",
+      "name": "sa_global_word_set_mask_8c056986",
+      "cases_passed": 128
+    },
+    {
+      "module": "1ST_READ.BIN",
+      "load_address": "0x8c010000",
+      "address": "0x8c056990",
+      "end_exclusive": "0x8c05699c",
+      "retail_span_sha256": "9387b26258117200222d9aeef2e412734bbd1a355048d6a428bb44e01604f042",
+      "name": "sa_global_word_clear_mask_8c056990",
+      "cases_passed": 128
+    }
+  ]
+}

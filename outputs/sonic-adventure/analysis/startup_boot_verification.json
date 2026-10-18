@@ -1,0 +1,105 @@
+{
+  "cases_passed": 7,
+  "routine_start": "0x8c010180",
+  "routine_end_exclusive": "0x8c01025a",
+  "retail_binary_sha256": "45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a",
+  "retail_span_sha256": "b1b30922f6512361b7a8eaefe1817136f0058cec059019728fa51fe0c4852a72",
+  "source": "source/startup_boot.c",
+  "source_sha256": "59b92185589f2680db7447f1ab0a58d857cf0695554f5fec969f631a79320b42",
+  "dll_sha256": "210ead99ecacaebba563aa991d2169f5c8b493ce6b8ccf973e5e254c30fffa50",
+  "scenarios": [
+    {
+      "scenario": "immediate_success",
+      "transfer_statuses": [
+        "0x0"
+      ],
+      "retail_instructions_executed": 96,
+      "service_calls": 9,
+      "ram_cpu_and_calls_match": true
+    },
+    {
+      "scenario": "retry_success",
+      "transfer_statuses": [
+        "0x3",
+        "0x0"
+      ],
+      "retail_instructions_executed": 112,
+      "service_calls": 10,
+      "ram_cpu_and_calls_match": true
+    },
+    {
+      "scenario": "not_ready_then_success",
+      "transfer_statuses": [
+        "0xffffffe9",
+        "0x0"
+      ],
+      "retail_instructions_executed": 142,
+      "service_calls": 17,
+      "ram_cpu_and_calls_match": true
+    },
+    {
+      "scenario": "device_error_then_success",
+      "transfer_statuses": [
+        "0xffffffdf",
+        "0x0"
+      ],
+      "retail_instructions_executed": 145,
+      "service_calls": 17,
+      "ram_cpu_and_calls_match": true
+    },
+    {
+      "scenario": "exhausted_retries",
+      "transfer_statuses": [
+        "0x7",
+        "0x7",
+        "0x7",
+        "0x7",
+        "0x7",
+        "0x7",
+        "0x7",
+        "0x7"
+      ],
+      "retail_instructions_executed": 244,
+      "service_calls": 23,
+      "ram_cpu_and_calls_match": true
+    },
+    {
+      "scenario": "repeated_not_ready",
+      "transfer_statuses": [
+        "0xffffffe9",
+        "0xffffffe9",
+        "0xffffffe9",
+        "0xffffffe9",
+        "0xffffffe9",
+        "0xffffffe9",
+        "0xffffffe9",
+        "0xffffffe9"
+      ],
+      "retail_instructions_executed": 484,
+      "service_calls": 79,
+      "ram_cpu_and_calls_match": true
+    },
+    {
+      "scenario": "success_on_final_attempt",
+      "transfer_statuses": [
+        "0x1",
+        "0x1",
+        "0x1",
+        "0x1",
+        "0x1",
+        "0x1",
+        "0x1",
+        "0x0"
+      ],
+      "retail_instructions_executed": 208,
+      "service_calls": 16,
+      "ram_cpu_and_calls_match": true
+    }
+  ],
+  "scope": "Full 16 MiB RAM, GPR/SR/PR/PC, stack frame, subsystem call arguments, retry outcomes and service ordering compared with retail across seven success/retry/error scenarios.",
+  "limitations": [
+    "External firmware and subsystem service bodies are represented by deterministic host callbacks.",
+    "The local exception routine 0x8c01025a is executed from recovered C and separately compared with retail.",
+    "No Dreamcast hardware execution claim."
+  ]
+}

@@ -1,0 +1,139 @@
+Sonic Adventure Dreamcast Rev A - original motion sampling and formats
+
+Whole-project estimate: 10%, a weighted milestone estimate, not code coverage.
+The goal remains active on Sol High. The full renderer, gameplay and all playable
+ports remain unfinished.
+
+Twenty-five first registrations add 1,150 original instruction rows and all 38
+conditional outcomes. Eight helpers are newly translated (401 rows / 24 outcomes):
+8c03feb8 / 8c040a60 - primary and channel-selected unsigned key searches.
+8c03ff2c / 8c03ff90 - primary vector and signed-angle linear interpolation.
+8c040c5c / 8c040d60 - channel-selected vector/angle interpolation.
+8c60b596 / 8c60b4a8 - paired-motion buffer/track callback dispatch.
+
+Seventeen previously compiled proposals now have complete instruction, outcome
+and reached native-dependency evidence (749 rows / 14 outcomes):
+8c0400a0 / 0400f8 / 040150 / 0401a8 - primary position/scale/rotation samplers.
+8c040df0 / 040e74 / 040ef8 - channel position/scale/rotation buffer samplers.
+8c0405b2 / 0405d2 / 040612 / 0406a0 / 0406e0 - primary format callbacks 0-4.
+8c041516 / 04154e / 041600 / 041666 / 0416cc - secondary format callbacks 0-4.
+Their existing source remains unchanged. This is new registration credit for
+formerly partial bodies, not duplicate credit for already registered routines.
+
+Nine bodies / 673 instructions are translated in the new file. The ninth,
+8c60b81c, remains a partial 272-row proposal with only 66 rows exercised in direct
+tests. Its three immediate-XOR sites are translated but not reached in this
+corpus, and no complete-body credit is awarded. Across the preceding 43 and new
+nine motion proposals, fifteen bodies remain partial and unregistered. The
+AL_MAIN draw parent also remains unregistered.
+
+Sources and reproducible workflows (relative to this project directory):
+source/sa_draw_motion_sampling.c - nine new bodies, eight complete registrations.
+source/sa_draw_motion_variants.c - preserved source containing the seventeen
+  now completed bodies and earlier motion helpers/proposals.
+source/sa_draw_motion_sampling_connected.c - native dispatch bridge.
+recover_draw_motion_sampling.py / connect_draw_motion_sampling.py
+build_draw_motion_sampling.ps1
+verify_draw_motion_sampling.py
+verify_draw_motion_sampling_extended.py
+verify_overlay_draw_motion_sampling.py
+register_draw_motion_sampling.py
+analysis/draw_motion_sampling_translation.json
+analysis/draw_motion_sampling_connection.json
+analysis/draw_motion_sampling_verification.json
+analysis/draw_motion_sampling_extended_verification.json
+analysis/draw_motion_sampling_reused_verification.json
+analysis/overlay_draw_motion_sampling_verification.json
+
+The focused optimized 111-source build passes with warnings treated as errors
+and no standard-library dependency. It retains the documented research-only
+original hierarchy-stall bound. The separate verified DLL is located under the
+workspace root at work/sonic-adventure/build/draw_motion_sampling.dll. Previous
+source, native DLLs, input hashes and verification reports are preserved. Both
+new C files also pass default (non-research-define) syntax checks.
+
+Direct verification: all 1,916 baseline plus 524 supplemental comparisons pass.
+Combined: 2,440 comparisons, 7,278 matched ordered entries, 1,578 independently
+checked cases / 4,707 assertions. Baseline statuses: 1,591 returns, 126 missing
+services, 148 numeric-mode guards, 27 memory/return guards and 24 FP traps. The
+supplemental set has 506 returns and 18 memory/return guards, with zero reached
+missing services. A matched missing-service prefix does not complete its caller.
+
+All 401 rows / 24 outcomes in the eight new complete bodies and all 749 rows /
+14 outcomes in the seventeen completed old bodies execute. New-source coverage
+is 467/673 rows because it includes the partial blend prefix. The baseline's
+131 covered conditional outcomes span new and prior proposals; that count is
+not presented as a completed-family outcome count.
+
+Independent checks cover unsigned key interval selection (including duplicate
+labels, one-key tracks and negative-frame conversion), approximate vector and
+signed-angle curves, sampled channel buffers, exact default pose copies,
+consumed-track counters, interleaved format record advancement and unchanged
+other-channel records. Tests cover valid format/type combinations, both register
+banks/channels, RAM aliases and invalid source/output/stack cases. Sorted,
+nonempty bounded key arrays are supplied. A zero key count can make the original
+search stall; that input is not claimed as supported. Original loop semantics
+are retained rather than inventing an early result.
+
+The original interpolation squares FSRRA (reciprocal square root) to normalize
+positive key spans. The native implementation uses the existing qualified vector
+numeric backend; its original-instruction reference uses the documented numerical
+model. Analytic vector checks allow 2e-5 absolute error and angle checks one
+integer unit. These are not claims of arbitrary Dreamcast hardware bit equality.
+Existing scalar/vector/sqrt, enabled-exception, MMU-off valid-RAM and legacy mode
+limits remain. No interpolation result or game-service return is injected.
+
+Supplemental test wiring: an explicit function/globals binding and identity
+assertion ensure the additional independent oracle is invoked. An initial
+dynamic source-inspection wiring issue was corrected before registration; only
+the corrected 524-case report (492 independent cases / 1,056 assertions) is used.
+
+Connected verification freshly passes 146 selected original-corpus cases:
+all 48 cases affected by the new helpers plus 98 regressions, including all 64
+direct-service inputs, twelve label event profiles and type/bank/guard groups.
+The preserved previous 420-case report supplies the exact original input corpus.
+The new bridge, after removing its nine added declarations/routes and restoring
+the public entry name, is text-identical to the previous bridge. The prior source
+and proof hashes remain pinned. The earlier 420 tests are not counted as 420
+fresh tests of this DLL; --all supports an optional full rerun.
+
+The 146 fresh cases compare 15,834 ordered entries, 140 independent state/stack/
+spring cases and 60 distance prefixes; 342 new sampling rows are reached. Their
+statuses: 92 returns, 48 explicit missing services, two numeric guards, two
+memory/return guards and two FP traps. The former first stops 8c03feb8, 8c60b596
+and 8c040a60 disappear. Next first services: 8c03718c (32 cases) and 8c60a3f8 (16).
+The selected corpus exercises 417/911 parent rows, not the full prior corpus's
+489/911; this is a scope difference, not evidence of lost behavior. Parent stays
+unregistered. Original model/motion records and texture names are retained.
+
+Selected-caller queue totals: 12,552 flushes / 137,664 counted events. The first
+4,096 events per invocation are compared individually (49,152 stored-prefix
+events overall); 88,512 later events are count-only. Final queue/QACR/counters and
+full reached/final RAM match. Runtime view/renderer/texture metadata remain
+supplied inputs. Natural resource loading, physical GPU pixels, complete frames,
+gameplay and the playable ports remain unproved.
+
+Registry: 1,213 entries / 1,210 unique module/address pairs, with 1,113 matches in
+10,875 frozen indexed candidates. Another 211 nontexture binaries lack an index.
+Candidate snapshots do not establish the total game routine count or completion
+percentage. Audit: zero evidence errors and zero stale whole-source reports.
+Eighty-five existing entries receive integration evidence with zero duplicate
+recovery credit. All five generated artifacts reproduce byte-for-byte. Repeated
+registration preserves registry, project-status and reused-source-proof bytes.
+The dispatcher map still passes all 658 pointer-load checks over 80 spans and
+83 selectors. The historical aggregate workflow is extended, not rerun.
+
+Next: analysis/draw-sampling-frontier/ and its inventory preserve six read-only
+proposals / 547 byte-checked rows: 8c03718c, 8c60a3f8, 8c040498, 8c041378,
+8c64f31c and 8c60b3e2. All direct branch destinations are present; twelve annotated
+unregistered targets remain outside that proposal. Temporary discovery was
+discarded; frozen indexes stay unchanged. These drafts have zero native credit.
+GBR-relative renderer state in 8c03718c must be recovered from real initialization
+or explicit caller state, not replaced with a guessed fixed RAM address.
+
+How to check: open this guide, the source files and the saved JSON reports listed
+above. The DLL is a research harness, not a game executable. Continue Sol High
+for the next renderer/GBR dependency. Luna Low is suitable for documentation-only
+work; no model switch or goal pause is recommended for reverse engineering.
+The HD texture/display plan remains pending, including true vertex/material
+colours when Texture Off disables sampling; high-FPS/8K and all ports remain goals.

@@ -1,0 +1,125 @@
+Recovered audio source-buffer ABI
+=================================
+
+This describes verified Dreamcast RAM structures and native recovered routines.
+It is not a completed host audio API. Addresses refer to USA Rev A 1ST_READ.BIN.
+
+Source pool: 0x8c8a65b8, 64 objects, 48 bytes per object, total 3072 bytes.
+The guarded initializer is 0x8c65e39c. If the signed counter at 0x8c67c264
+is positive it does nothing; otherwise it increments the counter modulo 32
+bits and clears the pool. Negative counter behavior is preserved by recovery.
+Counter decrement 0x8c65e3b8 subtracts one modulo 32 bits and sets SR.T if
+the signed result is positive. It does not clear or release source objects.
+Connected verification confirms that decrementing 1 to 0 preserves live
+objects, but the next initializer clears all of them and restores counter1.
+Old object pointers cease to represent allocated objects after that clear.
+Real game call-site synchronization and object lifetime rules are unverified.
+
+Object layout (little-endian 32-bit words)
+  +00  method table, installed as 0x8c67c234
+  +04  allocation flag; constructor finds first slot whose word is zero
+  +08  identity pointer, installed as 0x8c672434
+  +0c  published bytes available to the consumer
+  +10  free bytes available to the producer
+  +14  producer reservation cursor
+  +18  consumer reservation cursor
+  +1c  buffer pointer
+  +20  ring length in bytes
+  +24  mirror length in bytes
+  +28  error callback; constructor installs 0x8c65e398
+  +2c  callback user data; constructor installs the source-object pointer
+
+Constructor 0x8c65e3c6 takes R4 buffer, R5 ring length, R6 mirror length.
+It returns the selected object in R0, or zero when all 64 slots are occupied.
+Reset 0x8c65e454 sets published bytes and both cursors to zero and free bytes
+to the ring length. It preserves bindings and other object fields.
+Destroy 0x8c65e42c clears all 48 bytes; a null pointer is a no-op.
+Identity getter 0x8c65e44a returns the word at +8.
+Error callback setter 0x8c65e44e stores R5 at +28 and R6 at +2c.
+
+Reservation descriptor: two 32-bit words, buffer pointer and byte count.
+Query 0x8c65e4b8 takes R4 source, R5 mode, R6 requested count, R7 descriptor.
+Mode 0 reserves producer/free space using +10/+14.
+Mode 1 reserves consumer/published space using +0c/+18.
+Queries clamp against available bytes and the contiguous ring-plus-mirror
+window. Reservation changes counters/cursors before a commit or return.
+
+Commit 0x8c65e58a takes R4 source, R5 mode, R6 descriptor.
+Mode 1 publishes produced bytes into +0c and maintains the ring mirror.
+Mode 0 releases consumed bytes into +10.
+Thus the normal producer sequence is query mode 0, fill descriptor bytes,
+commit mode 1. The consumer sequence is query mode 1, consume descriptor
+bytes, commit mode 0. Query and commit mode numbers differ intentionally.
+
+Return 0x8c65e644 rolls back unused reservations for the query's mode and
+validates the descriptor position against the corresponding cursor.
+Contiguous check 0x8c65e712 reports a clamped count through R7 and returns
+whether the request was satisfied exactly in R0; it does not reserve bytes.
+The clamp uses signed 32-bit comparisons, including unusual input patterns.
+
+Invalid-mode tests use a controlled native callback, not the installed
+default error handler. Default-handler execution and real game call-site
+argument constraints are not verified by these tests.
+
+Evidence and limits
+  analysis/sound_source_create_verification.json
+  analysis/sound_source_reset_verification.json
+  analysis/sound_source_pool_initialize_verification.json
+  analysis/sound_source_pool_counter_decrement_verification.json
+  analysis/sound_source_destroy_verification.json
+  analysis/sound_source_pool_connected_verification.json
+  analysis/sound_source_pool_reinitialize_verification.json
+  analysis/sound_source_contiguous_check_verification.json
+  analysis/sound_source_identity_get_verification.json
+  analysis/sound_source_error_callback_set_verification.json
+  analysis/source_error_callback_connected_verification.json
+  analysis/native_sources_audio_decode_verification.json
+  analysis/native_audio_consume_decode_verification.json
+  analysis/native_audio_refill_verification.json
+  analysis/native_audio_refilled_decode_verification.json
+  analysis/native_audio_full_file_verification.json
+
+The connected audio fixtures use an 8192-byte encoded ring and 1024-byte
+sample rings with 64512-byte mirrors to provide a controlled channel stride.
+These are verification choices, not a claim about all retail buffer layouts.
+Native input copying and publication, output consumption, mirror maintenance,
+and 16 decode updates per asset/bank are verified by the listed reports.
+The refill-boundary test covers 109 assets in both FPU banks, 3488 updates,
+and 4096 exact PCM samples per channel per sequence. It decodes through the
+original input-prefix boundary into natively published refilled bytes.
+Complete FISHMISS.ADX streaming is verified in both FPU banks: 628 public
+decode updates per bank and all 156653 declared samples per channel, with
+independent PCM/history/ring/mirror checks, repeated producer refill,
+consumer release, final trimming and work-state termination. This fixture
+uses an 8192-byte input ring with a 64-byte mirror. Its controlled caller
+normally requests 256 samples (clamped to contiguous output space), then
+512 for the final tail when it fits an empty sample ring. Native completion
+trims the padded final block. Exact non-block-aligned tail requests were
+observed to round down; earlier failed diagnostic data are retained and do
+not count as passing evidence. Recovered game routines were not altered.
+
+Other complete files, physical audio playback, and the complete game remain
+unverified. See each report for its actual asset counts and comparison scope.
+
+Linear input source (method table 8c67c1fc) uses 32 slots of 36 bytes at
+8c8a6138. Constructor 8c65e0ea binds buffer+14 and length+18; reset sets
+remaining+c to length and offset+10 to zero. Mode1 query reserves the signed
+minimum of request and remaining, returns buffer+offset, advances offset,
+and decreases remaining. Valid commit modes0/1 leave state unchanged.
+Mode1 return rolls back offset with signed-positive clamp to zero and adds
+returned count to remaining with signed upper clamp to length. A returned
+descriptor pointer must equal buffer plus the resulting offset; mismatch
+invokes the optional error callback after these state changes. Mode0 return
+also invokes the optional error callback. These rules are retail behavior,
+not validation added by the port. Default error callback is not exercised.
+
+verify_linear_input_audio_full_file.py verifies complete FISHMISS.ADX from
+one natively constructed linear input object, with native ring output
+objects and native work/stream/handle construction. Both FPU banks pass:
+611 decode updates per bank, all 156653 samples per channel checked against
+the exact binary32 oracle, predictor histories, output ring/mirror guards,
+input bytes preserved, and final work state3. The controlled caller uses
+256-sample requests bounded by contiguous output space and a final512
+request at an empty output ring; native completion trims final padding.
+This is complete-file decoding evidence for one asset, without physical
+audio playback or recovered game caller scheduling. Overall project10%.

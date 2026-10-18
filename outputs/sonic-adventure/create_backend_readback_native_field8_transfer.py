@@ -1,0 +1,17 @@
+from pathlib import Path
+p=Path(__file__).resolve().parent
+s=(p/'verify_backend_readback_native_field_transfer.py').read_text()
+s=s.replace('cases=0', "field8_get=ctypes.CDLL(str(ROOT/'work/sonic-adventure/build/sound_backend_field8_get.dll')).sa_sound_backend_field8_get;field8_get.argtypes=abi\ncases=0")
+s=s.replace('mmio={device:payload,(device+8)&0xffffffff:field_payload}', "field8_payload=int.from_bytes(bytes((value+8+i)&255 for i in range(4)),'little');mmio={device:payload,(device+8)&0xffffffff:field_payload,(device+4)&0xffffffff:field8_payload}")
+s=s.replace('  service(a,m,r);return 0', '  if a==0x8c66bcb4:return field8_get(m,f,sr,r,pr,ctypes.byref(fpul),ctypes.byref(macl),None,call)\n  service(a,m,r);return 0')
+s=s.replace('0x8c66bb4c,0x8c66bc24]', '0x8c66bb4c,0x8c66bc24,0x8c66bcb4]')
+s=s.replace('for i in [1,2]]', 'for i in [1,2]]')
+s=s.replace('signed_selector*32+8)&0xffffffff]', 'signed_selector*32+i)&0xffffffff for i in [8,4]]')
+s=s.replace('  else:output[4+o]=(value+i)&255', '  elif a==0x8c66bcb4:output[4+o:6+o]=bytes([(value+8)&255,(value+9)&255])\n  else:output[4+o]=(value+i)&255')
+s=s.replace('assert reads==[device]*3+[(device+8)&0xffffffff]', 'assert reads==[device]*3+[(device+8)&0xffffffff,(device+4)&0xffffffff]')
+s=s.replace('Polling/control services and six other field readers modeled', 'Native packet field8 reader66bcb4 connected through667150 and transfer;independent device address+4,two packet bytes+8/+9,ordered five MMIO reads and neighbor preservation. Polling/control services and five other field readers modeled')
+s=s.replace('Actual field widths/values and native field readers/hardware/game integration unverified.', 'Remaining field widths/values, remaining native readers and physical hardware/game integration unverified.')
+s=s.replace('backend_readback_native_field_transfer_verification.json', 'backend_readback_native_field8_transfer_verification.json')
+(p/'verify_backend_readback_native_field8_transfer.py').write_text(s)
+reg=(p/'register_backend_readback_native_field_transfer.py').read_text().replace('native_field_transfer', 'native_field8_transfer').replace("'sa_sound_field_word_read'}", "'sa_sound_field_word_read','sa_sound_backend_field8_get'}").replace("marker=stem+' native diagnostics:'", "marker=stem+' native field8 transfer:'")
+(p/'register_backend_readback_native_field8_transfer.py').write_text(reg)

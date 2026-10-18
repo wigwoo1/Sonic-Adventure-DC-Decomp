@@ -1,0 +1,106 @@
+Sonic Adventure Dreamcast Rev A - original view setup dependencies
+
+Overall estimate: 10%, weighted whole-project milestones, not code coverage.
+Goal remains active on Sol High. No model switch or goal pause recommended.
+Status: VERIFIED for the four qualified dependencies; view builder PARTIAL.
+
+Historical milestone note: DRAW_VIEW_COMPLETE.txt documents the later complete
+166-row/six-outcome view-builder proof. The prefix counts below retain their
+earlier scope and zero parent credit; they do not override the later registration.
+
+Four newly registered original bodies
+8c64f548 - default floating/control state and cleared word block, 48 rows
+8c605006 - initialize a render record, tail-call original state builder, 68 rows
+8c652f66 - two packed colours and three raw state words, 74 rows
+8c604fd0 - select 192-byte record/slot, call original texture header, 27 rows
+Names/roles are inferred from the original instructions and tested callers.
+Total 217 rows / two conditional outcomes: every exported row/outcome matches.
+
+Source and workflow in this project directory
+source/sa_draw_view_setup.c - four complete guarded static C bodies
+source/sa_draw_view_setup_connected.c - explicit bank/MACH production connection
+ghidra/export_draw_view_dependencies.ps1 - read-only original instruction export
+recover_draw_view_setup.py / connect_draw_view_setup.py
+build_draw_view_setup.ps1
+verify_draw_view_setup.py / verify_draw_view_prefix.py
+register_draw_view_setup.py
+analysis/draw_view_setup_translation.json
+analysis/draw_view_setup_connection.json
+analysis/draw_view_setup_verification.json
+analysis/draw_view_prefix_verification.json
+analysis/draw-view-dependencies/*_instructions.tsv - byte-checked original rows
+The Ghidra *_draft.c files are research pseudocode, separate from verified C.
+The five generated source/manifest/connection/build artifacts reproduce exactly
+in memory. Python and PowerShell syntax checks pass. The aggregate workflow is
+extended but the whole historical suite was not rerun. Registration is byte-
+idempotent, with three existing entries linked at zero duplicate credit.
+Registry audit: 1,249 entries / 1,246 unique module/address pairs, 1,141 matches
+in 10,875 frozen candidates; zero evidence errors or stale source reports.
+All 658 dispatcher pointer checks pass. The whole-game routine count remains
+unknown because 211 nontexture binaries lack function indexes.
+
+Build and focused verification
+A separate optimized strict 123-source native DLL builds with warnings as errors.
+Earlier DLLs, source/APIs and proofs remain preserved. Tested DLL SHA-256:
+b3a9a898c760ac99cdbe8da536b9abe99de4b1235107a03bf25efc96a3b2a8be.
+182 comparisons pass: 167 normal returns, twelve numerical-mode guards and
+three typed host-memory stops. All machine/RAM/banks/MACH/MACL/FPU/FPUL/GBR,
+ordered boundaries and queue/cache state match the original-opcode model.
+There are 255 ordered entry checks and zero queue events/flushes in this suite.
+The independent original model stores physical integer banks canonically; native
+code carries its visible/inactive banks through the same real call chain.
+
+146 cases add 158 independent assertions. Checks cover the reset's entire RAM
+footprint, all first 36 default record words, exact staged binary32 multiply and
+signed FTRC conversion, packed-channel shifts/ORs without invented byte clamps,
+raw trailing words, sequential input/output overlap, 192-byte slot arithmetic,
+preserved stack/PR and the complete selected-header composed RAM footprint.
+Record initialization checks its first 36 words and stack/PR independently;
+the full original-machine comparison checks all remaining native child effects.
+Cases vary both floating banks, three colour profiles, 32 deterministic signed/
+large-value packing samples, overlapping colour buffers, texture header layouts,
+three record slots, mirrored pointers, PR/SZ mode guards and invalid pointers.
+The packer is a leaf and does not access its stack: the deliberately bad-stack
+fixture returns normally there; the other reached invalid accesses stop.
+
+Actual view-builder integration
+Eight original/native prefixes execute 8c604ba0 with supplied screen dimensions
+(1x1, 640x480, 1920x1080, 7680x4320), each in both floating banks. Full reached
+state/RAM and 160 ordered boundaries match. This reaches 117/166 view-builder
+rows; 49 remain unexecuted. The caller reaches 190 new dependency rows through
+real native default/reset/packing bodies, 56 record-initializer calls and 64
+existing render-state calls across the suite. The slot selector is separately
+proved through the actual native texture-header body in the focused suite.
+
+An existing original function at 8c63eeb0 initially exposed another unconnected
+entry. Its bytes are exactly RTS/NOP, checked against the executable. The new
+connection invokes its existing native implementation and preserves its state;
+this is a real original empty function, not a replacement for missing behavior.
+It and the two existing state/header bodies receive zero new recovery credit.
+
+All eight view prefixes stop explicitly at 8c652d3a, the existing FR4 sign-mask
+dispatcher wrapper. It calls the existing register writer at 8c653444. Connecting
+their actual register effects is the next task; no successful result is invented.
+The full view builder stays unregistered with zero recovery credit. Testing its
+dimension fields through 8K does not prove working 8K output or a playable port.
+
+Verification limits
+Direct input records, saved camera/screen state and valid texture/header metadata
+are prepared fixtures. GBR preparation for the prefix uses the existing checked
+original/native initializer. This is not natural startup/loading/scheduling.
+Normal CPU entry is privileged bank 1 with FPU enabled. Existing qualified
+numerical and MMU-off coherent-RAM/software-queue domains apply. Guard stops are
+not full exception-vector delivery, interrupt or timing proofs. Physical GPU
+register execution/pixels and complete rendering/gameplay remain unproved.
+The later 156-case AL_MAIN object regression is now complete on its preserved
+122-source DLL and reaches textured/environment clipping. Read OBJECT_DRAW_CLIPPING.txt.
+It is not included in these separate 182+8 view-dependency comparisons.
+Full PC FPS/8K/settings, SUPIR HD textures, texture Off with vertex/material colour,
+Android/stereo-3DS and later N64/PS1 demakes remain unfinished goal requirements.
+
+How to check without programming
+Open this guide and SOURCE_HANDOFF.txt. The focused JSON has cases_passed=182,
+rows_covered=217, conditional_edges_covered=2 and empty missing lists for all four
+bodies. The prefix report has eight explicit stops at 0x8c652d3a, not successful
+view-builder returns. The source files above contain the recovered C. This work
+does not yet provide a playable game executable.

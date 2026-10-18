@@ -1,0 +1,148 @@
+Native motion mesh preprocessing and connected primitive output
+17 October 2026 - new helper bodies VERIFIED; game/port remains PARTIAL.
+Overall completion: 10% estimated weighted whole-project milestones, not code coverage.
+Goal active on Sol High. No model switch or pause advised.
+
+What changed
+Two original main-executable bodies now have guarded native C:
+  8c617c34..8c617e46: motion mesh matrix/light preprocessing, 259 rows.
+  8c621574..8c62159a: render-state/motion mesh wrapper, 19 rows.
+All 278 instruction rows / 556 instruction bytes are checked against 1ST_READ.
+The larger span includes a literal pool skipped by the original branch; span
+bytes are not a recovered-code size metric. Names describe inferred behavior.
+
+The wrapper saves renderer state and R8, calls the distinct preprocessing body,
+and restores R8/state. Preprocessing multiplies supplied 3x3 matrix blocks,
+keeps the original separately rounded multiply/two fused multiply-add order,
+derives lighting direction, copies two projection fields, and calls existing
+mesh wrapper 8c6215ba. That path then reaches the existing native filter,
+material and primitive families. It does not bypass preprocessing by calling
+the static mesh renderer directly.
+
+Source and reproducible workflow
+Source: source/sa_draw_motion_mesh.c
+Top bridge: source/sa_draw_motion_mesh_connected.c
+Lower bridge: source/sa_draw_motion_mesh_lower_connected.c
+Generator: recover_draw_motion_mesh.py
+Connection generator: connect_draw_motion_mesh.py
+Build: build_draw_motion_mesh.ps1
+Focused verifier: verify_draw_motion_mesh.py
+Original-model verifier: verify_overlay_draw_motion_mesh.py
+Registration: register_draw_motion_mesh.py
+Reports: analysis/draw_motion_mesh_translation.json
+         analysis/draw_motion_mesh_connection.json
+         analysis/draw_motion_mesh_verification.json
+         analysis/overlay_draw_motion_mesh_verification.json
+
+Native pipeline integration and stop reporting
+A separate 102-source build joins motion setup/interpolation, the new mesh
+bodies and the complete existing bounded material/primitive pipeline. Its
+nine-argument entry takes a caller-owned vertex bus. Queue state can survive
+across calls; no large automatic queue allocation or C runtime is required.
+There is no external game-service substitute in this connection.
+
+61 private copies of existing raw C sources publish reached instruction sites
+through a common internal context prefix. This retains exact error PCs in
+the tested numerical/memory cases, including arithmetic folded into a branch
+delay slot. The first diagnosed error was the original FTRV delay instruction
+at 8c61123e, whose old outer ABI exposed only the vertex-worker entry address.
+The publication pointer is host metadata; no guest instruction/result changes.
+All old sources, DLLs and proofs are preserved, with zero duplicate recovery
+credit for the reused pipeline and these reporting copies. Other legacy ABI,
+return-guard and hardware fault limitations remain; no universal exception-PC
+guarantee is claimed beyond the comparisons actually run.
+The separate audit_draw_motion_reuse.py check strips only the reporting
+include/calls and exactly recovers all 61 original files, covering 31,769
+emitted sites. It grants zero new guest-code credit.
+
+Focused build and verification actually run
+The 102-source DLL passes Clang -O2 -Wall -Wextra -Werror without a C runtime.
+130 comparisons against original instructions pass: 94 complete returns,
+12 RAM guard stops, 16 unsupported modes and eight numerical traps. All 278
+new rows execute; the new bodies have no conditional branch outcomes.
+All 2,145 ordered entries match, along with full 16-MiB RAM, all integer
+registers, SR/PR/PC, both FPU banks/FPSCR, FPUL/MACL and reached stop state.
+
+There are 98 independent exact-dyadic matrix/light/projection handoff checks.
+Both banks, identity/nontrivial matrices, all nine material families, four
+primitive topologies, primary/secondary acquisition and numerical/invalid-span
+inputs are exercised. Native and independent Python queues match all 7,020
+events and 604 flushes, including retained queue state and register words.
+This proves bounded packet preparation, not physical GPU pixels.
+
+Original initialized-model integration
+All 408 original-model/service-routing comparisons pass: 344 caller cases and
+64 direct service cases. There are 114 complete returns (50 rejected draws
+and 64 direct services), 274 missing-service stops, eight unsupported modes,
+eight RAM guards and four numerical traps. These use the valid runtime profile
+described below, rather than the older arbitrary state-only render masks.
+No full accepted-model draw callback completion or gameplay is claimed.
+
+All 111,684 ordered entries and full reached machine/RAM state match. There
+are 388 independent state/stack/spring cases and 200 independent distance
+accumulations. The new wrapper and preprocessing body each execute 2,570 times;
+existing lower mesh wrapper 8c6215ba executes 2,610 times, and the previously
+unwired particle wrapper 8c6215d6 executes 40 times. All 278 new rows execute
+in the original-model suite. Source/model records are retained as noted below.
+
+The software queue model records 138,384 flushes and counts 1,524,614 events.
+Its stored prefixes contain 632,532 individually matched events; 892,082 later
+events are counted but not individually stored/compared. Final queue state,
+QACR/counters and complete reached/final guest RAM still match, including packet
+output. The event trace cap does not cap queue execution or packet writes.
+
+Original draw coverage rises from 421 to 461 of 911 rows. 450 remain unexecuted;
+the parent stays unregistered and gets zero recovery credit. First missing
+services now are 8c0583a0 (132 cases), 0c90c384 (94), 8c0409c0 (16), 8c5fde20
+(16) and 8c041c92 (16). Old motion-mesh/particle-wrapper entry stops are gone.
+Two first registry entries bring totals to 1,148 entries / 1,145 unique pairs,
+with 1,075 matches among 10,875 old snapshot candidates. These are not whole-
+game coverage numbers. Six remaining helper proposals have 363 byte-checked
+analysis rows, with no source credit from that inventory.
+Registry evidence audit found zero errors and zero stale source reports.
+Generators reproduce exact bytes; repeated registration adds no duplicates.
+Eight Python/three PowerShell syntax checks pass. The historical aggregate
+test sequence was not rerun. One unreferenced intermediate worker source was
+removed after checking it was absent from current script/proof references.
+
+Original-model runtime inputs and limits
+The initialized-object integration retains the native constructor's shipped
+models and animation data. Renderer scratch records are relocated into an
+isolated f00000..ffffff RAM arena, away from the original object heap. The
+camera/view record is separately supplied at 8ce90000. Valid renderer masks,
+projection/light/basis values, command buffers and texture metadata are input
+fixtures, not proof of natural renderer/player initialization.
+
+Zero-valued render masks must be initialized explicitly: the older state-only
+tests deliberately used arbitrary bit patterns. Retaining their OR mask would
+force a textured primitive profile onto meshes with no UV stream. That test
+setup error was corrected without changing original geometry or UV pointers.
+
+The secondary drawing path selects the shipped texture list at 0ca53c14:
+221 name records at 0ca531b8. Their on-disc runtime descriptor slots are zero.
+The comparison supplies valid descriptor pointers while retaining the original
+filenames and attribute words. A separate 256-entry supplied runtime table is
+also available for selected texture lists. Real texture loading, GPU sampling,
+asset upload and the final HD/texture-off settings remain unfinished.
+The native queue trace stores the first 4,096 events per invocation. Caller
+checks compare that entire stored prefix, the dropped-event count, final queue/
+QACR/counters and all reached/final guest RAM. Events beyond the stored prefix
+are not individually compared; final packet RAM is still compared in full.
+
+The queue reference is a bounded coherent-RAM/MMU-off software model. It checks
+queue/QACR state, invalidations, prefetch/write-back events and destination RAM,
+not physical cache timing, MMU/TLB behavior or GPU FIFO rendering. Vector
+numerical comparisons retain the separately qualified pinned core; the exact
+dyadic preprocessing oracle is independent. Existing lower routines retain
+their documented valid-RAM, narrow-FPU, count/lookahead and pointer contracts.
+Natural scene setup, whole frames, gameplay, high-FPS/8K/SUPIR and playable
+ports remain unfinished. The AL_MAIN parent stays unregistered until all of
+its paths and dependencies are recovered and verified.
+
+How to check without programming
+Open this report for the milestone explanation. The JSON proof files above
+list each tested input and the exact remaining boundaries. Recovered C and
+all generator/build/verification scripts remain in the project folder. There
+is no playable executable for this milestone. Continue Sol High for remaining
+renderer/runtime initialization and draw/frame reverse engineering. Luna Low
+is suitable for documentation-only changes.

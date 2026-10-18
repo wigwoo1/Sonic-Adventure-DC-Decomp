@@ -1,0 +1,28 @@
+address	opcode	instruction	references
+8c63a970	644d	extu.w r4,r4	
+8c63a972	445a	lds r4,FPUL	
+8c63a974	f0fd	fsca FPUL,dr0	
+8c63a976	b	rts	
+8c63a978	f01c	_fmov fr1,fr0	
+8c63a980	d001	mov.l 0x8c63a988,r0	READ:8c63a988=8c10eb50 
+8c63a982	d402	mov.l 0x8c63a98c,r4	READ:8c63a98c=8c89033c 
+8c63a984	402b	jmp @r0	COMPUTED_CALL:8c10eb50=7ff44f22 
+8c63a986	9	_nop	
+8c63a994	d005	mov.l 0x8c63a9ac,r0	READ:8c63a9ac=8c10d198 
+8c63a996	f08d	fldi0 fr0	
+8c63a998	f045	fcmp/gt fr4,fr0	
+8c63a99a	8f09	bf/s 0x8c63a9b0	CONDITIONAL_JUMP:8c63a9b0=9402b 
+8c63a99c	f45d	_fabs fr4	
+8c63a99e	4f22	sts.l PR,@-r15	DATA:Stack[-0x4] 
+8c63a9a0	400b	jsr @r0	COMPUTED_CALL:8c10d198=7ffc4f22 
+8c63a9a2	9	_nop	
+8c63a9a4	4f26	lds.l @r15+,PR	DATA:Stack[-0x4] 
+8c63a9a6	b	rts	
+8c63a9a8	f04d	_fneg fr0	
+8c63a9b0	402b	jmp @r0	COMPUTED_CALL:8c10d198=7ffc4f22 
+8c63a9b2	9	_nop	
+8c63a9b8	644d	extu.w r4,r4	
+8c63a9ba	445a	lds r4,FPUL	
+8c63a9bc	b	rts	
+8c63a9be	f0fd	_fsca FPUL,dr0	
+8c63a9c4	f08d	fldi0 fr0	

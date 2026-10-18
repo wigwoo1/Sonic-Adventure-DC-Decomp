@@ -1,0 +1,86 @@
+{
+  "verification": "analysis/overlay_model_blend_verification.json",
+  "verification_sha256": "ea2fdcc0ca110d69863d10cdd2c26e51b771abb53dc87be482e29e7d7bfb136b",
+  "uncovered_rows": [
+    "0xc904fc0",
+    "0xc904fc2",
+    "0xc90539e",
+    "0xc9053a0",
+    "0xc9053a2",
+    "0xc9053aa",
+    "0xc9053ac",
+    "0xc9053b2",
+    "0xc9053b4",
+    "0xc9053bc",
+    "0xc9053c6",
+    "0xc9053c8",
+    "0xc9053ca",
+    "0xc9053d2",
+    "0xc9053d4"
+  ],
+  "uncovered_edges": [
+    [
+      "0xc904fbc",
+      "0xc904fc0"
+    ],
+    [
+      "0xc90539c",
+      "0xc90539e"
+    ],
+    [
+      "0xc9053a8",
+      "0xc9053aa"
+    ],
+    [
+      "0xc9053b0",
+      "0xc9053b2"
+    ],
+    [
+      "0xc9053ba",
+      "0xc9053bc"
+    ],
+    [
+      "0xc9053c4",
+      "0xc9053c6"
+    ],
+    [
+      "0xc9053d0",
+      "0xc9053d2"
+    ]
+  ],
+  "explanations": [
+    {
+      "rows": [
+        "0xc904fc0",
+        "0xc904fc2"
+      ],
+      "scope": "Initial loop-count branch",
+      "reason": "The original code assigns 12 for appearance type 0 and 14 otherwise. Both are positive at the initial CMP/PL/BT/S. The fall-through BRA/NOP is not reached with the unchanged instructions and bounded valid RAM inputs."
+    },
+    {
+      "rows": [
+        "0xc90539e",
+        "0xc9053a0",
+        "0xc9053a2",
+        "0xc9053aa",
+        "0xc9053ac",
+        "0xc9053b2",
+        "0xc9053b4",
+        "0xc9053bc",
+        "0xc9053c6",
+        "0xc9053c8",
+        "0xc9053ca",
+        "0xc9053d2",
+        "0xc9053d4"
+      ],
+      "scope": "Final six channel-clamp outcomes after byte conversion",
+      "reason": "For completed ordinary PR=0/SZ=0 arithmetic, each value was truncated, masked by EXTU.B and converted back with FLOAT. It is therefore exactly in 0..255 at these clamps. Extrapolation tests exercise the earlier, necessary clamps; these later clamp outcomes remain unexecuted.",
+      "qualification": "This explains the ordinary narrow finite contract. It is not a proof that every wide-transfer, exceptional or hardware-reentrant state makes these paths unreachable. Such states are guarded or remain outside the verified contract."
+    }
+  ],
+  "newly_recovered_entries": 0,
+  "scope": "Coverage-accounting notes, no added dynamic coverage or routine credit.",
+  "sha256": {
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\audit_overlay_model_blend_coverage.py": "4c5cde713104fca2cecbc6b668c964c9a5ea7a3d3b96658c3a4a02a94eb0239e"
+  }
+}

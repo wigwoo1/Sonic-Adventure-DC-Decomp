@@ -1,0 +1,113 @@
+Main dispatcher particle primitive emitters
+16 October 2026 — VERIFIED within the bounded scope below.
+Overall completion remains 10% estimated weighted milestones, not recovered-code
+coverage. The full goal remains active; continue Sol High for reverse engineering.
+
+New recovered source
+  8c61ffe4..8c62040a: 513 original instruction rows
+  8c620428..8c6209a2: 669 original instruction rows
+  source/sa_main_dispatch_primitives.c
+  source/sa_main_dispatch_primitives_connected.c
+Names describe inferred behavior; original source symbols are unknown. Both
+complete bodies are static annotated C, not an opcode interpreter. Every listed
+instruction is checked against the pinned original executable. Earlier sources,
+binaries, data and verification reports are retained unchanged.
+
+Behavior
+Both routines decode segment word & c000 into triangle lists, quad lists,
+variable-length strips, or an alternate path. They read unsigned indices into
+32-byte projected vertex records, test screen-space orientation where reached,
+write 32-byte primitive packets through R8 and transfer them with PREF. Packet
+words comprise control, projected X/Y/depth and four material values. The final
+vertex uses the original f0000000 control value; earlier vertices use e0000000.
+R8 intentionally returns an advanced queue cursor. Input/emitted-vertex counters
+wrap as original unsigned 32-bit stores; they are not invented triangle totals.
+
+The clipped routine first rejects a primitive sharing any of the six outside
+bits. Mixed near-plane cases route triangles to helper 8c613312. A quad can route
+its two constituent triangles independently, including skipping a triangle whose
+three vertices all have the near-plane flag. Strips preserve their original
+counts, scanning, culling, packet ordering and near-plane delegation. The two
+alternate paths save/switch floating banks and call 8c6149b4 or 8c616bc4, then
+restore the bank data. Those three callees remain explicit test substitutes.
+Tests exercise their missing/error exits and deliberate register/FPU effects;
+substitute results are not evidence of their eventual native behavior.
+
+Reachability proof
+The original topology switch zero-extends a 16-bit word and masks it with c000.
+Exhausting all 65,536 inputs yields exactly 0, 4000, 8000 and c000. Prior switch
+comparisons handle the first three values, so the last comparison must be equal.
+The final default BRA/NOP pair in each function cannot execute:
+  8c620024/8c620026; 8c62046a/8c62046c.
+The BF-taken outcomes at 8c62001e and 8c620464 are likewise impossible.
+The generator verifies the original switch opcodes/literals and records this
+proof. All 1,182 rows remain in C and the instruction inventory. Runtime coverage
+is correctly reported as 1,178 reachable rows / 72 reachable branch outcomes,
+with four impossible rows / two impossible outcomes separately accounted for.
+
+Build and tests actually passed
+- Strict Clang shared-library build: -O2 -Wall -Wextra -Werror.
+- 546 focused cases: plain 212, clipped 326, draw four, primary four.
+- All 1,178 reachable rows, 72 reachable outcomes and six call sites covered.
+- Full 16 MiB RAM, all GPRs/SR/PR, both FPU banks/FPSCR, FPUL and MACL match
+  original instruction execution; 344 ordered boundary comparisons and 2,128
+  numerical operations checked. Native C queues match an independent Python
+  queue model: 388 transfers and 4,080 ordered queue events.
+- 364 completed cases. The 182 partial cases match original partial state:
+  176 inherited unsupported numerical-mode exits, three missing services (-2),
+  three deliberately failed services (-17). These are host guard/status tests,
+  not a claim of physical Dreamcast fault handling.
+- 72 cases independently check triangle packet words, area-based culling,
+  six-bit common-mask rejection, near-plane call routing, input/output counters
+  and the advanced queue cursor. Coverage includes winding reversal, degenerate
+  triangles, empty lists, repeated lists, both banks/queue starts, short strips,
+  and quads where only one constituent triangle needs clipping.
+- 120 complete particle lifetimes / 984 stage comparisons passed. The chain
+  performs 880 real filter/vertex-worker invocations, 176 native primitive calls,
+  744 primitive PREF transfers and 10,600 total queue transfers, with 117,808
+  queue events, 23,264 ordered boundaries and 100,816 numerical operations checked.
+- Existing motion/timer/pause/deferred-deletion/task-pool/heap-coalescing checks
+  and 46 matrix-translation regression cases remain verified. The lifetime path
+  still uses 160 calls to the near-plane helper substitute at 8c613312.
+The entire accumulated build_and_verify.ps1 workflow was not run end-to-end.
+
+Evidence and repetition
+  analysis/main-dispatch-primitives/*_instructions.tsv
+  analysis/main_dispatch_primitives_translation.json
+  analysis/main_dispatch_primitives_verification.json
+  analysis/main_dispatch_primitives_lifecycle_verification.json
+From this output directory with the installed project Python:
+  python recover_main_dispatch_primitives.py
+  .\build_main_dispatch_primitives.ps1
+  python verify_main_dispatch_primitives.py
+  python verify_main_dispatch_primitives_lifecycle.py
+  python register_main_dispatch_primitives.py
+  python inventory_main_dispatch_clipping.py
+  python map_main_dispatch_cases.py
+  python verify_main_dispatch_case_map.py
+The focused stages are included in build_and_verify.ps1. Registration validates
+all original spans, proof inputs, source and DLL hashes before adding two entries.
+Registry: 1,048 entries / 1,045 unique module-address pairs. Neither this count nor
+the incomplete candidate index establishes whole-game recovered-code coverage.
+Final audits found zero registry evidence errors and zero stale source reports.
+The dispatcher map passed 658 original pointer-load checks over 80 spans and 83
+selectors. Source/manifest regeneration reproduced identical hashes, registration
+reran with zero added entries, and all three PowerShell syntax checks passed.
+
+Limits and next task
+Nineteen other acquisition/primitive services and three newly exposed lower
+helpers remain test substitutes. Coherent-RAM/MMU-off queue behavior is tested;
+GPU FIFO output, visible pixels, MMU-on/TLB, cache timing and hardware exceptions
+are not. Numerical guard/oracle limitations and host-selected scheduler order
+remain. Full decompilation, gameplay, all ports and HD settings remain unfinished.
+
+Prioritize near-plane helper 8c613312, reached 160 times in the lifetimes. The
+read-only next-dependency export also includes 8c6149b4 and 8c616bc4:
+  analysis/main-dispatch-clipping/
+  analysis/main_dispatch_clipping_inventory.json
+All 1,099 exported rows across those three bodies match original bytes. This is
+boundary/instruction evidence only, with zero new behavior-verified routine
+credit. Draft pseudocode and flow hints are not recovered source. Optional
+re-export command: ghidra/export_main_dispatch_clipping.ps1.
+Keep Sol High for this clipping/numerical recovery; no model switch or goal
+pause is recommended at this checkpoint.

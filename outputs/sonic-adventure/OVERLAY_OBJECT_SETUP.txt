@@ -1,0 +1,136 @@
+AL_MAIN object setup, recursive cloning and traversal
+17 October 2026 - VERIFIED for the bounded contract and exclusions below.
+Overall completion: 10% estimated weighted whole-project milestones, not code coverage.
+Goal active. Continue Sol High; no model switch or pause advised.
+
+What changed
+Recovered four AL_MAIN.BIN functions from byte-checked original instructions:
+  0c9044a0..0c9044e2: recursive preorder table walker, 33 rows.
+  0c9044e2..0c90451c: root table walker, 29 rows.
+  0c90451c..0c904776: recursive object/model clone, 273 rows.
+  0c904d22..0c904e26: entity object setup, 130 rows.
+465 instruction rows / 930 instruction bytes are translated into static native C.
+Literal-pool bytes are not instruction credit. Names and field purposes are inferred.
+Source: source/sa_overlay_object_setup.c
+Native bridge: source/sa_overlay_object_setup_connected.c
+The separate DLL reuses existing full-register heap allocation/release bodies
+and forward byte-copy C. These three existing routines receive zero new credit.
+All previously pinned sources, binaries, DLLs and checkpoints remain preserved.
+
+Why this follows primitive recovery
+The earlier bounded mesh chain already supports all nine material families.
+The previous AL_MAIN initializer checkpoint still supplied object setup as a
+fixture. These four bodies recover that setup dependency before connecting the
+complete initializer and object draw path. This checkpoint is not another new
+primitive family and does not prove a complete rendered scene.
+
+Observed behavior
+Walkers flatten every node in preorder: current node, child subtree, sibling
+subtree. Flags do not suppress nodes. The recursive walker returns the next
+index; the root wrapper leaves the original incidental R0 behavior unchanged.
+
+The clone allocates a 52-byte object and optional 40-byte model. It copies model
+positions and normals (vertex count times 12), materials (count times 20), and
+segments (count times 24). Only the FIRST segment's auxiliary normal buffer
+receives an additional copy (its group count times 12). Index streams, UVs and
+remaining segment subpointers stay shallow. This is not a universal deep copy.
+Children and siblings are cloned recursively; a descendant allocation failure
+stores a null pointer without rolling back an already allocated parent.
+
+Failure cleanup intentionally follows the original asymmetry. In particular,
+failure of the first-segment auxiliary allocation can retain the segment table
+when there are no materials. The repeated material-pointer test after freeing
+that separate allocation remains nonzero under the valid heap contract. These
+behaviors are preserved and documented rather than silently repaired.
+
+Object setup stores original auxiliary pointer 0ca53c14 at entity+7c4, maps
+appearance type 7 to type 0, and selects six original roots from table 0c91c3d0.
+It clones the first root and writes seven preorder tables (clone plus six
+original roots). Every shipped root examined has 39 nodes. Entity offsets are
+248 for the clone pointer, then 24c/314/3dc/6fc/4a4/56c/634 for the tables (hex).
+It executes FLDI0 FR3 and an original raw FMOV at entity+d4. Wide transfers use
+the inactive FR2 pair as the original odd-register encoding requires; raw
+neighboring-word effects are preserved. PR=1 is guarded at FLDI0 before effects.
+
+Appearance bit 40 invokes 0c904aea and then continues. Bit 04 tail-calls
+0c904bbc, otherwise bit 08 tail-calls 0c904c80. Tail branches restore original
+PR, stack and saved registers before transferring. The three variants remain
+explicit state-mutating fixtures; they are not recovered in this checkpoint.
+
+Coverage exclusions
+The null-source branch at 0c904536/538 is not executed: the preceding BF/S delay
+slot at 0c904534 first reads source+4, outside modeled RAM when source is null.
+Native code stops before that invalid read, preserving the reached partial
+state. Both walkers similarly stop before a null-node child read, after the
+original output-table write. This models a boundary, not hardware exceptions.
+The two excluded conditional outcomes are the null-source branch and the
+repeated material-null test under valid separate allocations. No dynamic
+coverage is claimed for either; all 465 exported rows remain byte checked.
+
+Verification design
+The reference executes the unchanged original AL_MAIN and main executable
+instructions, including the real heap allocator, free routine and copy loop.
+The native side calls compiled C for all four bodies and those three services.
+Tests compare all 16 MiB of RAM, all integer registers, SR, PR, return/stop PC,
+both FPU banks and FPSCR, and ordered entry states. Boundary tracing recognizes
+copy-loop iterations separately from function calls. Original overlay bytes
+and constructed source models must remain unchanged.
+Independent checks validate preorder results, copied byte arrays, intentionally
+shallow subpointers, clone tree structure, seven shipped tables, type-7 alias,
+raw transfer selection and appearance-service priority. Tests exhaust all
+32 optional model-buffer combinations, all eight FR/SZ/PR modes for integer
+bodies, bounded real-heap capacities, partial descendant allocation failure,
+physical/cached/uncached root aliases, and all eight appearance types and flag
+combinations. All seven clone allocation-failure sites are exercised.
+Missing variant callbacks and deliberately injected errors preserve original
+partial state. A zero-allocation setup stops at the subsequent invalid walk.
+
+Build and tests actually passed
+- Strict Clang -O2 -Wall -Wextra -Werror native DLL build passed.
+- 1,552 full original RAM/CPU/FPU comparisons passed, with 167,449 ordered
+  entry-state comparisons. 624 cases also pass the independent assertions.
+- 1,532 executions returned normally (including expected null allocation
+  results); four PR-mode guards, four invalid-node guards, six missing-service
+  stops and six injected errors match exact original reached partial state.
+- 463 of 465 byte-checked rows and 66 of 68 CFG outcomes were executed; the
+  specific two rows/two outcomes excluded above are not claimed as covered.
+- All 52 call sites and all seven clone allocation-failure sites were exercised.
+- Test inputs cover all eight shipped appearance types and four legal setup
+  FPU transfer modes, plus guarded PR=1 cases. Only three appearance-variant
+  targets use explicit fixtures; allocator/free/copy/recursion are native.
+- Generator reproduction, pinned evidence, script parsing, repeat registration,
+  dispatcher mapping and coverage audits are checked during finalization.
+The first harness run exposed loop-entry counting and an overly broad coverage
+assertion. The harness now distinguishes copy loops and asserts the exact two
+coverage exclusions. The final suite above passed after these corrections.
+
+Final integrity results
+Native source and translation manifest reproduce byte-for-byte. All 11
+translation and 27 focused-report pinned inputs match. Three Python and three
+PowerShell scripts parse. Repeat registration adds zero duplicates and leaves
+registry bytes unchanged. Dispatcher verification passed 658 original pointer
+loads, 80 spans and 83 selectors. Audits report 1,102 registry entries / 1,099
+unique module-address pairs, 1,050 matches in 10,875 snapshot candidates, zero
+evidence errors and zero stale source reports. There remain 211 non-texture
+binaries without a function index; routine snapshots are not the whole game.
+The focused build/tests were run; the entire historical aggregate was not rerun.
+
+Remaining work
+Connect this new native object dependency to the previously recovered full
+initializer (its earlier frozen verifier still uses the old setup fixture).
+Recover variant helpers 0c904aea / 0c904bbc / 0c904c80, then connect object draw
+helper 0c905666 and the remaining scene setup dependencies. Actual frame/GPU
+integration, game scheduling, audio/input, playable ports, higher frame rates,
+8K and HD textures remain unfinished. These tests do not show gameplay pixels.
+
+How to check
+Open this guide and SOURCE_HANDOFF.txt. The complete recovered C is in source/.
+Evidence: analysis/overlay_object_setup_translation.json and
+analysis/overlay_object_setup_verification.json.
+To reproduce this focused checkpoint from PowerShell in the project folder:
+  python -B recover_overlay_object_setup.py
+  ./build_overlay_object_setup.ps1
+  python -B verify_overlay_object_setup.py
+  python -B register_overlay_object_setup.py
+Read-only original exports: ghidra/export_overlay_object_setup.ps1.
+The aggregate build_and_verify.ps1 includes these steps before coverage audits.

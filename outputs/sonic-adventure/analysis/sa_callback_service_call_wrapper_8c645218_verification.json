@@ -1,0 +1,1026 @@
+{
+  "module": "1ST_READ.BIN",
+  "load_address": "0x8c010000",
+  "address": "0x8c645218",
+  "end_exclusive": "0x8c645226",
+  "retail_span_sha256": "03de128c0f083afb062a2b17caf0abf63b7004772ad30e4e141a2f529d425f71",
+  "source_sha256": "ed2b8187265a584676f262909c39a34114c1c35fcc08e732b3a4599f0518f7d4",
+  "cases_passed": 144,
+  "comparison_level": "complete 16 MiB RAM and all GPR/SR/PR/PC state across callback call and wrapper return against retail SH-4 interpreter",
+  "scope": "Save PR on the stack, call the callback pointer at 0x8c645334, return through the JSR continuation, restore PR/R15, then return to the caller. Callback service clobbers caller-saved GPRs, SR, and RAM.",
+  "limitations": [
+    "The callback body is modeled as a service and remains a separate routine.",
+    "Differential verification uses the project SH-4 interpreter, not Dreamcast hardware or whole-game execution."
+  ],
+  "callback_literal": "0x8c645334",
+  "cases": [
+    {
+      "case": 0,
+      "callback": "0x8c720000",
+      "saved_pr_write_alias": true,
+      "return_address": "0x8cfed800",
+      "matched": true
+    },
+    {
+      "case": 1,
+      "callback": "0x8c720004",
+      "saved_pr_write_alias": true,
+      "return_address": "0x8cfed804",
+      "matched": true
+    },
+    {
+      "case": 2,
+      "callback": "0x8c720008",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed008",
+      "matched": true
+    },
+    {
+      "case": 3,
+      "callback": "0x8c72000c",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed00c",
+      "matched": true
+    },
+    {
+      "case": 4,
+      "callback": "0x8c720010",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed010",
+      "matched": true
+    },
+    {
+      "case": 5,
+      "callback": "0x8c720014",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed014",
+      "matched": true
+    },
+    {
+      "case": 6,
+      "callback": "0x8c720018",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed018",
+      "matched": true
+    },
+    {
+      "case": 7,
+      "callback": "0x8c72001c",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed01c",
+      "matched": true
+    },
+    {
+      "case": 8,
+      "callback": "0x8c720020",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed020",
+      "matched": true
+    },
+    {
+      "case": 9,
+      "callback": "0x8c720024",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed024",
+      "matched": true
+    },
+    {
+      "case": 10,
+      "callback": "0x8c720028",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed028",
+      "matched": true
+    },
+    {
+      "case": 11,
+      "callback": "0x8c72002c",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed02c",
+      "matched": true
+    },
+    {
+      "case": 12,
+      "callback": "0x8c720030",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed030",
+      "matched": true
+    },
+    {
+      "case": 13,
+      "callback": "0x8c720034",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed034",
+      "matched": true
+    },
+    {
+      "case": 14,
+      "callback": "0x8c720038",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed038",
+      "matched": true
+    },
+    {
+      "case": 15,
+      "callback": "0x8c72003c",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed03c",
+      "matched": true
+    },
+    {
+      "case": 16,
+      "callback": "0x8c720040",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed040",
+      "matched": true
+    },
+    {
+      "case": 17,
+      "callback": "0x8c720044",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed044",
+      "matched": true
+    },
+    {
+      "case": 18,
+      "callback": "0x8c720048",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed048",
+      "matched": true
+    },
+    {
+      "case": 19,
+      "callback": "0x8c72004c",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed04c",
+      "matched": true
+    },
+    {
+      "case": 20,
+      "callback": "0x8c720050",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed050",
+      "matched": true
+    },
+    {
+      "case": 21,
+      "callback": "0x8c720054",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed054",
+      "matched": true
+    },
+    {
+      "case": 22,
+      "callback": "0x8c720058",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed058",
+      "matched": true
+    },
+    {
+      "case": 23,
+      "callback": "0x8c72005c",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed05c",
+      "matched": true
+    },
+    {
+      "case": 24,
+      "callback": "0x8c720060",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed060",
+      "matched": true
+    },
+    {
+      "case": 25,
+      "callback": "0x8c720064",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed064",
+      "matched": true
+    },
+    {
+      "case": 26,
+      "callback": "0x8c720068",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed068",
+      "matched": true
+    },
+    {
+      "case": 27,
+      "callback": "0x8c72006c",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed06c",
+      "matched": true
+    },
+    {
+      "case": 28,
+      "callback": "0x8c720070",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed070",
+      "matched": true
+    },
+    {
+      "case": 29,
+      "callback": "0x8c720074",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed074",
+      "matched": true
+    },
+    {
+      "case": 30,
+      "callback": "0x8c720078",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed078",
+      "matched": true
+    },
+    {
+      "case": 31,
+      "callback": "0x8c72007c",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed07c",
+      "matched": true
+    },
+    {
+      "case": 32,
+      "callback": "0x8c720080",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed080",
+      "matched": true
+    },
+    {
+      "case": 33,
+      "callback": "0x8c720084",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed084",
+      "matched": true
+    },
+    {
+      "case": 34,
+      "callback": "0x8c720088",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed088",
+      "matched": true
+    },
+    {
+      "case": 35,
+      "callback": "0x8c72008c",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed08c",
+      "matched": true
+    },
+    {
+      "case": 36,
+      "callback": "0x8c720090",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed090",
+      "matched": true
+    },
+    {
+      "case": 37,
+      "callback": "0x8c720094",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed094",
+      "matched": true
+    },
+    {
+      "case": 38,
+      "callback": "0x8c720098",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed098",
+      "matched": true
+    },
+    {
+      "case": 39,
+      "callback": "0x8c72009c",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed09c",
+      "matched": true
+    },
+    {
+      "case": 40,
+      "callback": "0x8c7200a0",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed0a0",
+      "matched": true
+    },
+    {
+      "case": 41,
+      "callback": "0x8c7200a4",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed0a4",
+      "matched": true
+    },
+    {
+      "case": 42,
+      "callback": "0x8c7200a8",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed0a8",
+      "matched": true
+    },
+    {
+      "case": 43,
+      "callback": "0x8c7200ac",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed0ac",
+      "matched": true
+    },
+    {
+      "case": 44,
+      "callback": "0x8c7200b0",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed0b0",
+      "matched": true
+    },
+    {
+      "case": 45,
+      "callback": "0x8c7200b4",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed0b4",
+      "matched": true
+    },
+    {
+      "case": 46,
+      "callback": "0x8c7200b8",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed0b8",
+      "matched": true
+    },
+    {
+      "case": 47,
+      "callback": "0x8c7200bc",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed0bc",
+      "matched": true
+    },
+    {
+      "case": 48,
+      "callback": "0x8c7200c0",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed0c0",
+      "matched": true
+    },
+    {
+      "case": 49,
+      "callback": "0x8c7200c4",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed0c4",
+      "matched": true
+    },
+    {
+      "case": 50,
+      "callback": "0x8c7200c8",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed0c8",
+      "matched": true
+    },
+    {
+      "case": 51,
+      "callback": "0x8c7200cc",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed0cc",
+      "matched": true
+    },
+    {
+      "case": 52,
+      "callback": "0x8c7200d0",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed0d0",
+      "matched": true
+    },
+    {
+      "case": 53,
+      "callback": "0x8c7200d4",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed0d4",
+      "matched": true
+    },
+    {
+      "case": 54,
+      "callback": "0x8c7200d8",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed0d8",
+      "matched": true
+    },
+    {
+      "case": 55,
+      "callback": "0x8c7200dc",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed0dc",
+      "matched": true
+    },
+    {
+      "case": 56,
+      "callback": "0x8c7200e0",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed0e0",
+      "matched": true
+    },
+    {
+      "case": 57,
+      "callback": "0x8c7200e4",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed0e4",
+      "matched": true
+    },
+    {
+      "case": 58,
+      "callback": "0x8c7200e8",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed0e8",
+      "matched": true
+    },
+    {
+      "case": 59,
+      "callback": "0x8c7200ec",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed0ec",
+      "matched": true
+    },
+    {
+      "case": 60,
+      "callback": "0x8c7200f0",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed0f0",
+      "matched": true
+    },
+    {
+      "case": 61,
+      "callback": "0x8c7200f4",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed0f4",
+      "matched": true
+    },
+    {
+      "case": 62,
+      "callback": "0x8c7200f8",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed0f8",
+      "matched": true
+    },
+    {
+      "case": 63,
+      "callback": "0x8c7200fc",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed0fc",
+      "matched": true
+    },
+    {
+      "case": 64,
+      "callback": "0x8c720100",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed100",
+      "matched": true
+    },
+    {
+      "case": 65,
+      "callback": "0x8c720104",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed104",
+      "matched": true
+    },
+    {
+      "case": 66,
+      "callback": "0x8c720108",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed108",
+      "matched": true
+    },
+    {
+      "case": 67,
+      "callback": "0x8c72010c",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed10c",
+      "matched": true
+    },
+    {
+      "case": 68,
+      "callback": "0x8c720110",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed110",
+      "matched": true
+    },
+    {
+      "case": 69,
+      "callback": "0x8c720114",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed114",
+      "matched": true
+    },
+    {
+      "case": 70,
+      "callback": "0x8c720118",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed118",
+      "matched": true
+    },
+    {
+      "case": 71,
+      "callback": "0x8c72011c",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed11c",
+      "matched": true
+    },
+    {
+      "case": 72,
+      "callback": "0x8c720120",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed120",
+      "matched": true
+    },
+    {
+      "case": 73,
+      "callback": "0x8c720124",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed124",
+      "matched": true
+    },
+    {
+      "case": 74,
+      "callback": "0x8c720128",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed128",
+      "matched": true
+    },
+    {
+      "case": 75,
+      "callback": "0x8c72012c",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed12c",
+      "matched": true
+    },
+    {
+      "case": 76,
+      "callback": "0x8c720130",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed130",
+      "matched": true
+    },
+    {
+      "case": 77,
+      "callback": "0x8c720134",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed134",
+      "matched": true
+    },
+    {
+      "case": 78,
+      "callback": "0x8c720138",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed138",
+      "matched": true
+    },
+    {
+      "case": 79,
+      "callback": "0x8c72013c",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed13c",
+      "matched": true
+    },
+    {
+      "case": 80,
+      "callback": "0x8c720140",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed140",
+      "matched": true
+    },
+    {
+      "case": 81,
+      "callback": "0x8c720144",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed144",
+      "matched": true
+    },
+    {
+      "case": 82,
+      "callback": "0x8c720148",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed148",
+      "matched": true
+    },
+    {
+      "case": 83,
+      "callback": "0x8c72014c",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed14c",
+      "matched": true
+    },
+    {
+      "case": 84,
+      "callback": "0x8c720150",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed150",
+      "matched": true
+    },
+    {
+      "case": 85,
+      "callback": "0x8c720154",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed154",
+      "matched": true
+    },
+    {
+      "case": 86,
+      "callback": "0x8c720158",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed158",
+      "matched": true
+    },
+    {
+      "case": 87,
+      "callback": "0x8c72015c",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed15c",
+      "matched": true
+    },
+    {
+      "case": 88,
+      "callback": "0x8c720160",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed160",
+      "matched": true
+    },
+    {
+      "case": 89,
+      "callback": "0x8c720164",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed164",
+      "matched": true
+    },
+    {
+      "case": 90,
+      "callback": "0x8c720168",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed168",
+      "matched": true
+    },
+    {
+      "case": 91,
+      "callback": "0x8c72016c",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed16c",
+      "matched": true
+    },
+    {
+      "case": 92,
+      "callback": "0x8c720170",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed170",
+      "matched": true
+    },
+    {
+      "case": 93,
+      "callback": "0x8c720174",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed174",
+      "matched": true
+    },
+    {
+      "case": 94,
+      "callback": "0x8c720178",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed178",
+      "matched": true
+    },
+    {
+      "case": 95,
+      "callback": "0x8c72017c",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed17c",
+      "matched": true
+    },
+    {
+      "case": 96,
+      "callback": "0x8c720180",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed180",
+      "matched": true
+    },
+    {
+      "case": 97,
+      "callback": "0x8c720184",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed184",
+      "matched": true
+    },
+    {
+      "case": 98,
+      "callback": "0x8c720188",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed188",
+      "matched": true
+    },
+    {
+      "case": 99,
+      "callback": "0x8c72018c",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed18c",
+      "matched": true
+    },
+    {
+      "case": 100,
+      "callback": "0x8c720190",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed190",
+      "matched": true
+    },
+    {
+      "case": 101,
+      "callback": "0x8c720194",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed194",
+      "matched": true
+    },
+    {
+      "case": 102,
+      "callback": "0x8c720198",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed198",
+      "matched": true
+    },
+    {
+      "case": 103,
+      "callback": "0x8c72019c",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed19c",
+      "matched": true
+    },
+    {
+      "case": 104,
+      "callback": "0x8c7201a0",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed1a0",
+      "matched": true
+    },
+    {
+      "case": 105,
+      "callback": "0x8c7201a4",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed1a4",
+      "matched": true
+    },
+    {
+      "case": 106,
+      "callback": "0x8c7201a8",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed1a8",
+      "matched": true
+    },
+    {
+      "case": 107,
+      "callback": "0x8c7201ac",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed1ac",
+      "matched": true
+    },
+    {
+      "case": 108,
+      "callback": "0x8c7201b0",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed1b0",
+      "matched": true
+    },
+    {
+      "case": 109,
+      "callback": "0x8c7201b4",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed1b4",
+      "matched": true
+    },
+    {
+      "case": 110,
+      "callback": "0x8c7201b8",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed1b8",
+      "matched": true
+    },
+    {
+      "case": 111,
+      "callback": "0x8c7201bc",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed1bc",
+      "matched": true
+    },
+    {
+      "case": 112,
+      "callback": "0x8c7201c0",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed1c0",
+      "matched": true
+    },
+    {
+      "case": 113,
+      "callback": "0x8c7201c4",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed1c4",
+      "matched": true
+    },
+    {
+      "case": 114,
+      "callback": "0x8c7201c8",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed1c8",
+      "matched": true
+    },
+    {
+      "case": 115,
+      "callback": "0x8c7201cc",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed1cc",
+      "matched": true
+    },
+    {
+      "case": 116,
+      "callback": "0x8c7201d0",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed1d0",
+      "matched": true
+    },
+    {
+      "case": 117,
+      "callback": "0x8c7201d4",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed1d4",
+      "matched": true
+    },
+    {
+      "case": 118,
+      "callback": "0x8c7201d8",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed1d8",
+      "matched": true
+    },
+    {
+      "case": 119,
+      "callback": "0x8c7201dc",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed1dc",
+      "matched": true
+    },
+    {
+      "case": 120,
+      "callback": "0x8c7201e0",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed1e0",
+      "matched": true
+    },
+    {
+      "case": 121,
+      "callback": "0x8c7201e4",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed1e4",
+      "matched": true
+    },
+    {
+      "case": 122,
+      "callback": "0x8c7201e8",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed1e8",
+      "matched": true
+    },
+    {
+      "case": 123,
+      "callback": "0x8c7201ec",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed1ec",
+      "matched": true
+    },
+    {
+      "case": 124,
+      "callback": "0x8c7201f0",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed1f0",
+      "matched": true
+    },
+    {
+      "case": 125,
+      "callback": "0x8c7201f4",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed1f4",
+      "matched": true
+    },
+    {
+      "case": 126,
+      "callback": "0x8c7201f8",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed1f8",
+      "matched": true
+    },
+    {
+      "case": 127,
+      "callback": "0x8c7201fc",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed1fc",
+      "matched": true
+    },
+    {
+      "case": 128,
+      "callback": "0x8c720200",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed200",
+      "matched": true
+    },
+    {
+      "case": 129,
+      "callback": "0x8c720204",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed204",
+      "matched": true
+    },
+    {
+      "case": 130,
+      "callback": "0x8c720208",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed208",
+      "matched": true
+    },
+    {
+      "case": 131,
+      "callback": "0x8c72020c",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed20c",
+      "matched": true
+    },
+    {
+      "case": 132,
+      "callback": "0x8c720210",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed210",
+      "matched": true
+    },
+    {
+      "case": 133,
+      "callback": "0x8c720214",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed214",
+      "matched": true
+    },
+    {
+      "case": 134,
+      "callback": "0x8c720218",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed218",
+      "matched": true
+    },
+    {
+      "case": 135,
+      "callback": "0x8c72021c",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed21c",
+      "matched": true
+    },
+    {
+      "case": 136,
+      "callback": "0x8c720220",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed220",
+      "matched": true
+    },
+    {
+      "case": 137,
+      "callback": "0x8c720224",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed224",
+      "matched": true
+    },
+    {
+      "case": 138,
+      "callback": "0x8c720228",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed228",
+      "matched": true
+    },
+    {
+      "case": 139,
+      "callback": "0x8c72022c",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed22c",
+      "matched": true
+    },
+    {
+      "case": 140,
+      "callback": "0x8c720230",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed230",
+      "matched": true
+    },
+    {
+      "case": 141,
+      "callback": "0x8c720234",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed234",
+      "matched": true
+    },
+    {
+      "case": 142,
+      "callback": "0x8c720238",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed238",
+      "matched": true
+    },
+    {
+      "case": 143,
+      "callback": "0x8c72023c",
+      "saved_pr_write_alias": false,
+      "return_address": "0x8cfed23c",
+      "matched": true
+    }
+  ]
+}

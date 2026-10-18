@@ -1,0 +1,2735 @@
+{
+  "functions_verified": 3,
+  "total_cases": 384,
+  "comparison_level": "Complete 16 MiB RAM and all GPRs, SR, PR, return PC, and MACL compared.",
+  "scope": "Compares the input-device record equality test, status-byte getter, and status-byte setter against retail, including nested 0x8c65f390 index calculation and stack/PR restoration.",
+  "limitations": [
+    "The input record layout is controlled RAM fixture state; ownership and broader device lifecycle remain incomplete.",
+    "Uses the project SH-4 interpreter, not Dreamcast hardware or end-to-end gameplay."
+  ],
+  "binary_sha256": "45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a",
+  "source_sha256": "6e7faed327cf6f3074ba04444bc898b1312367d5b37169b56f1dbd46458039c4",
+  "routines": [
+    {
+      "module": "1ST_READ.BIN",
+      "load_address": "0x8c010000",
+      "name": "sa_input_device_record_matches_8c65f3f4",
+      "address": "0x8c65f3f4",
+      "end_exclusive": "0x8c65f40e",
+      "retail_span_sha256": "00ff47800f9c75c799b2cef415a61aa97ebc4fba0a91872bced0116c7fedc09b",
+      "cases_passed": 128,
+      "cases": [
+        {
+          "case": 0,
+          "index": 0,
+          "returned_r0": "0x1",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 1,
+          "index": 1,
+          "returned_r0": "0x0",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 2,
+          "index": 2,
+          "returned_r0": "0x1",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 3,
+          "index": 3,
+          "returned_r0": "0x0",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 4,
+          "index": 4,
+          "returned_r0": "0x1",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 5,
+          "index": 5,
+          "returned_r0": "0x0",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 6,
+          "index": 6,
+          "returned_r0": "0x1",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 7,
+          "index": 7,
+          "returned_r0": "0x0",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 8,
+          "index": 8,
+          "returned_r0": "0x1",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 9,
+          "index": 9,
+          "returned_r0": "0x0",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 10,
+          "index": 10,
+          "returned_r0": "0x1",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 11,
+          "index": 11,
+          "returned_r0": "0x0",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 12,
+          "index": 12,
+          "returned_r0": "0x1",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 13,
+          "index": 13,
+          "returned_r0": "0x0",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 14,
+          "index": 14,
+          "returned_r0": "0x1",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 15,
+          "index": 15,
+          "returned_r0": "0x0",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 16,
+          "index": 0,
+          "returned_r0": "0x1",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 17,
+          "index": 1,
+          "returned_r0": "0x0",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 18,
+          "index": 2,
+          "returned_r0": "0x1",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 19,
+          "index": 3,
+          "returned_r0": "0x0",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 20,
+          "index": 4,
+          "returned_r0": "0x1",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 21,
+          "index": 5,
+          "returned_r0": "0x0",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 22,
+          "index": 6,
+          "returned_r0": "0x1",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 23,
+          "index": 7,
+          "returned_r0": "0x0",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 24,
+          "index": 8,
+          "returned_r0": "0x1",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 25,
+          "index": 9,
+          "returned_r0": "0x0",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 26,
+          "index": 10,
+          "returned_r0": "0x1",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 27,
+          "index": 11,
+          "returned_r0": "0x0",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 28,
+          "index": 12,
+          "returned_r0": "0x1",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 29,
+          "index": 13,
+          "returned_r0": "0x0",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 30,
+          "index": 14,
+          "returned_r0": "0x1",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 31,
+          "index": 15,
+          "returned_r0": "0x0",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 32,
+          "index": 0,
+          "returned_r0": "0x1",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 33,
+          "index": 1,
+          "returned_r0": "0x0",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 34,
+          "index": 2,
+          "returned_r0": "0x1",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 35,
+          "index": 3,
+          "returned_r0": "0x0",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 36,
+          "index": 4,
+          "returned_r0": "0x1",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 37,
+          "index": 5,
+          "returned_r0": "0x0",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 38,
+          "index": 6,
+          "returned_r0": "0x1",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 39,
+          "index": 7,
+          "returned_r0": "0x0",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 40,
+          "index": 8,
+          "returned_r0": "0x1",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 41,
+          "index": 9,
+          "returned_r0": "0x0",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 42,
+          "index": 10,
+          "returned_r0": "0x1",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 43,
+          "index": 11,
+          "returned_r0": "0x0",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 44,
+          "index": 12,
+          "returned_r0": "0x1",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 45,
+          "index": 13,
+          "returned_r0": "0x0",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 46,
+          "index": 14,
+          "returned_r0": "0x1",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 47,
+          "index": 15,
+          "returned_r0": "0x0",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 48,
+          "index": 0,
+          "returned_r0": "0x1",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 49,
+          "index": 1,
+          "returned_r0": "0x0",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 50,
+          "index": 2,
+          "returned_r0": "0x1",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 51,
+          "index": 3,
+          "returned_r0": "0x0",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 52,
+          "index": 4,
+          "returned_r0": "0x1",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 53,
+          "index": 5,
+          "returned_r0": "0x0",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 54,
+          "index": 6,
+          "returned_r0": "0x1",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 55,
+          "index": 7,
+          "returned_r0": "0x0",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 56,
+          "index": 8,
+          "returned_r0": "0x1",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 57,
+          "index": 9,
+          "returned_r0": "0x0",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 58,
+          "index": 10,
+          "returned_r0": "0x1",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 59,
+          "index": 11,
+          "returned_r0": "0x0",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 60,
+          "index": 12,
+          "returned_r0": "0x1",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 61,
+          "index": 13,
+          "returned_r0": "0x0",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 62,
+          "index": 14,
+          "returned_r0": "0x1",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 63,
+          "index": 15,
+          "returned_r0": "0x0",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 64,
+          "index": 0,
+          "returned_r0": "0x1",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 65,
+          "index": 1,
+          "returned_r0": "0x0",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 66,
+          "index": 2,
+          "returned_r0": "0x1",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 67,
+          "index": 3,
+          "returned_r0": "0x0",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 68,
+          "index": 4,
+          "returned_r0": "0x1",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 69,
+          "index": 5,
+          "returned_r0": "0x0",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 70,
+          "index": 6,
+          "returned_r0": "0x1",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 71,
+          "index": 7,
+          "returned_r0": "0x0",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 72,
+          "index": 8,
+          "returned_r0": "0x1",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 73,
+          "index": 9,
+          "returned_r0": "0x0",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 74,
+          "index": 10,
+          "returned_r0": "0x1",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 75,
+          "index": 11,
+          "returned_r0": "0x0",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 76,
+          "index": 12,
+          "returned_r0": "0x1",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 77,
+          "index": 13,
+          "returned_r0": "0x0",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 78,
+          "index": 14,
+          "returned_r0": "0x1",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 79,
+          "index": 15,
+          "returned_r0": "0x0",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 80,
+          "index": 0,
+          "returned_r0": "0x1",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 81,
+          "index": 1,
+          "returned_r0": "0x0",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 82,
+          "index": 2,
+          "returned_r0": "0x1",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 83,
+          "index": 3,
+          "returned_r0": "0x0",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 84,
+          "index": 4,
+          "returned_r0": "0x1",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 85,
+          "index": 5,
+          "returned_r0": "0x0",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 86,
+          "index": 6,
+          "returned_r0": "0x1",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 87,
+          "index": 7,
+          "returned_r0": "0x0",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 88,
+          "index": 8,
+          "returned_r0": "0x1",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 89,
+          "index": 9,
+          "returned_r0": "0x0",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 90,
+          "index": 10,
+          "returned_r0": "0x1",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 91,
+          "index": 11,
+          "returned_r0": "0x0",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 92,
+          "index": 12,
+          "returned_r0": "0x1",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 93,
+          "index": 13,
+          "returned_r0": "0x0",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 94,
+          "index": 14,
+          "returned_r0": "0x1",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 95,
+          "index": 15,
+          "returned_r0": "0x0",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 96,
+          "index": 0,
+          "returned_r0": "0x1",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 97,
+          "index": 1,
+          "returned_r0": "0x0",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 98,
+          "index": 2,
+          "returned_r0": "0x1",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 99,
+          "index": 3,
+          "returned_r0": "0x0",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 100,
+          "index": 4,
+          "returned_r0": "0x1",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 101,
+          "index": 5,
+          "returned_r0": "0x0",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 102,
+          "index": 6,
+          "returned_r0": "0x1",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 103,
+          "index": 7,
+          "returned_r0": "0x0",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 104,
+          "index": 8,
+          "returned_r0": "0x1",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 105,
+          "index": 9,
+          "returned_r0": "0x0",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 106,
+          "index": 10,
+          "returned_r0": "0x1",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 107,
+          "index": 11,
+          "returned_r0": "0x0",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 108,
+          "index": 12,
+          "returned_r0": "0x1",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 109,
+          "index": 13,
+          "returned_r0": "0x0",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 110,
+          "index": 14,
+          "returned_r0": "0x1",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 111,
+          "index": 15,
+          "returned_r0": "0x0",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 112,
+          "index": 0,
+          "returned_r0": "0x1",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 113,
+          "index": 1,
+          "returned_r0": "0x0",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 114,
+          "index": 2,
+          "returned_r0": "0x1",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 115,
+          "index": 3,
+          "returned_r0": "0x0",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 116,
+          "index": 4,
+          "returned_r0": "0x1",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 117,
+          "index": 5,
+          "returned_r0": "0x0",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 118,
+          "index": 6,
+          "returned_r0": "0x1",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 119,
+          "index": 7,
+          "returned_r0": "0x0",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 120,
+          "index": 8,
+          "returned_r0": "0x1",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 121,
+          "index": 9,
+          "returned_r0": "0x0",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 122,
+          "index": 10,
+          "returned_r0": "0x1",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 123,
+          "index": 11,
+          "returned_r0": "0x0",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 124,
+          "index": 12,
+          "returned_r0": "0x1",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 125,
+          "index": 13,
+          "returned_r0": "0x0",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 126,
+          "index": 14,
+          "returned_r0": "0x1",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 127,
+          "index": 15,
+          "returned_r0": "0x0",
+          "retail_instructions": 21,
+          "full_ram_cpu_and_macl_match": true
+        }
+      ]
+    },
+    {
+      "module": "1ST_READ.BIN",
+      "load_address": "0x8c010000",
+      "name": "sa_input_device_record_status_get_8c65f40e",
+      "address": "0x8c65f40e",
+      "end_exclusive": "0x8c65f41e",
+      "retail_span_sha256": "0ab07ad252f06b7b7d3eafca3eb2464aa6b4334a716044b571758b072fd9d73d",
+      "cases_passed": 128,
+      "cases": [
+        {
+          "case": 0,
+          "index": 0,
+          "returned_r0": "0x95",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 1,
+          "index": 1,
+          "returned_r0": "0xed",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 2,
+          "index": 2,
+          "returned_r0": "0xe",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 3,
+          "index": 3,
+          "returned_r0": "0x46",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 4,
+          "index": 4,
+          "returned_r0": "0xd6",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 5,
+          "index": 5,
+          "returned_r0": "0x1f",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 6,
+          "index": 6,
+          "returned_r0": "0xcc",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 7,
+          "index": 7,
+          "returned_r0": "0xcb",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 8,
+          "index": 8,
+          "returned_r0": "0xd2",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 9,
+          "index": 9,
+          "returned_r0": "0x1d",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 10,
+          "index": 10,
+          "returned_r0": "0x8a",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 11,
+          "index": 11,
+          "returned_r0": "0xcc",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 12,
+          "index": 12,
+          "returned_r0": "0x23",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 13,
+          "index": 13,
+          "returned_r0": "0xbb",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 14,
+          "index": 14,
+          "returned_r0": "0xac",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 15,
+          "index": 15,
+          "returned_r0": "0x1c",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 16,
+          "index": 0,
+          "returned_r0": "0x48",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 17,
+          "index": 1,
+          "returned_r0": "0xa9",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 18,
+          "index": 2,
+          "returned_r0": "0xc4",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 19,
+          "index": 3,
+          "returned_r0": "0x74",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 20,
+          "index": 4,
+          "returned_r0": "0x3c",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 21,
+          "index": 5,
+          "returned_r0": "0x9b",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 22,
+          "index": 6,
+          "returned_r0": "0xfc",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 23,
+          "index": 7,
+          "returned_r0": "0xb6",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 24,
+          "index": 8,
+          "returned_r0": "0xc6",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 25,
+          "index": 9,
+          "returned_r0": "0xda",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 26,
+          "index": 10,
+          "returned_r0": "0x9d",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 27,
+          "index": 11,
+          "returned_r0": "0x99",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 28,
+          "index": 12,
+          "returned_r0": "0x7f",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 29,
+          "index": 13,
+          "returned_r0": "0xd1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 30,
+          "index": 14,
+          "returned_r0": "0xc8",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 31,
+          "index": 15,
+          "returned_r0": "0xeb",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 32,
+          "index": 0,
+          "returned_r0": "0x1e",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 33,
+          "index": 1,
+          "returned_r0": "0xc1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 34,
+          "index": 2,
+          "returned_r0": "0x5b",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 35,
+          "index": 3,
+          "returned_r0": "0x7d",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 36,
+          "index": 4,
+          "returned_r0": "0xeb",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 37,
+          "index": 5,
+          "returned_r0": "0x85",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 38,
+          "index": 6,
+          "returned_r0": "0xb6",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 39,
+          "index": 7,
+          "returned_r0": "0x68",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 40,
+          "index": 8,
+          "returned_r0": "0xa3",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 41,
+          "index": 9,
+          "returned_r0": "0x9e",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 42,
+          "index": 10,
+          "returned_r0": "0x75",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 43,
+          "index": 11,
+          "returned_r0": "0xc5",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 44,
+          "index": 12,
+          "returned_r0": "0x86",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 45,
+          "index": 13,
+          "returned_r0": "0x70",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 46,
+          "index": 14,
+          "returned_r0": "0xb0",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 47,
+          "index": 15,
+          "returned_r0": "0x2e",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 48,
+          "index": 0,
+          "returned_r0": "0xab",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 49,
+          "index": 1,
+          "returned_r0": "0x96",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 50,
+          "index": 2,
+          "returned_r0": "0x68",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 51,
+          "index": 3,
+          "returned_r0": "0xc5",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 52,
+          "index": 4,
+          "returned_r0": "0x7a",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 53,
+          "index": 5,
+          "returned_r0": "0xc5",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 54,
+          "index": 6,
+          "returned_r0": "0x72",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 55,
+          "index": 7,
+          "returned_r0": "0x7f",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 56,
+          "index": 8,
+          "returned_r0": "0x31",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 57,
+          "index": 9,
+          "returned_r0": "0x5b",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 58,
+          "index": 10,
+          "returned_r0": "0x4b",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 59,
+          "index": 11,
+          "returned_r0": "0x57",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 60,
+          "index": 12,
+          "returned_r0": "0xd1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 61,
+          "index": 13,
+          "returned_r0": "0x54",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 62,
+          "index": 14,
+          "returned_r0": "0x1a",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 63,
+          "index": 15,
+          "returned_r0": "0x0",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 64,
+          "index": 0,
+          "returned_r0": "0x94",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 65,
+          "index": 1,
+          "returned_r0": "0xd7",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 66,
+          "index": 2,
+          "returned_r0": "0x5",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 67,
+          "index": 3,
+          "returned_r0": "0x2b",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 68,
+          "index": 4,
+          "returned_r0": "0xa4",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 69,
+          "index": 5,
+          "returned_r0": "0xc2",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 70,
+          "index": 6,
+          "returned_r0": "0xb5",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 71,
+          "index": 7,
+          "returned_r0": "0x2f",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 72,
+          "index": 8,
+          "returned_r0": "0x39",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 73,
+          "index": 9,
+          "returned_r0": "0x21",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 74,
+          "index": 10,
+          "returned_r0": "0xf6",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 75,
+          "index": 11,
+          "returned_r0": "0xbc",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 76,
+          "index": 12,
+          "returned_r0": "0xe9",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 77,
+          "index": 13,
+          "returned_r0": "0x8e",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 78,
+          "index": 14,
+          "returned_r0": "0x9c",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 79,
+          "index": 15,
+          "returned_r0": "0x26",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 80,
+          "index": 0,
+          "returned_r0": "0x50",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 81,
+          "index": 1,
+          "returned_r0": "0x9e",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 82,
+          "index": 2,
+          "returned_r0": "0xc7",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 83,
+          "index": 3,
+          "returned_r0": "0x5f",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 84,
+          "index": 4,
+          "returned_r0": "0x93",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 85,
+          "index": 5,
+          "returned_r0": "0xbe",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 86,
+          "index": 6,
+          "returned_r0": "0x0",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 87,
+          "index": 7,
+          "returned_r0": "0x93",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 88,
+          "index": 8,
+          "returned_r0": "0xb",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 89,
+          "index": 9,
+          "returned_r0": "0x0",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 90,
+          "index": 10,
+          "returned_r0": "0x55",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 91,
+          "index": 11,
+          "returned_r0": "0xd",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 92,
+          "index": 12,
+          "returned_r0": "0xe7",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 93,
+          "index": 13,
+          "returned_r0": "0x88",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 94,
+          "index": 14,
+          "returned_r0": "0xfa",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 95,
+          "index": 15,
+          "returned_r0": "0xf7",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 96,
+          "index": 0,
+          "returned_r0": "0xac",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 97,
+          "index": 1,
+          "returned_r0": "0x84",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 98,
+          "index": 2,
+          "returned_r0": "0x13",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 99,
+          "index": 3,
+          "returned_r0": "0xba",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 100,
+          "index": 4,
+          "returned_r0": "0x3b",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 101,
+          "index": 5,
+          "returned_r0": "0x62",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 102,
+          "index": 6,
+          "returned_r0": "0xd3",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 103,
+          "index": 7,
+          "returned_r0": "0xfc",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 104,
+          "index": 8,
+          "returned_r0": "0x52",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 105,
+          "index": 9,
+          "returned_r0": "0x90",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 106,
+          "index": 10,
+          "returned_r0": "0xdd",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 107,
+          "index": 11,
+          "returned_r0": "0x76",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 108,
+          "index": 12,
+          "returned_r0": "0x72",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 109,
+          "index": 13,
+          "returned_r0": "0xa5",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 110,
+          "index": 14,
+          "returned_r0": "0xfa",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 111,
+          "index": 15,
+          "returned_r0": "0xa5",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 112,
+          "index": 0,
+          "returned_r0": "0x3c",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 113,
+          "index": 1,
+          "returned_r0": "0xdb",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 114,
+          "index": 2,
+          "returned_r0": "0xe7",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 115,
+          "index": 3,
+          "returned_r0": "0x99",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 116,
+          "index": 4,
+          "returned_r0": "0x9",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 117,
+          "index": 5,
+          "returned_r0": "0xa4",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 118,
+          "index": 6,
+          "returned_r0": "0x15",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 119,
+          "index": 7,
+          "returned_r0": "0x29",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 120,
+          "index": 8,
+          "returned_r0": "0x41",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 121,
+          "index": 9,
+          "returned_r0": "0x9",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 122,
+          "index": 10,
+          "returned_r0": "0x9c",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 123,
+          "index": 11,
+          "returned_r0": "0x43",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 124,
+          "index": 12,
+          "returned_r0": "0xa6",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 125,
+          "index": 13,
+          "returned_r0": "0x90",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 126,
+          "index": 14,
+          "returned_r0": "0x3b",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 127,
+          "index": 15,
+          "returned_r0": "0x93",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        }
+      ]
+    },
+    {
+      "module": "1ST_READ.BIN",
+      "load_address": "0x8c010000",
+      "name": "sa_input_device_record_status_set_8c65f41e",
+      "address": "0x8c65f41e",
+      "end_exclusive": "0x8c65f42e",
+      "retail_span_sha256": "ab3361f16e9d7b3aa1bcdc9dc0ab3a029a10515a795014fddb20d2ab8f64ead4",
+      "cases_passed": 128,
+      "cases": [
+        {
+          "case": 0,
+          "index": 0,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 1,
+          "index": 1,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 2,
+          "index": 2,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 3,
+          "index": 3,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 4,
+          "index": 4,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 5,
+          "index": 5,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 6,
+          "index": 6,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 7,
+          "index": 7,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 8,
+          "index": 8,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 9,
+          "index": 9,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 10,
+          "index": 10,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 11,
+          "index": 11,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 12,
+          "index": 12,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 13,
+          "index": 13,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 14,
+          "index": 14,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 15,
+          "index": 15,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 16,
+          "index": 0,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 17,
+          "index": 1,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 18,
+          "index": 2,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 19,
+          "index": 3,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 20,
+          "index": 4,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 21,
+          "index": 5,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 22,
+          "index": 6,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 23,
+          "index": 7,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 24,
+          "index": 8,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 25,
+          "index": 9,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 26,
+          "index": 10,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 27,
+          "index": 11,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 28,
+          "index": 12,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 29,
+          "index": 13,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 30,
+          "index": 14,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 31,
+          "index": 15,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 32,
+          "index": 0,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 33,
+          "index": 1,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 34,
+          "index": 2,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 35,
+          "index": 3,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 36,
+          "index": 4,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 37,
+          "index": 5,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 38,
+          "index": 6,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 39,
+          "index": 7,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 40,
+          "index": 8,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 41,
+          "index": 9,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 42,
+          "index": 10,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 43,
+          "index": 11,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 44,
+          "index": 12,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 45,
+          "index": 13,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 46,
+          "index": 14,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 47,
+          "index": 15,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 48,
+          "index": 0,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 49,
+          "index": 1,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 50,
+          "index": 2,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 51,
+          "index": 3,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 52,
+          "index": 4,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 53,
+          "index": 5,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 54,
+          "index": 6,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 55,
+          "index": 7,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 56,
+          "index": 8,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 57,
+          "index": 9,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 58,
+          "index": 10,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 59,
+          "index": 11,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 60,
+          "index": 12,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 61,
+          "index": 13,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 62,
+          "index": 14,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 63,
+          "index": 15,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 64,
+          "index": 0,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 65,
+          "index": 1,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 66,
+          "index": 2,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 67,
+          "index": 3,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 68,
+          "index": 4,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 69,
+          "index": 5,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 70,
+          "index": 6,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 71,
+          "index": 7,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 72,
+          "index": 8,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 73,
+          "index": 9,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 74,
+          "index": 10,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 75,
+          "index": 11,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 76,
+          "index": 12,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 77,
+          "index": 13,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 78,
+          "index": 14,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 79,
+          "index": 15,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 80,
+          "index": 0,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 81,
+          "index": 1,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 82,
+          "index": 2,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 83,
+          "index": 3,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 84,
+          "index": 4,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 85,
+          "index": 5,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 86,
+          "index": 6,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 87,
+          "index": 7,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 88,
+          "index": 8,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 89,
+          "index": 9,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 90,
+          "index": 10,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 91,
+          "index": 11,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 92,
+          "index": 12,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 93,
+          "index": 13,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 94,
+          "index": 14,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 95,
+          "index": 15,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 96,
+          "index": 0,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 97,
+          "index": 1,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 98,
+          "index": 2,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 99,
+          "index": 3,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 100,
+          "index": 4,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 101,
+          "index": 5,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 102,
+          "index": 6,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 103,
+          "index": 7,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 104,
+          "index": 8,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 105,
+          "index": 9,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 106,
+          "index": 10,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 107,
+          "index": 11,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 108,
+          "index": 12,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 109,
+          "index": 13,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 110,
+          "index": 14,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 111,
+          "index": 15,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 112,
+          "index": 0,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 113,
+          "index": 1,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 114,
+          "index": 2,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 115,
+          "index": 3,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 116,
+          "index": 4,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 117,
+          "index": 5,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 118,
+          "index": 6,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 119,
+          "index": 7,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 120,
+          "index": 8,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 121,
+          "index": 9,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 122,
+          "index": 10,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 123,
+          "index": 11,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 124,
+          "index": 12,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 125,
+          "index": 13,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 126,
+          "index": 14,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        },
+        {
+          "case": 127,
+          "index": 15,
+          "returned_r0": "0x1",
+          "retail_instructions": 16,
+          "full_ram_cpu_and_macl_match": true
+        }
+      ]
+    }
+  ]
+}

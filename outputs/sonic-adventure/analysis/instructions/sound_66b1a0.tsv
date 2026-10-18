@@ -1,0 +1,51 @@
+address	opcode	instruction	references
+8c66b1a0	d31a	mov.l 0x8c66b20c,r3	READ:8c66b20c=8c67c1d0 
+8c66b1a2	2fe6	mov.l r14,@-r15	DATA:Stack[-0x4] 
+8c66b1a4	4f22	sts.l PR,@-r15	DATA:Stack[-0x8] 
+8c66b1a6	6632	mov.l @r3,r6	READ:8c67c1d0=0 
+8c66b1a8	d717	mov.l 0x8c66b208,r7	READ:8c66b208=d000001 
+8c66b1aa	2668	tst r6,r6	
+8c66b1ac	8f02	bf/s 0x8c66b1b4	CONDITIONAL_JUMP:8c66b1b4=8b022448 
+8c66b1ae	ee00	_mov #0x0,r14	
+8c66b1b0	a01e	bra 0x8c66b1f0	UNCONDITIONAL_JUMP:8c66b1f0=89032ee8 
+8c66b1b2	6e73	_mov r7,r14	
+8c66b1b4	2448	tst r4,r4	
+8c66b1b6	8b02	bf 0x8c66b1be	CONDITIONAL_JUMP:8c66b1be=89152668 
+8c66b1b8	de15	mov.l 0x8c66b210,r14	READ:8c66b210=7000103 
+8c66b1ba	a019	bra 0x8c66b1f0	UNCONDITIONAL_JUMP:8c66b1f0=89032ee8 
+8c66b1bc	9	_nop	
+8c66b1be	2668	tst r6,r6	
+8c66b1c0	8915	bt 0x8c66b1ee	CONDITIONAL_JUMP:8c66b1ee=2ee86e73 
+8c66b1c2	8441	mov.b @(0x1,r4),r0	
+8c66b1c4	e32c	mov #0x2c,r3	
+8c66b1c6	6703	mov r0,r7	
+8c66b1c8	647e	exts.b r7,r4	
+8c66b1ca	243f	muls.w r3,r4	
+8c66b1cc	605e	exts.b r5,r0	
+8c66b1ce	887f	cmp/eq #0x7f,r0	
+8c66b1d0	8f05	bf/s 0x8c66b1de	CONDITIONAL_JUMP:8c66b1de=45009111 
+8c66b1d2	41a	_sts MACL,r4	
+8c66b1d4	9116	mov.w 0x8c66b204,r1	READ:8c66b204=a8 
+8c66b1d6	316c	add r6,r1	
+8c66b1d8	341c	add r1,r4	
+8c66b1da	a006	bra 0x8c66b1ea	UNCONDITIONAL_JUMP:8c66b1ea=8046a001 
+8c66b1dc	e000	_mov #0x0,r0	
+8c66b1de	9111	mov.w 0x8c66b204,r1	READ:8c66b204=a8 
+8c66b1e0	4500	shll r5	
+8c66b1e2	e0ff	mov #-0x1,r0	
+8c66b1e4	316c	add r6,r1	
+8c66b1e6	3058	sub r5,r0	
+8c66b1e8	341c	add r1,r4	
+8c66b1ea	a001	bra 0x8c66b1f0	UNCONDITIONAL_JUMP:8c66b1f0=89032ee8 
+8c66b1ec	8046	_mov.b r0,@(0x6,r4)	
+8c66b1ee	6e73	mov r7,r14	
+8c66b1f0	2ee8	tst r14,r14	
+8c66b1f2	8903	bt 0x8c66b1fc	CONDITIONAL_JUMP:8c66b1fc=60e34f26 
+8c66b1f4	d308	mov.l 0x8c66b218,r3	READ:8c66b218=8c65acac 
+8c66b1f6	d407	mov.l 0x8c66b214,r4	READ:8c66b214=8c66b1a0 PARAM:8c66b1a0=2fe6d31a 
+8c66b1f8	430b	jsr @r3	COMPUTED_CALL:8c65acac=d203d302 
+8c66b1fa	65e3	_mov r14,r5	
+8c66b1fc	4f26	lds.l @r15+,PR	DATA:Stack[-0x8] 
+8c66b1fe	60e3	mov r14,r0	
+8c66b200	b	rts	
+8c66b202	6ef6	_mov.l @r15+,r14	

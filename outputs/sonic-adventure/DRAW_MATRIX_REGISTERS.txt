@@ -1,0 +1,121 @@
+Complete register-input matrix scale and translation
+17 October 2026 - VERIFIED within the bounded contracts below.
+Overall completion: 10% estimated weighted whole-project milestones, not code coverage.
+Goal active on Sol High. No model switch or pause advised.
+
+What changed
+Two formerly unregistered helpers now have complete guarded native bodies:
+  8c63a69c..8c63a742: register-input matrix scale, 83 instruction rows.
+  8c63a878..8c63a8da: register-input matrix translation, 49 rows.
+All 132 rows / 264 instruction bytes are checked against 1ST_READ.BIN.
+Earlier scale C had limited entry-mode checks. Earlier translation C implemented
+only the implicit matrix branch. Those sources and all their old reports/builds
+are preserved. This is the first registry entry for each original address;
+there is no duplicate credit for earlier limited source or reused renderer code.
+
+Source: source/sa_draw_matrix_registers.c
+Direct API bridge: source/sa_draw_matrix_registers_connected.c
+Separate renderer bridge: source/sa_draw_matrix_renderer_connected.c
+Generators: recover_draw_matrix_registers.py, connect_draw_matrix_renderer.py
+Builds: build_draw_matrix_registers.ps1, build_draw_matrix_renderer.ps1
+The renderer build contains 84 compiled sources. It routes real traversal calls
+to the completed bodies while preserving the older linked renderer builds.
+
+Behavior and original dataflow
+R4=0 selects the implicit XMTRX in the opposite FPU bank. Nonzero R4 selects
+an explicit matrix in guest RAM. Both paths are now complete.
+Scale factors come from active FR4/FR5/FR6. Under ordinary narrow transfers,
+the first three four-word matrix columns are scaled independently and the
+fourth column is retained. All 12 original multiplications and their order,
+scratch-register writes, pair moves, bank selection and FSCHG toggles remain.
+
+Translation supplies active FR4/FR5/FR6 and forces FR7 to 1.0. The implicit
+path executes FTRV on that vector, then copies all four results into XMTRX's
+fourth column. The explicit path reads each original matrix row, executes
+FIPR and stores its result at +30/+34/+38/+3c. Original reads, GPR writes,
+delay slots, wide FMOV side effects and the final delay-slot store are retained.
+The direct bridge publishes exact reached PC for numerical or RAM stops.
+Guards occur at reached instructions, rather than rejecting every unusual
+mode before original prefix effects. They do not deliver CPU exceptions.
+
+Vector numerical support
+FTRV/FIPR use the existing pinned MIT-licensed SH-4 numerical dependency and
+native adapter. Its source, license, revision and earlier proof fingerprints
+are retained. Original-instruction comparisons use a separate reference adapter
+to the same core for vector arithmetic; those comparisons prove dataflow/wiring,
+not independent physical-hardware numerical equivalence. The independent matrix
+tests use exact rational algebra on representable dyadic inputs and separately
+check the complete matrix and all memory writes.
+
+Build and tests actually run
+Both new native DLL builds pass Clang -O2 -Wall -Wextra -Werror without a C
+runtime. 856 focused original-state comparisons pass, executing all 132 rows
+and all four branch outcomes. 558 complete; 42 numerical traps, 192 unsupported
+precision/rounding boundaries and 64 invalid-RAM stops retain matching reached
+state. 256 completed cases independently check exact matrix algebra and the
+entire RAM write footprint. Cases cover both FPU banks, implicit/explicit
+matrices, raw wide transfers, rounding modes, enabled exceptions, finite edge
+inputs and RAM ends. No alignment/hardware-fault delivery claim is made.
+Proof: analysis/draw_matrix_registers_verification.json
+
+64 actual native model-traversal caller cases also pass: eight transform
+selectors, single/five-node trees, both FPU banks and both Euler-order flags.
+They make 64 scale calls, 96 translation calls and 160 mesh calls, through the
+native renderer with zero game-service fixtures. Full original state, 2,384
+ordered boundaries, output queues (800 flushes / 8,860 events), independent
+mesh-address preorder and matrix-stack restoration match. These caller paths
+supply R4=0; explicit matrices are covered by the focused proof above.
+The nodes and four-vertex flat mesh inputs are constructed valid test data.
+Proof: analysis/draw_matrix_model_callers_verification.json
+
+The separate linked build also passes all 120 earlier particle lifetimes,
+984 scheduler stages, 23,264 boundaries and 46 existing translation regressions.
+The original particle models do not call either new helper: invocation counts
+are explicitly zero in this regression report. These runs establish preserved
+behavior elsewhere; the 64 transformed caller cases establish use of the new
+matrix bodies. No independent helper coverage is inferred from the lifetimes.
+Proof: analysis/draw_matrix_renderer_lifecycle_verification.json
+
+Checks include complete 16-MiB RAM, integer registers, SR/PR/PC where exposed,
+both FPU banks/FPSCR, FPUL/MACL and the inherited queue/event model. The older
+renderer ABI exposes aggregate status, with its inherited partial-stop limits;
+exact helper stop-PC evidence comes from the direct API. None of these tests
+proves GPU pixels, physical cache timing, natural frame ordering or gameplay.
+
+Integrity and progress
+Both new generators reproduce source/build/manifests byte-for-byte. Registration
+is repeatable without duplicate entries. New Python and changed PowerShell
+syntax checks pass. The dispatcher map passes 658 original pointer-load checks
+over 80 spans / 83 selectors. Registry audit: 1,119 entries / 1,116 unique
+module-address pairs, 1,067 matches in 10,875 snapshot candidates, zero evidence
+errors and zero stale source reports. 211 non-texture binaries still lack a
+complete function index. Counts are not an exhaustive game-routine inventory.
+The historical aggregate build_and_verify.ps1 suite was not rerun this turn.
+
+How to check
+Open this guide and the three proof JSON files listed above for the recorded
+results, test inputs and pinned files. Developers can run the following with
+the bundled Python runtime and -B:
+  verify_draw_matrix_registers.py --smoke
+  verify_draw_matrix_model_callers.py --smoke
+  verify_draw_matrix_renderer_lifecycle.py --smoke
+Remove --smoke for full tests. The ordered full reproduction steps are also
+included in build_and_verify.ps1. Rebuilding a preserved DLL changes its proof
+fingerprint; regenerate that build's reports intentionally when doing so.
+
+Next dependencies
+The AL_MAIN draw callback candidate 0c9058a0 still has 11 unregistered targets
+among its 27 statically resolved targets. Caller 0c9009d0 still has ten.
+Nine next helpers have been exported read-only and 477 instruction rows checked
+against original binary bytes. Draft pseudocode is analysis, not recovered C.
+See analysis/overlay_draw_missing_helpers_inventory.json and the export script
+ghidra/export_overlay_draw_missing_helpers.ps1. Two other targets, 8c5fde20 and
+8c60e5e4, lack indexed function boundaries; their ends have not been guessed.
+Start with predicate/culling candidate 8c038d00 and the four-float wrapper
+8c043a20, including its original 8c60edf0 dependency, then remaining draw services.
+Their names/purposes are inferred until recovery and original behavior checks.
+
+Recommended next model: Sol High for vector arithmetic, reverse engineering and
+draw integration. Luna Low is appropriate for documentation-only maintenance.
+Complete game-code recovery, scene/frame integration, hardware rendering,
+60/120/240 FPS, 8K, optional SUPIR textures and all playable ports remain pending.

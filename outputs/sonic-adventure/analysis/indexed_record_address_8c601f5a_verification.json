@@ -1,0 +1,913 @@
+{
+  "module": "1ST_READ.BIN",
+  "load_address": "0x8c010000",
+  "address": "0x8c601f5a",
+  "end_exclusive": "0x8c601f66",
+  "retail_span_sha256": "9dcfbecd5cec5b2903070bba70713be15e3dbc9fc316c02eb6b0bc9e465f4e6f",
+  "binary_sha256": "45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a",
+  "source_sha256": "1d63c427291d9a755057b1c55e50f98e07fdeada30e9c20a51ec940b3ff30a9a",
+  "cases_passed": 128,
+  "comparison_level": "Complete 16 MiB RAM, all GPRs, SR, PR, return PC, and MACL compared against the retail SH-4 interpreter.",
+  "scope": "Tests the literal-loaded base, modulo-32-bit MUL.L by 0x34, MACL result, R3/R0 effects, and wrapping address addition across boundary and randomized inputs.",
+  "limitations": [
+    "The indexed record table and caller-valid index range remain unidentified."
+  ],
+  "cases": [
+    {
+      "case": 0,
+      "index": "0x0",
+      "base": "0x8c000000",
+      "macl": "0x0",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 1,
+      "index": "0x1",
+      "base": "0x8cfffffc",
+      "macl": "0x34",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 2,
+      "index": "0x2",
+      "base": "0x8c010000",
+      "macl": "0x68",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 3,
+      "index": "0x7fffff",
+      "base": "0x8c601f50",
+      "macl": "0x19ffffcc",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 4,
+      "index": "0x800000",
+      "base": "0x8c601f70",
+      "macl": "0x1a000000",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 5,
+      "index": "0xffffffff",
+      "base": "0x8c710014",
+      "macl": "0xffffffcc",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 6,
+      "index": "0x12345678",
+      "base": "0x8c000000",
+      "macl": "0xb2a19060",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 7,
+      "index": "0x1010101",
+      "base": "0x8cfffffc",
+      "macl": "0x34343434",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 8,
+      "index": "0x0",
+      "base": "0x8c010000",
+      "macl": "0x0",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 9,
+      "index": "0x1",
+      "base": "0x8c601f50",
+      "macl": "0x34",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 10,
+      "index": "0x2",
+      "base": "0x8c601f70",
+      "macl": "0x68",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 11,
+      "index": "0x7fffff",
+      "base": "0x8c71002c",
+      "macl": "0x19ffffcc",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 12,
+      "index": "0x800000",
+      "base": "0x8c000000",
+      "macl": "0x1a000000",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 13,
+      "index": "0xffffffff",
+      "base": "0x8cfffffc",
+      "macl": "0xffffffcc",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 14,
+      "index": "0x12345678",
+      "base": "0x8c010000",
+      "macl": "0xb2a19060",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 15,
+      "index": "0x1010101",
+      "base": "0x8c601f50",
+      "macl": "0x34343434",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 16,
+      "index": "0x0",
+      "base": "0x8c601f70",
+      "macl": "0x0",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 17,
+      "index": "0x1",
+      "base": "0x8c710044",
+      "macl": "0x34",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 18,
+      "index": "0x2",
+      "base": "0x8c000000",
+      "macl": "0x68",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 19,
+      "index": "0x7fffff",
+      "base": "0x8cfffffc",
+      "macl": "0x19ffffcc",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 20,
+      "index": "0x800000",
+      "base": "0x8c010000",
+      "macl": "0x1a000000",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 21,
+      "index": "0xffffffff",
+      "base": "0x8c601f50",
+      "macl": "0xffffffcc",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 22,
+      "index": "0x12345678",
+      "base": "0x8c601f70",
+      "macl": "0xb2a19060",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 23,
+      "index": "0x1010101",
+      "base": "0x8c71005c",
+      "macl": "0x34343434",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 24,
+      "index": "0x0",
+      "base": "0x8c000000",
+      "macl": "0x0",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 25,
+      "index": "0x1",
+      "base": "0x8cfffffc",
+      "macl": "0x34",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 26,
+      "index": "0x2",
+      "base": "0x8c010000",
+      "macl": "0x68",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 27,
+      "index": "0x7fffff",
+      "base": "0x8c601f50",
+      "macl": "0x19ffffcc",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 28,
+      "index": "0x800000",
+      "base": "0x8c601f70",
+      "macl": "0x1a000000",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 29,
+      "index": "0xffffffff",
+      "base": "0x8c710074",
+      "macl": "0xffffffcc",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 30,
+      "index": "0x12345678",
+      "base": "0x8c000000",
+      "macl": "0xb2a19060",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 31,
+      "index": "0x1010101",
+      "base": "0x8cfffffc",
+      "macl": "0x34343434",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 32,
+      "index": "0x4f68546d",
+      "base": "0x8c010000",
+      "macl": "0x21312624",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 33,
+      "index": "0x79960f79",
+      "base": "0x8c601f50",
+      "macl": "0xb27b2494",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 34,
+      "index": "0x1468d70e",
+      "base": "0x8c601f70",
+      "macl": "0x254baed8",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 35,
+      "index": "0xb2dbbf64",
+      "base": "0x8c71008c",
+      "macl": "0x54a2e050",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 36,
+      "index": "0x992b0fee",
+      "base": "0x8c000000",
+      "macl": "0x1cbf3c58",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 37,
+      "index": "0xc71ca348",
+      "base": "0x8cfffffc",
+      "macl": "0x71d12aa0",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 38,
+      "index": "0x8444cff5",
+      "base": "0x8c010000",
+      "macl": "0xddfa3dc4",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 39,
+      "index": "0x529bae08",
+      "base": "0x8c601f50",
+      "macl": "0xc79f59a0",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 40,
+      "index": "0x17d74d14",
+      "base": "0x8c601f70",
+      "macl": "0xd7bba810",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 41,
+      "index": "0x5fa3a0f0",
+      "base": "0x8c7100a4",
+      "macl": "0x6d3cb0c0",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 42,
+      "index": "0xe852569f",
+      "base": "0x8c000000",
+      "macl": "0x30b9984c",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 43,
+      "index": "0xb6266f55",
+      "base": "0x8cfffffc",
+      "macl": "0xffce9d44",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 44,
+      "index": "0xee6f7ac7",
+      "base": "0x8c010000",
+      "macl": "0x6ea4f06c",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 45,
+      "index": "0x76ccbaa2",
+      "base": "0x8c601f50",
+      "macl": "0x2195e8e8",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 46,
+      "index": "0x1b9693bc",
+      "base": "0x8c601f70",
+      "macl": "0x9a960230",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 47,
+      "index": "0xfcecf89a",
+      "base": "0x8c7100bc",
+      "macl": "0x60227f48",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 48,
+      "index": "0x8fce9569",
+      "base": "0x8c000000",
+      "macl": "0x35f65954",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 49,
+      "index": "0xcc53a49b",
+      "base": "0x8cfffffc",
+      "macl": "0x80fd6f7c",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 50,
+      "index": "0x51a04f34",
+      "base": "0x8c010000",
+      "macl": "0x94901690",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 51,
+      "index": "0x11bd9a4f",
+      "base": "0x8c601f50",
+      "macl": "0x9a83580c",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 52,
+      "index": "0x691d61b8",
+      "base": "0x8c601f70",
+      "macl": "0x59f7d960",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 53,
+      "index": "0xfcfb2157",
+      "base": "0x8c7100d4",
+      "macl": "0x6302c5ac",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 54,
+      "index": "0x58d3a3da",
+      "base": "0x8c000000",
+      "macl": "0xafd4848",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 55,
+      "index": "0xed40f1d7",
+      "base": "0x8cfffffc",
+      "macl": "0x31311fac",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 56,
+      "index": "0x604dc5db",
+      "base": "0x8c010000",
+      "macl": "0x8fcc307c",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 57,
+      "index": "0x32ebd1ac",
+      "base": "0x8c601f50",
+      "macl": "0x57e696f0",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 58,
+      "index": "0x76e5d16d",
+      "base": "0x8c601f70",
+      "macl": "0x26ae8a24",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 59,
+      "index": "0xe728a2f4",
+      "base": "0x8c7100ec",
+      "macl": "0xf4411990",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 60,
+      "index": "0x887931bd",
+      "base": "0x8c000000",
+      "macl": "0xb89e1a64",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 61,
+      "index": "0x69bf977",
+      "base": "0x8cfffffc",
+      "macl": "0x57aeac2c",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 62,
+      "index": "0x142312c3",
+      "base": "0x8c010000",
+      "macl": "0x171fcf9c",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 63,
+      "index": "0x933e7af9",
+      "base": "0x8c601f50",
+      "macl": "0xe8b0fa94",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 64,
+      "index": "0x69aa3af1",
+      "base": "0x8c601f70",
+      "macl": "0x7693f8f4",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 65,
+      "index": "0xabfacb39",
+      "base": "0x8c710104",
+      "macl": "0xeef14794",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 66,
+      "index": "0x3290f78",
+      "base": "0x8c000000",
+      "macl": "0xa4572460",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 67,
+      "index": "0xbf85a82",
+      "base": "0x8cfffffc",
+      "macl": "0x6e726268",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 68,
+      "index": "0x3640d432",
+      "base": "0x8c010000",
+      "macl": "0x52b1a28",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 69,
+      "index": "0x7e499d5f",
+      "base": "0x8c601f50",
+      "macl": "0xa6f3f74c",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 70,
+      "index": "0xc14f88b5",
+      "base": "0x8c601f70",
+      "macl": "0x4427c4c4",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 71,
+      "index": "0xdb509a52",
+      "base": "0x8c71011c",
+      "macl": "0x8c5f58a8",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 72,
+      "index": "0xa3805ed6",
+      "base": "0x8c000000",
+      "macl": "0x36134378",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 73,
+      "index": "0x1a3ae74f",
+      "base": "0x8cfffffc",
+      "macl": "0x53f6fc0c",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 74,
+      "index": "0xc8c0d75d",
+      "base": "0x8c010000",
+      "macl": "0xc72bbee4",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 75,
+      "index": "0xa38faad3",
+      "base": "0x8c601f50",
+      "macl": "0x392eb2dc",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 76,
+      "index": "0x7707aba",
+      "base": "0x8c601f70",
+      "macl": "0x82d8edc8",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 77,
+      "index": "0x4872f66e",
+      "base": "0x8c710134",
+      "macl": "0xb75a0e58",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 78,
+      "index": "0x973ba34a",
+      "base": "0x8c000000",
+      "macl": "0xb81d2b08",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 79,
+      "index": "0xf409862f",
+      "base": "0x8cfffffc",
+      "macl": "0x91ef418c",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 80,
+      "index": "0xe50ad931",
+      "base": "0x8c010000",
+      "macl": "0x86341df4",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 81,
+      "index": "0xcb8d1e3d",
+      "base": "0x8c601f50",
+      "macl": "0x58aa2464",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 82,
+      "index": "0xc827213c",
+      "base": "0x8c601f70",
+      "macl": "0xa7f2c030",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 83,
+      "index": "0x409d7e0c",
+      "base": "0x8c71014c",
+      "macl": "0x1ffd9a70",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 84,
+      "index": "0x60d7c6f",
+      "base": "0x8c000000",
+      "macl": "0x3abd468c",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 85,
+      "index": "0x8bed1558",
+      "base": "0x8cfffffc",
+      "macl": "0x6c2855e0",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 86,
+      "index": "0x543607a2",
+      "base": "0x8c010000",
+      "macl": "0x1af98ce8",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 87,
+      "index": "0xe2506ce1",
+      "base": "0x8c601f50",
+      "macl": "0xf8561db4",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 88,
+      "index": "0x8981528c",
+      "base": "0x8c601f70",
+      "macl": "0xee44c470",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 89,
+      "index": "0x3e12d6d0",
+      "base": "0x8c710164",
+      "macl": "0x9bd3a240",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 90,
+      "index": "0x57b7e528",
+      "base": "0x8c000000",
+      "macl": "0xd15a8c20",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 91,
+      "index": "0xdfc0815d",
+      "base": "0x8cfffffc",
+      "macl": "0x731a46e4",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 92,
+      "index": "0x5aaebac6",
+      "base": "0x8c010000",
+      "macl": "0x6b7df038",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 93,
+      "index": "0x214c32ab",
+      "base": "0x8c601f50",
+      "macl": "0xc37a4abc",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 94,
+      "index": "0xe36d9820",
+      "base": "0x8c601f70",
+      "macl": "0x3242e680",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 95,
+      "index": "0x31994cbf",
+      "base": "0x8c71017c",
+      "macl": "0x132396cc",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 96,
+      "index": "0x826138cf",
+      "base": "0x8c000000",
+      "macl": "0x7bbf8a0c",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 97,
+      "index": "0x830c64eb",
+      "base": "0x8cfffffc",
+      "macl": "0x9e847fbc",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 98,
+      "index": "0xd3adbb5f",
+      "base": "0x8c010000",
+      "macl": "0xff4a0f4c",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 99,
+      "index": "0x986f80e1",
+      "base": "0x8c601f50",
+      "macl": "0xf6a62db4",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 100,
+      "index": "0x3a8f7a0f",
+      "base": "0x8c601f70",
+      "macl": "0xe524cb0c",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 101,
+      "index": "0xd23724ac",
+      "base": "0x8c710194",
+      "macl": "0xb33372f0",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 102,
+      "index": "0x764b9a24",
+      "base": "0x8c000000",
+      "macl": "0x75b4f50",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 103,
+      "index": "0x3ad63b40",
+      "base": "0x8cfffffc",
+      "macl": "0xf3840900",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 104,
+      "index": "0xd55d8fee",
+      "base": "0x8c010000",
+      "macl": "0x57013c58",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 105,
+      "index": "0x1ea858ee",
+      "base": "0x8c601f50",
+      "macl": "0x3a321058",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 106,
+      "index": "0xe06d1d0f",
+      "base": "0x8c601f70",
+      "macl": "0x9629e70c",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 107,
+      "index": "0x2e5ac2d0",
+      "base": "0x8c7101ac",
+      "macl": "0x6a6f9240",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 108,
+      "index": "0xb19a8dd9",
+      "base": "0x8c000000",
+      "macl": "0x1364d014",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 109,
+      "index": "0x2459a5e",
+      "base": "0x8cfffffc",
+      "macl": "0x76235b18",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 110,
+      "index": "0x96aa6be3",
+      "base": "0x8c010000",
+      "macl": "0x9a9dea1c",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 111,
+      "index": "0x1cd19e98",
+      "base": "0x8c601f50",
+      "macl": "0xda9436e0",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 112,
+      "index": "0x9369758a",
+      "base": "0x8c601f70",
+      "macl": "0xf16be008",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 113,
+      "index": "0x97863d9d",
+      "base": "0x8c7101c4",
+      "macl": "0xc74483e4",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 114,
+      "index": "0x555855ba",
+      "base": "0x8c000000",
+      "macl": "0x55f169c8",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 115,
+      "index": "0x37e1d1f",
+      "base": "0x8cfffffc",
+      "macl": "0xb59dea4c",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 116,
+      "index": "0x90dd6f8e",
+      "base": "0x8c010000",
+      "macl": "0x6cfaa8d8",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 117,
+      "index": "0x2903acd1",
+      "base": "0x8c601f50",
+      "macl": "0x54bf1a74",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 118,
+      "index": "0x80421f0f",
+      "base": "0x8c601f70",
+      "macl": "0xd6e4f0c",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 119,
+      "index": "0x686a51de",
+      "base": "0x8c7101dc",
+      "macl": "0x3598a118",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 120,
+      "index": "0x8025b0eb",
+      "base": "0x8c000000",
+      "macl": "0x7a7efbc",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 121,
+      "index": "0x6c47aca8",
+      "base": "0x8cfffffc",
+      "macl": "0xfe8f1220",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 122,
+      "index": "0xf9be62f8",
+      "base": "0x8c010000",
+      "macl": "0xbaac1a60",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 123,
+      "index": "0x21cf318a",
+      "base": "0x8c601f50",
+      "macl": "0xde161008",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 124,
+      "index": "0xf3da065d",
+      "base": "0x8c601f70",
+      "macl": "0x88494ae4",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 125,
+      "index": "0xa226e619",
+      "base": "0x8c7101f4",
+      "macl": "0xefe6bd14",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 126,
+      "index": "0x6d7cc3d0",
+      "base": "0x8c000000",
+      "macl": "0x3d57c640",
+      "ram_cpu_macl_match": true
+    },
+    {
+      "case": 127,
+      "index": "0x4f32e3d1",
+      "base": "0x8cfffffc",
+      "macl": "0x16564674",
+      "ram_cpu_macl_match": true
+    }
+  ]
+}

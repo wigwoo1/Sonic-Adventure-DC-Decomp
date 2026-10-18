@@ -1,0 +1,97 @@
+Sonic Adventure Rev A - complete material-block dispatcher
+
+Overall estimate: 10%, weighted whole-project milestones, not measured code
+coverage. Goal remains active on Sol High. No model switch or pause recommended.
+
+Status: VERIFIED within the stated processor, numeric, RAM and fixture domains.
+The original dispatcher at 8c0376d0 is now registered, adding 149 original
+instruction rows and 20 conditional outcomes. Every row/outcome was executed
+and matched. Its name is inferred. Three geometry/view/frame/boot proposals
+remain partial: view builder 8c604ba0, frame initializer 8c0544e2 and boot caller
+8c10b840. Fifteen older motion proposals and the full AL_MAIN draw parent also
+remain partial. No new recovery credit is granted to these outer routines.
+
+What the routine does
+It walks 24-byte primitive descriptors, selects a 20-byte material record,
+applies renderer material overrides, configures texture/colour/header state,
+then calls the appropriate original primitive emitter. The near-plane count
+selects ordinary or clipping-aware emitters. The textured clipped emitter can
+tail-transfer to the environment-coordinate emitter. Actual native children
+execute throughout; there are no fabricated service return values.
+
+Two details matter for faithful behavior:
+Material overrides affect the header setup word, while primitive selection
+reloads the unmodified material word. Forcing texture flags therefore does not
+necessarily select the textured primitive emitter. The independent routing
+formula was corrected after the original/native comparisons exposed this test
+assumption; the native game C already matched the original instructions.
+The descriptor's top two bits index the original strip table [3,4,0,0]. Fixed
+triangle/quad streams omit a count word; zero table entries read lengths from
+the index stream. Tests preserve each real layout and the 24-byte loop stride.
+
+Source and reproducibility files in this project directory
+source/sa_draw_geometry_stream.c - sa_geometry_stream_8c0376d0
+verify_draw_material_dispatch.py - focused complete-body verification
+register_draw_material_dispatch.py - hash/coverage-gated registration
+analysis/draw_material_dispatch_verification.json - complete results and inputs
+analysis/draw_geometry_stream_translation.json - original byte/listing provenance
+analysis/draw-geometry-frontier/8c0376d0_instructions.tsv - original instructions
+build_draw_clipping_complete.ps1 - retained strict optimized 122-source build
+source/sa_draw_clipping_state_connected.c - actual production connection
+DRAW_CLIPPING_COMPLETE.txt - preceding seven-body geometry/packet evidence
+
+Verification
+116 comparisons pass: 112 normal returns and four typed host-memory stops.
+All 149 rows and 20 outcomes match. The direct original-opcode model and native
+implementation compare full RAM, GPR/SR/PR/PC, both integer banks, MACH/MACL,
+FPU/FPUL, GBR and ordered entry/queue/cache state. There are 1,022 ordered entry
+checks, 589 flushes and 4,988 individually compared queue events, no count-only
+trace suffix. The four memory failures stop at the reached instruction; a guard
+does not imply successful guest completion or full hardware exception handling.
+
+336 independent assertions check effective material words, overridden header
+versus original primitive selection, complete child-entry order, loop exhaustion,
+descriptor stride and preserved stack/PR. Cases cover texture/alpha/header-format/
+environment combinations, both floating banks, enabled override masks/forced
+flags, two-block loops, all four strip-table entries, mirrored 0c/ac pointers and
+bad source/stack/descriptor/material pointers. Real native paths reach all four
+clippers, the shared tail writer and both clipped/ordinary primitive variants.
+Independent geometry/colour/UV/packet formulas retain their separate preceding
+seven-body proof; these 336 dispatcher assertions concern routing and state.
+
+No game C changes were needed: the compiled proposal now has complete evidence.
+The linked DLL is preserved with SHA-256
+f591fb807d5ac0572a101b242e73f75d659bc172f7b47de5dada1a81d9ad6d23.
+All 122 source files passed strict native syntax compilation with warnings as
+errors. The previously linked strict optimized build remains the tested binary.
+Older DLLs, source and verification evidence remain available. The broad
+build_and_verify.ps1 includes this focused stage; the whole aggregate was not
+rerun. Registration is byte-idempotent and attaches zero duplicate credit to
+18 existing child routines. Full-proof input hashes remain current.
+
+Registry audit: 1,245 entries / 1,242 unique module/address pairs, 1,137 matches
+in 10,875 frozen candidates. Zero evidence errors or stale source reports.
+All 658 dispatcher pointer checks pass (80 spans / 83 selectors). 211 nontexture
+binaries lack function indexes; the whole-game routine count remains unknown.
+
+How to check without programming
+Read this file and SOURCE_HANDOFF.txt. The JSON report contains cases_passed=116,
+rows_covered=149, conditional_edges_covered=20, empty missing_rows/missing_edges,
+and status_counts of 112 normal returns plus four memory stops. The recovered C
+is available in the source file above. This milestone does not produce a playable
+game executable.
+
+Remaining integration
+The tested model/material/strip, projected-cache, UV/normal and runtime texture
+records are prepared fixtures. Natural loading, full upstream camera/projection,
+startup/frame execution and physical GPU pixels remain unproved. CPU entry uses
+privileged integer bank 1 with FPU enabled. Existing numerical and MMU-off coherent
+software-queue domains apply; exception delivery, interrupts and timing remain open.
+Three early object smoke cases passed without reaching this clipping family.
+The later 156-case original-object run now passes and reaches textured/environment
+clipping through shipped models. Read OBJECT_DRAW_CLIPPING.txt. It remains a
+separate DLL/corpus scope and adds zero source credit to this dispatcher.
+Next recover view builder 8c604ba0 and trace its real dependencies. Continue
+distinguishing renderer families and supplied camera state from natural startup.
+Full decompilation/gameplay, FPS/8K, SUPIR/texture-Off/display options, Android,
+stereo 3DS and later N64/PS1 demakes remain requirements of the active goal.

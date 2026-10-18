@@ -1,0 +1,114 @@
+Mesh/material loop and filter-call wrapper
+16 October 2026 -- VERIFIED within the bounded scope below.
+Whole-project completion: 10% estimated weighted milestones, not code coverage.
+Goal active. Continue Sol High for lower filter/material/rendering services.
+
+Recovered native bodies
+  source/sa_main_dispatch_mesh.c
+    sa_mesh_material_loop_8c6209a8: 542 original instruction rows.
+    sa_mesh_filter_wrapper_8c62159a: 16 original instruction rows.
+  source/sa_main_dispatch_mesh_connected.c
+The complete 558-row translation preserves 92 conditional outcomes and 33 call
+sites. Exact original spans are hash-pinned; intervening literal pools contribute
+to span hashes but not instruction counts. Names and field meanings are inferred.
+
+Resolved indirect control flow
+Ghidra's draft stops at indirect-jump warnings, but original literals establish:
+  8c6209ca and 8c6209dc -> internal exit 8c620f0a;
+  8c6209e4 -> internal loop check 8c620efa;
+  8c620f06 -> internal material body 8c620a30.
+These retain internal C control flow and original PR; they are not fake external
+function calls. The translator checks their literal values against original
+bytes. The focused suite reaches all four jumps and their actual destinations.
+Arbitrary modified executable literals are outside this proof's input scope.
+
+Behavior
+The mesh compares a signed vertex count at +8 with the live signed global limit,
+calls the filter wrapper, and loops over the unsigned segment count at +14.
+Segments advance by 24 bytes. The material index uses the low 14 bits of a word;
+material records are 20 bytes. A repeated material index reuses the existing
+setup/handle, while changed indices recompute material state. Environment masks,
+colour overrides/additions, texture references and render flags choose the lower
+material services and one of eighteen primitive paths. The handle-release call
+occurs for each processed segment. The loop preserves its original scalar FLOAT,
+FMUL and FADD order and reached numerical restrictions.
+R8 is intentionally a handle/scratch output of this mesh body; callers preserve
+it through the recovered wrappers. The filter wrapper saves/restores R8 while
+retaining the filter's guest R0 result across its own cleanup.
+
+Strict build and focused verification
+The Clang DLL build passed with -Wall -Wextra -Werror, then eight smoke checks.
+All 663 final comparisons passed: mesh 453, mesh wrapper 159, filter wrapper 33,
+traversal 6, and original particle primary/draw/geometry paths 4 each.
+Every one of 558 new rows, 92 conditional outcomes and 33 call sites was reached.
+Full 16 MiB RAM, GPR/SR/PR, both floating-register banks, FPSCR/FPUL and MACL
+were compared, including 4,404 ordered boundaries and 8,040 numerical operations.
+526 completed cases passed independent loop-count/return and service-sequence
+checks. 137 numerical-guard or external-error cases matched partial state.
+All 27 lower service targets were reached; each also has missing/error tests.
+The final suite records 3,531 external service boundaries.
+
+Inputs cover all material-layout masks, both rendering selectors, environment
+override/addition/masking flags, repeated and changing material IDs, upper index
+bits, empty/multiple segments, signed vertex-limit extremes, filter rejection,
+FR/PR/SZ modes, reserved rounding, enabled traps and bank-changing filter calls.
+One independent assertion initially compared unsigned integers; the original
+signed CMP/GT treats 0xffffffff as -1. Correcting that assertion resolved the
+failure. Original/native full state already agreed; recovered code was unchanged.
+An additional uncovered acquisition target required its missing material-flag
+combination in the test inputs; the final suite reaches every declared target.
+
+Full linked lifetime verification
+Six smoke lifetimes and 120 full lifetimes / 984 stage comparisons passed with
+native spawn/emission, particle updates, geometry preparation, model traversal,
+mesh/material loop and deferred deletion sharing unchanged state between passes.
+The original particle meshes contain eleven vertices; retail-input fixtures set
+a sufficient limit so their material loops execute rather than taking rejection.
+Assertions confirm 880 actual mesh iterations, 880 filter calls, 880 primitive
+renderer calls and 880 release calls. The 5,280 lower service invocations comprise
+880 calls each to 8c611444, 8c606c56, 8c606a08, 8c605e68, 8c61ffe4 and 8c6069a4.
+There are 25,744 ordered boundaries and 57,120 scalar/vector operations, 64 parent
+tasks, 80 particles, and 54 paused scheduler passes. Independent lifetime checks
+confirm expiration, empty lists, exact free-task order and full heap coalescing.
+The existing translation regression also retains its 46-case/56-row coverage.
+
+Explicit remaining substitutes and limitations
+The 27 filter/material/acquisition/primitive-rendering/release services are
+state-mutating test substitutes. Their call arguments and ordering are verified;
+their real implementation, visible pixels, GPU/MMIO and actual texture sampling
+are not. No complete rendering system or playable native game is claimed.
+Constructed valid material/segment data and bounded loops do not prove arbitrary
+invalid pointers, concurrent mutation, hardware exceptions or frame-driver order.
+Shared vector numerical-oracle limits and scalar native guard-probe limits from
+earlier checkpoints remain. The complete project and all ports are unfinished.
+The HD/SUPIR and display controls remain planned; texture Off still requires
+vertex-coloured rendering with game-texture sampling disabled.
+
+Sources, evidence and repeat commands
+  analysis/main-dispatch-mesh/*_instructions.tsv
+  analysis/main_dispatch_mesh_translation.json
+  analysis/main_dispatch_mesh_verification.json
+  analysis/main_dispatch_mesh_lifecycle_verification.json
+Reports pin original spans, source, dependency evidence, tools and tested DLL.
+The registrar verifies metrics, hashes and the 880 original-mesh iterations.
+From this document's directory with the installed project Python:
+  python -B recover_main_dispatch_mesh.py
+  .\build_main_dispatch_mesh.ps1
+  python -B verify_main_dispatch_mesh.py
+  python -B verify_main_dispatch_mesh_lifecycle.py
+  python -B register_main_dispatch_mesh.py
+  python -B map_main_dispatch_cases.py
+  python -B verify_main_dispatch_case_map.py
+Optional read-only export: ghidra/export_main_dispatch_mesh.ps1.
+The focused stages are included in build_and_verify.ps1. Its PowerShell syntax
+passed; the entire accumulated project workflow was not rerun end-to-end.
+
+Final audits and next task
+1,036 registered entries / 1,033 unique module-address pairs; zero evidence errors
+and zero stale source reports. 984 entries match the unchanged 10,875 candidate
+snapshot. 211 non-texture modules still lack a function index. Those incomplete
+inventories do not measure whole-game decompilation coverage. Dispatcher checks
+passed 658 original pointer loads, 80 spans and 83 selectors. Milestone audit: 10%.
+Next, inspect the filter at 8c611444 and material-state service 8c606c56, check for
+existing reusable source, and recover their original dependencies. Keep Sol High
+for this reverse engineering; no model switch or pause is recommended.

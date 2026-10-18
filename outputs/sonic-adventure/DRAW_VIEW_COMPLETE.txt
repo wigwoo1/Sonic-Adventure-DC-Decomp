@@ -1,0 +1,107 @@
+Sonic Adventure Dreamcast Rev A - complete original view builder
+
+Overall estimate: 10%, weighted whole-project milestones, not code coverage.
+Goal remains active on Sol High. No model switch or pause recommended.
+Status: VERIFIED within the documented domains. Full rendering/gameplay is pending.
+
+New complete registration
+8c604ba0, inferred name sa_geometry_stream_8c604ba0: all 166 original instruction
+rows and six conditional outcomes now execute and match. The former 117-row
+prefix has been completed through the original register wrapper, register writer,
+slot/header selector and word-copy dispatcher. Frame initializer 8c0544e2 and
+boot caller 8c10b840 remain partial; the view builder no longer receives partial
+status in the latest milestone. Fifteen older motion proposals remain partial.
+
+Source and reproducibility files in this project directory
+source/sa_draw_geometry_stream.c - complete original view-builder body
+source/sa_draw_view_registers.c - guarded adaptations of existing original
+  register services 8c652d3a (14 rows) and 8c653444 (five rows), zero new credit
+source/render_register_bus.h and .c - explicit bounded host register storage,
+  composed with the existing RAM/store-queue backend
+source/sa_draw_view_registers_connected.c - production native connection
+source/sa_overlay_model_blend.c - existing complete original word-copy dispatcher
+recover_draw_view_registers.py / connect_draw_view_registers.py
+build_draw_view_registers.ps1
+verify_draw_view_registers.py / verify_draw_view_complete.py
+register_draw_view_complete.py
+analysis/draw_view_registers_translation.json and _connection.json
+analysis/draw_view_registers_verification.json
+analysis/draw_view_complete_verification.json
+ghidra/export_draw_view_registers.ps1 - read-only original instruction export
+Earlier source, APIs, builds and proofs remain preserved.
+
+Build and full view verification
+A separate optimized strict 126-source native DLL builds with warnings as errors.
+SHA-256: 5fc42ce918a80fc49606b5c57fbfcfe82b1f903269d6b5af10f890cbd14ccaa3.
+28 view-builder comparisons pass: 14 qualified normal returns, six numerical-mode
+guards, six invalid-return/memory/rejected-backend stops and two missing-bus stops.
+The six -3 stops comprise two paired-move overwritten-return guards, two rejected
+register writes and two invalid stacks. Missing/rejected bus stops occur at the
+actual register store 8c653448, preserving reached partial state.
+All 166 rows/six outcomes match. Full reached/final RAM, CPU/FPU/FPUL, both integer
+banks, MACH/MACL/GBR, complete register map and 484 ordered boundaries match the
+original-opcode model. Normal entry uses privileged bank 1 with FPU enabled and
+scalar PR=0/SZ=0. Guard stops do not count as successful guest function returns.
+
+70 independent assertions check screen half-width/height, original default screen
+distance, preserved callee registers/stack and the exact original-literal register
+write. Another 28 captured native 192-byte copies are checked against input byte
+snapshots at their actual copy entry. Real native dependencies execute; no game
+service result is supplied to force a return. Screen inputs include 1x1 through
+7680x4320; this proves state construction, not working 8K display output.
+There are 16 actual register writes across this suite: 14 normal returns plus two
+paired-move cases that write before their later return guard.
+
+Register services and backend verification
+142 separate original/native comparisons pass: 134 returns, two missing-bus
+stops and six invalid-address/stack/rejected-bus stops. All 19 original rows,
+226 ordered entry checks and 134 exact register writes match. 134 cases add
+402 independent sign-mask/address/value/register/stack/full-RAM assertions.
+Raw floating bit patterns, including NaNs, infinities and signed zero, are moved
+and sign-masked without numerical interpretation. Direct paired-move fixtures
+put the original PR in the adjacent floating word so the original paired stack
+write remains returnable. The real view cases test its actual overwritten PR.
+One added reserved-rounding case exposed a missing guard in the original test
+model; it now reports the same explicit unsupported-numerical-domain stop as the
+native arithmetic kernel, rather than crashing the verifier. No game C was
+changed to fit an expected numeric result.
+
+The backend passes 18,447 independent operations over all 2,048 stored register
+words and three address aliases, including reads, writes, queue fallback/flush,
+four mutation-free invalid writes and initialization from deliberately dirty
+memory. Its 18,444 ordered events compare the first 4,096 individually, with
+14,348 later count-only events and exact final full register/RAM/queue state.
+The view/service corpora have individually compared event traces without overflow.
+GPU register effects are included in original/native ordered entry snapshots too.
+
+What the software register store proves
+It stores accepted values and records ordered reads/writes in an explicit bounded
+address window, while retaining the existing QACR/store-queue behavior. It does
+not execute GPU commands, emulate hardware status/acknowledgements, render pixels
+or implement timing/interrupts/read-only register rules. That platform work remains
+necessary for a playable PC port. The successful view proof is limited to its
+actual register writes; it does not rely on invented hardware read responses.
+
+Audit and next step
+Registry: 1,250 entries / 1,247 unique module/address pairs; 1,142 matches in
+10,875 frozen candidates. Zero evidence errors or stale source reports. All 658
+dispatcher pointer checks pass. The whole-game routine count remains unknown;
+211 nontexture binaries lack function indexes. Registration is byte-idempotent;
+ten existing services attach with zero duplicate recovery credit.
+Five generated register artifacts reproduce exactly in memory. Python and
+PowerShell syntax checks pass, all view/register/object proof inputs remain
+current, and earlier prefix registration preserves the later full-view evidence.
+The separate 156-case object suite is complete; read OBJECT_DRAW_CLIPPING.txt
+for its distinct 122-source DLL, reached clippers and queue trace limits.
+Next recover the real frame initializer 8c0544e2 and its reached dependencies,
+keeping natural startup/frame scheduling distinct from prepared caller states.
+Full game code, physical rendering/gameplay, PC FPS/8K/settings, SUPIR HD textures,
+true vertex/material-colour texture Off, Android/stereo-3DS and later N64/PS1
+demakes remain incomplete requirements of the active goal.
+
+How to check without programming
+Open this document and SOURCE_HANDOFF.txt. The complete-view JSON has
+cases_passed=28, rows_covered=166, conditional_edges_covered=6 and empty missing
+lists. Its status_counts distinguish 14 normal returns from 14 checked stops.
+The recovered C is in the source files above. No playable executable is produced
+by this milestone. The entire historical aggregate was not rerun.

@@ -1,0 +1,30 @@
+{
+  "cases_passed": 128,
+  "comparison_level": "Complete 16 MiB RAM and all GPRs, SR, PR, and return PC compared against the retail SH-4 interpreter.",
+  "scope": "The ten-byte routine at 0x8c056972 reads source and destination pointers from separate PC-relative literals, copies the source longword, and writes in the RTS delay slot. Tests vary both pointers across retail targets, same-address aliases, literal aliases, randomized mapped RAM and the final aligned longword in physical RAM.",
+  "limitations": [
+    "Uses the project SH-4 interpreter rather than Dreamcast hardware or end-to-end gameplay.",
+    "The global fields and their higher-level ownership remain unidentified."
+  ],
+  "binary_sha256": "45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a",
+  "retail_span_sha256": "c4f70ba4c04c1dd87cce172af42e0aaee7a5c389cd06c84e2098eabb5f4de66b",
+  "literal_addresses": [
+    "0x8c0569bc",
+    "0x8c0569c0"
+  ],
+  "literal_values": [
+    "0x8c88f62c",
+    "0x8c788c40"
+  ],
+  "source_sha256": "2b95e6368e749ded58b4c0190071550a939b29b7b1849b5c8e2d0c987971279d",
+  "routines": [
+    {
+      "module": "1ST_READ.BIN",
+      "load_address": "0x8c010000",
+      "address": "0x8c056972",
+      "end_exclusive": "0x8c05697c",
+      "retail_span_sha256": "c4f70ba4c04c1dd87cce172af42e0aaee7a5c389cd06c84e2098eabb5f4de66b",
+      "cases_passed": 128
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+Sonic Adventure Dreamcast Rev A - public source and research-build publishing
+
+Repository: https://github.com/wigwoo1/Sonic-Adventure-DC-Decomp
+Owner: wigwoo1. Visibility: public. Main branch: main.
+Whole-project estimate: 10% weighted milestones; the game/ports are unfinished.
+
+The public checkout preserves outputs/sonic-adventure beneath its repository
+root, so the existing workspace-relative scripts retain their layout. Recovered
+C/support code, Python/PowerShell/Java workflows, documentation, research drafts,
+instruction listings and verification evidence are published. The publisher
+copies these bytes into publication/sonic-adventure and records a SHA256 manifest.
+Original local source and historical proof files are not rewritten.
+
+Builds are prerelease assets: Windows research DLLs and import libraries, not a
+playable game. Each archive has a per-file BUILD_MANIFEST.json and a SHA256SUMS
+file. Every archived build is checked byte-for-byte against its local input.
+Existing build qualification varies: reports describe what was actually tested.
+The archive is a collection of current compiled artifacts; do not claim that all
+of them were rebuilt or that the complete game works. There is no playable EXE.
+
+Retail disc/executable/module files, textures/models/music, toolchain downloads,
+caches, credential files and secrets are excluded. Third-party numerical code
+retains its original MIT notice; no new project-wide license is assigned.
+Historical absolute evidence paths remain intact. Some older compiler paths
+still need adaptation on another machine. Matching retail inputs must be supplied
+locally to rerun game-dependent differential tests.
+
+Prepare locally (PowerShell; substitute your workspace/Python paths):
+python -B outputs/sonic-adventure/publish_github_snapshot.py --workspace WORKSPACE
+
+Publish reviewed changes:
+python -B outputs/sonic-adventure/publish_github_snapshot.py --workspace WORKSPACE --publish
+
+The publisher uses the normal Git Credential Manager login; tokens remain in
+memory and the OS credential store, never in the repository or command arguments.
+Credential-store/network access can require the normal execution approval.
+Only the expected owner/repository is accepted. Remote history is preserved by
+ordinary fast-forward pushes. If another contributor changes main, reconcile
+their changes deliberately; never force-push or silently remove their files.
+If the staged snapshot contains a source file no longer selected locally, the
+publisher stops for review rather than automatically deleting the old copy.
+
+Daily follow-up: Codex heartbeat publish-sonic-adventure-github-updates, every day
+at 18:00 America/Indianapolis. It checks for project changes, reviews relevant
+verification, commits/pushes changes and uploads corresponding research assets.
+No empty commit is created when unchanged. It reports publication/failure/action
+needed and stays quiet when unchanged. This local automation requires this
+computer and Codex to be running with the needed GitHub access; it cannot promise
+uploads while the machine is off. It does not pause the decompilation goal.
+
+After publishing, verify the remote main commit equals local HEAD, the repository
+is public, and both prerelease assets are uploaded with matching sizes/hashes.
+The publishing script aborts on unexpected account, visibility, stale staged
+files, credential-shaped content or upload errors. Review those errors before
+retrying rather than bypassing the checks.

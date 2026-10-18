@@ -1,0 +1,51 @@
+{
+  "functions_verified": 4,
+  "total_full_state_cases": 512,
+  "comparison_level": "Complete 16 MiB RAM and all GPRs, SR, PR, and return PC compared against the retail SH-4 interpreter.",
+  "scope": "The accessors at 0x8c099d2a, 0x8c099d38, 0x8c099d44, and 0x8c099d80 resolve a null object argument through global pointer slot 0x8c7a0a08 and update SR.T from the null test. The address getter returns object+0x24; setters at 0x8c099d38 and 0x8c099d80 write offsets +0x20 and +0x18, respectively, while the getter reads +0x20. Tests cover null/non-null objects, aliased code/literal/global storage, random object RAM, and the final aligned RAM word.",
+  "limitations": [
+    "Uses the project SH-4 interpreter rather than Dreamcast hardware or end-to-end gameplay.",
+    "The higher-level ownership and specific work-field type remain unidentified."
+  ],
+  "binary_sha256": "45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a",
+  "literal_address": "0x8c099d64",
+  "global_pointer_slot": "0x8c7a0a08",
+  "routines": [
+    {
+      "module": "1ST_READ.BIN",
+      "load_address": "0x8c010000",
+      "address": "0x8c099d2a",
+      "end_exclusive": "0x8c099d38",
+      "retail_span_sha256": "8c34836a48950421ecd83d619ea67e2aabe41308a3b98a63c010c8f4afc0dc7a",
+      "cases_passed": 128,
+      "name": "sa_task_work_address_get_8c099d2a"
+    },
+    {
+      "module": "1ST_READ.BIN",
+      "load_address": "0x8c010000",
+      "address": "0x8c099d38",
+      "end_exclusive": "0x8c099d44",
+      "retail_span_sha256": "9d759fabbc7f70759e3227b3bfaca4a6ab2f8f79311e823490f4d3c0df6d2196",
+      "cases_passed": 128,
+      "name": "sa_task_work_set_8c099d38"
+    },
+    {
+      "module": "1ST_READ.BIN",
+      "load_address": "0x8c010000",
+      "address": "0x8c099d44",
+      "end_exclusive": "0x8c099d50",
+      "retail_span_sha256": "f4307f833d1acdb9d2f40d30bb9acde395419b862d670a3b31afb6743b00c309",
+      "cases_passed": 128,
+      "name": "sa_task_work_get_8c099d44"
+    },
+    {
+      "module": "1ST_READ.BIN",
+      "load_address": "0x8c010000",
+      "address": "0x8c099d80",
+      "end_exclusive": "0x8c099d8c",
+      "retail_span_sha256": "6a1bbf146f8cb6acc815b8ca3f2efba74707287aaf2d6955897618af94d534f3",
+      "cases_passed": 128,
+      "name": "sa_task_work_aux_set_8c099d80"
+    }
+  ]
+}

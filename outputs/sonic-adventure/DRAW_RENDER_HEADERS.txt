@@ -1,0 +1,112 @@
+Sonic Adventure Dreamcast Rev A - expanded renderer helper recovery
+2026-10-17; overall project 10% estimated weighted milestones; goal active.
+
+New original-code bodies
+8c654e60: render-state preparation, 644 instruction rows / 112 static outcomes.
+8c655620: cached texture/material header packing, 315 rows / 16 outcomes.
+8c64f5bc: point-Z visibility test, 19 rows / 6 outcomes.
+8c654b60: texture-size code conversion, 39 rows / 16 outcomes.
+Descriptive names are inferred. These are original helper implementations;
+they do not establish a complete renderer, visible frame or playable game.
+
+Computed branches and preserved evidence
+The older 582-row state export omitted nine case heads in each of two bounded
+twelve-selector BRAF tables. ExpandDrawRenderStateBody.java follows every
+original signed-word target and exports 644 rows, retaining all older bytes.
+The two tables contain eleven distinct targets each. All 22 computed outcomes
+are exercised. Added coverage is 62 instruction rows and 18 case heads. The
+old analysis/draw-effect-lower snapshot and old global indexes are preserved.
+The Ghidra export uses -readOnly and -noanalysis; database changes are discarded.
+
+One impossible conditional outcome is retained in the source, not fabricated
+as executed coverage. TST/BT at 8c655534/536 requires r8 != 0 to reach 538.
+Straight-line instructions through the next TST/BT at 8c655546/54a never write
+r8. The second taken edge to 8c65555a therefore cannot occur. The verifier
+checks these instructions and absence of intervening r8 writes. All 1,017
+rows and all other 149 conditional outcomes execute in the direct suite.
+
+Direct verification
+Strict 107-source native research DLL build passes with warnings as errors.
+All 1,974 comparisons pass: 1,958 normal returns, eight unsupported-numerical
+stops and eight RAM/computed-target guard stops. There are 3,416 ordered native
+entry comparisons and 993 cases with independent semantic checks. Each case
+compares full 16 MiB RAM, GPRs, SR, PR, PC, FPU state, FPUL and MACL against
+execution of original SH-4 instructions, including reached guards and entries.
+The standalone helpers produce no software queue events, as expected.
+
+Independent checks cover ordered source/destination blend tables, header/cache
+writes, layout and byte-length outputs, binary32 colour scaling/truncation,
+signed-count visibility and size conversion. Colour packing follows the
+original truncation and bit operations, including out-of-range finite colours;
+it does not impose a new saturation rule. All 64 original header-table indices
+and variant bits are tested. Explicit lookup-data overrides cover the retained
+unknown-layout fallback: they do not prove natural mutation of that table.
+
+Connected renderer verification
+All 408 original-model/routing comparisons pass: 141,920 ordered entries,
+complete reached/final RAM and processor state, 388 independent state/stack/
+spring cases and 200 distance prefixes. The suite reaches 393 rows of the new
+family. State entry executes 28 times, header 160 and visibility 132. Size
+conversion has direct verification only; it is not naturally reached here.
+Status totals: 274 explicit missing-service stops, 114 returns (50 outer
+rejections and 64 direct services), eight unsupported numerical stops, eight
+RAM guards and four numerical traps. These matched stops are not full drawing
+success. Outer AL_MAIN drawing remains 476/911 rows, 435 unexecuted, unregistered.
+
+The previous state/header stops are replaced by deeper 8c64f840 (132 calls).
+Other first missing services remain 0c90c384 (94), 8c0409c0, 8c5fde20 and
+8c041c92 (16 each). Queue totals match: 138,384 flushes / 1,524,614 counted
+events. First-4096-event prefixes per call give 632,532 individually compared
+events; 892,082 later events are counted only. Final queue/QACR/counters and
+full reached/final packet RAM still match. Physical GPU pixels are unproved.
+
+Registration, audits and next task
+Four first entries are registered; 68 existing entries receive linked integration
+evidence with zero duplicate credit. Incomplete dispatcher/emitter/material/
+texture-selector/polygon-array bodies and the AL_MAIN parent remain unregistered.
+Registry: 1,164 entries / 1,161 unique module-address pairs; 1,091 matches among
+10,875 frozen index candidates. This is not whole-game coverage: 211 nontexture
+binaries still lack a function index. Audit: zero evidence errors / stale reports.
+Five generated source/manifest/bridge/build artifacts reproduce exact bytes.
+Repeated registration adds zero and leaves registry/status bytes unchanged.
+Seven Python/four PowerShell syntax checks and default C syntax pass; the map
+passes 658 original pointer-load checks / 80 spans / 83 selectors.
+
+Seven subsequent proposals are exported read-only and byte-checked separately:
+8c64f840 (336 rows), 8c60607a (36), 8c605fca (40), 8c64fc68 (198),
+8c64fae8 (181), 8c650144 (531), 8c64fe0c (398): 1,720 rows total. All
+direct branch targets are present and no nonlocal call/jump sites are listed.
+These remain drafts with zero native recovery credit; listings alone do not
+prove complete semantics. Recover/test 8c64f840 first from the saved real
+caller boundary. See analysis/draw_polygon_lower_inventory.json and
+ghidra/export_draw_polygon_lower.ps1; no old evidence is replaced.
+
+Reproduction and source access
+Source: source/sa_draw_render_headers.c
+Native bridge: source/sa_draw_render_headers_connected.c
+Original listings: analysis/draw-render-headers/*_instructions.tsv
+Read-only export: ghidra/export_draw_render_headers.ps1
+Generation: recover_draw_render_headers.py; connect_draw_render_headers.py
+Build: build_draw_render_headers.ps1
+Checks: verify_draw_render_headers.py; verify_overlay_draw_render_headers.py
+Registration: register_draw_render_headers.py
+Evidence: analysis/draw_render_headers_translation.json
+          analysis/draw_render_headers_connection.json
+          analysis/draw_render_headers_verification.json
+          analysis/overlay_draw_render_headers_verification.json
+The aggregate build_and_verify.ps1 includes these steps. Its historical full
+sequence is not rerun for this milestone. Earlier DLLs and source are retained.
+
+Limits and beginner check
+Open this report and project_status.json to inspect accepted counts and remaining
+boundaries. JSON case records identify exact tested inputs. There is no playable
+executable yet. Original-code comparisons retain the existing scalar/vector
+numerical reference assumptions, MMU-off valid-RAM contract, FPU mode guards,
+bounded computed targets and explicit missing-service boundaries. Runtime
+renderer/view/scratch/texture metadata remain supplied fixtures; natural loading
+and initialization are unproved. The research DLL retains the existing bounded
+unsupported hierarchy-layout stall; it is not silently treated as success.
+Physical GPU pixels, complete frames/gameplay, high-FPS/8K, SUPIR textures and
+all playable ports are unfinished. Texture Off remains planned as disabling
+texture sampling and using vertex/material colours. Continue Sol High for
+reverse engineering; Luna Low is suitable for documentation-only work.

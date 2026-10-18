@@ -1,0 +1,15 @@
+from pathlib import Path
+p=Path(__file__).resolve().parent
+s=(p/'verify_magic_lifecycle_native_input.py').read_text()
+s=s.replace("start_stream=extra('sound_stream_start.dll','sa_sound_stream_start')","start_stream=extra('sound_stream_start.dll','sa_sound_stream_start')\noutput_default=extra('sound_stream_default_output.dll','sa_sound_stream_default_output')")
+s=s.replace('if address==0x8c010200:service(address,mem,r,actual);return 0','assert address!=0x8c010200,\'Modeled output callback forbidden\'')
+s=s.replace('0x8c65e380:lock_exit}', '0x8c65e380:lock_exit,0x8c6673a2:output_default}')
+s=s.replace('output_set,0x8c010200,0x87654321','output_set,0x8c6673a2,0x8ca70000')
+s=s.replace('0x8c010200,0x87654321)','0x8c6673a2,0x8ca70000)')
+s=s.replace('reference(ram,s,{a:hook(a) for a in [0x8c010200]},fpu=f,special=special)','reference(ram,s,{},fpu=f,special=special)')
+s=s.replace('assert actual==expected and [address for address,args in actual]==[0x8c010200]','assert actual==expected==[]')
+s=s.replace("struct.pack_into('<2I',wanted_stream,0xa0,256,288)","struct.pack_into('<2I',wanted_stream,0xa0,256,288)\n    initial_counters=struct.unpack_from('<2I',stream_before,0x98)\n    struct.pack_into('<2I',wanted_stream,0x98,*[(v+256)&0xffffffff for v in initial_counters])")
+s=s.replace('magic_lifecycle_native_input_verification','magic_lifecycle_native_callbacks_verification').replace('only output callback modeled, all input/internal calls native.','native default output callback6673a2; no modeled callbacks or internal function dependencies. Independent stream+98/+9c counters each increase by256.').replace('native-input original-audio lifecycle','native-callback original-audio lifecycle')
+(p/'verify_magic_lifecycle_native_callbacks.py').write_text(s)
+r=(p/'register_magic_lifecycle_native_input.py').read_text().replace('magic_lifecycle_native_input','magic_lifecycle_native_callbacks').replace("'sa_sound_source_lock_exit'}","'sa_sound_source_lock_exit','sa_sound_stream_default_output'}").replace('Native input original-audio stream lifecycle:','Native callbacks original-audio stream lifecycle:')
+(p/'register_magic_lifecycle_native_callbacks.py').write_text(r)

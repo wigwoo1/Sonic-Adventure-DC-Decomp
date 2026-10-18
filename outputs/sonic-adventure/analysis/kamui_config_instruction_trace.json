@@ -1,0 +1,20 @@
+{
+  "binary_sha256": "45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a",
+  "direct_checks_passed": 3,
+  "routine": "0x8c665a80",
+  "argument_evidence": "Save initial r5 and r6 on stack. Pass original r4 with HARDWARE string to helper 0x8c10d3c8. If helper r0 nonzero load saved r6 to r4, return r4. Otherwise pass saved original r5 with EnableTexture16MB string to same helper; when result zero set r4 zero, otherwise return helper-left r4.",
+  "strings": {
+    "0x8c672534": "HARDWARE",
+    "0x8c672540": "EnableTexture16MB"
+  },
+  "next_dependency": "0x8c10d3c8 and target from literal 0x8c10d3d8",
+  "finding": "Actual instructions inspect fixed string names rather than showing a general configuration lookup. Need helper semantics and register effects before asserting fallback results.",
+  "evidence": [
+    "analysis/instructions/8c665a80.tsv"
+  ],
+  "limitations": [
+    "Helper semantics and actual return values still unresolved.",
+    "Previous DisplayMode source trace identifies call-site arguments, not proven runtime configuration behavior.",
+    "Native ports unfinished."
+  ]
+}

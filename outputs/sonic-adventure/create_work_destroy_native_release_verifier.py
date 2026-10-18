@@ -1,0 +1,15 @@
+from pathlib import Path
+p=Path(__file__).resolve().parent
+s=(p/'verify_work_destroy_native_critical.py').read_text()
+s=s.replace('cases=0', "for address,stem,name in [(0x8c667440,'sound_stream_destroy','sa_sound_stream_destroy'),(0x8c644bfe,'file_decode_handle_release','sa_file_decode_handle_release')]:\n helpers[address]=getattr(ctypes.CDLL(str(ROOT/f'work/sonic-adventure/build/{stem}.dll')),name);helpers[address].argtypes=abi\ncases=0")
+s=s.replace(' before=bytes(ram[0xa20000:'," ram[0xa30000:0xa30100]=bytes([0x77])*256;struct.pack_into('<I',ram,0xa30008,0x8ca40000)\n ram[0xa40000:0xa40040]=bytes([0x55])*64\n stream_before=bytes(ram[0xa30000:0xa30100]);handle_before=bytes(ram[0xa40000:0xa40040])\n before=bytes(ram[0xa20000:")
+s=s.replace('{a:hook(a) for a in [0x8c667440]}','{}')
+s=s.replace('assert actual==([0x8c667440] if kind==2 else [])',"assert actual==expected==[]\n wanted_stream=bytearray(stream_before);wanted_handle=bytearray(handle_before)\n if kind==2:wanted_stream[:172]=bytes(172);wanted_handle[:52]=bytes(52)\n assert native[0xa30000:0xa30100]==wanted_stream and native[0xa40000:0xa40040]==wanted_handle")
+s=s.replace('work_destroy_native_critical_verification','work_destroy_native_release_verification')
+s=s.replace('stream destruction alone modeled,exact stream argument and restored stack checked.', 'Stream destructor667440 and handle release644bfe native,no modeled calls. Independent entire256-byte stream and64-byte handle guards:stream first172 bytes and handle first52 bytes zeroed only when non-null stream is released;surrounding bytes intact. Work stream pointer preserved and state bytes cleared;restored stack checked.')
+s=s.replace('Native complete release/reuse and fullgame unverified.', 'Creation-to-release/reuse integration and fullgame unverified.')
+(p/'verify_work_destroy_native_release.py').write_text(s)
+s=(p/'register_work_destroy_native_critical.py').read_text().replace('work_destroy_native_critical','work_destroy_native_release')
+s=s.replace("'sa_sound_critical_exit'}", "'sa_sound_critical_exit','sa_sound_stream_destroy','sa_file_decode_handle_release'}")
+s=s.replace('Native nested critical sections in work destruction:', 'Fully native work, stream and handle release:')
+(p/'register_work_destroy_native_release.py').write_text(s)

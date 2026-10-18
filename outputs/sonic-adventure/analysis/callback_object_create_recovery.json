@@ -1,0 +1,26 @@
+{
+  "entry": "0x8c64594c",
+  "end_exclusive": "0x8c645afa",
+  "instruction_count": 195,
+  "binary_span_sha256": "bb2ab5c19d14fff610167b12bd29f6b5f868790c2f9a5444bd2734b1b50858b8",
+  "classification": "Interrupt callback registration table; not the game task allocator",
+  "evidence": {
+    "entry_table": "0x8c892840, 256 entries, index0 reserved,16-byte records",
+    "priority_heads": "0x8c893840, indexed by signed16 event code arithmetic shift right4",
+    "allocated_bit": "0x80000000 in record+0x0c; lower bits preserve input ordering key",
+    "interrupt_mask": "Save SR.IMASK; set0xf during mutation; restore saved mask before return",
+    "vector_base_path": "STC VBR at0x8c6459d6 and vector write through VBR+0x200 for event codes below0x900",
+    "special_event": "0x900 invokes0x8c64135a with callback0x8c645b1e",
+    "hardware_paths": [
+      "Event group0x0a writes mask register0xa05f6920",
+      "Event group0x0b writes mask register0xa05f6924"
+    ]
+  },
+  "native_recovery_requirements": [
+    "Represent VBR explicitly in recovered API and reference model.",
+    "Route hardware register reads/writes through platform services; do not map them into Dreamcast RAM.",
+    "Preserve interrupt mask save/restore, slot exhaustion, sorted linked insertion and all event branches.",
+    "Validate setup event0x900, slot exhaustion, insertion boundaries, VBR vector paths and both hardware mask register paths."
+  ],
+  "status": "Full instruction export and hardware dependency analysis complete; native body not implemented or verified."
+}

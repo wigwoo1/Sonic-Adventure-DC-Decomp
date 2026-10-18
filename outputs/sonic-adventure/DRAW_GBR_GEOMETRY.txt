@@ -1,0 +1,149 @@
+Sonic Adventure Dreamcast Rev A - renderer state and explicit GBR geometry
+
+Whole-project estimate: 10%, weighted milestones rather than code coverage.
+The goal remains active on Sol High. The full renderer, gameplay and all playable
+ports remain unfinished.
+
+Seven first registrations cover 428 original instructions / all 40 conditional
+outcomes. Their descriptive roles are inferred from the original instructions:
+8c036f60 - renderer initialization and GBR setup (41 rows).
+8c03718c - transformed model-bounds predicate and attribute preparation (111 rows).
+8c60a3f8 - channel position sampling and default-buffer copy (127 rows).
+8c64f31c - transformed position cache in XMTRX (10 rows).
+8c64f244 - ordered angle/matrix rotation (74 rows).
+8c64f2dc - register-matrix scaling (30 rows).
+8c60b3e2 - channel default position-buffer copy (35 rows).
+
+GBR is a Dreamcast register pointing at shared renderer data. The original
+8c036f60 loads it from the data literal at 8c036fb4, whose stock value is 8c8ffe00.
+The new native bridge passes a caller-owned GBR value explicitly through nested
+dispatch. GBR is included in final machine state and ordered entry comparisons.
+There is no guessed fixed GBR operand in the recovered relative loads/stores.
+
+The new public API appends a uint32_t* gbr argument after the existing bus
+argument. The older source/API/DLLs remain preserved. After removing the seven
+new declarations/routes and the explicit GBR plumbing, the bridge reproduces
+the prior bridge text exactly. Existing routine/dispatch implementations are not
+rewritten. The instruction-model extension adds the original GBR-relative load
+and SETT/CLRT semantics without changing the earlier executor files.
+
+Sources and workflows (relative to this project directory):
+source/sa_draw_gbr_geometry.c
+source/sa_draw_gbr_geometry_connected.c
+recover_draw_gbr_geometry.py / connect_draw_gbr_geometry.py
+build_draw_gbr_geometry.ps1
+verify_draw_gbr_geometry.py
+verify_draw_gbr_relocation.py
+verify_overlay_draw_gbr_geometry.py
+register_draw_gbr_geometry.py
+inventory_draw_gbr_state.py
+analysis/draw_gbr_geometry_translation.json
+analysis/draw_gbr_geometry_connection.json
+analysis/draw_gbr_geometry_verification.json
+analysis/draw_gbr_relocation_verification.json
+analysis/overlay_draw_gbr_geometry_verification.json
+analysis/draw_gbr_state_provenance.json
+
+The optimized strict 112-source native build passes with warnings treated as
+errors and no standard-library dependency. Its separate verified research DLL
+is work/sonic-adventure/build/draw_gbr_geometry.dll under the workspace root.
+The documented earlier hierarchy-stall research bound remains. Both new C files
+also pass default (non-research-define) syntax checks. Old binaries, source and
+proofs are preserved; this DLL is not a game executable.
+
+All 716 focused comparisons pass, reaching all 428 rows / 40 outcomes. They
+contain 652 returns, 24 numeric-mode guards, twelve memory/return guards and
+28 floating-point traps. An additional 26 relocation/boundary comparisons pass
+(20 returns / six memory guards). Combined direct proof: 742 comparisons,
+1,230 ordered entries, 593 independent cases / 1,362 independent assertions.
+No reached missing service remains in these direct helper tests.
+
+Independent checks cover the actual GBR setup literal, renderer field copies
+and lookup/scratch data pointers, clipping decisions and complete RAM footprints, attribute
+selection, transformed position, scaled matrices, perpendicular/unit rotation
+columns, preserved translations, unsigned-frame search/curve arguments, consumed
+track counts and default position buffers. Tests include both banks/channels,
+angle orders, high unsigned frame values, aliases, special floats, enabled
+exceptions and exact reached partial states for invalid inputs. Qualified
+numerical-model and valid-RAM limits remain; no arbitrary hardware bit proof.
+
+Two original details are retained rather than replaced by simpler assumptions:
+- The bounds helper's configuration pointer is 8c8ffe1c, which aliases the stock
+  GBR+1c output record. Its just-written flag and attribute words control later
+  masking. Direct tests vary the original global attribute inputs and verify
+  the resulting complete memory footprint.
+- The sampler's 2^31 threshold and subtraction of 2^32 implement unsigned-frame
+  conversion. They are not an ordinary rounding-to-nearest key selection rule.
+
+Relocation tests patch only the initializer pointer data literal in isolated
+guest-RAM fixtures. The original binary/opcodes are unchanged. Three aliases
+and distinct physical records at offsets 8ffe00, e10000 and e18000 verify live
+GBR state. Near-boundary and unmapped literals verify partial writes/GBR state at
+the actual faulting instruction. The original fixed configuration pointer stays
+fixed even when the test renderer record is relocated.
+
+Connected verification freshly passes 210 original-model cases: all immediately
+prior 146 selected cases (48 affected paths plus 98 regressions), and 64 added
+camera/animation/position/tail profiles. This preserves all 64 direct-service
+and twelve label-event inputs. Every case computes renderer preparation by
+executing the real 41-instruction initializer in native code and the original
+instruction model and comparing complete final RAM/machine/GBR state.
+Across direct and connected preparation there are 890 such checked stages,
+reported separately from the 742 direct and 210 connected main comparisons.
+
+The additional camera profiles explicitly supply renderer/view globals and
+positions in the viewing area. Original model/motion records and texture names
+are retained. These saved-state inputs and checked initialization stages are
+not proof of natural whole-engine startup, resource loading or camera scheduling.
+The earlier 420-case corpus is preserved, not counted as 420 fresh tests here.
+
+Connected results: 18,506 matched ordered entries, 204 independent state/stack/
+spring cases, 124 distance prefixes and 168 new helper rows reached in callbacks.
+The initializer is a separate preparation stage; matrix/cache helpers have
+direct proof and are not claimed as naturally reached in this callback corpus.
+Statuses: 92 returns, 112 explicit lower-service boundaries, two numeric guards,
+two memory/return guards and two traps. Earlier 146 case statuses are unchanged;
+the extra 64 profiles reach additional explicit lower-service boundaries.
+The previous first stops 8c03718c and 8c60a3f8 disappear. Next first services are
+8c037294 (64 cases) and 8c60a61a (48 cases).
+
+The selected corpus still covers 417/911 parent rows, with 494 unexecuted; the
+earlier full corpus covered 489/911. These are different input scopes, not a
+claim of lost behavior. The AL_MAIN parent, fifteen earlier motion proposals
+and the complete renderer remain unregistered/incomplete where documented.
+
+Queue totals remain 12,552 flushes / 137,664 counted events in this selected
+corpus. The first 4,096 events per invocation are individually compared (49,152
+stored-prefix events); 88,512 later events are count-only. Final queue/QACR/
+counters and full reached/final RAM match. No injected game-service results,
+physical GPU pixels, complete frames or gameplay/high-FPS/port proof is claimed.
+
+Static provenance preserves twelve analyzed main-image GBR transfers and four
+byte-checked initializer call sites. Two indexed caller candidates are 8c0544e2
+and 8c10b840; two more call sites have no indexed owner. References also identify
+viewport/clip-global writer candidates 8c604ba0 and 8c604d68. These references
+do not establish exhaustive code boundaries or natural scheduler reachability.
+
+Next read-only proposals: analysis/draw-geometry-frontier/ contains nine bodies /
+891 byte-checked rows: 8c037294, 8c60a61a, 8c037350, 8c0376d0, 8c036ffc,
+8c604ba0, 8c604d68, 8c0544e2 and 8c10b840. All direct branch destinations are
+present; 36 unregistered annotated targets remain outside the proposal. Viewport
+setters/initializer callers are static candidates, not all reached missing
+services. Temporary discovery was discarded; frozen indexes stay unchanged.
+These proposals receive zero native recovery credit pending behavior proof.
+
+Registry: 1,220 entries / 1,217 unique module/address pairs; 1,118 matches in
+10,875 frozen indexed candidates. Another 211 nontexture binaries still lack
+an index, so the entire game's routine count remains unknown. Audit: zero
+evidence errors and zero stale source reports. Ninety-two existing entries gain
+integration evidence with zero duplicate credit. Five generated artifacts
+reproduce byte-for-byte; repeated registration leaves registry/status bytes
+unchanged. Eight Python/six PowerShell syntax checks, default C syntax and all
+658 dispatcher pointer-load checks over 80 spans / 83 selectors pass. Historical
+aggregate workflow extended, not rerun.
+
+How to check: open this guide, the source and JSON reports above. Continue Sol
+High for geometry preparation, sampling and natural renderer/view initialization.
+Luna Low suits documentation-only work; no model switch or goal pause is advised
+for the next reverse-engineering task. SUPIR/HD settings, true texture-off vertex/
+material colours, 60/120/240 FPS, 8K and all playable ports remain pending goals.

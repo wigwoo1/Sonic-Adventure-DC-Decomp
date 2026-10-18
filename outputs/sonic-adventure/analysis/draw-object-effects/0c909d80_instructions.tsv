@@ -1,0 +1,71 @@
+address	length	bytes	instruction	flows
+0c909d80	2	e62f	mov.l r14,@-r15	
+0c909d82	2	536e	mov r5,r14	
+0c909d84	2	d62f	mov.l r13,@-r15	
+0c909d86	2	08ed	mov #0x8,r13	
+0c909d88	2	184d	shll8 r13	
+0c909d8a	2	107d	add #0x10,r13	
+0c909d8c	2	ec3d	add r14,r13	
+0c909d8e	2	224f	sts.l PR,@-r15	
+0c909d90	2	d185	mov.w @(0x2,r13),r0	
+0c909d92	2	0d60	extu.w r0,r0	
+0c909d94	2	0ae1	mov #0xa,r1	
+0c909d96	2	1230	cmp/hs r1,r0	
+0c909d98	2	2689	bt 0x0c909de8	0c909de8 
+0c909d9a	2	0040	shll r0	
+0c909d9c	2	0361	mov r0,r1	
+0c909d9e	2	02c7	mova 0x0c909da8,r0	
+0c909da0	2	1d00	mov.w @(r0,r1),r0	
+0c909da2	2	2300	braf r0	0c909dbc 0c909dcc 0c909ddc 0c909de8 0c909dc4 0c909dd4 0c909de4 
+0c909da4	2	0900	_nop	
+0c909dbc	2	bfb8	bsr 0x0c908f3e	0c908f3e 
+0c909dbe	2	e365	_mov r14,r5	
+0c909dc0	2	12a0	bra 0x0c909de8	0c909de8 
+0c909dc2	2	0900	_nop	
+0c909dc4	2	46b9	bsr 0x0c909054	0c909054 
+0c909dc6	2	e365	_mov r14,r5	
+0c909dc8	2	0ea0	bra 0x0c909de8	0c909de8 
+0c909dca	2	0900	_nop	
+0c909dcc	2	85ba	bsr 0x0c9092da	0c9092da 
+0c909dce	2	e365	_mov r14,r5	
+0c909dd0	2	0aa0	bra 0x0c909de8	0c909de8 
+0c909dd2	2	0900	_nop	
+0c909dd4	2	c4bb	bsr 0x0c909560	0c909560 
+0c909dd6	2	e365	_mov r14,r5	
+0c909dd8	2	06a0	bra 0x0c909de8	0c909de8 
+0c909dda	2	0900	_nop	
+0c909ddc	2	02bd	bsr 0x0c9097e4	0c9097e4 
+0c909dde	2	e365	_mov r14,r5	
+0c909de0	2	02a0	bra 0x0c909de8	0c909de8 
+0c909de2	2	0900	_nop	
+0c909de4	2	5cbe	bsr 0x0c909aa0	0c909aa0 
+0c909de6	2	e365	_mov r14,r5	
+0c909de8	2	ece0	mov #-0x14,r0	
+0c909dea	2	0c60	extu.b r0,r0	
+0c909dec	2	ee00	mov.l @(r0,r14),r0	
+0c909dee	2	0060	mov.b @r0,r0	
+0c909df0	2	0c60	extu.b r0,r0	
+0c909df2	2	0688	cmp/eq #0x6,r0	
+0c909df4	2	0589	bt 0x0c909e02	0c909e02 
+0c909df6	2	22d2	mov.l 0x0c909e80,r2	
+0c909df8	2	d365	mov r13,r5	
+0c909dfa	2	0b42	jsr @r2	0c908b00 
+0c909dfc	2	e364	_mov r14,r4	
+0c909dfe	2	04a0	bra 0x0c909e0a	0c909e0a 
+0c909e00	2	0900	_nop	
+0c909e02	2	20d2	mov.l 0x0c909e84,r2	
+0c909e04	2	d365	mov r13,r5	
+0c909e06	2	0b42	jsr @r2	0c908d80 
+0c909e08	2	e364	_mov r14,r4	
+0c909e0a	2	34e0	mov #0x34,r0	
+0c909e0c	2	dd03	mov.w @(r0,r13),r3	
+0c909e0e	2	0173	add #0x1,r3	
+0c909e10	2	350d	mov.w r3,@(r0,r13)	
+0c909e12	2	74e0	mov #0x74,r0	
+0c909e14	2	dd02	mov.w @(r0,r13),r2	
+0c909e16	2	0172	add #0x1,r2	
+0c909e18	2	250d	mov.w r2,@(r0,r13)	
+0c909e1a	2	264f	lds.l @r15+,PR	
+0c909e1c	2	f66d	mov.l @r15+,r13	
+0c909e1e	2	0b00	rts	
+0c909e20	2	f66e	_mov.l @r15+,r14	

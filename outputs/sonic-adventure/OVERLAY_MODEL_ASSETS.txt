@@ -1,0 +1,147 @@
+Mapped overlay models and recovered AL_MAIN object selector
+17 October 2026 - VERIFIED within the bounded scope below.
+Overall completion: 10% estimated weighted whole-project milestones, not code coverage.
+Goal active. Continue Sol High; no model switch or pause advised.
+
+What changed
+The existing bounded basic-model parser now has a separate overlay reader. It
+resolves physical/cached/uncached RAM aliases for reads without changing file
+bytes. All 42 existing mapped decoded files are scanned independently. Original
+loader filename/destination literals and decoded hashes are rechecked; this is
+literal/data evidence, not a newly demonstrated full game loader trace.
+A separate linked DLL verifies selected unchanged overlay streams through the
+recovered native main renderer. A newly authored native C function recovers the
+AL_MAIN selector referenced by one of the discovered objects.
+
+Discovery results
+- 42 mapped decoded files scanned; 39 contain accepted self-contained candidates.
+- 15,984 structural model occurrences and 45,425 segment records.
+- 22,401 structural object nodes reference 15,975 distinct model occurrences.
+- Topologies: 2,332 triangle-list records (0000), 1,168 quad-list records (4000),
+  24 non-alternate 8000 records and 41,901 alternate-strip records (c000).
+- All nine default material families occur. Records at the same address in
+  different modules are tracked separately; these counts do not mean unique art.
+- Per-module candidate records, groups, rejected headers and node references are
+  saved under analysis/overlay-model-assets/. Three zero-model results remain
+  explicit rather than being omitted.
+
+Two shipped face-strip occurrences
+AL_MAIN.BIN contains model 8ca50cbc / object 8ca50ce4. AL_RACE.BIN contains model
+8cbcad80 / object 8cbcada8. Both have fifteen vertices and two segment records:
+eleven triangles followed by a five-index 8000 group. Original flags 9571a400
+select environment-face lighting under default dispatch. The five indices are
+3,4,7,5,6 after the count word 5. The two index streams have identical SHA256;
+they are two stored occurrences, not two proven unique artworks.
+
+This finding matters because the previous bounded main-executable scan found no
+face-lit 8000 combinations. Absence in that image did not establish absence in
+shipped data. The decoded overlays contain actual records with the combination.
+Actual scene/camera reachability is still a separate unverified question.
+
+The original near-crossing branch at 8c61ef72 is reached in 24 constructed-camera
+cases using these unmodified records. It reads R12=the current segment,
+R14=renderer state and R13=the material, not indexed cache normals. Reference and
+native normalizer inputs match; their sums/classification are independently
+checked. All 24 readings include a material word which is NaN when reinterpreted
+as a float. Original behavior is preserved, with no invented colour/normal fallback.
+This is not proof of hardware NaN payload precision or actual visible game output.
+
+Newly recovered selector: AL_MAIN.BIN 0c905548
+Source: source/sa_overlay_face_model_selector_0c905548.c
+The complete body has 88 original instruction rows / 176 instruction bytes.
+The contiguous span 0c905548..0c905618 is 208 bytes including its literal pool;
+that larger span is not counted as instruction recovery. A read-only Ghidra
+export was byte-checked against original AL_MAIN.BIN. Names are inferred.
+
+R5 identifies an entity. The selector reads a byte through entity+ec, pointee+34,
+and reads the destination object through entity+2d4. It initializes the object's
+three scale fields at +20/+24/+28 to raw 3e999999 (approximately 0.3). Bits are
+prioritized 10,08,04,02,01 hex. The highest set supported bit selects a source
+object whose mesh pointer is copied to destination+4. With none set, the old
+mesh pointer remains. Other flag bits do not select another model.
+Bit 10 loads the pointer literal at 0c9055ec: physical object 0ca50ce4, whose
+mesh is 0ca50cbc, matching the inventoried AL_MAIN face-strip model.
+
+The full integer register/SR effects are retained, including the original RTS
+delay-slot write. FMOV uses FR/SZ directly; PR does not gate these raw transfers.
+Wide SZ stores retain the original overlapping writes and companion word
+0ca50ce4 at destination+2c. These are tested original effects, not a recommended
+normal runtime mode. This selector is verified separately from the mesh tests;
+a complete selector-caller/object-transform/render pipeline is next work.
+
+Build and tests actually passed
+- Two separate strict Clang builds: -O2 -Wall -Wextra -Werror. Existing game C,
+  main-model proofs and pinned checkpoint DLLs remain unchanged.
+- Overlay inventory reproduces byte-for-byte, including all per-module reports.
+- Independent raw original checks: 15,984 model headers, 22,401 object pointers,
+  126 whole-image alias/bounds cases and original filename/load literals.
+- 392 native overlay comparisons across 46 unchanged original models in all 39
+  model-bearing modules. Selections include one representative per module, all
+  nine material families and both discovered face-strip models.
+- Front/crossing cameras, both FPU banks and cursor halves are tested. The two
+  face-strip models receive extra crossing-axis variants. No asset model, vertex,
+  normal, segment, material, index or UV input span is changed by the fixtures or
+  native execution.
+- Full RAM, CPU/SR/PR, FPU banks/FPSCR, FPUL/MACL, ordered boundaries and queue
+  words/events agree with original instructions. Zero external game services.
+- Overlay totals: 5,084 ordered boundaries, 94,656 numerical operations, 4,600
+  queue transfers, 49,452 queue events and 496 native near-clipper calls.
+- 184 front-camera cases independently verify projected vertices and original
+  parsed input counts. Original/native normalizer inputs are additionally
+  compared in all reached normalization calls. Twenty-four face-strip readings
+  check real material/segment/state pointers and pre-normalizer sums.
+- Selector: 2,176 full RAM/CPU/FPU comparisons pass. All 88 instruction rows and
+  ten conditional branch outcomes covered, with zero external calls. All 256
+  flag bytes are tested in all eight FR/SZ/PR combinations; physical/uncached
+  entity aliases add bounded cases. Independent model priority, unchanged mesh,
+  scales, wide-store tail, stack/return and SR assertions pass.
+- Selector outcomes: bit 10 selected 1,072 times; 08 528; 04 272; 02 144;
+  01 80; unchanged 80. Higher supported flags consistently take priority.
+
+Final integrity checks passed: all four reports match their pinned inputs
+(89 inventory, 91 inventory validation, 412 native overlay, 10 selector). Six
+Python and four PowerShell scripts parse. Repeat registration adds no duplicates.
+Dispatcher checks verify 658 pointer loads, 80 spans and 83 selectors. Audits
+report zero evidence errors and zero stale reports, with 1,044 registered matches
+among 10,875 indexed candidates. The app goal remains active.
+
+Files and a simple check
+Open this guide and SOURCE_HANDOFF.txt. Reports:
+  analysis/overlay_model_assets_inventory.json
+  analysis/overlay_model_inventory_verification.json
+  analysis/overlay_model_assets_verification.json
+  analysis/overlay_face_model_selector_verification.json
+The native overlay report has cases_passed=392 and modules_exercised=39; the
+selector report has cases_passed=2176 and instruction_rows_covered=88.
+The new source file is readable and available for the eventual GitHub handoff.
+Scripts: overlay_model_assets.py, inventory_overlay_model_assets.py,
+verify_overlay_model_inventory.py, build_overlay_model_assets.ps1,
+verify_overlay_model_assets.py, build_overlay_face_model_selector.ps1,
+verify_overlay_face_model_selector.py and register_overlay_model_assets.py.
+Read-only selector export: ghidra/export_overlay_face_model_selector.ps1.
+The aggregate workflow includes the new steps in dependency order.
+
+Limits and next work
+Self-contained aligned basic-model layouts and existing mapped files are the
+scan contract. Cross-image pointers, relative/relocated formats, alternative
+formats, unsupported metadata and unmapped files require separate work. Counts
+are model occurrences, not exhaustive unique game assets or code coverage.
+Texture descriptors, camera matrices and command buffers are constructed; image
+pixels, physical GPU/cache/MMU behavior, complete scene traversal, frame order
+and full gameplay remain unproved. Selector tests use valid constructed entity/
+appearance/object pointers. Wide FMOV tests do not establish normal gameplay use.
+The new builds and suites ran; the historical aggregate/lifetime workflow was not
+rerun. A failed initial export path and single-source build-argument setup were
+corrected; final export, both builds and all reported suites passed.
+
+Registry is now 1,096 entries / 1,093 unique module-address pairs; model discovery
+receives no routine credit, and the selector receives exactly one new entry.
+Next: trace the AL_MAIN selector caller/installation and connect selected object
+rendering, retaining exact recovered lighting behavior. Runtime material overrides
+and actual frame driving remain open. Sol High remains appropriate for binary
+call/ABI tracing; Luna can handle routine documentation afterward. No model
+switch or goal pause is advised.
+
+Full decompilation, native PC/Android/stereo 3DS ports, 60/120/240 FPS, 8K,
+SUPIR/settings and later N64/PS1 work remain unfinished. Texture Off must disable
+sampling and use vertex colours/material fallback, overriding the HD toggle.

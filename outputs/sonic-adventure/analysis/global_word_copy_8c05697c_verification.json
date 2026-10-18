@@ -1,0 +1,30 @@
+{
+  "cases_passed": 128,
+  "comparison_level": "Complete 16 MiB RAM and all GPRs, SR, PR, and return PC compared against the retail SH-4 interpreter.",
+  "scope": "The ten-byte routine at 0x8c05697c reads a longword through the source pointer in the first literal and writes it through the destination pointer in the second literal. Tests vary both pointers across the retail targets, same-address and literal aliases, randomized mapped RAM, and the final aligned longword in RAM.",
+  "limitations": [
+    "Uses the project SH-4 interpreter rather than Dreamcast hardware or end-to-end gameplay.",
+    "The global fields and their higher-level ownership remain unidentified."
+  ],
+  "binary_sha256": "45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a",
+  "retail_span_sha256": "7b6dafe483d386e55fdc19d43863b7c6291b6944506c5df168f056ab496263a5",
+  "literal_addresses": [
+    "0x8c0569c0",
+    "0x8c0569bc"
+  ],
+  "literal_values": [
+    "0x8c788c40",
+    "0x8c88f62c"
+  ],
+  "source_sha256": "1bf9a73124432462c036420dc42dc05dcb6a2813653ead90c2977b36ae62b8df",
+  "routines": [
+    {
+      "module": "1ST_READ.BIN",
+      "load_address": "0x8c010000",
+      "address": "0x8c05697c",
+      "end_exclusive": "0x8c056986",
+      "retail_span_sha256": "7b6dafe483d386e55fdc19d43863b7c6291b6944506c5df168f056ab496263a5",
+      "cases_passed": 128
+    }
+  ]
+}

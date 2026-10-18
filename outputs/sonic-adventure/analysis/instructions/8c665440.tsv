@@ -1,0 +1,20 @@
+address	opcode	instruction	references
+8c665440	7ffc	add #-0x4,r15	
+8c665442	d51f	mov.l 0x8c6654c0,r5	READ:8c6654c0=8c8c03e4 
+8c665444	d320	mov.l 0x8c6654c8,r3	READ:8c6654c8=13000 
+8c665446	6153	mov r5,r1	
+8c665448	d71e	mov.l 0x8c6654c4,r7	READ:8c6654c4=fffe 
+8c66544a	313c	add r3,r1	
+8c66544c	2f52	mov.l r5,@r15	DATA:Stack[-0x4] 
+8c66544e	6653	mov r5,r6	
+8c665450	3540	cmp/eq r4,r5	
+8c665452	8b02	bf 0x8c66545a	CONDITIONAL_JUMP:8c66545a=3512754c 
+8c665454	6261	mov.w @r6,r2	READ:8c8c03e4 READ:8c8c0430 
+8c665456	2279	and r7,r2	
+8c665458	2621	mov.w r2,@r6	WRITE:8c8c03e4 WRITE:8c8c0430 
+8c66545a	754c	add #0x4c,r5	
+8c66545c	3512	cmp/hs r1,r5	
+8c66545e	8ff7	bf/s 0x8c665450	CONDITIONAL_JUMP:8c665450=8b023540 
+8c665460	764c	_add #0x4c,r6	
+8c665462	b	rts	
+8c665464	7f04	_add #0x4,r15	

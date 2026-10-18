@@ -1,0 +1,34 @@
+{
+  "cases_passed": 128,
+  "comparison_level": "Complete 16 MiB RAM and all GPRs, SR, PR, and return PC compared against the retail SH-4 interpreter.",
+  "scope": "The 18-byte routine at 0x8c04f6a6 copies signed-loaded words from 0x8c7493ba and 0x8c7493bc to 0x8c7493b6 and 0x8c7493b8. The second read and write occur before return, with the final write in the RTS delay slot. Tests compare every RAM byte and CPU register over varied neighboring data and CPU state.",
+  "limitations": [
+    "Uses the project SH-4 interpreter rather than Dreamcast hardware or end-to-end gameplay.",
+    "The global fields\u2019 higher-level meaning remains unidentified."
+  ],
+  "binary_sha256": "45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a",
+  "retail_span_sha256": "de01d82e604c5cd46a267b563d55ce767b962114e0eecc9e031f2e76dc03f0c2",
+  "literal_addresses": [
+    "0x8c04f6c4",
+    "0x8c04f704",
+    "0x8c04f708",
+    "0x8c04f70c"
+  ],
+  "literal_values": [
+    "0x8c7493ba",
+    "0x8c7493b6",
+    "0x8c7493bc",
+    "0x8c7493b8"
+  ],
+  "source_sha256": "5cdc0fb5b1c483364468c285e3686df0f6d50a5e2b75aa9d419b3af3b1907e2c",
+  "routines": [
+    {
+      "module": "1ST_READ.BIN",
+      "load_address": "0x8c010000",
+      "address": "0x8c04f6a6",
+      "end_exclusive": "0x8c04f6b8",
+      "retail_span_sha256": "de01d82e604c5cd46a267b563d55ce767b962114e0eecc9e031f2e76dc03f0c2",
+      "cases_passed": 128
+    }
+  ]
+}

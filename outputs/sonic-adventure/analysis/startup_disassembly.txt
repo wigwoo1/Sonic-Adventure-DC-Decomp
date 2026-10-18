@@ -1,0 +1,80 @@
+0x8c010000: 0009  nop
+0x8c010002: 0009  nop
+0x8c010004: 0009  nop
+0x8c010006: 0009  nop
+0x8c010008: 0009  nop
+0x8c01000a: 0009  nop
+0x8c01000c: d005  mov.l @(0x8c010024,pc),r0 ; 0xff00001c
+0x8c01000e: 6102  mov.l @r0,r1
+0x8c010010: d205  mov.l @(0x8c010028,pc),r2 ; 0x89af
+0x8c010012: 2129  and r2,r1
+0x8c010014: 9204  mov.w @(0x8c010020,pc),r2
+0x8c010016: 212b  or r2,r1
+0x8c010018: 2012  mov.l r1,@r0
+0x8c01001a: d004  mov.l @(0x8c01002c,pc),r0 ; 0x8c0100a0
+0x8c01001c: 402b  jmp @r0
+0x8c01001e: 0009  nop
+0x8c0100a0: d224  mov.l @(0x8c010134,pc),r2 ; 0x8c66c3ac
+0x8c0100a2: 4f22  .word 0x4f22
+0x8c0100a4: 6322  mov.l @r2,r3
+0x8c0100a6: 6130  .word 0x6130
+0x8c0100a8: d525  mov.l @(0x8c010140,pc),r5 ; 0x8c00f400
+0x8c0100aa: d624  mov.l @(0x8c01013c,pc),r6 ; 0x41474553
+0x8c0100ac: d422  mov.l @(0x8c010138,pc),r4 ; 0x8c00c000
+0x8c0100ae: 2462  mov.l r6,@r4
+0x8c0100b0: 7404  add #4,r4
+0x8c0100b2: 3452  .word 0x3452
+0x8c0100b4: 8bfb  bf 0x8c0100ae
+0x8c0100b6: b00f  bsr 0x8c0100d8
+0x8c0100b8: 0009  nop
+0x8c0100ba: b005  bsr 0x8c0100c8
+0x8c0100bc: 0009  nop
+0x8c0100be: d221  mov.l @(0x8c010144,pc),r2 ; 0x8c053940
+0x8c0100c0: 420b  jsr @r2
+0x8c0100c2: 0009  nop
+0x8c0100c4: a004  bra 0x8c0100d0
+0x8c0100c6: 4f26  .word 0x4f26
+0x8c0100c8: d220  mov.l @(0x8c01014c,pc),r2 ; 0x8c5ff8b8
+0x8c0100ca: d31f  mov.l @(0x8c010148,pc),r3 ; 0x8c66c2c0
+0x8c0100cc: 422b  jmp @r2
+0x8c0100ce: 6432  mov.l @r3,r4
+0x8c0100d0: d31f  mov.l @(0x8c010150,pc),r3 ; 0x8c5ff936
+0x8c0100d2: d21d  mov.l @(0x8c010148,pc),r2 ; 0x8c66c2c0
+0x8c0100d4: 432b  jmp @r3
+0x8c0100d6: 6422  mov.l @r2,r4
+0x8c0100d8: d31f  mov.l @(0x8c010158,pc),r3 ; 0x8c1111ac
+0x8c0100da: e400  mov #0,r4
+0x8c0100dc: d61d  mov.l @(0x8c010154,pc),r6 ; 0x8c1111b8
+0x8c0100de: a002  bra 0x8c0100e6
+0x8c0100e0: 6532  mov.l @r3,r5
+0x8c0100e2: 2540  mov.b r4,@r5
+0x8c0100e4: 7501  add #1,r5
+0x8c0100e6: 6362  mov.l @r6,r3
+0x8c0100e8: 3532  .word 0x3532
+0x8c0100ea: 8bfa  bf 0x8c0100e2
+0x8c0100ec: d31c  mov.l @(0x8c010160,pc),r3 ; 0x8c11119c
+0x8c0100ee: d21d  mov.l @(0x8c010164,pc),r2 ; 0x8c111194
+0x8c0100f0: 6532  mov.l @r3,r5
+0x8c0100f2: d71a  mov.l @(0x8c01015c,pc),r7 ; 0x8c1111a8
+0x8c0100f4: a003  bra 0x8c0100fe
+0x8c0100f6: 6622  mov.l @r2,r6
+0x8c0100f8: 6364  .word 0x6364
+0x8c0100fa: 2530  mov.b r3,@r5
+0x8c0100fc: 7501  add #1,r5
+0x8c0100fe: 6272  mov.l @r7,r2
+0x8c010100: 3522  .word 0x3522
+0x8c010102: 8bf9  bf 0x8c0100f8
+0x8c010104: d219  mov.l @(0x8c01016c,pc),r2 ; 0x8c66c2ec
+0x8c010106: d618  mov.l @(0x8c010168,pc),r6 ; 0x8c66c2f8
+0x8c010108: a002  bra 0x8c010110
+0x8c01010a: 6522  mov.l @r2,r5
+0x8c01010c: 2540  mov.b r4,@r5
+0x8c01010e: 7501  add #1,r5
+0x8c010110: 6262  mov.l @r6,r2
+0x8c010112: 3522  .word 0x3522
+0x8c010114: 8bfa  bf 0x8c01010c
+0x8c010116: d217  mov.l @(0x8c010174,pc),r2 ; 0x8c66c2d8
+0x8c010118: d317  mov.l @(0x8c010178,pc),r3 ; 0x8c66c2d0
+0x8c01011a: 6422  mov.l @r2,r4
+0x8c01011c: d614  mov.l @(0x8c010170,pc),r6 ; 0x8c66c2e4
+0x8c01011e: a003  bra 0x8c010128

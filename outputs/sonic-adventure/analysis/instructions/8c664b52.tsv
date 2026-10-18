@@ -1,0 +1,25 @@
+address	opcode	instruction	references
+8c664b52	7ff8	add #-0x8,r15	
+8c664b54	5761	mov.l @(0x4,r6),r7	
+8c664b56	2778	tst r7,r7	
+8c664b58	2f72	mov.l r7,@r15	DATA:Stack[-0x8] 
+8c664b5a	5362	mov.l @(0x8,r6),r3	
+8c664b5c	8f03	bf/s 0x8c664b66	CONDITIONAL_JUMP:8c664b66=62f25362 
+8c664b5e	1f31	_mov.l r3,@(0x4,r15)	DATA:Stack[-0x4] 
+8c664b60	5162	mov.l @(0x8,r6),r1	
+8c664b62	a003	bra 0x8c664b6c	UNCONDITIONAL_JUMP:8c664b6c=22285262 
+8c664b64	2412	_mov.l r1,@r4	
+8c664b66	5362	mov.l @(0x8,r6),r3	
+8c664b68	62f2	mov.l @r15,r2	DATA:Stack[-0x8] 
+8c664b6a	1232	mov.l r3,@(0x8,r2)	
+8c664b6c	5262	mov.l @(0x8,r6),r2	
+8c664b6e	2228	tst r2,r2	
+8c664b70	8b16	bf 0x8c664ba0	CONDITIONAL_JUMP:8c664ba0=51f15361 
+8c664b72	5261	mov.l @(0x4,r6),r2	
+8c664b74	a017	bra 0x8c664ba6	UNCONDITIONAL_JUMP:8c664ba6=7f08000b 
+8c664b76	2522	_mov.l r2,@r5	
+8c664ba0	5361	mov.l @(0x4,r6),r3	
+8c664ba2	51f1	mov.l @(0x4,r15),r1	DATA:Stack[-0x4] 
+8c664ba4	1131	mov.l r3,@(0x4,r1)	
+8c664ba6	b	rts	
+8c664ba8	7f08	_add #0x8,r15	

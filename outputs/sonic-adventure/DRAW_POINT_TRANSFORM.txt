@@ -1,0 +1,123 @@
+Original point transformation connected to object drawing
+17 October 2026 - helper and bounded original-caller integration VERIFIED; game partial.
+Overall completion: 10% estimated weighted whole-project milestones, not code coverage.
+Goal active on Sol High. No model switch or pause advised.
+
+What changed
+The original point-transform helper at 8c638ecc..8c638f24 now has a complete
+guarded native source in source/sa_draw_point.c. Its 44 instructions / 88 bytes
+are checked against 1ST_READ.BIN. It is a distinct first registry entry with
+integration verification; descriptive names remain inferred.
+
+The helper transforms a position using either a supplied matrix (three FIPR
+operations) or the current matrix bank (FTRV). Its homogeneous input W is one,
+so translation applies. It stores XYZ without perspective division. The implicit
+path also retains the computed fourth component in the FPU bank. Explicit and
+implicit paths retain their different output-pointer results.
+
+Instruction order matters when buffers overlap. The explicit path reads the
+second matrix row before storing X, then reads the third row before storing Y.
+The implicit path computes the complete vector before its reverse-order stores.
+The new source preserves these orders, dynamic FMOV bank/width, reached guards,
+partial writes, numerical status and return-delay-slot behavior.
+
+The earlier source/model_point_transform.c and its injected-vector proof remain
+available. That experiment checked orchestration with supplied vector outputs;
+the new connection uses the real pinned numerical backend and receives no
+duplicate recovery credit for the old experiment or reused renderer services.
+
+Build and direct verification actually run
+build_draw_point.ps1 builds 105 sources with Clang -O2 -Wall -Wextra -Werror
+and no C runtime. A separate default C syntax check passes. Six Python and
+three PowerShell syntax checks pass, including the next-family inventory/export.
+The historical aggregate suite was not rerun.
+
+verify_draw_point.py passes 435 original-instruction/native comparisons:
+269 complete returns, 140 unsupported-mode/numerical-domain stops, 20 RAM guards
+and six numerical traps. All 44 rows / both conditional outcomes execute.
+All 435 ordered entries, full 16-MiB RAM, integer registers, SR/PR/PC, both FPU
+banks/FPSCR, FPUL/MACL and reached stop state match. No packets are fabricated
+by the standalone point-transform tests.
+
+124 independent exact-dyadic cases check identity/nontrivial/zero/projective
+matrices, input/output pointers, homogeneous W, no perspective division,
+overlapping point/matrix output and the precise read-before-write order.
+Other cases cover both banks, all eight PR/SZ/FR combinations, RAM aliases,
+partially valid source/matrix/output spans, signed zero, subnormal/normal limits,
+infinity/NaN inputs, rounding modes and exception enables.
+
+The direct fixture inherits DN=1 (denormal flushing). Its two special-value
+fpscr_bits labels are ORed into that state and do not establish DN=0 coverage.
+The vector opcode reference shares the separately qualified pinned numerical
+core. The exact-dyadic matrix/point/overlap/pointer checks are independent.
+Existing supported-numerical-domain and MMU-off valid-RAM guard limits remain;
+the tests are not exhaustive arbitrary-machine or physical-hardware proof.
+
+Original-model integration
+All 408 original-model/routing comparisons pass: 344 caller cases and 64 direct
+service cases. There are 114 complete returns (50 rejected draws and 64 direct
+services), 274 missing-service stops, eight unsupported modes, eight RAM guards
+and four numerical traps. Full accepted-model drawing remains unfinished.
+All 139,446 ordered entries match, along with full reached machine/RAM state,
+388 independent state/stack/spring cases and 200 distance-prefix checks.
+
+The caller executes the point transform 132 times, reaching all 38 explicit-path
+rows. Its six additional implicit-only rows execute in the direct suite. Parent
+coverage advances from 472 to 476 of 911 rows; 435 remain unexecuted and the
+parent stays unregistered with zero recovery credit. The former 8c638ecc stop
+is gone. First missing services are now 0c909d80 (132 cases), 0c90c384 (94),
+8c0409c0 (16), 8c5fde20 (16), 8c041c92 (16).
+
+Software queue totals remain 138,384 flushes / 1,524,614 counted events.
+632,532 stored-prefix events match individually; 892,082 later events beyond
+the 4,096-event per-call cap are counted, not individually compared. Final
+queue/QACR/counters and full reached/final RAM, including packet output, match.
+
+The fixture retains the original constructor-created geometry/motion records
+and the preceding hierarchy suite's supplied runtime renderer/texture metadata.
+Natural scene/renderer/texture initialization remains unproved.
+
+Reproduction checks
+All five generated point artifacts reproduce byte for byte. Repeated registration
+adds zero entries and leaves registry/project-status bytes unchanged. The DLL,
+older source and earlier proof artifacts remain unchanged. Registry totals are
+1,154 entries / 1,151 unique module/address pairs, with 1,081 matches among
+10,875 frozen candidates. These counts are not whole-game coverage; 211
+nontexture binaries still lack a function index. The evidence audit finds zero
+errors and zero stale source reports. Dispatch-map verification passes 658
+original pointer loads across 80 entry spans / 83 selectors.
+
+Next-family analysis
+Read-only Ghidra exports and inventory_draw_object_effects.py byte-check 2,421
+rows in 12 proposed bodies: dispatcher 0c909d80, eight overlay services and
+three main-executable dependencies (8c605628, 8c608d14, 8c63d414). Their static
+calls expose 21 unregistered targets after point-transform registration.
+These are drafts/static inventories,
+not recovered buildable source or complete computed-target verification; they
+receive zero recovery credit. Frozen global function indexes are not regenerated.
+
+Reproducible source and evidence
+Source: source/sa_draw_point.c
+Top bridge: source/sa_draw_point_connected.c
+Generator: recover_draw_point.py
+Connection generator: connect_draw_point.py
+Build: build_draw_point.ps1
+Direct checks: verify_draw_point.py
+Original-caller checks: verify_overlay_draw_point.py
+Registration: register_draw_point.py
+Reports: analysis/draw_point_translation.json
+         analysis/draw_point_connection.json
+         analysis/draw_point_verification.json
+         analysis/overlay_draw_point_verification.json
+
+Older source, DLLs and proofs remain accessible. The AL_MAIN drawing callback
+stays unregistered until its remaining paths and services are recovered.
+No physical GPU pixels, whole frames/gameplay, high-FPS/8K/SUPIR or playable
+port is proved by these numerical/software queue checks. Texture Off remains
+planned as disabled texture sampling with vertex/material colours.
+
+How to check without programming
+Open this report to read the milestone results. The JSON reports list tested
+inputs and the remaining service boundaries. Source and reproduction scripts
+are in this project folder; there is no playable executable yet. Continue
+Sol High for remaining draw dependencies. Luna Low suits documentation-only work.

@@ -1,0 +1,10 @@
+address	opcode	instruction	references
+8c668ffc	d304	mov.l 0x8c669010,r3	READ:8c669010=8c67c1d0 
+8c668ffe	6532	mov.l @r3,r5	READ:8c67c1d0=0 
+8c669000	2558	tst r5,r5	
+8c669002	8902	bt 0x8c66900a	CONDITIONAL_JUMP:8c66900a=e000000b 
+8c669004	9003	mov.w 0x8c66900e,r0	READ:8c66900e=c1d001a8 
+8c669006	25e	mov.l @(r0,r5),r2	
+8c669008	2422	mov.l r2,@r4	
+8c66900a	b	rts	
+8c66900c	e000	_mov #0x0,r0	

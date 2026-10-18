@@ -1,0 +1,29 @@
+address	opcode	instruction	references
+8c6687bc	4f22	sts.l PR,@-r15	DATA:Stack[-0x4] 
+8c6687be	2558	tst r5,r5	
+8c6687c0	8b03	bf 0x8c6687ca	CONDITIONAL_JUMP:8c6687ca=2622e201 
+8c6687c2	4f26	lds.l @r15+,PR	DATA:Stack[-0x4] 
+8c6687c4	e200	mov #0x0,r2	
+8c6687c6	b	rts	
+8c6687c8	2622	_mov.l r2,@r6	
+8c6687ca	e201	mov #0x1,r2	
+8c6687cc	2622	mov.l r2,@r6	
+8c6687ce	e740	mov #0x40,r7	
+8c6687d0	a00a	bra 0x8c6687e8	UNCONDITIONAL_JUMP:8c6687e8=32776262 
+8c6687d2	e402	_mov #0x2,r4	
+8c6687d4	d21e	mov.l 0x8c668850,r2	READ:8c668850=8c10cbb8 
+8c6687d6	6153	mov r5,r1	
+8c6687d8	420b	jsr @r2	COMPUTED_CALL:8c10cbb8=2f262008 
+8c6687da	6043	_mov r4,r0	
+8c6687dc	2008	tst r0,r0	
+8c6687de	8b06	bf 0x8c6687ee	CONDITIONAL_JUMP:8c6687ee=b4f26 
+8c6687e0	6362	mov.l @r6,r3	
+8c6687e2	344c	add r4,r4	
+8c6687e4	4300	shll r3	
+8c6687e6	2632	mov.l r3,@r6	
+8c6687e8	6262	mov.l @r6,r2	
+8c6687ea	3277	cmp/gt r7,r2	
+8c6687ec	8bf2	bf 0x8c6687d4	CONDITIONAL_JUMP:8c6687d4=6153d21e 
+8c6687ee	4f26	lds.l @r15+,PR	DATA:Stack[-0x4] 
+8c6687f0	b	rts	
+8c6687f2	9	_nop	

@@ -1,0 +1,26 @@
+{
+  "cases_passed": 832,
+  "checks": [
+    {
+      "verifier": "sound_driver_resource_query_native_index",
+      "cases_passed": 240,
+      "scope": "Native47-instruction resource query66863c with native resource index getter66abf0 and bank section lookup65a900. Selectors signed byte/truncation,resource indexes0/15/16/255/256,missing context,banks/SR. Full retail state and diagnostic traces match. Independent SPRS table output/cache values,range/context error preserving output seeds,selector2 overlapping cache,arguments/message/result checked. Outer diagnostics modeled; actual bank loading/full game unverified."
+    },
+    {
+      "verifier": "sound_driver_state_query",
+      "cases_passed": 192,
+      "scope": "Native32-instruction driver state query6685bc with native state getter65a568/error recorder65acac. Signed-byte selector/truncation,state0/1/2/FFFFFFFF,null selected object,banks/SR. Full retail RAM/CPU/FPU/SR/PR/MACL and diagnostics match. Independent selected getter arguments,output,state preservation,error/message/result verified. Null-object error copies seeded unwritten stack wordDEADBEEF to output; value depends on prior stack contents. Outer diagnostics modeled; full game unverified."
+    },
+    {
+      "verifier": "sound_driver_fixed_block_transfer_native_bus",
+      "cases_passed": 384,
+      "scope": "Native55-instruction fixed32-byte driver transfer66854e connected to configuration/consumer/begin/submit/frame services/callback dispatch/pending getter and G2 strided copy/channel controls. Full retail RAM/CPU/FPU/SR/PR/MACL,MMIO and diagnostics match. Independent exact32-byte payload,16-byte preserved destination tail,unchanged source,channel release,object idle/context counters/global result checked. Context/null object/busy configuration rejections preserve destination/channels. No timer reads. G2 bus registers simulated; physical audio/full-game operation unverified."
+    },
+    {
+      "verifier": "sound_driver_zero_queries",
+      "cases_passed": 16,
+      "scope": "Two native five-instruction zero-output queries66869a/6686a4. Full retail state matched for distinct/aliased valid output pointers,banks/SR. Independent zero output words,neighbor preservation,R0/R4 zero checked. Null/invalid outputs excluded; query purpose unresolved."
+    }
+  ],
+  "scope": "Recent recovered routines execute from the combined25-source driver library with existing native dependencies. Synthetic fixtures and MMIO; full game remains unverified."
+}

@@ -1,0 +1,63 @@
+{
+  "module": "1ST_READ.BIN",
+  "load_address": "0x8c010000",
+  "address": "0x8c65f2a4",
+  "end_exclusive": "0x8c65f348",
+  "indexed_instruction_bytes": 164,
+  "retail_span_sha256": "c7d4236f92891adfea719d327e4a299f2ffa52d565e9bcdc205bc7710c427e9d",
+  "binary_sha256": "45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a",
+  "source_sha256": "cd94d3325ff9b435f22484799def2cdb308ffec729d26bb6b552d2e45f465551",
+  "cases_passed": 4,
+  "comparison_level": "Complete 16 MiB RAM, all GPR/SR/PR/FPU state and helper call traces compared against retail SH-4 interpretation.",
+  "scope": "Recovers both status-bit waits and signed timeout tests, the device-record reset writes/constants, stack saves/restores, and helper-call register effects.",
+  "limitations": [
+    "Clock-read and elapsed-time helper behavior is provided by deterministic fixtures; each helper has separate recovery/verification evidence.",
+    "The asynchronous status transition is simulated by the fixture callback; no physical device or complete game session is run."
+  ],
+  "cases": [
+    {
+      "name": "state clear immediately",
+      "clock_reads": 2,
+      "calls": [
+        "0x8c60260e",
+        "0x8c60260e"
+      ],
+      "full_ram_gpr_sr_pr_fpu_match": true
+    },
+    {
+      "name": "first wait timeout",
+      "clock_reads": 3,
+      "calls": [
+        "0x8c60260e",
+        "0x8c60260e",
+        "0x8c602618",
+        "0x8c60260e"
+      ],
+      "full_ram_gpr_sr_pr_fpu_match": true
+    },
+    {
+      "name": "first wait signal then second timeout",
+      "clock_reads": 4,
+      "calls": [
+        "0x8c60260e",
+        "0x8c60260e",
+        "0x8c602618",
+        "0x8c60260e",
+        "0x8c60260e",
+        "0x8c602618"
+      ],
+      "full_ram_gpr_sr_pr_fpu_match": true
+    },
+    {
+      "name": "second wait signal release",
+      "clock_reads": 3,
+      "calls": [
+        "0x8c60260e",
+        "0x8c60260e",
+        "0x8c60260e",
+        "0x8c602618"
+      ],
+      "full_ram_gpr_sr_pr_fpu_match": true
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+address	opcode	instruction	references
+8c651368	4f22	sts.l PR,@-r15	DATA:Stack[-0x4] 
+8c65136a	d24a	mov.l 0x8c651494,r2	READ:8c651494=8c67c004 
+8c65136c	6322	mov.l @r2,r3	READ:8c67c004=0 
+8c65136e	2338	tst r3,r3	
+8c651370	8905	bt 0x8c65137e	CONDITIONAL_JUMP:8c65137e=b4f26 
+8c651372	d349	mov.l 0x8c651498,r3	READ:8c651498=8c665a54 
+8c651374	430b	jsr @r3	COMPUTED_CALL:8c665a54=9000b 
+8c651376	9	_nop	
+8c651378	d346	mov.l 0x8c651494,r3	READ:8c651494=8c67c004 
+8c65137a	e200	mov #0x0,r2	
+8c65137c	2322	mov.l r2,@r3	WRITE:8c67c004=0 
+8c65137e	4f26	lds.l @r15+,PR	DATA:Stack[-0x4] 
+8c651380	b	rts	
+8c651382	9	_nop	

@@ -1,0 +1,38 @@
+address	opcode	instruction	references
+0cb00994	e038	mov #0x38,r0	
+0cb00996	f466	fmov.s @(r0,r6),fr4	
+0cb00998	c721	mova 0x0cb00a20,r0	DATA:0cb00a20=40a00000 
+0cb0099a	f008	fmov.s @r0,fr0	READ:0cb00a20=40a00000 
+0cb0099c	e038	mov #0x38,r0	
+0cb0099e	f356	fmov.s @(r0,r5),fr3	
+0cb009a0	e049	mov #0x49,r0	
+0cb009a2	4008	shll2 r0	
+0cb009a4	6d	mov.w @(r0,r6),r0	
+0cb009a6	600d	extu.w r0,r0	
+0cb009a8	8808	cmp/eq #0x8,r0	
+0cb009aa	8d16	bt/s 0x0cb009da	CONDITIONAL_JUMP:0cb009da=9000b 
+0cb009ac	f43e	_fmac fr0,fr3,fr4	
+0cb009ae	e0c0	mov #-0x40,r0	
+0cb009b0	600c	extu.b r0,r0	
+0cb009b2	f366	fmov.s @(r0,r6),fr3	
+0cb009b4	f435	fcmp/gt fr3,fr4	
+0cb009b6	8b04	bf 0x0cb009c2	CONDITIONAL_JUMP:0cb009c2=4008e049 
+0cb009b8	e049	mov #0x49,r0	
+0cb009ba	4008	shll2 r0	
+0cb009bc	e202	mov #0x2,r2	
+0cb009be	a004	bra 0x0cb009ca	UNCONDITIONAL_JUMP:0cb009ca=f366e038 
+0cb009c0	625	_mov.w r2,@(r0,r6)	
+0cb009c2	e049	mov #0x49,r0	
+0cb009c4	4008	shll2 r0	
+0cb009c6	e101	mov #0x1,r1	
+0cb009c8	615	mov.w r1,@(r0,r6)	
+0cb009ca	e038	mov #0x38,r0	
+0cb009cc	f366	fmov.s @(r0,r6),fr3	
+0cb009ce	c715	mova 0x0cb00a24,r0	DATA:0cb00a24=41a00000 
+0cb009d0	f008	fmov.s @r0,fr0	READ:0cb00a24=41a00000 
+0cb009d2	e038	mov #0x38,r0	
+0cb009d4	f256	fmov.s @(r0,r5),fr2	
+0cb009d6	f32e	fmac fr0,fr2,fr3	
+0cb009d8	f63a	fmov.s fr3,@r6	
+0cb009da	b	rts	
+0cb009dc	9	_nop	

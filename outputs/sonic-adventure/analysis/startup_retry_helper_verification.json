@@ -1,0 +1,124 @@
+{
+  "cases_passed": 6,
+  "routine_start": "0x8c010fcc",
+  "routine_end_exclusive": "0x8c011042",
+  "instruction_bytes": 118,
+  "retail_span_sha256": "bf1f5eb3b7a50d1428c03cdfe6836794192ff056f5d3145179485b1cd19784a5",
+  "source_sha256": "d36432ae0927df8695a2fcc4af23e72dbf88a129923a389600d0cf2f2684b53b",
+  "dll_sha256": "e7e8158377be6e6b21a6fbfc8dd4108310cddc963911978416dca734ffaba686",
+  "callback_targets": [
+    "0x8c602fb8",
+    "0x8c10d3c8",
+    "0x8c602fe6"
+  ],
+  "cases": [
+    {
+      "case": 0,
+      "gate": 1,
+      "service_results": {
+        "0x8c602fb8": [],
+        "0x8c10d3c8": [],
+        "0x8c602fe6": []
+      },
+      "calls": 0,
+      "retail_instructions_executed": 25,
+      "full_state_and_call_trace_match": true
+    },
+    {
+      "case": 1,
+      "gate": 0,
+      "service_results": {
+        "0x8c602fb8": [
+          -1
+        ],
+        "0x8c10d3c8": [
+          0
+        ],
+        "0x8c602fe6": []
+      },
+      "calls": 2,
+      "retail_instructions_executed": 42,
+      "full_state_and_call_trace_match": true
+    },
+    {
+      "case": 2,
+      "gate": 0,
+      "service_results": {
+        "0x8c602fb8": [
+          0
+        ],
+        "0x8c10d3c8": [
+          0
+        ],
+        "0x8c602fe6": []
+      },
+      "calls": 2,
+      "retail_instructions_executed": 44,
+      "full_state_and_call_trace_match": true
+    },
+    {
+      "case": 3,
+      "gate": 0,
+      "service_results": {
+        "0x8c602fb8": [
+          2
+        ],
+        "0x8c10d3c8": [
+          1,
+          0
+        ],
+        "0x8c602fe6": [
+          0
+        ]
+      },
+      "calls": 4,
+      "retail_instructions_executed": 57,
+      "full_state_and_call_trace_match": true
+    },
+    {
+      "case": 4,
+      "gate": 0,
+      "service_results": {
+        "0x8c602fb8": [
+          2
+        ],
+        "0x8c10d3c8": [
+          1,
+          1
+        ],
+        "0x8c602fe6": [
+          -1
+        ]
+      },
+      "calls": 4,
+      "retail_instructions_executed": 55,
+      "full_state_and_call_trace_match": true
+    },
+    {
+      "case": 5,
+      "gate": 0,
+      "service_results": {
+        "0x8c602fb8": [
+          2
+        ],
+        "0x8c10d3c8": [
+          1,
+          -7,
+          4
+        ],
+        "0x8c602fe6": [
+          2,
+          -1
+        ]
+      },
+      "calls": 6,
+      "retail_instructions_executed": 68,
+      "full_state_and_call_trace_match": true
+    }
+  ],
+  "scope": "Full 118-byte helper span, including stack frame and 20-byte local buffer. Compares complete 16 MiB RAM, GPR/SR/PR/PC, callback order and arguments, initial gate, first-service sign, result-zero and repeated helper/service paths.",
+  "limitations": [
+    "Services at 0x8c602fb8 and 0x8c602fe6, plus the 14-byte wrapper at 0x8c10d3c8, are deterministic modeled callback boundaries.",
+    "Verification uses a partial SH-4 interpreter rather than physical Dreamcast hardware or end-to-end game behavior."
+  ]
+}

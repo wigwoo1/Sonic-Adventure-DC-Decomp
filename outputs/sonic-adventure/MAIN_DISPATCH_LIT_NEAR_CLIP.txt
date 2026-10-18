@@ -1,0 +1,145 @@
+Lighting-aware near-plane triangle clipping
+16 October 2026 — VERIFIED within the bounded scope below.
+Overall completion: 10% estimated weighted project milestones, not code coverage.
+Goal active. Continue Sol High with the remaining alternate lighting helpers.
+
+Recovered source
+  8c612e64..8c613312: all 564 original instruction rows
+  source/sa_main_dispatch_lit_near_clip.c
+  source/sa_main_dispatch_lit_near_clip_connected.c
+The complete body is byte-checked and translated to annotated static C with
+original register effects, instruction order and delay slots. There is no
+runtime opcode decoder. Names and field meanings are descriptive inferences,
+not a claim to possess the original developers' source. Older source/reports
+and original game files are preserved.
+
+Behavior
+For three input cache records, this helper first computes the same lighting
+factor as the parent primitive family:
+  factor = ((base - normal.x * light.x) - normal.y * light.y)
+           - normal.z * light.z
+It saves each factor at cache+1c before orientation rejection, including when
+the triangle is rejected. This differs from the plain parent's accepted-only
+lighting work. Normal words, material/lighting state and original scratch
+effects are checked against original execution.
+
+The helper reconstructs camera-space coordinates for projected vertices and
+uses raw camera coordinates for vertices flagged behind the near plane. It
+rejects orientation as directed by 8c8902fc, clips crossing edges at z=near,
+and interpolates lighting factors along those same camera-space edges. It
+emits three or four vertex packets, with four-vertex strip order 0,1,3,2.
+Packet alpha remains the unchanged material word; RGB is scaled by the input
+or interpolated factor. Negative and >1 factors are retained by this helper.
+The original output counter, queue cursor and orientation-global effects stay
+intact. There are no calls from the helper itself.
+
+Build and tests actually passed
+- Strict Clang build: -O2 -Wall -Wextra -Werror; new separate linked DLL.
+- 566 original-instruction comparisons: 358 direct helper cases, 150 clipped
+  parent cases, two plain-parent alternate cases, four draws, four particle
+  callbacks and 48 connected mesh cases. All 564 rows and all 14 conditional
+  outcomes covered. All four near-helper call sites in parent 8c6184f0 execute.
+- Entire 16 MiB RAM, GPRs/SR/PR, both FPU banks/FPSCR, FPUL/MACL and ordered
+  call boundaries match original execution, including matched partial state.
+- 770 ordered boundary comparisons, 35,092 numerical operations, 1,450 queue
+  transfers and 14,708 queue events checked. The helper executes 564 times in
+  this suite; that invocation count is separate from its 564 static rows.
+- 302 independent cases check cached input factors, camera-space clipping,
+  polygon ordering/projection, RGB interpolation, unchanged alpha, control
+  words, output counters/cursors and orientation rejection. All six mixed-near
+  masks, both windings/banks, differing near planes/scales/offsets, degenerate
+  triangles, and negative/zero/>1 lighting inputs are exercised.
+- 474 cases complete successfully. Another 76 match inherited unsupported
+  numeric/precision guards (-1), four stop at the explicit saved-pointer guard
+  (-3), and 12 match enabled floating-point traps (status 1). All four rounding
+  bit patterns and inherited precision/width combinations are exercised with
+  the established scalar-probe/shared-vector numerical-oracle limitations.
+
+Connected clipping and fixture corrections
+All 48 connected meshes use actual normal projection/classification, material
+setup, primary or secondary header acquisition, the clipped lighting parent,
+the new native helper and cursor finalization, with zero external game-service
+substitutes on those paths. Every mesh is independently checked for its final
+geometry, colour, counter and cursor result. Both banks/orientations and all
+six mixed-near masks are covered. Accepted and rejected triangles are checked.
+
+The inherited fixture option named 'clip' actually sets ENV bit 2, which bypasses
+classification. The previous lighting checkpoint's constructed mixed-near meshes
+therefore selected its plain body. Its coverage notes have been corrected; its
+saved original-code comparisons remain valid. The new fixtures clear that bit
+and explicitly assert calls to the clipped parent and lighting near helper.
+Standalone parent fixtures also initialize the projection divisors that the real
+filter normally publishes. Their old zero defaults only worked with a service
+substitute; with native clipping they produced unsupported numeric results.
+With valid divisors all direct parent cases in this suite complete successfully.
+
+Only four alternate-service boundaries remain in the focused suite, from
+explicit alternate-parent tests. Two alternate lighting helpers remain fixtures:
+8c6136c0 and 8c614bb0. Fourteen other primitive emitters remain unfinished.
+No recovery credit is granted for those substitutes or for draft pseudocode.
+
+Saved-pointer guard and input contract
+Wide FMOV fixtures can overwrite a saved vertex-pointer slot in the original
+stack frame. At reached instruction 8c612ff2, the native and reference paths stop
+with host status -3 before loading flags through a pointer outside modeled RAM.
+This is an unsupported-transfer boundary, not physical SH-4 exception dispatch.
+All-near standalone inputs are outside the normal parent contract and receive
+original-code comparison evidence only; no valid clipped-polygon claim is made.
+Independent colour checks use finite constructed values and tolerances for
+interpolated output; they do not prove every floating-point input or hardware
+exception behavior.
+
+Lifetime regression
+The new linked build passes 120 unchanged original-model particle lifetimes /
+984 stage comparisons, with 23,264 ordered boundaries, 104,016 numerical
+operations, 10,600 queue transfers and 117,808 queue events. Those paths use
+zero external game services. Motion/timers, pauses, deferred deletion, pool/heap
+checks and 46 matrix-translation cases remain verified. These particular models
+do not reach the new lighting family or helper; the harness explicitly asserts
+that. New clipping coverage comes from focused/constructed meshes above.
+Host-selected scheduler ordering does not establish the full original frame loop.
+
+How to inspect or repeat
+Read this file, then the source and saved evidence:
+  analysis/main_dispatch_lit_near_clip_translation.json
+  analysis/main_dispatch_lit_near_clip_verification.json
+  analysis/main_dispatch_lit_near_clip_lifecycle_verification.json
+From this output directory with the installed project Python:
+  python recover_main_dispatch_lit_near_clip.py
+  .\build_main_dispatch_lit_near_clip.ps1
+  python verify_main_dispatch_lit_near_clip.py
+  python verify_main_dispatch_lit_near_clip_lifecycle.py
+  python register_main_dispatch_lit_near_clip.py
+  python map_main_dispatch_cases.py
+  python verify_main_dispatch_case_map.py
+  python audit_recovery_coverage.py
+  python audit_project_completion.py
+The focused stages are included in build_and_verify.ps1. The entire accumulated
+workflow was not rerun. Rebuilding changes DLL timestamps/hashes, so fresh
+focused and lifetime reports are required before registration after a rebuild.
+
+Registry and remaining work
+1,057 entries / 1,054 unique module-address pairs; 1,005 match the unchanged
+10,875-candidate snapshots. Another 211 non-texture modules have no function
+index. None of these incomplete inventories establishes whole-game coverage.
+Next: recover alternate lighting helpers 8c6136c0 (300 rows) and 8c614bb0
+(460 rows), using this native helper and existing empty stub 8c611708.
+Their bytes and call hints are already exported/checked in:
+  analysis/main-dispatch-lit-lower/
+  analysis/main_dispatch_lit_lower_inventory.json
+They have 760 rows of analysis input, not newly recovered code. Enclosing spans
+may include literal pools; span sizes are not recovered-code byte counts.
+
+Valid bounded metadata and coherent-RAM/MMU-off queues only. Physical GPU FIFO,
+visible pixels, MMU-on/TLB, cache timing/faults, full original frame driver,
+full decompilation/gameplay and playable ports remain unfinished. HD/display
+settings are still planned; Texture Off will disable sampling and use vertex
+colours or the material-colour fallback. No model downgrade or goal pause is
+recommended while the remaining lighting helpers are being recovered.
+
+Final integrity checks: source/translation regeneration matched saved hashes
+byte-for-byte; registration reran with zero additions. Dispatcher verification
+passed 658 original pointer-load checks over 80 spans and 83 selectors. Both
+new-build and aggregate PowerShell scripts parsed; all four new Python scripts
+parsed. Final coverage audit found zero registry evidence errors and zero stale
+whole-source reports. The declared whole-project milestone score remains 10%.

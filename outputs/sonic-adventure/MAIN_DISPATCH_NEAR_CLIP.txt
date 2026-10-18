@@ -1,0 +1,108 @@
+Main dispatcher native near-plane triangle clipping
+16 October 2026 — VERIFIED within the bounded scope below.
+Overall completion remains 10% estimated weighted milestones, not code coverage.
+The goal stays active. Continue Sol High for the remaining rendering recovery.
+
+Recovered code
+Complete helper 8c613312..8c6136c0: 461 original instruction rows, 14 conditional
+outcomes and no function calls. The source is annotated static C, not a runtime
+opcode interpreter. The name is descriptive; original symbols are unknown.
+  source/sa_main_dispatch_near_clip.c
+  source/sa_main_dispatch_near_clip_connected.c
+Earlier game files, sources, DLLs and proof reports are preserved.
+
+Behavior
+The helper accepts three vertex-record pointers in R4/R5/R6 and an output queue
+cursor in R8. For records without the near flag it reconstructs camera-space
+coordinates from projected X/Y and reciprocal depth using the original global
+scales and offsets. Near-flagged records already contain camera-space X/Y/Z.
+It tests orientation using the original scalar arithmetic and the cull-control
+word at 8c8902fc. Accepted input clears that word, clips each edge against the
+near plane, retains inside vertices and interpolates crossing vertices. It then
+reprojects intersections, stores the temporary polygon, emits three or four
+32-byte packets and advances R8 and the emitted-vertex counter.
+The four-vertex result uses strip order 0,1,3,2 relative to polygon perimeter
+order. Packet control/material words and the final f0000000 marker are preserved.
+This ordering was confirmed against original instructions before correcting the
+independent test oracle; native C already matched the original executor.
+
+Reached unsupported-transfer guard
+In eight wide-FMOV (SZ=1) fixtures the original stack layout overwrites a saved
+vertex pointer with floating data. Before the flags read at 8c61345a, native code
+returns host -3 if that pointer addresses outside modeled RAM. The reference
+executor stops at the same boundary and compares complete partial state.
+This follows the existing filter's saved-pointer guard policy. It does not model
+Dreamcast bus exceptions or prove wide-FMOV gameplay reachability. Normal bounded
+single-width input retains original instruction behavior. Other invalid pointers
+and hardware exceptions are outside this checkpoint's scope.
+
+Verification actually passed
+- Strict Clang shared-library build: -O2 -Wall -Wextra -Werror.
+- 408 focused cases: direct helper 340, clipped primitive 36, draw four, primary
+  four and connected mesh 24. All 461 rows / 14 branch outcomes reached.
+- Full 16 MiB RAM, GPRs, SR/PR, both FPU banks/FPSCR, FPUL and MACL match original
+  instruction execution. 428 ordered boundary comparisons and 13,316 numerical
+  operations checked. Native queues match the independent Python queue model:
+  794 transfers / 7,872 ordered queue events. No external game services reached.
+- 260 independent geometry cases check clipped coordinates, polygon/strip order,
+  culling, material/control words, counters and cursor movement, including all
+  mixed near masks, multiple near-plane/scaling/offset values, both FPU banks,
+  both queue starts and degenerate geometry.
+- The 24 connected mesh cases use valid indexed input vertices with the original
+  material selector for this primitive. Real filter/projection, queue acquisition,
+  primitive dispatch, clipping and cursor finalization execute together. Tests
+  explicitly require a native clipper invocation and zero substitute calls.
+- 276 cases complete. The 132 partial cases preserve original partial state:
+  112 inherited unsupported numerical modes, eight saved-pointer guards (-3),
+  and 12 enabled numerical-exception statuses (1). Trap classification retains
+  the established native numeric probe; this is not hardware exception dispatch.
+- Direct all-near input is compared against original instructions but excluded
+  from the polygon oracle: normal callers reject it before calling this helper.
+
+Connected lifetime evidence
+120 complete particle lifetimes / 984 stage comparisons passed, including
+23,264 ordered boundaries, 104,016 numerical operations, 10,600 queue transfers
+and 117,808 queue events. There are 880 real filter/worker invocations, 176 native
+primitive invocations and 160 native near-helper invocations. The tested lifetime
+chain now has zero external game-service substitutes. All 160 near-helper calls
+in these lifetime fixtures exit through the original orientation cull and emit
+no extra packets; the direct and connected mesh cases separately prove accepted
+triangle/quad clipping and emitted positions. Preserve that distinction.
+Motion, timers, pauses, deferred deletion, task pools and heap coalescing remain
+independently checked. The 46 matrix-translation regression cases also pass.
+Host-selected scheduler ordering still does not establish the whole frame driver.
+
+Reproduction and saved proof
+  analysis/main-dispatch-clipping/8c613312_instructions.tsv
+  analysis/main_dispatch_near_clip_translation.json
+  analysis/main_dispatch_near_clip_verification.json
+  analysis/main_dispatch_near_clip_lifecycle_verification.json
+From this output directory using the installed project Python:
+  python recover_main_dispatch_near_clip.py
+  .\build_main_dispatch_near_clip.ps1
+  python verify_main_dispatch_near_clip.py
+  python verify_main_dispatch_near_clip_lifecycle.py
+  python register_main_dispatch_near_clip.py
+  python map_main_dispatch_cases.py
+  python verify_main_dispatch_case_map.py
+The focused stages are saved in build_and_verify.ps1. Its full accumulated
+workflow was not run end-to-end. Registration validates original spans, source,
+DLL and proof-input hashes before admitting the single new routine.
+Registry: 1,049 entries / 1,046 unique module-address pairs. The incomplete function
+inventory cannot establish a whole-game recovered-code percentage.
+Final audits found zero registry evidence errors and zero stale source reports.
+The dispatcher map passed 658 original pointer-load checks over 80 spans and 83
+selectors. Source/manifest regeneration reproduced identical hashes, registration
+reran with zero added entries, and both PowerShell syntax checks passed.
+
+Remaining work and next task
+Two alternate rendering helpers (8c6149b4 / 8c616bc4) and 19 other acquisition/
+primitive targets remain substitutes outside this tested lifetime path. Their
+original instruction exports are already saved. Their shared 8c611708 call
+resolves to an existing recovered empty stub, and 8c616bc4 also calls this now
+native near clipper. Check/reuse the existing stub before recovering the two
+alternate bodies; do not count it again. Keep Sol High for that task.
+Coherent-RAM/MMU-off queue behavior is tested. No visible pixels, GPU FIFO,
+MMU-on/TLB, cache timing, physical fault, complete gameplay or playable-port
+success is claimed. Full decompilation, all platforms and planned HD/display
+settings remain unfinished. No model switch or goal pause is recommended.

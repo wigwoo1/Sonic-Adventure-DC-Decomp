@@ -1,0 +1,85 @@
+Default request-device bindings and native cancellation
+=======================================================
+Native platform data-path follow-up: see NATIVE_DISC_PLATFORM.txt. The new
+sector reader reproduces four original-disc file hashes, but the runtime-vector
+command queue and game-caller integration remain unfinished.
+Whole-project weighted milestone score: 10%; this is not whole-game code coverage.
+
+inventory_request_device_callbacks.py verifies the following original binary
+pointer words and instruction bytes. Its report is:
+  analysis/request_device_callback_bindings.json
+
+Cancellation:
+  Default device table 0x8c66d240, returned by getter 0x8c645328
+  Table slot +0x14 -> 0x8c6451a4
+  Wrapper literal 0x8c6451f8 -> 0x8c10d9d8
+  Service tail sets R6=0, R7=8, then jumps through runtime word 0x8c0000bc.
+
+Pump bindings identified for later connection:
+  Backend table 0x8c66c4b4, slot +0x48 -> 0x8c6005c2
+  Device table 0x8c66d240, slot +0x40 -> 0x8c6452d6
+  Lower service tail 0x8c10d960 selects operation 2 through the same vector.
+
+Backend poll 0x8c6005c2 now has focused, hash-linked verification in
+analysis/file_backend_poll_verification.json: 64 cases and 96 service boundaries.
+It reloads the context pointer after device pumping and checks the current
+pending handle before tail-calling completion. Tests cover both RAM aliases,
+both FPU banks, handle changes and context retargeting during pumping.
+Full RAM/GPR/SR/PR/FPU are compared at service entry and return; the native ABI
+does not export PC. Device pumping and completion are fixtures in this focused
+test. The CPU-state implementation in source/sa_file_backend_poll_state.c now
+connects this backend pump to the cleanup/abort native bridge. Thirty additional
+connected cases exercise it with device-table pumping and completion fixtures.
+Thirty further cases also execute the lower pump wrappers at 0x8c6452d6 and
+0x8c10d960, selecting operation 2 through the same runtime vector as cancellation.
+The existing native completion processor is now connected using
+source/sa_file_completion_connected.c. Its device-status callback supplies
+0x43 in the connected cases; the external vector target also remains a fixture.
+The deepest thirty cases now execute the status formatter (0x8c6450ea) and
+operation-1 tail (0x8c10d94c), translating external raw status 4 into 0x43.
+The retail default status table slot at 0x8c66d250 points to that formatter.
+verify_device_status_connected.py checks these binary bindings and 192 cases
+with 384 full RAM/CPU service comparisons, eight raw statuses and twelve error
+values through both RAM aliases. Independent assertions check translated codes
+and exactly which output words changed. Report:
+analysis/device_status_connected_verification.json. External vector is a fixture.
+Reproduce with build_file_backend_poll.ps1 then verify_file_backend_poll.py.
+
+Static bindings do not prove complete driver startup or alternate runtime
+backends. The vector word is below 1ST_READ.BIN's load address; its target is
+supplied explicitly by tests/platform state.
+
+source/sa_device_cancel_path.c recovers the 6-byte cancellation tail and
+12-byte service tail. Literal words are recorded as data, not instructions.
+Neither entry appeared in the current Ghidra draft index. Their actual retail
+code was located through table pointers and checked through instruction execution.
+
+128 leaf comparisons and 64 complete two-wrapper comparisons matched full
+16 MiB RAM and GPR/SR/PR/PC at the tail target. Tests vary the runtime target
+and registers, verify operation 8, and preserve incoming R4 and PR.
+
+The connected cleanup chain now executes both real cancellation wrappers
+natively. Its fixture boundary moves to the external vector target. Ninety
+connected cases pass 1286 service-entry comparisons and 456 timer reads. The
+external fixture checks operation code 8, R6=0, and the cancellation handle.
+
+A bounded dispatch chain prevents malformed retargeting from recursing forever.
+A cycle test matches the stable retail boundary state, returns a host budget
+error, and keeps work pending. The connected suite has eight host guard tests,
+including failure inside the native backend's device call with its frame intact.
+Failure at the operation-2 runtime target also preserves both lower call frames.
+Failure at completion's device-status callback preserves its partial frame too.
+The deepest error test fails at operation 1 after the native formatter/tail.
+
+Reproduce from outputs/sonic-adventure using PowerShell:
+  & 'C:\Users\wigwo\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe' .\inventory_request_device_callbacks.py
+  .\build_stream_cleanup_abort_native.ps1
+  & 'C:\Users\wigwo\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe' .\verify_device_cancel_path.py
+  & 'C:\Users\wigwo\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe' .\verify_stream_cleanup_abort_native.py
+
+Reports: analysis/device_cancel_path_verification.json and
+analysis/stream_cleanup_abort_native_verification.json.
+
+Remaining scope: the external vector implementation, backend pump/completion,
+complete startup, hardware I/O, concurrency and whole-game behavior. No complete
+native PC or later port is claimed. The full accumulated suite was not run.

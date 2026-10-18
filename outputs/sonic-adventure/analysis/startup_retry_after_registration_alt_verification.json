@@ -1,0 +1,141 @@
+{
+  "cases_passed": 10,
+  "routine_start": "0x8c011592",
+  "routine_end_exclusive": "0x8c0115d0",
+  "instruction_bytes": 62,
+  "retail_span_sha256": "9a838856b35c9150aad9d4e305fd315a54f32a050fe3ce6f0f5e09950090f965",
+  "source_sha256": "f50ef46f2af7b5d110f2addb9d3f66ae8d285cfc030004c6ac18ed54f2840587",
+  "dll_sha256": "1d5da3f6fcf2c1400fe6da8fc34a78b8cfdf3e1139ef193f05b6f00b83d3c39b",
+  "callback_targets": [
+    "0x8c088608",
+    "0x8c6033e4",
+    "0x8c0112e6"
+  ],
+  "cases": [
+    {
+      "case": 0,
+      "flag": "0x1",
+      "poll_returns": [],
+      "helper_return": 0,
+      "callback_count": 1,
+      "retail_instructions_executed": 16,
+      "full_state_and_call_trace_match": true
+    },
+    {
+      "case": 1,
+      "flag": "0xffffffff",
+      "poll_returns": [],
+      "helper_return": 0,
+      "callback_count": 1,
+      "retail_instructions_executed": 16,
+      "full_state_and_call_trace_match": true
+    },
+    {
+      "case": 2,
+      "flag": "0x0",
+      "poll_returns": [
+        0
+      ],
+      "helper_return": 1,
+      "callback_count": 3,
+      "retail_instructions_executed": 26,
+      "full_state_and_call_trace_match": true
+    },
+    {
+      "case": 3,
+      "flag": "0x0",
+      "poll_returns": [
+        -1,
+        0
+      ],
+      "helper_return": -1,
+      "callback_count": 4,
+      "retail_instructions_executed": 30,
+      "full_state_and_call_trace_match": true
+    },
+    {
+      "case": 4,
+      "flag": "0x0",
+      "poll_returns": [
+        -1,
+        -1,
+        2,
+        0
+      ],
+      "helper_return": 0,
+      "callback_count": 6,
+      "retail_instructions_executed": 37,
+      "full_state_and_call_trace_match": true
+    },
+    {
+      "case": 5,
+      "flag": "0x0",
+      "poll_returns": [
+        1,
+        -1,
+        3
+      ],
+      "helper_return": 0,
+      "callback_count": 5,
+      "retail_instructions_executed": 33,
+      "full_state_and_call_trace_match": true
+    },
+    {
+      "case": 6,
+      "flag": "0x0",
+      "poll_returns": [
+        -2
+      ],
+      "helper_return": 7,
+      "callback_count": 3,
+      "retail_instructions_executed": 26,
+      "full_state_and_call_trace_match": true
+    },
+    {
+      "case": 7,
+      "flag": "0x0",
+      "poll_returns": [
+        0,
+        -1,
+        -1,
+        -3
+      ],
+      "helper_return": 0,
+      "callback_count": 6,
+      "retail_instructions_executed": 37,
+      "full_state_and_call_trace_match": true
+    },
+    {
+      "case": 8,
+      "flag": "0x0",
+      "poll_returns": [
+        -1,
+        305419896
+      ],
+      "helper_return": -2147483648,
+      "callback_count": 4,
+      "retail_instructions_executed": 30,
+      "full_state_and_call_trace_match": true
+    },
+    {
+      "case": 9,
+      "flag": "0x0",
+      "poll_returns": [
+        -1,
+        -1,
+        -1,
+        2147483647,
+        0
+      ],
+      "helper_return": 0,
+      "callback_count": 7,
+      "retail_instructions_executed": 41,
+      "full_state_and_call_trace_match": true
+    }
+  ],
+  "scope": "Complete contiguous 62-byte routine span. Full 16 MiB RAM and GPR/SR/PR/PC, initializer and poll loop counts, helper result, optional second poll, return values, callback order and saved context compared with retail.",
+  "limitations": [
+    "Initializer at 0x8c088608, poll service at 0x8c6033e4, and helper at 0x8c0112e6 are deterministic modeled callback boundaries, not recovered by this source file.",
+    "Verification uses a partial SH-4 interpreter, not physical Dreamcast hardware or end-to-end game behavior."
+  ]
+}

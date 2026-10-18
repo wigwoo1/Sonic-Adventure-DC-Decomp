@@ -1,0 +1,3601 @@
+{
+  "module": "1ST_READ.BIN",
+  "load_address": "0x8c010000",
+  "address": "0x8c07cfa0",
+  "end_exclusive": "0x8c07cfaa",
+  "retail_span_sha256": "31b7e2529f314a4093ed31a6a7be5e445dcfefb17644790f12cc547839cbcd63",
+  "binary_sha256": "45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a",
+  "source_sha256": "0356ea56b973f877fd5d66d00c573dc314f99760cc81b0e256d7bb83f97525ab",
+  "cases_passed": 512,
+  "comparison_level": "Complete 16 MiB RAM and all GPRs, SR, PR, and return PC compared against the retail SH-4 interpreter.",
+  "scope": "Tests all 256 zero-extended input byte values, high-bit truncation, unchanged R4, R1/R0 results, table literal handling, code-backed reads, and first/last aligned RAM words.",
+  "limitations": [
+    "The table purpose and legal index range are not yet identified; boundary tests keep effective addresses inside mapped RAM."
+  ],
+  "cases": [
+    {
+      "case": 0,
+      "index_byte": "0x0",
+      "table": "0x8c000000",
+      "result_address": "0x8c000000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 1,
+      "index_byte": "0x1",
+      "table": "0x8c000000",
+      "result_address": "0x8c000004",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 2,
+      "index_byte": "0x2",
+      "table": "0x8c000000",
+      "result_address": "0x8c000008",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 3,
+      "index_byte": "0x3",
+      "table": "0x8c000000",
+      "result_address": "0x8c00000c",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 4,
+      "index_byte": "0x4",
+      "table": "0x8c000000",
+      "result_address": "0x8c000010",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 5,
+      "index_byte": "0x5",
+      "table": "0x8c000000",
+      "result_address": "0x8c000014",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 6,
+      "index_byte": "0x6",
+      "table": "0x8c000000",
+      "result_address": "0x8c000018",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 7,
+      "index_byte": "0x7",
+      "table": "0x8c000000",
+      "result_address": "0x8c00001c",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 8,
+      "index_byte": "0x8",
+      "table": "0x8c000000",
+      "result_address": "0x8c000020",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 9,
+      "index_byte": "0x9",
+      "table": "0x8c000000",
+      "result_address": "0x8c000024",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 10,
+      "index_byte": "0xa",
+      "table": "0x8c000000",
+      "result_address": "0x8c000028",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 11,
+      "index_byte": "0xb",
+      "table": "0x8c000000",
+      "result_address": "0x8c00002c",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 12,
+      "index_byte": "0xc",
+      "table": "0x8c000000",
+      "result_address": "0x8c000030",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 13,
+      "index_byte": "0xd",
+      "table": "0x8c000000",
+      "result_address": "0x8c000034",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 14,
+      "index_byte": "0xe",
+      "table": "0x8c000000",
+      "result_address": "0x8c000038",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 15,
+      "index_byte": "0xf",
+      "table": "0x8c000000",
+      "result_address": "0x8c00003c",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 16,
+      "index_byte": "0x10",
+      "table": "0x8c000000",
+      "result_address": "0x8c000040",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 17,
+      "index_byte": "0x11",
+      "table": "0x8c000000",
+      "result_address": "0x8c000044",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 18,
+      "index_byte": "0x12",
+      "table": "0x8c000000",
+      "result_address": "0x8c000048",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 19,
+      "index_byte": "0x13",
+      "table": "0x8c000000",
+      "result_address": "0x8c00004c",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 20,
+      "index_byte": "0x14",
+      "table": "0x8c000000",
+      "result_address": "0x8c000050",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 21,
+      "index_byte": "0x15",
+      "table": "0x8c000000",
+      "result_address": "0x8c000054",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 22,
+      "index_byte": "0x16",
+      "table": "0x8c000000",
+      "result_address": "0x8c000058",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 23,
+      "index_byte": "0x17",
+      "table": "0x8c000000",
+      "result_address": "0x8c00005c",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 24,
+      "index_byte": "0x18",
+      "table": "0x8c000000",
+      "result_address": "0x8c000060",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 25,
+      "index_byte": "0x19",
+      "table": "0x8c000000",
+      "result_address": "0x8c000064",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 26,
+      "index_byte": "0x1a",
+      "table": "0x8c000000",
+      "result_address": "0x8c000068",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 27,
+      "index_byte": "0x1b",
+      "table": "0x8c000000",
+      "result_address": "0x8c00006c",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 28,
+      "index_byte": "0x1c",
+      "table": "0x8c000000",
+      "result_address": "0x8c000070",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 29,
+      "index_byte": "0x1d",
+      "table": "0x8c000000",
+      "result_address": "0x8c000074",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 30,
+      "index_byte": "0x1e",
+      "table": "0x8c000000",
+      "result_address": "0x8c000078",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 31,
+      "index_byte": "0x1f",
+      "table": "0x8c000000",
+      "result_address": "0x8c00007c",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 32,
+      "index_byte": "0x20",
+      "table": "0x8c000000",
+      "result_address": "0x8c000080",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 33,
+      "index_byte": "0x21",
+      "table": "0x8c000000",
+      "result_address": "0x8c000084",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 34,
+      "index_byte": "0x22",
+      "table": "0x8c000000",
+      "result_address": "0x8c000088",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 35,
+      "index_byte": "0x23",
+      "table": "0x8c000000",
+      "result_address": "0x8c00008c",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 36,
+      "index_byte": "0x24",
+      "table": "0x8c000000",
+      "result_address": "0x8c000090",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 37,
+      "index_byte": "0x25",
+      "table": "0x8c000000",
+      "result_address": "0x8c000094",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 38,
+      "index_byte": "0x26",
+      "table": "0x8c000000",
+      "result_address": "0x8c000098",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 39,
+      "index_byte": "0x27",
+      "table": "0x8c000000",
+      "result_address": "0x8c00009c",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 40,
+      "index_byte": "0x28",
+      "table": "0x8c000000",
+      "result_address": "0x8c0000a0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 41,
+      "index_byte": "0x29",
+      "table": "0x8c000000",
+      "result_address": "0x8c0000a4",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 42,
+      "index_byte": "0x2a",
+      "table": "0x8c000000",
+      "result_address": "0x8c0000a8",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 43,
+      "index_byte": "0x2b",
+      "table": "0x8c000000",
+      "result_address": "0x8c0000ac",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 44,
+      "index_byte": "0x2c",
+      "table": "0x8c000000",
+      "result_address": "0x8c0000b0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 45,
+      "index_byte": "0x2d",
+      "table": "0x8c000000",
+      "result_address": "0x8c0000b4",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 46,
+      "index_byte": "0x2e",
+      "table": "0x8c000000",
+      "result_address": "0x8c0000b8",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 47,
+      "index_byte": "0x2f",
+      "table": "0x8c000000",
+      "result_address": "0x8c0000bc",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 48,
+      "index_byte": "0x30",
+      "table": "0x8c000000",
+      "result_address": "0x8c0000c0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 49,
+      "index_byte": "0x31",
+      "table": "0x8c000000",
+      "result_address": "0x8c0000c4",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 50,
+      "index_byte": "0x32",
+      "table": "0x8c000000",
+      "result_address": "0x8c0000c8",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 51,
+      "index_byte": "0x33",
+      "table": "0x8c000000",
+      "result_address": "0x8c0000cc",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 52,
+      "index_byte": "0x34",
+      "table": "0x8c000000",
+      "result_address": "0x8c0000d0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 53,
+      "index_byte": "0x35",
+      "table": "0x8c000000",
+      "result_address": "0x8c0000d4",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 54,
+      "index_byte": "0x36",
+      "table": "0x8c000000",
+      "result_address": "0x8c0000d8",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 55,
+      "index_byte": "0x37",
+      "table": "0x8c000000",
+      "result_address": "0x8c0000dc",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 56,
+      "index_byte": "0x38",
+      "table": "0x8c000000",
+      "result_address": "0x8c0000e0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 57,
+      "index_byte": "0x39",
+      "table": "0x8c000000",
+      "result_address": "0x8c0000e4",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 58,
+      "index_byte": "0x3a",
+      "table": "0x8c000000",
+      "result_address": "0x8c0000e8",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 59,
+      "index_byte": "0x3b",
+      "table": "0x8c000000",
+      "result_address": "0x8c0000ec",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 60,
+      "index_byte": "0x3c",
+      "table": "0x8c000000",
+      "result_address": "0x8c0000f0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 61,
+      "index_byte": "0x3d",
+      "table": "0x8c000000",
+      "result_address": "0x8c0000f4",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 62,
+      "index_byte": "0x3e",
+      "table": "0x8c000000",
+      "result_address": "0x8c0000f8",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 63,
+      "index_byte": "0x3f",
+      "table": "0x8c000000",
+      "result_address": "0x8c0000fc",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 64,
+      "index_byte": "0x40",
+      "table": "0x8c000000",
+      "result_address": "0x8c000100",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 65,
+      "index_byte": "0x41",
+      "table": "0x8c000000",
+      "result_address": "0x8c000104",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 66,
+      "index_byte": "0x42",
+      "table": "0x8c000000",
+      "result_address": "0x8c000108",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 67,
+      "index_byte": "0x43",
+      "table": "0x8c000000",
+      "result_address": "0x8c00010c",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 68,
+      "index_byte": "0x44",
+      "table": "0x8c000000",
+      "result_address": "0x8c000110",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 69,
+      "index_byte": "0x45",
+      "table": "0x8c000000",
+      "result_address": "0x8c000114",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 70,
+      "index_byte": "0x46",
+      "table": "0x8c000000",
+      "result_address": "0x8c000118",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 71,
+      "index_byte": "0x47",
+      "table": "0x8c000000",
+      "result_address": "0x8c00011c",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 72,
+      "index_byte": "0x48",
+      "table": "0x8c000000",
+      "result_address": "0x8c000120",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 73,
+      "index_byte": "0x49",
+      "table": "0x8c000000",
+      "result_address": "0x8c000124",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 74,
+      "index_byte": "0x4a",
+      "table": "0x8c000000",
+      "result_address": "0x8c000128",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 75,
+      "index_byte": "0x4b",
+      "table": "0x8c000000",
+      "result_address": "0x8c00012c",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 76,
+      "index_byte": "0x4c",
+      "table": "0x8c000000",
+      "result_address": "0x8c000130",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 77,
+      "index_byte": "0x4d",
+      "table": "0x8c000000",
+      "result_address": "0x8c000134",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 78,
+      "index_byte": "0x4e",
+      "table": "0x8c000000",
+      "result_address": "0x8c000138",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 79,
+      "index_byte": "0x4f",
+      "table": "0x8c000000",
+      "result_address": "0x8c00013c",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 80,
+      "index_byte": "0x50",
+      "table": "0x8c000000",
+      "result_address": "0x8c000140",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 81,
+      "index_byte": "0x51",
+      "table": "0x8c000000",
+      "result_address": "0x8c000144",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 82,
+      "index_byte": "0x52",
+      "table": "0x8c000000",
+      "result_address": "0x8c000148",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 83,
+      "index_byte": "0x53",
+      "table": "0x8c000000",
+      "result_address": "0x8c00014c",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 84,
+      "index_byte": "0x54",
+      "table": "0x8c000000",
+      "result_address": "0x8c000150",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 85,
+      "index_byte": "0x55",
+      "table": "0x8c000000",
+      "result_address": "0x8c000154",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 86,
+      "index_byte": "0x56",
+      "table": "0x8c000000",
+      "result_address": "0x8c000158",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 87,
+      "index_byte": "0x57",
+      "table": "0x8c000000",
+      "result_address": "0x8c00015c",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 88,
+      "index_byte": "0x58",
+      "table": "0x8c000000",
+      "result_address": "0x8c000160",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 89,
+      "index_byte": "0x59",
+      "table": "0x8c000000",
+      "result_address": "0x8c000164",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 90,
+      "index_byte": "0x5a",
+      "table": "0x8c000000",
+      "result_address": "0x8c000168",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 91,
+      "index_byte": "0x5b",
+      "table": "0x8c000000",
+      "result_address": "0x8c00016c",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 92,
+      "index_byte": "0x5c",
+      "table": "0x8c000000",
+      "result_address": "0x8c000170",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 93,
+      "index_byte": "0x5d",
+      "table": "0x8c000000",
+      "result_address": "0x8c000174",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 94,
+      "index_byte": "0x5e",
+      "table": "0x8c000000",
+      "result_address": "0x8c000178",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 95,
+      "index_byte": "0x5f",
+      "table": "0x8c000000",
+      "result_address": "0x8c00017c",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 96,
+      "index_byte": "0x60",
+      "table": "0x8c000000",
+      "result_address": "0x8c000180",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 97,
+      "index_byte": "0x61",
+      "table": "0x8c000000",
+      "result_address": "0x8c000184",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 98,
+      "index_byte": "0x62",
+      "table": "0x8c000000",
+      "result_address": "0x8c000188",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 99,
+      "index_byte": "0x63",
+      "table": "0x8c000000",
+      "result_address": "0x8c00018c",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 100,
+      "index_byte": "0x64",
+      "table": "0x8c000000",
+      "result_address": "0x8c000190",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 101,
+      "index_byte": "0x65",
+      "table": "0x8c000000",
+      "result_address": "0x8c000194",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 102,
+      "index_byte": "0x66",
+      "table": "0x8c000000",
+      "result_address": "0x8c000198",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 103,
+      "index_byte": "0x67",
+      "table": "0x8c000000",
+      "result_address": "0x8c00019c",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 104,
+      "index_byte": "0x68",
+      "table": "0x8c000000",
+      "result_address": "0x8c0001a0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 105,
+      "index_byte": "0x69",
+      "table": "0x8c000000",
+      "result_address": "0x8c0001a4",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 106,
+      "index_byte": "0x6a",
+      "table": "0x8c000000",
+      "result_address": "0x8c0001a8",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 107,
+      "index_byte": "0x6b",
+      "table": "0x8c000000",
+      "result_address": "0x8c0001ac",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 108,
+      "index_byte": "0x6c",
+      "table": "0x8c000000",
+      "result_address": "0x8c0001b0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 109,
+      "index_byte": "0x6d",
+      "table": "0x8c000000",
+      "result_address": "0x8c0001b4",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 110,
+      "index_byte": "0x6e",
+      "table": "0x8c000000",
+      "result_address": "0x8c0001b8",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 111,
+      "index_byte": "0x6f",
+      "table": "0x8c000000",
+      "result_address": "0x8c0001bc",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 112,
+      "index_byte": "0x70",
+      "table": "0x8c000000",
+      "result_address": "0x8c0001c0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 113,
+      "index_byte": "0x71",
+      "table": "0x8c000000",
+      "result_address": "0x8c0001c4",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 114,
+      "index_byte": "0x72",
+      "table": "0x8c000000",
+      "result_address": "0x8c0001c8",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 115,
+      "index_byte": "0x73",
+      "table": "0x8c000000",
+      "result_address": "0x8c0001cc",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 116,
+      "index_byte": "0x74",
+      "table": "0x8c000000",
+      "result_address": "0x8c0001d0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 117,
+      "index_byte": "0x75",
+      "table": "0x8c000000",
+      "result_address": "0x8c0001d4",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 118,
+      "index_byte": "0x76",
+      "table": "0x8c000000",
+      "result_address": "0x8c0001d8",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 119,
+      "index_byte": "0x77",
+      "table": "0x8c000000",
+      "result_address": "0x8c0001dc",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 120,
+      "index_byte": "0x78",
+      "table": "0x8c000000",
+      "result_address": "0x8c0001e0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 121,
+      "index_byte": "0x79",
+      "table": "0x8c000000",
+      "result_address": "0x8c0001e4",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 122,
+      "index_byte": "0x7a",
+      "table": "0x8c000000",
+      "result_address": "0x8c0001e8",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 123,
+      "index_byte": "0x7b",
+      "table": "0x8c000000",
+      "result_address": "0x8c0001ec",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 124,
+      "index_byte": "0x7c",
+      "table": "0x8c000000",
+      "result_address": "0x8c0001f0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 125,
+      "index_byte": "0x7d",
+      "table": "0x8c000000",
+      "result_address": "0x8c0001f4",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 126,
+      "index_byte": "0x7e",
+      "table": "0x8c000000",
+      "result_address": "0x8c0001f8",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 127,
+      "index_byte": "0x7f",
+      "table": "0x8c000000",
+      "result_address": "0x8c0001fc",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 128,
+      "index_byte": "0x80",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cfffe00",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 129,
+      "index_byte": "0x81",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cfffe04",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 130,
+      "index_byte": "0x82",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cfffe08",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 131,
+      "index_byte": "0x83",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cfffe0c",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 132,
+      "index_byte": "0x84",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cfffe10",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 133,
+      "index_byte": "0x85",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cfffe14",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 134,
+      "index_byte": "0x86",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cfffe18",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 135,
+      "index_byte": "0x87",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cfffe1c",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 136,
+      "index_byte": "0x88",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cfffe20",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 137,
+      "index_byte": "0x89",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cfffe24",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 138,
+      "index_byte": "0x8a",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cfffe28",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 139,
+      "index_byte": "0x8b",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cfffe2c",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 140,
+      "index_byte": "0x8c",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cfffe30",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 141,
+      "index_byte": "0x8d",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cfffe34",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 142,
+      "index_byte": "0x8e",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cfffe38",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 143,
+      "index_byte": "0x8f",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cfffe3c",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 144,
+      "index_byte": "0x90",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cfffe40",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 145,
+      "index_byte": "0x91",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cfffe44",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 146,
+      "index_byte": "0x92",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cfffe48",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 147,
+      "index_byte": "0x93",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cfffe4c",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 148,
+      "index_byte": "0x94",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cfffe50",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 149,
+      "index_byte": "0x95",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cfffe54",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 150,
+      "index_byte": "0x96",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cfffe58",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 151,
+      "index_byte": "0x97",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cfffe5c",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 152,
+      "index_byte": "0x98",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cfffe60",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 153,
+      "index_byte": "0x99",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cfffe64",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 154,
+      "index_byte": "0x9a",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cfffe68",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 155,
+      "index_byte": "0x9b",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cfffe6c",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 156,
+      "index_byte": "0x9c",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cfffe70",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 157,
+      "index_byte": "0x9d",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cfffe74",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 158,
+      "index_byte": "0x9e",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cfffe78",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 159,
+      "index_byte": "0x9f",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cfffe7c",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 160,
+      "index_byte": "0xa0",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cfffe80",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 161,
+      "index_byte": "0xa1",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cfffe84",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 162,
+      "index_byte": "0xa2",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cfffe88",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 163,
+      "index_byte": "0xa3",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cfffe8c",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 164,
+      "index_byte": "0xa4",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cfffe90",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 165,
+      "index_byte": "0xa5",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cfffe94",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 166,
+      "index_byte": "0xa6",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cfffe98",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 167,
+      "index_byte": "0xa7",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cfffe9c",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 168,
+      "index_byte": "0xa8",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cfffea0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 169,
+      "index_byte": "0xa9",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cfffea4",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 170,
+      "index_byte": "0xaa",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cfffea8",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 171,
+      "index_byte": "0xab",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cfffeac",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 172,
+      "index_byte": "0xac",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cfffeb0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 173,
+      "index_byte": "0xad",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cfffeb4",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 174,
+      "index_byte": "0xae",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cfffeb8",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 175,
+      "index_byte": "0xaf",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cfffebc",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 176,
+      "index_byte": "0xb0",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cfffec0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 177,
+      "index_byte": "0xb1",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cfffec4",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 178,
+      "index_byte": "0xb2",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cfffec8",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 179,
+      "index_byte": "0xb3",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cfffecc",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 180,
+      "index_byte": "0xb4",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cfffed0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 181,
+      "index_byte": "0xb5",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cfffed4",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 182,
+      "index_byte": "0xb6",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cfffed8",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 183,
+      "index_byte": "0xb7",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cfffedc",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 184,
+      "index_byte": "0xb8",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cfffee0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 185,
+      "index_byte": "0xb9",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cfffee4",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 186,
+      "index_byte": "0xba",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cfffee8",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 187,
+      "index_byte": "0xbb",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cfffeec",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 188,
+      "index_byte": "0xbc",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cfffef0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 189,
+      "index_byte": "0xbd",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cfffef4",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 190,
+      "index_byte": "0xbe",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cfffef8",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 191,
+      "index_byte": "0xbf",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cfffefc",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 192,
+      "index_byte": "0xc0",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cffff00",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 193,
+      "index_byte": "0xc1",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cffff04",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 194,
+      "index_byte": "0xc2",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cffff08",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 195,
+      "index_byte": "0xc3",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cffff0c",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 196,
+      "index_byte": "0xc4",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cffff10",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 197,
+      "index_byte": "0xc5",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cffff14",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 198,
+      "index_byte": "0xc6",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cffff18",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 199,
+      "index_byte": "0xc7",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cffff1c",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 200,
+      "index_byte": "0xc8",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cffff20",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 201,
+      "index_byte": "0xc9",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cffff24",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 202,
+      "index_byte": "0xca",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cffff28",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 203,
+      "index_byte": "0xcb",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cffff2c",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 204,
+      "index_byte": "0xcc",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cffff30",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 205,
+      "index_byte": "0xcd",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cffff34",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 206,
+      "index_byte": "0xce",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cffff38",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 207,
+      "index_byte": "0xcf",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cffff3c",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 208,
+      "index_byte": "0xd0",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cffff40",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 209,
+      "index_byte": "0xd1",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cffff44",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 210,
+      "index_byte": "0xd2",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cffff48",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 211,
+      "index_byte": "0xd3",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cffff4c",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 212,
+      "index_byte": "0xd4",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cffff50",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 213,
+      "index_byte": "0xd5",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cffff54",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 214,
+      "index_byte": "0xd6",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cffff58",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 215,
+      "index_byte": "0xd7",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cffff5c",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 216,
+      "index_byte": "0xd8",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cffff60",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 217,
+      "index_byte": "0xd9",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cffff64",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 218,
+      "index_byte": "0xda",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cffff68",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 219,
+      "index_byte": "0xdb",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cffff6c",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 220,
+      "index_byte": "0xdc",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cffff70",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 221,
+      "index_byte": "0xdd",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cffff74",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 222,
+      "index_byte": "0xde",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cffff78",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 223,
+      "index_byte": "0xdf",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cffff7c",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 224,
+      "index_byte": "0xe0",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cffff80",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 225,
+      "index_byte": "0xe1",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cffff84",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 226,
+      "index_byte": "0xe2",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cffff88",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 227,
+      "index_byte": "0xe3",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cffff8c",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 228,
+      "index_byte": "0xe4",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cffff90",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 229,
+      "index_byte": "0xe5",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cffff94",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 230,
+      "index_byte": "0xe6",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cffff98",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 231,
+      "index_byte": "0xe7",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cffff9c",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 232,
+      "index_byte": "0xe8",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cffffa0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 233,
+      "index_byte": "0xe9",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cffffa4",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 234,
+      "index_byte": "0xea",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cffffa8",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 235,
+      "index_byte": "0xeb",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cffffac",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 236,
+      "index_byte": "0xec",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cffffb0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 237,
+      "index_byte": "0xed",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cffffb4",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 238,
+      "index_byte": "0xee",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cffffb8",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 239,
+      "index_byte": "0xef",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cffffbc",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 240,
+      "index_byte": "0xf0",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cffffc0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 241,
+      "index_byte": "0xf1",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cffffc4",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 242,
+      "index_byte": "0xf2",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cffffc8",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 243,
+      "index_byte": "0xf3",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cffffcc",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 244,
+      "index_byte": "0xf4",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cffffd0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 245,
+      "index_byte": "0xf5",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cffffd4",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 246,
+      "index_byte": "0xf6",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cffffd8",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 247,
+      "index_byte": "0xf7",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cffffdc",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 248,
+      "index_byte": "0xf8",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cffffe0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 249,
+      "index_byte": "0xf9",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cffffe4",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 250,
+      "index_byte": "0xfa",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cffffe8",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 251,
+      "index_byte": "0xfb",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cffffec",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 252,
+      "index_byte": "0xfc",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cfffff0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 253,
+      "index_byte": "0xfd",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cfffff4",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 254,
+      "index_byte": "0xfe",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cfffff8",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 255,
+      "index_byte": "0xff",
+      "table": "0x8cfffc00",
+      "result_address": "0x8cfffffc",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 256,
+      "index_byte": "0x66",
+      "table": "0x8c010000",
+      "result_address": "0x8c010198",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 257,
+      "index_byte": "0xf3",
+      "table": "0x8c07cfc0",
+      "result_address": "0x8c07d38c",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 258,
+      "index_byte": "0x7c",
+      "table": "0x8c710200",
+      "result_address": "0x8c7103f0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 259,
+      "index_byte": "0x52",
+      "table": "0x8c422b44",
+      "result_address": "0x8c422c8c",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 260,
+      "index_byte": "0xea",
+      "table": "0x8c010000",
+      "result_address": "0x8c0103a8",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 261,
+      "index_byte": "0xb6",
+      "table": "0x8c07cfc0",
+      "result_address": "0x8c07d298",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 262,
+      "index_byte": "0x5e",
+      "table": "0x8c710600",
+      "result_address": "0x8c710778",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 263,
+      "index_byte": "0xbe",
+      "table": "0x8c422b44",
+      "result_address": "0x8c422e3c",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 264,
+      "index_byte": "0xe4",
+      "table": "0x8c010000",
+      "result_address": "0x8c010390",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 265,
+      "index_byte": "0xb9",
+      "table": "0x8c07cfc0",
+      "result_address": "0x8c07d2a4",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 266,
+      "index_byte": "0x95",
+      "table": "0x8c710a00",
+      "result_address": "0x8c710c54",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 267,
+      "index_byte": "0xa3",
+      "table": "0x8c422b44",
+      "result_address": "0x8c422dd0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 268,
+      "index_byte": "0x7f",
+      "table": "0x8c010000",
+      "result_address": "0x8c0101fc",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 269,
+      "index_byte": "0x13",
+      "table": "0x8c07cfc0",
+      "result_address": "0x8c07d00c",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 270,
+      "index_byte": "0x55",
+      "table": "0x8c710e00",
+      "result_address": "0x8c710f54",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 271,
+      "index_byte": "0x2e",
+      "table": "0x8c422b44",
+      "result_address": "0x8c422bfc",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 272,
+      "index_byte": "0x2f",
+      "table": "0x8c010000",
+      "result_address": "0x8c0100bc",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 273,
+      "index_byte": "0xe5",
+      "table": "0x8c07cfc0",
+      "result_address": "0x8c07d354",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 274,
+      "index_byte": "0x64",
+      "table": "0x8c711200",
+      "result_address": "0x8c711390",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 275,
+      "index_byte": "0xbe",
+      "table": "0x8c422b44",
+      "result_address": "0x8c422e3c",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 276,
+      "index_byte": "0x87",
+      "table": "0x8c010000",
+      "result_address": "0x8c01021c",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 277,
+      "index_byte": "0xce",
+      "table": "0x8c07cfc0",
+      "result_address": "0x8c07d2f8",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 278,
+      "index_byte": "0xae",
+      "table": "0x8c711600",
+      "result_address": "0x8c7118b8",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 279,
+      "index_byte": "0xe4",
+      "table": "0x8c422b44",
+      "result_address": "0x8c422ed4",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 280,
+      "index_byte": "0xfd",
+      "table": "0x8c010000",
+      "result_address": "0x8c0103f4",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 281,
+      "index_byte": "0x5c",
+      "table": "0x8c07cfc0",
+      "result_address": "0x8c07d130",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 282,
+      "index_byte": "0x18",
+      "table": "0x8c711a00",
+      "result_address": "0x8c711a60",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 283,
+      "index_byte": "0x77",
+      "table": "0x8c422b44",
+      "result_address": "0x8c422d20",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 284,
+      "index_byte": "0xb2",
+      "table": "0x8c010000",
+      "result_address": "0x8c0102c8",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 285,
+      "index_byte": "0xa0",
+      "table": "0x8c07cfc0",
+      "result_address": "0x8c07d240",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 286,
+      "index_byte": "0x91",
+      "table": "0x8c711e00",
+      "result_address": "0x8c712044",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 287,
+      "index_byte": "0x25",
+      "table": "0x8c422b44",
+      "result_address": "0x8c422bd8",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 288,
+      "index_byte": "0x96",
+      "table": "0x8c010000",
+      "result_address": "0x8c010258",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 289,
+      "index_byte": "0xfb",
+      "table": "0x8c07cfc0",
+      "result_address": "0x8c07d3ac",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 290,
+      "index_byte": "0x5c",
+      "table": "0x8c712200",
+      "result_address": "0x8c712370",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 291,
+      "index_byte": "0xbf",
+      "table": "0x8c422b44",
+      "result_address": "0x8c422e40",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 292,
+      "index_byte": "0x9b",
+      "table": "0x8c010000",
+      "result_address": "0x8c01026c",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 293,
+      "index_byte": "0xa7",
+      "table": "0x8c07cfc0",
+      "result_address": "0x8c07d25c",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 294,
+      "index_byte": "0x78",
+      "table": "0x8c712600",
+      "result_address": "0x8c7127e0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 295,
+      "index_byte": "0x3b",
+      "table": "0x8c422b44",
+      "result_address": "0x8c422c30",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 296,
+      "index_byte": "0x1d",
+      "table": "0x8c010000",
+      "result_address": "0x8c010074",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 297,
+      "index_byte": "0xd6",
+      "table": "0x8c07cfc0",
+      "result_address": "0x8c07d318",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 298,
+      "index_byte": "0x9",
+      "table": "0x8c712a00",
+      "result_address": "0x8c712a24",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 299,
+      "index_byte": "0x5d",
+      "table": "0x8c422b44",
+      "result_address": "0x8c422cb8",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 300,
+      "index_byte": "0xe6",
+      "table": "0x8c010000",
+      "result_address": "0x8c010398",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 301,
+      "index_byte": "0xc4",
+      "table": "0x8c07cfc0",
+      "result_address": "0x8c07d2d0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 302,
+      "index_byte": "0xae",
+      "table": "0x8c712e00",
+      "result_address": "0x8c7130b8",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 303,
+      "index_byte": "0x81",
+      "table": "0x8c422b44",
+      "result_address": "0x8c422d48",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 304,
+      "index_byte": "0x1f",
+      "table": "0x8c010000",
+      "result_address": "0x8c01007c",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 305,
+      "index_byte": "0x4e",
+      "table": "0x8c07cfc0",
+      "result_address": "0x8c07d0f8",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 306,
+      "index_byte": "0x44",
+      "table": "0x8c713200",
+      "result_address": "0x8c713310",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 307,
+      "index_byte": "0x61",
+      "table": "0x8c422b44",
+      "result_address": "0x8c422cc8",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 308,
+      "index_byte": "0xf9",
+      "table": "0x8c010000",
+      "result_address": "0x8c0103e4",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 309,
+      "index_byte": "0x5a",
+      "table": "0x8c07cfc0",
+      "result_address": "0x8c07d128",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 310,
+      "index_byte": "0x94",
+      "table": "0x8c713600",
+      "result_address": "0x8c713850",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 311,
+      "index_byte": "0x81",
+      "table": "0x8c422b44",
+      "result_address": "0x8c422d48",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 312,
+      "index_byte": "0xdb",
+      "table": "0x8c010000",
+      "result_address": "0x8c01036c",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 313,
+      "index_byte": "0x53",
+      "table": "0x8c07cfc0",
+      "result_address": "0x8c07d10c",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 314,
+      "index_byte": "0xf3",
+      "table": "0x8c713a00",
+      "result_address": "0x8c713dcc",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 315,
+      "index_byte": "0xaa",
+      "table": "0x8c422b44",
+      "result_address": "0x8c422dec",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 316,
+      "index_byte": "0xe7",
+      "table": "0x8c010000",
+      "result_address": "0x8c01039c",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 317,
+      "index_byte": "0x19",
+      "table": "0x8c07cfc0",
+      "result_address": "0x8c07d024",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 318,
+      "index_byte": "0x68",
+      "table": "0x8c713e00",
+      "result_address": "0x8c713fa0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 319,
+      "index_byte": "0x6",
+      "table": "0x8c422b44",
+      "result_address": "0x8c422b5c",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 320,
+      "index_byte": "0xae",
+      "table": "0x8c010000",
+      "result_address": "0x8c0102b8",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 321,
+      "index_byte": "0x38",
+      "table": "0x8c07cfc0",
+      "result_address": "0x8c07d0a0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 322,
+      "index_byte": "0x3e",
+      "table": "0x8c714200",
+      "result_address": "0x8c7142f8",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 323,
+      "index_byte": "0xfb",
+      "table": "0x8c422b44",
+      "result_address": "0x8c422f30",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 324,
+      "index_byte": "0x77",
+      "table": "0x8c010000",
+      "result_address": "0x8c0101dc",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 325,
+      "index_byte": "0x13",
+      "table": "0x8c07cfc0",
+      "result_address": "0x8c07d00c",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 326,
+      "index_byte": "0x96",
+      "table": "0x8c714600",
+      "result_address": "0x8c714858",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 327,
+      "index_byte": "0x93",
+      "table": "0x8c422b44",
+      "result_address": "0x8c422d90",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 328,
+      "index_byte": "0x8e",
+      "table": "0x8c010000",
+      "result_address": "0x8c010238",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 329,
+      "index_byte": "0x7c",
+      "table": "0x8c07cfc0",
+      "result_address": "0x8c07d1b0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 330,
+      "index_byte": "0xf9",
+      "table": "0x8c714a00",
+      "result_address": "0x8c714de4",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 331,
+      "index_byte": "0xab",
+      "table": "0x8c422b44",
+      "result_address": "0x8c422df0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 332,
+      "index_byte": "0x37",
+      "table": "0x8c010000",
+      "result_address": "0x8c0100dc",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 333,
+      "index_byte": "0xb3",
+      "table": "0x8c07cfc0",
+      "result_address": "0x8c07d28c",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 334,
+      "index_byte": "0xd",
+      "table": "0x8c714e00",
+      "result_address": "0x8c714e34",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 335,
+      "index_byte": "0x21",
+      "table": "0x8c422b44",
+      "result_address": "0x8c422bc8",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 336,
+      "index_byte": "0xf7",
+      "table": "0x8c010000",
+      "result_address": "0x8c0103dc",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 337,
+      "index_byte": "0x85",
+      "table": "0x8c07cfc0",
+      "result_address": "0x8c07d1d4",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 338,
+      "index_byte": "0xdb",
+      "table": "0x8c715200",
+      "result_address": "0x8c71556c",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 339,
+      "index_byte": "0x70",
+      "table": "0x8c422b44",
+      "result_address": "0x8c422d04",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 340,
+      "index_byte": "0x2c",
+      "table": "0x8c010000",
+      "result_address": "0x8c0100b0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 341,
+      "index_byte": "0x52",
+      "table": "0x8c07cfc0",
+      "result_address": "0x8c07d108",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 342,
+      "index_byte": "0xd9",
+      "table": "0x8c715600",
+      "result_address": "0x8c715964",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 343,
+      "index_byte": "0x3b",
+      "table": "0x8c422b44",
+      "result_address": "0x8c422c30",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 344,
+      "index_byte": "0x23",
+      "table": "0x8c010000",
+      "result_address": "0x8c01008c",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 345,
+      "index_byte": "0xa3",
+      "table": "0x8c07cfc0",
+      "result_address": "0x8c07d24c",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 346,
+      "index_byte": "0x1",
+      "table": "0x8c715a00",
+      "result_address": "0x8c715a04",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 347,
+      "index_byte": "0xe2",
+      "table": "0x8c422b44",
+      "result_address": "0x8c422ecc",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 348,
+      "index_byte": "0x29",
+      "table": "0x8c010000",
+      "result_address": "0x8c0100a4",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 349,
+      "index_byte": "0x37",
+      "table": "0x8c07cfc0",
+      "result_address": "0x8c07d09c",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 350,
+      "index_byte": "0xff",
+      "table": "0x8c715e00",
+      "result_address": "0x8c7161fc",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 351,
+      "index_byte": "0x7c",
+      "table": "0x8c422b44",
+      "result_address": "0x8c422d34",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 352,
+      "index_byte": "0x96",
+      "table": "0x8c010000",
+      "result_address": "0x8c010258",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 353,
+      "index_byte": "0x9d",
+      "table": "0x8c07cfc0",
+      "result_address": "0x8c07d234",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 354,
+      "index_byte": "0x38",
+      "table": "0x8c716200",
+      "result_address": "0x8c7162e0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 355,
+      "index_byte": "0x9",
+      "table": "0x8c422b44",
+      "result_address": "0x8c422b68",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 356,
+      "index_byte": "0x54",
+      "table": "0x8c010000",
+      "result_address": "0x8c010150",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 357,
+      "index_byte": "0xb9",
+      "table": "0x8c07cfc0",
+      "result_address": "0x8c07d2a4",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 358,
+      "index_byte": "0x79",
+      "table": "0x8c716600",
+      "result_address": "0x8c7167e4",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 359,
+      "index_byte": "0xae",
+      "table": "0x8c422b44",
+      "result_address": "0x8c422dfc",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 360,
+      "index_byte": "0x9a",
+      "table": "0x8c010000",
+      "result_address": "0x8c010268",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 361,
+      "index_byte": "0x5d",
+      "table": "0x8c07cfc0",
+      "result_address": "0x8c07d134",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 362,
+      "index_byte": "0xe8",
+      "table": "0x8c716a00",
+      "result_address": "0x8c716da0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 363,
+      "index_byte": "0xf3",
+      "table": "0x8c422b44",
+      "result_address": "0x8c422f10",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 364,
+      "index_byte": "0x51",
+      "table": "0x8c010000",
+      "result_address": "0x8c010144",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 365,
+      "index_byte": "0xf",
+      "table": "0x8c07cfc0",
+      "result_address": "0x8c07cffc",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 366,
+      "index_byte": "0xce",
+      "table": "0x8c716e00",
+      "result_address": "0x8c717138",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 367,
+      "index_byte": "0x6d",
+      "table": "0x8c422b44",
+      "result_address": "0x8c422cf8",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 368,
+      "index_byte": "0xcd",
+      "table": "0x8c010000",
+      "result_address": "0x8c010334",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 369,
+      "index_byte": "0x78",
+      "table": "0x8c07cfc0",
+      "result_address": "0x8c07d1a0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 370,
+      "index_byte": "0x9e",
+      "table": "0x8c717200",
+      "result_address": "0x8c717478",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 371,
+      "index_byte": "0x4",
+      "table": "0x8c422b44",
+      "result_address": "0x8c422b54",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 372,
+      "index_byte": "0xb8",
+      "table": "0x8c010000",
+      "result_address": "0x8c0102e0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 373,
+      "index_byte": "0xd5",
+      "table": "0x8c07cfc0",
+      "result_address": "0x8c07d314",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 374,
+      "index_byte": "0x5c",
+      "table": "0x8c717600",
+      "result_address": "0x8c717770",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 375,
+      "index_byte": "0xcd",
+      "table": "0x8c422b44",
+      "result_address": "0x8c422e78",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 376,
+      "index_byte": "0x5f",
+      "table": "0x8c010000",
+      "result_address": "0x8c01017c",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 377,
+      "index_byte": "0x2b",
+      "table": "0x8c07cfc0",
+      "result_address": "0x8c07d06c",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 378,
+      "index_byte": "0xd3",
+      "table": "0x8c717a00",
+      "result_address": "0x8c717d4c",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 379,
+      "index_byte": "0x64",
+      "table": "0x8c422b44",
+      "result_address": "0x8c422cd4",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 380,
+      "index_byte": "0xe1",
+      "table": "0x8c010000",
+      "result_address": "0x8c010384",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 381,
+      "index_byte": "0x63",
+      "table": "0x8c07cfc0",
+      "result_address": "0x8c07d14c",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 382,
+      "index_byte": "0x91",
+      "table": "0x8c717e00",
+      "result_address": "0x8c718044",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 383,
+      "index_byte": "0xc8",
+      "table": "0x8c422b44",
+      "result_address": "0x8c422e64",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 384,
+      "index_byte": "0x18",
+      "table": "0x8c010000",
+      "result_address": "0x8c010060",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 385,
+      "index_byte": "0x6",
+      "table": "0x8c07cfc0",
+      "result_address": "0x8c07cfd8",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 386,
+      "index_byte": "0xe6",
+      "table": "0x8c718200",
+      "result_address": "0x8c718598",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 387,
+      "index_byte": "0xea",
+      "table": "0x8c422b44",
+      "result_address": "0x8c422eec",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 388,
+      "index_byte": "0x8e",
+      "table": "0x8c010000",
+      "result_address": "0x8c010238",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 389,
+      "index_byte": "0xc5",
+      "table": "0x8c07cfc0",
+      "result_address": "0x8c07d2d4",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 390,
+      "index_byte": "0x1",
+      "table": "0x8c718600",
+      "result_address": "0x8c718604",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 391,
+      "index_byte": "0x78",
+      "table": "0x8c422b44",
+      "result_address": "0x8c422d24",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 392,
+      "index_byte": "0xf6",
+      "table": "0x8c010000",
+      "result_address": "0x8c0103d8",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 393,
+      "index_byte": "0x5e",
+      "table": "0x8c07cfc0",
+      "result_address": "0x8c07d138",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 394,
+      "index_byte": "0xe4",
+      "table": "0x8c718a00",
+      "result_address": "0x8c718d90",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 395,
+      "index_byte": "0x87",
+      "table": "0x8c422b44",
+      "result_address": "0x8c422d60",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 396,
+      "index_byte": "0x29",
+      "table": "0x8c010000",
+      "result_address": "0x8c0100a4",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 397,
+      "index_byte": "0xc8",
+      "table": "0x8c07cfc0",
+      "result_address": "0x8c07d2e0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 398,
+      "index_byte": "0x50",
+      "table": "0x8c718e00",
+      "result_address": "0x8c718f40",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 399,
+      "index_byte": "0x2c",
+      "table": "0x8c422b44",
+      "result_address": "0x8c422bf4",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 400,
+      "index_byte": "0x42",
+      "table": "0x8c010000",
+      "result_address": "0x8c010108",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 401,
+      "index_byte": "0x6b",
+      "table": "0x8c07cfc0",
+      "result_address": "0x8c07d16c",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 402,
+      "index_byte": "0x38",
+      "table": "0x8c719200",
+      "result_address": "0x8c7192e0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 403,
+      "index_byte": "0x91",
+      "table": "0x8c422b44",
+      "result_address": "0x8c422d88",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 404,
+      "index_byte": "0x50",
+      "table": "0x8c010000",
+      "result_address": "0x8c010140",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 405,
+      "index_byte": "0x16",
+      "table": "0x8c07cfc0",
+      "result_address": "0x8c07d018",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 406,
+      "index_byte": "0x8f",
+      "table": "0x8c719600",
+      "result_address": "0x8c71983c",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 407,
+      "index_byte": "0x5a",
+      "table": "0x8c422b44",
+      "result_address": "0x8c422cac",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 408,
+      "index_byte": "0x39",
+      "table": "0x8c010000",
+      "result_address": "0x8c0100e4",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 409,
+      "index_byte": "0x1f",
+      "table": "0x8c07cfc0",
+      "result_address": "0x8c07d03c",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 410,
+      "index_byte": "0x82",
+      "table": "0x8c719a00",
+      "result_address": "0x8c719c08",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 411,
+      "index_byte": "0xdf",
+      "table": "0x8c422b44",
+      "result_address": "0x8c422ec0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 412,
+      "index_byte": "0x33",
+      "table": "0x8c010000",
+      "result_address": "0x8c0100cc",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 413,
+      "index_byte": "0x42",
+      "table": "0x8c07cfc0",
+      "result_address": "0x8c07d0c8",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 414,
+      "index_byte": "0x80",
+      "table": "0x8c719e00",
+      "result_address": "0x8c71a000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 415,
+      "index_byte": "0x28",
+      "table": "0x8c422b44",
+      "result_address": "0x8c422be4",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 416,
+      "index_byte": "0xfa",
+      "table": "0x8c010000",
+      "result_address": "0x8c0103e8",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 417,
+      "index_byte": "0x66",
+      "table": "0x8c07cfc0",
+      "result_address": "0x8c07d158",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 418,
+      "index_byte": "0x2e",
+      "table": "0x8c71a200",
+      "result_address": "0x8c71a2b8",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 419,
+      "index_byte": "0x84",
+      "table": "0x8c422b44",
+      "result_address": "0x8c422d54",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 420,
+      "index_byte": "0xd",
+      "table": "0x8c010000",
+      "result_address": "0x8c010034",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 421,
+      "index_byte": "0xa8",
+      "table": "0x8c07cfc0",
+      "result_address": "0x8c07d260",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 422,
+      "index_byte": "0x4b",
+      "table": "0x8c71a600",
+      "result_address": "0x8c71a72c",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 423,
+      "index_byte": "0x9b",
+      "table": "0x8c422b44",
+      "result_address": "0x8c422db0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 424,
+      "index_byte": "0x40",
+      "table": "0x8c010000",
+      "result_address": "0x8c010100",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 425,
+      "index_byte": "0x52",
+      "table": "0x8c07cfc0",
+      "result_address": "0x8c07d108",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 426,
+      "index_byte": "0xf1",
+      "table": "0x8c71aa00",
+      "result_address": "0x8c71adc4",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 427,
+      "index_byte": "0xd5",
+      "table": "0x8c422b44",
+      "result_address": "0x8c422e98",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 428,
+      "index_byte": "0x81",
+      "table": "0x8c010000",
+      "result_address": "0x8c010204",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 429,
+      "index_byte": "0xbf",
+      "table": "0x8c07cfc0",
+      "result_address": "0x8c07d2bc",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 430,
+      "index_byte": "0x65",
+      "table": "0x8c71ae00",
+      "result_address": "0x8c71af94",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 431,
+      "index_byte": "0xf6",
+      "table": "0x8c422b44",
+      "result_address": "0x8c422f1c",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 432,
+      "index_byte": "0x9",
+      "table": "0x8c010000",
+      "result_address": "0x8c010024",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 433,
+      "index_byte": "0x37",
+      "table": "0x8c07cfc0",
+      "result_address": "0x8c07d09c",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 434,
+      "index_byte": "0xe",
+      "table": "0x8c71b200",
+      "result_address": "0x8c71b238",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 435,
+      "index_byte": "0x8e",
+      "table": "0x8c422b44",
+      "result_address": "0x8c422d7c",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 436,
+      "index_byte": "0x2f",
+      "table": "0x8c010000",
+      "result_address": "0x8c0100bc",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 437,
+      "index_byte": "0x84",
+      "table": "0x8c07cfc0",
+      "result_address": "0x8c07d1d0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 438,
+      "index_byte": "0xae",
+      "table": "0x8c71b600",
+      "result_address": "0x8c71b8b8",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 439,
+      "index_byte": "0x27",
+      "table": "0x8c422b44",
+      "result_address": "0x8c422be0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 440,
+      "index_byte": "0xbb",
+      "table": "0x8c010000",
+      "result_address": "0x8c0102ec",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 441,
+      "index_byte": "0xa5",
+      "table": "0x8c07cfc0",
+      "result_address": "0x8c07d254",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 442,
+      "index_byte": "0xc0",
+      "table": "0x8c71ba00",
+      "result_address": "0x8c71bd00",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 443,
+      "index_byte": "0x47",
+      "table": "0x8c422b44",
+      "result_address": "0x8c422c60",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 444,
+      "index_byte": "0xed",
+      "table": "0x8c010000",
+      "result_address": "0x8c0103b4",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 445,
+      "index_byte": "0x12",
+      "table": "0x8c07cfc0",
+      "result_address": "0x8c07d008",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 446,
+      "index_byte": "0x5e",
+      "table": "0x8c71be00",
+      "result_address": "0x8c71bf78",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 447,
+      "index_byte": "0x79",
+      "table": "0x8c422b44",
+      "result_address": "0x8c422d28",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 448,
+      "index_byte": "0xea",
+      "table": "0x8c010000",
+      "result_address": "0x8c0103a8",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 449,
+      "index_byte": "0x4f",
+      "table": "0x8c07cfc0",
+      "result_address": "0x8c07d0fc",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 450,
+      "index_byte": "0xaa",
+      "table": "0x8c71c200",
+      "result_address": "0x8c71c4a8",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 451,
+      "index_byte": "0x7",
+      "table": "0x8c422b44",
+      "result_address": "0x8c422b60",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 452,
+      "index_byte": "0xd0",
+      "table": "0x8c010000",
+      "result_address": "0x8c010340",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 453,
+      "index_byte": "0xd2",
+      "table": "0x8c07cfc0",
+      "result_address": "0x8c07d308",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 454,
+      "index_byte": "0x9d",
+      "table": "0x8c71c600",
+      "result_address": "0x8c71c874",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 455,
+      "index_byte": "0xd1",
+      "table": "0x8c422b44",
+      "result_address": "0x8c422e88",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 456,
+      "index_byte": "0xdb",
+      "table": "0x8c010000",
+      "result_address": "0x8c01036c",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 457,
+      "index_byte": "0x90",
+      "table": "0x8c07cfc0",
+      "result_address": "0x8c07d200",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 458,
+      "index_byte": "0x57",
+      "table": "0x8c71ca00",
+      "result_address": "0x8c71cb5c",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 459,
+      "index_byte": "0x4d",
+      "table": "0x8c422b44",
+      "result_address": "0x8c422c78",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 460,
+      "index_byte": "0x17",
+      "table": "0x8c010000",
+      "result_address": "0x8c01005c",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 461,
+      "index_byte": "0xfd",
+      "table": "0x8c07cfc0",
+      "result_address": "0x8c07d3b4",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 462,
+      "index_byte": "0xdf",
+      "table": "0x8c71ce00",
+      "result_address": "0x8c71d17c",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 463,
+      "index_byte": "0x1c",
+      "table": "0x8c422b44",
+      "result_address": "0x8c422bb4",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 464,
+      "index_byte": "0x65",
+      "table": "0x8c010000",
+      "result_address": "0x8c010194",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 465,
+      "index_byte": "0xb6",
+      "table": "0x8c07cfc0",
+      "result_address": "0x8c07d298",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 466,
+      "index_byte": "0xaf",
+      "table": "0x8c71d200",
+      "result_address": "0x8c71d4bc",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 467,
+      "index_byte": "0x91",
+      "table": "0x8c422b44",
+      "result_address": "0x8c422d88",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 468,
+      "index_byte": "0xc4",
+      "table": "0x8c010000",
+      "result_address": "0x8c010310",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 469,
+      "index_byte": "0x60",
+      "table": "0x8c07cfc0",
+      "result_address": "0x8c07d140",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 470,
+      "index_byte": "0xa5",
+      "table": "0x8c71d600",
+      "result_address": "0x8c71d894",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 471,
+      "index_byte": "0x99",
+      "table": "0x8c422b44",
+      "result_address": "0x8c422da8",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 472,
+      "index_byte": "0x85",
+      "table": "0x8c010000",
+      "result_address": "0x8c010214",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 473,
+      "index_byte": "0x3c",
+      "table": "0x8c07cfc0",
+      "result_address": "0x8c07d0b0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 474,
+      "index_byte": "0x46",
+      "table": "0x8c71da00",
+      "result_address": "0x8c71db18",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 475,
+      "index_byte": "0xe7",
+      "table": "0x8c422b44",
+      "result_address": "0x8c422ee0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 476,
+      "index_byte": "0x99",
+      "table": "0x8c010000",
+      "result_address": "0x8c010264",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 477,
+      "index_byte": "0x5c",
+      "table": "0x8c07cfc0",
+      "result_address": "0x8c07d130",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 478,
+      "index_byte": "0xdc",
+      "table": "0x8c71de00",
+      "result_address": "0x8c71e170",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 479,
+      "index_byte": "0x3c",
+      "table": "0x8c422b44",
+      "result_address": "0x8c422c34",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 480,
+      "index_byte": "0x5a",
+      "table": "0x8c010000",
+      "result_address": "0x8c010168",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 481,
+      "index_byte": "0xfb",
+      "table": "0x8c07cfc0",
+      "result_address": "0x8c07d3ac",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 482,
+      "index_byte": "0x36",
+      "table": "0x8c71e200",
+      "result_address": "0x8c71e2d8",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 483,
+      "index_byte": "0x77",
+      "table": "0x8c422b44",
+      "result_address": "0x8c422d20",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 484,
+      "index_byte": "0xb5",
+      "table": "0x8c010000",
+      "result_address": "0x8c0102d4",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 485,
+      "index_byte": "0x68",
+      "table": "0x8c07cfc0",
+      "result_address": "0x8c07d160",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 486,
+      "index_byte": "0xf4",
+      "table": "0x8c71e600",
+      "result_address": "0x8c71e9d0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 487,
+      "index_byte": "0x15",
+      "table": "0x8c422b44",
+      "result_address": "0x8c422b98",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 488,
+      "index_byte": "0xf5",
+      "table": "0x8c010000",
+      "result_address": "0x8c0103d4",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 489,
+      "index_byte": "0xce",
+      "table": "0x8c07cfc0",
+      "result_address": "0x8c07d2f8",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 490,
+      "index_byte": "0x9a",
+      "table": "0x8c71ea00",
+      "result_address": "0x8c71ec68",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 491,
+      "index_byte": "0xe1",
+      "table": "0x8c422b44",
+      "result_address": "0x8c422ec8",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 492,
+      "index_byte": "0x74",
+      "table": "0x8c010000",
+      "result_address": "0x8c0101d0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 493,
+      "index_byte": "0xfe",
+      "table": "0x8c07cfc0",
+      "result_address": "0x8c07d3b8",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 494,
+      "index_byte": "0xd8",
+      "table": "0x8c71ee00",
+      "result_address": "0x8c71f160",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 495,
+      "index_byte": "0xb6",
+      "table": "0x8c422b44",
+      "result_address": "0x8c422e1c",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 496,
+      "index_byte": "0x80",
+      "table": "0x8c010000",
+      "result_address": "0x8c010200",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 497,
+      "index_byte": "0xf3",
+      "table": "0x8c07cfc0",
+      "result_address": "0x8c07d38c",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 498,
+      "index_byte": "0x55",
+      "table": "0x8c71f200",
+      "result_address": "0x8c71f354",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 499,
+      "index_byte": "0x10",
+      "table": "0x8c422b44",
+      "result_address": "0x8c422b84",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 500,
+      "index_byte": "0x8a",
+      "table": "0x8c010000",
+      "result_address": "0x8c010228",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 501,
+      "index_byte": "0x3b",
+      "table": "0x8c07cfc0",
+      "result_address": "0x8c07d0ac",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 502,
+      "index_byte": "0xb0",
+      "table": "0x8c71f600",
+      "result_address": "0x8c71f8c0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 503,
+      "index_byte": "0x63",
+      "table": "0x8c422b44",
+      "result_address": "0x8c422cd0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 504,
+      "index_byte": "0x99",
+      "table": "0x8c010000",
+      "result_address": "0x8c010264",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 505,
+      "index_byte": "0x53",
+      "table": "0x8c07cfc0",
+      "result_address": "0x8c07d10c",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 506,
+      "index_byte": "0xa4",
+      "table": "0x8c71fa00",
+      "result_address": "0x8c71fc90",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 507,
+      "index_byte": "0xf7",
+      "table": "0x8c422b44",
+      "result_address": "0x8c422f20",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 508,
+      "index_byte": "0xb8",
+      "table": "0x8c010000",
+      "result_address": "0x8c0102e0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 509,
+      "index_byte": "0x99",
+      "table": "0x8c07cfc0",
+      "result_address": "0x8c07d224",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 510,
+      "index_byte": "0x7b",
+      "table": "0x8c71fe00",
+      "result_address": "0x8c71ffec",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 511,
+      "index_byte": "0x4d",
+      "table": "0x8c422b44",
+      "result_address": "0x8c422c78",
+      "ram_and_cpu_match": true
+    }
+  ]
+}

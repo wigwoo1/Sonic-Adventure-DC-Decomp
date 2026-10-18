@@ -1,0 +1,26 @@
+address	opcode	instruction	references
+8c08ab20	d221	mov.l 0x8c08aba8,r2	READ:8c08aba8=8c752be1 
+8c08ab22	d320	mov.l 0x8c08aba4,r3	READ:8c08aba4=8c752be2 
+8c08ab24	d121	mov.l 0x8c08abac,r1	READ:8c08abac=8c752be3 
+8c08ab26	2350	mov.b r5,@r3	WRITE:8c752be2 
+8c08ab28	2240	mov.b r4,@r2	WRITE:8c752be1 
+8c08ab2a	b	rts	
+8c08ab2c	2160	_mov.b r6,@r1	WRITE:8c752be3 
+8c08ab2e	d01e	mov.l 0x8c08aba8,r0	READ:8c08aba8=8c752be1 DATA:8c752be1 
+8c08ab30	d21c	mov.l 0x8c08aba4,r2	READ:8c08aba4=8c752be2 
+8c08ab32	6320	mov.b @r2,r3	READ:8c752be2 
+8c08ab34	2530	mov.b r3,@r5	
+8c08ab36	6100	mov.b @r0,r1	READ:8c752be1 
+8c08ab38	2410	mov.b r1,@r4	
+8c08ab3a	d11c	mov.l 0x8c08abac,r1	READ:8c08abac=8c752be3 
+8c08ab3c	6310	mov.b @r1,r3	READ:8c752be3 
+8c08ab3e	b	rts	
+8c08ab40	2630	_mov.b r3,@r6	
+8c08ab42	d718	mov.l 0x8c08aba4,r7	READ:8c08aba4=8c752be2 
+8c08ab44	e63c	mov #0x3c,r6	
+8c08ab46	d518	mov.l 0x8c08aba8,r5	READ:8c08aba8=8c752be1 
+8c08ab48	6370	mov.b @r7,r3	READ:8c752be2 
+8c08ab4a	343c	add r3,r4	
+8c08ab4c	3463	cmp/ge r6,r4	
+8c08ab4e	8b05	bf 0x8c08ab5c	CONDITIONAL_JUMP:8c08ab5c=2740000b 
+8c08ab50	6350	mov.b @r5,r3	READ:8c752be1 

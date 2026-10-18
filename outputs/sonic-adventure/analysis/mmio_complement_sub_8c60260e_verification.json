@@ -1,0 +1,785 @@
+{
+  "module": "1ST_READ.BIN",
+  "load_address": "0x8c010000",
+  "address": "0x8c60260e",
+  "end_exclusive": "0x8c602618",
+  "retail_span_sha256": "90629f29891a28af2a6ceea556b4ad0f4f0b12740d809a305a874eaaeaa973bd",
+  "binary_sha256": "45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a",
+  "source_sha256": "99408c06a52e6ce64a1dff4c464629834e35ede85f960f0acb2736126cb3df63",
+  "cases_passed": 128,
+  "comparison_level": "Complete 16 MiB RAM and all GPRs, SR, PR, and return PC compared against the retail SH-4 interpreter; host MMIO callback address/count also checked.",
+  "scope": "Tests literal-loaded MMIO addresses, exactly one bus read, modulo-32-bit -1-value result, R2/R3/R0 register effects, and boundary values.",
+  "limitations": [
+    "The register is modeled through a host callback; its Dreamcast hardware semantics and game-level purpose require hardware or authoritative peripheral documentation."
+  ],
+  "cases": [
+    {
+      "case": 0,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0x0",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 1,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0x1",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 2,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0xffffffff",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 3,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0x80000000",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 4,
+      "mmio_address": "0xffd8001c",
+      "mmio_value": "0x7fffffff",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 5,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0x0",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 6,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0x1",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 7,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0xffffffff",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 8,
+      "mmio_address": "0xffd8002c",
+      "mmio_value": "0x80000000",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 9,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0x7fffffff",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 10,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0x0",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 11,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0x1",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 12,
+      "mmio_address": "0xffd8003c",
+      "mmio_value": "0xffffffff",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 13,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0x80000000",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 14,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0x7fffffff",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 15,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0x0",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 16,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0x1",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 17,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0xffffffff",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 18,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0x80000000",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 19,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0x7fffffff",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 20,
+      "mmio_address": "0xffd8001c",
+      "mmio_value": "0xa4538882",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 21,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0xba5724ff",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 22,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0x3d7a12b4",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 23,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0xb98c246",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 24,
+      "mmio_address": "0xffd8002c",
+      "mmio_value": "0xd9434328",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 25,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0xeef7f655",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 26,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0x523064b6",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 27,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0x13baaee8",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 28,
+      "mmio_address": "0xffd8003c",
+      "mmio_value": "0x97f2a075",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 29,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0xc2530947",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 30,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0x622dad9e",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 31,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0xd8474363",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 32,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0x5b81e909",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 33,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0x1078ab58",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 34,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0x4ec2b4a",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 35,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0x89126197",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 36,
+      "mmio_address": "0xffd8001c",
+      "mmio_value": "0xd139d684",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 37,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0xb72a0c56",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 38,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0x4f0eacbf",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 39,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0xe4997ee8",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 40,
+      "mmio_address": "0xffd8002c",
+      "mmio_value": "0xb4421819",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 41,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0x5e3a4f4e",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 42,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0x3297180e",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 43,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0x7c8edd2b",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 44,
+      "mmio_address": "0xffd8003c",
+      "mmio_value": "0xb135d400",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 45,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0x73b2fd79",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 46,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0xe59fa48",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 47,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0xd9d9144a",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 48,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0x60f25758",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 49,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0x90a87976",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 50,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0xb588392b",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 51,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0x9e3822ed",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 52,
+      "mmio_address": "0xffd8001c",
+      "mmio_value": "0x1326baf",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 53,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0xa10d0947",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 54,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0x14c9f067",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 55,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0x3c5fa66",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 56,
+      "mmio_address": "0xffd8002c",
+      "mmio_value": "0xe88487e2",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 57,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0x67b56b98",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 58,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0x1f737517",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 59,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0xf2fc7f5d",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 60,
+      "mmio_address": "0xffd8003c",
+      "mmio_value": "0x4847fd21",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 61,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0x32d2989a",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 62,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0x8a46b7db",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 63,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0x9daebeb2",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 64,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0xee87a981",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 65,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0x9c1cd272",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 66,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0xefd6d019",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 67,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0x8553df90",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 68,
+      "mmio_address": "0xffd8001c",
+      "mmio_value": "0xd6f4784f",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 69,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0xb3a7f9f4",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 70,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0x81ce4c61",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 71,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0xe5aa8373",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 72,
+      "mmio_address": "0xffd8002c",
+      "mmio_value": "0xd36cbcb8",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 73,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0xdffa7546",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 74,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0xd84d7858",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 75,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0xeb5fb067",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 76,
+      "mmio_address": "0xffd8003c",
+      "mmio_value": "0x4bdadf02",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 77,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0x6089a177",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 78,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0xb774faeb",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 79,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0xefb3ca52",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 80,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0xf6375435",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 81,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0x3e2a1c3a",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 82,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0x5c75d4de",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 83,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0x4531ac20",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 84,
+      "mmio_address": "0xffd8001c",
+      "mmio_value": "0xa9aea61",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 85,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0xcd8f2756",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 86,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0x61301c48",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 87,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0x4c740d3c",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 88,
+      "mmio_address": "0xffd8002c",
+      "mmio_value": "0xe40aaa7",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 89,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0x11293aff",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 90,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0x56fe23f3",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 91,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0xd3cfb43e",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 92,
+      "mmio_address": "0xffd8003c",
+      "mmio_value": "0xfe0688a2",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 93,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0x882f5e96",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 94,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0x2cd36467",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 95,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0xe573730d",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 96,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0xc0e85315",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 97,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0xcc1b6645",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 98,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0x6fcd8ada",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 99,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0x99c6d0d9",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 100,
+      "mmio_address": "0xffd8001c",
+      "mmio_value": "0x293baf13",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 101,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0x2f74fdec",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 102,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0xbac54ad7",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 103,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0x4bc4c173",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 104,
+      "mmio_address": "0xffd8002c",
+      "mmio_value": "0xe2a0291f",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 105,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0xf922fef3",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 106,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0xaf02a250",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 107,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0xfeae9ecb",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 108,
+      "mmio_address": "0xffd8003c",
+      "mmio_value": "0x7017eb5a",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 109,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0x86248f1b",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 110,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0x99c37e84",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 111,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0x331402ae",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 112,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0xb69e4d9f",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 113,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0xac6c4bc3",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 114,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0x27fb8a0f",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 115,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0x6df404d4",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 116,
+      "mmio_address": "0xffd8001c",
+      "mmio_value": "0x9cb97232",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 117,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0xb334ece6",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 118,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0x2cedacd3",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 119,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0x3739a73b",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 120,
+      "mmio_address": "0xffd8002c",
+      "mmio_value": "0xcb92d3a3",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 121,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0xf56371d2",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 122,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0xb21aa636",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 123,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0x70a550ca",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 124,
+      "mmio_address": "0xffd8003c",
+      "mmio_value": "0x60a4d4cf",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 125,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0x6a41963c",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 126,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0x13ed6792",
+      "ram_cpu_and_callback_match": true
+    },
+    {
+      "case": 127,
+      "mmio_address": "0xffd8000c",
+      "mmio_value": "0x8a36d874",
+      "ram_cpu_and_callback_match": true
+    }
+  ]
+}

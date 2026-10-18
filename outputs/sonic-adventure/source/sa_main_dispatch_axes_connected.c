@@ -1,0 +1,65 @@
+#include "fpu_cleanup_transfer.h"
+typedef int (*sa_matrix_service)(void *,uint32_t,uint8_t *,struct sa_fpu_banks *,uint32_t *,uint32_t *,uint32_t *);
+typedef void (*sa_matrix_observer)(void *,uint32_t,const uint8_t *,const struct sa_fpu_banks *,const uint32_t *,const uint32_t *,const uint32_t *);
+typedef int (*sa_axis_instruction)(void *,uint32_t,struct sa_fpu_banks *,uint32_t);
+#define AXIS_DECL(name) int name(uint8_t *,struct sa_fpu_banks *,uint32_t *,uint32_t *,uint32_t *,void *,sa_axis_instruction)
+AXIS_DECL(sa_matrix_rotate_x);
+AXIS_DECL(sa_matrix_rotate_y);
+AXIS_DECL(sa_matrix_rotate_z);
+#define SERVICE_DECL(name) int name(uint8_t *,struct sa_fpu_banks *,uint32_t *,uint32_t *,uint32_t *,uint32_t *,uint32_t *,void *,sa_matrix_service)
+#define OBSERVER_DECL(name) int name(uint8_t *,struct sa_fpu_banks *,uint32_t *,uint32_t *,uint32_t *,uint32_t *,uint32_t *,void *,sa_matrix_observer)
+SERVICE_DECL(sa_main_dispatch_transform_8c078eb0);
+SERVICE_DECL(sa_main_dispatch_detach_8c0b1d60);
+SERVICE_DECL(sa_main_dispatch_vector_store_8c07cb54);
+SERVICE_DECL(sa_main_dispatch_shared_check_8c06c880);
+SERVICE_DECL(sa_main_dispatch_status_query_8c06cebe);
+SERVICE_DECL(sa_main_dispatch_status_transition_8c0afc98);
+SERVICE_DECL(sa_main_dispatch_flag_transition_8c0b11c0);
+OBSERVER_DECL(sa_main_dispatch_matrix_init_8c057b40);
+OBSERVER_DECL(sa_main_dispatch_reset_8c05e788);
+OBSERVER_DECL(sa_main_dispatch_active_query_8c05e6e8);
+int sa_model_matrix_stack_pop_8c639b98(uint8_t *,struct sa_fpu_banks *,uint32_t *,uint32_t *);
+struct matrix_context {void *user;sa_matrix_service external;sa_matrix_observer observe;uint32_t *fpul,*macl;sa_axis_instruction instruction;};
+static int instruction(void *context,uint32_t word,struct sa_fpu_banks *fpu,uint32_t fpul){
+ struct matrix_context *s=(struct matrix_context *)context;
+ return s->instruction?s->instruction(s->user,word,fpu,fpul):-2;
+}
+static int dispatch(void *context,uint32_t target,uint8_t *ram,struct sa_fpu_banks *fpu,uint32_t *sr,uint32_t *r,uint32_t *pr){
+ struct matrix_context *s=(struct matrix_context *)context;
+ if(s->observe)s->observe(s->user,target,ram,fpu,sr,r,pr);
+ if(target==0x8c639ec8u)return sa_matrix_rotate_x(ram,fpu,sr,r,s->fpul,s,instruction);
+ if(target==0x8c639f5cu)return sa_matrix_rotate_y(ram,fpu,sr,r,s->fpul,s,instruction);
+ if(target==0x8c63a1ccu)return sa_matrix_rotate_z(ram,fpu,sr,r,s->fpul,s,instruction);
+ if(target==0x8c057b40u)return sa_main_dispatch_matrix_init_8c057b40(ram,fpu,sr,r,pr,s->fpul,s->macl,s->user,s->observe);
+ if(target==0x8c05e788u)return sa_main_dispatch_reset_8c05e788(ram,fpu,sr,r,pr,s->fpul,s->macl,s->user,s->observe);
+ if(target==0x8c05e6e8u)return sa_main_dispatch_active_query_8c05e6e8(ram,fpu,sr,r,pr,s->fpul,s->macl,s->user,s->observe);
+ if(target==0x8c06cebeu)return sa_main_dispatch_status_query_8c06cebe(ram,fpu,sr,r,pr,s->fpul,s->macl,context,dispatch);
+ if(target==0x8c06c880u)return sa_main_dispatch_shared_check_8c06c880(ram,fpu,sr,r,pr,s->fpul,s->macl,context,dispatch);
+ if(target==0x8c0b1d60u)return sa_main_dispatch_detach_8c0b1d60(ram,fpu,sr,r,pr,s->fpul,s->macl,context,dispatch);
+ if(target==0x8c07cb54u)return sa_main_dispatch_vector_store_8c07cb54(ram,fpu,sr,r,pr,s->fpul,s->macl,context,dispatch);
+ if(target==0x8c078eb0u)return sa_main_dispatch_transform_8c078eb0(ram,fpu,sr,r,pr,s->fpul,s->macl,context,dispatch);
+ if(target==0x8c639b98u)return sa_model_matrix_stack_pop_8c639b98(ram,fpu,sr,r);
+ return s->external?s->external(s->user,target,ram,fpu,sr,r,pr):-2;
+}
+/* Host integration. Push/init, three existing rotations and pop are native.
+ * Vector calculation and sound remain game services. FSCA/FTRV remain explicit
+ * instruction services; missing instruction returns -2 at its reached boundary.
+ * Legacy rotations/pop require entry PR=0/SZ=0 and retain their atomic guard.
+ */
+#define CONNECT(name,callee) \
+SA_STAGE_EXPORT int name(uint8_t *ram,struct sa_fpu_banks *fpu,uint32_t *sr,uint32_t *r,uint32_t *pr,uint32_t *fpul,uint32_t *macl,void *user,sa_matrix_service external,sa_axis_instruction vector,sa_matrix_observer observe){ \
+ struct matrix_context s={user,external,observe,fpul,macl,vector}; \
+ return callee(ram,fpu,sr,r,pr,fpul,macl,&s,dispatch); \
+}
+CONNECT(sa_main_dispatch_axes_transform_connected,sa_main_dispatch_transform_8c078eb0)
+CONNECT(sa_main_dispatch_axes_detach_connected,sa_main_dispatch_detach_8c0b1d60)
+CONNECT(sa_main_dispatch_axes_status_connected,sa_main_dispatch_status_transition_8c0afc98)
+CONNECT(sa_main_dispatch_axes_flag_connected,sa_main_dispatch_flag_transition_8c0b11c0)
+#define AXIS_CONNECT(name,callee) \
+SA_STAGE_EXPORT int name(uint8_t *ram,struct sa_fpu_banks *fpu,uint32_t *sr,uint32_t *r,uint32_t *pr,uint32_t *fpul,uint32_t *macl,void *user,sa_matrix_service external,sa_axis_instruction vector,sa_matrix_observer observe){ \
+ struct matrix_context s={user,external,observe,fpul,macl,vector};(void)pr; \
+ return callee(ram,fpu,sr,r,fpul,&s,instruction); \
+}
+AXIS_CONNECT(sa_main_dispatch_axis_x_connected,sa_matrix_rotate_x)
+AXIS_CONNECT(sa_main_dispatch_axis_y_connected,sa_matrix_rotate_y)
+AXIS_CONNECT(sa_main_dispatch_axis_z_connected,sa_matrix_rotate_z)

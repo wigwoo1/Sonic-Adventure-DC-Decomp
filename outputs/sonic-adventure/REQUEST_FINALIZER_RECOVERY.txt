@@ -1,0 +1,64 @@
+Native request finalizer and request status
+==========================================
+
+Whole-project weighted milestone score: 10%. This is not measured game-code
+coverage, and the complete native game and later ports remain unfinished.
+
+Recovered routines
+------------------
+source/sa_request_finalize_8c600cf0.c contains static annotated native C for
+73 retail instructions (146 bytes). It pumps the device, queries request
+status, returns completion/error codes, waits for pending states 2/3/4, and
+checks elapsed time. Changes to the request's progress word reset the timeout
+baseline, preserving the original behavior.
+
+source/sa_request_status_8c6013a4.c covers 12 retail instructions (24 bytes).
+It handles null/inactive requests and returns the signed 16-bit request state.
+
+Both sources are deterministic products of the saved instruction listings.
+They execute static native C; no runtime SH-4 opcode interpreter is used for
+these routines on the native path. Register-level annotations preserve exact
+CPU/stack behavior, but do not reconstruct original high-level source code.
+
+Verification
+------------
+26 finalizer scenarios and 64 status cases matched complete 16 MiB RAM and
+GPR/SR/PR/PC state. The finalizer suite also compared 166 native service-entry
+snapshots and 52 ordered timer reads. Every one of the 73 finalizer and 12
+status instructions was exercised. This is not proof of all possible inputs.
+
+Cases cover status 0 (return -32), success (return 0), unknown/inactive status
+(return -25), signed error words for states 5/64, pending states 2/3/4,
+multi-iteration waits, timeout (return -21), progress-sensitive timeout reset,
+timer rollover and both RAM aliases.
+
+The connected cleanup/abort bridge now dispatches finalizer and status to these
+native implementations. Its 90 nested-call scenarios pass 1286 service
+entries and 456 timer reads. The external operation-1/2/8 runtime service
+target remain fixtures; both cancellation wrappers now execute natively.
+See STREAM_CLEANUP_ABORT_CONNECTED.txt and REQUEST_DEVICE_CALLBACKS.txt.
+
+Reproduce from outputs/sonic-adventure
+------------------------------------
+Use PowerShell:
+
+  & 'C:\Users\wigwo\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe' .\recover_request_abort_8c6013d2.py --routine finalizer
+  & 'C:\Users\wigwo\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe' .\recover_request_abort_8c6013d2.py --routine status
+  .\build_stream_cleanup_abort_native.ps1
+  & 'C:\Users\wigwo\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe' .\verify_request_finalize_native.py
+  & 'C:\Users\wigwo\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe' .\verify_stream_cleanup_abort_native.py
+
+Expected focused result:
+  26 finalizer cases, 64 status cases, 166 service entries and 52 timer reads passed
+
+The read-only Ghidra export script is ghidra/export_request_finalizer_8c600cf0.ps1.
+Listings are analysis/instructions/8c600cf0.tsv and 8c6013a4.tsv.
+Evidence is analysis/request_finalize_native_verification.json, including
+source, binary, DLL, generator, listing, verifier and interpreter hashes.
+
+Remaining limitations
+---------------------
+The device-pump implementation is a controlled fixture in the focused suite;
+the connected suite fixtures the external cancellation service target. Hardware I/O, interrupts,
+concurrency, complete game execution and complete ports remain unverified.
+The full accumulated project suite was not run for this milestone.

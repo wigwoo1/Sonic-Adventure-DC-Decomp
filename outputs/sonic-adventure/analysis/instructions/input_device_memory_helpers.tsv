@@ -1,0 +1,31 @@
+address	opcode	instruction	references
+8c660794	d313	mov.l 0x8c6607e4,r3	READ:8c6607e4=8c8a83b4 
+8c660796	901d	mov.w 0x8c6607d4,r0	READ:8c6607d4=10f40fcc 
+8c660798	6432	mov.l @r3,r4	READ:8c8a83b4 
+8c66079a	d213	mov.l 0x8c6607e8,r2	READ:8c6607e8=80000000 
+8c66079c	44e	mov.l @(r0,r4),r4	
+8c66079e	6142	mov.l @r4,r1	
+8c6607a0	212b	or r2,r1	
+8c6607a2	2412	mov.l r1,@r4	
+8c6607a4	b	rts	
+8c6607a6	e000	_mov #0x0,r0	
+8c6607a8	4615	cmp/pl r6	
+8c6607aa	e700	mov #0x0,r7	
+8c6607ac	8f05	bf/s 0x8c6607ba	CONDITIONAL_JUMP:8c6607ba=6063000b 
+8c6607ae	6043	_mov r4,r0	
+8c6607b0	7701	add #0x1,r7	
+8c6607b2	2052	mov.l r5,@r0	
+8c6607b4	3763	cmp/ge r6,r7	
+8c6607b6	8ffb	bf/s 0x8c6607b0	CONDITIONAL_JUMP:8c6607b0=20527701 
+8c6607b8	7004	_add #0x4,r0	
+8c6607ba	b	rts	
+8c6607bc	6063	_mov r6,r0	
+8c6607be	d00b	mov.l 0x8c6607ec,r0	READ:8c6607ec=fffffff 
+8c6607c0	b	rts	
+8c6607c2	2049	_and r4,r0	
+8c6607c8	d206	mov.l 0x8c6607e4,r2	READ:8c6607e4=8c8a83b4 
+8c6607ca	9004	mov.w 0x8c6607d6,r0	READ:8c6607d6=7f410f4 
+8c6607cc	d108	mov.l 0x8c6607f0,r1	READ:8c6607f0=a05f6c00 
+8c6607ce	6322	mov.l @r2,r3	READ:8c8a83b4 
+8c6607d0	b	rts	
+8c6607d2	316	_mov.l r1,@(r0,r3)	

@@ -1,0 +1,38 @@
+{
+  "retail_binary_sha256": "45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a",
+  "source": "source/packet_requests.c",
+  "source_sha256": "e40981d1df92ebb06227f3e79f7b9dda66167d2c33f6690c17c458c29fbf038b",
+  "dll_sha256": "59b56c432643809425eef8f6a45849b8410147487a36dc07ad9d820c64fdd68f",
+  "routines": [
+    {
+      "routine_start": "0x8c6041d4",
+      "routine_end_exclusive": "0x8c604210",
+      "name": "packet_read_request",
+      "cases_passed": 218,
+      "retail_instructions_executed": 2144,
+      "retail_span_sha256": "635ab7ae91804b2aa04bed724aa5414ced05751b3d53c1e2751b42fc5d7b32c2",
+      "scope": "Index validation, active-context and busy-state errors, and read-request field updates."
+    },
+    {
+      "routine_start": "0x8c604210",
+      "routine_end_exclusive": "0x8c604250",
+      "name": "packet_write_request",
+      "cases_passed": 218,
+      "retail_instructions_executed": 2168,
+      "retail_span_sha256": "f26ae28b0976cf4ae36cf6468beca1af98a7337f62e7050082c813c7498bdfaf",
+      "scope": "Index validation, active-context and busy-state errors, write-request field updates, and retry-field clearing."
+    },
+    {
+      "routine_start": "0x8c6042e4",
+      "routine_end_exclusive": "0x8c6042ec",
+      "name": "packet_context_clear",
+      "cases_passed": 64,
+      "retail_instructions_executed": 256,
+      "retail_span_sha256": "b9ef616f66416a431547abccc911b5bdf783633311c0bb210147623223dd68b9",
+      "scope": "Clearing the active packet context global from null, valid, arbitrary, and sentinel initial values."
+    }
+  ],
+  "limitations": [
+    "Unmapped pointers and hardware exception behavior are not tested."
+  ]
+}

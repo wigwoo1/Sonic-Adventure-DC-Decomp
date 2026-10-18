@@ -1,0 +1,166 @@
+{
+  "module": "1ST_READ.BIN",
+  "load_address": "0x8c010000",
+  "address": "0x8c647198",
+  "end_exclusive": "0x8c6471f4",
+  "retail_span_sha256": "77169608a3999ce6470debece72dd25d2cd969f88c638ca36dcd1183b5db4fe9",
+  "binary_sha256": "45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a",
+  "source_sha256": "4cb237949380bb65163b1b91053c897a11e9bdd9e28b50560bec021544577549",
+  "cases_passed": 13,
+  "comparison_level": "Complete 16 MiB RAM, all GPR/SR/PR/FPU state, and callback arguments/order against retail SH-4 execution.",
+  "scope": "Recovers the 92-byte entry control flow, semaphore test/release, positive-result record call, and optional cleanup dispatch. The busy-path report callback at 0x8c65f348 executes recovered native code; its report-service condition is clear in these entry fixtures.",
+  "limitations": [
+    "The device service, record writer, and cleanup are dispatched as explicit test callbacks.",
+    "The report callback and forwarding wrapper execute as recovered native code; the formatter and optional runtime callback remain fixtures. The report gate is clear in these caller scenarios.",
+    "This isolated entry test still dispatches cleanup as a callee stub; the separately verified 0x8c646654 routine is covered by analysis/input_service_cleanup_8c646654_verification.json, where its external service callbacks remain explicit stubs.",
+    "This verifies one input-service entry, not full game behavior or project completion."
+  ],
+  "cases": [
+    {
+      "case": 0,
+      "lock_byte_in": 1,
+      "service_result": "0x0",
+      "cleanup_flag": 0,
+      "returned_r0": "0xfffffffe",
+      "calls": [],
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 1,
+      "lock_byte_in": 128,
+      "service_result": "0x0",
+      "cleanup_flag": 0,
+      "returned_r0": "0xfffffffe",
+      "calls": [],
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 2,
+      "lock_byte_in": 255,
+      "service_result": "0x0",
+      "cleanup_flag": 0,
+      "returned_r0": "0xfffffffe",
+      "calls": [],
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 3,
+      "lock_byte_in": 0,
+      "service_result": "0x0",
+      "cleanup_flag": 0,
+      "returned_r0": "0x0",
+      "calls": [
+        "0x8c6604c0"
+      ],
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 4,
+      "lock_byte_in": 0,
+      "service_result": "0x0",
+      "cleanup_flag": 1,
+      "returned_r0": "0x0",
+      "calls": [
+        "0x8c6604c0",
+        "0x8c646654"
+      ],
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 5,
+      "lock_byte_in": 0,
+      "service_result": "0x1",
+      "cleanup_flag": 0,
+      "returned_r0": "0x1",
+      "calls": [
+        "0x8c6604c0",
+        "0x8c646f68"
+      ],
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 6,
+      "lock_byte_in": 0,
+      "service_result": "0x1",
+      "cleanup_flag": 1,
+      "returned_r0": "0x1",
+      "calls": [
+        "0x8c6604c0",
+        "0x8c646f68",
+        "0x8c646654"
+      ],
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 7,
+      "lock_byte_in": 0,
+      "service_result": "0x7fffffff",
+      "cleanup_flag": 0,
+      "returned_r0": "0x7fffffff",
+      "calls": [
+        "0x8c6604c0",
+        "0x8c646f68"
+      ],
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 8,
+      "lock_byte_in": 0,
+      "service_result": "0x7fffffff",
+      "cleanup_flag": 1,
+      "returned_r0": "0x7fffffff",
+      "calls": [
+        "0x8c6604c0",
+        "0x8c646f68",
+        "0x8c646654"
+      ],
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 9,
+      "lock_byte_in": 0,
+      "service_result": "0x80000000",
+      "cleanup_flag": 0,
+      "returned_r0": "0x80000000",
+      "calls": [
+        "0x8c6604c0"
+      ],
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 10,
+      "lock_byte_in": 0,
+      "service_result": "0x80000000",
+      "cleanup_flag": 1,
+      "returned_r0": "0x80000000",
+      "calls": [
+        "0x8c6604c0",
+        "0x8c646654"
+      ],
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 11,
+      "lock_byte_in": 0,
+      "service_result": "0xffffffff",
+      "cleanup_flag": 0,
+      "returned_r0": "0xffffffff",
+      "calls": [
+        "0x8c6604c0"
+      ],
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 12,
+      "lock_byte_in": 0,
+      "service_result": "0xffffffff",
+      "cleanup_flag": 1,
+      "returned_r0": "0xffffffff",
+      "calls": [
+        "0x8c6604c0",
+        "0x8c646654"
+      ],
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    }
+  ]
+}

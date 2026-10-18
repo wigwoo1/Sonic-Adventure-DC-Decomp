@@ -1,0 +1,21 @@
+address	opcode	instruction	references
+8c66ab5e	9015	mov.w 0x8c66ab8c,r0	READ:8c66ab8c=aa 
+8c66ab60	4d	mov.w @(r0,r4),r0	
+8c66ab62	8802	cmp/eq #0x2,r0	
+8c66ab64	8b01	bf 0x8c66ab6a	CONDITIONAL_JUMP:8c66ab6a=4d900f 
+8c66ab66	af48	bra 0x8c66a9fa	UNCONDITIONAL_CALL:8c66a9fa=6e432fe6 
+8c66ab68	9	_nop	
+8c66ab6a	900f	mov.w 0x8c66ab8c,r0	READ:8c66ab8c=aa 
+8c66ab6c	4d	mov.w @(r0,r4),r0	
+8c66ab6e	8801	cmp/eq #0x1,r0	
+8c66ab70	8b01	bf 0x8c66ab76	CONDITIONAL_JUMP:8c66ab76=24d9009 
+8c66ab72	aec2	bra 0x8c66a8fa	UNCONDITIONAL_CALL:8c66a8fa=6e432fe6 
+8c66ab74	9	_nop	
+8c66ab76	9009	mov.w 0x8c66ab8c,r0	READ:8c66ab8c=aa 
+8c66ab78	24d	mov.w @(r0,r4),r2	
+8c66ab7a	2228	tst r2,r2	
+8c66ab7c	8b01	bf 0x8c66ab82	CONDITIONAL_JUMP:8c66ab82=9000b 
+8c66ab7e	ae41	bra 0x8c66a804	UNCONDITIONAL_CALL:8c66a804=6e432fe6 
+8c66ab80	9	_nop	
+8c66ab82	b	rts	
+8c66ab84	9	_nop	

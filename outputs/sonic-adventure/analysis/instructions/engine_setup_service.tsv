@@ -1,0 +1,24 @@
+address	opcode	instruction	references
+8c09b4aa	d319	mov.l 0x8c09b510,r3	READ:8c09b510=8c7a0a80 
+8c09b4ac	b	rts	
+8c09b4ae	2342	_mov.l r4,@r3	WRITE:8c7a0a80 
+8c09b4b0	d517	mov.l 0x8c09b510,r5	READ:8c09b510=8c7a0a80 
+8c09b4b2	e3e2	mov #-0x1e,r3	
+8c09b4b4	6652	mov.l @r5,r6	READ:8c7a0a80 
+8c09b4b6	3633	cmp/ge r3,r6	
+8c09b4b8	8905	bt 0x8c09b4c6	CONDITIONAL_JUMP:8c09b4c6=677ce7ff 
+8c09b4ba	4411	cmp/pz r4	
+8c09b4bc	8903	bt 0x8c09b4c6	CONDITIONAL_JUMP:8c09b4c6=677ce7ff 
+8c09b4be	e300	mov #0x0,r3	
+8c09b4c0	2532	mov.l r3,@r5	WRITE:8c7a0a80 
+8c09b4c2	b	rts	
+8c09b4c4	e0ff	_mov #-0x1,r0	
+8c09b4c6	e7ff	mov #-0x1,r7	
+8c09b4c8	677c	extu.b r7,r7	
+8c09b4ca	3677	cmp/gt r7,r6	
+8c09b4cc	8b28	bf 0x8c09b520	CONDITIONAL_JUMP:8c09b520=e0006252 
+8c09b4ce	4415	cmp/pl r4	
+8c09b4d0	8b26	bf 0x8c09b520	CONDITIONAL_JUMP:8c09b520=e0006252 
+8c09b4d2	2572	mov.l r7,@r5	WRITE:8c7a0a80 
+8c09b4d4	b	rts	
+8c09b4d6	e001	_mov #0x1,r0	

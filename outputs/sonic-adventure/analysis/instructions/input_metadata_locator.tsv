@@ -1,0 +1,62 @@
+address	opcode	instruction	references
+8c646b42	6743	mov r4,r7	
+8c646b44	2fc6	mov.l r12,@-r15	DATA:8c10827e=4f222fe6 DATA:Stack[-0x4] 
+8c646b46	d63d	mov.l 0x8c646c3c,r6	READ:8c646c3c=80000000 
+8c646b48	e020	mov #0x20,r0	
+8c646b4a	6c46	mov.l @r4+,r12	
+8c646b4c	7704	add #0x4,r7	
+8c646b4e	e100	mov #0x0,r1	
+8c646b50	6363	mov r6,r3	
+8c646b52	23c8	tst r12,r3	
+8c646b54	8906	bt 0x8c646b64	CONDITIONAL_JUMP:8c646b64=46017101 
+8c646b56	3560	cmp/eq r6,r5	
+8c646b58	8b02	bf 0x8c646b60	CONDITIONAL_JUMP:8c646b60=67437404 
+8c646b5a	6073	mov r7,r0	
+8c646b5c	b	rts	
+8c646b5e	6cf6	_mov.l @r15+,r12	
+8c646b60	7404	add #0x4,r4	
+8c646b62	6743	mov r4,r7	
+8c646b64	7101	add #0x1,r1	
+8c646b66	4601	shlr r6	
+8c646b68	3103	cmp/ge r0,r1	
+8c646b6a	8bf1	bf 0x8c646b50	CONDITIONAL_JUMP:8c646b50=23c86363 
+8c646b6c	e000	mov #0x0,r0	
+8c646b6e	b	rts	
+8c646b70	6cf6	_mov.l @r15+,r12	
+8c646b72	4f22	sts.l PR,@-r15	DATA:Stack[-0x4] 
+8c646b74	7ff8	add #-0x8,r15	
+8c646b76	2f42	mov.l r4,@r15	DATA:Stack[-0xc] 
+8c646b78	1f51	mov.l r5,@(0x4,r15)	DATA:Stack[-0x8] 
+8c646b7a	e501	mov #0x1,r5	
+8c646b7c	bfe1	bsr 0x8c646b42	UNCONDITIONAL_CALL:8c646b42=2fc66743 
+8c646b7e	54f1	_mov.l @(0x4,r15),r4	DATA:Stack[-0x8] 
+8c646b80	6403	mov r0,r4	
+8c646b82	2448	tst r4,r4	
+8c646b84	8b03	bf 0x8c646b8e	CONDITIONAL_JUMP:8c646b8e=61408441 
+8c646b86	7f08	add #0x8,r15	
+8c646b88	4f26	lds.l @r15+,PR	DATA:Stack[-0x4] 
+8c646b8a	b	rts	
+8c646b8c	e0ff	_mov #-0x1,r0	
+8c646b8e	8441	mov.b @(0x1,r4),r0	
+8c646b90	6140	mov.b @r4,r1	
+8c646b92	600c	extu.b r0,r0	
+8c646b94	63f2	mov.l @r15,r3	DATA:Stack[-0xc] 
+8c646b96	4028	shll16 r0	
+8c646b98	6203	mov r0,r2	
+8c646b9a	8442	mov.b @(0x2,r4),r0	
+8c646b9c	611c	extu.b r1,r1	
+8c646b9e	600c	extu.b r0,r0	
+8c646ba0	4018	shll8 r0	
+8c646ba2	220b	or r0,r2	
+8c646ba4	8443	mov.b @(0x3,r4),r0	
+8c646ba6	4128	shll16 r1	
+8c646ba8	4118	shll8 r1	
+8c646baa	600c	extu.b r0,r0	
+8c646bac	221b	or r1,r2	
+8c646bae	220b	or r0,r2	
+8c646bb0	e000	mov #0x0,r0	
+8c646bb2	2322	mov.l r2,@r3	
+8c646bb4	7f08	add #0x8,r15	
+8c646bb6	4f26	lds.l @r15+,PR	DATA:Stack[-0x4] 
+8c646bb8	b	rts	
+8c646bba	9	_nop	

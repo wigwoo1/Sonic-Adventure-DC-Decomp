@@ -1,0 +1,92 @@
+address	opcode	instruction	references
+8c643e6c	2fe6	mov.l r14,@-r15	
+8c643e6e	2fd6	mov.l r13,@-r15	
+8c643e70	2fc6	mov.l r12,@-r15	
+8c643e72	6c43	mov r4,r12	
+8c643e74	4f22	sts.l PR,@-r15	
+8c643e76	2cc8	tst r12,r12	
+8c643e78	8f03	bf/s 0x8c643e82	
+8c643e7a	ee00	mov #0x0,r14	
+8c643e7c	de29	mov.l 0x8c643f24,r14	
+8c643e7e	a03d	bra 0x8c643efc	
+8c643e80	9	nop	
+8c643e82	5dc2	mov.l @(0x8,r12),r13	
+8c643e84	d228	mov.l 0x8c643f28,r2	
+8c643e86	63d2	mov.l @r13,r3	
+8c643e88	3320	cmp/eq r2,r3	
+8c643e8a	8902	bt 0x8c643e92	
+8c643e8c	de27	mov.l 0x8c643f2c,r14	
+8c643e8e	a035	bra 0x8c643efc	
+8c643e90	9	nop	
+8c643e92	84d4	mov.b @(0x4,r13),r0	
+8c643e94	8801	cmp/eq #0x1,r0	
+8c643e96	8b03	bf 0x8c643ea0	
+8c643e98	84d5	mov.b @(0x5,r13),r0	
+8c643e9a	e301	mov #0x1,r3	
+8c643e9c	3037	cmp/gt r3,r0	
+8c643e9e	8b02	bf 0x8c643ea6	
+8c643ea0	de23	mov.l 0x8c643f30,r14	
+8c643ea2	a02b	bra 0x8c643efc	
+8c643ea4	9	nop	
+8c643ea6	d223	mov.l 0x8c643f34,r2	
+8c643ea8	420b	jsr @r2	
+8c643eaa	9	nop	
+8c643eac	d322	mov.l 0x8c643f38,r3	
+8c643eae	430b	jsr @r3	
+8c643eb0	9	nop	
+8c643eb2	d223	mov.l 0x8c643f40,r2	
+8c643eb4	d421	mov.l 0x8c643f3c,r4	
+8c643eb6	420b	jsr @r2	
+8c643eb8	9	nop	
+8c643eba	65d3	mov r13,r5	
+8c643ebc	d21f	mov.l 0x8c643f3c,r2	
+8c643ebe	d121	mov.l 0x8c643f44,r1	
+8c643ec0	e300	mov #0x0,r3	
+8c643ec2	2f36	mov.l r3,@-r15	
+8c643ec4	e7ff	mov #-0x1,r7	
+8c643ec6	56d2	mov.l @(0x8,r13),r6	
+8c643ec8	7520	add #0x20,r5	
+8c643eca	410b	jsr @r1	
+8c643ecc	6422	mov.l @r2,r4	
+8c643ece	7f04	add #0x4,r15	
+8c643ed0	d21d	mov.l 0x8c643f48,r2	
+8c643ed2	e500	mov #0x0,r5	
+8c643ed4	d319	mov.l 0x8c643f3c,r3	
+8c643ed6	420b	jsr @r2	
+8c643ed8	6432	mov.l @r3,r4	
+8c643eda	d11c	mov.l 0x8c643f4c,r1	
+8c643edc	410b	jsr @r1	
+8c643ede	9	nop	
+8c643ee0	d41b	mov.l 0x8c643f50,r4	
+8c643ee2	a001	bra 0x8c643ee8	
+8c643ee4	9	nop	
+8c643ee6	74ff	add #-0x1,r4	
+8c643ee8	2448	tst r4,r4	
+8c643eea	8bfc	bf 0x8c643ee6	
+8c643eec	d11a	mov.l 0x8c643f58,r1	
+8c643eee	e301	mov #0x1,r3	
+8c643ef0	d218	mov.l 0x8c643f54,r2	
+8c643ef2	410b	jsr @r1	
+8c643ef4	2232	mov.l r3,@r2	
+8c643ef6	d319	mov.l 0x8c643f5c,r3	
+8c643ef8	430b	jsr @r3	
+8c643efa	64c3	mov r12,r4	
+8c643efc	d30f	mov.l 0x8c643f3c,r3	
+8c643efe	6232	mov.l @r3,r2	
+8c643f00	2228	tst r2,r2	
+8c643f02	8902	bt 0x8c643f0a	
+8c643f04	d216	mov.l 0x8c643f60,r2	
+8c643f06	420b	jsr @r2	
+8c643f08	6432	mov.l @r3,r4	
+8c643f0a	2ee8	tst r14,r14	
+8c643f0c	8903	bt 0x8c643f16	
+8c643f0e	d316	mov.l 0x8c643f68,r3	
+8c643f10	d414	mov.l 0x8c643f64,r4	
+8c643f12	430b	jsr @r3	
+8c643f14	65e3	mov r14,r5	
+8c643f16	4f26	lds.l @r15+,PR	
+8c643f18	60e3	mov r14,r0	
+8c643f1a	6cf6	mov.l @r15+,r12	
+8c643f1c	6df6	mov.l @r15+,r13	
+8c643f1e	b	rts	
+8c643f20	6ef6	mov.l @r15+,r14	

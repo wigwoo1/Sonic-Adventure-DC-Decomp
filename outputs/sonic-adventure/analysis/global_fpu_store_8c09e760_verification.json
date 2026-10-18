@@ -1,0 +1,658 @@
+{
+  "module": "1ST_READ.BIN",
+  "load_address": "0x8c010000",
+  "address": "0x8c09e760",
+  "end_exclusive": "0x8c09e766",
+  "retail_span_sha256": "a6710e31a2d39e793bd0a13eee9d523d140f375bcae73623ba9bd7a8d18acf23",
+  "binary_sha256": "45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a",
+  "source_sha256": "02236e69b4b82980784b2e759836b6326e813923060bf147c4767cd47d1ca380",
+  "cases_passed": 128,
+  "comparison_level": "Complete 16 MiB RAM and all GPRs, SR, PR, and return PC compared against the retail SH-4 interpreter; FPU banks are varied across FR and DR modes.",
+  "scope": "Tests the PC-relative destination literal and delay-slot FMOV.S/FMOV.D stores for both FR banks and both FPSCR size modes.",
+  "limitations": [
+    "The FPU store instruction behavior is modeled by the project SH-4 interpreter and is not independently validated on Dreamcast hardware.",
+    "The purpose and higher-level ownership of global 0x8c66c314 remain unidentified."
+  ],
+  "cases": [
+    {
+      "case": 0,
+      "fpscr": "0x0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 1,
+      "fpscr": "0x100000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 2,
+      "fpscr": "0x200000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 3,
+      "fpscr": "0x300000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 4,
+      "fpscr": "0x0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 5,
+      "fpscr": "0x100000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 6,
+      "fpscr": "0x200000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 7,
+      "fpscr": "0x300000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 8,
+      "fpscr": "0x0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 9,
+      "fpscr": "0x100000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 10,
+      "fpscr": "0x200000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 11,
+      "fpscr": "0x300000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 12,
+      "fpscr": "0x0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 13,
+      "fpscr": "0x100000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 14,
+      "fpscr": "0x200000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 15,
+      "fpscr": "0x300000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 16,
+      "fpscr": "0x0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 17,
+      "fpscr": "0x100000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 18,
+      "fpscr": "0x200000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 19,
+      "fpscr": "0x300000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 20,
+      "fpscr": "0x0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 21,
+      "fpscr": "0x100000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 22,
+      "fpscr": "0x200000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 23,
+      "fpscr": "0x300000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 24,
+      "fpscr": "0x0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 25,
+      "fpscr": "0x100000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 26,
+      "fpscr": "0x200000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 27,
+      "fpscr": "0x300000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 28,
+      "fpscr": "0x0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 29,
+      "fpscr": "0x100000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 30,
+      "fpscr": "0x200000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 31,
+      "fpscr": "0x300000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 32,
+      "fpscr": "0x0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 33,
+      "fpscr": "0x100000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 34,
+      "fpscr": "0x200000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 35,
+      "fpscr": "0x300000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 36,
+      "fpscr": "0x0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 37,
+      "fpscr": "0x100000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 38,
+      "fpscr": "0x200000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 39,
+      "fpscr": "0x300000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 40,
+      "fpscr": "0x0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 41,
+      "fpscr": "0x100000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 42,
+      "fpscr": "0x200000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 43,
+      "fpscr": "0x300000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 44,
+      "fpscr": "0x0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 45,
+      "fpscr": "0x100000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 46,
+      "fpscr": "0x200000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 47,
+      "fpscr": "0x300000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 48,
+      "fpscr": "0x0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 49,
+      "fpscr": "0x100000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 50,
+      "fpscr": "0x200000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 51,
+      "fpscr": "0x300000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 52,
+      "fpscr": "0x0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 53,
+      "fpscr": "0x100000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 54,
+      "fpscr": "0x200000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 55,
+      "fpscr": "0x300000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 56,
+      "fpscr": "0x0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 57,
+      "fpscr": "0x100000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 58,
+      "fpscr": "0x200000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 59,
+      "fpscr": "0x300000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 60,
+      "fpscr": "0x0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 61,
+      "fpscr": "0x100000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 62,
+      "fpscr": "0x200000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 63,
+      "fpscr": "0x300000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 64,
+      "fpscr": "0x0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 65,
+      "fpscr": "0x100000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 66,
+      "fpscr": "0x200000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 67,
+      "fpscr": "0x300000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 68,
+      "fpscr": "0x0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 69,
+      "fpscr": "0x100000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 70,
+      "fpscr": "0x200000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 71,
+      "fpscr": "0x300000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 72,
+      "fpscr": "0x0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 73,
+      "fpscr": "0x100000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 74,
+      "fpscr": "0x200000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 75,
+      "fpscr": "0x300000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 76,
+      "fpscr": "0x0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 77,
+      "fpscr": "0x100000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 78,
+      "fpscr": "0x200000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 79,
+      "fpscr": "0x300000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 80,
+      "fpscr": "0x0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 81,
+      "fpscr": "0x100000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 82,
+      "fpscr": "0x200000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 83,
+      "fpscr": "0x300000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 84,
+      "fpscr": "0x0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 85,
+      "fpscr": "0x100000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 86,
+      "fpscr": "0x200000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 87,
+      "fpscr": "0x300000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 88,
+      "fpscr": "0x0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 89,
+      "fpscr": "0x100000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 90,
+      "fpscr": "0x200000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 91,
+      "fpscr": "0x300000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 92,
+      "fpscr": "0x0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 93,
+      "fpscr": "0x100000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 94,
+      "fpscr": "0x200000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 95,
+      "fpscr": "0x300000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 96,
+      "fpscr": "0x0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 97,
+      "fpscr": "0x100000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 98,
+      "fpscr": "0x200000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 99,
+      "fpscr": "0x300000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 100,
+      "fpscr": "0x0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 101,
+      "fpscr": "0x100000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 102,
+      "fpscr": "0x200000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 103,
+      "fpscr": "0x300000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 104,
+      "fpscr": "0x0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 105,
+      "fpscr": "0x100000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 106,
+      "fpscr": "0x200000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 107,
+      "fpscr": "0x300000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 108,
+      "fpscr": "0x0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 109,
+      "fpscr": "0x100000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 110,
+      "fpscr": "0x200000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 111,
+      "fpscr": "0x300000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 112,
+      "fpscr": "0x0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 113,
+      "fpscr": "0x100000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 114,
+      "fpscr": "0x200000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 115,
+      "fpscr": "0x300000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 116,
+      "fpscr": "0x0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 117,
+      "fpscr": "0x100000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 118,
+      "fpscr": "0x200000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 119,
+      "fpscr": "0x300000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 120,
+      "fpscr": "0x0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 121,
+      "fpscr": "0x100000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 122,
+      "fpscr": "0x200000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 123,
+      "fpscr": "0x300000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 124,
+      "fpscr": "0x0",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 125,
+      "fpscr": "0x100000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 126,
+      "fpscr": "0x200000",
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 127,
+      "fpscr": "0x300000",
+      "ram_and_cpu_match": true
+    }
+  ]
+}

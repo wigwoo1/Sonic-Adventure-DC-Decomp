@@ -1,0 +1,58 @@
+address	opcode	instruction	references
+8c0933ba	2fe6	mov.l r14,@-r15	DATA:Stack[-0x4] 
+8c0933bc	2fd6	mov.l r13,@-r15	DATA:Stack[-0x8] 
+8c0933be	4f22	sts.l PR,@-r15	DATA:Stack[-0xc] 
+8c0933c0	7ffc	add #-0x4,r15	
+8c0933c2	6e43	mov r4,r14	
+8c0933c4	e40f	mov #0xf,r4	
+8c0933c6	3e47	cmp/gt r4,r14	
+8c0933c8	8f01	bf/s 0x8c0933ce	CONDITIONAL_JUMP:8c0933ce=67e3d01c 
+8c0933ca	ed00	_mov #0x0,r13	
+8c0933cc	ed01	mov #0x1,r13	
+8c0933ce	d01c	mov.l 0x8c093440,r0	READ:8c093440=8c79ebc4 
+8c0933d0	67e3	mov r14,r7	
+8c0933d2	4708	shll2 r7	
+8c0933d4	d11c	mov.l 0x8c093448,r1	READ:8c093448=8c79e3ec 
+8c0933d6	e300	mov #0x0,r3	
+8c0933d8	77e	mov.l @(r0,r7),r7	
+8c0933da	e280	mov #-0x80,r2	
+8c0933dc	2f36	mov.l r3,@-r15	DATA:Stack[-0x14] 
+8c0933de	2e49	and r4,r14	
+8c0933e0	64d3	mov r13,r4	
+8c0933e2	622c	extu.b r2,r2	
+8c0933e4	2f76	mov.l r7,@-r15	DATA:Stack[-0x18] 
+8c0933e6	4408	shll2 r4	
+8c0933e8	d318	mov.l 0x8c09344c,r3	READ:8c09344c=8c643c18 
+8c0933ea	2e2b	or r2,r14	
+8c0933ec	d515	mov.l 0x8c093444,r5	READ:8c093444=8c79e3e0 
+8c0933ee	341c	add r1,r4	
+8c0933f0	2fe6	mov.l r14,@-r15	DATA:Stack[-0x1c] 
+8c0933f2	1f43	mov.l r4,@(0xc,r15)	DATA:8c79e3f0 DATA:Stack[-0x10] 
+8c0933f4	430b	jsr @r3	COMPUTED_CALL:8c643c18=2fd62fe6 
+8c0933f6	6442	_mov.l @r4,r4	READ:8c79e3f0 
+8c0933f8	54f3	mov.l @(0xc,r15),r4	DATA:Stack[-0x10] 
+8c0933fa	e600	mov #0x0,r6	
+8c0933fc	d511	mov.l 0x8c093444,r5	READ:8c093444=8c79e3e0 
+8c0933fe	6442	mov.l @r4,r4	READ:8c79e3f0 
+8c093400	7f10	add #0x10,r15	
+8c093402	4f26	lds.l @r15+,PR	DATA:Stack[-0xc] 
+8c093404	d312	mov.l 0x8c093450,r3	READ:8c093450=8c643b9c 
+8c093406	6df6	mov.l @r15+,r13	DATA:Stack[-0x8] 
+8c093408	432b	jmp @r3	COMPUTED_CALL:8c643b9c=2fe6d215 
+8c09340a	6ef6	_mov.l @r15+,r14	
+8c09340c	2fe6	mov.l r14,@-r15	DATA:Stack[-0x4] 
+8c09340e	e300	mov #0x0,r3	
+8c093410	2fd6	mov.l r13,@-r15	DATA:Stack[-0x8] 
+8c093412	2fc6	mov.l r12,@-r15	DATA:Stack[-0xc] 
+8c093414	2fb6	mov.l r11,@-r15	DATA:Stack[-0x10] 
+8c093416	4f22	sts.l PR,@-r15	DATA:Stack[-0x14] 
+8c093418	d20e	mov.l 0x8c093454,r2	READ:8c093454=8c1c19b0 
+8c09341a	d10f	mov.l 0x8c093458,r1	READ:8c093458=8c04f7e0 
+8c09341c	410b	jsr @r1	COMPUTED_CALL:8c04f7e0=d10fd20e 
+8c09341e	2232	_mov.l r3,@r2	WRITE:8c1c19b0=0 
+8c093420	600d	extu.w r0,r0	
+8c093422	6403	mov r0,r4	
+8c093424	4411	cmp/pz r4	
+8c093426	8b1b	bf 0x8c093460	CONDITIONAL_JUMP:8c093460=44196447 
+8c093428	a01d	bra 0x8c093466	UNCONDITIONAL_JUMP:8c093466=604dde08 
+8c09342a	4419	_shlr8 r4	

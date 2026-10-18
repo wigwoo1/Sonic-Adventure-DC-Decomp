@@ -1,0 +1,20 @@
+address	opcode	instruction	references
+8c645b1e	2	stc SR,r0	
+8c645b20	9312	mov.w 0x8c645b48,r3	READ:8c645b48=ff0f 
+8c645b22	2fe6	mov.l r14,@-r15	
+8c645b24	4f22	sts.l PR,@-r15	
+8c645b26	2039	and r3,r0	
+8c645b28	cb60	or #0x60,r0	
+8c645b2a	400e	ldc r0,SR	
+8c645b2c	de0d	mov.l 0x8c645b64,r14	READ:8c645b64=8c893a80 
+8c645b2e	a004	bra 0x8c645b3a	UNCONDITIONAL_JUMP:8c645b3a=8bf92ee8 
+8c645b30	6ee2	_mov.l @r14,r14	READ:8c893a80 
+8c645b32	63e2	mov.l @r14,r3	
+8c645b34	430b	jsr @r3	
+8c645b36	54e2	_mov.l @(0x8,r14),r4	
+8c645b38	5ee1	mov.l @(0x4,r14),r14	
+8c645b3a	2ee8	tst r14,r14	
+8c645b3c	8bf9	bf 0x8c645b32	CONDITIONAL_JUMP:8c645b32=430b63e2 
+8c645b3e	4f26	lds.l @r15+,PR	
+8c645b40	b	rts	
+8c645b42	6ef6	_mov.l @r15+,r14	

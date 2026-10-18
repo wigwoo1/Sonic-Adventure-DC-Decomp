@@ -1,0 +1,105 @@
+address	length	bytes	instruction	flows
+8c10e5ac	2	fbff	fmov.s fr15,@-r15	
+8c10e5ae	2	224f	sts.l PR,@-r15	
+8c10e5b0	2	f87f	add #-0x8,r15	
+8c10e5b2	2	04e0	mov #0x4,r0	
+8c10e5b4	2	4cf5	fmov fr4,fr5	
+8c10e5b6	2	57ff	fmov fr5,@(r0,r15)	
+8c10e5b8	2	f153	mov.l @(0x4,r15),r3	
+8c10e5ba	2	1143	cmp/pz r3	
+8c10e5bc	2	018d	bt/s 0x8c10e5c2	8c10e5c2 
+8c10e5be	2	00e4	_mov #0x0,r4	
+8c10e5c0	2	08e4	mov #0x8,r4	
+8c10e5c2	2	8df3	fldi0 fr3	
+8c10e5c4	2	34f5	fcmp/eq fr3,fr5	
+8c10e5c6	2	04e7	mov #0x4,r7	
+8c10e5c8	2	028f	bf/s 0x8c10e5d0	8c10e5d0 
+8c10e5ca	2	01e6	_mov #0x1,r6	
+8c10e5cc	2	0ca0	bra 0x8c10e5e8	8c10e5e8 
+8c10e5ce	2	7b24	_or r7,r4	
+8c10e5d0	2	f152	mov.l @(0x4,r15),r2	
+8c10e5d2	2	2ad3	mov.l 0x8c10e67c,r3	
+8c10e5d4	2	2ad1	mov.l 0x8c10e680,r1	
+8c10e5d6	2	3922	and r3,r2	
+8c10e5d8	2	1032	cmp/eq r1,r2	
+8c10e5da	2	028b	bf 0x8c10e5e2	8c10e5e2 
+8c10e5dc	2	02e0	mov #0x2,r0	
+8c10e5de	2	03a0	bra 0x8c10e5e8	8c10e5e8 
+8c10e5e0	2	0b24	_or r0,r4	
+8c10e5e2	2	54f5	fcmp/eq fr5,fr5	
+8c10e5e4	2	0089	bt 0x8c10e5e8	8c10e5e8 
+8c10e5e6	2	6b24	or r6,r4	
+8c10e5e8	2	26d5	mov.l 0x8c10e684,r5	
+8c10e5ea	2	4826	tst r4,r6	
+8c10e5ec	2	0489	bt 0x8c10e5f8	8c10e5f8 
+8c10e5ee	2	58f0	fmov.s @r5,fr0	
+8c10e5f0	2	087f	add #0x8,r15	
+8c10e5f2	2	264f	lds.l @r15+,PR	
+8c10e5f4	2	0b00	rts	
+8c10e5f6	2	f9ff	_fmov.s @r15+,fr15	
+8c10e5f8	2	f363	mov r15,r3	
+8c10e5fa	2	23d2	mov.l 0x8c10e688,r2	
+8c10e5fc	2	4aff	fmov.s fr4,@r15	
+8c10e5fe	2	3261	mov.l @r3,r1	
+8c10e600	2	2821	tst r2,r1	
+8c10e602	2	0289	bt 0x8c10e60a	8c10e60a 
+8c10e604	2	f8f3	fmov.s @r15,fr3	
+8c10e606	2	4df3	fneg fr3	
+8c10e608	2	3aff	fmov.s fr3,@r15	
+8c10e60a	2	20d3	mov.l 0x8c10e68c,r3	
+8c10e60c	2	f8f3	fmov.s @r15,fr3	
+8c10e60e	2	38f5	fmov.s @r3,fr5	
+8c10e610	2	55f3	fcmp/gt fr5,fr3	
+8c10e612	2	018b	bf 0x8c10e618	8c10e618 
+8c10e614	2	2da0	bra 0x8c10e672	8c10e672 
+8c10e616	2	58f5	_fmov.s @r5,fr5	
+8c10e618	2	54f3	fcmp/eq fr5,fr3	
+8c10e61a	2	068b	bf 0x8c10e62a	8c10e62a 
+8c10e61c	2	08e2	mov #0x8,r2	
+8c10e61e	2	1cd1	mov.l 0x8c10e690,r1	
+8c10e620	2	2824	tst r2,r4	
+8c10e622	2	268d	bt/s 0x8c10e672	8c10e672 
+8c10e624	2	18f5	_fmov.s @r1,fr5	
+8c10e626	2	24a0	bra 0x8c10e672	8c10e672 
+8c10e628	2	4df5	_fneg fr5	
+8c10e62a	2	7824	tst r7,r4	
+8c10e62c	2	0189	bt 0x8c10e632	8c10e632 
+8c10e62e	2	20a0	bra 0x8c10e672	8c10e672 
+8c10e630	2	4cf5	_fmov fr4,fr5	
+8c10e632	2	18d2	mov.l 0x8c10e694,r2	
+8c10e634	2	f8f3	fmov.s @r15,fr3	
+8c10e636	2	28f2	fmov.s @r2,fr2	
+8c10e638	2	35f2	fcmp/gt fr3,fr2	
+8c10e63a	2	098b	bf 0x8c10e650	8c10e650 
+8c10e63c	2	4cf1	fmov fr4,fr1	
+8c10e63e	2	42f1	fmul fr4,fr1	
+8c10e640	2	5cf0	fmov fr5,fr0	
+8c10e642	2	4cff	fmov fr4,fr15	
+8c10e644	2	11f0	fsub fr1,fr0	
+8c10e646	2	5cf1	fmov fr5,fr1	
+8c10e648	2	6df0	fsqrt fr0	
+8c10e64a	2	00f1	fadd fr0,fr1	
+8c10e64c	2	09a0	bra 0x8c10e662	8c10e662 
+8c10e64e	2	13ff	_fdiv fr1,fr15	
+8c10e650	2	4cf1	fmov fr4,fr1	
+8c10e652	2	42f1	fmul fr4,fr1	
+8c10e654	2	5cf0	fmov fr5,fr0	
+8c10e656	2	11f0	fsub fr1,fr0	
+8c10e658	2	5cf1	fmov fr5,fr1	
+8c10e65a	2	6df0	fsqrt fr0	
+8c10e65c	2	01f1	fsub fr0,fr1	
+8c10e65e	2	1cff	fmov fr1,fr15	
+8c10e660	2	43ff	fdiv fr4,fr15	
+8c10e662	2	0dd3	mov.l 0x8c10e698,r3	
+8c10e664	2	0b43	jsr @r3	8c10ef84 
+8c10e666	2	fcf4	_fmov fr15,fr4	
+8c10e668	2	0cd2	mov.l 0x8c10e69c,r2	
+8c10e66a	2	0cf4	fmov fr0,fr4	
+8c10e66c	2	0b42	jsr @r2	8c10e7b8 
+8c10e66e	2	01e4	_mov #0x1,r4	
+8c10e670	2	0cf5	fmov fr0,fr5	
+8c10e672	2	5cf0	fmov fr5,fr0	
+8c10e674	2	087f	add #0x8,r15	
+8c10e676	2	264f	lds.l @r15+,PR	
+8c10e678	2	0b00	rts	
+8c10e67a	2	f9ff	_fmov.s @r15+,fr15	

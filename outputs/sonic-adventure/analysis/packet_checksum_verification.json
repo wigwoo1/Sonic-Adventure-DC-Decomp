@@ -1,0 +1,38 @@
+{
+  "retail_binary_sha256": "45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a",
+  "source": "source/packet_checksum.c",
+  "source_sha256": "9f3a6854165b762296aea2e54cd2b06eb13b6068f6092f236f79389b35a37b23",
+  "dll_sha256": "cbf720aaa17ab774a7991a1272e584ed97ae74b4567a737fab74c21d7ec24dc4",
+  "routines": [
+    {
+      "routine_start": "0x8c64bda0",
+      "routine_end_exclusive": "0x8c64bdd4",
+      "name": "crc16",
+      "retail_span_sha256": "fbd47e24afe4a61852ac7018103b802ddff02565bbafeb8fe3a6d8a03372cdf8",
+      "cases_passed": 142,
+      "retail_instructions_executed": 246525,
+      "scope": "CRC-16 return and read-only memory comparison for signed lengths -3..65, 127 and 255 with deterministic input data and both cached/uncached RAM aliases."
+    },
+    {
+      "routine_start": "0x8c603cd2",
+      "routine_end_exclusive": "0x8c603d22",
+      "name": "packet_validator",
+      "retail_span_sha256": "a1854c0df122bbfd7932c2739d5fc7992067eb304d5a8de8206fa8127cfeb011",
+      "cases_passed": 324,
+      "retail_instructions_executed": 207003,
+      "scope": "Return and full 64-byte memory comparison for checksum success/failure, every padding-byte early exit, ignored header bytes, mixed packets, and both RAM aliases."
+    },
+    {
+      "routine_start": "0x8c603f8c",
+      "routine_end_exclusive": "0x8c603fe4",
+      "name": "packet_buffer_check",
+      "retail_span_sha256": "1127f359c17c850b54b4ae6e3a784a18f22549d77ae2ea9a6412d12658936d5c",
+      "cases_passed": 256,
+      "retail_instructions_executed": 207040,
+      "scope": "Return and full context-memory comparison for nonzero state, sentinel bypass, matching CRC and mismatched CRC after payload copy, under both RAM aliases."
+    }
+  ],
+  "limitations": [
+    "Unmapped pointers, SH-4 exception/cache effects, and the CRC INT_MIN post-decrement case that would execute over two billion iterations are outside this test."
+  ]
+}

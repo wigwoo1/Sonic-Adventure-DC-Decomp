@@ -1,0 +1,129 @@
+Sonic Adventure Dreamcast Rev A - original polygon/clipping primitives
+2026-10-17; overall project 10% estimated weighted milestones; goal active.
+
+New original-code bodies
+8c64f840: near-plane polygon clipping, 336 instruction rows / 12 outcomes.
+8c60607a: cached UV header acquisition, 36 rows / no conditional branches.
+8c605fca: cached colour header acquisition, 40 rows / no conditional branches.
+8c64fc68: UV vertex projection/strip emission, 198 rows / 4 outcomes.
+8c64fae8: colour projection/strip emission, 181 rows / 10 outcomes.
+8c650144: projected edge-strip emission, 531 rows / 10 outcomes.
+8c64fe0c: alternate projected edge-strip emission, 398 rows / 10 outcomes.
+Names are inferred; the exact instructions and data remain authoritative.
+
+The seven bodies have 1,720 byte-checked original rows, no indirect transfers
+or external game-service calls, and all direct branch targets in the exports.
+Every row and all 46 conditional outcomes execute in the direct comparisons.
+Static C follows original instructions, branch/delay effects and numerical
+operations. No guest function result is injected. Queue stores and PREF retain
+the existing portable MMU-off software queue bus, including original writes,
+flushes, cached header changes and destination-pointer updates.
+
+Direct verification
+Strict 108-source native build passes with warnings as errors. All 576 direct
+comparisons pass: 461 normal returns, 72 unsupported numerical stops, 23 access
+guards and 20 numerical traps. All reached/final CPU/FPU/FPUL/MACL state, complete
+16 MiB RAM, ordered entries and software queue state/events match original SH-4
+instruction execution. There are 576 ordered entry checks; 389 independent
+cases supply 1,730 checks. Queue totals: 850 flushes and 7,347 stored events,
+all individually compared (no direct-case prefix overflow).
+
+Independent checks cover finite exact-dyadic clipped coordinates, interpolated
+byte colours and signed 16-bit UVs; on-plane/retained/rejected vertices; signed
+nonpositive clip counts; header words, caches, QACRs and cursor; alternating
+front/back strip order, reciprocal depth, projected packet coordinates, colour,
+normalized UVs and strip terminators. Wider projected variants independently
+check closed-edge skip/count/cursor and four-vertex strip termination; their
+full geometry is compared with original instructions, not claimed to have a
+second independent complete geometry implementation. Primitive fixtures use
+valid polygons with 3/4/5 vertices. Caller count guarantees remain separate.
+
+Special-value and enabled-exception cases use the established qualified
+numerical-probe mode; the finite masked-exception reference is independent.
+The direct fixture inherits DN=1; DN=0 is not claimed by these cases.
+Initial QACR12 and runtime view/near-plane/header/array pointers are supplied
+input states. Header acquisition also writes its own original QACR values.
+Tests include both FPU banks/mode guards, legal rounding modes, RAM destinations,
+software queues, RAM aliases, null optional colour streams and reached bad-pointer
+guards. Host guard stops do not model physical hardware exception dispatch.
+
+Connection work
+The newly reached shader state (8c606a08), two acquisition services (8c605e68,
+8c605f3c) and finish helper (8c6069a4) already have canonical recovered source.
+The new bridge delegates to that existing lower chain before entry observation,
+so original entries are recorded once. These reused services get zero new
+recovery credit. Old sources, DLLs and proofs remain intact.
+
+Connected renderer verification
+All 408 original-model/routing comparisons pass: 145,352 ordered entries,
+complete reached/final RAM and processor state, 388 independent state/stack/
+spring cases and 200 independent distance prefixes. The caller reaches 354
+rows of this family: clipper executes 250 times, UV header 190 and UV strip
+emitter 190. The colour header, colour strip and both wider projected variants
+have direct verification only; they are not claimed naturally reached here.
+
+The previous clipper boundary is eliminated. First missing services are now
+0c90c384 (226 cases), 8c0409c0, 8c5fde20 and 8c041c92 (16 each).
+Status totals remain 274 missing-service stops, 114 returns (50 outer rejections
+and 64 direct services), eight unsupported numerical stops, eight access guards
+and four numerical traps. Matching these stops does not complete accepted
+drawing. The outer AL_MAIN body reaches 479/911 rows, up from 476, leaving 432
+unexecuted and zero parent registration credit.
+
+Queue totals match: 139,334 flushes / 1,532,974 counted events, an increase of
+950 flushes / 8,360 events over the preceding connected milestone. Stored
+first-4096-event prefixes still contain 632,532 individually compared events;
+900,442 later events are counted only. The additional 8,360 connected events
+fall beyond those stored prefixes and are not individually compared there.
+Reached/final full RAM and final queue/QACR/counters match. The direct helper
+suite separately compares all its 7,347 events individually. No GPU pixel claim.
+
+Registration, audits and next dependency
+Seven first entries are registered; 71 existing entries receive linked evidence
+with zero duplicate credit. Incomplete effect dispatcher/emitter/material/
+texture-selector/polygon-array bodies and the AL_MAIN parent remain unregistered.
+Registry: 1,171 entries / 1,168 unique module-address pairs; 1,098 matches among
+10,875 frozen index candidates. These are not whole-game coverage figures;
+211 nontexture binaries still lack a function index. Audit: zero evidence errors
+and zero stale reports. Five generated source/manifest/bridge/build artifacts
+reproduce byte for byte; repeated registration changes no registry/status bytes.
+Seven Python/four PowerShell syntax checks and default C syntax pass. The
+dispatch map passes 658 original pointer-load checks / 80 spans / 83 selectors.
+
+Next: recover 0c90c384 and its fade/draw family. Four proposals are exported
+read-only in analysis/draw-overlay-fade: 0c90c384 (108 rows), 0c90c274 (136),
+0c90bfc0 (190), 0c90c160 (138), totaling 572 byte-checked rows. All direct
+branch targets are present; 23 call/transfer sites are inventoried. These are
+drafts with zero native recovery credit. Static dependencies include the still
+unrecovered main helper 8c605480 and existing incomplete drawing bodies; do not
+replace those services with injected results. Read draw_overlay_fade_inventory.json.
+
+Source and reproduction
+source/sa_draw_polygon_lower.c
+source/sa_draw_polygon_lower_connected.c
+recover_draw_polygon_lower.py; connect_draw_polygon_lower.py
+build_draw_polygon_lower.ps1
+verify_draw_polygon_lower.py; verify_overlay_draw_polygon_lower.py
+register_draw_polygon_lower.py
+ghidra/export_draw_polygon_lower.ps1 (-readOnly, -noanalysis)
+analysis/draw-polygon-lower/*_instructions.tsv and *_draft.c
+analysis/draw_polygon_lower_translation.json
+analysis/draw_polygon_lower_connection.json
+analysis/draw_polygon_lower_verification.json
+analysis/overlay_draw_polygon_lower_verification.json
+The new steps are included in build_and_verify.ps1; its historical aggregate
+sequence is not rerun for this milestone.
+
+How to check and remaining scope
+Open this report for a plain-language milestone record and the JSON reports
+for exact cases, coverage and boundaries. Source remains available for review
+and future GitHub handoff. There is no playable executable yet. The software
+queue is not a physical GPU/cache emulator, and these tests do not prove pixels,
+complete frames/gameplay, high-FPS/8K or any playable port. Original constructor
+model/motion data are preserved in caller fixtures; natural renderer/view/
+texture metadata initialization and loading remain unproved. Existing scalar,
+vector, square-root, valid-RAM and numerical domains remain explicit, including
+the older bounded hierarchy-layout research stop. Incomplete outer routines
+receive no registration credit. SUPIR/display settings remain planned; Texture
+Off will disable texture sampling and use vertex/material colours. Continue
+Sol High for reverse engineering; Luna Low is suitable for documentation only.

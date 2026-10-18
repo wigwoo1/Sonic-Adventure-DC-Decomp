@@ -1,0 +1,48 @@
+address	opcode	instruction	references
+8c66863c	2fe6	mov.l r14,@-r15	DATA:Stack[-0x4] 
+8c66863e	2fd6	mov.l r13,@-r15	DATA:Stack[-0x8] 
+8c668640	4f22	sts.l PR,@-r15	DATA:Stack[-0xc] 
+8c668642	7ff0	add #-0x10,r15	
+8c668644	6e43	mov r4,r14	
+8c668646	63e3	mov r14,r3	
+8c668648	7310	add #0x10,r3	
+8c66864a	d22b	mov.l 0x8c6686f8,r2	READ:8c6686f8=8c66abf0 
+8c66864c	2f50	mov.b r5,@r15	DATA:Stack[-0x1c] 
+8c66864e	1f61	mov.l r6,@(0x4,r15)	DATA:Stack[-0x18] 
+8c668650	1f72	mov.l r7,@(0x8,r15)	DATA:Stack[-0x14] 
+8c668652	64f0	mov.b @r15,r4	DATA:Stack[-0x1c] 
+8c668654	4408	shll2 r4	
+8c668656	1f43	mov.l r4,@(0xc,r15)	DATA:Stack[-0x10] 
+8c668658	343c	add r3,r4	
+8c66865a	420b	jsr @r2	COMPUTED_CALL:8c66abf0=5041000b 
+8c66865c	6442	_mov.l @r4,r4	
+8c66865e	d427	mov.l 0x8c6686fc,r4	READ:8c6686fc=52535053 
+8c668660	d327	mov.l 0x8c668700,r3	READ:8c668700=8c65a900 
+8c668662	2f02	mov.l r0,@r15	DATA:Stack[-0x1c] 
+8c668664	56f1	mov.l @(0x4,r15),r6	DATA:Stack[-0x18] 
+8c668666	57f2	mov.l @(0x8,r15),r7	DATA:Stack[-0x14] 
+8c668668	430b	jsr @r3	COMPUTED_CALL:8c65a900=2fd62fe6 
+8c66866a	65f2	_mov.l @r15,r5	DATA:Stack[-0x1c] 
+8c66866c	62e3	mov r14,r2	
+8c66866e	51f1	mov.l @(0x4,r15),r1	DATA:Stack[-0x18] 
+8c668670	53f3	mov.l @(0xc,r15),r3	DATA:Stack[-0x10] 
+8c668672	7230	add #0x30,r2	
+8c668674	6112	mov.l @r1,r1	
+8c668676	6d03	mov r0,r13	
+8c668678	323c	add r3,r2	
+8c66867a	2212	mov.l r1,@r2	
+8c66867c	2dd8	tst r13,r13	
+8c66867e	53f2	mov.l @(0x8,r15),r3	DATA:Stack[-0x14] 
+8c668680	6232	mov.l @r3,r2	
+8c668682	8d04	bt/s 0x8c66868e	CONDITIONAL_JUMP:8c66868e=7f1060d3 
+8c668684	1e2e	_mov.l r2,@(0x38,r14)	
+8c668686	d20e	mov.l 0x8c6686c0,r2	READ:8c6686c0=8c667b7a 
+8c668688	d41e	mov.l 0x8c668704,r4	READ:8c668704=8c673334 PARAM:8c673334=34323145 
+8c66868a	420b	jsr @r2	COMPUTED_CALL:8c667b7a=4f222fe6 
+8c66868c	9	_nop	
+8c66868e	60d3	mov r13,r0	
+8c668690	7f10	add #0x10,r15	
+8c668692	4f26	lds.l @r15+,PR	DATA:Stack[-0xc] 
+8c668694	6df6	mov.l @r15+,r13	DATA:Stack[-0x8] 
+8c668696	b	rts	
+8c668698	6ef6	_mov.l @r15+,r14	

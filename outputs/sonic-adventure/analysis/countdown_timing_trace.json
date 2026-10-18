@@ -1,0 +1,66 @@
+{
+  "binary_sha256": "45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a",
+  "direct_binary_checks_passed": 13,
+  "counter": "0x8c754ec0",
+  "initial_counter": "0x8c754ebc",
+  "iteration_limit": "0x8c754ec4",
+  "iteration_index": "0x8c754ec8",
+  "wait_helper": {
+    "routine": "0x8c0517f6",
+    "condition": "Repeat signed comparison while shared counter > argument r4; no service call inside wait.",
+    "after_wait_calls": [
+      "0x8c601e2a",
+      "0x8c0948a0"
+    ]
+  },
+  "decrement_callback": {
+    "routine": "0x8c051810",
+    "operation": "Counter decremented with 32-bit wrap; extra callbacks when result equals zero.",
+    "zero_path_level_variant": "0x8c04f7e0",
+    "always_calls": [
+      "0x8c602cb8",
+      "0x8c09ce40"
+    ]
+  },
+  "initialization": {
+    "routine": "0x8c051760",
+    "operation": "Store r4 in initial and current countdown, r5 in iteration limit, zero iteration index, register decrement callback, invoke 0x8c055c44."
+  },
+  "registration": {
+    "routine": "0x8c605234",
+    "handle_global": "0x8c8900fc",
+    "remove_existing_handle": "0x8c645c54",
+    "new_registration": "0x8c64594c",
+    "arguments": [
+      "0x900",
+      "callback address",
+      "0x58",
+      "0"
+    ],
+    "additional_callers": [
+      "0x8c093e60",
+      "0x8c10b840"
+    ]
+  },
+  "next_dependencies": [
+    "0x8c64594c event registration body and event identifiers",
+    "0x8c645c54 unregister body",
+    "0x8c601e2a and 0x8c0948a0 post-wait services",
+    "hardware interrupt/event driver and measured cadence"
+  ],
+  "limitations": [
+    "No timer/event frequency established.",
+    "No native wait replacement implemented; a volatile C counter alone would not establish correct cross-thread behavior.",
+    "No complete loop recovery or FPS measurement."
+  ],
+  "evidence": [
+    "analysis/timing-references/scheduler_references.tsv",
+    "analysis/instructions/8c051760.tsv",
+    "analysis/instructions/8c051790.tsv",
+    "analysis/instructions/8c0517f6.tsv",
+    "analysis/instructions/8c051810.tsv",
+    "analysis/instructions/8c605234.tsv",
+    "analysis/instructions/8c093e60.tsv",
+    "analysis/instructions/8c10b840.tsv"
+  ]
+}

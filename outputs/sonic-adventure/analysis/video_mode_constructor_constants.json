@@ -1,0 +1,51 @@
+{
+  "binary_sha256": "45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a",
+  "direct_constant_checks_passed": 8,
+  "mode_constructors": [
+    {
+      "routine": "0x8c6585c0",
+      "low_scan_field": 863,
+      "high_scan_field_options": [
+        624,
+        312
+      ],
+      "callsite": "0x8c6587f2"
+    },
+    {
+      "routine": "0x8c658804",
+      "low_scan_field": 857,
+      "high_scan_field_options": [
+        524,
+        262
+      ],
+      "callsite": "0x8c658a90"
+    },
+    {
+      "routine": "0x8c658ae0",
+      "low_scan_field": 857,
+      "high_scan_field_options": [
+        524
+      ],
+      "callsite": "0x8c658bb6"
+    }
+  ],
+  "branch_control_global": "0x8c8a2d78",
+  "argument_copy_helper": "0x8c10cddc",
+  "argument_copy_bytes": "0xfc",
+  "next_work": [
+    "Trace selection among three constructors",
+    "Decode control flags and scan-clock field semantics",
+    "Verify hardware clock and interlace effects before computing cadence"
+  ],
+  "evidence": [
+    "analysis/video-mode-caller-references/scheduler_references.tsv",
+    "analysis/instructions/8c6585c0.tsv",
+    "analysis/instructions/8c658804.tsv",
+    "analysis/instructions/8c658ae0.tsv"
+  ],
+  "limitations": [
+    "Constants are raw register inputs, not a verified refresh-rate measurement.",
+    "Mode names and active runtime selection remain unproven.",
+    "Full decompilation and ports unfinished."
+  ]
+}

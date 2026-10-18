@@ -1,0 +1,58 @@
+address	opcode	instruction	references
+8c1108e0	d01b	mov.l 0x8c110950,r0	READ:8c110950=8c7ac8c4 
+8c1108e2	2052	mov.l r5,@r0	WRITE:8c7ac8c4 
+8c1108e4	7450	add #0x50,r4	
+8c1108e6	f049	fmov.s @r4+,fr0	
+8c1108e8	f149	fmov.s @r4+,fr1	
+8c1108ea	f249	fmov.s @r4+,fr2	
+8c1108ec	f349	fmov.s @r4+,fr3	
+8c1108ee	f449	fmov.s @r4+,fr4	
+8c1108f0	f549	fmov.s @r4+,fr5	
+8c1108f2	f649	fmov.s @r4+,fr6	
+8c1108f4	f749	fmov.s @r4+,fr7	
+8c1108f6	f849	fmov.s @r4+,fr8	
+8c1108f8	f949	fmov.s @r4+,fr9	
+8c1108fa	fa49	fmov.s @r4+,fr10	
+8c1108fc	fb49	fmov.s @r4+,fr11	
+8c1108fe	fc49	fmov.s @r4+,fr12	
+8c110900	fd49	fmov.s @r4+,fr13	
+8c110902	fe49	fmov.s @r4+,fr14	
+8c110904	ff48	fmov.s @r4,fr15	
+8c110906	5041	mov.l @(0x4,r4),r0	
+8c110908	405a	lds r0,FPUL	
+8c11090a	5042	mov.l @(0x8,r4),r0	
+8c11090c	406a	lds r0,fpscr	
+8c11090e	74a8	add #-0x58,r4	
+8c110910	5046	mov.l @(0x18,r4),r0	
+8c110912	401e	ldc r0,GBR	
+8c110914	5045	mov.l @(0x14,r4),r0	
+8c110916	401a	lds r0,MACL	
+8c110918	5044	mov.l @(0x10,r4),r0	
+8c11091a	400a	lds r0,MACH	
+8c11091c	5142	mov.l @(0x8,r4),r1	
+8c11091e	5241	mov.l @(0x4,r4),r2	
+8c110920	6342	mov.l @r4,r3	
+8c110922	74cc	add #-0x34,r4	
+8c110924	554b	mov.l @(0x2c,r4),r5	
+8c110926	564a	mov.l @(0x28,r4),r6	
+8c110928	5749	mov.l @(0x24,r4),r7	
+8c11092a	5848	mov.l @(0x20,r4),r8	
+8c11092c	5947	mov.l @(0x1c,r4),r9	
+8c11092e	5a46	mov.l @(0x18,r4),r10	
+8c110930	5b45	mov.l @(0x14,r4),r11	
+8c110932	5c44	mov.l @(0x10,r4),r12	
+8c110934	5d43	mov.l @(0xc,r4),r13	
+8c110936	5e41	mov.l @(0x4,r4),r14	
+8c110938	6043	mov r4,r0	
+8c11093a	540c	mov.l @(0x30,r0),r4	
+8c11093c	6f02	mov.l @r0,r15	
+8c11093e	5002	mov.l @(0x8,r0),r0	
+8c110940	402a	lds r0,PR	
+8c110942	d003	mov.l 0x8c110950,r0	READ:8c110950=8c7ac8c4 
+8c110944	6002	mov.l @r0,r0	READ:8c7ac8c4 
+8c110946	8800	cmp/eq #0x0,r0	
+8c110948	8b00	bf 0x8c11094c	CONDITIONAL_JUMP:8c11094c=9000b 
+8c11094a	e001	mov #0x1,r0	
+8c11094c	b	rts	
+8c11094e	9	_nop	
+8c110954	24f2	mov.l r15,@r4	

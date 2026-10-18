@@ -1,0 +1,33 @@
+{
+  "binary_sha256": "45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a",
+  "literal_occurrences": {
+    "0xa05f8000": [
+      "0x8c6534c0",
+      "0x8c653628"
+    ],
+    "0xa05f80d0": [],
+    "0xa05f80d8": [],
+    "0xa05f80dc": [
+      "0x8c646748"
+    ],
+    "0xa05f80e0": []
+  },
+  "search_scope": "Entire 1ST_READ.BIN byte sequence; occurrences may be data or coincidental, not proven executed accesses.",
+  "analyzed_direct_reference": "0x8c6466b0 reads 0xa05f80dc in routine 0x8c646654",
+  "register_source": "https://raw.githubusercontent.com/KallistiOS/KallistiOS/master/kernel/arch/dreamcast/include/dc/pvr/pvr_regs.h",
+  "register_names": {
+    "0xa05f80d0": "PVR_IL_CFG",
+    "0xa05f80d8": "PVR_SCAN_CLK",
+    "0xa05f80dc": "PVR_BORDER_Y"
+  },
+  "next_work": [
+    "Trace code references to scan-clock literal occurrences and base register address",
+    "Identify table-driven video mode programming",
+    "Verify active mode choice and VBLANK rate"
+  ],
+  "limitations": [
+    "No direct scan-clock references in current analyzed graph does not prove absence.",
+    "Vertical-border read does not establish video cadence.",
+    "Full decompilation and native port unfinished."
+  ]
+}

@@ -1,0 +1,51 @@
+address	opcode	instruction	references
+8c65a2fc	d21a	mov.l 0x8c65a368,r2	READ:8c65a368=8c67c1dc 
+8c65a2fe	4f22	sts.l PR,@-r15	DATA:Stack[-0x4] 
+8c65a300	6322	mov.l @r2,r3	READ:8c67c1dc=0 
+8c65a302	2338	tst r3,r3	
+8c65a304	8918	bt 0x8c65a338	CONDITIONAL_JUMP:8c65a338=b4f26 
+8c65a306	d319	mov.l 0x8c65a36c,r3	READ:8c65a36c=8c67c1d8 
+8c65a308	6032	mov.l @r3,r0	READ:8c67c1d8=0 
+8c65a30a	8801	cmp/eq #0x1,r0	
+8c65a30c	8b14	bf 0x8c65a338	CONDITIONAL_JUMP:8c65a338=b4f26 
+8c65a30e	60f3	mov r15,r0	
+8c65a310	7004	add #0x4,r0	
+8c65a312	e503	mov #0x3,r5	
+8c65a314	7004	add #0x4,r0	
+8c65a316	2508	tst r0,r5	
+8c65a318	8903	bt 0x8c65a322	CONDITIONAL_JUMP:8c65a322=750465f3 
+8c65a31a	65f3	mov r15,r5	
+8c65a31c	7504	add #0x4,r5	
+8c65a31e	a003	bra 0x8c65a328	UNCONDITIONAL_JUMP:8c65a328=6653d312 
+8c65a320	7508	_add #0x8,r5	
+8c65a322	65f3	mov r15,r5	
+8c65a324	7504	add #0x4,r5	
+8c65a326	7504	add #0x4,r5	
+8c65a328	d312	mov.l 0x8c65a374,r3	READ:8c65a374=8c10d400 
+8c65a32a	6653	mov r5,r6	
+8c65a32c	d410	mov.l 0x8c65a370,r4	READ:8c65a370=8c8a340c 
+8c65a32e	430b	jsr @r3	COMPUTED_CALL:8c10d400=7ff44f22 
+8c65a330	55f1	_mov.l @(0x4,r15),r5	DATA:Stack[0x0] 
+8c65a332	d40f	mov.l 0x8c65a370,r4	READ:8c65a370=8c8a340c 
+8c65a334	b003	bsr 0x8c65a33e	UNCONDITIONAL_CALL:8c65a33e=2fe6d30a 
+8c65a336	9	_nop	
+8c65a338	4f26	lds.l @r15+,PR	DATA:Stack[-0x4] 
+8c65a33a	b	rts	
+8c65a33c	e000	_mov #0x0,r0	
+8c65a33e	d30a	mov.l 0x8c65a368,r3	READ:8c65a368=8c67c1dc 
+8c65a340	2fe6	mov.l r14,@-r15	DATA:Stack[-0x4] 
+8c65a342	4f22	sts.l PR,@-r15	DATA:Stack[-0x8] 
+8c65a344	6e32	mov.l @r3,r14	READ:8c67c1dc=0 
+8c65a346	2ee8	tst r14,r14	
+8c65a348	8905	bt 0x8c65a356	CONDITIONAL_JUMP:8c65a356=e0004f26 
+8c65a34a	d108	mov.l 0x8c65a36c,r1	READ:8c65a36c=8c67c1d8 
+8c65a34c	6012	mov.l @r1,r0	READ:8c67c1d8=0 
+8c65a34e	8801	cmp/eq #0x1,r0	
+8c65a350	8b01	bf 0x8c65a356	CONDITIONAL_JUMP:8c65a356=e0004f26 
+8c65a352	4e0b	jsr @r14	
+8c65a354	9	_nop	
+8c65a356	4f26	lds.l @r15+,PR	DATA:Stack[-0x8] 
+8c65a358	e000	mov #0x0,r0	
+8c65a35a	b	rts	
+8c65a35c	6ef6	_mov.l @r15+,r14	
+8c65a378	2fe6	mov.l r14,@-r15	DATA:Stack[-0x4] 

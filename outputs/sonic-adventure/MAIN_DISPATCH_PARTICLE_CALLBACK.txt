@@ -1,0 +1,122 @@
+Particle callbacks, motion and renderer-state preservation
+16 October 2026 -- VERIFIED within the bounded scope below.
+Overall completion: 10% estimated weighted milestones, not code coverage.
+The full project goal remains active. Continue Sol High for reverse engineering.
+
+What changed
+Five original entries are now compiled and connected to native dependencies:
+  8c04481a..8c0448b4 primary particle state machine: 27 instruction rows.
+  8c0448b4..8c0449c2 secondary callback/shared work update: 135 rows.
+  8c6215d6..8c6215fa draw wrapper: 18 rows.
+  8c605dac..8c605e0a renderer-state save: 47 rows.
+  8c605e0a..8c605e68 renderer-state restore: 47 rows.
+All 274 unique new rows match the original executable. Primary contains a
+100-byte literal gap at 8c04483c..8c0448a0; its span hash includes these bytes,
+but they receive no instruction credit. The tail branch to internal 8c0448ba
+shares the secondary body, emitted once and not registered as another function.
+Descriptive names and field meanings are inferred from instructions.
+
+Existing source/model_matrix_translate.c (8c63a804, 56 rows) is reused unchanged
+and admitted to the registry for the first time. Its earlier 1,024 comparisons
+injected vector results; this checkpoint additionally reaches every row in 46
+cases using native numerical paths. This is one registry admission, not newly
+recovered code. Existing matrices, rotations, direction transform, mode query,
+spawn/emission, scheduler, deletion, heap and task-pool routines are reused.
+
+Behavior
+Primary state 0 initializes state 1 and stores the secondary callback at task
++20. State 1 tail-enters the shared work update; state 2 requests deferred
+removal. Work byte 0 holds the state and unsigned work +6 holds the timer.
+When the game-mode predicate is false, the timer advances; an old value >=10
+changes state to 2. Mode 0x10 freezes this timer but still allows drawing.
+The work update translates the particle position, applies optional camera-Y
+and spin-Z rotations, selects one of two models using a flag, and draws.
+It separately rotates local direction (2,0,0) by work X/Y angles. A fresh mode
+query determines whether to advance position and increment spin by 0x1000.
+Tests change mode inside the geometry fixture to prove this second query.
+
+The drawing wrapper saves R8, saves nine renderer words, calls geometry, then
+restores R8 and the renderer words. The flag 0x4000 controls two word mappings;
+save and restore each read the live flag independently. Tests exercise changes
+between them instead of assuming a snapshot. Geometry remains unrecovered.
+
+What actually passed
+- Strict Clang shared-library build with -Wall -Wextra -Werror.
+- 471 focused comparisons: primary 199, secondary 72, internal work entry 86,
+  draw wrapper 36, save 16, restore 16, existing translation 46.
+- All 274 new rows, 26 conditional outcomes and 18 call sites reached.
+- Full 16 MiB RAM, CPU, FPU and special-state comparisons; 2,801 ordered
+  boundaries and 1,144 numerical operations checked.
+- 395 independent invariant cases and 76 partial numerical-guard/error cases.
+  These include timer rollover, paused mode, both floating-register banks,
+  motion/spin, model selection, state mapping and missing/failed geometry.
+- Six smoke lifetimes, followed by 120 complete lifetimes over unchanged linked
+  state: 984 stage comparisons, 16,064 boundaries, 9,200 numerical operations,
+  64 parents and 80 particles created, 54 paused scheduler passes.
+- Independent timer/motion/deletion assertions, final empty scheduler lists,
+  exact free-task order, and complete heap coalescing after all particles die.
+- Geometry fixtures were called 228 times in focused tests and 880 in lifetime
+  tests. Those counts prove call integration, not actual geometry rendering.
+
+Verification limits
+Low-level geometry 8c620f2c is the remaining explicit game-service fixture in
+this chain. It deliberately changes registers and renderer state; missing and
+error returns verify partial-state handling. No pixels, actual graphics API,
+GPU/MMIO or Dreamcast hardware execution are claimed.
+Tests supply constructed valid task/work/global/matrix data. The host chooses
+scheduler-pass order and pause/resume, so the complete frame driver and original
+primary/secondary phase ordering remain unproven. Arbitrary pointers, concurrent
+execution, hardware exceptions, complete gameplay and all ports are unfinished.
+Vector comparisons retain the pinned shared numerical primitive and its stated
+hardware-accuracy limits. Scalar guard classification uses existing native
+probes; ordinary scalar results use the Python reference. Analytic motion uses
+an independent formula with 0.001 tolerance. Existing matrix PR/SZ entry guards
+and reached scalar precision/rounding restrictions remain in force.
+
+Source and evidence
+  source/sa_main_dispatch_particle_callback.c
+  source/sa_main_dispatch_particle_callback_connected.c
+  source/model_matrix_translate.c (existing unchanged source)
+  analysis/main-dispatch-particle-callback/*_instructions.tsv
+  analysis/main_dispatch_particle_callback_translation.json
+  analysis/main_dispatch_particle_callback_verification.json
+  analysis/main_dispatch_particle_lifecycle_verification.json
+Reports pin original spans, source, dependencies, verification tools and DLL.
+Registrar validates report metrics and pinned hashes before updating inventory.
+
+Final audits
+1,030 registry entries / 1,027 unique module-address pairs; zero evidence errors
+and zero stale whole-source reports. 978 entries match the unchanged 10,875
+candidate snapshot. These incomplete indexes do not establish whole-game code
+coverage. Dispatcher map: 658 retail pointer checks, 80 spans, 83 selectors.
+Aggregate PowerShell syntax passed; the entire accumulated suite was not rerun.
+Completion audit remains 10% weighted milestones. Graphics settings and SUPIR
+remain planned; texture-resolution Off still requires vertex-coloured rendering
+with texture sampling disabled, overriding the saved HD-toggle selection.
+
+Repeat from this document's directory with the installed project Python:
+  python -B recover_main_dispatch_particle_callback.py
+  .\build_main_dispatch_particle_callback.ps1
+  python -B verify_main_dispatch_particle_callback.py
+  python -B verify_main_dispatch_particle_lifecycle.py
+  python -B register_main_dispatch_particle_callback.py
+  python -B map_main_dispatch_cases.py
+  python -B verify_main_dispatch_case_map.py
+Optional read-only Ghidra export: ghidra/export_main_dispatch_particle_callback.ps1.
+These focused stages are included in build_and_verify.ps1.
+
+Next dependency: inspect original boundaries/callees of geometry 8c620f2c,
+then recover a verifiable native slice. Dynamic setter targets remain separate
+unfinished work. Sol High remains appropriate; no pause or model switch needed.
+
+Next-dependency inventory completed after the native checkpoint
+Read-only exports and inventory_main_dispatch_particle_geometry.py checked
+785 original instruction rows: 8c620f2c (258), R8-preserving wrapper 8c6215fa
+(13) and recursive model traversal 8c62113c (514). Geometry preparation has
+no conditional branches and one call to 8c6215fa; that wrapper has one call
+to 8c62113c. Geometry's 12-byte literal gap is excluded from row counts.
+The traversal has 58 conditional outcomes and 40 call sites; indirect targets
+and complete recursive model semantics still require implementation work.
+Evidence: analysis/main_dispatch_particle_geometry_inventory.json.
+This inventory receives zero routine recovery credit; none of these three new
+dependency bodies is claimed compiled or behavior-verified at this checkpoint.

@@ -1,0 +1,21 @@
+{
+  "primary_source": "https://www.renesas.com/en/document/mas/sh-4-software-manual",
+  "revision": "6.00 September 2006",
+  "sections": [
+    "6.4 rounding",
+    "9 instruction descriptions: normal_faddsub and check_single_exception",
+    "FMAC instruction"
+  ],
+  "decisions": [
+    "RM=0 uses nearest-even; RM=1 rounds toward zero.",
+    "Recover FPSCR cause/flag updates and output flushing separately from the exact numerical result.",
+    "FMAC must be verified as a combined operation rather than assumed equivalent to separately rounded multiply and add."
+  ],
+  "pending": [
+    "NaN classification and propagation",
+    "Denormal input handling and FPSCR.DN",
+    "Cause clearing and sticky flags",
+    "Enabled exception trap behavior",
+    "FMAC intermediate precision and rounding"
+  ]
+}

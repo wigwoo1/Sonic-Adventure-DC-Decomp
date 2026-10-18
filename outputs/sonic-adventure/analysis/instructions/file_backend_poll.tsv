@@ -1,0 +1,19 @@
+address	opcode	instruction	references
+8c6005c2	d23c	mov.l 0x8c6006b4,r2	READ:8c6006b4=8c673414 
+8c6005c4	e040	mov #0x40,r0	
+8c6005c6	4f22	sts.l PR,@-r15	
+8c6005c8	6322	mov.l @r2,r3	READ:8c673414=0 
+8c6005ca	5133	mov.l @(0xc,r3),r1	
+8c6005cc	1e	mov.l @(r0,r1),r0	
+8c6005ce	400b	jsr @r0	
+8c6005d0	9	_nop	
+8c6005d2	d238	mov.l 0x8c6006b4,r2	READ:8c6006b4=8c673414 
+8c6005d4	6322	mov.l @r2,r3	READ:8c673414=0 
+8c6005d6	5137	mov.l @(0x1c,r3),r1	
+8c6005d8	2118	tst r1,r1	
+8c6005da	8901	bt 0x8c6005e0	CONDITIONAL_JUMP:8c6005e0=b4f26 
+8c6005dc	aa19	bra 0x8c5ffa12	UNCONDITIONAL_JUMP:8c5ffa12=2fd62fe6 
+8c6005de	4f26	_lds.l @r15+,PR	
+8c6005e0	4f26	lds.l @r15+,PR	
+8c6005e2	b	rts	
+8c6005e4	9	_nop	

@@ -1,0 +1,77 @@
+Request-abort control-flow recovery
+===================================
+
+Whole-project weighted milestone score: 10%. This is not code coverage or
+a claim that the complete native game or any later port is finished.
+
+Recovered source
+----------------
+source/sa_request_abort_8c6013d2.c contains static annotated native C for the
+150 retail instructions in this function. It does not execute SH-4 opcodes
+at runtime. Register-level source is retained so interrupt-mask and delay-slot
+behavior omitted from Ghidra's pseudocode can be preserved and reviewed.
+This is not a reconstruction of the original developer's high-level source.
+
+The code checks request activity and driver ownership, waits for request
+readiness, detects elapsed-time timeout, runs a second minimum-delay loop,
+masks interrupts around device cancellation, restores the previous mask,
+and propagates the finalizer's result.
+
+The function has 300 instruction bytes in two body ranges:
+  0x8c6013d2 through 0x8c601410 exclusive
+  0x8c601412 through 0x8c601500 exclusive
+The enclosing 302-byte span includes an unexecuted alignment word. The saved
+instruction listing and binary hashes record this distinction.
+
+Reproducible workflow
+---------------------
+analysis/instructions/8c6013d2.tsv is the Ghidra instruction export. To re-export
+it from the existing local Ghidra project, use the read-only script:
+  .\ghidra\export_request_abort_8c6013d2.ps1
+
+From outputs/sonic-adventure, generate, build and test with PowerShell:
+
+  & 'C:\Users\wigwo\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe' .\recover_request_abort_8c6013d2.py
+  .\build_request_abort_8c6013d2.ps1
+  & 'C:\Users\wigwo\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe' .\verify_request_abort_8c6013d2.py
+
+Expected final output:
+  30 abort scenarios, 170 service entries and 84 timer reads passed
+
+The generator first verifies the listing's instruction bytes against the
+extracted retail binary. Hash-checked registration and the same sequence are
+included in build_and_verify.ps1.
+
+Evidence and limits
+-------------------
+All 30 scenarios match complete 16 MiB RAM and GPR/SR/PR/PC state at return
+and at every service entry. The suite also matches 84 ordered timer reads
+and device-call order. Every one of the 150 indexed instructions is executed
+by at least one scenario. Instruction coverage does not prove all possible
+input or concurrency behavior.
+
+Cases cover both RAM aliases, null/inactive requests, nonwaiting modes,
+owner mismatch, immediate readiness, one/multiple pump iterations, mode 4,
+timeout, mode changes during waits, ownership changes during the delay,
+timer rollover, and finalizer error propagation. The cancellation fixture
+checks that interrupts are masked, and returned state checks restoration.
+
+Timer and subtraction services run as the recovered native implementations.
+The standalone abort suite retains device pumping/cancellation and the finalizer
+as explicit test fixtures. These are not native device implementations.
+They must be connected to recovered code or platform services for the port.
+The baseline pending-cleanup suite retains its interpreted abort dependency
+as an independent regression check. STREAM_CLEANUP_ABORT_CONNECTED.txt documents
+the additional test that connects native cleanup, abort, finalizer and status,
+exercising nested wait/timeout paths with only device fixtures remaining.
+
+The host function returns status separately from the game result in R0.
+Missing dispatch returns -2 without mutation. Reaching its execution budget
+returns -3 with partial CPU/RAM state, and a service error is propagated.
+Three guard tests verify those contracts against the corresponding retail
+instruction boundary. Successful scenarios use a sufficient budget.
+
+Evidence is in analysis/request_abort_8c6013d2_verification.json, with source,
+generator, listing, binary, DLL, verifier and interpreter hashes. Hardware,
+concurrent interrupts, complete device behavior and whole-game execution remain
+unverified. The full accumulated project suite was not run for this milestone.

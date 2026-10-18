@@ -1,0 +1,76 @@
+Sonic Adventure Dreamcast Rev A - persistent renderer initialization
+2026-10-18; whole-project estimate 10% (weighted milestones, not code coverage).
+
+Four additional original bodies are now qualified and registered once:
+8c661300: 130 rows; three-vertex background packet compiler into RAM.
+8c66118a: 15 rows / six conditional outcomes; header classification.
+8c661160: 21 rows / four conditional outcomes; class/flag tag assembly.
+8c0544e2: 141 rows / no conditional outcomes; renderer initialization through
+actual native callees, after the original view builder supplies required state.
+Together with the three setup helpers in DRAW_FRAME_SETUP.txt, this milestone
+adds seven qualified entries, 438 original rows and ten conditional outcomes.
+
+Context source: source/sa_draw_frame_context.c
+Initializer source: source/sa_draw_geometry_stream.c (existing proposal now proved).
+Bridge: source/sa_draw_frame_context_connected.c
+Workflow: recover_draw_frame_context.py, connect_draw_frame_context.py,
+build_draw_frame_context.ps1, verify_draw_frame_context.py,
+verify_draw_frame_sequence.py, register_draw_frame_sequence.py.
+Reports: analysis/draw_frame_context_translation.json,
+analysis/draw_frame_context_connection.json,
+analysis/draw_frame_context_verification.json,
+analysis/draw_frame_sequence_verification.json.
+
+The separate strict optimized 128-source DLL builds successfully:
+work/sonic-adventure/build/draw_frame_context.dll
+SHA256 acb6b7705ad3af931df4d290315771281e8b88aa003fc09eb824bf49be51599c.
+All 103 context comparisons pass: 100 returns and three memory guards. All
+166 rows and ten outcomes execute; 100 independent cases add 128 assertions.
+Complete RAM/stack, packet/header/count/depth/tag values, preserved machine and
+FPU state match. There are 159 ordered boundaries and no queue/register writes.
+Tests include both floating-point banks, raw paired-move modes, all eight header
+bit combinations, tag flags, address aliases and invalid source/stack/vertices.
+The compiled packet contains three header words plus three four-word vertices,
+60 bytes total. This compiles command data; it does not render GPU output.
+
+Six persistent sequences test the actual view builder 8c604ba0, initializer
+8c0544e2, then that initializer again. Both floating-point banks and all three
+0c/8c/ac stack aliases run. RAM, CPU/FPU/FPUL, SR, both integer banks, MACH/MACL,
+GBR, queues/counters and the complete software register map carry between stages.
+Only PC/PR are set at ordinary external call boundaries. No fabricated return
+values substitute for missing game services. All 18 stage comparisons pass:
+six view returns and twelve initializer returns, including six repeated calls.
+Every initializer row executes. All 2,466 ordered boundaries and all 1,578
+register-write events match; no later event suffix is count-only. Forty-two
+independent assertions include twelve complete background packets captured
+before later operations overwrite their RAM.
+
+Actual producer dependency: view builder 8c604ba0 selects the original record
+pointer at literal 8c6051bc (8c88f834), storing it in global 8c88fcb4. The later
+filter reads this global through literal 8c6054ec. Two cold-entry tests, without
+the producer in either floating-point bank, match the explicit memory stop at
+8c60548e. The successful sequence uses the real producer rather than seeding
+a substitute pointer. Matrix-stack metadata and final GBR are checked as well.
+
+This proves the tested persistent call sequence, not the original boot's natural
+ordering. A read-only export of 8c6050b0 does not directly call 8c604ba0. The boot
+caller 8c10b840, loading/computed transfers and scheduler still need recovery and
+integration. Qualified successful CPU entry is privileged bank 1, FD=0, scalar
+PR=0/SZ=0, with loaded MAIN/AL_MAIN RAM and inherited supported numerical domains.
+Other proposed math/state paths are not completely qualified by these calls.
+The software graphics backend records register/command effects; GPU consumption,
+status, interrupts, timing and pixels remain unfinished. No full game frame,
+playable port, FPS/8K, HD/texture-Off/display settings or platform-port claim.
+
+Registry audit: 1,257 entries / 1,254 unique module/address pairs; 1,148 matches
+in 10,875 frozen candidates; zero evidence errors and zero stale source reports.
+Another 211 nontexture binaries lack function indexes, so whole-game routine
+count and decompiled-code percentage remain unknown. Thirty reused entries gain
+sequence evidence at zero duplicate credit. Earlier prefix registration preserves
+the complete initializer proof. Registrations are byte-idempotent. Historical
+source/APIs/DLLs/proofs remain available; separate DLL suites are not combined
+into an untested whole-game claim. The aggregate is extended, not fully rerun.
+
+How to check: open the listed source and JSON reports; each pins its inputs and
+DLL. Continue actual boot/loading dependency recovery with Sol High. Luna Low can
+handle documentation. No model switch or goal pause is recommended.

@@ -1,0 +1,30 @@
+address	length	bytes	instruction	flows
+0c9044e2	2	e62f	mov.l r14,@-r15	
+0c9044e4	2	00ee	mov #0x0,r14	
+0c9044e6	2	d62f	mov.l r13,@-r15	
+0c9044e8	2	436d	mov r4,r13	
+0c9044ea	2	c62f	mov.l r12,@-r15	
+0c9044ec	2	536c	mov r5,r12	
+0c9044ee	2	224f	sts.l PR,@-r15	
+0c9044f0	2	422c	mov.l r4,@r12	
+0c9044f2	2	db53	mov.l @(0x2c,r13),r3	
+0c9044f4	2	3823	tst r3,r3	
+0c9044f6	2	058d	bt/s 0x0c904504	0c904504 
+0c9044f8	2	017e	_add #0x1,r14	
+0c9044fa	2	c365	mov r12,r5	
+0c9044fc	2	e366	mov r14,r6	
+0c9044fe	2	cfbf	bsr 0x0c9044a0	0c9044a0 
+0c904500	2	db54	_mov.l @(0x2c,r13),r4	
+0c904502	2	036e	mov r0,r14	
+0c904504	2	dc52	mov.l @(0x30,r13),r2	
+0c904506	2	2822	tst r2,r2	
+0c904508	2	0389	bt 0x0c904512	0c904512 
+0c90450a	2	c365	mov r12,r5	
+0c90450c	2	e366	mov r14,r6	
+0c90450e	2	c7bf	bsr 0x0c9044a0	0c9044a0 
+0c904510	2	dc54	_mov.l @(0x30,r13),r4	
+0c904512	2	264f	lds.l @r15+,PR	
+0c904514	2	f66c	mov.l @r15+,r12	
+0c904516	2	f66d	mov.l @r15+,r13	
+0c904518	2	0b00	rts	
+0c90451a	2	f66e	_mov.l @r15+,r14	

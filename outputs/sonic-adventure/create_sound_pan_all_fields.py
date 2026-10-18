@@ -1,0 +1,15 @@
+from pathlib import Path
+p=Path(__file__).resolve().parent
+s=(p/'verify_sound_volume_all_fields.py').read_text().replace('sound_driver_volume_get','sound_driver_pan_get').replace('sa_sound_driver_volume_get','sa_sound_driver_pan_get')
+s=s.replace("(0x8c66adc4,'sound_backend_readback','sa_sound_backend_readback')]", "(0x8c66adc4,'sound_backend_readback','sa_sound_backend_readback'),(0x8c10ca5c,'signed_division','sa_signed_division')]")
+s=s.replace('signed_selector=0','signed_selector=ctypes.c_int8(value&255).value')
+s=s.replace('s.r[5]=0x8ca20004;', 's.r[5]=value;s.r[6]=0x8ca20004;').replace('s.pc=0x8c6680ea','s.pc=0x8c668112')
+s=s.replace('(a,0x8ca08000,0,0x8cefffe0+o)', '(a,0x8ca08000,value,0x8cefffe0+o)')
+s=s.replace('if True:result+=64','if (value&255)==0:result+=64').replace('elif False:result=(result if result else -1)-64','elif (value&255)==1:result=(result if result else -1)-64')
+s=s.replace("caller=bytearray(before[0xa20000:0xa20028]);struct.pack_into('<I',caller,4,(ctypes.c_int8((value+1)&255).value*2)&0xffffffff)", "caller=bytearray(before[0xa20000:0xa20028]);signed_pan=ctypes.c_int8(output[3]).value;scaled=abs(signed_pan*15)//127*(-1 if signed_pan<0 else 1);struct.pack_into('<I',caller,4,scaled&0xffffffff)")
+s=s.replace('upper volume getter6680ea','upper pan getter668112').replace('Independent forced selector0,signed hardware-byte1 doubling','Independent full selector forwarding,signed hardware-byte2 pan conversion and signed15/127 truncation')
+s=s.replace('sound_volume_all_fields_verification.json','sound_pan_all_fields_verification.json')
+(p/'verify_sound_pan_all_fields.py').write_text(s)
+reg=(p/'register_sound_volume_all_fields.py').read_text().replace('sound_volume','sound_pan').replace('sa_sound_driver_volume_get','sa_sound_driver_pan_get').replace("'sa_sound_driver_readback_wrapper'}", "'sa_sound_driver_readback_wrapper','sa_signed_division'}").replace('all fields volume:', 'all fields pan:')
+reg=reg.replace('sa_sound_pan_byte_read','sa_sound_volume_byte_read')
+(p/'register_sound_pan_all_fields.py').write_text(reg)

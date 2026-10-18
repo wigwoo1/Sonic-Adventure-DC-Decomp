@@ -1,0 +1,120 @@
+Main dispatcher alternate strip emitters
+16 October 2026 — VERIFIED within the bounded scope below.
+Overall completion remains 10% estimated weighted milestones, not code coverage.
+Goal active; continue Sol High for the remaining native rendering integration.
+
+Recovered source
+  8c6149b4..8c614bb0: 238 original instruction rows
+  8c616bc4..8c616f18: 400 original instruction rows
+  source/sa_main_dispatch_alternate_strips.c
+  source/sa_main_dispatch_alternate_strips_connected.c
+Both complete bodies are annotated static C with no runtime opcode interpreter.
+Names are inferred, not original source symbols. Every listing byte matches the
+pinned original executable. Existing source, game data and reports are retained.
+
+Native dependencies reused
+Both functions call the existing recovered empty stub at 8c611708; its original
+RTS/NOP bytes are checked. The bridge uses the existing source and its exact CPU
+structure declaration. No second recovery credit is added for this stub.
+The clipped variant also calls the already recovered native near-plane helper
+8c613312. All reached game callees in the focused suite execute natively.
+
+Behavior
+These alternate paths consume one or more variable-length indexed strips.
+The strip word's high bit reverses the initial winding; the lower 15 bits give
+the vertex count. The routines alternate the winding test per triangle, continue
+visible strips, end them at culled triangles and restart later visible portions.
+They preserve the original lookahead prefetch, reciprocal-depth/projected fields,
+material data, control markers, R8 cursor advancement and bank/width operations.
+FNEG and FSCHG are translated explicitly with the established precision guards.
+The clipped variant rejects triangles sharing outside bits, reconstructs camera
+coordinates for mixed near-plane triangles, performs its orientation test and
+delegates accepted clipping to the native near helper. It can combine ordinary
+strip output and separately clipped polygons in one input stream.
+
+Counter semantics preserved
+The original variants do not update 8c88f65c identically. For non-near input,
+8c6149b4 adds its output packet count plus one extra unit per closed output strip.
+8c616bc4 adds the sum of input strip lengths; near-helper calls additionally apply
+their own polygon-count updates. Both variants add input strip lengths at
+8c88f658. These observed operations retain their original unsigned wrap behavior;
+the counter names/meanings are provisional. No gameplay fix was invented to make
+them equal. Independent checks were corrected after inspecting the original
+counter instructions; native execution already matched the original executor.
+
+Build and tests actually passed
+- Strict Clang shared-library build: -O2 -Wall -Wextra -Werror.
+- 320 focused cases: plain alternate 104, clipped alternate 152, eight cases
+  through each parent primitive, and 48 connected mesh/projection/strip cases.
+- All 638 original rows, 40 branch outcomes and three call sites reached.
+- Full 16 MiB RAM, GPRs/SR/PR, both FPU banks/FPSCR, FPUL and MACL compared against
+  original instruction execution. 806 ordered boundaries and 11,334 numerical
+  operations checked. Native queue state/events match an independent Python
+  model: 862 transfers and 9,032 ordered queue events.
+- 264 cases complete; 56 unsupported numerical-mode exits (-1) match original
+  partial state under the established guard policy. No new hardware fault model.
+- 200 independent cases verify visible strip-triangle sets, packet materials/
+  markers, cursors and original counters, plus actual clipped geometry from the
+  mesh path. Tests cover winding flips, strip breaks/restarts, multiple strips,
+  degenerate triangles, outside masks, mixed near flags, both banks/queue starts
+  and the inherited precision/rounding combinations.
+- The 48 connected cases pass real world vertices through native filter,
+  projection, header acquisition, parent fallback, alternate strip and clipping
+  code. They require zero substitute calls, one native alternate/stub invocation,
+  and the independently expected near-helper invocation count. Accepted clipped
+  output coordinates and strip ordering are checked independently.
+- There are 300 native stub calls and 58 native near-helper calls in the focused
+  suite; zero external game-service boundaries.
+
+Lifetime regression scope
+The linked build passes 120 unchanged original-model particle lifetimes / 984
+stage comparisons: 23,264 ordered boundaries, 104,016 numerical operations,
+10,600 queue transfers and 117,808 queue events, with zero external game services.
+These original-model lifetimes do not reach either alternate body; the harness
+asserts that explicitly. Their purpose is preserving existing spawn/motion/pause/
+timer/deferred-deletion/task-pool/heap behavior. Alternate-path behavior is proved
+by the focused/connected cases above. The 46 translation regressions also pass.
+The complete accumulated build_and_verify.ps1 workflow was not run end-to-end.
+
+Evidence and repeat commands
+  analysis/main-dispatch-clipping/8c6149b4_instructions.tsv
+  analysis/main-dispatch-clipping/8c616bc4_instructions.tsv
+  analysis/main_dispatch_alternate_strips_translation.json
+  analysis/main_dispatch_alternate_strips_verification.json
+  analysis/main_dispatch_alternate_strips_lifecycle_verification.json
+From this output directory with the installed project Python:
+  python recover_main_dispatch_alternate_strips.py
+  .\build_main_dispatch_alternate_strips.ps1
+  python verify_main_dispatch_alternate_strips.py
+  python verify_main_dispatch_alternate_strips_lifecycle.py
+  python register_main_dispatch_alternate_strips.py
+  python inventory_main_dispatch_acquisition_variants.py
+  python map_main_dispatch_cases.py
+  python verify_main_dispatch_case_map.py
+The focused stages are included in build_and_verify.ps1. Registration validates
+source, DLL, original spans and proof hashes before adding two entries.
+Registry: 1,051 entries / 1,048 unique module-address pairs. The incomplete
+function inventory cannot establish a whole-game recovered-code percentage.
+Final audits found zero registry evidence errors and zero stale source reports.
+The dispatcher map passed 658 original pointer-load checks over 80 spans and 83
+selectors. Source/manifest regeneration reproduced identical hashes, registration
+reran with zero added entries, and all three PowerShell syntax checks passed.
+
+Limits and next task
+Constructed input uses positive strip counts and lengths at least three, with
+the original lookahead index available. Invalid count loops/pointers and hardware
+exceptions are not modeled. Existing numerical/saved-pointer guards remain.
+Only bounded coherent-RAM/MMU-off queues are verified; GPU FIFO, visible pixels,
+MMU-on/TLB, cache timing, the full frame driver and playable ports remain unproven.
+Full decompilation and all planned HD/display settings remain unfinished.
+
+Nineteen acquisition/primitive services remain substitutes on other paths:
+three acquisition variants and sixteen additional primitive emitters. Prioritize
+8c605f3c, 8c6064b0 and 8c6065b0, then continue the remaining primitive families.
+Their read-only instruction exports and draft pseudocode are saved under
+analysis/main-dispatch-acquisition-variants/. The new inventory checks all 134
+original instruction rows; it grants zero recovered-source/behavior credit.
+  analysis/main_dispatch_acquisition_variants_inventory.json
+Optional re-export: ghidra/export_main_dispatch_acquisition_variants.ps1.
+Keep Sol High for the remaining rendering integration; no model switch or goal
+pause is recommended at this checkpoint.

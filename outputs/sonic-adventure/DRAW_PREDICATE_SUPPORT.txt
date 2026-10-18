@@ -1,0 +1,118 @@
+Draw predicate, four-float state and original AL_MAIN draw entry
+17 October 2026 - helpers VERIFIED; draw caller PARTIALLY VERIFIED.
+Overall completion: 10% estimated weighted whole-project milestones, not code coverage.
+Goal active on Sol High. No model switch or pause advised.
+
+What changed
+Three complete original bodies now have guarded static native C:
+  8c038d00..8c038da0: draw predicate candidate, 66 instruction rows.
+  8c043a20..8c043a40: four-float stack wrapper, 16 rows.
+  8c60edf0..8c60ee0a: global four-float copy, 13 rows.
+All 95 rows / 190 instruction bytes are checked against 1ST_READ.BIN. The
+predicate's 28-byte literal gap adds no instruction credit. Names/purposes
+are inferred from dataflow, not original debug symbols.
+Source: source/sa_draw_predicate_support.c
+Bridge: source/sa_draw_predicate_support_connected.c
+Build: build_draw_predicate_support.ps1
+Proof: analysis/draw_predicate_support_verification.json
+
+Predicate dataflow
+Global 8c754ec8 nonzero returns R0=0 before any floating-point operation.
+Otherwise FR7 is retained as a radius-like input, FR7 becomes 1.0 and FTRV
+transforms FR4..FR7 with the opposite-bank matrix. Reached depth and projected
+coordinate tests return R0=0 or 1. Original comparisons are strict > tests.
+
+For ordinary narrow finite inputs, define transformed x,y,z, radius r,
+N=*(8c88f610), F=*(8c88f614), P=*(8c88f5e4), Ox=*(8c88f5f0),
+Oy=*(8c88f5f4), Sx=*(8c88f618), Sy=*(8c88f61c), and four bounds B0..B3
+at 8c88f600. Every arithmetic operation retains its separate original rounding.
+Require z>N-r and z<=F+r. Set inv=1/(z+r), Gx=(Sx*P)*inv.
+Require (x+r)*Gx+Ox>B0 and (x-r)*Gx+Ox<=B2.
+Set Gy=(Sy*Ox)*inv. Require (y+r)*Gy+Oy>B1.
+The final test requires (y-r)*Gx+Oy<=B2: it reuses horizontal Gx and B2.
+B3 is read but never used in a comparison. This unusual original behavior
+is preserved and independently checked, not repaired based on guessed intent.
+
+Four-float state
+The wrapper saves PR, reserves 16 stack bytes and stores active FR4..FR7 at
+four consecutive offsets. It passes that address to the original copy routine,
+which transfers four raw fields to global 8c88f668..8c88f674. Reads and writes
+remain sequential, preserving overlap effects. These are raw FMOV fields,
+not arithmetic conversions or inferred colour clamping.
+PR and SZ select the original raw-bank/width behavior. With wide stores, the
+last stack store can overwrite the saved return address. The reached return
+guard retains that original partial state instead of inventing a valid return.
+
+Focused verification actually run
+The new support DLL passes Clang -O2 -Wall -Wextra -Werror, without a C runtime.
+676 original-code comparisons pass: 548 completed, 16 numerical traps,
+48 unsupported precision/rounding boundaries and 64 invalid-RAM/return guards.
+All 95 instruction rows and all 14 branch outcomes execute. 740 ordered native
+entries match. 516 completed cases independently check identity-transform
+predicate decisions with separately rounded scalar arithmetic, or full-RAM
+sequential field-copy/stack/overlap effects. Full 16-MiB RAM, integer registers,
+SR/PR/PC, both FPU banks/FPSCR, FPUL/MACL and reached stops match.
+Vector numerical differential checks use a separate adapter to the same pinned
+MIT-licensed numerical core. Independent predicate checks use identity XMTRX;
+there is no new independent physical Dreamcast arithmetic/pixel claim.
+
+Actual draw caller: explicit partial scope
+The entire 0c9058a0..0c90608e candidate is now statically translated: 911 original
+rows, 50 conditional outcomes and 57 call sites, with original literal gaps.
+It compiles in a second new DLL. The candidate is not registered or credited
+as a complete recovered function: 825 rows remain dynamically unexecuted.
+Source: source/sa_overlay_object_draw_candidate.c
+Translation: analysis/overlay_draw_candidate_translation.json
+Bridge: source/sa_overlay_draw_gate_connected.c
+Build: build_overlay_draw_gate.ps1
+Proof: analysis/overlay_draw_gate_verification.json
+
+100 caller comparisons pass on records initialized by the preserved native
+constructor with shipped original models. There are 66 completed rejected
+returns through the original draw epilogue, 18 expected -2 continuation stops,
+eight unsupported arithmetic cases, four invalid-memory cases and four traps.
+86 candidate rows execute; 290 ordered entries match. 80 narrow cases also
+pass independent scale-spring and predicate/continuation decisions.
+The real caller runs 0c905618 and 8c038d00 natively. No game-service fixtures
+are injected. All reached RAM/CPU/FPU/FPUL/MACL state matches original code.
+The supplied camera, world position, scale and velocity remain test inputs.
+
+Accepted objects currently stop at service target 8c056990 with -2. That helper
+already has recovered source; it is not yet wired into this new bridge. This
+is an integration boundary, not a successfully rendered frame or a claim the
+helper is unrecovered. The candidate's remaining draw services, other branch
+paths, natural scheduling and pixel output remain pending. The four-float
+wrapper/copy are verified directly and connected, but not reached before this
+first continuation boundary in the caller tests.
+
+Integrity and progress
+Both new generators reproduce C/manifests byte-for-byte. Registration is
+repeatable without duplicate entries, and explicitly refuses to register the
+partial draw candidate. New Python and changed PowerShell syntax checks pass.
+The dispatcher map passes 658 original pointer-load checks across 80 spans /
+83 selectors. Registry audit: 1,122 entries / 1,119 unique module-address pairs,
+1,070 matches in 10,875 snapshot candidates, zero evidence errors and zero
+stale source reports. 211 non-texture binaries still lack a complete function
+index. Candidate counts are not a whole-game coverage denominator.
+The full historical build_and_verify.ps1 sequence was not rerun this turn.
+
+How to check
+Open this guide and the two behavior-proof JSON files above for inputs, results,
+fingerprints and precise remaining work. Developers can use the bundled Python
+runtime with -B to run verify_draw_predicate_support.py --smoke and
+verify_overlay_draw_gate.py --smoke. Remove --smoke for full suites. The
+ordered reproduction steps are included in build_and_verify.ps1. The read-only
+support export can be repeated with ghidra/export_draw_predicate_support.ps1.
+Preserved older DLL/source/report files are not rebuilt or overwritten.
+
+Next task and model
+Wire existing 8c056990 into the new bridge, then the other already recovered
+callees and remaining unregistered draw helpers. The static draw dependency
+inventory now has nine unregistered direct targets; 8c60edf0 is also newly
+recovered as the wrapper's lower dependency. Two targets still lack indexed
+boundaries. Do not count the candidate's 911 rows as fully recovered before
+its remaining paths have original-state and integration evidence.
+Continue Sol High for draw integration and numerical reverse engineering.
+Luna Low is appropriate for documentation-only maintenance. Full decompilation,
+visible gameplay, high-FPS/8K/display settings, SUPIR textures and all playable
+PC/Android/3DS/N64/PlayStation ports remain unfinished.

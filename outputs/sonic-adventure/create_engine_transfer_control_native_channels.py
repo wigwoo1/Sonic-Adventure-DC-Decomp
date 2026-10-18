@@ -1,0 +1,18 @@
+from pathlib import Path
+p=Path(__file__).resolve().parent
+s=(p/'verify_engine_transfer_control_pair.py').read_text()
+s=s.replace('cases=0', "helpers={}\nfor a,stem in [(0x8c10f9bc,'engine_channel_control_restore'),(0x8c10fa60,'engine_channel_control_install'),(0x8c1101f0,'engine_channel_status_get')]:\n helper=getattr(ctypes.CDLL(str(ROOT/f'work/sonic-adventure/build/{stem}.dll')),'sa_'+stem);helper.argtypes=abi;helpers[a]=helper\ncases=0")
+s=s.replace('initial,arg,bank,answer in itertools.product', 'initial,arg,bank,mask in itertools.product').replace('[0,1,0x8c10eee0,0xffffffff],[0,0x200000],[0,0xffffffff]', '[0,0xffffffff],[0,0x200000],[0,15,1,2,4,8,5,10]')
+s=s.replace('  before=bytes(ram)', "  struct.pack_into('<I',ram,0xa08000,0x8ca10000);ram[0xa10000:0xa10080]=bytes([0x66])*128\n  for i,index in enumerate([3,1,0,2]):\n   struct.pack_into('<I',ram,0xa08004+i*0x34,index);struct.pack_into('<I',ram,0xa10018+index*32,0x80000000|((mask>>i)&1))\n  before=bytes(ram)")
+a=s.index('   assert a==lower');z=s.index('  s=State();',a)
+s=s[:a]+"   assert a in helpers\n   if a==lower:actual.append((a,r[4],r[5]))\n   return helpers[a](m,f,sr,r,pr,ctypes.byref(fpul),ctypes.byref(macl),None,call)\n"+s[z:]
+s=s.replace('reference(ram,s,{lower:hook},fpu=f)','reference(ram,s,{},fpu=f)')
+s=s.replace('actual==expected==[(lower,0x8ca08004+i*0x34,arg) for i in range(4)]', 'actual==[(lower,0x8ca08004+i*0x34,arg if i==0 else 0x8cefffe0) for i in range(4)]')
+s=s.replace("  assert struct.unpack_from('<3I',native,0x7ac8bc)==(0x12345678,flag,0x87654321) and native[0xa08000:0xa08100]==before[0xa08000:0xa08100] and r[0]==0 and r[15]==0x8cf00000", "  context=bytearray(before[0xa08000:0xa08100]);table=bytearray(before[0xa10000:0xa10080])\n  for i,index in enumerate([3,1,0,2]):\n   if mask&(1<<i):\n    struct.pack_into('<I',table,index*32+28,flag)\n    if flag:struct.pack_into('<I',context,4+i*0x34+24,2)\n  assert native[0xa08000:0xa08100]==context and native[0xa10000:0xa10080]==table\n  assert struct.unpack_from('<3I',native,0x7ac8bc)==(0x12345678,flag,0x87654321) and r[0]==0 and r[15]==0x8cf00000")
+a=s.index("scope='");z=s.index("\n(p/'analysis/",a)
+s=s[:a]+"scope='256 full retail RAM/CPU/FPU/SR/PR comparisons of transfer restore10ee20/install10ee9c connected through native channel controls10f9bc/10fa60 and status query1101f0. Eight four-channel readiness masks,permuted channel indices,four initial global flags,two initial R5 values,both banks. Independent four channel calls and native R5 clobbering,only ready-channel table flag writes,install channel state2,global flag0/1,256-byte context/128-byte table guards,status0 and stack restoration. No modeled calls. Physical hardware/full game integration unverified.'"+s[z:]
+s=s.replace('engine_transfer_control_pair_verification.json','engine_transfer_control_native_channels_verification.json')
+(p/'verify_engine_transfer_control_native_channels.py').write_text(s)
+reg=(p/'register_engine_channel_control_native_status.py').read_text().replace('engine_channel_control_native_status','engine_transfer_control_native_channels').replace("['engine_channel_control']","['engine_transfer_control']").replace("'_native_status'","'_native_channels'").replace("{'sa_engine_channel_control_restore'", "{'sa_engine_transfer_control_restore','sa_engine_transfer_control_install','sa_engine_channel_control_restore'").replace('==128','==256').replace('native channel status:', 'native channels:').replace("'_native_status.py'", "'_native_channels.py'")
+reg=reg.replace('stem+\'_native_status', 'stem+\'_native_channels').replace('{stem}_native_status.py','{stem}_native_channels.py')
+(p/'register_engine_transfer_control_native_channels.py').write_text(reg)

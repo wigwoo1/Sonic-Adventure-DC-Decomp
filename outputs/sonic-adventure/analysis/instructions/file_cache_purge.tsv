@@ -1,0 +1,49 @@
+address	opcode	instruction	references
+8c5fc336	2fe6	mov.l r14,@-r15	
+8c5fc338	2fd6	mov.l r13,@-r15	
+8c5fc33a	2fc6	mov.l r12,@-r15	
+8c5fc33c	7ff8	add #-0x8,r15	
+8c5fc33e	6d53	mov r5,r13	
+8c5fc340	2dd8	tst r13,r13	
+8c5fc342	8f03	bf/s 0x8c5fc34c	
+8c5fc344	6c43	mov r4,r12	
+8c5fc346	d309	mov.l 0x8c5fc36c,r3	
+8c5fc348	432b	jmp @r3	
+8c5fc34a	9	nop	
+8c5fc34c	d209	mov.l 0x8c5fc374,r2	
+8c5fc34e	de08	mov.l 0x8c5fc370,r14	
+8c5fc350	3d22	cmp/hs r2,r13	
+8c5fc352	8f03	bf/s 0x8c5fc35c	
+8c5fc354	2ec9	and r12,r14	
+8c5fc356	d308	mov.l 0x8c5fc378,r3	
+8c5fc358	432b	jmp @r3	
+8c5fc35a	9	nop	
+8c5fc35c	e51f	mov #0x1f,r5	
+8c5fc35e	64e3	mov r14,r4	
+8c5fc360	25c9	and r12,r5	
+8c5fc362	35dc	add r13,r5	
+8c5fc364	a00a	bra 0x8c5fc37c	
+8c5fc366	9	nop	
+8c5fc37c	751f	add #0x1f,r5	
+8c5fc37e	4509	shlr2 r5	
+8c5fc380	4509	shlr2 r5	
+8c5fc382	4501	shlr r5	
+8c5fc384	4a3	ocbp @r4	
+8c5fc386	4510	dt r5	
+8c5fc388	8ffc	bf/s 0x8c5fc384	
+8c5fc38a	7420	add #0x20,r4	
+8c5fc38c	d207	mov.l 0x8c5fc3ac,r2	
+8c5fc38e	422b	jmp @r2	
+8c5fc390	9	nop	
+8c5fc392	2	stc SR,r0	
+8c5fc394	9309	mov.w 0x8c5fc3aa,r3	
+8c5fc396	4009	shlr2 r0	
+8c5fc398	4009	shlr2 r0	
+8c5fc39a	c90f	and #0xf,r0	
+8c5fc39c	2f01	mov.w r0,@r15	
+8c5fc39e	2	stc SR,r0	
+8c5fc3a0	2039	and r3,r0	
+8c5fc3a2	cbf0	or #0xf0,r0	
+8c5fc3a4	400e	ldc r0,SR	
+8c5fc3a6	a003	bra 0x8c5fc3b0	
+8c5fc3a8	9	nop	

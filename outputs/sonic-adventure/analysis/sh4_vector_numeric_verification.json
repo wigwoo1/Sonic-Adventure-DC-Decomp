@@ -1,0 +1,45 @@
+{
+  "counts": {
+    "adapter_primitive_comparisons": 90112,
+    "invalid_opcode_guards": 65495,
+    "reserved_rm_guards": 1408,
+    "pr_noop_and_trap_policy_checks": 45056,
+    "fsca_status_policy_checks": 16384,
+    "fsca_angle_mode_checks": 131072,
+    "fsrra_positive_normal_checks": 58768,
+    "dot_error_bound_checks": 26000,
+    "matrix_invariant_checks": 4096
+  },
+  "total_checks_passed": 438455,
+  "zero_status_policy_checks": 64,
+  "source": "source/sh4_vector_numeric.c",
+  "source_sha256": "2c7d7c7264dbf0cf55e41b81b1b13f6b2a63167b3ddba44799e908f51ccee12b",
+  "vendor_revision": "29f17b480213f063c6db998ecba5745d3f4ad4b3",
+  "vendor_sha256": "cc95d6a3ede9ab57b6f332fcec5dacc97cda16515699dcdcd4bcf4978c869d2f",
+  "vendor_url": "https://gist.github.com/skmp/4bd7b38149fc455978b5104201573236",
+  "dll_sha256": "2e56428fadb1903c319da319cf6fa3731839eab1b16163e4e820821d6e4c2db2",
+  "primitive_reference_dll_sha256": "8c14c70287c296972de774ca170b632f5694d3c58262c46cd7b7187eba54b06a",
+  "sha256": {
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\verify_sh4_vector_numeric.py": "9edd23e673fea97f572be40b54118bba3a6ff9705950fbdf00315b31440fbdea",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\build_sh4_vector_numeric.ps1": "13b79734f2d08daa934c681e0803e092ac7bc0e58d5cbc45959bd9895230a6df",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\third_party\\skmp-sh4-fpu\\sh4_fpu_approx.h": "cc95d6a3ede9ab57b6f332fcec5dacc97cda16515699dcdcd4bcf4978c869d2f",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\third_party\\skmp-sh4-fpu\\README.txt": "1ea2ef9e2d064ef7f9ad4acc560a6f9c441913f1e8f81d708d50e0147e98e380",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\source\\sh4_vector_numeric.c": "2c7d7c7264dbf0cf55e41b81b1b13f6b2a63167b3ddba44799e908f51ccee12b",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\source\\sh4_vector_numeric.h": "7ea2b0357edaa913446538639fe35b8912ae63075409159c99bb4b72bbbf1e5e",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\source\\sh4_vector_numeric_reference.c": "b3119723318de756caa306dc8335cd5c2520aba538c004ea8bacd3e3f49d35c8",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\source\\fpu_cleanup_transfer.h": "8282c045c60250303c1a0267b0c952d645e49a948d71dab79c76c35f3eb4fa5c",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\source\\stage00_task.h": "658be73519085a94ce2d44d0939a280c546d3c414b804a4b4d4b1560d5dcb739",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\source\\level_variant.h": "e7e8be3d2cd05147b7c954bafadd883635a7fcd43bbb5b865822889c6945d2c0",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\verify_fpu_cleanup_transfer.py": "e8ec3b9bd98d83083e7008d6091b5c0ad160974cacc6ce73943873a79f540ad4"
+  },
+  "max_fsca_absolute_error": 1.270954682608405e-07,
+  "max_fsrra_ulp_error": 1.8632959499955177,
+  "max_dot_error_bound_fraction": 0.655857857081586,
+  "scope": "All 44 opcode/register variants, both banks/SZ/PR/DN/RM0/1, all 32 enables, preset flags; full 16-bit opcode rejection; all FSCA angles, sampled FSRRA normal domain, Fraction-based dot bounds and identity matrix invariants.",
+  "limitations": [
+    "Primitive API comparisons share the vendored core and establish adapter wiring, not independent arithmetic or hardware equivalence.",
+    "Mathematical bounds/invariants are independent local checks, not bit-exact reproduction of physical captures.",
+    "Upstream hardware-validation claims belong to the author; original captures were not available in the inspected public repository and were not replayed here.",
+    "Reserved RM2/3 and unknown opcodes return -1 atomically; actual CPU exception dispatch, MMIO, timing and gameplay remain unverified."
+  ]
+}

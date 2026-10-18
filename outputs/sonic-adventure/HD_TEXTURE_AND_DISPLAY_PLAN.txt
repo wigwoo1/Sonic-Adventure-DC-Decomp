@@ -1,0 +1,113 @@
+Sonic Adventure — HD textures and display settings plan
+Requested 15 October 2026. Status: PLANNED, not implemented or verified in-game.
+Whole-project estimate remains 10% weighted milestones, not code coverage.
+
+Required result
+Use SUPIR to prepare an optional HD replacement pack covering all the game's
+textures. Add HD-texture, texture-resolution, render-resolution and aspect-ratio
+controls to the native game's settings. Preserve the original assets and make
+the original-texture path available throughout development and release.
+
+Settings and their meaning
+1. HD textures: On / Off. Off loads original game textures. On loads the optional
+   prepared HD pack where available, with original fallback for missing entries.
+2. Texture resolution: 100%, 75%, 50%, 25%, Off. Percentages refer to each active
+   original/HD texture's width and height, not GPU-memory percentage or screen size.
+   For example, a 1024x1024 replacement becomes 768x768 at 75%, 512x512 at 50%,
+   and 256x256 at 25%. Supported formats may require aligned dimensions.
+   Off disables game-texture sampling and displays geometry using its vertex
+   colours, with existing lighting/fog/material modulation where applicable.
+   Geometry without vertex colours uses its existing material colour, without
+   inventing a texture-derived colour bake. This supersedes the earlier plan.
+   Off overrides both original and HD texture selection. The HD toggle remembers
+   which set to use when a percentage is selected again; HD Off selects originals
+   only when textures are enabled. Percentages scale the active original/HD set.
+   Show pack availability clearly and persist both selections independently.
+3. Render resolution: choose the supported internal rendering dimensions,
+   independently of texture quality and display/output resolution. Include
+   selectable render scales of 100%, 75%, 50%, 25% relative to output dimensions,
+   subject to aspect-preserving rounding and platform limits. Retain the PC
+   output-resolution goal through 7680x4320. Show actual internal dimensions.
+   This control must not change simulation speed or the selected 60/120/240 FPS.
+4. Aspect ratio: Auto (match output), Original 4:3, 16:9, 16:10, 21:9 and 32:9
+   on capable PC displays. Use the selected camera projection and appropriate
+   bars where needed. Keep the HUD readable and undistorted, preserve movie
+   proportions, and check culling, menus, transitions and scripted cameras.
+
+Texture-resolution Off takes priority over the HD toggle; it is a real vertex-
+coloured rendering mode. The HD toggle selects original versus HD assets when
+textures are enabled. Render resolution and aspect ratio remain independent.
+Persist valid choices, validate old configuration files, and recover safely from
+unsupported display modes or insufficient texture memory. Originals remain usable
+without downloading models, installing Python or running AI during gameplay.
+
+Milestone 1 — complete texture inventory
+Identify textures in every relevant archive/module, including stages, characters,
+objects, effects, animated sequences, UI, fonts/signs and language variants.
+Record source container/identifier, content hash, dimensions, format, palette,
+alpha, mipmaps, animation grouping and tile/atlas relationships. Deduplicate
+identical content while preserving every original lookup identity. Track coverage
+with an explicit manifest so 'all textures' can be checked rather than assumed.
+
+Milestone 2 — SUPIR pilot and reproducible offline pipeline
+Use the official SUPIR project: https://github.com/Fanghua-Yu/SUPIR
+Its documented batch interface provides input/output directories, upscale ratio,
+model choice, seed and restoration settings. Pin tool/model versions and hashes,
+record prompts/seeds/settings, and save the original-to-replacement mapping.
+First test representative small textures, repeating surfaces, characters, UI,
+text, transparency, atlases and animation frames before a full conversion.
+Use settings aimed at the original Sonic art style; the upstream photographic
+prompt defaults are unsuitable as an unreviewed project-wide preset.
+Select the full-pack upscale factor after the pilot and memory/disk measurements;
+the 100% setting means the chosen full-pack size, not 8K for every texture.
+Perform generation ahead of gameplay and resume interrupted batches safely.
+
+Milestone 3 — process the full inventory and review quality
+Target every identified visual texture with SUPIR. Preserve alpha/masks and
+palette semantics explicitly, handle tile borders and atlas padding, keep
+animation frames consistent, and verify text remains accurate in every language.
+Keep non-colour data channels exact instead of treating them as photographs.
+Record each entry as pending, generated, approved, rejected or awaiting repair.
+Rejected results keep original fallback and remain incomplete until repaired or
+an explicit exception is documented; fallback is not proof of full HD coverage.
+Preserve all originals; never overwrite the user's extracted game data.
+
+Milestone 4 — pack loading and settings integration
+Add stable texture identity/replacement lookup to the native asset/renderer path.
+Prepare the requested size variants or use a validated resampling path, rebuild
+mipmaps, choose supported compression, and budget RAM/VRAM and loading time.
+Apply selections at a safe texture reload point, preserving active resources.
+Add an explicit untextured material path that never samples game textures,
+including texture-based effect materials. Preserve vertex colours, lighting,
+fog, depth and suitable blending; review changed silhouettes from alpha cutouts.
+Keep settings usable with host UI text even when game texture sampling is off.
+Integrate settings labels, help text, persistence, pack-missing feedback and
+reliable return to originals. Keep model weights out of the gameplay runtime.
+Use existing settings architecture and hardware limits where practical.
+
+Milestone 5 — acceptance checks before marking complete
+Account for every texture identity and review rejected/missing entries explicitly.
+Compare original and HD gameplay captures across stages, characters, bosses,
+UI/languages, alpha effects, animation, tiling and distant mip levels.
+Prove Off produces no game-texture samples, preserves vertex/material colours,
+and can return to original or HD rendering without losing the stored choices.
+Exercise every percentage, both toggles, reloads, relaunch persistence, missing
+or corrupt pack files, memory pressure and unchanged originals.
+Check render dimensions, aspect ratios, camera/culling/HUD behavior, and retained
+60/120/240 FPS timing separately from texture quality. Measure memory, frame
+times and loading times on actual target configurations before choosing defaults.
+Keep the feature pending until asset quality and runtime behavior both pass.
+
+Scheduling and platform scope
+Plan and inventory work may precede a playable port. Full conversion and settings
+acceptance follow stable texture identification and the native renderer/asset
+path; they do not replace full game-code decompilation. PC is the first target.
+Adapt pack size/compression and exposed options for Android and stereoscopic
+3DS hardware. N64/PlayStation demakes retain their own adapted asset budgets;
+do not assume the PC HD pack fits those platforms.
+
+Tracking
+project_status.json records these as pending requirements/milestones.
+The completion audit includes the HD pack in the existing native-PC acceptance
+gate and display settings in the existing FPS/resolution gate, preserving the
+declared milestone weights. Adding this plan earns no completion credit.

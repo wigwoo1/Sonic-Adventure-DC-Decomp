@@ -1,0 +1,664 @@
+{
+  "module": "1ST_READ.BIN",
+  "load_address": "0x8c010000",
+  "address": "0x8c65f1aa",
+  "end_exclusive": "0x8c65f1ec",
+  "retail_span_sha256": "cb4ddcb171b4af4120a01fd5c0d93bd67efeb909f3ccc6e6017b37d969f9735d",
+  "binary_sha256": "45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a",
+  "source_sha256": "7519db48910fd6ad36b3852c7e1bae6f13f0d2c52ea23efb4a33bea65f3772ec",
+  "cases_passed": 64,
+  "comparison_level": "Complete 16 MiB RAM and all GPR/SR/PR/FPU state plus callback arguments/order against retail SH-4 execution.",
+  "scope": "Checks request status and device flags, claims the semaphore when available, and dispatches the fatal-error callback when the semaphore is already busy.",
+  "limitations": [
+    "The fatal-error routine is represented by an explicit no-effect callback stub in this isolated test.",
+    "This verifies one 66-byte preflight routine, not the full device service or cleanup routine."
+  ],
+  "cases": [
+    {
+      "case": 0,
+      "request_status": 1,
+      "device_flags": "0x0",
+      "lock_byte_in": 0,
+      "returned_r0": "0xfffffffd",
+      "callback_targets": [],
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 1,
+      "request_status": 0,
+      "device_flags": "0x1",
+      "lock_byte_in": 0,
+      "returned_r0": "0xffffffff",
+      "callback_targets": [],
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 2,
+      "request_status": 0,
+      "device_flags": "0x0",
+      "lock_byte_in": 0,
+      "returned_r0": "0x0",
+      "callback_targets": [],
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 3,
+      "request_status": 0,
+      "device_flags": "0x0",
+      "lock_byte_in": 1,
+      "returned_r0": "0xfffffffe",
+      "callback_targets": [
+        "0x8c65f348"
+      ],
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 4,
+      "request_status": 0,
+      "device_flags": "0x0",
+      "lock_byte_in": 128,
+      "returned_r0": "0xfffffffe",
+      "callback_targets": [
+        "0x8c65f348"
+      ],
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 5,
+      "request_status": 0,
+      "device_flags": "0x0",
+      "lock_byte_in": 255,
+      "returned_r0": "0xfffffffe",
+      "callback_targets": [
+        "0x8c65f348"
+      ],
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 6,
+      "request_status": 0,
+      "device_flags": "0xba022348",
+      "lock_byte_in": 174,
+      "returned_r0": "0xfffffffe",
+      "callback_targets": [
+        "0x8c65f348"
+      ],
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 7,
+      "request_status": 0,
+      "device_flags": "0x849c2a14",
+      "lock_byte_in": 76,
+      "returned_r0": "0xfffffffe",
+      "callback_targets": [
+        "0x8c65f348"
+      ],
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 8,
+      "request_status": 0,
+      "device_flags": "0x3426c7c1",
+      "lock_byte_in": 6,
+      "returned_r0": "0xffffffff",
+      "callback_targets": [],
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 9,
+      "request_status": 0,
+      "device_flags": "0x1ae7a591",
+      "lock_byte_in": 125,
+      "returned_r0": "0xffffffff",
+      "callback_targets": [],
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 10,
+      "request_status": 0,
+      "device_flags": "0x36e36485",
+      "lock_byte_in": 168,
+      "returned_r0": "0xffffffff",
+      "callback_targets": [],
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 11,
+      "request_status": 0,
+      "device_flags": "0xf841e71c",
+      "lock_byte_in": 83,
+      "returned_r0": "0xfffffffe",
+      "callback_targets": [
+        "0x8c65f348"
+      ],
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 12,
+      "request_status": 0,
+      "device_flags": "0xb4be5c80",
+      "lock_byte_in": 89,
+      "returned_r0": "0xfffffffe",
+      "callback_targets": [
+        "0x8c65f348"
+      ],
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 13,
+      "request_status": 0,
+      "device_flags": "0xd9c4df1",
+      "lock_byte_in": 144,
+      "returned_r0": "0xffffffff",
+      "callback_targets": [],
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 14,
+      "request_status": 0,
+      "device_flags": "0xd470e622",
+      "lock_byte_in": 175,
+      "returned_r0": "0xfffffffe",
+      "callback_targets": [
+        "0x8c65f348"
+      ],
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 15,
+      "request_status": 0,
+      "device_flags": "0x85bb5bc0",
+      "lock_byte_in": 1,
+      "returned_r0": "0xfffffffe",
+      "callback_targets": [
+        "0x8c65f348"
+      ],
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 16,
+      "request_status": 0,
+      "device_flags": "0xa3236401",
+      "lock_byte_in": 220,
+      "returned_r0": "0xffffffff",
+      "callback_targets": [],
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 17,
+      "request_status": 0,
+      "device_flags": "0x7cd0ade0",
+      "lock_byte_in": 72,
+      "returned_r0": "0xfffffffe",
+      "callback_targets": [
+        "0x8c65f348"
+      ],
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 18,
+      "request_status": 0,
+      "device_flags": "0xcb2deb2b",
+      "lock_byte_in": 174,
+      "returned_r0": "0xffffffff",
+      "callback_targets": [],
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 19,
+      "request_status": 0,
+      "device_flags": "0x4ce18f3b",
+      "lock_byte_in": 190,
+      "returned_r0": "0xffffffff",
+      "callback_targets": [],
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 20,
+      "request_status": 0,
+      "device_flags": "0x4db9014a",
+      "lock_byte_in": 254,
+      "returned_r0": "0xfffffffe",
+      "callback_targets": [
+        "0x8c65f348"
+      ],
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 21,
+      "request_status": 0,
+      "device_flags": "0x27550a20",
+      "lock_byte_in": 182,
+      "returned_r0": "0xfffffffe",
+      "callback_targets": [
+        "0x8c65f348"
+      ],
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 22,
+      "request_status": 0,
+      "device_flags": "0xc51a966e",
+      "lock_byte_in": 58,
+      "returned_r0": "0xfffffffe",
+      "callback_targets": [
+        "0x8c65f348"
+      ],
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 23,
+      "request_status": 0,
+      "device_flags": "0xa826a74f",
+      "lock_byte_in": 166,
+      "returned_r0": "0xffffffff",
+      "callback_targets": [],
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 24,
+      "request_status": 0,
+      "device_flags": "0x2d9c34f9",
+      "lock_byte_in": 55,
+      "returned_r0": "0xffffffff",
+      "callback_targets": [],
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 25,
+      "request_status": 0,
+      "device_flags": "0x20e1c08d",
+      "lock_byte_in": 10,
+      "returned_r0": "0xffffffff",
+      "callback_targets": [],
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 26,
+      "request_status": 0,
+      "device_flags": "0x5cca7af5",
+      "lock_byte_in": 250,
+      "returned_r0": "0xffffffff",
+      "callback_targets": [],
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 27,
+      "request_status": 0,
+      "device_flags": "0x48d77e25",
+      "lock_byte_in": 140,
+      "returned_r0": "0xffffffff",
+      "callback_targets": [],
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 28,
+      "request_status": 0,
+      "device_flags": "0xea37a7a",
+      "lock_byte_in": 103,
+      "returned_r0": "0xfffffffe",
+      "callback_targets": [
+        "0x8c65f348"
+      ],
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 29,
+      "request_status": 0,
+      "device_flags": "0xf7f5042b",
+      "lock_byte_in": 254,
+      "returned_r0": "0xffffffff",
+      "callback_targets": [],
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 30,
+      "request_status": 0,
+      "device_flags": "0xfcd0ff46",
+      "lock_byte_in": 146,
+      "returned_r0": "0xfffffffe",
+      "callback_targets": [
+        "0x8c65f348"
+      ],
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 31,
+      "request_status": 0,
+      "device_flags": "0x35718b39",
+      "lock_byte_in": 104,
+      "returned_r0": "0xffffffff",
+      "callback_targets": [],
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 32,
+      "request_status": 0,
+      "device_flags": "0x84f9d660",
+      "lock_byte_in": 202,
+      "returned_r0": "0xfffffffe",
+      "callback_targets": [
+        "0x8c65f348"
+      ],
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 33,
+      "request_status": 0,
+      "device_flags": "0xbc5a3805",
+      "lock_byte_in": 114,
+      "returned_r0": "0xffffffff",
+      "callback_targets": [],
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 34,
+      "request_status": 0,
+      "device_flags": "0x2ce86e95",
+      "lock_byte_in": 158,
+      "returned_r0": "0xffffffff",
+      "callback_targets": [],
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 35,
+      "request_status": 0,
+      "device_flags": "0x3b5c9890",
+      "lock_byte_in": 60,
+      "returned_r0": "0xfffffffe",
+      "callback_targets": [
+        "0x8c65f348"
+      ],
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 36,
+      "request_status": 0,
+      "device_flags": "0x1aae2a3c",
+      "lock_byte_in": 133,
+      "returned_r0": "0xfffffffe",
+      "callback_targets": [
+        "0x8c65f348"
+      ],
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 37,
+      "request_status": 0,
+      "device_flags": "0x60daa8ba",
+      "lock_byte_in": 208,
+      "returned_r0": "0xfffffffe",
+      "callback_targets": [
+        "0x8c65f348"
+      ],
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 38,
+      "request_status": 0,
+      "device_flags": "0x295a784a",
+      "lock_byte_in": 82,
+      "returned_r0": "0xfffffffe",
+      "callback_targets": [
+        "0x8c65f348"
+      ],
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 39,
+      "request_status": 0,
+      "device_flags": "0xb9102840",
+      "lock_byte_in": 151,
+      "returned_r0": "0xfffffffe",
+      "callback_targets": [
+        "0x8c65f348"
+      ],
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 40,
+      "request_status": 0,
+      "device_flags": "0x5d3af78a",
+      "lock_byte_in": 234,
+      "returned_r0": "0xfffffffe",
+      "callback_targets": [
+        "0x8c65f348"
+      ],
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 41,
+      "request_status": 0,
+      "device_flags": "0xca33e1bb",
+      "lock_byte_in": 88,
+      "returned_r0": "0xffffffff",
+      "callback_targets": [],
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 42,
+      "request_status": 0,
+      "device_flags": "0x364d6fd8",
+      "lock_byte_in": 30,
+      "returned_r0": "0xfffffffe",
+      "callback_targets": [
+        "0x8c65f348"
+      ],
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 43,
+      "request_status": 0,
+      "device_flags": "0x19451bfe",
+      "lock_byte_in": 12,
+      "returned_r0": "0xfffffffe",
+      "callback_targets": [
+        "0x8c65f348"
+      ],
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 44,
+      "request_status": 0,
+      "device_flags": "0xed6c1533",
+      "lock_byte_in": 235,
+      "returned_r0": "0xffffffff",
+      "callback_targets": [],
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 45,
+      "request_status": 0,
+      "device_flags": "0xaa2acc35",
+      "lock_byte_in": 240,
+      "returned_r0": "0xffffffff",
+      "callback_targets": [],
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 46,
+      "request_status": 0,
+      "device_flags": "0x6e4374b9",
+      "lock_byte_in": 82,
+      "returned_r0": "0xffffffff",
+      "callback_targets": [],
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 47,
+      "request_status": 0,
+      "device_flags": "0xfef7f703",
+      "lock_byte_in": 231,
+      "returned_r0": "0xffffffff",
+      "callback_targets": [],
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 48,
+      "request_status": 0,
+      "device_flags": "0x99f3dae5",
+      "lock_byte_in": 225,
+      "returned_r0": "0xffffffff",
+      "callback_targets": [],
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 49,
+      "request_status": 0,
+      "device_flags": "0xce702003",
+      "lock_byte_in": 199,
+      "returned_r0": "0xffffffff",
+      "callback_targets": [],
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 50,
+      "request_status": 0,
+      "device_flags": "0x77491c34",
+      "lock_byte_in": 136,
+      "returned_r0": "0xfffffffe",
+      "callback_targets": [
+        "0x8c65f348"
+      ],
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 51,
+      "request_status": 0,
+      "device_flags": "0x2273645a",
+      "lock_byte_in": 222,
+      "returned_r0": "0xfffffffe",
+      "callback_targets": [
+        "0x8c65f348"
+      ],
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 52,
+      "request_status": 0,
+      "device_flags": "0x1a2a1b08",
+      "lock_byte_in": 254,
+      "returned_r0": "0xfffffffe",
+      "callback_targets": [
+        "0x8c65f348"
+      ],
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 53,
+      "request_status": 0,
+      "device_flags": "0xf13ec55f",
+      "lock_byte_in": 188,
+      "returned_r0": "0xffffffff",
+      "callback_targets": [],
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 54,
+      "request_status": 0,
+      "device_flags": "0x75615211",
+      "lock_byte_in": 95,
+      "returned_r0": "0xffffffff",
+      "callback_targets": [],
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 55,
+      "request_status": 0,
+      "device_flags": "0x56d29a7e",
+      "lock_byte_in": 205,
+      "returned_r0": "0xfffffffe",
+      "callback_targets": [
+        "0x8c65f348"
+      ],
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 56,
+      "request_status": 0,
+      "device_flags": "0xf9e40aaa",
+      "lock_byte_in": 218,
+      "returned_r0": "0xfffffffe",
+      "callback_targets": [
+        "0x8c65f348"
+      ],
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 57,
+      "request_status": 0,
+      "device_flags": "0x29ab1f6c",
+      "lock_byte_in": 105,
+      "returned_r0": "0xfffffffe",
+      "callback_targets": [
+        "0x8c65f348"
+      ],
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 58,
+      "request_status": 0,
+      "device_flags": "0xdf9e778b",
+      "lock_byte_in": 158,
+      "returned_r0": "0xffffffff",
+      "callback_targets": [],
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 59,
+      "request_status": 0,
+      "device_flags": "0xef458206",
+      "lock_byte_in": 43,
+      "returned_r0": "0xfffffffe",
+      "callback_targets": [
+        "0x8c65f348"
+      ],
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 60,
+      "request_status": 0,
+      "device_flags": "0xa150e06e",
+      "lock_byte_in": 244,
+      "returned_r0": "0xfffffffe",
+      "callback_targets": [
+        "0x8c65f348"
+      ],
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 61,
+      "request_status": 0,
+      "device_flags": "0xec7c7e46",
+      "lock_byte_in": 206,
+      "returned_r0": "0xfffffffe",
+      "callback_targets": [
+        "0x8c65f348"
+      ],
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 62,
+      "request_status": 0,
+      "device_flags": "0xce78b76",
+      "lock_byte_in": 109,
+      "returned_r0": "0xfffffffe",
+      "callback_targets": [
+        "0x8c65f348"
+      ],
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    },
+    {
+      "case": 63,
+      "request_status": 0,
+      "device_flags": "0x45576224",
+      "lock_byte_in": 104,
+      "returned_r0": "0xfffffffe",
+      "callback_targets": [
+        "0x8c65f348"
+      ],
+      "complete_ram_cpu_sr_pr_and_fpu_match": true
+    }
+  ]
+}

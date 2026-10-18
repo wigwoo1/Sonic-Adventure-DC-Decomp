@@ -1,0 +1,31 @@
+{
+  "functions_verified": 2,
+  "total_full_state_cases": 256,
+  "comparison_level": "Complete 16 MiB RAM and all GPRs, SR, PR, and return PC compared against the retail SH-4 interpreter.",
+  "scope": "Tests both directions of the three-word task vector transfer with independent and overlapping buffers, code-backed source data, and final aligned source and destination ranges in RAM.",
+  "limitations": [
+    "Uses the project SH-4 interpreter rather than Dreamcast hardware or end-to-end gameplay."
+  ],
+  "binary_sha256": "45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a",
+  "source_sha256": "b1df8486b77963d7e5eb9adc289cef922adf48751b3ba5506f2dbc79a8a0a9af",
+  "routines": [
+    {
+      "module": "1ST_READ.BIN",
+      "load_address": "0x8c010000",
+      "address": "0x8c047d90",
+      "end_exclusive": "0x8c047da2",
+      "retail_span_sha256": "3f75ffb77b08de045ec9767d7d739ec65858d5db884e8bb367fc0e46d41ab7c5",
+      "cases_passed": 128,
+      "name": "sa_vector_copy_to_offset_0x68_8c047d90"
+    },
+    {
+      "module": "1ST_READ.BIN",
+      "load_address": "0x8c010000",
+      "address": "0x8c047da2",
+      "end_exclusive": "0x8c047db4",
+      "retail_span_sha256": "7ffdb5469b3f6134d6c46a935036ea1d619924e16b9f1f6db1a1951a6bd4f63e",
+      "cases_passed": 128,
+      "name": "sa_vector_copy_from_offset_0x68_8c047da2"
+    }
+  ]
+}

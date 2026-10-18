@@ -1,0 +1,1685 @@
+{
+  "module": "1ST_READ.BIN",
+  "cases_passed": 2,
+  "steps_passed": 328,
+  "callback_entries_compared": 66,
+  "binary_sha256": "45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a",
+  "interpreter_sha256": "e1dbae17f07354a51fe7b05258895f980bda38d65b615ff2e8fb9b65dabc75e8",
+  "verifier_sha256": "295baa864fc2c5360e2349f448e5769c94f3023bd31919ce8ecb787bdcd60853",
+  "dll_sha256": "8c477286e2cbae587f832fdc0fc68b3cac4c39a47ea86ce2ccb88e3066f52548",
+  "sources": {
+    "source/sa_audio_work_buffer_initialize_8c65bd2c.c": "c914bc638931ea89953ba80bc9550210f1042712ef5ace2e0a6ca166ec61a93c",
+    "source/sa_sound_stream_record_allocate_8c65bd46.c": "15fc0c22f2414ad6a52edf57d0eae20b9e82cf28da76b789b52754e2364063fb",
+    "source/sa_stream_request_open_prepare_8c65bf42.c": "f071207afc2fb4fabe7b38a46b9e9c3fda75655048c67e2c1143cb31bfa12168",
+    "source/sa_stream_request_position_update_8c600e7a.c": "dbf7201798136862d5375032d2630f020689e60bf36592693bc5d60bcffeb8e8",
+    "source/sa_stream_request_seek_query_8c65bfa4.c": "26ab08e00d20298a71ad64c9287c5183504ac910e15793be84398ad367f493eb",
+    "source/sa_stream_position_set_8c65bfc2.c": "f8a8c9fbd2e43fd8fbfc9dbe06e4092c3b673f7a02c60e3ffa56bf7e3361993c"
+  },
+  "comparison_level": "Complete 16 MiB RAM and GPR/SR/PR/PC after every call, plus complete callback-entry CPU and RAM hashes.",
+  "scope": "Scripted persistent-RAM initialization, 32 consecutive allocations, request position updates, the original native seek/query caller with native callees, stream preparation, position setting, exhaustion, reset, and reuse in cached and uncached RAM aliases.",
+  "limitations": [
+    "Calls are sequenced by this test harness; the original game caller and runtime scheduler have not been recovered by this test.",
+    "The object method remains external: one scenario interprets the retail subtraction helper and one interprets an explicit stack/record-write test fixture; neither is claimed as a native game object method.",
+    "This is subsystem regression evidence, not hardware or whole-game execution."
+  ],
+  "cases": [
+    {
+      "ram_alias": "0x8c000000",
+      "method_address": "0x8c602618",
+      "method_kind": "retail subtraction",
+      "steps_passed": 164,
+      "callback_entries_compared": 33,
+      "events": [
+        {
+          "entry": "0x8c65bd2c",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bd46",
+          "return": "0x8c8a3d90",
+          "callback_entries_compared": 1
+        },
+        {
+          "entry": "0x8c600e7a",
+          "return": "0x0",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfa4",
+          "return": "0x0",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bf42",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfc2",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bd46",
+          "return": "0x8c8a3df4",
+          "callback_entries_compared": 1
+        },
+        {
+          "entry": "0x8c600e7a",
+          "return": "0xffffffef",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfa4",
+          "return": "0x0",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bf42",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfc2",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bd46",
+          "return": "0x8c8a3e58",
+          "callback_entries_compared": 1
+        },
+        {
+          "entry": "0x8c600e7a",
+          "return": "0xffffffef",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfa4",
+          "return": "0x26",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bf42",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfc2",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bd46",
+          "return": "0x8c8a3ebc",
+          "callback_entries_compared": 1
+        },
+        {
+          "entry": "0x8c600e7a",
+          "return": "0xfffffff0",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfa4",
+          "return": "0x26",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bf42",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfc2",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bd46",
+          "return": "0x8c8a3f20",
+          "callback_entries_compared": 1
+        },
+        {
+          "entry": "0x8c600e7a",
+          "return": "0x0",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfa4",
+          "return": "0x4c",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bf42",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfc2",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bd46",
+          "return": "0x8c8a3f84",
+          "callback_entries_compared": 1
+        },
+        {
+          "entry": "0x8c600e7a",
+          "return": "0x0",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfa4",
+          "return": "0x5",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bf42",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfc2",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bd46",
+          "return": "0x8c8a3fe8",
+          "callback_entries_compared": 1
+        },
+        {
+          "entry": "0x8c600e7a",
+          "return": "0xffffffef",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfa4",
+          "return": "0x72",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bf42",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfc2",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bd46",
+          "return": "0x8c8a404c",
+          "callback_entries_compared": 1
+        },
+        {
+          "entry": "0x8c600e7a",
+          "return": "0xfffffff0",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfa4",
+          "return": "0x72",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bf42",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfc2",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bd46",
+          "return": "0x8c8a40b0",
+          "callback_entries_compared": 1
+        },
+        {
+          "entry": "0x8c600e7a",
+          "return": "0x0",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfa4",
+          "return": "0x98",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bf42",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfc2",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bd46",
+          "return": "0x8c8a4114",
+          "callback_entries_compared": 1
+        },
+        {
+          "entry": "0x8c600e7a",
+          "return": "0x0",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfa4",
+          "return": "0x51",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bf42",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfc2",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bd46",
+          "return": "0x8c8a4178",
+          "callback_entries_compared": 1
+        },
+        {
+          "entry": "0x8c600e7a",
+          "return": "0xffffffef",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfa4",
+          "return": "0xbe",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bf42",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfc2",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bd46",
+          "return": "0x8c8a41dc",
+          "callback_entries_compared": 1
+        },
+        {
+          "entry": "0x8c600e7a",
+          "return": "0xfffffff0",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfa4",
+          "return": "0xbe",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bf42",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfc2",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bd46",
+          "return": "0x8c8a4240",
+          "callback_entries_compared": 1
+        },
+        {
+          "entry": "0x8c600e7a",
+          "return": "0x0",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfa4",
+          "return": "0xe4",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bf42",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfc2",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bd46",
+          "return": "0x8c8a42a4",
+          "callback_entries_compared": 1
+        },
+        {
+          "entry": "0x8c600e7a",
+          "return": "0x0",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfa4",
+          "return": "0x9d",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bf42",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfc2",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bd46",
+          "return": "0x8c8a4308",
+          "callback_entries_compared": 1
+        },
+        {
+          "entry": "0x8c600e7a",
+          "return": "0xffffffef",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfa4",
+          "return": "0x10a",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bf42",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfc2",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bd46",
+          "return": "0x8c8a436c",
+          "callback_entries_compared": 1
+        },
+        {
+          "entry": "0x8c600e7a",
+          "return": "0xfffffff0",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfa4",
+          "return": "0x10a",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bf42",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfc2",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bd46",
+          "return": "0x8c8a43d0",
+          "callback_entries_compared": 1
+        },
+        {
+          "entry": "0x8c600e7a",
+          "return": "0x0",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfa4",
+          "return": "0x130",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bf42",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfc2",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bd46",
+          "return": "0x8c8a4434",
+          "callback_entries_compared": 1
+        },
+        {
+          "entry": "0x8c600e7a",
+          "return": "0x0",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfa4",
+          "return": "0xe9",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bf42",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfc2",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bd46",
+          "return": "0x8c8a4498",
+          "callback_entries_compared": 1
+        },
+        {
+          "entry": "0x8c600e7a",
+          "return": "0xffffffef",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfa4",
+          "return": "0x156",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bf42",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfc2",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bd46",
+          "return": "0x8c8a44fc",
+          "callback_entries_compared": 1
+        },
+        {
+          "entry": "0x8c600e7a",
+          "return": "0xfffffff0",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfa4",
+          "return": "0x156",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bf42",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfc2",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bd46",
+          "return": "0x8c8a4560",
+          "callback_entries_compared": 1
+        },
+        {
+          "entry": "0x8c600e7a",
+          "return": "0x0",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfa4",
+          "return": "0x17c",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bf42",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfc2",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bd46",
+          "return": "0x8c8a45c4",
+          "callback_entries_compared": 1
+        },
+        {
+          "entry": "0x8c600e7a",
+          "return": "0x0",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfa4",
+          "return": "0x135",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bf42",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfc2",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bd46",
+          "return": "0x8c8a4628",
+          "callback_entries_compared": 1
+        },
+        {
+          "entry": "0x8c600e7a",
+          "return": "0xffffffef",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfa4",
+          "return": "0x1a2",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bf42",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfc2",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bd46",
+          "return": "0x8c8a468c",
+          "callback_entries_compared": 1
+        },
+        {
+          "entry": "0x8c600e7a",
+          "return": "0xfffffff0",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfa4",
+          "return": "0x1a2",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bf42",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfc2",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bd46",
+          "return": "0x8c8a46f0",
+          "callback_entries_compared": 1
+        },
+        {
+          "entry": "0x8c600e7a",
+          "return": "0x0",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfa4",
+          "return": "0x1c8",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bf42",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfc2",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bd46",
+          "return": "0x8c8a4754",
+          "callback_entries_compared": 1
+        },
+        {
+          "entry": "0x8c600e7a",
+          "return": "0x0",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfa4",
+          "return": "0x181",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bf42",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfc2",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bd46",
+          "return": "0x8c8a47b8",
+          "callback_entries_compared": 1
+        },
+        {
+          "entry": "0x8c600e7a",
+          "return": "0xffffffef",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfa4",
+          "return": "0x1ee",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bf42",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfc2",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bd46",
+          "return": "0x8c8a481c",
+          "callback_entries_compared": 1
+        },
+        {
+          "entry": "0x8c600e7a",
+          "return": "0xfffffff0",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfa4",
+          "return": "0x1ee",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bf42",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfc2",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bd46",
+          "return": "0x8c8a4880",
+          "callback_entries_compared": 1
+        },
+        {
+          "entry": "0x8c600e7a",
+          "return": "0x0",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfa4",
+          "return": "0x214",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bf42",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfc2",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bd46",
+          "return": "0x8c8a48e4",
+          "callback_entries_compared": 1
+        },
+        {
+          "entry": "0x8c600e7a",
+          "return": "0x0",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfa4",
+          "return": "0x1cd",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bf42",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfc2",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bd46",
+          "return": "0x8c8a4948",
+          "callback_entries_compared": 1
+        },
+        {
+          "entry": "0x8c600e7a",
+          "return": "0xffffffef",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfa4",
+          "return": "0x23a",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bf42",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfc2",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bd46",
+          "return": "0x8c8a49ac",
+          "callback_entries_compared": 1
+        },
+        {
+          "entry": "0x8c600e7a",
+          "return": "0xfffffff0",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfa4",
+          "return": "0x23a",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bf42",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfc2",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bd46",
+          "return": "0x0",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bd2c",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bd46",
+          "return": "0x8c8a3d90",
+          "callback_entries_compared": 1
+        }
+      ]
+    },
+    {
+      "ram_alias": "0xac000000",
+      "method_address": "0x8c700000",
+      "method_kind": "explicit stack/record-write fixture",
+      "steps_passed": 164,
+      "callback_entries_compared": 33,
+      "events": [
+        {
+          "entry": "0x8c65bd2c",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bd46",
+          "return": "0x8c8a3d90",
+          "callback_entries_compared": 1
+        },
+        {
+          "entry": "0x8c600e7a",
+          "return": "0x0",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfa4",
+          "return": "0x0",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bf42",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfc2",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bd46",
+          "return": "0x8c8a3df4",
+          "callback_entries_compared": 1
+        },
+        {
+          "entry": "0x8c600e7a",
+          "return": "0xffffffef",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfa4",
+          "return": "0x0",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bf42",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfc2",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bd46",
+          "return": "0x8c8a3e58",
+          "callback_entries_compared": 1
+        },
+        {
+          "entry": "0x8c600e7a",
+          "return": "0xffffffef",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfa4",
+          "return": "0x26",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bf42",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfc2",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bd46",
+          "return": "0x8c8a3ebc",
+          "callback_entries_compared": 1
+        },
+        {
+          "entry": "0x8c600e7a",
+          "return": "0xfffffff0",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfa4",
+          "return": "0x26",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bf42",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfc2",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bd46",
+          "return": "0x8c8a3f20",
+          "callback_entries_compared": 1
+        },
+        {
+          "entry": "0x8c600e7a",
+          "return": "0x0",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfa4",
+          "return": "0x4c",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bf42",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfc2",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bd46",
+          "return": "0x8c8a3f84",
+          "callback_entries_compared": 1
+        },
+        {
+          "entry": "0x8c600e7a",
+          "return": "0x0",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfa4",
+          "return": "0x5",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bf42",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfc2",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bd46",
+          "return": "0x8c8a3fe8",
+          "callback_entries_compared": 1
+        },
+        {
+          "entry": "0x8c600e7a",
+          "return": "0xffffffef",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfa4",
+          "return": "0x72",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bf42",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfc2",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bd46",
+          "return": "0x8c8a404c",
+          "callback_entries_compared": 1
+        },
+        {
+          "entry": "0x8c600e7a",
+          "return": "0xfffffff0",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfa4",
+          "return": "0x72",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bf42",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfc2",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bd46",
+          "return": "0x8c8a40b0",
+          "callback_entries_compared": 1
+        },
+        {
+          "entry": "0x8c600e7a",
+          "return": "0x0",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfa4",
+          "return": "0x98",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bf42",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfc2",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bd46",
+          "return": "0x8c8a4114",
+          "callback_entries_compared": 1
+        },
+        {
+          "entry": "0x8c600e7a",
+          "return": "0x0",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfa4",
+          "return": "0x51",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bf42",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfc2",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bd46",
+          "return": "0x8c8a4178",
+          "callback_entries_compared": 1
+        },
+        {
+          "entry": "0x8c600e7a",
+          "return": "0xffffffef",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfa4",
+          "return": "0xbe",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bf42",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfc2",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bd46",
+          "return": "0x8c8a41dc",
+          "callback_entries_compared": 1
+        },
+        {
+          "entry": "0x8c600e7a",
+          "return": "0xfffffff0",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfa4",
+          "return": "0xbe",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bf42",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfc2",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bd46",
+          "return": "0x8c8a4240",
+          "callback_entries_compared": 1
+        },
+        {
+          "entry": "0x8c600e7a",
+          "return": "0x0",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfa4",
+          "return": "0xe4",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bf42",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfc2",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bd46",
+          "return": "0x8c8a42a4",
+          "callback_entries_compared": 1
+        },
+        {
+          "entry": "0x8c600e7a",
+          "return": "0x0",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfa4",
+          "return": "0x9d",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bf42",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfc2",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bd46",
+          "return": "0x8c8a4308",
+          "callback_entries_compared": 1
+        },
+        {
+          "entry": "0x8c600e7a",
+          "return": "0xffffffef",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfa4",
+          "return": "0x10a",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bf42",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfc2",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bd46",
+          "return": "0x8c8a436c",
+          "callback_entries_compared": 1
+        },
+        {
+          "entry": "0x8c600e7a",
+          "return": "0xfffffff0",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfa4",
+          "return": "0x10a",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bf42",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfc2",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bd46",
+          "return": "0x8c8a43d0",
+          "callback_entries_compared": 1
+        },
+        {
+          "entry": "0x8c600e7a",
+          "return": "0x0",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfa4",
+          "return": "0x130",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bf42",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfc2",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bd46",
+          "return": "0x8c8a4434",
+          "callback_entries_compared": 1
+        },
+        {
+          "entry": "0x8c600e7a",
+          "return": "0x0",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfa4",
+          "return": "0xe9",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bf42",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfc2",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bd46",
+          "return": "0x8c8a4498",
+          "callback_entries_compared": 1
+        },
+        {
+          "entry": "0x8c600e7a",
+          "return": "0xffffffef",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfa4",
+          "return": "0x156",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bf42",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfc2",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bd46",
+          "return": "0x8c8a44fc",
+          "callback_entries_compared": 1
+        },
+        {
+          "entry": "0x8c600e7a",
+          "return": "0xfffffff0",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfa4",
+          "return": "0x156",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bf42",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfc2",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bd46",
+          "return": "0x8c8a4560",
+          "callback_entries_compared": 1
+        },
+        {
+          "entry": "0x8c600e7a",
+          "return": "0x0",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfa4",
+          "return": "0x17c",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bf42",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfc2",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bd46",
+          "return": "0x8c8a45c4",
+          "callback_entries_compared": 1
+        },
+        {
+          "entry": "0x8c600e7a",
+          "return": "0x0",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfa4",
+          "return": "0x135",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bf42",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfc2",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bd46",
+          "return": "0x8c8a4628",
+          "callback_entries_compared": 1
+        },
+        {
+          "entry": "0x8c600e7a",
+          "return": "0xffffffef",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfa4",
+          "return": "0x1a2",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bf42",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfc2",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bd46",
+          "return": "0x8c8a468c",
+          "callback_entries_compared": 1
+        },
+        {
+          "entry": "0x8c600e7a",
+          "return": "0xfffffff0",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfa4",
+          "return": "0x1a2",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bf42",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfc2",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bd46",
+          "return": "0x8c8a46f0",
+          "callback_entries_compared": 1
+        },
+        {
+          "entry": "0x8c600e7a",
+          "return": "0x0",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfa4",
+          "return": "0x1c8",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bf42",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfc2",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bd46",
+          "return": "0x8c8a4754",
+          "callback_entries_compared": 1
+        },
+        {
+          "entry": "0x8c600e7a",
+          "return": "0x0",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfa4",
+          "return": "0x181",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bf42",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfc2",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bd46",
+          "return": "0x8c8a47b8",
+          "callback_entries_compared": 1
+        },
+        {
+          "entry": "0x8c600e7a",
+          "return": "0xffffffef",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfa4",
+          "return": "0x1ee",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bf42",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfc2",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bd46",
+          "return": "0x8c8a481c",
+          "callback_entries_compared": 1
+        },
+        {
+          "entry": "0x8c600e7a",
+          "return": "0xfffffff0",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfa4",
+          "return": "0x1ee",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bf42",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfc2",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bd46",
+          "return": "0x8c8a4880",
+          "callback_entries_compared": 1
+        },
+        {
+          "entry": "0x8c600e7a",
+          "return": "0x0",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfa4",
+          "return": "0x214",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bf42",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfc2",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bd46",
+          "return": "0x8c8a48e4",
+          "callback_entries_compared": 1
+        },
+        {
+          "entry": "0x8c600e7a",
+          "return": "0x0",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfa4",
+          "return": "0x1cd",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bf42",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfc2",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bd46",
+          "return": "0x8c8a4948",
+          "callback_entries_compared": 1
+        },
+        {
+          "entry": "0x8c600e7a",
+          "return": "0xffffffef",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfa4",
+          "return": "0x23a",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bf42",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfc2",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bd46",
+          "return": "0x8c8a49ac",
+          "callback_entries_compared": 1
+        },
+        {
+          "entry": "0x8c600e7a",
+          "return": "0xfffffff0",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfa4",
+          "return": "0x23a",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bf42",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bfc2",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bd46",
+          "return": "0x0",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bd2c",
+          "return": "0x1",
+          "callback_entries_compared": 0
+        },
+        {
+          "entry": "0x8c65bd46",
+          "return": "0x8c8a3d90",
+          "callback_entries_compared": 1
+        }
+      ]
+    }
+  ]
+}

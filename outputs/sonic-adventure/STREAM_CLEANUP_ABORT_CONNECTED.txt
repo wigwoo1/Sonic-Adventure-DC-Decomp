@@ -1,0 +1,112 @@
+Connected native stream cleanup and request abort
+=================================================
+Native disc-platform follow-up: NATIVE_DISC_PLATFORM.txt documents a separate
+12-case connection to actual user-disc reads and the new host queue. It matches
+256 service boundaries and two host guards. The 90-case suite below retains
+its controlled service scenarios and remains independently reproducible.
+
+Whole-project weighted milestone score: 10%. The full game and ports remain
+unfinished; this score is not measured code coverage.
+
+Native connection
+-----------------
+source/sa_stream_cleanup_abort_native.c connects the original pending-cleanup
+caller at 0x8c65bf60 to native abort at 0x8c6013d2, finalization at 0x8c600cf0,
+and request status at 0x8c6013a4. Timer and subtraction helpers are also native.
+No cleanup/abort/finalizer/status code is interpreted on the native test path.
+Dispatch context is kept per
+invocation, without global or thread-local service state.
+
+The pending-cleanup service API now passes its context into the abort callback
+and receives a host status back. If abort reaches its execution budget or a
+service fails, cleanup propagates the host error immediately. It preserves
+partial state rather than running the final clock/subtraction and clearing
+the pending flag after an incomplete abort.
+
+What passed
+-----------
+90 connected scenarios compared complete 16 MiB RAM and GPR/SR/PR/PC state
+against the original nested retail call chain. They matched 1286 outer and
+nested service entries, 456 ordered timer reads, and external device-call order.
+Thirty baseline scenarios retain the pump fixture; thirty more execute native
+backend polling at 0x8c6005c2 through source/sa_file_backend_poll_state.c.
+Thirty further scenarios execute the lower pump wrappers at 0x8c6452d6 and
+0x8c10d960, reaching the runtime vector with R6=0 and operation R7=2.
+The latter tail uses source/sa_indirect_service_tail_wrappers_8c10d938.c.
+The error-aware calling wrapper shares source/sa_file_backend_poll_state.c.
+Both backend groups now execute the existing native completion processor at
+0x8c5ffa12 via source/sa_file_completion_connected.c. This adapter aliases the
+connected CPU fields into the legacy integer-only routine ABI and sets PC at
+each subordinate service entry. Successful returns restore PC from PR; host
+errors retain the exact partial frame. The connected scenarios supply device
+status 0x43. Other statuses are outside this connected milestone's coverage.
+The deepest thirty cases now also execute the device-status formatter at
+0x8c6450ea and lower tail at 0x8c10d94c. The shared runtime-vector fixture receives
+operation 1 and returns raw status 4, which the formatter translates to 0x43.
+The combined scenarios exercised all 150 indexed abort instructions.
+
+Cases include null/inactive requests, immediate or delayed readiness, multiple
+pump iterations, mode 4, timeout, owner/mode changes, rollover, cancellation
+interrupt masking/restoration, and finalizer errors, through both RAM aliases.
+
+Eight host-guard checks cover atomic rejection of missing services, a nested
+abort budget stop, and a device-service error. The latter two match RAM/CPU
+at the corresponding retail instruction/service boundary and keep work pending.
+The fourth bounds a retargeted cancellation-tail cycle. See REQUEST_DEVICE_CALLBACKS.txt.
+The fifth matches a failure inside the native backend's device call, including
+its saved PR frame and unchanged pending flag.
+The sixth checks failure at the runtime-vector target after both lower pump
+wrappers, preserving full RAM/CPU, both saved frames and pending work.
+The seventh stops at a failed completion-status callback, matching complete
+RAM/CPU, the completion processor's partial frame and the pending cleanup flag.
+The eighth fails at operation 1 after the formatter and lower tail, preserving
+the complete partial frame and pending cleanup work.
+
+The independent suites also passed after the service API change: 96 cleanup
+cases and 30 standalone abort scenarios. Their evidence hashes were refreshed.
+The registry now has 990 entries representing 987 unique module/address pairs.
+
+Expanded completion adapter verification
+----------------------------------------
+verify_file_completion_connected.py independently checks the exported adapter
+against the original instructions for 324 cases and 438 service entries.
+Statuses 0/1/4/0x41/0x43/5/0x40/0x123/0xffffffef, modes 0/1/4, optional
+notifications, both RAM aliases and pending-query results 0/1/2 are covered.
+Full 16 MiB RAM and GPR/SR/PR/PC match at every service entry and return.
+Six guards cover missing dispatch, failed status/pending callbacks, global/local
+error notifications and completion notification. Partial frames match retail.
+The fixture dispatcher also verifies the adapter forwards invocation context.
+Independent owner/status/gate/error assertions supplement retail comparison.
+Evidence: analysis/file_completion_connected_verification.json, including hashes
+of source, DLL, binary, listing, verifier and interpreter. Device callbacks remain
+fixtures; modes 7/8 and special error remapping are outside this focused suite.
+Run verify_file_completion_connected.py after the combined build to reproduce.
+The full accumulated project suite was not run.
+
+Reproduce
+---------
+Open PowerShell in outputs/sonic-adventure and run:
+
+  .\build_stream_cleanup_abort_native.ps1
+  & 'C:\Users\wigwo\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe' .\verify_stream_cleanup_abort_native.py
+
+Expected output:
+  90 connected cleanup/abort cases, 1286 service entries and 456 timer reads passed
+
+Evidence is analysis/stream_cleanup_abort_native_verification.json. It records
+the linked source, DLL, binary, shared fixture harness, verifier, and interpreter
+hashes. Build, verification and hash-checked registration are integrated into
+build_and_verify.ps1.
+
+Remaining scope
+---------------
+The real default cancellation wrappers now run natively. The external runtime
+vector remains a fixture boundary in the deepest chain, for operations 1/2/8.
+Completion and device-status formatting themselves execute natively there.
+Earlier baseline cases retain the device-table pumping fixture.
+The backend dispatcher runs natively in sixty scenarios; thirty also execute
+both lower pump wrappers. Full native
+implementations, hardware interactions, concurrency and
+whole-game execution are not established by these tests. Instruction execution
+coverage does not prove every possible input state. The full accumulated
+project suite was not run for this connection.

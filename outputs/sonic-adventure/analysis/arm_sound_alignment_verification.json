@@ -1,0 +1,13 @@
+{
+  "word_load_cases_passed": 32,
+  "word_store_cases_passed": 16,
+  "byte_store_cases_passed": 16,
+  "reference_corrections": 108,
+  "dll_sha256": "4ad2c321b0809d840700a8da0acbdabc1ad756803cc9a3aae0c48bb192024489",
+  "header_sha256": "397f87896e2e6c4c2979de73622484280c1b75f9f132758e137861db6097cb07",
+  "verifier_sha256": "9c5f48960f36479ca3f234595d3f5f79c4b5f473710bc83da598ee3bcb9e8f37",
+  "adapter_sha256": "6c4ca90aeef010072d5ea4b2da5c52e7c243a28ddacfba30564e6ecbe66c52dc",
+  "scope": "All four word offsets, two independent hardcoded rotate tables, aligned physical stores, untouched adjacent bytes and byte-addressed stores; original payload instructions and manual-derived reference corrections. Unadapted Unicorn differs for the tested unaligned word reads.",
+  "reference": "ARM Architecture Reference Manual ARM DDI 0100I A2.8, https://e2e.ti.com/cfs-file/__key/communityserver-discussions-components-files/1023/ARM-Architecture.pdf",
+  "limitations": "Unicorn is augmented only for unaligned single-word transfers. Word-aligned block-transfer stacks remain a caller contract; physical AICA timing and exception entry are not tested."
+}

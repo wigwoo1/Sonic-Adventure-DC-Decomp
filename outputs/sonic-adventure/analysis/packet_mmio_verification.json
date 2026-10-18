@@ -1,0 +1,29 @@
+{
+  "retail_binary_sha256": "45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a",
+  "source": "source/packet_mmio.c",
+  "source_sha256": "14a41c628d06492c6a5c4d0f62abb0bb96ca21661c9c07609a629efb37d35138",
+  "dll_sha256": "beb2b3c89c786b7124aee8175660cd58b2d47f0fe01205cae932b3d6056f2e85",
+  "routines": [
+    {
+      "name": "mmio_transition_wait",
+      "routine_start": "0x8c604594",
+      "routine_end_exclusive": "0x8c6045a8",
+      "cases_passed": 25,
+      "retail_instructions_executed": 550,
+      "scope": "MMIO polling transition compared over 25 deterministic sequences, including values with only bits outside the retail mask set.",
+      "retail_span_sha256": "69f29563d05b2bd2fb1698f5e69c588eda2f65fe7fd902f6bf49d45a901f33b0"
+    },
+    {
+      "name": "mmio_idle_flag_store",
+      "routine_start": "0x8c6045a8",
+      "routine_end_exclusive": "0x8c6045b4",
+      "cases_passed": 644,
+      "retail_instructions_executed": 3864,
+      "scope": "Output memory comparison for all low-byte MMIO values, fixed edge values and 64 deterministic words, with cached and uncached RAM aliases.",
+      "retail_span_sha256": "0e5047def861d958b331f252bd671a719c83dfc02d5c63ee9823c3ed0c961189"
+    }
+  ],
+  "limitations": [
+    "MMIO is injected through a host read adapter; electrical timing, asynchronous register changes outside supplied sequences, and SH-4 bus faults are not modeled."
+  ]
+}

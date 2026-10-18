@@ -1,0 +1,34 @@
+address	opcode	instruction	references
+8c09878c	2fe6	mov.l r14,@-r15	DATA:Stack[-0x4] 
+8c09878e	6043	mov r4,r0	
+8c098790	2fd6	mov.l r13,@-r15	DATA:Stack[-0x8] 
+8c098792	8808	cmp/eq #0x8,r0	
+8c098794	2fc6	mov.l r12,@-r15	DATA:Stack[-0xc] 
+8c098796	2fb6	mov.l r11,@-r15	DATA:Stack[-0x10] 
+8c098798	4f22	sts.l PR,@-r15	DATA:Stack[-0x14] 
+8c09879a	8b00	bf 0x8c09879e	CONDITIONAL_JUMP:8c09879e=4408d010 
+8c09879c	e407	mov #0x7,r4	
+8c09879e	d010	mov.l 0x8c0987e0,r0	READ:8c0987e0=8c79f04c DATA:8c79f04c 
+8c0987a0	4408	shll2 r4	
+8c0987a2	44e	mov.l @(r0,r4),r4	READ:8c79f068 DATA:8c79f04c 
+8c0987a4	2448	tst r4,r4	
+8c0987a6	890c	bt 0x8c0987c2	CONDITIONAL_JUMP:8c0987c2=6bf64f26 
+8c0987a8	dd10	mov.l 0x8c0987ec,r13	READ:8c0987ec=8c1c1d40 
+8c0987aa	eb00	mov #0x0,r11	
+8c0987ac	5e44	mov.l @(0x10,r4),r14	
+8c0987ae	6c42	mov.l @r4,r12	
+8c0987b0	2ee8	tst r14,r14	
+8c0987b2	8d02	bt/s 0x8c0987ba	CONDITIONAL_JUMP:8c0987ba=244864c3 
+8c0987b4	2de2	_mov.l r14,@r13	WRITE:8c1c1d40=0 
+8c0987b6	4e0b	jsr @r14	
+8c0987b8	9	_nop	
+8c0987ba	64c3	mov r12,r4	
+8c0987bc	2448	tst r4,r4	
+8c0987be	8ff5	bf/s 0x8c0987ac	CONDITIONAL_JUMP:8c0987ac=6c425e44 
+8c0987c0	2db2	_mov.l r11,@r13	WRITE:8c1c1d40=0 
+8c0987c2	4f26	lds.l @r15+,PR	DATA:Stack[-0x14] 
+8c0987c4	6bf6	mov.l @r15+,r11	DATA:Stack[-0x10] 
+8c0987c6	6cf6	mov.l @r15+,r12	DATA:Stack[-0xc] 
+8c0987c8	6df6	mov.l @r15+,r13	DATA:Stack[-0x8] 
+8c0987ca	b	rts	
+8c0987cc	6ef6	_mov.l @r15+,r14	

@@ -1,0 +1,39 @@
+address	opcode	instruction	references
+8c098a10	d415	mov.l 0x8c098a68,r4	READ:8c098a68=8c7ee8e0 
+8c098a12	e100	mov #0x0,r1	
+8c098a14	d016	mov.l 0x8c098a70,r0	READ:8c098a70=90000 
+8c098a16	e5ff	mov #-0x1,r5	
+8c098a18	d714	mov.l 0x8c098a6c,r7	READ:8c098a6c=8c79f03c 
+8c098a1a	655c	extu.b r5,r5	
+8c098a1c	2fe6	mov.l r14,@-r15	DATA:Stack[-0x4] 
+8c098a1e	6e43	mov r4,r14	
+8c098a20	2742	mov.l r4,@r7	WRITE:8c79f03c 
+8c098a22	3e0c	add r0,r14	
+8c098a24	6613	mov r1,r6	
+8c098a26	2450	mov.b r5,@r4	WRITE:8c7ee8e0 WRITE:8c7ee8e3 
+8c098a28	7401	add #0x1,r4	
+8c098a2a	2450	mov.b r5,@r4	WRITE:8c7ee8e1 WRITE:8c7ee8e4 
+8c098a2c	7603	add #0x3,r6	
+8c098a2e	7401	add #0x1,r4	
+8c098a30	3602	cmp/hs r0,r6	
+8c098a32	2450	mov.b r5,@r4	WRITE:8c7ee8e2 WRITE:8c7ee8e5 
+8c098a34	8ff7	bf/s 0x8c098a26	CONDITIONAL_JUMP:8c098a26=74012450 
+8c098a36	7401	_add #0x1,r4	
+8c098a38	6272	mov.l @r7,r2	READ:8c79f03c 
+8c098a3a	22e2	mov.l r14,@r2	WRITE:8c7ee8e0 
+8c098a3c	6372	mov.l @r7,r3	READ:8c79f03c 
+8c098a3e	1311	mov.l r1,@(0x4,r3)	WRITE:8c7ee8e4 
+8c098a40	6272	mov.l @r7,r2	READ:8c79f03c 
+8c098a42	12e2	mov.l r14,@(0x8,r2)	WRITE:8c7ee8e8 
+8c098a44	6372	mov.l @r7,r3	READ:8c79f03c 
+8c098a46	1313	mov.l r1,@(0xc,r3)	WRITE:8c7ee8ec 
+8c098a48	2e12	mov.l r1,@r14	WRITE:8c87e8e0 
+8c098a4a	6272	mov.l @r7,r2	READ:8c79f03c 
+8c098a4c	1e21	mov.l r2,@(0x4,r14)	WRITE:8c87e8e4 DATA:8c7ee8e0 
+8c098a4e	d209	mov.l 0x8c098a74,r2	READ:8c098a74=8c79f040 
+8c098a50	1e12	mov.l r1,@(0x8,r14)	WRITE:8c87e8e8 
+8c098a52	6372	mov.l @r7,r3	READ:8c79f03c 
+8c098a54	1e33	mov.l r3,@(0xc,r14)	WRITE:8c87e8ec DATA:8c7ee8e0 
+8c098a56	2212	mov.l r1,@r2	WRITE:8c79f040 
+8c098a58	b	rts	
+8c098a5a	6ef6	_mov.l @r15+,r14	

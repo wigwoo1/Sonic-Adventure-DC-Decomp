@@ -1,0 +1,24 @@
+{
+  "cases_passed": 128,
+  "comparison_level": "Complete 16 MiB RAM and all GPRs, SR, PR, and return PC compared against the retail SH-4 interpreter.",
+  "scope": "The eight-byte routine at 0x8c04f8ec loads the fixed destination from a PC-relative literal, sign-extends R4\u2019s low byte, and stores the low 16 bits at 0x8c7493c6 in the RTS delay slot. Tests cover signed-byte boundaries, discarded upper register bits, unaligned destination neighbors, and varied CPU state.",
+  "limitations": [
+    "Uses the project SH-4 interpreter rather than Dreamcast hardware or end-to-end gameplay.",
+    "The destination field\u2019s higher-level meaning remains unidentified."
+  ],
+  "binary_sha256": "45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a",
+  "retail_span_sha256": "8d14357d4345a3b9880603a4dd987dcce3786506431c963e94baaf076029cb00",
+  "literal_address": "0x8c04f954",
+  "literal_value": "0x8c7493c6",
+  "source_sha256": "4b573131726b0c043450199a970827c683b89b583f8fa9e076fa43593896c062",
+  "routines": [
+    {
+      "module": "1ST_READ.BIN",
+      "load_address": "0x8c010000",
+      "address": "0x8c04f8ec",
+      "end_exclusive": "0x8c04f8f4",
+      "retail_span_sha256": "8d14357d4345a3b9880603a4dd987dcce3786506431c963e94baaf076029cb00",
+      "cases_passed": 128
+    }
+  ]
+}

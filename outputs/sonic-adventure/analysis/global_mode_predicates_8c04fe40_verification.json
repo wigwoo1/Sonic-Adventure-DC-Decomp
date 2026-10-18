@@ -1,0 +1,31 @@
+{
+  "functions_verified": 2,
+  "total_full_state_cases": 256,
+  "comparison_level": "Complete 16 MiB RAM and all GPRs, SR, PR, and return PC compared against the retail SH-4 interpreter.",
+  "scope": "Tests the mode == 0x10 and mode in {0x0f, 4, 2} predicates with edge values, randomized field targets, code reads, the pointer literal, and the final aligned RAM word.",
+  "limitations": [
+    "Uses the project SH-4 interpreter rather than Dreamcast hardware or end-to-end gameplay."
+  ],
+  "binary_sha256": "45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a",
+  "source_sha256": "1427ae702771aeafb03511a0d7b19a25a3e9f2ad9ed5b226f9df19898170f19c",
+  "routines": [
+    {
+      "module": "1ST_READ.BIN",
+      "load_address": "0x8c010000",
+      "address": "0x8c04fe40",
+      "end_exclusive": "0x8c04fe4a",
+      "retail_span_sha256": "e3dbecbcfa49243d86232f293db49d9b545a96847cbfb56346b18dd7214be691",
+      "cases_passed": 128,
+      "name": "sa_global_mode_is_0x10_8c04fe40"
+    },
+    {
+      "module": "1ST_READ.BIN",
+      "load_address": "0x8c010000",
+      "address": "0x8c04fe4a",
+      "end_exclusive": "0x8c04fe6a",
+      "retail_span_sha256": "ce3949e4aa9b50b83d9d9019895457f0b553bf0cf2851685ac92529c205e17d0",
+      "cases_passed": 128,
+      "name": "sa_global_mode_is_0xf_4_or_2_8c04fe4a"
+    }
+  ]
+}

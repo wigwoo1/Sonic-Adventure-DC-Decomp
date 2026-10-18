@@ -1,0 +1,1000 @@
+{
+  "functions_verified": 3,
+  "total_abi_cases": 192,
+  "comparison_level": "Return register R0, preserved registers R8-R15, PR/PC, and complete RAM; caller-clobbered R1-R7 and SR are not compared.",
+  "source_sha256": "3b0bb05a5da6c56fa681e892b9dfee1a1379c052112301cd12a5b94a64c126c0",
+  "scope": "Three input bitset helpers: signed bit test, population count over 17 bytes, and key-index mapping. Compared return value, preserved R8-R15, PR/PC, and full 16 MiB RAM against retail SH-4 execution across edge and randomized inputs. Caller-clobbered R1-R7 and SR are excluded because the C translation need not reproduce scratch-register allocation.",
+  "limitations": [
+    "Negative bit indices were tested against retail execution, including wrapped byte offsets; public callers still need complete ABI and lifecycle analysis.",
+    "Verification uses the project partial SH-4 interpreter, not Dreamcast hardware or end-to-end game execution."
+  ],
+  "routines": [
+    {
+      "address": "0x8c0a68d8",
+      "end_exclusive": "0x8c0a6918",
+      "kind": "bit_test",
+      "retail_span_sha256": "feb00ed383db961990cd7f2a18bf49ce74cc3d9f558ab7105459dfc6a401a811",
+      "cases_passed": 64,
+      "cases": [
+        {
+          "case": 0,
+          "retail_instructions": 27,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 1,
+          "retail_instructions": 28,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 2,
+          "retail_instructions": 28,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 3,
+          "retail_instructions": 28,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 4,
+          "retail_instructions": 28,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 5,
+          "retail_instructions": 28,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 6,
+          "retail_instructions": 28,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 7,
+          "retail_instructions": 23,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 8,
+          "retail_instructions": 24,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 9,
+          "retail_instructions": 23,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 10,
+          "retail_instructions": 24,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 11,
+          "retail_instructions": 23,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 12,
+          "retail_instructions": 23,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 13,
+          "retail_instructions": 24,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 14,
+          "retail_instructions": 23,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 15,
+          "retail_instructions": 24,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 16,
+          "retail_instructions": 23,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 17,
+          "retail_instructions": 24,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 18,
+          "retail_instructions": 23,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 19,
+          "retail_instructions": 23,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 20,
+          "retail_instructions": 24,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 21,
+          "retail_instructions": 24,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 22,
+          "retail_instructions": 24,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 23,
+          "retail_instructions": 24,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 24,
+          "retail_instructions": 24,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 25,
+          "retail_instructions": 23,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 26,
+          "retail_instructions": 23,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 27,
+          "retail_instructions": 23,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 28,
+          "retail_instructions": 23,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 29,
+          "retail_instructions": 24,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 30,
+          "retail_instructions": 24,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 31,
+          "retail_instructions": 23,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 32,
+          "retail_instructions": 24,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 33,
+          "retail_instructions": 23,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 34,
+          "retail_instructions": 23,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 35,
+          "retail_instructions": 23,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 36,
+          "retail_instructions": 23,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 37,
+          "retail_instructions": 24,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 38,
+          "retail_instructions": 24,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 39,
+          "retail_instructions": 24,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 40,
+          "retail_instructions": 23,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 41,
+          "retail_instructions": 24,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 42,
+          "retail_instructions": 23,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 43,
+          "retail_instructions": 23,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 44,
+          "retail_instructions": 24,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 45,
+          "retail_instructions": 23,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 46,
+          "retail_instructions": 23,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 47,
+          "retail_instructions": 24,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 48,
+          "retail_instructions": 23,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 49,
+          "retail_instructions": 24,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 50,
+          "retail_instructions": 24,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 51,
+          "retail_instructions": 23,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 52,
+          "retail_instructions": 24,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 53,
+          "retail_instructions": 23,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 54,
+          "retail_instructions": 24,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 55,
+          "retail_instructions": 24,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 56,
+          "retail_instructions": 23,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 57,
+          "retail_instructions": 24,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 58,
+          "retail_instructions": 23,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 59,
+          "retail_instructions": 24,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 60,
+          "retail_instructions": 24,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 61,
+          "retail_instructions": 24,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 62,
+          "retail_instructions": 24,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 63,
+          "retail_instructions": 24,
+          "full_state_and_ram_match": true
+        }
+      ]
+    },
+    {
+      "address": "0x8c0a6960",
+      "end_exclusive": "0x8c0a6992",
+      "kind": "bit_count",
+      "retail_span_sha256": "e9c6e37a11d0d6746149c1ee1e2814c9d5f3fd338a62295efb598f19e15f9b7f",
+      "cases_passed": 64,
+      "cases": [
+        {
+          "case": 0,
+          "retail_instructions": 1192,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 1,
+          "retail_instructions": 1167,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 2,
+          "retail_instructions": 1171,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 3,
+          "retail_instructions": 1201,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 4,
+          "retail_instructions": 1117,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 5,
+          "retail_instructions": 1181,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 6,
+          "retail_instructions": 1097,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 7,
+          "retail_instructions": 1045,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 8,
+          "retail_instructions": 1225,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 9,
+          "retail_instructions": 1195,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 10,
+          "retail_instructions": 1053,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 11,
+          "retail_instructions": 1156,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 12,
+          "retail_instructions": 1188,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 13,
+          "retail_instructions": 1195,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 14,
+          "retail_instructions": 1240,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 15,
+          "retail_instructions": 1188,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 16,
+          "retail_instructions": 1066,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 17,
+          "retail_instructions": 1125,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 18,
+          "retail_instructions": 1079,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 19,
+          "retail_instructions": 1073,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 20,
+          "retail_instructions": 1094,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 21,
+          "retail_instructions": 1216,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 22,
+          "retail_instructions": 1032,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 23,
+          "retail_instructions": 1122,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 24,
+          "retail_instructions": 1184,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 25,
+          "retail_instructions": 1207,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 26,
+          "retail_instructions": 1121,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 27,
+          "retail_instructions": 1179,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 28,
+          "retail_instructions": 1201,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 29,
+          "retail_instructions": 1180,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 30,
+          "retail_instructions": 1133,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 31,
+          "retail_instructions": 1071,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 32,
+          "retail_instructions": 1181,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 33,
+          "retail_instructions": 1175,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 34,
+          "retail_instructions": 1129,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 35,
+          "retail_instructions": 1198,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 36,
+          "retail_instructions": 1229,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 37,
+          "retail_instructions": 1124,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 38,
+          "retail_instructions": 1158,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 39,
+          "retail_instructions": 1120,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 40,
+          "retail_instructions": 1139,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 41,
+          "retail_instructions": 1156,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 42,
+          "retail_instructions": 1113,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 43,
+          "retail_instructions": 1095,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 44,
+          "retail_instructions": 1087,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 45,
+          "retail_instructions": 1227,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 46,
+          "retail_instructions": 1186,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 47,
+          "retail_instructions": 1073,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 48,
+          "retail_instructions": 1142,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 49,
+          "retail_instructions": 1123,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 50,
+          "retail_instructions": 1190,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 51,
+          "retail_instructions": 1207,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 52,
+          "retail_instructions": 1183,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 53,
+          "retail_instructions": 1094,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 54,
+          "retail_instructions": 1060,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 55,
+          "retail_instructions": 1218,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 56,
+          "retail_instructions": 1131,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 57,
+          "retail_instructions": 1188,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 58,
+          "retail_instructions": 1192,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 59,
+          "retail_instructions": 1179,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 60,
+          "retail_instructions": 1214,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 61,
+          "retail_instructions": 1135,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 62,
+          "retail_instructions": 1201,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 63,
+          "retail_instructions": 1233,
+          "full_state_and_ram_match": true
+        }
+      ]
+    },
+    {
+      "address": "0x8c0a6992",
+      "end_exclusive": "0x8c0a69a8",
+      "kind": "index_to_code",
+      "retail_span_sha256": "24129495fd88aa3348bfe8fac42f9364017b5394568380c1cb3f27debbe092b6",
+      "cases_passed": 64,
+      "cases": [
+        {
+          "case": 0,
+          "retail_instructions": 9,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 1,
+          "retail_instructions": 9,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 2,
+          "retail_instructions": 10,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 3,
+          "retail_instructions": 10,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 4,
+          "retail_instructions": 10,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 5,
+          "retail_instructions": 11,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 6,
+          "retail_instructions": 11,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 7,
+          "retail_instructions": 11,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 8,
+          "retail_instructions": 11,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 9,
+          "retail_instructions": 11,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 10,
+          "retail_instructions": 11,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 11,
+          "retail_instructions": 11,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 12,
+          "retail_instructions": 11,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 13,
+          "retail_instructions": 11,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 14,
+          "retail_instructions": 11,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 15,
+          "retail_instructions": 11,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 16,
+          "retail_instructions": 11,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 17,
+          "retail_instructions": 9,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 18,
+          "retail_instructions": 9,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 19,
+          "retail_instructions": 9,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 20,
+          "retail_instructions": 9,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 21,
+          "retail_instructions": 11,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 22,
+          "retail_instructions": 11,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 23,
+          "retail_instructions": 11,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 24,
+          "retail_instructions": 11,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 25,
+          "retail_instructions": 9,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 26,
+          "retail_instructions": 11,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 27,
+          "retail_instructions": 9,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 28,
+          "retail_instructions": 9,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 29,
+          "retail_instructions": 9,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 30,
+          "retail_instructions": 9,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 31,
+          "retail_instructions": 11,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 32,
+          "retail_instructions": 11,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 33,
+          "retail_instructions": 9,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 34,
+          "retail_instructions": 9,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 35,
+          "retail_instructions": 9,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 36,
+          "retail_instructions": 11,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 37,
+          "retail_instructions": 11,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 38,
+          "retail_instructions": 9,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 39,
+          "retail_instructions": 9,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 40,
+          "retail_instructions": 9,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 41,
+          "retail_instructions": 11,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 42,
+          "retail_instructions": 11,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 43,
+          "retail_instructions": 11,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 44,
+          "retail_instructions": 11,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 45,
+          "retail_instructions": 9,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 46,
+          "retail_instructions": 9,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 47,
+          "retail_instructions": 11,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 48,
+          "retail_instructions": 11,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 49,
+          "retail_instructions": 9,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 50,
+          "retail_instructions": 11,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 51,
+          "retail_instructions": 9,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 52,
+          "retail_instructions": 9,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 53,
+          "retail_instructions": 9,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 54,
+          "retail_instructions": 11,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 55,
+          "retail_instructions": 9,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 56,
+          "retail_instructions": 9,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 57,
+          "retail_instructions": 11,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 58,
+          "retail_instructions": 9,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 59,
+          "retail_instructions": 9,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 60,
+          "retail_instructions": 11,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 61,
+          "retail_instructions": 9,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 62,
+          "retail_instructions": 11,
+          "full_state_and_ram_match": true
+        },
+        {
+          "case": 63,
+          "retail_instructions": 9,
+          "full_state_and_ram_match": true
+        }
+      ]
+    }
+  ]
+}

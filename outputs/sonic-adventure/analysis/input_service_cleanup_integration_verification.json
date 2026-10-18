@@ -1,0 +1,51 @@
+{
+  "module": "1ST_READ.BIN",
+  "entry_address": "0x8c647198",
+  "integrated_cleanup_address": "0x8c646654",
+  "cases_passed": 4,
+  "entry_source_sha256": "4cb237949380bb65163b1b91053c897a11e9bdd9e28b50560bec021544577549",
+  "cleanup_source_sha256": "0734de64fafc6cfe20f353af88fdcddaeddf265c1f0cca6097ed0b55e2287af8",
+  "binary_sha256": "45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a",
+  "comparison_level": "Full 16 MiB RAM, all GPR/SR/PR/FPU state and external callback order compared against retail SH-4 interpretation; the native caller invokes the recovered cleanup and its recovered native dependency graph.",
+  "limitations": [
+    "Device service, record writer, and fatal callback remain explicit stubs.",
+    "Runtime callback records are zeroed in these integration scenarios; this does not verify every runtime callback implementation.",
+    "This is input-service integration evidence, not whole-game or port verification."
+  ],
+  "cases": [
+    {
+      "service_result": "0x0",
+      "calls": [
+        "0x8c6604c0",
+        "0x8c646654"
+      ],
+      "full_ram_cpu_fpu_and_callback_trace_match": true
+    },
+    {
+      "service_result": "0x1",
+      "calls": [
+        "0x8c6604c0",
+        "0x8c646f68",
+        "0x8c646654"
+      ],
+      "full_ram_cpu_fpu_and_callback_trace_match": true
+    },
+    {
+      "service_result": "0x7fffffff",
+      "calls": [
+        "0x8c6604c0",
+        "0x8c646f68",
+        "0x8c646654"
+      ],
+      "full_ram_cpu_fpu_and_callback_trace_match": true
+    },
+    {
+      "service_result": "0xffffffff",
+      "calls": [
+        "0x8c6604c0",
+        "0x8c646654"
+      ],
+      "full_ram_cpu_fpu_and_callback_trace_match": true
+    }
+  ]
+}

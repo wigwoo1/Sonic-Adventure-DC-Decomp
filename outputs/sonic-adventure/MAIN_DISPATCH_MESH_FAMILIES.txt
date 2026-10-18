@@ -1,0 +1,127 @@
+Combined native renderer families and real-caller strip behavior
+17 October 2026 - VERIFIED within the bounded scope below.
+Overall completion: 10% estimated weighted whole-project milestones, not code coverage.
+Goal active. Continue Sol High; no model switch or pause advised.
+
+What changed
+A separate strict linked build now verifies all nine recovered material families
+together in the actual native mesh/material loop. Three new scripts build, verify
+and register this integration, with a separate lifetime regression script. The
+aggregate workflow runs these in dependency order. Existing recovered C and
+historical proof/DLL files remain unchanged. This task adds no recovered routines.
+
+The nine families are flat material colour, per-vertex material lighting, signed
+UV/per-vertex lighting, generated environment UV/per-vertex lighting, normalized
+face material lighting, signed UV/normalized face factor, signed UV/constant
+factor, environment UV/normalized face factor and environment UV/constant factor.
+Each has ordinary/clipped parents, a near clipper and two alternate strip helpers;
+together with the reused normalizer these are 46 exercised native entry targets.
+
+New real-caller evidence
+Earlier face-family guides documented controlled body tests that seeded R12,
+R14 and R13 with cache pointers. Those tests did not establish a game caller ABI.
+The new tests start from native mesh/material dispatch, without register seeding,
+and observe both original execution and native call-boundary state.
+
+At the first near-crossing non-alternate 8000-topology group, the face family
+reads at 8c61bca2, the signed-UV face family at 8c61cdc6 and the environment-face
+family at 8c61ef72. The actual caller supplies:
+  R12 = segment record, 8cc90000 in the constructed fixture
+  R14 = renderer state, 8c8ea3a0
+  R13 = material record, 8cca0000
+These are valid RAM addresses but are not the three indexed vertex-cache records.
+Original instructions reinterpret their first three words as normals and sum
+those words before normalizing. Constructed ordinary material colour bytes include
+a signaling NaN under this interpretation; the original-instruction reference and
+native numerical backend propagate NaN. Tests preserve that behavior and do not
+substitute a normal or colour fallback. This is not hardware NaN-payload proof.
+
+History also matters. An ordinary three-vertex group followed by crossing indices
+1,2,3 computes crossing lighting from the earlier group's pointers 0,1,2. A
+four-vertex crossing group followed by another crossing group uses pointers 2,3,3
+for the second group's lighting. The subsequent clipper geometry arguments are
+loaded from the current index stream. Finite pre-normalizer sums are independently
+checked at binary32 rounding boundaries; NaN classification is checked separately.
+A fourth normal distinct from the first prevents accidental equality of old/current
+face normals from hiding this effect.
+
+These observations resolve what the tested material caller actually supplies.
+They do not establish that the shipped game reaches these specific material/
+8000-topology/near-crossing combinations. Treat apparent stale-pointer lighting
+as preserved observed original behavior until original asset reachability is
+established. Earlier controlled body proofs remain valid within their stated
+scope; their seeded pointers must not be treated as a confirmed caller contract.
+
+Build and tests actually passed
+- Clang -O2 -Wall -Wextra -Werror compiled a separate combined-family DLL using
+  the existing recovered sources and complete portable queue bridge.
+- 1,040 original-code comparisons all complete with zero external game services.
+- 896 combined meshes run all nine families in forward and reverse order, testing
+  state carry-over through one mesh/material loop. Topologies are 0000, 4000,
+  8000 and c000 hex. Four-vertex near masks are 0,1,3,7,8,14,15; both windings,
+  both FPU banks, primary/secondary queues and cursor halves are covered.
+- 144 caller tests span three face families, three group histories, both windings,
+  banks, queues and cursor halves, without manually supplying live registers.
+- Full 16 MiB RAM, GPRs/SR/PR, both FPU banks/FPSCR, FPUL/MACL, ordered call
+  boundaries, queue contents and queue events agree with original execution.
+  Additional original/native snapshots agree at all selected entry targets.
+- 55,128 ordered boundaries, 751,528 numerical operations, 33,512 queue transfers
+  and 324,880 queue events checked. All 46 primitive dependency targets reached.
+- Independent checks: 192 mixed-family triangle geometry cases; 128 all-near
+  whole-mesh rejections; 576 other-topology family-selection/input-counter cases;
+  and the 144 live-register/normal-input cases. Other-topology geometry and all
+  lighting words retain original-instruction comparison evidence; they are not
+  claimed independently verified by this new geometric oracle.
+- 120 particle lifetime regressions / 984 stages passed against this combined DLL:
+  23,264 boundaries, 104,016 numerical operations, 10,600 queue transfers and
+  117,808 queue events; zero external game services. Independent particle motion,
+  callbacks, pool and heap assertions passed. Unchanged original model fixtures
+  use flat paths, so these lifetimes are regression evidence rather than extra
+  coverage of the other material families. Translation regression: 46 cases and
+  all 56 instruction rows.
+- The first smoke run found that the new test fixture had not initialized the
+  secondary header cursor. Selecting the existing full parent fixture initializer
+  corrected that test setup. Final smoke, full comparisons and lifetimes passed;
+  no original/native code was patched to bypass this failure.
+
+Final integrity checks passed: both reports match all pinned inputs (321 focused,
+9 lifecycle), three Python and two PowerShell scripts parse, and repeat evidence
+registration adds no routines. Dispatcher mapping checks 658 pointer loads, 80
+spans and 83 selectors. Audits report zero evidence errors and zero stale reports.
+The app goal was checked and remains active.
+
+Evidence and a simple check
+Open this guide and SOURCE_HANDOFF.txt. The report
+analysis/main_dispatch_mesh_families_verification.json has cases_passed=1040,
+material_families=9, native_targets_covered=46, caller_contract_cases=144 and
+external_service_boundaries=0. Its cases include the observed pointer words and
+matching original/native call snapshots. The linked report
+analysis/main_dispatch_mesh_families_lifecycle_verification.json has
+lifecycles_passed=120 and stage_comparisons=984. No playable game exists yet.
+Build/test/registration scripts:
+  build_main_dispatch_mesh_families.ps1
+  verify_main_dispatch_mesh_families.py
+  verify_main_dispatch_mesh_families_lifecycle.py
+  register_main_dispatch_mesh_families.py
+
+Limits and next work
+Constructed bounded metadata and simulated coherent RAM/MMU-off queues constrain
+these checks. No actual GPU FIFO/pixels, physical cache timing, MMU-on behavior,
+hardware exception delivery, full original frame ordering or gameplay is proved.
+The shared numerical backend and inherited guards still apply. No new routines
+or instruction recovery credit was assigned. The new build and suites were run;
+the whole historical aggregate workflow was not rerun.
+
+Registry remains 1,095 entries / 1,092 unique module-address pairs; 1,043 matches
+among 10,875 indexed candidates. Another 211 non-texture binaries lack a function
+index. These discovery figures are not whole-game code coverage.
+Next: inventory topology/material combinations from original model data, including
+whether these non-alternate face-strip crossing combinations are reachable,
+before broader native frame/GPU integration. Sol High remains appropriate for
+binary data-layout and call-contract tracing. Luna can handle routine document
+maintenance afterward, but is not recommended for the next reverse-engineering
+step. No model switch or goal pause is advised.
+
+Full decompilation, native PC/Android/stereo 3DS ports, 60/120/240 FPS, 8K,
+SUPIR/settings and later N64/PS1 work remain unfinished. Texture Off must disable
+sampling and use vertex colours/material fallback, overriding the HD toggle.

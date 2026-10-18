@@ -1,0 +1,49 @@
+Workspace cleanup — 15 October 2026
+
+Status: VERIFIED for the cleanup scope.
+Whole-project completion: 10% estimated weighted milestones, not code coverage.
+
+Removed 522 confirmed disposable files totaling 1,289,015,171 bytes
+(1.29 GB / 1.20 GiB, before the small new audit records):
+- 3 redundant downloaded tool ZIP archives: 1,284,675,572 bytes.
+- 517 Python bytecode caches whose Python source remains: 4,237,035 bytes.
+- 2 duplicate scratch scripts: 102,564 bytes. The misplaced bitstream
+  registrar has an identical maintained copy; every line of the temporary
+  build-script tail remains in order in the maintained build script.
+
+Preserved all recovered source, historical verification baselines, in-progress
+spawn/setter code, Ghidra exports and projects, original game data, installed
+tools, dependencies, third-party repositories, images, and uncertain older files.
+Older source often remains necessary to reproduce earlier verification.
+
+Before deletion, 12,215 installed tool files were checked against their ZIP
+members by length and CRC32. The intentional Ghidra settings/cache directory
+configuration was preserved, and its original archive text was recorded.
+Each deletion target was checked by absolute project path, size, and SHA256.
+Only individual reviewed files were deleted; no directory trees were removed.
+
+After deletion, all 8,622 retained output files in the pre-deletion snapshot
+matched their saved SHA256 hashes. This comparison preceded the project audits,
+which intentionally refresh their own reports.
+
+Post-cleanup checks passed:
+- Strict Clang native-library build, with warnings treated as errors.
+- Installed Java runtime launch.
+- Recovery audit: 0 registry evidence errors; 0 stale whole-source reports.
+- Dispatcher map: 658 original instruction checks, 80 spans, 83 selectors.
+- Project milestone audit: 10%; full decompilation and ports remain unfinished.
+
+The full accumulated verification suite was not rerun for file housekeeping.
+The next reverse-engineering task remains behavior verification and integration
+of the recovered spawn helper and callback setter. Keep Sol High for that work.
+
+Machine-readable evidence:
+analysis/workspace_cleanup_2026-10-15.json — exact targets, reasons, hashes,
+installed archive checks, retained original configuration, protected snapshot.
+analysis/workspace_cleanup_result_2026-10-15.json — actual deletion results
+and the completed retained-file comparison.
+
+Cleanup audit: audit_workspace_cleanup.py
+One-time cleanup executor: ../../work/sonic-adventure/cleanup_workspace.ps1
+Retained-file verifier: verify_workspace_cleanup.py
+The dated manifest and executor are one-time records, not a recurring cleanup.

@@ -1,0 +1,104 @@
+Signed-UV constant-factor primitive family
+17 October 2026 - VERIFIED within the bounded scope below.
+Overall completion: 10% estimated weighted project milestones, not code coverage.
+Goal active. Continue Sol High with lower near-plane clipper 8c6124c0.
+
+Recovered source
+  8c61cf9c..8c61d404: 531 original instruction rows
+  8c61d408..8c61db92: 892 original instruction rows
+  source/sa_main_dispatch_uv_constant_primitives.c
+  source/sa_main_dispatch_uv_constant_primitives_connected.c
+Both complete bodies are byte-checked annotated static C, retaining instruction
+order, register effects and delay slots without runtime opcode decoding. Names
+are descriptive inferences. Prior sources, evidence, DLLs and disc files remain.
+
+Observed behavior
+The material loop selects this pair for layout 2200000 or 3200000 hex (with
+secondary-header bit 100000 handled separately). The segment's +14 hex field
+points to signed 16-bit U/V pairs. Each coordinate converts to float and scales
+by 1/256. The helper writes factor 1.0 on every emitted ordinary vertex, including
+the first two. It does not calculate normal lighting or reuse earlier factor
+words. Output packets contain control, projected x/y/reciprocal depth, U/V,
+factor 1.0 and an untouched eighth word. Triangle, quad and strip loops retain
+original winding/rejection, UV advancement, counters and cursor behavior.
+
+Near crossings stage vertex pointers and six raw signed UV words to lower
+helper 8c6124c0. Alternate topology c000 delegates to 8c61430e / 8c616068 with
+the parent's original parameter/bank preparation. All three lower bodies remain
+explicit fixtures in this checkpoint; their output beyond those calls is not
+yet proved. No numerical normalizer executes in these tests.
+
+Build and tests actually passed
+- Strict Clang build: -O2 -Wall -Wextra -Werror; separate connected DLL.
+- 642 original-code comparisons: 228 plain, 342 clipped, four draws, four particle
+  callbacks and 64 connected meshes.
+- All 1,419 reachable rows, 72 conditional outcomes and six call sites covered.
+  Four additional switch rows/two outcomes have exact-byte checks and exhaustive
+  proofs over all 65,536 input words under the c000 mask.
+- Full 16 MiB RAM, GPRs/SR/PR, both FPU banks/FPSCR, FPUL/MACL, ordered boundaries
+  and queue contents/events agree with original execution, including partial state.
+- 460 cases complete, 176 match numeric/precision guards (-1), three match missing
+  lower services (-2) and three propagate deliberately injected lower errors (-17).
+  These guarded/error cases compare partial state rather than completed draws.
+- 952 ordered boundaries, 9,624 numerical operations, 764 queue transfers and
+  7,964 queue events checked. There are 200 external boundaries for lower fixtures.
+- 168 independent cases check signed UV/256, exact factor 1.0 on every emitted
+  triangle vertex, final-word retention, unchanged source UV tables, unchanged
+  direct input caches, counters/cursors and/or near-helper pointer/UV staging.
+  Tests include -32768/32767, negative/mixed/zero UVs, successive faces with
+  changing indices/winding, rejected/degenerate inputs, both FPU banks, queue
+  halves and inherited precision/rounding variants. Independent packet math is
+  restricted to supported precision fixtures; original comparisons cover others.
+- All 64 connected meshes use native material setup, projection/classification,
+  primary/secondary extended acquisition, a new parent and finalization. They
+  cover both material layouts, windings, banks and cursor halves. Thirty-two
+  ordinary cases remain native throughout; 32 crossing cases verify lower-call
+  staging only. They do not establish the fixture's clipped output.
+- 120 lifetime regressions / 984 stages passed: 23,264 boundaries, 104,016 numerical
+  operations, 10,600 queue transfers, 117,808 queue events and zero external game
+  services. The unchanged original models do not reach this new family. Existing
+  flat paths and independent particle/pool/heap behavior are regression coverage.
+- Final integrity checks passed: generated C/manifest are byte-identical, four
+  reports match pinned inputs, repeat registration adds zero duplicates, five
+  Python and three PowerShell scripts parse. Dispatcher mapping verifies 658
+  pointer loads, 80 spans and 83 selectors. Audits find zero evidence errors and
+  zero reports needing source-hash refresh. The app goal remains active.
+
+Limits and next work
+Parent RTS guards at 8c61d400 / 8c61db8e stop before delay-slot effects if a saved
+return address differs from its incoming value. They preserve the inherited host
+unsupported-transfer policy; these tests did not trigger them. Physical fault
+dispatch and arbitrary indirect returns remain unimplemented.
+Valid constructed streams and coherent-RAM/MMU-off queue modeling bound results.
+Physical cache timing, GPU FIFO/pixels, MMU-on behavior, full gameplay and the
+complete frame driver remain unverified. Lifetime pass order is host-selected.
+The whole historical workflow was not rerun; the new build and focused/lifetime
+suites were run. No playable game is available yet.
+
+Registry: 1,082 entries / 1,079 unique module-address pairs, with 1,030 matches
+among 10,875 indexed candidates. Another 211 non-texture binaries lack function
+indexes. These discovery counts do not measure whole-game code coverage.
+Next lower helpers: 8c6124c0 (553 rows), 8c61430e (295 rows), 8c616068 (504 rows).
+Their 1,352 exported rows are checked against the original binary as analysis:
+analysis/main_dispatch_uv_constant_lower_inventory.json. Draft pseudocode and
+exports are not recovered source. Four other primitive emitters also remain
+unfinished: 8c61db98, 8c61e4f4, 8c61f108 and 8c61f7c8.
+Earlier face-family caller preconditions and numerical/cache limitations remain.
+Full decompilation, playable PC/Android/stereo 3DS ports, 60/120/240 FPS, 8K,
+SUPIR/settings and later N64/PS1 work remain unfinished. Texture Off must disable
+sampling and use vertex colours/material fallback, including when HD is enabled.
+
+Evidence and simple check
+Open this guide and SOURCE_HANDOFF.txt. Focused report
+analysis/main_dispatch_uv_constant_primitives_verification.json has
+cases_passed=642, rows_covered=1419, conditional_edges_covered=72 and
+call_sites_covered=6. Linked lifetime report
+analysis/main_dispatch_uv_constant_primitives_lifecycle_verification.json has
+lifecycles_passed=120 and stage_comparisons=984.
+Scripts: recover_main_dispatch_uv_constant_primitives.py,
+build_main_dispatch_uv_constant_primitives.ps1,
+verify_main_dispatch_uv_constant_primitives.py,
+verify_main_dispatch_uv_constant_primitives_lifecycle.py,
+register_main_dispatch_uv_constant_primitives.py.
+Recommended next model: Sol High; the lower clipping and alternate bodies need
+instruction-level reverse engineering. No model switch or pause advised.

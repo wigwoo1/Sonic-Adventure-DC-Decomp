@@ -1,0 +1,64 @@
+{
+  "binary_sha256": "45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a",
+  "direct_opcode_checks_passed": 15,
+  "configurations": [
+    {
+      "caller": "8c0546c0",
+      "callsite": "0x8c054738",
+      "vblank_countdown": 2,
+      "update_iteration_limit": 2
+    },
+    {
+      "caller": "8c049560",
+      "callsite": "0x8c049570",
+      "vblank_countdown": 2,
+      "update_iteration_limit": 2
+    },
+    {
+      "caller": "8c04e660",
+      "callsite": "0x8c04e668",
+      "vblank_countdown": 2,
+      "update_iteration_limit": 2
+    },
+    {
+      "caller": "8c082a8c",
+      "callsite": "0x8c082ab0",
+      "vblank_countdown": 2,
+      "update_iteration_limit": 2
+    },
+    {
+      "caller": "8c09a1a0",
+      "callsite": "0x8c09a1e4",
+      "vblank_countdown": 2,
+      "update_iteration_limit": 2
+    },
+    {
+      "caller": "8c049298",
+      "callsite": "0x8c0492aa",
+      "vblank_countdown": 2,
+      "update_iteration_limit": 1
+    },
+    {
+      "caller": "8c08f210",
+      "callsite": "0x8c08f24a",
+      "vblank_countdown": 1,
+      "update_iteration_limit": 1
+    }
+  ],
+  "inference": "Recovered call sites configure different countdown/update ratios; a single hard-coded simulation step is not yet justified.",
+  "evidence": [
+    "analysis/timing-settings-references/scheduler_references.tsv",
+    "analysis/instructions/8c0546c0.tsv",
+    "analysis/instructions/8c049560.tsv",
+    "analysis/instructions/8c04e660.tsv",
+    "analysis/instructions/8c082a8c.tsv",
+    "analysis/instructions/8c09a1a0.tsv",
+    "analysis/instructions/8c049298.tsv",
+    "analysis/instructions/8c08f210.tsv"
+  ],
+  "limitations": [
+    "Execution reachability and video refresh frequency remain unmeasured.",
+    "Dynamic extra iterations exist in game loop; settings alone do not prove full cadence.",
+    "No FPS implementation or full decompilation completion."
+  ]
+}

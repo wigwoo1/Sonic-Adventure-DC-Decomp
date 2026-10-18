@@ -1,0 +1,139 @@
+Alternate-strip lighting helpers
+16 October 2026 — VERIFIED within the bounded scope below.
+Overall completion: 10% estimated weighted project milestones, not code coverage.
+Goal active. Continue Sol High with the next primitive pair.
+
+Recovered source
+  8c6136c0..8c61394a: 300 original rows
+  8c614bb0..8c614f70: 460 original rows
+  source/sa_main_dispatch_lit_alternate_strips.c
+  source/sa_main_dispatch_lit_alternate_strips_connected.c
+Complete, byte-checked static C translations preserve instruction order, delay
+slots, register/FPU effects and original memory writes. They do not decode guest
+opcodes at runtime. Descriptive names are inferred, not original developer names.
+Earlier code, proof artifacts and original game files remain preserved.
+
+Behavior
+Both helpers walk positively bounded indexed triangle strips, handle the strip's
+orientation bit, alternate winding and reject hidden triangles. The second also
+checks common clip masks and uses native lighting near helper 8c612e64 for mixed
+near-plane triangles. Both call the existing empty stub 8c611708. These reused
+dependencies receive no duplicate recovery credit.
+
+For ordinary emitted vertices the original code temporarily switches FMOV width,
+uses paired transfers to read lighting/material parameters from the other FPU
+bank, and computes a FIPR vector dot product. It subtracts that from the supplied
+base, saves the factor at cache+1c and executes OCBWB for that address. The output
+packet retains alpha and scales the three RGB words by the lighting factor.
+The two helpers preserve the original strip grouping, control words, counters
+and queue advancement. As in the earlier flat family, the first output counter
+counts emitted vertices plus closed groups; the clipped path adds input strip
+lengths, with additional output counted by the near helper when reached.
+
+Portable cache interface
+The new source/vertex_bus_lighting.c retains the previous queue/backend ABI and
+adds explicit cache operation 2 for OCBWB, recorded as event kind 6. RAM is already
+coherent in this bounded backend, so it records the operation without simulating
+physical cache lines, dirty tags, latency or fault dispatch. Older backend source
+and DLLs are unchanged. This follows the OCBWB write-back classification in the
+Renesas SH-4 Software Manual, sections 4.3.8 and 9 (instruction descriptions):
+  https://www.renesas.com/en/document/mas/sh-4-software-manual
+This reference does not turn the software backend into hardware emulation.
+
+Build and tests actually passed
+- Strict Clang build: -O2 -Wall -Wextra -Werror; new separate linked DLL.
+- 392 cases: 116 direct plain helpers, 164 direct clipped helpers, eight calls
+  through each parent body, and 96 connected mesh cases. Every one of 760 rows,
+  40 conditional outcomes and three call sites covered.
+- Entire 16 MiB RAM, GPRs/SR/PR, both FPU banks/FPSCR, FPUL/MACL and ordered
+  boundaries match original instruction execution, including partial state.
+- 1,334 ordered boundary comparisons, 21,208 numerical operations, 1,186 queue
+  transfers and 13,502 ordered queue events checked against Python queue state.
+  The traces include 510 write-back events and 894 reached FIPR instructions;
+  these are execution counts across the suite, not new routine counts.
+- 336 cases complete successfully. Another 56 match inherited unsupported
+  numeric/precision guards (-1). Original bank/width combinations and all four
+  rounding-mode bit patterns are exercised. FIPR uses the established shared
+  vector numerical oracle, whose support is bounded; this is not independent
+  hardware-accuracy proof for arbitrary floating-point values.
+- 272 independent cases check the visible lit-triangle sets, packet alpha/RGB,
+  orientation/grouping, cached factors and write-back addresses, counters and
+  cursors, or camera-space clipping/interpolated colours. Direct lighting inputs
+  include negative/zero/>1 factors and binary-exact constructed values.
+- Existing empty stub executes 372 times; native lighting near helper executes
+  82 times. Zero external game-service substitutes are reached by this suite.
+
+Connected mesh and parent proof
+All 96 constructed meshes use actual normal projection/classification, material
+setup, the clipped parent, new alternate helper and finalization. They span six
+mixed-near masks, both orientation signs, the strip orientation bit, both FPU
+banks and primary/secondary header cursors. Distinct input normals make clipped
+RGB interpolation observable. Every mesh is independently checked for final
+geometry/colour/cursor/counter results, including rejection and accepted output.
+Each accepted case reaches native lighting near clipping; rejected cases are
+explicitly checked not to call it. ENV bit 2 remains clear to allow classification.
+Direct parent cases verify the original other-bank parameter setup and restore.
+
+Lifetime regression
+The newly linked backend/build passes 120 unchanged original-model particle
+lifetimes / 984 stage comparisons: 23,264 boundaries, 104,016 numerical operations,
+10,600 queue transfers and 117,808 queue events, with zero external game services.
+Motion/timer, pause, deferred deletion, pool/heap and 46 matrix-translation cases
+remain checked. These original models do not call the new lighting bodies; the
+harness explicitly asserts that. Their results are regression evidence; new-body
+coverage comes from the focused/constructed cases above. Host-chosen pass order
+does not establish the full original frame driver.
+
+How to inspect or repeat
+Read this file, then source and these saved reports:
+  analysis/main_dispatch_lit_alternate_strips_translation.json
+  analysis/main_dispatch_lit_alternate_strips_verification.json
+  analysis/main_dispatch_lit_alternate_strips_lifecycle_verification.json
+From this output directory with the installed project Python:
+  python recover_main_dispatch_lit_alternate_strips.py
+  .\build_main_dispatch_lit_alternate_strips.ps1
+  python verify_main_dispatch_lit_alternate_strips.py
+  python verify_main_dispatch_lit_alternate_strips_lifecycle.py
+  python register_main_dispatch_lit_alternate_strips.py
+  python inventory_main_dispatch_next_primitives.py
+  python map_main_dispatch_cases.py
+  python verify_main_dispatch_case_map.py
+  python audit_recovery_coverage.py
+  python audit_project_completion.py
+The focused steps are integrated into build_and_verify.ps1; the full accumulated
+suite was not rerun. A rebuild changes DLL timestamp/hash and requires fresh
+focused/lifetime reports before registration.
+
+Registry and next work
+1,059 entries / 1,056 unique module-address pairs. The unchanged candidate
+snapshots contain 10,875 entries, 1,007 now matched; 211 non-texture modules
+still lack function indexes. These incomplete counts are not code coverage.
+Fourteen other primitive emitters remain unfinished. Prioritize the next pair:
+  8c618d18..8c6192e0: 708 exported rows
+  8c619310..8c619bf6: 1,067 exported rows
+Their read-only original-byte evidence and inventory grant zero recovery credit:
+  analysis/main-dispatch-next-primitives/
+  analysis/main_dispatch_next_primitives_inventory.json
+  ghidra/export_main_dispatch_next_primitives.ps1
+Calls hint at lower helpers 8c61394a / 8c611a14 / 8c614f70; check existing source
+and original boundaries before recovering or counting them. Draft pseudocode is
+analysis input only. Enclosing spans can contain literal pools and are not
+recovered-code byte counts.
+
+Limits
+Positive strip counts, lengths >=3, valid lookahead indices and bounded coherent
+RAM/MMU-off queue destinations only. Inherited numerical/saved-pointer guards
+and shared vector-oracle limits apply. Physical GPU FIFO, visible pixels,
+MMU-on/TLB, cache timing/faults, full frame driver, complete decompilation/gameplay
+and playable ports remain unfinished. HD/display settings are still planned;
+Texture Off will disable sampling and use vertex colours/material fallback.
+Keep Sol High for the remaining primitive families; no model downgrade or goal
+pause is recommended at this checkpoint.
+
+Final integrity: zero registry evidence errors and zero stale whole-source
+reports. Source/translation regeneration reproduced the saved hashes, and
+registration reran with zero additions. Dispatcher verification passed 658
+original pointer-load checks over 80 spans and 83 selectors. New build/export
+and aggregate PowerShell scripts parsed; all five new Python scripts parsed.
+Next-pair original-byte inventory and all current proof hashes passed. The
+whole-project milestone score remains 10%; full goal active and unfinished.

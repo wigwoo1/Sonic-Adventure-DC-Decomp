@@ -1,0 +1,5 @@
+{
+  "cases_passed": 36,
+  "native_operations_compared": 4932,
+  "scope": "36 persistent native source-pool reinitialization sequences:six initial byte patterns,ring sizes0/64/1024,both banks. Initialize counter0 to1;two cycles each allocate all64 objects plus exhaustion check,verify positive-counter initializer preserves entire RAM,decrement1 to0 without touching live pool,then initialize to clear entire3072-byte pool and restore counter1. Second cycle reallocates cleared slots with exact original bindings and pointers. 4932 public native operations,each compared against retail full RAM/CPU/FPU/SR/PR,with independent all12 object fields,wholepool contents,counter transition,SR.T,guards,stack and preservation checks. Native source allocator/reset,bytefill,counterdecrement and initializer connected,no modeled calls. Reinitialization after decrement invalidates all old objects; this verifies raw retail behavior,not authorization or lifetime handling at game call sites. Game caller synchronization/fullgame remain unverified."
+}

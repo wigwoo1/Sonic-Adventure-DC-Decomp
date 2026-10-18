@@ -1,0 +1,128 @@
+AL_MAIN parameter updates and scale smoothing
+17 October 2026 - VERIFIED within the bounded contracts below.
+Overall completion: 10% estimated weighted whole-project milestones, not code coverage.
+Goal active on Sol High. No model switch or pause advised.
+
+What changed
+Two original bodies now have static native C and a service-free bridge:
+  0c905618..0c905666: scale smoothing, 39 instruction rows.
+  0c905666..0c905872: parameter clamp/approach/events, 236 rows.
+All 275 rows / 550 instruction bytes are checked against AL_MAIN.BIN.
+Literal pools and the existing morph/copy bodies receive no new credit.
+Names and field purposes are inferred from the instructions.
+
+The parameter helper tail-transfers to existing native morph 0c904e80 when
+its original change flag requests it. The morph's word-copy dispatcher
+8c10cddc also runs natively. The public API has an observation callback for
+tests, with no external game-service implementation or game-service fixture.
+The original initializer, morph and copy sources/reports/DLLs are preserved.
+
+Source and proof files
+  source/sa_overlay_parameter_update.c
+  source/sa_overlay_parameter_update_connected.c
+  recover_overlay_parameter_update.py
+  build_overlay_parameter_update.ps1
+  verify_overlay_parameter_update.py
+  verify_overlay_parameter_lifecycle.py
+  register_overlay_parameter_update.py
+  analysis/overlay_parameter_update_translation.json
+  analysis/overlay_parameter_update_verification.json
+  analysis/overlay_parameter_lifecycle_verification.json
+  work/sonic-adventure/build/overlay_parameter_update.dll (workspace-relative)
+
+Parameter behavior
+Entity+ec points to appearance data. Stored X/Y at appearance+20/+24 are
+clamped independently to [-1.5,1.5]; the clamp itself does not request a morph.
+Each coordinate then approaches entity targets +dc/+e0 by raw step 3b449ba5
+(approximately 0.003). Positive and negative adjustments are separate tests.
+An overshoot can add then subtract on one call, retaining the morph request.
+This is preserved rather than replaced by an else-if or snapping algorithm.
+
+Appearance flag halfword +36 bit 0 requests an event. The helper clears only
+that bit and adds raw 3c03126e (approximately .008) to target Z for type 0,
+or 3b83126e (approximately .004) for other types. For four current/peak pairs
+at +0c/+54, +0e/+56, +10/+58, +12/+5a, a current below its peak gains 10
+with 16-bit wrapping. The corresponding target changes by raw 3ac49ba5
+(approximately .0015), in order: Y minus, Y plus, X plus, X minus.
+Peaks are then updated to max(peak,current). Unsigned halfword ordering and
+wrap cases around 32767/32768 and 65535 are tested explicitly. These event
+changes do not directly set the morph-request flag.
+
+Target Z at entity+e4 is capped above at 1.5, with no lower clamp here.
+If target Z exceeds stored appearance+28, the stored value gains the same
+.003 step and requests a morph. If stored Z exceeds target Z, it copies
+the target directly, without setting that request. Thus a Z-only decrease
+can change stored Z while leaving the previous mesh unchanged for this call.
+An X/Y request can still cause a morph in that same situation.
+
+Scale smoothing
+With S=work+30 and V=entity+d4, original separately rounded operations are:
+  displacement = S - 1
+  damping = V * raw 3e199999 (approximately .15)
+  restoring = displacement * raw 3e8f5c28 (approximately .28)
+  delta = -damping - restoring
+  Vnext = V + delta; Snext = S + Vnext
+The helper stores Vnext at entity+d4, Snext at work+30 and 2-Snext at work+2c.
+These are original per-call operations. No frame-rate independence, fixed-time
+simulation or 60/120/240-FPS gameplay behavior is claimed by this checkpoint.
+
+Build and tests actually run
+The new DLL compiled with Clang -O2 -Wall -Wextra -Werror and no C runtime.
+Focused proof: 1,000 original-instruction comparisons passed, covering all
+275 rows and all 44 conditional outcomes. 928 completed and 72 stopped at
+expected boundaries: 48 unsupported precision/rounding cases, 16 arithmetic
+traps, eight invalid-RAM cases. Exact reached memory/register/FPU state matches
+on partial stops too. There are 2,444 ordered native entry comparisons.
+902 successful cases also pass independent data algorithms. Parameter data
+is checked immediately before a morph or on a no-morph return. The spring
+algorithm checks independently rounded multiplication/addition stages.
+
+Integration proof: 32 shipped-object lifecycles passed: all eight appearance
+types, both active FPU banks, with and without original accessories. Each
+begins with the existing service-free native constructor, compared against
+the original constructor instructions. Eight supplied parameter/scale frames
+then give 512 successful stages, 896 ordered boundaries and 192 morph calls.
+Full 16-MiB RAM, integer registers, SR/PR/PC, both FPU banks/FPSCR, FPUL/MACL
+match after construction and every stage. All 512 stages also pass independent
+parameter/event/scale checks. The test retains real cloned geometry and shared
+accessory/material mutations; it does not replace the models with blank data.
+
+The generator reproduces source and manifest byte-for-byte. New Python scripts
+and changed PowerShell scripts pass syntax checks. The dispatcher map passes
+658 original pointer-load checks across 80 spans / 83 selectors. Registry audit
+reports 1,117 entries / 1,114 unique module-address pairs, with 1,065 matches in
+10,875 snapshot candidates, zero evidence errors and zero stale source reports.
+These candidate counts are not an exhaustive game-routine count or completion
+denominator. 211 non-texture binaries still lack a complete function index.
+The entire historical build_and_verify.ps1 sequence was not rerun this turn.
+
+How to check
+Read this file and the two verification JSON files listed above. They record
+the exact inputs, results and file fingerprints. For a quick developer rerun,
+use the bundled Python runtime with -B to run:
+  verify_overlay_parameter_update.py --smoke
+  verify_overlay_parameter_lifecycle.py --smoke
+Omit --smoke for the full suites. Build with build_overlay_parameter_update.ps1
+only when intentionally refreshing this DLL and its proof fingerprints. Old
+DLL builds are preserved because rebuilding can change their pinned hashes.
+build_and_verify.ps1 now contains the ordered full reproduction steps.
+
+Remaining dependencies and next task
+The nine known material/primitive families already run natively in the separately
+verified bounded mesh chain; see MAIN_DISPATCH_MESH_FAMILIES.txt. This checkpoint
+advances the object-update side feeding that chain, not a new primitive family.
+The actual AL_MAIN draw callback candidate 0c9058a0 remains unrecovered.
+Its 911 exported rows have 57 static call sites / 27 distinct targets; 13 are
+still unregistered, including matrix helpers 8c63a878/8c63a69c and object draw
+helpers 0c909d80/0c90c384. Caller 0c9009d0 has 182 rows / 20 call sites /
+14 targets, of which ten remain unregistered. See the byte-checked inventory
+analysis/overlay_draw_dependencies_inventory.json and its reproducible script
+inventory_overlay_draw_dependencies.py. Inventory rows add zero recovery credit.
+
+Next: recover the missing draw/matrix helpers and connect the draw callback,
+then task update/natural creation/scheduling. Sol High remains appropriate for
+these reverse-engineering and floating-point contracts. Luna Low is suitable
+for documentation-only maintenance; no model switch is recommended now.
+Supplied task/entity/heap/frame inputs, reached memory/FPU guards and bounded
+arithmetic models do not prove hardware exceptions, visible pixels, scheduling,
+full gameplay, a full decompilation or playable PC/Android/3DS/N64/PS1 ports.

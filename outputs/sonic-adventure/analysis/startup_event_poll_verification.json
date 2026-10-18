@@ -1,0 +1,63 @@
+{
+  "cases_passed": 8,
+  "routine_start": "0x8c010a0e",
+  "routine_end_exclusive": "0x8c010a3e",
+  "retail_span_sha256": "bc032ae1d4e3fa85d3a8c45c78190cea5407a6c8bcc18ba26540335dc45b4d96",
+  "source": "source/startup_event_poll.c",
+  "source_sha256": "7e2a44906b7f96c3e81a96442425bc592d9946ec49aabdd2200b85dd19109be1",
+  "dll_sha256": "4e59a7fce90acd782710ea8e3228a9a0fb2967cbf3ad95dad6b9c34da3bf16bf",
+  "cases": [
+    {
+      "case": 0,
+      "handler_calls": 1,
+      "retail_instructions_executed": 24,
+      "full_state_and_events_match": true
+    },
+    {
+      "case": 1,
+      "handler_calls": 2,
+      "retail_instructions_executed": 30,
+      "full_state_and_events_match": true
+    },
+    {
+      "case": 2,
+      "handler_calls": 3,
+      "retail_instructions_executed": 36,
+      "full_state_and_events_match": true
+    },
+    {
+      "case": 3,
+      "handler_calls": 5,
+      "retail_instructions_executed": 48,
+      "full_state_and_events_match": true
+    },
+    {
+      "case": 4,
+      "handler_calls": 8,
+      "retail_instructions_executed": 66,
+      "full_state_and_events_match": true
+    },
+    {
+      "case": 5,
+      "handler_calls": 13,
+      "retail_instructions_executed": 96,
+      "full_state_and_events_match": true
+    },
+    {
+      "case": 6,
+      "handler_calls": 21,
+      "retail_instructions_executed": 144,
+      "full_state_and_events_match": true
+    },
+    {
+      "case": 7,
+      "handler_calls": 34,
+      "retail_instructions_executed": 222,
+      "full_state_and_events_match": true
+    }
+  ],
+  "scope": "Full 16 MiB RAM and GPR/SR/PR/PC compared to retail across eight loop lengths (1 to 34 calls); callback target, per-iteration PR/stack state, event arguments and mutations, four initialized global fields, pending-flag exit, and r14/stack restoration are checked.",
+  "limitations": [
+    "The event handler at 0x8c6050b0 is a deterministic modeled callback; its implementation and hardware/game semantics are not recovered by this wrapper."
+  ]
+}

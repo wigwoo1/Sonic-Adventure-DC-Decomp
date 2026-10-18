@@ -1,0 +1,10 @@
+import json,hashlib
+from pathlib import Path
+p=Path(__file__).resolve().parent;name='sa_sound_magic_extension_word';report='analysis/sound_magic_extension_word_verification.json'
+source=p/f'source/{name}.c';s=source.read_text();a=s.index('/* Static C recovery');b=s.index('SA_STAGE_EXPORT',a);source.write_text(s[:a]+'/* Retail magic8000 extension-word getter65af64..65afca.\n * Requires signed size>=18 and BE header offset>13; copies BE word at16.\n * Field semantic meaning not established; no external calls. */\n'+s[b:])
+evidence=json.loads((p/report).read_text());assert evidence['cases_passed']==108
+path=p/'analysis/recovered_routines.json';registry=json.loads(path.read_text());binary=(p.parents[1]/'work/sonic-adventure/extracted/1ST_READ.BIN').read_bytes()
+if not any(r['name']==name for r in registry['routines']):registry['routines'].append(dict(module='1ST_READ.BIN',name=name,address='0x8c65af64',end_exclusive='0x8c65afca',source=f'source/{name}.c',retail_span_sha256=hashlib.sha256(binary[0x64af64:0x64afca]).hexdigest(),verification=report,status='Compiled and matched within report scope'))
+path.write_text(json.dumps(registry,indent=2)+'\n');path=p/'project_status.json';status=json.loads(path.read_text());status['verified_progress']['sound_magic_extension_word']=evidence;path.write_text(json.dumps(status,indent=2)+'\n')
+with (p/'SOURCE_HANDOFF.txt').open('a') as f:f.write('\nMagic8000 extension-word getter65af64: build_sound_magic_extension_word.ps1/verify_sound_magic_extension_word.py reproduce108 retail comparisons with no calls. Independent signed size>=18,signature,BE offset>13,BE word at16/outputLE,distinct rejections,guards/source preservation. Field meaning/initializer integration/actual encoded assets/decoding/playback/fullgame unverified. Overall project remains 10%.\n')
+with (p/'build_and_verify.ps1').open('a') as f:f.write("\n& (Join-Path $PSScriptRoot 'build_sound_magic_extension_word.ps1')\n& $python (Join-Path $PSScriptRoot 'verify_sound_magic_extension_word.py')\nif ($LASTEXITCODE -ne 0) { throw 'Magic extension word verification failed' }\n")

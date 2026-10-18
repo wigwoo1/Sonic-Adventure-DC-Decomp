@@ -1,0 +1,155 @@
+Original hierarchy preparation and matrix-cache helpers
+17 October 2026 - helper bodies and bounded integration VERIFIED; game/port partial.
+Overall completion: 10% estimated weighted whole-project milestones, not code coverage.
+Goal active on Sol High. No model switch or pause advised.
+
+What changed
+The next dependency reached by the original object-drawing callback is now
+recovered in native C. It prepares animated hierarchy matrices for the existing
+material/primitive renderer. This is a rendering prerequisite; the final game
+does not yet draw playable scenes.
+
+source/sa_draw_hierarchy.c retains six original instruction bodies:
+  8c0583a0..8c05842e - hierarchy preparation, 71 rows.
+  8c057bc0..8c0580de - recursive generation and key sampling, 582 rows.
+  8c63a770..8c63a7e0 - matrix copy or implicit matrix load, 56 rows.
+  8c058434..8c05846a - indexed cached-matrix retrieval, 27 rows.
+  8c63a5ec..8c63a698 - vector-input matrix scaling, 86 rows.
+  8c638f94..8c638fc0 - matrix-bank serialization, 22 rows.
+All 844 instruction rows / 1,688 instruction bytes are checked against the
+original executable. Names describe inferred behavior. Five are first registry
+entries; bank serialization already has a canonical source/proof, which is
+preserved. Its wider raw-machine-state evidence is an extension, with zero
+duplicate credit. Older partial/injected-vector hierarchy experiments remain
+available and are not counted as these complete recoveries.
+
+Behavior preserved
+The wrapper resets the cache count, clamps the requested count to 128 matrices,
+optionally loads an input matrix, traverses the original child/sibling tree,
+optionally returns the requested cached matrix and restores its matrix stack.
+The recursive generator returns a node's sibling for the caller to follow;
+the root's sibling is not automatically traversed. Count exhaustion returns
+zero and retains the original counter/partial cache behavior.
+
+Channel layout uses the highest set bit's position, capped at five, rather
+than counting set bits. Supported layouts have two or three channels. Original
+null-track flag behavior, unsigned frame labels, end-frame wrap, separately
+rounded interpolation and signed shortest-arc angle differences are retained.
+Copy overlap follows two original 32-byte buffered blocks; a 64-byte memmove
+would change some overlapping results. Retrieval uses an unsigned index/count
+comparison and supports both explicit output and implicit matrix-bank loading.
+
+Unsupported-layout loop and qualified coverage
+The original generator enters BRA-to-self/NOP at 8c05809c for
+unsupported layouts. The C source defaults to preserving that nonreturning
+loop. The focused research DLL explicitly defines SA_BOUND_RETAIL_STALLS=1;
+it stops with -4 after one original BRA/NOP cycle, before the second BRA.
+The reference compares that exact finite prefix and reached state. This is
+not a successful return or a claim that the original loop terminates.
+
+836 of 844 rows execute in the direct corpus; all 98 reachable conditional
+outcomes execute. Eight retained fallback rows / four outcomes are structurally
+unreachable under the normal valid-data contract: the two-channel dispatch
+counter is only 0/1 and the three-channel counter only 0/1/2. Both null-track
+and animated dispatches retain their fallback branch/NOP pairs in the source.
+audit_draw_hierarchy_bounds.py checks all original R9 accesses, loop resets,
+increments and bounds, plus the relevant callee sources' lack of R9/R10 use.
+Recursive saves/restores preserve the counters with separate valid stack/data.
+This argument excludes corrupted return frames, deliberate data/stack aliasing
+and self-modifying code; it is not exhaustive arbitrary-memory verification.
+
+Build and direct verification actually run
+build_draw_hierarchy.ps1 compiles 104 sources with Clang -O2 -Wall -Wextra
+-Werror and no C runtime. A separate default-production syntax check passes.
+Six Python and three PowerShell syntax checks pass. The historical aggregate
+test sequence was not rerun.
+
+verify_draw_hierarchy.py passes 595 original-instruction/native comparisons:
+512 complete returns, 24 bounded original-loop prefixes, 17 RAM guard stops,
+38 unsupported-mode stops and four numerical traps. All 12,662 ordered entries
+match, together with full 16-MiB RAM, integer registers, SR/PR/PC, both FPU banks,
+FPSCR, FPUL/MACL and reached stop state. Standalone hierarchy tests emit no
+fabricated render packets.
+
+463 cases have independent checks, including 1,100 exact-dyadic generated world
+matrices and 842 integer angle handoffs. They cover flags, both banks, optional
+input/output, cache limits and untouched tails, root-only and recursive trees,
+stack/caller-matrix restoration, overlapping copies, scaling, serialization
+and indexed retrieval. Large unsigned labels, gaps and terminal frames cover
+the unsigned-to-float corrections. Invalid spans and reached FPU modes/traps
+are compared explicitly.
+
+Real FSCA/FTRV numerical support is connected; no vector results are injected.
+The vector reference shares the pinned separately qualified numerical core;
+exact dyadic world matrices and integer angle checks are independent. Existing
+lower routines retain their documented valid-RAM and supported-numerical limits.
+
+Original-model integration
+All 408 original initialized-model/routing comparisons pass: 344 caller and
+64 direct service cases. There are 114 complete returns (50 rejected draws and
+64 direct services), 274 missing-service stops, eight unsupported modes, eight
+RAM guards and four numerical traps. Full accepted-model drawing is unfinished.
+All 139,314 ordered entries and full reached machine/RAM state match, with
+388 independent state/stack/spring cases and 200 distance-prefix checks.
+
+The original caller enters preparation 132 times, recursive generation 4,488
+times, bank serialization 4,356 times, vector scaling 278 times and matrix
+copy/output 132 times. It reaches 425 of the new raw rows. Indexed retrieval
+8c058434 is verified by the direct suite; it is not naturally reached here.
+The parent advances from 461 to 472 of 911 instruction rows. 439 remain
+unexecuted; the parent stays unregistered and receives zero recovery credit.
+
+The first missing services are now:
+  8c638ecc - point transform, 132 cases (replaces the old 8c0583a0 stop).
+  0c90c384 - 94 cases.
+  8c0409c0, 8c5fde20, 8c041c92 - 16 cases each.
+Recover the point transform and remaining draw/runtime dependencies next.
+
+Software queue results remain 138,384 flushes and 1,524,614 counted events.
+632,532 stored-prefix events match individually; 892,082 beyond the 4,096-event
+per-call cap are counted, not individually compared. Final queue/QACR/counters
+and all reached/final RAM, including packet output, still match. Hashing all
+16 MiB at each entry now avoids a temporary copy; comparison scope is unchanged.
+
+The new test inherits the preceding original-model fixture without altering
+geometry, animation or texture-name/attribute records. Renderer globals,
+isolated scratch storage and populated runtime texture descriptors are supplied
+inputs, not evidence of natural scene/texture initialization or GPU pixels.
+
+Registration and evidence audit
+Five first entries bring the registry to 1,153 entries / 1,150 unique pairs.
+1,080 match the 10,875 frozen function-index candidates. These are not whole-
+game coverage numbers; 211 nontexture binaries still have no function index.
+The registry evidence audit reports zero errors and zero stale source reports.
+All six generated artifacts reproduce byte for byte. Repeated registration
+adds zero entries and leaves registry/status bytes unchanged. Dispatch-map
+verification passes 658 original pointer loads across 80 spans / 83 selectors.
+
+Reproducible source and evidence
+Generator: recover_draw_hierarchy.py
+Connection: connect_draw_hierarchy.py
+Top native entry: source/sa_draw_hierarchy_connected.c
+Build: build_draw_hierarchy.ps1
+Direct checks: verify_draw_hierarchy.py
+Caller checks: verify_overlay_draw_hierarchy.py
+Qualified coverage audit: audit_draw_hierarchy_bounds.py
+Registration: register_draw_hierarchy.py
+Reports: analysis/draw_hierarchy_translation.json
+         analysis/draw_hierarchy_connection.json
+         analysis/draw_hierarchy_bounds_audit.json
+         analysis/draw_hierarchy_verification.json
+         analysis/overlay_draw_hierarchy_verification.json
+
+Older sources, DLLs and proofs remain accessible. Reused transform, numerical,
+primitive and queue routines receive no new recovery credit. The original
+AL_MAIN draw callback remains unregistered pending its remaining paths/services.
+
+How to check without programming
+Open this file to read the milestone results. The JSON reports list the tested
+inputs and remaining service boundaries. Recovered C, generators and verification
+scripts are in the same project folder. There is no playable executable yet.
+Physical GPU pixels, whole frames/gameplay, natural renderer/texture loading,
+high-FPS/8K/SUPIR and all playable ports remain unfinished. Texture Off remains
+planned as disabled texture sampling with vertex/material colours.
+Continue Sol High for the next rendering dependency; Luna Low is suitable for
+documentation-only work.

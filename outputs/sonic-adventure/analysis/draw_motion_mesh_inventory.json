@@ -1,0 +1,83 @@
+{
+  "routines": [
+    {
+      "entry": "0x8c621574",
+      "instruction_rows": 19,
+      "listing": "analysis/draw-motion-mesh/8c621574_instructions.tsv",
+      "currently_registered": true,
+      "registered_source": "source/sa_draw_motion_mesh.c",
+      "transfers": [
+        {
+          "site": "8c62157a",
+          "instruction": "jsr @r3",
+          "static_targets": [
+            {
+              "address": "0x8c605dac",
+              "already_registered": true,
+              "source": "source/sa_main_dispatch_particle_callback.c"
+            }
+          ]
+        },
+        {
+          "site": "8c621584",
+          "instruction": "jsr @r3",
+          "static_targets": [
+            {
+              "address": "0x8c617c34",
+              "already_registered": true,
+              "source": "source/sa_draw_motion_mesh.c"
+            }
+          ]
+        },
+        {
+          "site": "8c62158e",
+          "instruction": "jsr @r3",
+          "static_targets": [
+            {
+              "address": "0x8c605e0a",
+              "already_registered": true,
+              "source": "source/sa_main_dispatch_particle_callback.c"
+            }
+          ]
+        }
+      ],
+      "boundary_status": "This inventory byte-checks the export and registry membership only; consult the separate recovered-source proof for bounded behavior."
+    },
+    {
+      "entry": "0x8c617c34",
+      "instruction_rows": 259,
+      "listing": "analysis/draw-motion-mesh/8c617c34_instructions.tsv",
+      "currently_registered": true,
+      "registered_source": "source/sa_draw_motion_mesh.c",
+      "transfers": [
+        {
+          "site": "8c617e30",
+          "instruction": "jsr @r1",
+          "static_targets": [
+            {
+              "address": "0x8c6215ba",
+              "already_registered": true,
+              "source": "source/sa_main_dispatch_model_traversal.c"
+            }
+          ]
+        }
+      ],
+      "boundary_status": "This inventory byte-checks the export and registry membership only; consult the separate recovered-source proof for bounded behavior."
+    }
+  ],
+  "instruction_rows": 278,
+  "newly_recovered_entries": 0,
+  "reused_routine_credit": 0,
+  "function_index_modified": false,
+  "scope": "Byte-checked motion mesh instruction inventory and current registry membership. Distinct 8c617c34 preprocessing calls the existing native mesh wrapper 8c6215ba; wrapper alone is not a substitute for that preprocessing. This inventory itself grants no recovery credit.",
+  "sha256": {
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\inventory_draw_motion_mesh.py": "884ab6d052e17d53b97f28a47413bb92ba7ab16c292cb12685bf8f4cbc5ece3f",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\work\\sonic-adventure\\extracted\\1ST_READ.BIN": "45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\analysis\\recovered_routines.json": "4d5ce4cb032891ba943c88587ac0efa390956b9e53b8deaadf05d472a08a941a",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\ghidra\\export_draw_motion_mesh.ps1": "373088c95019627cb0cd59c4fba8b6ae52909fd13fe1500098243ffb890fe69d",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\ghidra\\SeedCallbackFunctions.java": "80c59b92574a2a759108ff9e2d1d66f0ef4439f29f052a1f3be056a2c2aa21f9",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\ghidra\\ExportFailedFunctionEvidence.java": "975e646c5726c37021e9f02cd4d495e79084914bb51a0d6c7020dcf2266a3658",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\analysis\\draw-motion-mesh\\8c621574_instructions.tsv": "5779aff8c3293994c9ebaf50c76666a0fec58ee2133f56a0e1c05222b3d50de1",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\analysis\\draw-motion-mesh\\8c617c34_instructions.tsv": "3e2ad8f3171839231012b509639ae10016e0cc568fd29d41b114450bce589e65"
+  }
+}

@@ -1,0 +1,27 @@
+address	opcode	instruction	references
+8c66846a	2fe6	mov.l r14,@-r15	DATA:Stack[-0x4] 
+8c66846c	4f22	sts.l PR,@-r15	DATA:Stack[-0x8] 
+8c66846e	7ffc	add #-0x4,r15	
+8c668470	625e	exts.b r5,r2	
+8c668472	6343	mov r4,r3	
+8c668474	2f42	mov.l r4,@r15	DATA:Stack[-0xc] 
+8c668476	1322	mov.l r2,@(0x8,r3)	
+8c668478	d393	mov.l 0x8c6686c8,r3	READ:8c6686c8=8c6694b8 
+8c66847a	64f2	mov.l @r15,r4	DATA:Stack[-0xc] 
+8c66847c	430b	jsr @r3	COMPUTED_CALL:8c6694b8=432bd301 
+8c66847e	544a	_mov.l @(0x28,r4),r4	
+8c668480	6e03	mov r0,r14	
+8c668482	2ee8	tst r14,r14	
+8c668484	8903	bt 0x8c66848e	CONDITIONAL_JUMP:8c66848e=7f0460e3 
+8c668486	d38e	mov.l 0x8c6686c0,r3	READ:8c6686c0=8c667b7a 
+8c668488	d490	mov.l 0x8c6686cc,r4	READ:8c6686cc=8c67322c PARAM:8c67322c=34323145 
+8c66848a	430b	jsr @r3	COMPUTED_CALL:8c667b7a=4f222fe6 
+8c66848c	9	_nop	
+8c66848e	60e3	mov r14,r0	
+8c668490	7f04	add #0x4,r15	
+8c668492	4f26	lds.l @r15+,PR	DATA:Stack[-0x8] 
+8c668494	b	rts	
+8c668496	6ef6	_mov.l @r15+,r14	
+8c668498	b	rts	
+8c66849a	e000	_mov #0x0,r0	
+8c66849c	2fe6	mov.l r14,@-r15	DATA:Stack[-0x4] 

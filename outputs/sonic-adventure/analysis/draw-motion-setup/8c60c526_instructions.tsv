@@ -1,0 +1,80 @@
+address	length	bytes	instruction	flows
+8c60c526	2	e62f	mov.l r14,@-r15	
+8c60c528	2	d62f	mov.l r13,@-r15	
+8c60c52a	2	224f	sts.l PR,@-r15	
+8c60c52c	2	f07f	add #-0x10,r15	
+8c60c52e	2	79dd	mov.l 0x8c60c714,r13	
+8c60c530	2	422f	mov.l r4,@r15	
+8c60c532	2	d555	mov.l @(0x14,r13),r5	
+8c60c534	2	d150	mov.l @(0x4,r13),r0	
+8c60c536	2	0845	shll2 r5	
+8c60c538	2	5e04	mov.l @(r0,r5),r4	
+8c60c53a	2	4824	tst r4,r4	
+8c60c53c	2	3289	bt 0x8c60c5a4	8c60c5a4 
+8c60c53e	2	d250	mov.l @(0x8,r13),r0	
+8c60c540	2	5e06	mov.l @(r0,r5),r6	
+8c60c542	2	0ce0	mov #0xc,r0	
+8c60c544	2	d6f4	fmov.s @(r0,r13),fr4	
+8c60c546	2	74c7	mova 0x8c60c718,r0	
+8c60c548	2	08f3	fmov.s @r0,fr3	
+8c60c54a	2	00e5	mov #0x0,r5	
+8c60c54c	2	35f4	fcmp/gt fr3,fr4	
+8c60c54e	2	058f	bf/s 0x8c60c55c	8c60c55c 
+8c60c550	2	636e	_mov r6,r14	
+8c60c552	2	72c7	mova 0x8c60c71c,r0	
+8c60c554	2	4cf3	fmov fr4,fr3	
+8c60c556	2	08f2	fmov.s @r0,fr2	
+8c60c558	2	01a0	bra 0x8c60c55e	8c60c55e 
+8c60c55a	2	20f3	_fadd fr2,fr3	
+8c60c55c	2	4cf3	fmov fr4,fr3	
+8c60c55e	2	3df3	ftrc fr3,FPUL	
+8c60c560	2	5a01	sts FPUL,r1	
+8c60c562	2	0da0	bra 0x8c60c580	8c60c580 
+8c60c564	2	01e0	_mov #0x1,r0	
+8c60c566	2	5367	mov r5,r7	
+8c60c568	2	ec37	add r14,r7	
+8c60c56a	2	0147	shlr r7	
+8c60c56c	2	7362	mov r7,r2	
+8c60c56e	2	0842	shll2 r2	
+8c60c570	2	0842	shll2 r2	
+8c60c572	2	4c32	add r4,r2	
+8c60c574	2	2263	mov.l @r2,r3	
+8c60c576	2	3231	cmp/hs r3,r1	
+8c60c578	2	018b	bf 0x8c60c57e	8c60c57e 
+8c60c57a	2	01a0	bra 0x8c60c580	8c60c580 
+8c60c57c	2	7365	_mov r7,r5	
+8c60c57e	2	736e	mov r7,r14	
+8c60c580	2	e362	mov r14,r2	
+8c60c582	2	5832	sub r5,r2	
+8c60c584	2	0632	cmp/hi r0,r2	
+8c60c586	2	ee89	bt 0x8c60c566	8c60c566 
+8c60c588	2	65d3	mov.l 0x8c60c720,r3	
+8c60c58a	2	f36e	mov r15,r14	
+8c60c58c	2	047e	add #0x4,r14	
+8c60c58e	2	3262	mov.l @r3,r2	
+8c60c590	2	0b42	jsr @r2	
+8c60c592	2	e367	_mov r14,r7	
+8c60c594	2	e265	mov.l @r14,r5	
+8c60c596	2	64d2	mov.l 0x8c60c728,r2	
+8c60c598	2	e257	mov.l @(0x8,r14),r7	
+8c60c59a	2	e156	mov.l @(0x4,r14),r6	
+8c60c59c	2	0b42	jsr @r2	8c639ff8 
+8c60c59e	2	d654	_mov.l @(0x18,r13),r4	
+8c60c5a0	2	08a0	bra 0x8c60c5b4	8c60c5b4 
+8c60c5a2	2	0900	_nop	
+8c60c5a4	2	f26e	mov.l @r15,r14	
+8c60c5a6	2	60d3	mov.l 0x8c60c728,r3	
+8c60c5a8	2	147e	add #0x14,r14	
+8c60c5aa	2	e265	mov.l @r14,r5	
+8c60c5ac	2	e257	mov.l @(0x8,r14),r7	
+8c60c5ae	2	e156	mov.l @(0x4,r14),r6	
+8c60c5b0	2	0b43	jsr @r3	8c639ff8 
+8c60c5b2	2	d654	_mov.l @(0x18,r13),r4	
+8c60c5b4	2	d552	mov.l @(0x14,r13),r2	
+8c60c5b6	2	0172	add #0x1,r2	
+8c60c5b8	2	251d	mov.l r2,@(0x14,r13)	
+8c60c5ba	2	107f	add #0x10,r15	
+8c60c5bc	2	264f	lds.l @r15+,PR	
+8c60c5be	2	f66d	mov.l @r15+,r13	
+8c60c5c0	2	0b00	rts	
+8c60c5c2	2	f66e	_mov.l @r15+,r14	

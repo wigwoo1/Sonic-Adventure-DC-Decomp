@@ -1,0 +1,33 @@
+{
+  "binary_sha256": "45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a",
+  "direct_checks_passed": 4,
+  "hardware_event_identity": "PowerVR VBLANK begin",
+  "status_register": "0xa05f6900",
+  "status_bit_index": 3,
+  "status_mask": "0x8",
+  "identity_source": {
+    "url": "https://raw.githubusercontent.com/KallistiOS/KallistiOS/master/kernel/arch/dreamcast/include/dc/asic.h",
+    "symbol": "ASIC_EVT_PVR_VBLANK_BEGIN",
+    "event_code": "0x0003",
+    "source_lines": [
+      32,
+      35,
+      51,
+      129
+    ],
+    "access_date": "2026-10-04",
+    "kind": "Primary implementation documentation; external reference, not game code"
+  },
+  "inference": "Game instruction trace routes this status bit to callback slot 1, event chain 0x900, and countdown decrement 0x8c051810. Therefore that countdown is driven by VBLANK begin when the installed handler executes.",
+  "timing_implication": "Recover the game video mode and iteration-count settings before selecting a native simulation cadence. High refresh rendering must preserve original simulation progression.",
+  "unproven": [
+    "Active game video mode and VBLANK frequency",
+    "Interrupt delivery loss/coalescing during long callbacks",
+    "Native rendering/simulation decoupling and 60/120/240 FPS behavior"
+  ],
+  "binary_evidence": [
+    "analysis/countdown_hardware_path.json",
+    "analysis/instructions/8c651bc0.tsv",
+    "analysis/instructions/8c653640.tsv"
+  ]
+}

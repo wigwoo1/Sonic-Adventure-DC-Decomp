@@ -1,0 +1,2770 @@
+Main executable dispatch discovery at 0x8c0a966c
+
+The original full-game Ghidra export lists this function as 254 body bytes and
+failed decompilation. That number counts the discovered address set, not a
+contiguous routine extent and not a proof that only 254 bytes belong to it.
+
+The original prefix reads a signed byte selector from the object in r4. Values
+1 through 83 select an 83-entry signed 16-bit relative-offset table at 8c0a979c.
+The BRAF at 8c0a9792 uses base 8c0a9796. The table contains 80 distinct targets,
+from 8c0a9842 through the shared return tail at 8c0ae0ac. Other byte selectors
+reach that shared tail directly. Target entries are not separate indexed
+functions in the baseline index; they are case blocks within this dispatcher.
+
+A temporary Ghidra switch override, using the installed SwitchOverride API,
+expands the function body to 16244 instruction bytes / 8122 instruction rows.
+That exposes 7995 additional rows relative to the old 127-row body. Every exported
+instruction byte was compared with the original 1ST_READ.BIN SHA256
+45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a.
+All 83 table entries were independently decoded from the original file. The
+existing SH4 subset reference executed the prefix for all 256 byte selectors,
+stopping before the selected case body; counter/flag and stack behavior were
+also checked in this deliberately callback-free constructed prefix scenario.
+These checks do not validate the case bodies or constitute native code recovery.
+
+Files:
+analysis/main-failed-function-evidence/ = read-only baseline export/diagnostic
+analysis/main-dispatch-enrichment/ = temporary switch override export/table
+analysis/main_dispatch_discovery_verification.json = byte/selector proof
+analysis/main_dispatch_discovery_provenance.json = registered bounded evidence
+verify_main_dispatch_discovery.py = repeat the focused verification
+register_main_dispatch_discovery.py = register it without routine credit
+
+Reproduction from this project directory:
+.\ghidra\export_failed_function_evidence.ps1
+.\ghidra\enrich_main_dispatch.ps1
+Then run verify_main_dispatch_discovery.py using the bundled Python interpreter.
+Both headless scripts use the existing Ghidra 12.1.4/JDK installation and open
+1ST_READ.BIN read-only. Switch/body changes are discarded from the project;
+separate exported evidence files persist. Baseline indexes remain unchanged.
+
+The baseline and enriched function each timed out in the 60-second decompiler
+attempt. After those two distinct focused attempts, no further timeout/retry or
+speculative decompiler changes were made. Next recovery work should partition
+and understand the case control-flow in manageable groups, track shared exits
+and callbacks, then compile and compare recovered native paths against retail
+instructions. The enriched export is analysis evidence, not buildable C.
+
+No new complete routine or whole-game milestone is claimed. Main-game code/data
+boundaries, the other five failed draft functions, original behavior recovery,
+physical audio, playable ports and target-platform functionality remain open.
+Whole-project weighted completion remains 10%; this is not code or time coverage.
+Dispatcher case/dependency mapping checkpoint
+
+The case map is saved in analysis/main-dispatch-enrichment/case_dependency_map.json
+and entry_spans.tsv. It accounts for all 8122 exported instruction rows as prefix
+or one of 80 entry-address spans representing 83 selector entries. Spans are not
+independent semantic functions: outgoing cross-span branches and shared exits
+remain explicit. No native case bodies were claimed recovered in this task.
+
+There are 663 statically identified call/jump sites. Their targets are resolved
+from raw direct branches or same-block PC-relative pointer loads. Computed JMP
+landing addresses are included as block leaders. Every claimed pointer load was
+also executed independently by the existing retail SH4 subset reference and
+matched the mapped target. This validates constants and mapping, not callee
+behavior or every runtime path.
+
+Next work when resumed: export and establish boundaries for shared helper
+0x8c0aff1a, referenced by 50 calls in this dispatcher but absent as an entry in
+the baseline function index. Other frequently used unindexed targets include
+0x8c0afc98 and 0x8c0b11c0. Recovering shared helpers can support many case paths.
+The first case at 0x8c0a9842 has eight calls and floating-point comparisons;
+those dependencies must remain explicit until recovered and verified.
+
+The user requested a pause after this mapping task. No new native DLL was built
+or changed. The full game and ports remain unfinished; overall estimate 10%.
+
+Native shared transition helper checkpoint (2026-10-15)
+
+Work resumed at the user's request after switching to Sol High. The shared
+helper at 8c0aff1a now has buildable, annotated native C. Its descriptive symbol
+sa_main_dispatch_transition_8c0aff1a is inferred, not an original game symbol.
+
+The read-only Ghidra export establishes 957 instruction rows / 1914 instruction
+bytes through the RTS delay slot at 8c0b07e2. The contiguous span ending at
+8c0b07e4 also includes tables/literal pools and is not a recovered-byte count.
+Unlike the large dispatcher, this helper's draft decompilation completed.
+Independent traversal of raw retail branches and the 50 signed table offsets
+accounts for exactly the exported rows, including all 45 distinct switch
+targets. The baseline function index/project remains unchanged.
+
+The helper handles pending transitions based on object byte +1 and flags at
++4, updates the main object state byte and work halfword +124, and invokes
+subordinate services. Byte +24 of the object +3c pointee selects an early
+subordinate call; word +4c selects a state-80 path; flag 1000 gates the switch.
+Selectors outside 1..50 take the original default path. Selector 26 includes
+a comparison/flag-only path; selectors 30/32 include floating-point position
+comparisons; selector 46 invokes allocation twice and handles null results.
+Field offsets and flags above are hexadecimal; selectors and state 80 are
+decimal. These descriptions are observations, not original type names.
+
+Native source preserves original-PC labels, all GPR/SR/PR effects, guest RAM
+writes, delay slots, and external call boundaries. It reuses the established
+integer translator and software SH4 add/sub/compare support. FMOV honors both
+physical register banks and 32/64-bit transfer widths, including odd-register
+encodings selecting the other physical bank. FPSCR.PR=1 is explicitly rejected
+before guest mutation. All 34 call sites to seven target routines remain
+explicit external services; this checkpoint does not recover those callees.
+
+Verification passed 2424 complete-state retail/native comparisons plus two
+no-mutation entry guards. The cases cover every selector byte, both FR banks
+and SZ widths, transition flag branches, early returns, allocation success and
+failure, callback mutations and FR switches, and finite/NaN comparison cases.
+Retail execution traces visited all 957 rows, 109 conditional/switch edges and
+34 call sites. Each case compares all 16 MiB RAM, registers, SR/PR, FPU state,
+unchanged FPUL/MACL, and ordered callback entry arguments/return addresses.
+Representative direct state/result assertions supplement differential checks.
+
+Limits: test services are synthetic; no physical hardware or live gameplay
+was tested. Enabled floating exceptions, infinity arithmetic, unsupported
+rounding, PR=1 execution, invalid guest addresses and MMIO are outside the
+verified domain. Every discovered instruction being visited is not proof of
+all possible runtime states or exhaustive full-game decompilation.
+
+Reproduce from this project directory using the bundled Python interpreter:
+  python recover_main_dispatch_transition.py
+  .\build_main_dispatch_transition.ps1
+  python verify_main_dispatch_transition.py
+  python register_main_dispatch_transition.py
+  python map_main_dispatch_cases.py
+  python verify_main_dispatch_case_map.py
+The corresponding stages are also saved in build_and_verify.ps1. The focused
+stages were run; the entire large build_and_verify.ps1 was not run end-to-end.
+To recreate the read-only analysis export:
+  .\ghidra\export_main_dispatch_helpers.ps1
+
+Evidence/source:
+  source/sa_main_dispatch_transition_8c0aff1a.c
+  recover_main_dispatch_transition.py
+  verify_main_dispatch_transition.py
+  register_main_dispatch_transition.py
+  analysis/main-dispatch-helpers/ (instruction export, draft, diagnostics)
+  analysis/main_dispatch_transition_translation.json
+  analysis/main_dispatch_transition_verification.json
+
+Next reverse-engineering work: recover subordinate 8c0afe72 used by this
+helper's early path, then the other highly shared dispatcher helpers 8c0afc98
+and 8c0b11c0. Connect native dependencies before claiming recovered dispatcher
+behavior. The full game and every playable port remain unfinished. Whole-
+project milestone completion remains 10%; no additional milestone is complete.
+
+Native early-path dependency and connection checkpoint (2026-10-15)
+
+The goal is active again following the user's app resume. Dependency 8c0afe72
+now has structured native C in source/sa_main_dispatch_early_gate_8c0afe72.c.
+Its inferred name describes observed behavior, not an original source symbol.
+The original instruction export contains 55 rows / 110 instruction bytes in
+the 168-byte span 8c0afe72..8c0aff1a. The gap includes a literal pool; those
+bytes are not counted as instructions. Every exported byte matched retail,
+and independent raw-branch traversal accounted for exactly the 55 rows.
+The read-only Ghidra draft completed; analysis/project changes were discarded.
+
+The helper reads an unsigned mode at object->(+3c)->(+24). Modes 1..4 set
+object flag 4000; modes outside 1..6 clear it. Mode 6 passes the value at
+object->(+3c)->(+2c) to the target loaded from literal word 8c0afef8 (retail
+8c07c298). Mode 5 first subtracts object word +18 and adds 4000, with wrapping
+32-bit arithmetic. The first callback argument is signed object byte +8.
+Return R0 is 1 for modes 1..6, otherwise 0. Offsets/flags here are hexadecimal;
+the mode numbers are decimal. The real purpose/name of 8c07c298 remains open.
+
+The original 957-instruction native transition helper remains unchanged.
+source/sa_main_dispatch_transition_early_native.c connects its 8c0afe72 call
+to the recovered dependency; remaining targets are external services. The
+bridge is integration support, not an extra game routine. In the connected
+early path the parent deliberately discards the child's R0 and returns zero.
+Both nested PR saves/restores, both stack frames and callback changes are
+preserved. Host service failure propagates with the exact partial guest state
+instead of executing either epilogue. An optional observer is test support.
+
+Verification passed 2120 direct and 1156 connected retail/native comparisons
+(3276 total), 1282 ordered dependency/service boundary comparisons, four
+service-error cases and three atomic entry guards. Both entry modes exercise
+all 55 instructions and all 12 conditional edges. Tests cover all 256 input
+mode bytes, every FR/SZ/PR combination for the integer child, both transfer
+widths/banks in the connected parent, unsigned wrapping, signed characters,
+flag masks, external literal retargeting, callback mutations and FR changes.
+Sixty connected cases with the early gate disabled exercise the parent paths
+and external-service forwarding. Each completed/error case compares all 16
+MiB RAM, GPR/SR/PR/FPU state, preserved FPUL/MACL and ordered boundary states.
+
+The remaining 8c07c298 routine and other parent services are synthetic test
+callbacks. No live gameplay, physical Dreamcast hardware, complete dispatcher,
+rendering, audio or playable platform port is established. The connected
+parent retains its existing PR=1 and other floating-point limitations. The
+integer dependency itself uses no FPU instructions and passes PR=1 cases.
+
+Reproduce using the bundled Python interpreter from this project directory:
+  .\ghidra\export_main_dispatch_early_dependency.ps1   (optional re-export)
+  .\build_main_dispatch_early_native.ps1
+  python verify_main_dispatch_early_native.py
+  python register_main_dispatch_early_native.py
+  python map_main_dispatch_cases.py
+  python verify_main_dispatch_case_map.py
+The focused build/test/registration stages are also in build_and_verify.ps1.
+The focused stages were executed; the entire large workflow was not run.
+
+Files:
+  source/sa_main_dispatch_early_gate_8c0afe72.c
+  source/sa_main_dispatch_transition_early_native.c
+  build_main_dispatch_early_native.ps1
+  verify_main_dispatch_early_native.py
+  register_main_dispatch_early_native.py
+  analysis/main-dispatch-early-dependency/
+  analysis/main_dispatch_early_native_verification.json
+
+Next dependencies include external target 8c07c298 and the shared dispatcher
+helpers 8c0afc98 / 8c0b11c0. Original code/data boundaries and complete game
+recovery remain unfinished. Registry: 992 entries / 989 unique module/address
+pairs. Whole-project milestone completion remains 10%.
+
+Native value routines and closed early-path checkpoint (2026-10-15)
+
+Two further integer routines are now structured native C in
+source/sa_main_dispatch_value_native.c:
+  8c07c298..8c07c2d0: 28 instructions / 56 bytes, value-apply wrapper.
+  8c07c9d2..8c07c9fa: 20 instructions / 40 bytes, value writer.
+These descriptive names are inferred. Both read-only Ghidra drafts completed;
+every instruction byte matched retail, contiguous instruction extents and the
+direct BSR destination were checked, and all 48 rows executed in comparisons.
+
+The wrapper uses the incoming index's low byte to select a guest table entry,
+saves its incoming value, and reads object fields +14/+1c before calling the
+writer. The writer independently reads its two guest table pointers, writes
+the left/right values, and stores the wrapping value 4000 - incoming_R6 to
+primary object +18 and secondary object +20. The wrapper then reloads its
+table entry and clears the selected object's +3c pointee byte +24. Offsets and
+4000 are hexadecimal. The existing retail table pointers are 8c78c608 and
+8c78c628; their full code/data and valid-index boundaries are not established.
+Constructed entries test all byte encodings, not validity of all game indexes.
+
+Read/write order matters. The writer reloads a saved secondary pointer after
+its first writes, and the wrapper reloads its table entry after the child.
+Focused alias fixtures verify both reloads, including cases where earlier
+writes change which object receives the final write. Relocated/distinct
+literal table bases, signed/truncated index arguments and wrapping values
+are also covered. No null-pointer fallback absent in retail was introduced.
+
+The bridge source/sa_main_dispatch_transition_early_native.c retains the older
+sa_main_dispatch_transition_early_native entry and adds
+sa_main_dispatch_transition_values_native. The new entry connects:
+  8c0aff1a -> 8c0afe72 -> 8c07c298 -> 8c07c9d2.
+All four bodies execute natively in the tested nonzero early-mode paths.
+No external service callback is supplied in these closed-path tests. An
+optional read-only observer records the native boundary states. Other main
+transition branches still require external services. If the new entry reaches
+one without a service, it returns host -2 with exactly the partial guest state
+at that boundary; outer PR=1 still returns -1 before guest mutation. The older
+entry keeps its previous service boundary and atomic missing-service guard.
+
+Strict native compilation passed. The existing 3276 early-dependency cases
+were rerun after the bridge/build change and all passed. The new suite passed
+1034 writer, 1034 wrapper and 240 connected comparisons (2308 total), 1730
+ordered native-boundary comparisons including eight additional persistent-RAM
+calls, and 16 cases with observation disabled. Every new instruction executed
+through the native parent. Missing-service partial state and atomic precision
+rejection also passed. Each comparison checks complete 16 MiB RAM, GPR/SR/PR,
+FPU state and FPUL/MACL preservation against original SH4 instructions without
+callee hooks. Persistent calls preserve prior output values and table state.
+
+The first new-suite run completed its ordinary/persistent cases but failed
+the final missing-service fixture because its flags selected an earlier return.
+That fixture now enables flag 1000 to reach the intended unresolved target;
+the whole suite was rerun successfully. No C correction was needed.
+
+Files/reproduction from this project directory using bundled Python:
+  .\ghidra\export_main_dispatch_value_writer.ps1   (optional read-only re-export)
+  .\build_main_dispatch_early_native.ps1
+  python verify_main_dispatch_early_native.py
+  python register_main_dispatch_early_native.py
+  python verify_main_dispatch_value_native.py
+  python register_main_dispatch_value_native.py
+  python map_main_dispatch_cases.py
+  python verify_main_dispatch_case_map.py
+Reports: analysis/main_dispatch_early_native_verification.json and
+analysis/main_dispatch_value_native_verification.json. Original listings,
+drafts and diagnostics are in analysis/main-dispatch-value-writer/. The new
+stages are in build_and_verify.ps1. Focused stages passed; the entire accumulated
+workflow was not run. All source, verifiers and registration scripts are local.
+
+This verifies a closed early transition path in constructed states. It does
+not verify live gameplay, physical SH4 hardware, invalid guest pointers,
+memory exceptions/MMIO, other transition branches or any playable port.
+The original full main dispatcher remains unrecovered. Next shared dependency
+targets are 8c0afc98 (28 calls in the dispatcher map) and 8c0b11c0 (26 calls).
+Stay on Sol High for their reverse engineering. Registry: 994 entries / 991
+unique module/address pairs. Whole-project milestone completion remains 10%.
+
+Shared status/flag transition helpers checkpoint (2026-10-15)
+
+The next two high-use dispatcher helpers are now buildable native C in
+source/sa_main_dispatch_shared_helpers.c:
+  8c0afc98..8c0afe20: 153 rows / 306 instruction bytes, 14 conditional edges,
+    eight external call sites; used at 28 dispatcher call sites.
+  8c0b11c0..8c0b122e: 55 rows / 110 instruction bytes, eight conditional edges,
+    two external call sites; used at 26 dispatcher call sites.
+Both descriptive names are inferred. Their read-only Ghidra drafts completed,
+and the temporary function creations were discarded from the original project.
+The first routine's enclosing span includes a literal-pool gap; its full span
+size is not recovered-code byte coverage. The baseline index is unchanged.
+
+Independent raw-opcode traversal accounts for exactly both instruction sets.
+The saved generator reuses the existing integer translator and emits fixed C
+control flow, original-PC annotations, delay-slot effects and guest-memory
+literal loads. It performs no runtime opcode decoding. FMOV honors both
+physical register banks and transfer widths, including odd-register double
+transfers. Neither routine performs floating arithmetic; PR=1 is supported
+for the actual integer/FMOV instruction paths.
+
+Status helper 8c0afc98 calls query 8c06cebe once and tests for result 2. On other
+results it queries again independently and tests for zero; those calls must
+not be merged/cached. Its branches update object state, work +124/+8 and
+flags, optionally copy work +b4 to +3c, optionally load a linked vector for
+8c07cb54, and issue the final 8c0940da service with argument 11. Flag helper
+8c0b11c0 returns zero when low flag bits 0/1 are set, otherwise tests flags
+100/800 and the 200 result bit from 8c06c880 before choosing a state/work
+transition. Offsets, flags and service argument 11 in this paragraph are hex.
+Original field/type and semantic subsystem names remain undetermined.
+
+All external callees remain explicit services: 8c06cebe, 8c06c880, 8c0b1d60,
+8c05e788, 8c07cb54 and 8c0940da. This checkpoint does not claim to recover
+those implementations or the full main dispatcher. The new routines can be
+resolved natively at all 54 mapped dispatcher call sites; the dispatcher
+itself is still analysis evidence, not a completed native caller.
+
+Strict native compilation passed, followed by 2088 status-helper and 200
+flag-helper comparisons (2288 total). Retail traces exercised all 208
+exported instruction rows, all 22 conditional edges and all ten call sites.
+7039 ordered callback-entry states matched, including failure-boundary cases.
+Ten additional host-service failure tests cover every external call site and
+preserve the exact partial guest state; two missing-service guards reject
+before mutation. Cases include independent query sequences (including first
+and second returning different values), flag combinations/sign extension,
+both nullable link levels, signed object bytes, every FR/SZ/PR combination,
+raw FMOV patterns, callback mutations and FPSCR mode changes. Comparisons
+cover complete 16 MiB RAM, GPR/SR/PR/FPU state and FPUL/MACL preservation.
+
+Reproduce from this project directory using the bundled Python interpreter:
+  .\ghidra\export_main_dispatch_shared_helpers.ps1  (optional read-only export)
+  python recover_main_dispatch_shared_helpers.py
+  .\build_main_dispatch_shared_helpers.ps1
+  python verify_main_dispatch_shared_helpers.py
+  python register_main_dispatch_shared_helpers.py
+  python map_main_dispatch_cases.py
+  python verify_main_dispatch_case_map.py
+The stages are also in build_and_verify.ps1. Focused build/tests were executed;
+the full accumulated workflow was not run. Evidence and scripts are local:
+analysis/main-dispatch-shared-helpers/ (listings, drafts and diagnostics),
+analysis/main_dispatch_shared_translation.json,
+analysis/main_dispatch_shared_verification.json,
+recover_main_dispatch_shared_helpers.py,
+verify_main_dispatch_shared_helpers.py,
+register_main_dispatch_shared_helpers.py.
+
+These are constructed-state comparisons against the existing SH4 subset, not
+live gameplay or physical hardware. Invalid pointers, memory exceptions/MMIO,
+complete original behavior and playable ports remain unverified. Next work:
+recover query 8c06cebe, then its companion check 8c06c880 and detach helper
+8c0b1d60, to replace test services and connect actual dispatcher case paths.
+Stay on Sol High for reverse engineering. Registry: 996 entries / 993 unique
+module/address pairs. Whole-project milestone completion remains 10%.
+
+Native table/mask status query checkpoint (2026-10-15)
+
+Query 8c06cebe..8c06cefe is now structured native C in
+source/sa_main_dispatch_status_query.c: 32 instructions / 64 bytes, three
+conditional tests (six edges) and one external call site. The read-only Ghidra
+draft completed; all instruction bytes matched retail. The native parent
+entry sa_main_dispatch_status_query_connected replaces both query call sites
+in recovered shared helper 8c0afc98 with this original query body. Its optional
+observer is host test support, not another game routine. Existing parent
+source/DLL and its standalone fixture-based evidence remain unchanged.
+
+The query returns zero if object flag 4000 is set or the intersection of a
+per-index table word with a guest global mask is zero. Object byte +8 is
+unsigned for table selection with stride 34. MULU.W stores index * 34 in MACL,
+even when the later intersection is zero; the flag-4000 early return preserves
+the incoming MACL. An active entry calls the target loaded from 8c06cf54
+(retail 8c05e6e8) and returns two for positive signed R0, otherwise one. The
+mask pointer at 8c06cf4c and table pointer at 8c06cf50 are read from guest RAM,
+not hard-coded. Flag, field offsets and stride in this paragraph are hex.
+
+The native parent connection passes explicit MACL storage into each query.
+The retail reference likewise uses explicit special-register state; tests
+compare the resulting MACL rather than assuming it stays unchanged. Two
+native query calls can observe mask/flag/index changes from the first active
+callee. The second query can use a different table slot or return inactive
+without invoking the active-entry service. The parent's other services and
+query active-entry callee
+remain explicit external dependencies. This is not a closed native branch
+when 8c05e6e8 or other services are required.
+
+Strict compilation passed. 1204 direct and 1005 connected comparisons (2209
+total) passed, including 3423 ordered query/service boundary checks. Every
+query instruction and all six query conditional edges executed both directly
+and through the parent; all 153 parent instruction rows executed as well.
+Cases cover all index-byte encodings in constructed entries, mask/flag gates,
+positive/zero/negative signed results, callback register changes,
+first-callee changes to mask/flag/index before the next query, all FR/SZ/PR
+modes, retargeted/relocated guest literals and MACL preservation/modification.
+Eight connected cases run without observation. Three host-service failures
+check direct and first/second nested query partial states; two missing-service
+guards reject before mutation. Each case compares complete 16 MiB RAM,
+GPR/SR/PR/FPU, explicit MACL and unchanged FPUL. Failure comparisons stop and
+resume the original executor at service boundaries to preserve exact MACL.
+
+The first verifier run stopped on a fixture expecting a fixed character byte
+after a deliberate index change. The service assertion now reads the current
+object byte, and the complete suite was rerun successfully. Native C did not
+need a correction.
+
+Reproduce with bundled Python from this project directory:
+  .\ghidra\export_main_dispatch_status_query.ps1  (optional read-only export)
+  .\build_main_dispatch_status_query.ps1
+  python verify_main_dispatch_status_query.py
+  python register_main_dispatch_status_query.py
+  python map_main_dispatch_cases.py
+  python verify_main_dispatch_case_map.py
+Evidence: analysis/main-dispatch-status-query/ and
+analysis/main_dispatch_status_query_verification.json. Native query source,
+build, verifier and registration scripts are preserved. Stages are added to
+build_and_verify.ps1; focused stages passed, full accumulated workflow not run.
+
+Limitations: active service 8c05e6e8 and the parent's other callees use test
+services; the per-byte table fixtures do not prove all indexes valid in the
+game. Physical hardware, invalid pointers, memory exceptions/MMIO, the full
+dispatcher/game and playable ports remain unverified. Next useful work is
+the shared check 8c06c880 and/or active query target 8c05e6e8. Stay on Sol High.
+Registry: 997 entries / 994 unique module/address pairs. Whole-project milestone
+completion remains 10%.
+
+Native shared classification/check checkpoint (2026-10-15)
+
+Shared check 8c06c880..8c06ca30 is now annotated native C in
+source/sa_main_dispatch_shared_check.c. It contains 195 discovered integer
+instruction rows / 390 instruction bytes, 76 conditional edges and no external
+calls. Its 432-byte enclosing span includes a literal gap; it is not a
+recovered-code byte count. Read-only Ghidra decompilation completed, and the
+saved generator verifies original bytes plus exact raw-branch reachability.
+It emits static native C with explicit SR/GPR/stack effects, not an opcode
+interpreter. Original names and precise subsystem/type meanings remain open.
+
+The checker selects one of two pointer paths using object flag 800. The
+linked path reads a per-index guest table and requires the link's +24 word,
+its +20 object and that object's +38 word to be nonzero. The other path
+uses object +38, input flags 2/8, object flag 4, a guarded +18 pointer, and
+linked-object eligibility flag 40 while excluding flag 1000. Mode byte +9
+and the linked object's type byte +2 then select the result mask. Modes
+0/2/3/5/6 classify types 4/5/7 as 200/400/800 and type 6 as zero; mode 7
+classifies types 4/5/6/7 as 200/600/600/800. Other modes/types return zero.
+Offsets and flag/result masks here are hexadecimal; mode/type numbers are
+decimal. No invalid-pointer fallback absent from retail was added.
+
+source/sa_main_dispatch_shared_check_connected.c provides two host connection
+entries: sa_main_dispatch_status_check_connected and
+sa_main_dispatch_flag_check_connected. They link the recovered check into
+the original 153-row status and 55-row flag transitions. The status connection
+also executes native query 8c06cebe, preserving explicit MACL. Other targets
+remain external services. Null external service is allowed on closed paths;
+reaching an unresolved target returns -2 with the exact partial guest state.
+Optional observation is test support, not another original game routine.
+Existing sources, DLLs and verification artifacts remain unchanged; the new
+connected build has its own DLL.
+
+Strict compilation passed. 3408 direct, 594 status-parent and 186 flag-parent
+comparisons passed (4188 total). Direct tests cover all 195 checker rows and
+76 conditional edges, every mode byte, classified/default types, all index
+bytes in constructed table entries, both pointer paths and every guarded
+null/data exit. Stack canaries verify byte/word writes and delayed branches.
+Both parent instruction sets (153/55 rows) execute in connected tests. Only
+the checker's linked path is reachable from these parents; those tests cover
+110 checker rows each, rather than claiming all 195 through each caller.
+
+3296 ordered native/service boundary states matched. 160 flag-transition
+cases execute with a null external service, including the checker when its
+result selects the closed branch. 24 cases execute with observation disabled.
+Two missing-service and two service-error checks preserve the exact partial
+state in both caller chains. Every comparison checks full 16 MiB RAM,
+GPR/SR/PR/FPU, explicit MACL and preserved FPUL. All FR/SZ/PR combinations
+occur in the suite; the pure integer check has no FPU-mode restriction.
+
+The first suite run passed its state comparisons, then its coverage assertion
+identified a parent early-return path absent from the fixtures. Sixteen
+inactive-query cases were added; the complete suite was rerun successfully.
+No native C correction was needed, and the coverage requirement was retained.
+
+Reproduce from this project directory with bundled Python:
+  .\ghidra\export_main_dispatch_shared_check.ps1  (optional read-only export)
+  python recover_main_dispatch_shared_check.py
+  .\build_main_dispatch_shared_check.ps1
+  python verify_main_dispatch_shared_check.py
+  python register_main_dispatch_shared_check.py
+  python map_main_dispatch_cases.py
+  python verify_main_dispatch_case_map.py
+Evidence: analysis/main-dispatch-shared-check/,
+analysis/main_dispatch_shared_check_translation.json and
+analysis/main_dispatch_shared_check_verification.json. Source, generator,
+build, verifier and registration scripts remain local. Stages are integrated
+in build_and_verify.ps1. Focused stages passed; the full workflow was not run.
+
+These are constructed-state/software-reference comparisons, not live gameplay
+or physical SH4 hardware proof. Remaining parent services (including active
+query target 8c05e6e8 and detach helper 8c0b1d60), invalid pointers, memory
+exceptions/MMIO, full original game behavior and playable ports are open.
+Constructed per-index entries do not establish all indexes valid in the game.
+Next: active query target 8c05e6e8 and its dependencies, with Sol High.
+Registry: 998 entries / 995 unique module/address pairs. Whole-project milestone
+completion remains 10%.
+
+Native active-query group checkpoint (2026-10-15)
+
+Three related retail routines now have annotated static native C in
+source/sa_main_dispatch_active_query.c:
+  8c05e69e..8c05e6c4: 19 instructions / 38 bytes, ten-entry clear helper.
+  8c05e6c4..8c05e6e8: 18 instructions / 36 bytes, linked-object predicate.
+  8c05e6e8..8c05e788: 51 instructions / 102 bytes, active query.
+The active routine's enclosing span includes gaps/literals; span bytes are
+not recovered instruction coverage. All three read-only Ghidra drafts
+completed. The generator matches every original instruction byte and proves
+exact raw-branch reachability, including all five native BSR targets. Original
+subsystem/type names remain undetermined; the new symbols are descriptive.
+
+The predicate requires a nonnull object +38 -> +18 link, object byte +8 equal
+to zero, and type byte +2 equal to eight in the linked +10 -> +20 object.
+The clear helper visits ten guest table words (table pointer from 8c05e760),
+clearing byte zero at each nonnull entry's +20 pointee. It reloads each table
+word as retail does; a fixture where clearing one flag changes the next table
+pointer verifies that order instead of caching the original table contents.
+
+The active query returns zero on ordinary negative-predicate paths, sometimes
+clearing the table first. A positive predicate with linked halfword +6 equal
+to zero clears the table and returns -1. Otherwise contact halfword +16 must
+equal one to reach the floating path: linked word +c moves to FPUL, converts
+signed int32 to FR3, and compares against the retail constant 30.0. Values
+below the threshold return one; other values clear the table and return zero.
+Offsets in this paragraph are hexadecimal; counts, type values and return
+values are decimal. Raw FMOV transfers respect FR/SZ, and the conversion and
+comparison reuse existing software SH4 support. The Ghidra draft warned about
+removing a block at 8c05e734; the raw listing contains FLOAT there, and native
+tests execute it rather than dropping it based on that draft warning.
+
+source/sa_main_dispatch_active_connected.c adds native connections through
+the original status query 8c06cebe and shared transition 8c0afc98. QUERY now
+executes ACTIVE -> predicate/clear without any external game-service calls.
+The STATUS connection also executes the native shared check; its remaining
+detach/reset/vector/sound targets are still external services. Existing DLLs,
+sources and verification artifacts are unchanged; this build uses a new DLL.
+
+Strict compilation passed after fixing generated forward declarations to use
+the same Windows export attribute as their definitions. All warnings remain
+errors. 3112 cases passed: 44 clear-helper, 2048 predicate, 238 active-query,
+494 connected QUERY and 288 connected STATUS cases. Tests cover all 88 new
+instruction rows, 20 conditional edges and five original native call sites;
+3704 ordered dependency/service boundary states matched. 474 supported QUERY
+cases execute with a null external callback, and eight cases disable optional
+observation. Integer paths run for all FR/SZ/PR combinations; supported floating
+cases cover both banks/transfer widths, both rounding modes, signed extrema,
+values around 30, NaN/infinity threshold fixtures and pool-pointer aliasing.
+
+Forty exact partial-state checks cover unsupported precision/reserved rounding,
+enabled conversion exceptions (exact and inexact input) and enabled invalid
+comparison. Integer-only paths are not rejected solely for PR=1. When an
+unsupported/trapping floating instruction is reached, host status -1/1
+propagates without unwinding guest frames; actual CPU exception delivery is
+not emulated. These checks stop retail execution at the instruction boundary
+and apply the independently established FPSCR/trap rules. They do not claim
+physical exception-handler behavior. Complete 16 MiB RAM, GPR/SR/PR, physical
+FPU banks/FPSCR, separate FPUL and explicit MACL are compared. The native C
+ABI keeps FPUL separate from the bank/FPSCR object; the verifier follows that
+layout in both final and observed boundary comparisons.
+
+Reproduce using bundled Python from this project directory:
+  .\ghidra\export_main_dispatch_active_query.ps1   (optional read-only export)
+  python recover_main_dispatch_active_query.py
+  .\build_main_dispatch_active_query.ps1
+  python verify_main_dispatch_active_query.py
+  python register_main_dispatch_active_query.py
+  python map_main_dispatch_cases.py
+  python verify_main_dispatch_case_map.py
+Evidence: analysis/main-dispatch-active-query/,
+analysis/main_dispatch_active_translation.json,
+analysis/main_dispatch_active_verification.json. All source, generator,
+build/test and registration scripts are local. Stages are integrated into
+build_and_verify.ps1. Focused stages passed; full accumulated workflow not run.
+
+Limits: physical hardware, memory exceptions/MMIO, arbitrary invalid pointers,
+all actual game states, full dispatcher/game behavior and playable ports are
+unfinished. Enabled FPU traps are bounded host errors, not hardware emulation.
+The STATUS caller still uses external services on other branches. Next useful
+dependency is reset 8c05e788, which calls the newly native clear helper, then
+detach 8c0b1d60. Stay on Sol High for reverse engineering. Registry: 1001 entries
+/ 998 unique module/address pairs. Whole-project milestone completion is 10%.
+
+Native reset and STATUS caller connection (2026-10-15):
+source/sa_main_dispatch_reset.c recovers 8c05e788..8c05e7d4: 38 integer
+instructions, 76 bytes, four conditional edges and one native call to the
+previously recovered table clear 8c05e69e. source/sa_main_dispatch_reset_connected.c
+adds a separate STATUS bridge that uses native reset, clear, active query,
+predicate, status query and shared check. Detach/vector/sound are still external
+services. Prior DLLs, recovered sources and their evidence remain unchanged.
+
+Reset clears the pool before reloading the object +38 -> +18 -> +10 -> +20
+chain. It reads signed halfword +6, writes one to linked byte zero and selects
+pool entry zero when the index is nine or the next candidate is null. Otherwise
+it selects the next entry, sign-extending the low 16 bits before the final
+table access, then writes two through that node's +20 pointer. At current
+32767 the candidate is table[32768], while the final selection is table[-32768].
+Those distinct accesses are preserved. The original first-entry nonnull and
+mapped-pointer requirements remain; synthetic extended indexes demonstrate
+instruction behavior, not valid gameplay states. Offsets above are hexadecimal.
+
+Strict compilation with all warnings as errors passed. 912 comparisons passed:
+736 direct reset and 176 connected STATUS cases, all 38 reset rows and four
+conditional edges at each entry, 1780 ordered boundary states, 24 runs without
+observation and eight exact partial-state checks at the remaining sound call.
+Tests compare complete 16 MiB RAM, GPR/SR/PR, physical FPU banks/FPSCR, separate
+FPUL and MACL against the original SH4 instructions. They cover index-nine
+fallback, missing candidates, signed rollover, relocated table pointers,
+clear-induced count/chain changes and aliased flag writes. One initial test
+used a zero-count STATUS path that skips reset; the original and native states
+agreed, but the fixture's selection assertion was wrong. Changing that alias
+fixture to a nonzero count exercised reset as intended; the full rerun passed.
+No native implementation change was needed for that fixture correction.
+
+Reproduce from this project directory:
+  .\ghidra\export_main_dispatch_reset.ps1   (optional read-only evidence export)
+  .\build_main_dispatch_reset.ps1
+  python verify_main_dispatch_reset.py
+  python register_main_dispatch_reset.py
+  python map_main_dispatch_cases.py
+  python verify_main_dispatch_case_map.py
+Evidence: analysis/main-dispatch-reset/ and
+analysis/main_dispatch_reset_verification.json. All C, export, build, test and
+registration scripts are local, and focused stages are integrated into
+build_and_verify.ps1. Full accumulated workflow was not run end-to-end.
+
+Registry: 1002 entries / 999 unique module/address pairs. The full game and
+playable ports remain unfinished; physical hardware and arbitrary invalid
+pointers/memory exceptions are not verified. Whole-project weighted milestone
+completion remains 10%, not a code-coverage measurement. Next dependency:
+detach 8c0b1d60, then vector 8c07cb54. Continue with Sol High for this work.
+
+Native detach/vector group and both parent connections (2026-10-15):
+source/sa_main_dispatch_detach.c recovers detach 8c0b1d60..8c0b1de0 (64
+instructions, 128 bytes) and vector storage 8c07cb54..8c07cb6a (11 instructions,
+22 bytes). recover_main_dispatch_detach.py reuses the existing byte-checked
+static translator without changing prior sources or reports. All 75 listing
+rows match the original executable. Raw reachability proves six conditional
+edges and two indirect call sites, both in detach. Ghidra read-only drafts
+completed, but native argument/register behavior follows the raw instructions.
+In particular detach copies input R4 to R14; Ghidra's inferred prototype is
+not treated as proof that the object argument came from R5.
+
+If object halfword +4 lacks bit 0x800, detach returns after its prologue and
+epilogue. Otherwise it reads work +68 -> +20 and, when nonnull, clears bit
+0x1000 in that child's +4 halfword. It clears object bit 0x800 before calling
+native check 8c06c880, so the checker uses the unattached contact path. When
+the result contains 0x200, detach prepares a stack vector, calls transform
+8c078eb0, reloads work +68 -> +24, and copies the transformed three words to
+destination +4/+8/+c. It then clears work +68. Callback-driven relocation
+tests verify the post-call link reload; the prior pointer is not cached.
+In ordinary PR=0/SZ=0 mode the initial vector is (1.0, 1.0, 0.0). Offsets and
+masks above are hexadecimal. The descriptive function names are inferred.
+
+Raw transfers retain SZ/FR semantics. With SZ=1, overlapping double-width
+stack stores include the saved PR slot at stack +c. Direct tests deliberately
+restore an alternate return sentinel and compare it; connected transform
+tests put the required original caller return in the overlapping opposite-bank
+pair so retail execution can continue. This does not prove arbitrary SZ=1
+game states return safely. Reached FLDI1/FLDI0 with PR=1 returns host -1 at
+that instruction, retaining the guest frame and exact preceding state;
+hardware exception delivery is not modeled. Integer-only paths allow PR=1.
+
+The vector writer masks input R4 to one byte, indexes the guest table pointer
+at literal 8c07cca4, and stores FR4/FR5/FR6 through the selected node at
++10/+14/+18. All 256 byte indexes are tested in all eight FR/SZ/PR combinations,
+including high input bits, and extra fixtures relocate the table. Overlapping
+SZ=1 stores and their opposite-bank source pairs remain bit-exact.
+
+source/sa_main_dispatch_detach_connected.c supplies native CHECK to detach
+and connects detach and vector storage into both original shared transitions.
+The STATUS connection also retains native query/active/predicate/clear/reset.
+Only transform 8c078eb0 and sound 8c0940da remain external services in this
+connection. Synthetic transform output is explicitly a fixture; the transform
+algorithm has not been recovered by this checkpoint. Existing DLLs, C and
+verification evidence remain unchanged; this build uses main_dispatch_detach.dll.
+
+Strict compilation with warnings as errors passed after removing an unused
+inherited transfer helper; the generator's missing signed-offset helper was
+also supplied. All 4116 comparisons passed: 1708 detach, 2080 vector, 164
+STATUS and 164 FLAG cases. They cover all 75 new rows, six conditional edges,
+two call sites, all 153/55 parent rows and all 64 detach rows through each
+parent. 3136 ordered native/service boundaries matched. Tests include 112
+complete FLAG cases and 1424 complete detach cases with no external calls,
+140 exact partial precision guards, 24 missing/failing-transform cases,
+12 unobserved cases, child-null branches, flag masks, aliased child/contact
+flags, callback register/FPU mutations and post-transform pointer relocation.
+Complete 16 MiB RAM, GPR/SR/PR, physical FPU banks/FPSCR, separate FPUL and
+MACL are compared with the original SH4 executor. Precision guard cases stop
+the reference before the unsupported instruction; they are partial-state
+checks, not execution or emulation of the hardware exception handler.
+
+Reproduce from this project directory with bundled Python:
+  .\ghidra\export_main_dispatch_detach.ps1   (optional read-only evidence export)
+  python recover_main_dispatch_detach.py
+  .\build_main_dispatch_detach.ps1
+  python verify_main_dispatch_detach.py
+  python register_main_dispatch_detach.py
+  python map_main_dispatch_cases.py
+  python verify_main_dispatch_case_map.py
+Evidence: analysis/main-dispatch-detach/,
+analysis/main_dispatch_detach_translation.json and
+analysis/main_dispatch_detach_verification.json. All C, export, generator,
+build, test and registration scripts are local. Focused stages are integrated
+into build_and_verify.ps1; that file passes PowerShell syntax parsing. The
+full accumulated workflow has not been run end-to-end for this checkpoint.
+
+Registry: 1004 entries / 1001 unique module/address pairs. Whole-project
+weighted milestone completion remains 10%, not recovered-code coverage.
+Mapped/nonnull retail pointer preconditions are required; arbitrary invalid
+pointers, MMIO, hardware and all gameplay states remain unverified. Full game
+and playable ports are unfinished. Next dependency: transform 8c078eb0 and
+its rotation/matrix callees, using Sol High. Luna Low is suitable for docs only.
+
+Native transform sequence and matrix-pop connection (2026-10-15):
+source/sa_main_dispatch_transform.c recovers 8c078eb0..8c078f1e: 55
+instructions, 110 bytes, six conditional edges and six indirect call sites.
+All listing bytes match the original executable; the read-only Ghidra draft
+completed. recover_main_dispatch_transform.py reuses the existing static
+translator without changing prior source files or verification artifacts.
+
+The wrapper saves R14/PR and allocates 0x14 stack bytes. It copies the input
+vector from R5 to local +8/+c/+10 using FR3 transfers, then calls 8c057b40.
+After that call it reads object +1c and conditionally calls 8c63a1cc with R4=0,
+R5=that value. It similarly reads +14 and calls 8c639ec8, then reads +18,
+negates it with original uint32 wraparound, and calls 8c639f5c when nonzero.
+The conventional Z/X/negative-Y rotation labels are inferred; the byte-proven
+ordering is the offsets and addresses above. Each conditional delay slot
+writes the angle to local +0 even on the skipped-call path. Values are read
+after preceding callbacks, preserving mutations rather than caching angles.
+
+It then calls 8c638f28 with R4=0, R5=local +8 and R6 reloaded from the saved
+input pointer at local +4. Finally it calls existing native stack pop
+8c639b98 with R4=1 and restores its frame. The native pop result remains in
+R0. The input pointer can be redirected by a callback changing local +4,
+and matrix globals can be relocated before pop; both reloads are tested.
+No floating arithmetic is performed by the wrapper itself. Offsets are hex.
+
+source/sa_main_dispatch_transform_connected.c adds a new bridge connecting
+this wrapper through detach and both shared transitions, while routing matrix
+pop to source/model_matrix_stack_pop.c. Existing pop source/evidence remain
+unchanged and are not registered as an additional recovered routine. Its
+PR=0/SZ=0 support boundary remains explicit: other modes return host -1 at
+the pop entry without unwinding the wrapper or caller frames. Direct wrapper
+tests execute raw FR/SZ transfers for all modes up to that boundary. SZ=1's
+last vector store overlaps the saved PR word; exact stack bytes are compared,
+but those cases do not claim a successful return through unsupported pop.
+Detach's earlier PR=1 FLDI guard also remains intact on connected paths.
+
+Strict compilation passed, followed by 2030 comparisons: 1606 direct wrapper,
+140 detach, 144 STATUS and 140 FLAG. All 55 wrapper rows are covered through
+each entry, as are all six branch outcomes and six call sites overall. All
+28 original pop instruction rows execute in supported cases. 11116 ordered
+native/external boundary states matched. The suite contains 570 completed
+runs, 1272 exact partial precision/pop guards and 188 partial service failures;
+these categories are separate. Eight runs disable observation, and 56 use a
+null external callback (including closed caller paths and missing-service
+checks). Tests cover all rotation-presence combinations, angle sign/extrema,
+all FR/SZ/PR and RM patterns, unsigned pop-depth underflow, callback register/
+FPU/angle changes, input aliasing, saved-pointer redirection, matrix-global
+relocation and every remaining matrix-call error boundary. Missing raw
+wrapper callbacks retain prologue, FMOV delay-slot and call-entry effects.
+
+Complete 16 MiB RAM, GPR/SR/PR, physical FPU banks/FPSCR, separate FPUL and
+MACL match the original SH4 executor. Unsupported guard checks stop the
+reference at the relevant instruction or native-pop entry before applying
+the established support limit; hardware exception delivery is not emulated.
+Matrix push 8c057b40, rotations 8c63a1cc/8c639ec8/8c639f5c, vector calculation
+8c638f28 and sound 8c0940da remain explicit synthetic services. Their
+algorithms, numerical matrix results and complete transform functionality
+have not been recovered or verified by these sequence comparisons.
+
+Reproduce from this project directory with bundled Python:
+  .\ghidra\export_main_dispatch_transform.ps1   (optional read-only export)
+  python recover_main_dispatch_transform.py
+  .\build_main_dispatch_transform.ps1
+  python verify_main_dispatch_transform.py
+  python register_main_dispatch_transform.py
+  python map_main_dispatch_cases.py
+  python verify_main_dispatch_case_map.py
+Evidence: analysis/main-dispatch-transform/,
+analysis/main_dispatch_transform_translation.json and
+analysis/main_dispatch_transform_verification.json. All C, export, generator,
+build, test and registration scripts remain local. Focused stages are in
+build_and_verify.ps1 and its PowerShell syntax passes. The full accumulated
+workflow has not been run end-to-end for this checkpoint.
+
+Registry: 1005 entries / 1002 unique module/address pairs. The evidence audit
+reports zero registry errors and zero stale source reports. Weighted whole-
+project milestone completion remains 10%, not a recovered-code percentage.
+Invalid pointers, MMIO, hardware and all actual gameplay states remain
+unverified; full game and playable ports are unfinished. Next dependency:
+matrix push/initialization 8c057b40, followed by rotations and vector math.
+Continue with Sol High for this reverse engineering; Luna Low suits docs.
+
+Native matrix push/initialization and connected stack lifecycle (2026-10-15):
+source/sa_main_dispatch_matrix_init.c recovers 8c057b40..8c057bac as
+structured C: 50 instructions, 100 instruction bytes, two conditional edges
+and no callees. The 108-byte enclosing span also contains two literal words;
+a third literal used by this routine is at 8c057bac. The read-only Ghidra
+export completed. recover_main_dispatch_matrix_init.py validates listing
+bytes, raw reachability and all three original literal values without
+rewriting the hand-authored C. Inferred descriptive names remain explicit.
+
+The routine reads signed stack depth and limit through the literal pointers
+at 8c057b54 and 8c057b50. Depth >= limit returns retail R0=0 with no matrix
+writes. Otherwise it increments depth, reloads the stack-pointer global
+through literal 8c057bac, advances it by 0x40 and preserves the exact GPR/SR
+effects. Initial PR=1 reaches a bounded host -1 at FLDI1 8c057b66 after those
+global changes, rather than being rejected before the function runs. The
+limit-reached path works in all tested FPU modes. No new overflow clamp or
+depth correction is added; signed edge cases follow the original code.
+
+In ordinary initial PR=0/SZ=0 mode it loads constants into active FR0..FR5,
+toggles SZ and saves all sixteen opposite-bank matrix words through eight
+descending pair stores. It builds an identity matrix in that opposite bank,
+stores it in the next 0x40-byte matrix slot, restores SZ and returns R0=1.
+The fixed store sequences are expressed as native loops. Initial SZ=1 is
+also preserved: toggling SZ produces 32-bit stores, partial matrix saves/
+writes and different final R4/R5 offsets. These are raw instruction semantics,
+not a claim that such states form a valid normal matrix stack. PR, guest SP,
+FPUL and MACL remain unchanged. Offsets and masks above are hexadecimal.
+
+source/sa_main_dispatch_matrix_connected.c adds a separate native bridge
+for transform, detach, STATUS and FLAG with this push/initialization routine
+and existing pop 8c639b98 both native. Older DLLs, C and evidence remain
+unchanged. Three rotations, vector calculation and sound are still external
+fixtures; the complete numerical transform is unfinished. Existing native
+pop retains its PR=0/SZ=0 support boundary and partial-state host -1 guard.
+
+Strict compilation passed, followed by 2240 comparisons: 1232 direct init,
+240 transform, 256 detach, 256 STATUS and 256 FLAG. All 50 init instruction
+rows and both branch outcomes are covered through each of the five entries.
+6544 ordered native/external boundary states matched. Independently of the
+SH4 executor, 162 cases assert that saved matrix bytes equal the original
+opposite bank, the next matrix is exactly identity, and depth/pointer updates
+are correct. The suite contains 1180 completed runs, 924 exact partial
+precision/pop guards and 136 missing/failing-service cases. Sixteen runs
+disable observation, and 40 use a null external callback.
+
+Tests cover signed depth/limit extrema and equality, all FR/SZ/PR and RM bit
+patterns, FPSCR flag/enable bits, raw zeros/infinities/NaNs/subnormal payloads,
+all combinations of relocated literal pointers, writes overlapping the depth
+or stack-pointer global, native push/pop integration, callback mutations,
+post-call matrix relocation and every remaining rotation/vector error target.
+Full 16 MiB RAM, GPR/SR/PR, physical FPU banks/FPSCR, separate FPUL and MACL
+match the original SH4 executor. Unsupported guard checks stop at the original
+instruction or pop entry and compare the exact preceding/retained state;
+they do not emulate hardware exception delivery. Synthetic depth/alias cases
+demonstrate instruction behavior, not validity of every constructed game state.
+
+Reproduce from this project directory with bundled Python:
+  .\ghidra\export_main_dispatch_matrix_init.ps1   (optional read-only export)
+  python recover_main_dispatch_matrix_init.py
+  .\build_main_dispatch_matrix_init.ps1
+  python verify_main_dispatch_matrix_init.py
+  python register_main_dispatch_matrix_init.py
+  python map_main_dispatch_cases.py
+  python verify_main_dispatch_case_map.py
+Evidence: analysis/main-dispatch-matrix-init/,
+analysis/main_dispatch_matrix_init_translation.json and
+analysis/main_dispatch_matrix_init_verification.json. All C, export, inventory,
+build, test and registration scripts are local. Focused stages are integrated
+into build_and_verify.ps1, whose PowerShell syntax passes. The full accumulated
+workflow has not been run end-to-end for this checkpoint.
+
+Registry: 1006 entries / 1003 unique module/address pairs. Weighted whole-
+project milestone completion remains 10%, not a recovered-code percentage.
+Mapped/nonnull guest pointer preconditions are required; arbitrary invalid
+pointers, MMIO, hardware and all gameplay states remain unverified. Full game
+and playable ports are unfinished. Next: rotation helpers 8c63a1cc, 8c639ec8
+and 8c639f5c, then vector calculation 8c638f28. Continue with Sol High;
+Luna Low is suitable for documentation-only work.
+
+Existing native axis rotations reused and connected (2026-10-15):
+The current workspace already contained source/sa_matrix_rotate_x.c,
+source/sa_matrix_rotate_y.c and source/sa_matrix_rotate_z.c, with an older
+standalone dataflow test. These sources were not in the recovery registry.
+They are reused unchanged rather than rewritten or described as newly
+decompiled code. New read-only exports and recover_main_dispatch_axes.py
+validate all raw bytes, reachability, source labels and source hashes against
+the earlier evidence. X at 8c639ec8 has 72 instructions (144 bytes), Y at
+8c639f5c has 75 (150 bytes), and Z at 8c63a1cc has 75 (150 bytes). Together:
+222 instructions, six conditional edges and 18 FSCA/FTRV instruction sites.
+All three new Ghidra draft exports completed; raw instructions remain the
+authority where draft warnings describe removed blocks.
+
+Each axis selects the implicit matrix when R4 is zero and the explicit
+matrix path otherwise. The conditional delay slot moves R5 to FPUL on both
+paths. Both paths use FSCA and two FTRV operations with native integer,
+register-bank, paired-transfer and save/restore dataflow around them. The
+explicit path also preserves matrix and guest-stack writes. The legacy
+entry contract remains PR=0/SZ=0; an unsupported mode returns host -1 before
+guest state changes. Source files and older dependent DLLs/reports remain
+unchanged. Registering these bodies adds previously uncounted existing work;
+it is not three additional newly written implementations.
+
+source/sa_main_dispatch_axes_connected.c adds native X/Y/Z dispatch through
+transform, detach, STATUS and FLAG, retaining native matrix init and pop.
+Only vector calculation 8c638f28 and sound remain external game services in
+this connection. FSCA/FTRV remain separate instruction services. A missing
+instruction service returns host -2 at its reached opcode, retaining preceding
+TST, FPUL/delay-slot, FLDI and stack effects; a service error propagates its
+status and effects. Instruction callbacks must preserve FR/SZ/PR/RM mode bits;
+the verification fixtures vary flag bits and input-sensitive raw outputs.
+They do not implement sine/cosine or numerical vector multiplication.
+
+Strict compilation passed. 1488 comparisons passed: 268 each X/Y/Z directly,
+158 transform, 174 detach, 178 STATUS and 174 FLAG. Direct tests cover both
+matrix paths, zero/high/wrapped angles, both banks, all RM patterns, SR flags,
+complete matrix/stack RAM, every instruction and all 18 vector sites. All
+66 implicit-path rotation rows reachable from each of the four callers are
+covered; the callers always pass R4=0, so they do not claim explicit-path
+coverage. 3528 vector-instruction input snapshots and 7544 total ordered
+native/game/instruction boundary snapshots matched the original executor.
+
+The suite contains 876 completed runs, 444 exact partial precision guards
+and 168 partial instruction/game-service failures. Twenty runs disable native
+call observation while still checking instruction inputs. Sixty-eight cases
+use a null instruction callback, covering bypass paths and exact state before
+the first missing opcode. Missing/failing instructions are checked at each
+FSCA/FTRV position on implicit/explicit paths; connected failures also verify
+that errors propagate through every parent without unwinding guest frames.
+All 16 MiB RAM, GPR/SR/PR, physical FPU banks/FPSCR, separate FPUL and MACL
+match retail execution under the same explicit instruction fixtures. These
+comparisons prove dataflow/integration, not numerical or hardware fidelity.
+
+Reproduce from this project directory with bundled Python:
+  .\ghidra\export_main_dispatch_axes.ps1   (optional read-only evidence export)
+  python recover_main_dispatch_axes.py
+  .\build_main_dispatch_axes.ps1
+  python verify_main_dispatch_axes.py
+  python register_main_dispatch_axes.py
+  python map_main_dispatch_cases.py
+  python verify_main_dispatch_case_map.py
+Evidence: analysis/main-dispatch-axes/,
+analysis/main_dispatch_axes_inventory.json and
+analysis/main_dispatch_axes_verification.json. Existing C, new bridge,
+export/inventory/build/test/registration scripts and all evidence remain local.
+Focused stages are in build_and_verify.ps1, whose PowerShell syntax passes.
+The full accumulated workflow was not run end-to-end for this checkpoint.
+
+Registry: 1009 entries / 1006 unique module/address pairs. Weighted whole-
+project milestone completion remains 10%, not a code-coverage measurement.
+Full numerical FSCA/FTRV, vector calculation, complete game behavior and all
+playable ports remain unfinished. Mapped pointer preconditions are required;
+invalid-pointer exceptions, MMIO, hardware and all gameplay states are not
+verified. Next: reuse and extend verification of existing vector-calculation
+source at 8c638f28, then recover the underlying numerical instruction support.
+Continue with Sol High; Luna Low is suitable for documentation work.
+
+Existing vector-calculation code reused and connected (2026-10-15):
+source/model_direction_transform.c already existed, with a 1024-case dataflow
+test, but was not registered. It is reused unchanged. Fresh read-only Ghidra
+evidence and recover_main_dispatch_vector_calc.py validate 8c638f28..8c638f8c:
+50 instructions, 100 bytes, four conditional edges, six vector-instruction
+sites and three native scalar FMUL sites. The original normalization-pointer
+literal at 8c638f8c equals 8c890070. Existing C hardcodes that original pointer;
+its contract requires that literal to retain its original value. This is
+registration and stronger integration of existing work, not a newly written
+implementation of the routine or the underlying vector instructions.
+
+The routine loads three input words through R5 and chooses an implicit FTRV
+when R4=0, or three FIPR column calculations for a supplied matrix. The
+implicit FTRV executes in the BRA delay slot at 8c638f36. After rearranging
+the resulting registers, it reads the normalization flag, advances R6 by
+0xc in a conditional delay slot, and optionally performs FIPR/FSRRA followed
+by three native scalar FMULs. Descending stores write the output words at
+the original destination. The source/destination/matrix/flag overlap tests
+preserve this ordering. Offsets are hexadecimal. The descriptive name remains
+inferred and should not imply stronger numerical verification than below.
+
+source/sa_main_dispatch_vector_calc_connected.c connects this body through
+transform, detach, STATUS and FLAG, with native init, X/Y/Z and pop retained.
+Sound is now the only external game routine in this particular connection.
+FSCA/FTRV/FIPR/FSRRA still require explicit instruction services. The legacy
+calculation function collapses instruction and scalar errors to host -1;
+the bridge preserves that convention and exact partial guest state. Missing
+instructions reach the same boundary through a nonnull adapter, avoiding a
+null native function pointer. Existing PR=0/SZ=0 entry guards remain atomic.
+Other game-service/rotation error conventions remain unchanged.
+
+Strict compilation passed, followed by 1832 comparisons: 1008 calculation,
+194 transform and 210 each detach/STATUS/FLAG. All 50 rows, four edges, six
+vector sites and three native FMUL sites are covered directly. Each caller
+covers all 23 implicit-path calculation rows reachable with its R4=0 argument;
+explicit matrix coverage is direct, not claimed through those callers.
+6540 instruction input snapshots and 12400 total ordered native/instruction/
+sound boundary states matched. 56 completed connected cases use a null
+external game callback; numerical instruction callbacks remain required.
+
+The suite contains 1032 completed runs, 680 exact partial guards and 120
+instruction/sound failures. Twenty-four runs disable native-call observation
+while retaining instruction input checks. Tests cover all buffer overlap
+variants (same, shifted, matrix and normalization-flag destinations), both
+matrix paths/banks, zero and nonzero flag values, finite normalization factors,
+native scalar RM0/1 rounding, subnormal-factor DN handling, and RM2/3 late
+guards when normalization actually reaches FMUL. Reserved RM bits pass through
+paths that skip scalar arithmetic. Full RAM, GPR/SR/PR, physical FPU banks/
+FPSCR and separate FPUL/MACL are compared with the original SH4 executor.
+Final scalar multiplications use the existing native core and an independent
+Python scalar implementation. Enabled scalar FPU traps and nonfinite scalar
+exception cases are outside this integration scope; hardware exception
+delivery is not emulated.
+
+Vector/sine/reciprocal-root outputs in these tests are input-sensitive finite
+bit fixtures, not recovered numerical implementations. Instruction fixtures
+preserve FR/SZ/PR/RM mode bits. This checkpoint proves native game-routine
+dataflow and error propagation under those explicit services, not complete
+numerical transforms, rendering, gameplay or a playable port.
+
+Reproduce from this project directory with bundled Python:
+  .\ghidra\export_main_dispatch_vector_calc.ps1   (optional read-only export)
+  python recover_main_dispatch_vector_calc.py
+  .\build_main_dispatch_vector_calc.ps1
+  python verify_main_dispatch_vector_calc.py
+  python register_main_dispatch_vector_calc.py
+  python map_main_dispatch_cases.py
+  python verify_main_dispatch_case_map.py
+Evidence: analysis/main-dispatch-vector-calc/,
+analysis/main_dispatch_vector_calc_inventory.json and
+analysis/main_dispatch_vector_calc_verification.json. Existing C, new bridge,
+export/inventory/build/test/registration scripts and evidence remain local.
+Focused stages are in build_and_verify.ps1, whose PowerShell syntax passes.
+The full accumulated workflow was not run end-to-end for this checkpoint.
+
+Registry: 1010 entries / 1007 unique module/address pairs. Weighted whole-
+project completion remains 10%, not code coverage. Mapped/nonnull pointer
+preconditions remain; arbitrary invalid pointers, MMIO, hardware and all
+gameplay states are unverified. Full game/ports remain unfinished. Next:
+replace numerical FSCA/FTRV/FIPR/FSRRA instruction fixtures with researched,
+verified native implementations. Continue with Sol High; Luna Low suits docs.
+
+Real numerical SH-4 vector/approximation backend (2026-10-15):
+source/sh4_vector_numeric.c and .h now implement native opcode dispatch for
+FSCA, FTRV, FIPR and FSRRA using the MIT-licensed C99 implementation by skmp.
+The unmodified dependency and its complete original license notice are in
+third_party/skmp-sh4-fpu/sh4_fpu_approx.h. Source/attribution/provenance are in
+that folder's README.txt. The pinned upstream revision is
+29f17b480213f063c6db998ecba5745d3f4ad4b3; header SHA256 is
+cc95d6a3ede9ab57b6f332fcec5dacc97cda16515699dcdcd4bcf4978c869d2f.
+fetch_sh4_vector_dependency.ps1 fetches only when absent and verifies this
+hash; normal builds use the already-vendored source and need no network.
+Keep the original MIT notice with any later GitHub redistribution.
+
+Primary sources:
+  https://gist.github.com/skmp/4bd7b38149fc455978b5104201573236
+  https://skmp.dev/blog/sh4-fpu/
+  https://www.renesas.com/en/document/mas/sh-4a-software-manual
+The author reports extensive Dreamcast hardware validation. Those captures
+were not available in the inspected public repository tree and were not
+replayed locally; analysis/sh4_vector_upstream_tree.json records that tree.
+The SH-4A manual is a related architectural/error-bound reference. The core
+uses the author's measured SH7091 behavior, including documented differences
+from that related manual. No local bit-exact physical-hardware proof is claimed.
+
+The native adapter decodes all 44 supported register/opcode variants, selects
+the active FR bank and opposite XMTRX bank, and preserves separate FPUL input.
+It returns 0 on completion, 1 for an enabled FPU trap with retained FPSCR
+effects/destinations, or -1 atomically for unknown opcodes/reserved RM2/3.
+SZ is ignored by these operations. PR=1 follows the upstream measured no-op/
+trap policy; recovered game routines still retain their older entry guards.
+Arithmetic, coefficient tables, status effects and exceptional operand classes
+come from the pinned integer-only core. No game data, ROM assets or guest
+routine count is supplied by this dependency; it is native CPU support code.
+
+Strict builds passed. verify_sh4_vector_numeric.py passed 438455 local checks:
+90112 adapter-vs-direct-primitive comparisons, 65495 invalid-opcode guards,
+1408 reserved-RM guards, 45056 PR policy assertions, 16384 FSCA status assertions,
+131072 complete angle/rounding FSCA checks, 58768 sampled positive-normal FSRRA
+checks, 26000 Fraction-based dot-product error-bound checks, 4096 identity
+matrix invariants and 64 zero-result/status assertions. Some policy assertions
+are additional checks on earlier inputs; this is not a count of distinct
+hardware cases. Maximum FSCA absolute error against independent host sin/cos
+was 1.270954682608405e-7. Maximum sampled FSRRA error was 1.8632959499955177
+binary32 ULPs. Largest dot-error/bound ratio was 0.655857857081586.
+
+Primitive API comparisons share the vendor core and establish adapter wiring,
+not independent numerical fidelity. Mathematical bounds and invariants are
+separate local evidence. The reference primitive DLL is test-only and is not
+linked into the game-call backend. Original hardware captures, timing and
+actual CPU trap delivery remain outside these checks.
+
+source/sa_main_dispatch_numeric_connected.c adds new native exports with no
+instruction-fixture callback parameter. They execute real numerical operations
+through rotations, vector calculation, transform, detach, STATUS and FLAG.
+Sound remains the only external game routine in this connection. Existing
+fixture-based bridges, recovered C, DLLs and reports remain unchanged.
+668 new full-state comparisons passed: 72 each X/Y/Z, 120 vector calculation,
+82 each transform/detach/FLAG and 86 STATUS. They matched complete 16 MiB RAM,
+GPR/SR/PR, FPU banks/FPSCR and separate FPUL/MACL, with 2752 native boundary
+states and 2742 numerical operations executed on the retail-reference side.
+528 completed cases also matched independent analytic axis rotations or
+transformed/normalized vectors; maximum absolute error was
+3.0462992373081477e-7 (acceptance bound 8e-6). 140 cases verify retained partial
+guard, trap or sound-error state, and 198 complete with no external game callback.
+
+Integration numerical operations use separately compiled direct vendor APIs
+on the original SH4 executor side. That is independent control-flow execution
+with shared arithmetic, not an independent bit-exact arithmetic oracle. The
+analytic checks and backend bounds add independent mathematical evidence.
+Selected enabled-trap paths verify FPSCR and unchanged destinations before
+propagating native host status; hardware exception dispatch is not emulated.
+
+Known remaining scalar limit: normalizing a zero vector makes FSRRA return
+infinity, then reaches 0 * infinity at the first scalar FMUL (8c638f7e).
+The existing scalar helper rejects that operand class with host -1. Four
+implicit/explicit/bank cases verify the exact partial state; they do not claim
+successful zero-vector normalization. This gap predates the new backend and
+is now exposed by real arithmetic. It is the next correction to make.
+
+Reproduce from this project directory with bundled Python:
+  .\fetch_sh4_vector_dependency.ps1   (optional fetch/hash verification)
+  .\build_sh4_vector_numeric.ps1
+  python verify_sh4_vector_numeric.py
+  .\build_main_dispatch_numeric.ps1
+  python verify_main_dispatch_numeric.py
+  python register_main_dispatch_numeric.py
+  python map_main_dispatch_cases.py
+  python verify_main_dispatch_case_map.py
+Evidence: analysis/sh4_vector_numeric_verification.json and
+analysis/main_dispatch_numeric_verification.json. New sources, vendor code,
+license, build/test/fetch/registration scripts and evidence are all local.
+Focused stages are in build_and_verify.ps1, whose PowerShell syntax passes.
+The full accumulated workflow was not run end-to-end for this checkpoint.
+
+Original routine registry remains 1010 entries / 1007 unique module/address
+pairs; support code is not counted as additional original game routines.
+Weighted overall milestone completion remains 10%, not code coverage. Full
+game/ports, all gameplay states, MMIO, arbitrary invalid pointers and timing
+remain unfinished/unverified. Continue with Sol High for the scalar exceptional-
+operand correction; Luna Low suits documentation work.
+
+Scalar infinity dependency completed (2026-10-15)
+-----------------------------------------------
+This checkpoint supersedes the zero-vector scalar limitation above for the
+new extended numerical bridge. Prior sources, DLLs and evidence are preserved.
+
+source/sh4_multiply_extended.c/.h add the missing SH-4 binary32 infinity
+classes while delegating ordinary finite/NaN handling to the existing helper.
+The SH-4 manual class table specifies invalid operation for 0 * infinity:
+with invalid disabled it writes canonical quiet NaN 0x7fbfffff and updates
+FPSCR; with invalid enabled it retains the destination and reports a trap.
+Signs, DN treatment, unflushed-denormal priority, all exception enables,
+sticky/cause bits, aliasing and unsupported PR/RM guards are checked.
+Reference: https://www.renesas.com/en/document/mas/sh-4-software-manual
+The new infinity path classifies DN inputs without rewriting source operands;
+the existing finite delegate keeps its previous operand-flush behavior.
+
+230384 primary scalar cases passed: 196608 manual-class comparisons, 2048
+same-operand aliases, 6000 unsupported-mode guards and 25728 comparisons to
+the established finite helper. 25248 of the finite cases also passed independent
+Python arithmetic checks; these are subchecks, not extra primary cases.
+The manual-derived exceptional oracle is software evidence, not hardware data.
+
+source/model_direction_transform_extended.c reuses the original recovered
+game body with only its scalar helper renamed. The new
+source/sa_main_dispatch_scalar_complete_connected.c APIs run all numerical
+operations locally through calculation, transform and their native parents.
+Sound at 8c0940da remains an external game service in STATUS.
+836 full-state comparisons passed: 72 each X/Y/Z, 256 calculation, 114
+transform, 82 each detach/FLAG and 86 STATUS. Complete 16 MiB RAM, GPR/SR/PR,
+FPU banks/FPSCR, separate FPUL/MACL and 2896 native boundary states matched.
+The original-instruction reference executed 3374 vector numerical operations.
+608 independent analytic checks passed (max absolute error
+3.0462992373081477e-7); 84 additional zero-normalization cases independently
+asserted three canonical SH-4 quiet NaNs and invalid/divide-by-zero status.
+Eight invalid-enabled scalar traps matched exact partial state. Overall,
+144 guard/trap/service-error cases and 230 completed null-external cases passed.
+Zero inputs include both rounding modes/banks, DN settings, signed zeros,
+implicit/explicit matrices and overlapping input/output vectors.
+
+Integration vector arithmetic shares the separately compiled pinned upstream
+primitive core; scalar exceptional arithmetic uses the manual-derived class
+oracle. These checks do not independently prove bit-exact hardware arithmetic.
+Legacy PR/SZ entry guards, reserved RM limits and host trap-status conventions
+remain. Actual CPU trap dispatch, hardware captures, timing, all gameplay
+states, MMIO and arbitrary invalid pointers remain outside this evidence.
+
+Reproduce from this project directory with bundled Python:
+  .\build_sh4_multiply_extended.ps1
+  python verify_sh4_multiply_extended.py
+  .\build_main_dispatch_scalar_complete.ps1
+  python verify_main_dispatch_scalar_complete.py
+  python register_main_dispatch_scalar_complete.py
+  python map_main_dispatch_cases.py
+  python verify_main_dispatch_case_map.py
+Evidence: analysis/sh4_multiply_extended_verification.json and
+analysis/main_dispatch_scalar_complete_verification.json. Both strict native
+builds passed. Focused stages are in build_and_verify.ps1; the full accumulated
+suite was not run end-to-end for this checkpoint.
+
+No new original game routine is counted for CPU support: registry remains
+1010 entries / 1007 unique module/address pairs. Overall weighted milestone
+completion remains 10%, not recovered-code coverage. The goal remains active.
+Next game dependency: inspect and recover the STATUS sound service 8c0940da,
+including its own callees and shared state. Continue with Sol High for that
+reverse engineering; Luna Low is suitable for documentation-only work.
+
+Native sound request and slot selection completed (2026-10-15)
+------------------------------------------------------------
+This checkpoint supersedes references above to sound 8c0940da being an
+external service in the newest bridge. Historical bridges/reports are retained.
+
+source/sa_main_dispatch_sound.c recovers two original routines:
+  8c093f02..8c0940da: sa_sound_slot_select_8c093f02, 193 instruction rows
+  8c0940da..8c09413a: sa_sound_request_8c0940da, 48 instruction rows
+The selector span includes literal-pool gaps: its 472-byte span contains 386
+indexed instruction bytes. Span size is not a recovered-code byte measure.
+All 241 instruction rows were checked against the pinned original binary.
+Both names describe inferred behavior; original symbols are unavailable.
+
+The selector chooses a free or lower/equal signed-priority record from one
+of two pools. Specific IDs/ranges use a five-record search starting from the
+special cursor, normally records 32..36; other IDs search 32 records, normally
+0..31. Cursor updates, wrapping, signed comparisons and failure return -1 are
+retained exactly. A failed special search stores cursor zero in the original;
+this behavior is preserved rather than imposing a new lower-bound rule.
+The request wrapper saves its arguments, calls the selector, and fills a
+52-byte request record with the original fields/constants. Successful retail
+return is 44 (not the chosen slot). This prepares requests; it does not itself
+synthesize or play sound. No new physical-audio result is claimed.
+
+FLDI0 is guarded only when it is reached with PR=1, after selection/MACL
+effects. Failure selection bypasses that instruction. Raw FMOV obeys FR/SZ:
+SZ=1 writes eight bytes at offsets 0x24/0x28/0x2c, overlapping preceding stores
+and retaining the FR5 companion at offset 0x30. No zero-fill shortcut is used.
+
+1130 standalone/full-state comparisons passed: 713 selector, 225 request
+wrapper and 192 fully native request/selector cases. Tests cover IDs and range
+boundaries, both pools, slot positions, occupied/free/priority decisions,
+cursor wrapping/failure, signed extremes, eight PR/SZ/FR modes, callee mode/
+volatile-state changes, null callbacks and errors. All 241 rows and 74 feasible
+conditional outcomes executed. Four additional static outcomes are impossible
+because R9 is set once to 1 and never changed in the leaf selector. There are
+320 matched boundaries, 201 partial guard/error cases and 857 independent
+slot/cursor/request-record invariants. Full 16 MiB RAM and CPU/FPU state match.
+
+source/sa_sound_request_connected.c supplies the native selector to the request
+wrapper; its optional observer supplies no behavior or return values.
+source/sa_main_dispatch_sound_complete_connected.c connects both routines to
+the existing numerical STATUS chain. Its eight new exports accept neither an
+external game-service callback nor numerical fixtures. Missing internal targets
+still return a host error; tests exercise all reached call targets natively.
+
+868 complete/partial numerical-chain comparisons passed: 72 each X/Y/Z,
+256 calculation, 114 transform, 82 each detach/FLAG and 118 STATUS. Complete
+RAM, GPR/SR/PR, FPU banks/FPSCR, FPUL/MACL and 3496 ordered native boundaries
+matched original instruction execution. The reference executed 3726 numerical
+vector operations. 644 analytic checks passed with maximum absolute error
+3.0462992373081477e-7. 728 cases completed without any external game-service
+API, and 140 retained guard/trap state. 102 cases reached both sound routines,
+including full/available pools, cursor edges and absent observation.
+
+Strict native builds passed. Reproduction from this project directory:
+  .\ghidra\export_main_dispatch_sound.ps1  (optional read-only evidence export)
+  python recover_main_dispatch_sound.py
+  .\build_main_dispatch_sound.ps1
+  python verify_main_dispatch_sound.py
+  .\build_main_dispatch_sound_complete.ps1
+  python verify_main_dispatch_sound_complete.py
+  python register_main_dispatch_sound.py
+  python map_main_dispatch_cases.py
+  python verify_main_dispatch_case_map.py
+Evidence: analysis/main_dispatch_sound_translation.json,
+analysis/main_dispatch_sound_verification.json and
+analysis/main_dispatch_sound_complete_verification.json. Focused stages are
+in build_and_verify.ps1; its syntax passes, but the full accumulated workflow
+was not run end-to-end. Original baseline sources/reports remain unchanged.
+
+Registry now has 1012 entries / 1009 unique module/address pairs; 964 match
+10875 indexed candidates. Coverage audit reports zero evidence errors and zero
+stale source hashes; 211 non-texture binaries still lack function indexes.
+Weighted whole-project completion remains 10%, not code coverage. The goal
+remains active; playable ports, physical audio, MMIO, concurrency, hardware
+exception delivery and arbitrary gameplay states remain unverified. Numerical
+hardware limitations stated in the earlier checkpoint still apply.
+Next work: continue main-dispatch case/dependency recovery using the refreshed
+case map, preserving these closed native service paths. Stay on Sol High for
+reverse engineering. Luna Low is suitable for documentation-only updates.
+
+Shared prefix state gate recovered (2026-10-15)
+----------------------------------------------
+source/sa_main_dispatch_prefix_gate.c recovers 8c0afb10..8c0afc98 as
+sa_main_dispatch_prefix_gate_8c0afb10 (inferred descriptive name). All 153
+instruction rows / 306 indexed instruction bytes were checked against the
+original binary. Its 392-byte span also includes literal-pool gaps and must
+not be treated as a recovered-code byte total. This is a dependency of the
+dispatcher prefix, not recovery of the complete 8122-row dispatcher body.
+
+The original calling convention uses R4 for the object and R6 for the work
+pointer; the draft decompiler signature misidentified the latter. The routine
+checks object type 2, object flag 4 and work flag 0x10000 before notifying a
+service and selecting a state-dependent action. It reads state bytes with
+the original signed/unsigned distinctions and writes the original state/
+motion flags. Sound IDs 0x458/0x463 use the previously recovered native sound
+request and selector in the new connected bridge.
+
+States 46..50 change to state 50/motion 46 and reach a spawn service. States
+62..68 change to state 68/motion 110, clear flag 4 and return guest R0=0.
+Other states can halve a movement component, leave state 45 unchanged, or
+change to state 16/motion 23, invoke the setter and copy/negate movement fields.
+These labels/meanings are inferred; the original instruction-level writes,
+return values, stack effects and call ordering are the supported evidence.
+
+Raw FMOV obeys FR/SZ, including overlapping stores and odd-register bank
+selection in SZ=1. There is no blanket PR/SZ guard. PR=1 returns host -1 only
+at a reached unsupported FMUL/FNEG (or native sound FLDI0); paths that avoid
+these instructions still execute. Reserved RM2/3 stops only at reached FMUL.
+The established extended scalar backend supplies multiplication and retains
+exact tested trap status/partial writes. Hardware trap delivery is not modeled.
+
+2298 comparisons passed: all 153 rows, all 22 conditional outcomes and all
+seven call sites executed. Complete 16 MiB RAM, GPR/SR/PR, FPU banks/FPSCR,
+separate FPUL/MACL and 3818 ordered boundary states matched original instruction
+execution. 1066 completed cases also passed independent state/flag/vector
+invariants. There are 1132 partial guard/trap/service-error cases, including
+two injected error statuses at each of the seven call sites. 640 cases use
+native sound request/selector code. Tests cover early returns, state and signed
+byte boundaries, PR/SZ/FR modes, DN/rounding, exceptional scalar inputs, all 32
+exception-enable combinations on the multiplication path, callback register/
+mode/state changes, exhausted sound pools and absent observation/services.
+
+The test executor normally publishes MACL only on return. A process-local copy
+now publishes its existing local MACL before trace observations, allowing exact
+intermediate-boundary and partial-stop comparisons. No original executor file
+or instruction behavior was changed. Exceptional arithmetic uses manual-class
+evidence and independent finite integer arithmetic, not new hardware captures.
+
+source/sa_main_dispatch_prefix_gate_connected.c supplies native sound behavior.
+Four remaining original routines are explicit services in this checkpoint:
+  8c109fde: initial event/notification (next dependency to inspect)
+  8c07b320: spawn-related helper
+  8c01ae60: state-44 cancellation-related helper
+  8c07b2b8: callback/setter-related helper
+These names are inferred. Their modeled results are not claimed as recovery
+of those implementations. Arbitrary pointers, MMIO, concurrency, all gameplay
+states, playable ports and physical audio remain outside this evidence.
+
+Reproduce from this project directory:
+  .\ghidra\export_main_dispatch_interrupt_gate.ps1  (optional read-only export)
+  python recover_main_dispatch_prefix_gate.py
+  .\build_main_dispatch_prefix_gate.ps1
+  python verify_main_dispatch_prefix_gate.py
+  python register_main_dispatch_prefix_gate.py
+  python map_main_dispatch_cases.py
+  python verify_main_dispatch_case_map.py
+The analysis directory's "interrupt-gate" label is descriptive, not a claim
+that this is a CPU interrupt handler. Evidence is in
+analysis/main_dispatch_prefix_gate_translation.json and
+analysis/main_dispatch_prefix_gate_verification.json. Strict native compilation
+passed; focused stages are included in build_and_verify.ps1. The full accumulated
+workflow was not run end-to-end. Prior recovered source and evidence are retained.
+
+Registry now contains 1013 entries / 1010 unique module/address pairs; 965 match
+the 10875 indexed candidate snapshots. Whole-project weighted completion stays
+10%, not recovered-code coverage. The goal remains active. Continue with
+Sol High for the remaining event/notification dependency at 8c109fde; Luna Low
+is suitable for documentation-only work.
+
+Native notification dependency recovered (2026-10-15)
+----------------------------------------------------
+The prefix gate's initial service 8c109fde is now recovered, with its record
+creator and candidate-readiness query, in source/sa_main_dispatch_notification.c:
+  8c109fde..8c10a0ec: sa_main_dispatch_notification_8c109fde, 108 rows
+  8c109e50..8c109eac: sa_notification_create_8c109e50, 46 rows
+  8c64bed8..8c64befe: sa_notification_candidate_ready_8c64bed8, 19 rows
+All 173 instruction rows / 346 instruction bytes match the pinned original
+binary. The first routine's larger span includes literal-pool gaps. Names and
+field meanings are inferred; this does not establish live hardware behavior.
+
+The selector checks a global disable word, reads a per-ID mapping, and tries
+two candidate entries. Readiness uses the original flag 0x100 through the
+native callback tail, channel-info pointer and device-record index helpers.
+It preserves the original reload of the selected candidate after querying.
+The first parameter is clamped to -4..4, with -1/+1 remapped to -2/+2; the
+second is clamped to 7..59. The subsequent helper calls are signed division,
+not random-number calls as the draft pseudocode might suggest. The numerator
+product wraps to 32 bits before division. A zero divisor follows the existing
+native division helper's error-0x44e path; the notification routine continues.
+
+The creator requests a task with flags 8, then an eight-byte heap record. On
+success the task's +0x28 points to that record and +0x2c points to its zeroed
+16-byte work allocation, whose first word receives the selected candidate ID.
+The eight-byte record receives five bytes: 1, 128, the clamped first parameter,
+the clamped second parameter and the derived quotient byte. Its remaining
+three bytes are left untouched. Direct creator calls preserve low-byte stores
+of their actual inputs. Allocation failure reaches the original disposal
+boundary through the correct restored PR on the tail-call path.
+
+source/sa_main_dispatch_notification_connected.c reuses existing native code
+for the callback tail, input pointer/index, signed division, task creation/base,
+heap allocation and zero allocation. The adapter copies the guest CPU state
+for existing helper interfaces without replacing their behavior with fixtures.
+It also provides a prefix-gate entry connected to notification and native sound.
+No new original-routine credit is taken for this reused support.
+
+1114 full-state comparisons passed: 679 notification, 168 creator, 72 readiness
+and 195 prefix-gate cases. All 173 new rows, 30 conditional outcomes and eight
+call sites executed. Complete 16 MiB RAM, GPR/SR/PR, FPU banks/FPSCR, FPUL/MACL
+and 10618 ordered boundaries match original instruction execution. There are
+886 independent readiness/clamp/signed-division/allocation/payload invariants,
+124 partial guard/error cases and four explicit service-error paths. 862 cases
+complete without external calls, including successful runs with a null external
+service pointer. Additional tests cover exhausted task/heap pools, record-space
+shortage after task creation, both candidates, absent mappings, disabled state,
+signed extremes, byte truncation, mode changes and missing observation/services.
+All eight PR/SZ/FR combinations execute for the integer helpers without imposing
+a new precision guard. The prefix retains its previously documented FPU limits.
+
+Task disposal 8c09865c remains an explicit service fixture in this connection,
+as do the prefix's spawn/cancel/setter routines. The existing projected-pointer
+disposal implementation remains available, but is not claimed to preserve the
+full guest RAM/register ABI here. Live notification/audio output, concurrency,
+MMIO, hardware exception delivery, invalid pointers and full gameplay/ports
+remain unverified. Existing sources and verification baselines are preserved.
+
+Reproduction from this project directory:
+  .\ghidra\export_main_dispatch_notification.ps1  (optional read-only export)
+  python recover_main_dispatch_notification.py
+  .\build_main_dispatch_notification.ps1
+  python verify_main_dispatch_notification.py
+  python register_main_dispatch_notification.py
+  python map_main_dispatch_cases.py
+  python verify_main_dispatch_case_map.py
+Evidence: analysis/main_dispatch_notification_translation.json and
+analysis/main_dispatch_notification_verification.json. Strict native compilation
+passed. Focused stages are included in build_and_verify.ps1; the full accumulated
+workflow was not run end-to-end. The tests reuse the previously documented
+process-local MACL observation enhancement; the saved executor is unchanged.
+
+Registry now has 1016 entries / 1013 unique module/address pairs; 968 match the
+10875 indexed candidate snapshots. Audit found zero evidence errors and zero
+stale source reports; 211 non-texture binaries still lack function indexes.
+Overall weighted milestone completion remains 10%, not recovered-code coverage.
+The goal remains active. Next dependency: guest-RAM/register-accurate task
+disposal at 8c09865c to replace the allocation-failure cleanup fixture. Continue
+Sol High for that reverse engineering; Luna Low is suitable for docs work.
+
+Native allocation-failure cleanup connected (2026-10-15)
+-------------------------------------------------------
+The cleanup fixture above is replaced in the newest notification bridge by
+existing register-preserving native sources, revalidated without editing them:
+  source/sa_task_delete.c: 8c09865c, 119 instruction rows
+  source/sa_task_data_release.c: 8c098998, 24 rows
+  source/sa_task_children_delete.c: 8c098e60, 28 rows
+  source/sa_task_children_update.c: 8c098e98, 17 rows
+  source/sa_heap_release.c: 8c098b42, 100 rows
+All 288 rows match fresh read-only retail instruction exports. The existing
+projected-pointer implementations and earlier verification baselines remain
+available. No additional original routine is counted for this reuse.
+
+source/sa_main_dispatch_notification_cleanup_connected.c routes disposal,
+work release, recursive child cleanup and heap coalescing natively. Its
+notification/creator/query/prefix exports retain the earlier bridge's interface;
+new exports also permit focused disposal/work/children/heap checks. Callbacks
+still use the original guest register/RAM state; no projected host task pointers
+or synthetic disposal result are substituted in this connection.
+
+1113 caller comparisons passed: 678 notification, 168 creator, 72 readiness
+and 195 prefix cases. Complete RAM/CPU/FPU/FPUL/MACL and 10654 boundaries
+matched original execution. 918 independent invariants and 91 retained partial
+guard/error cases passed. 958 cases completed without external calls. In 96
+allocation-failure cases, independent checks confirmed restored task-free/list
+heads, cleared task slots and the original complete free heap block after
+coalescing, including shortage after task construction. Cleanup no longer
+needs an external service callback in these failure paths. Three unrelated
+prefix actions (spawn/cancel/setter) remain external.
+
+1564 standalone comparisons passed: 795 disposal, 48 work release, 193 child
+deletion, 96 child update and 432 heap release. Full state and 3372 boundaries
+matched. 1552 independent invariants checked ownership release, cleared slots,
+free-list backlinks/acyclicity, callback-driven work-pointer replacement and
+the attachment's 16-bit flag clear with its neighboring byte preserved. 992
+cases completed without external calls. Twelve cases retain exact partial
+state at absent/failing callbacks; four distinct callback error paths are tested.
+Tests include eight PR/SZ/FR modes, task-list positions, child recursion, saved
+next-sibling behavior despite callback mutation, level-array search exhaustion,
+existing/empty free-task lists, left/right/both-neighbor coalescing and varied
+valid heap free-list orders.
+
+All 188 instructions in disposal/work/both child helpers executed. Conditional
+coverage is 35/36, 4/4, 8/8 and 4/4 respectively; the unexecuted disposal edge
+is the initial empty-range check for the fixed non-wrapping eight-entry level
+array. Heap coverage is 95/100 rows and 31/40 static conditional outcomes.
+The five uncovered heap rows check already-free/corrupt block links and enter
+the original infinite fail-stop loop. They are preserved but not invoked by
+valid-ownership tests. Remaining uncovered edges are listed in the report;
+no complete arbitrary-metadata or corruption-path proof is claimed.
+
+Arbitrary task destructors/child callbacks and two work-resource releasers
+remain explicit services in standalone tests. Their implementation is not
+recovered by exercising the surrounding cleanup. Hardware, MMIO, invalid
+pointers, concurrency, full gameplay and playable ports remain unverified.
+The prefix retains its existing numerical guards and software-evidence limits.
+
+Reproduce from this project directory:
+  .\ghidra\export_main_dispatch_task_disposal.ps1  (optional read-only export)
+  python inventory_main_dispatch_task_disposal.py
+  .\build_main_dispatch_notification_cleanup.ps1
+  python verify_main_dispatch_task_disposal.py
+  python verify_main_dispatch_notification_cleanup.py
+  python register_main_dispatch_notification_cleanup.py
+  python map_main_dispatch_cases.py
+  python verify_main_dispatch_case_map.py
+Evidence: analysis/main_dispatch_task_disposal_inventory.json,
+analysis/main_dispatch_task_disposal_verification.json and
+analysis/main_dispatch_notification_cleanup_verification.json. Strict native
+build and focused tests passed. Stages are in build_and_verify.ps1; the full
+accumulated workflow was not run end-to-end. PowerShell syntax passes.
+
+Registry stays at 1016 entries / 1013 unique module/address pairs. Coverage
+audit reports zero evidence errors and zero stale source reports. Overall
+weighted milestone completion remains 10%, not code coverage; the goal is
+active. Next prefix dependency is spawn helper 8c07b320, whose task-creation
+dependency is now native here. Continue Sol High for reverse engineering;
+Luna Low is suitable for documentation-only updates.
+
+Spawn/setter checkpoint (2026-10-16)
+Read MAIN_DISPATCH_SPAWN_SETTER.txt for the subsequent recovery of 8c07b320 and
+8c07b2b8. Strict build and 2,517 full-state comparisons passed, covering all 37
+original rows, 6 conditional outcomes and 1 call site with native task/heap and
+cleanup dependencies. Registry is now 1,018 entries / 1,015 unique addresses.
+Cancellation 8c01ae60 and eventual stored callback execution remain unfinished.
+Overall weighted completion remains 10%. Keep Sol High for reverse engineering.
+
+Cancellation checkpoint (2026-10-16)
+Cancellation 8c01ae60 and its restore dependency 8c01aae0 are subsequently
+recovered. Read MAIN_DISPATCH_CANCELLATION.txt for source, commands and limits.
+Strict build and 4,284 full-state comparisons passed: all 209 original rows,
+12 conditional outcomes, 3 call sites, 30,484 ordered CPU boundary states and
+3,761 independent semantic checks. The tested prefix uses no external game-
+service fixtures; callback bodies stored by the tasks are still separate work.
+Registry is now 1,020 entries / 1,017 unique module-address pairs. Overall
+weighted milestone completion remains 10%; goal active. Continue Sol High
+with stored callback 8c01b358 after checking its instruction boundaries.
+
+Stored context callback checkpoint (2026-10-16)
+Callback 8c01b358..8c01b35e is newly recovered. It tail-calls the existing task
+removal request, which changes the update callback to deletion for the next
+pass. Read MAIN_DISPATCH_CONTEXT_CALLBACK.txt for native lifecycle evidence.
+Strict build and 4,908 stage comparisons passed, including 644 created tasks
+and 512 mixed/null/deleting scheduler scenarios. All 3 new and 36 reused rows,
+8 conditional outcomes and 2 call sites were reached; no external fixtures.
+Only the new thunk earns original-function credit: registry 1,021 entries /
+1,018 unique module-address pairs. Overall weighted completion remains 10%.
+Continue Sol High with earlier spawn callback 8c044680; goal remains active.
+
+Spawn callback checkpoint (2026-10-16)
+Spawn callback 8c044680 and helpers 8c0446a2/8c04474a are subsequently recovered.
+Read MAIN_DISPATCH_SPAWN_CALLBACK.txt for source, numerical scope and repetition.
+Strict build, 612 body comparisons and 368 lifecycles / 1,104 stage comparisons
+passed. All 205 original rows, 16 conditional outcomes and 11 call sites covered.
+Native dependencies are reused without new-function credit. Parent callback
+execution creates level-5 particles and requests later parent deletion; particle
+callback 8c04481a remains unfinished. Registry: 1,024 entries / 1,021 unique
+addresses. Overall weighted completion remains 10%; goal active. Keep Sol High.
+
+Particle callback checkpoint (2026-10-16)
+The previously stored callbacks 8c04481a/8c0448b4 and three renderer wrappers
+are subsequently recovered: 274 unique new rows, 26 conditional outcomes and
+18 call sites. Internal 8c0448ba shares one body and receives no extra routine
+credit. Existing 56-row matrix translation is admitted to the registry once.
+Strict build, 471 focused comparisons and 120 complete particle lifetimes /
+984 stage comparisons passed. Native expiration/removal frees all tasks and
+work memory in these tests. Low-level geometry 8c620f2c remains a fixture;
+actual rendering and full frame ordering are unproven. Read
+MAIN_DISPATCH_PARTICLE_CALLBACK.txt for reproduction and numerical limits.
+Registry: 1,030 entries / 1,027 unique module-address pairs, zero audit errors
+or stale source reports. Overall weighted milestone completion remains 10%.
+Goal active; continue Sol High with geometry 8c620f2c.
+
+Geometry preparation checkpoint (2026-10-16)
+Geometry preparation 8c620f2c and R8-preserving wrapper 8c6215fa are subsequently
+recovered as native code: 271 original instruction rows and two call sites.
+Strict build, 548 focused comparisons and 120 complete lifetimes / 984 stage
+comparisons passed. The old geometry fixture is replaced; recursive model
+traversal 8c62113c remains the explicit service. Read
+MAIN_DISPATCH_PARTICLE_GEOMETRY.txt for numerical scope and reproduction.
+Registry: 1,032 entries / 1,029 unique module-address pairs; zero evidence errors
+or stale source reports. Overall weighted completion remains 10%; goal active.
+Continue Sol High with recursive traversal and its model/matrix dependencies.
+
+Recursive model traversal checkpoint (2026-10-16)
+Model traversal 8c62113c and mesh wrapper 8c6215ba are subsequently recovered.
+Strict build, 1,494 focused comparisons and 120 complete lifetimes / 984 stage
+comparisons passed. All 526 reachable rows, 57 reachable conditional outcomes
+and 41 call sites were reached. Two static rows and one outcome are proven
+unreachable after exhaustive selector masking, retained in source and inventory.
+Read MAIN_DISPATCH_MODEL_TRAVERSAL.txt for original-node, recursion, matrix and
+numerical scope. Mesh body 8c6209a8 remains the explicit test substitute.
+Registry: 1,034 entries / 1,031 unique module-address pairs; zero evidence errors
+and no stale source reports. Overall weighted completion stays 10%; goal active.
+Continue Sol High with original-byte recovery of mesh 8c6209a8 and its targets.
+
+Mesh/material-loop checkpoint (2026-10-16)
+Mesh 8c6209a8 and filter wrapper 8c62159a are subsequently recovered. Strict
+build, 663 focused comparisons and 120 full lifetimes / 984 stage comparisons
+passed. All 558 new rows, 92 conditional outcomes and 33 call sites are reached;
+four indirect jumps preserve internal control flow. Original particle meshes
+execute 880 material iterations with filter/drawing/release boundary assertions.
+Read MAIN_DISPATCH_MESH.txt for numerical scope and 27 remaining service fixtures.
+Registry: 1,036 entries / 1,033 unique module-address pairs; zero audit errors or
+stale source reports. Whole-project weighted completion remains 10%; goal active.
+Continue Sol High with filter 8c611444 and material-state service 8c606c56.
+
+Filter/material-services checkpoint (2026-10-16)
+Filter 8c611444 and four header/texture/command services are subsequently native.
+Strict build, 1,416 focused comparisons and 120 lifetimes / 984 stage comparisons
+passed: all 395 rows, 38 outcomes and four calls. Wide-transfer inputs that
+corrupt saved pointers or return state stop at documented partial-state guards;
+no hardware-exception claim. Native material setup changes the working header,
+so renderer wrappers transfer updated state instead of invariably preserving
+pre-draw values. Read MAIN_DISPATCH_MESH_SERVICES.txt for evidence and scope.
+Registry: 1,041 entries / 1,038 unique addresses; zero errors/stale reports.
+Overall weighted completion remains 10%; goal active on Sol High. Next: the
+four vertex/filter workers and 22 remaining acquisition/primitive services.
+
+Vertex-worker checkpoint (2026-10-16)
+All four workers are subsequently native: 392 original rows, 20 outcomes,
+265 focused comparisons and 120 complete lifetimes / 984 stages passed.
+A portable C store-queue backend matches independent Python queue state,
+ordered events and vertex records, including a stream beyond trace capacity.
+Original particle tests complete 9,680 vertex transfers and retain deletion/
+pool/heap checks. Read MAIN_DISPATCH_VERTEX_WORKERS.txt for numerical and
+MMU-off/coherent-RAM model limits. Twenty-two acquisition/primitive services
+remain fixtures. Registry: 1,045 entries / 1,042 unique addresses; zero audit
+errors or stale reports. Overall weighted completion stays 10%; goal active.
+Continue Sol High with acquisition 8c605e68 and primitive paths 8c61ffe4/8c620428.
+
+Header acquisition checkpoint (2026-10-16)
+Cancellation 8c01ae60/restore 8c01aae0 were already recovered. Their strict build
+and 15 smoke cases passed again, and saved 4,284-case proof inputs still match.
+No duplicate recovery credit added. The next native dependency 8c605e68 now
+covers 38 original rows: three header words, retained queue contents, QACRs,
+PREF transfer, saved address bits and output-cursor slot. Strict build, 152
+focused cases / 792 stage comparisons and 120 lifetimes / 984 stage comparisons
+passed. There are 9,856 queue transfers in the lifetimes, with only two primitive
+fixtures remaining on that path (176 boundaries). Read MAIN_DISPATCH_ACQUISITION.txt.
+Registry: 1,046 entries / 1,043 unique pairs. Overall estimate remains 10% weighted
+milestones; goal active, Sol High. Full decompilation, visible rendering and ports
+remain unfinished. Original primitive listings are exported but not credited as
+recovered source. The full accumulated suite was not run.
+
+Primitive emitter checkpoint (2026-10-16)
+Recovered both complete bodies 8c61ffe4 and 8c620428 (1,182 original rows), with
+1,178 runtime-reachable rows and 72 reachable branch outcomes covered. Exhaustive
+16-bit masked-topology proofs account for four impossible rows/two outcomes.
+Strict build, 546 focused comparisons and 120 complete particle lifetimes / 984
+stage comparisons passed, including 10,600 queue transfers. Three lower helpers
+remain substitutes; the lifetimes now expose 160 calls to near-plane helper
+8c613312. Read MAIN_DISPATCH_PRIMITIVES.txt. Read-only exports for that helper and
+8c6149b4/8c616bc4 have 1,099 byte-checked rows but zero recovered-behavior credit.
+Registry: 1,048 entries / 1,045 unique pairs. Overall completion remains 10%
+estimated milestones; goal active, Sol High. Visible pixels, full gameplay,
+complete decompilation and ports remain unfinished. Full accumulated suite not run.
+
+Native near-plane clipper checkpoint (2026-10-16)
+Recovered complete 8c613312: 461 original rows / 14 outcomes, no callees. Strict
+build, 408 focused cases and 120 complete lifetimes / 984 stage comparisons passed.
+Independent polygon/packet/cursor checks cover 260 cases, including 24 real mesh
+projection -> clipping -> output cases. The lifetime path has zero external game
+services; its 160 near-helper calls are orientation-culled, with accepted clipped
+output separately proved by focused cases. Wide-FMOV saved-pointer corruption
+stops before the unsupported transfer at 8c61345a with matched partial state (-3),
+not physical hardware exception emulation. Read MAIN_DISPATCH_NEAR_CLIP.txt.
+Registry: 1,049 entries / 1,046 unique pairs. Overall remains 10% estimated weighted
+milestones; goal active on Sol High. Next: alternate 8c6149b4 / 8c616bc4, reusing
+existing empty stub 8c611708. Full decompilation, pixels and ports unfinished.
+The full accumulated suite was not run.
+
+Alternate strip checkpoint (2026-10-16)
+Recovered complete 8c6149b4 / 8c616bc4: 638 rows, 40 outcomes, three call sites.
+Strict build, 320 focused cases (48 real mesh/projection/alternate/clipping cases)
+and 120 unchanged original-model lifetime regressions / 984 stage comparisons
+passed. Original-model lifetimes do not reach these alternate bodies; focused
+cases prove them. Independent triangles/packets/counters/cursors/geometry checked.
+Existing empty stub 8c611708 and near clipper reused, with zero duplicate credit.
+All reached game callees native; 19 acquisition/primitive services remain fixtures
+on other paths. Read MAIN_DISPATCH_ALTERNATE_STRIPS.txt. Three acquisition variants
+8c605f3c / 8c6064b0 / 8c6065b0 have 134 byte-checked exported rows, not recovered
+behavior. Registry: 1,051 entries / 1,048 unique pairs. Overall remains 10% weighted
+milestones; goal active on Sol High. Pixels, full code recovery/gameplay and ports
+remain unfinished. Full accumulated suite not run.
+
+Remaining acquisition variants checkpoint (2026-10-16)
+Recovered complete 8c605f3c / 8c6064b0 / 8c6065b0: 134 rows, zero branches/calls.
+Strict build, 352 cases / 1,864 stage comparisons, 908 independent packets and
+120 original-model lifetime regressions passed. All four original acquisition
+selectors now run natively. Connected material loops preserve consecutive-material
+header reuse, separate primary/secondary cursors and three-/eight-word packets.
+Sixteen other primitive emitters remain substitutes. Read
+MAIN_DISPATCH_ACQUISITION_VARIANTS.txt. The next pair 8c617e46 / 8c6184f0 has
+1,710 byte-checked exported rows, not recovered behavior. Registry: 1,054 entries /
+1,051 unique pairs. Overall remains 10% weighted milestones; goal active on Sol
+High. Pixels, full game recovery and all ports remain unfinished. Full accumulated
+suite not run.
+
+Normal-lit primitive family checkpoint (2026-10-16)
+Recovered complete 8c617e46 / 8c6184f0: 1,710 static rows, 1,706 reachable rows,
+72 reachable outcomes and six call sites. Four default-switch rows/two edges
+have exhaustive 16-bit input-mask proofs. Strict build, 606 focused cases,
+48 connected meshes and 120 original-model lifetimes / 984 stages passed.
+Independent RGB lighting, unchanged alpha, cache factors, control/geometry,
+queue/counters/cursors verified in 116 cases. New-body coverage comes from
+focused cases; unchanged original-model lifetimes explicitly do not reach them.
+Read MAIN_DISPATCH_LIT_PRIMITIVES.txt. Three lower helpers 8c612e64 / 8c6136c0 /
+8c614bb0 remain substitutes alongside fourteen other primitive emitters. Their
+1,324 exported original rows are byte-checked analysis evidence only. Registry:
+1,056 entries / 1,053 unique pairs. Overall remains 10% weighted milestones;
+goal active on Sol High. Pixels, full recovery/gameplay and all ports unfinished.
+Full accumulated suite not run; earlier source and pinned proof preserved.
+
+Lighting near-plane checkpoint (2026-10-16)
+Recovered complete 8c612e64: 564 rows, 14 outcomes, no calls. Strict build,
+566 focused cases and 120 lifetime regressions / 984 stages passed. All four
+near-helper call sites in 8c6184f0 are native. Forty-eight connected classified
+meshes independently verify clipped geometry, interpolated RGB, unchanged alpha,
+cache factors and counters/cursors, with zero external game services on those
+paths. ENV bit 2 bypasses classification; earlier lighting-mesh coverage notes
+were corrected. Direct parent fixtures now initialize the real filter's normal
+projection divisors. Read MAIN_DISPATCH_LIT_NEAR_CLIP.txt for numeric and
+saved-pointer guards and original-model lifetime coverage limits. Registry:
+1,057 entries / 1,054 unique pairs. Overall remains 10% weighted milestones;
+goal active on Sol High. Next: 8c6136c0 / 8c614bb0 (760 rows exported/byte-checked
+only), reusing native lighting near helper and existing empty stub. Fourteen
+other primitive emitters, pixels, full game recovery and ports remain unfinished.
+The full accumulated suite was not run; older source and proof preserved.
+
+Alternate-strip lighting checkpoint (2026-10-16)
+Recovered complete 8c6136c0 / 8c614bb0: 760 rows, 40 outcomes, three call sites.
+Strict build, 392 focused cases (96 fully native connected meshes) and 120
+lifetime regressions / 984 stage comparisons passed. Independent lit triangle
+sets, clipped colour interpolation with distinct normals, cached factors,
+write-back addresses, grouping/counters/cursors checked in 272 cases. New
+vertex_bus_lighting.c preserves the prior queue ABI and records coherent-RAM
+OCBWB events; physical cache timing/faults remain outside scope. Existing stub
+and native lighting near clipper are reused without duplicate credit. Original
+particle lifetimes do not reach the new bodies; focused tests prove them.
+Read MAIN_DISPATCH_LIT_ALTERNATE_STRIPS.txt. Registry: 1,059 entries / 1,056 unique
+pairs. Overall remains 10% weighted milestones; goal active on Sol High. Next:
+8c618d18 / 8c619310, whose 1,775 exported rows are byte-checked analysis only.
+Fourteen other primitive emitters, pixels, full game recovery and playable ports
+remain unfinished. Entire accumulated suite not run; earlier source/evidence
+preserved. No model switch or goal pause is recommended.
+
+Signed UV/lit primitive checkpoint (2026-10-16)
+Recovered complete 8c618d18 / 8c619310: 1,775 static rows, 1,771 reachable rows,
+72 outcomes, six calls; four rows/two edges have exhaustive input-mask proofs.
+Strict build, 638 focused cases and 120 lifetime regressions / 984 stages passed.
+Forty-eight connected meshes and 164 independent cases check signed UV/256,
+lighting factors, retained eighth queue words, culling/stream advancement,
+counters/cursors and/or near-helper argument staging. Three lower helpers stay
+explicit fixtures; no UV clipping output or visible textures are claimed.
+Read MAIN_DISPATCH_UV_LIT_PRIMITIVES.txt. Registry: 1,061 entries / 1,058 unique
+pairs. Overall remains 10% weighted milestones; goal active on Sol High. Next:
+8c611a14 (616 rows), then 8c61394a / 8c614f70 (839 rows), all exported/byte-checked
+analysis input only. Twelve other primitive emitters, pixels/texture sampling,
+full recovery/gameplay and playable ports remain unfinished. Original-model
+lifetimes do not call the UV pair; focused cases provide its execution proof.
+Entire accumulated suite not run; older source/evidence preserved.
+
+UV-aware near-plane checkpoint (2026-10-16)
+Recovered complete 8c611a14: 616 rows, 14 outcomes, no game calls. Strict build,
+614 focused cases and 120 lifetime regressions / 984 stages passed. All four
+parent near-helper call sites are native. Ninety-six constructed meshes use no
+external game services and independently verify clipped geometry, quantized
+signed UVs, lighting factors, retained queue words and counters/cursors. UVs
+are interpolated in integer coordinate units, truncated toward zero back to
+16-bit words, then scaled by 1/256. Read MAIN_DISPATCH_UV_NEAR_CLIP.txt for
+rounding-mode oracle limits and saved-pointer host guard at 8c611b9a. Registry:
+1,062 entries / 1,059 unique pairs. Overall remains 10% weighted milestones;
+goal active on Sol High. Next: 8c61394a / 8c614f70 (839 rows exported/checked
+only), reusing native UV clipping and existing empty stub. Twelve other primitive
+emitters, pixels/texture sampling, full recovery/gameplay and playable ports
+remain unfinished. Original-model lifetimes do not reach the new UV helper;
+focused cases provide its coverage. Entire accumulated suite not run; earlier
+source/evidence preserved. No model switch or goal pause is recommended.
+
+Alternate UV strip checkpoint (2026-10-17)
+Recovered complete 8c61394a / 8c614f70: 839 rows, 40 outcomes and three calls.
+Strict build, 512 focused comparisons and 120 lifetime regressions / 984 stages
+passed. All 192 connected meshes use native material setup, projection, header,
+parent, alternate helper, UV clipping where accepted, and finalization. The
+392 independent cases verify signed UV/256, strip consumption, culling, clipped
+quantization and lighting, retained words and counters/cursors. Ordinary paths
+do not write cache factors or issue OCBWB. Existing stub and UV clipper reused
+without new credit. Read MAIN_DISPATCH_UV_ALTERNATE_STRIPS.txt for scope/guards.
+Registry: 1,064 entries / 1,061 unique pairs. Overall remains 10% weighted project
+milestones; goal active on Sol High. Next: 8c619c34 / 8c61a488 (2,153 exported
+rows byte-checked with zero recovery credit). Twelve other primitive emitters,
+pixels/texture sampling, full gameplay and all playable ports remain unfinished.
+Original-model lifetime runs do not reach the new UV helpers; focused meshes
+prove them. Entire accumulated suite not rerun; earlier evidence preserved.
+No model switch or goal pause is recommended.
+
+Normal-derived environment UV checkpoint (2026-10-17)
+Recovered complete 8c619c34 / 8c61a488: 2,153 static rows, 2,149 reachable rows,
+72 outcomes and six calls. Four default rows/two outcomes have exhaustive mask
+proofs. Strict build, 630 comparisons and 120 lifetime regressions / 984 stages
+passed. The 156 independent cases include 48 connected meshes, covering matrix-
+derived UVs, lighting, retained words, counters/cursors and/or near-call staging.
+Thirty-two meshes stay native; 16 near crossings use an explicit lower fixture.
+The complete pair is native; 8c611f24 / 8c613be2 / 8c6153bc remain fixtures, with
+1,337 exported original rows byte-checked as analysis input only. Ten other
+primitive emitters remain unfinished. Read MAIN_DISPATCH_ENVIRONMENT_PRIMITIVES.txt.
+Registry: 1,066 entries / 1,063 unique pairs. Overall remains 10% weighted project
+milestones; goal active on Sol High. Original-model lifetime regressions do not
+reach the new pair. Pixels, full gameplay and all playable ports remain unfinished.
+The whole historical workflow was not rerun; prior source/evidence preserved.
+No model switch or goal pause is recommended.
+
+Environment near-plane checkpoint (2026-10-17)
+Recovered complete 8c611f24: 675 rows / 14 outcomes, no game calls. Strict build,
+614 comparisons and 120 lifetime regressions / 984 stages passed. All four
+parent call sites are native; all 96 classified connected meshes use no external
+services. The 372 independent cases verify normal-derived UV generation and
+first signed 16-bit truncation/wrap, then clipped interpolation/re-quantization,
+projected polygons, lighting, retained words and counters/cursors. Read
+MAIN_DISPATCH_ENVIRONMENT_NEAR_CLIP.txt for numerical limits and host saved-pointer
+guard at 8c612136. Registry: 1,067 entries / 1,064 unique pairs. Overall remains
+10% weighted project milestones; goal active on Sol High. Next: 8c613be2 /
+8c6153bc (662 rows already exported/byte-checked, not recovered). Ten other
+primitive emitters, pixels, texture sampling, full gameplay and playable ports
+remain unfinished. Original-model lifetime runs do not reach the new helper;
+focused meshes provide its execution proof. Entire historical workflow not
+rerun; older source/evidence preserved. No model switch or goal pause advised.
+
+Environment alternate-strip checkpoint (2026-10-17)
+Recovered complete 8c613be2 / 8c6153bc: 662 rows, 40 outcomes and three calls.
+Strict build, 544 comparisons and 120 lifetime regressions / 984 stages passed.
+The 424 independent cases include all 224 native connected meshes: 192 crossing
+cases and 32 ordinary/rejected cases. FTRV generates floating U/V/lighting for
+ordinary output; near crossings reuse the native environment clipper and its
+integer UV quantization. Retained words, grouping/counters/cursors and unchanged
+ordinary factor cache checked. Existing empty stub/clipper reused without new
+credit. Read MAIN_DISPATCH_ENVIRONMENT_ALTERNATE_STRIPS.txt for oracle limits.
+Registry: 1,069 entries / 1,066 unique pairs. Overall remains 10% weighted project
+milestones; goal active on Sol High. Next pair 8c61ae3c / 8c61b488 has 1,859
+exported rows byte-checked as analysis only. Ten primitive emitters, pixels,
+texture sampling, full gameplay and playable ports remain unfinished. Original-
+model lifetimes do not reach the new family; focused tests provide its coverage.
+Historical full workflow not rerun; older source/evidence preserved. No model
+switch or goal pause is recommended.
+
+Face-lit primitive/normalizer checkpoint (2026-10-17)
+Recovered complete 8c61ae3c / 8c61b488 plus native numerical 8c63a94c: 1,875 static
+rows / 1,871 reachable rows, 72 outcomes and 15 calls. Four switch rows/two edges
+have exhaustive proofs. Strict build, 870 comparisons and 120 lifetime regressions
+passed. Independent finite unit-vector/face-colour checks use tolerance for the
+pinned approximate reciprocal root. Final triangle vertices carry calculated
+RGBA; earlier vertices retain queue colours. The near-strip branch expects
+pre-existing R12/R14/R13 pointers: 48 controlled cases seed these explicitly;
+this does not prove the complete game caller contract. Host guards cover invalid
+R14 reads and overwritten parent return addresses. Read MAIN_DISPATCH_FACE_LIT_PRIMITIVES.txt.
+Registry: 1,072 entries / 1,069 unique pairs. Overall remains 10% weighted milestones;
+goal active on Sol High. Next: 8c6178c6 / 8c613dfa / 8c61572c, whose 1,240 exported
+rows are byte-checked analysis only. Three lower fixtures and eight other primitive
+emitters remain unfinished. Original-model lifetimes do not reach this new family.
+Full gameplay, pixels and playable ports remain unverified. Older source/evidence
+preserved; historical full workflow not rerun. No switch or pause recommended.
+
+Face-colour near-plane checkpoint (2026-10-17)
+Recovered complete 8c6178c6: 410 rows / 14 outcomes, no game calls. Strict build,
+644 comparisons and 120 lifetime regressions / 984 stages passed. All four
+parent sites execute natively, including controlled live-register strip fixtures.
+The 368 independent cases include all 96 native classified meshes and verify
+clipped geometry, exact supplied colour copies, retained early colours, input
+preservation, counters/cursors and normalized face-lighting integration. Read
+MAIN_DISPATCH_FACE_NEAR_CLIP.txt for the saved-pointer guard at 8c617a0e, inherited
+parent guards and unproven complete strip-caller contract. Registry: 1,073 entries /
+1,070 unique pairs. Overall remains 10% weighted milestones; goal active on Sol
+High. Next: 8c613dfa / 8c61572c, 830 exported rows byte-checked as analysis only.
+Eight other primitive emitters, pixels, full gameplay and playable ports remain
+unfinished. Original-model lifetimes do not reach the new helper. Historical
+full workflow not rerun; earlier source/evidence preserved. No switch or pause
+recommended.
+
+Face-selected alternate-strip checkpoint (2026-10-17)
+Recovered complete 8c613dfa / 8c61572c: 830 rows, 40 outcomes and four calls.
+Strict build, 544 comparisons and 120 lifetime regressions / 984 stages passed.
+The 424 independent cases include 224 native meshes: 192 crossings, 32 ordinary/
+rejected cases. Ordinary emission uses per-vertex RGB and cached-factor OCBWB;
+crossings normalize summed normals and use the native face-colour clipper. All
+stub/normalizer/clipper dependencies reused without new credit. Read
+MAIN_DISPATCH_FACE_ALTERNATE_STRIPS.txt for scope and numerical/cache limits.
+Registry: 1,075 entries / 1,072 unique pairs. Overall remains 10% weighted project
+milestones; goal active on Sol High. Next: 8c61be44 / 8c61c4b4 (2,042 exported
+rows checked as analysis only). Eight other primitive emitters, the separate
+face-parent non-alternate strip crossing contract, pixels/gameplay and playable ports
+remain unfinished. Original-model lifetimes do not reach this family. Earlier
+source/evidence preserved; historical full workflow not rerun. No switch/pause
+recommended.
+
+Signed UV/face-factor checkpoint (2026-10-17)
+Recovered complete 8c61be44 / 8c61c4b4: 2,042 static rows, 2,038 reachable rows,
+72 outcomes and 15 calls. Four switch rows/two edges have exhaustive proofs.
+Strict build, 702 comparisons and 120 lifetime regressions passed. The 180
+independent cases check signed UV/256, normalized provoking face factors, retained
+earlier factors/eighth words, input caches, counters/cursors and/or near staging.
+Thirty-two meshes cover 16 native ordinary cases and 16 lower-clipper staging
+cases. Native normalizer reused without credit. Read MAIN_DISPATCH_UV_FACE_PRIMITIVES.txt
+for controlled strip-register inputs, pointer guard 8c61cdc6 and return guards.
+Registry: 1,077 entries / 1,074 unique pairs. Overall remains 10% weighted project
+milestones; goal active on Sol High. Next: 8c616f18 / 8c614076 / 8c615b84 (1,437
+exported rows byte-checked, not recovered). Three lower fixtures and six other
+primitive emitters, full caller contracts, pixels/gameplay and playable ports
+remain unfinished. Original-model lifetimes do not reach the new pair. Earlier
+source/proofs preserved; historical full workflow not rerun. No switch or pause
+recommended.
+
+UV-face near-plane clipping checkpoint (2026-10-17)
+UV-face clipping helper 8c616f18 is recovered.
+Strict build, 716 original-code comparisons and 120 lifetime regressions / 984
+stages passed. All 550 rows, 14 outcomes and four parent call sites covered.
+The 426 independent cases include 96 entirely native classified mesh paths,
+quantized signed UVs, supplied face factors and retained packet words. Read
+MAIN_DISPATCH_UV_FACE_NEAR_CLIP.txt for precision bounds, saved-pointer/parent guards
+and the controlled strip-register precondition. Registry: 1,078 entries / 1,075
+unique pairs. Overall remains 10% weighted project milestones; goal active on Sol
+High. Next: 8c614076 / 8c615b84 (887 exported rows checked as analysis only).
+Two UV-face alternate fixtures and six other primitive emitters remain unfinished.
+Unchanged original-model lifetimes do not reach this new helper; focused meshes
+provide its coverage. Full caller contracts, pixels/gameplay and playable ports
+remain unverified. No model switch or pause advised.
+
+
+Alternate UV-face strip checkpoint (2026-10-17)
+alternate UV-face helpers 8c614076 /
+8c615b84 are recovered with native stub, normalizer and UV-face clipper. Strict
+build, 544 comparisons and 120 lifetime regressions / 984 stages passed. All 887
+rows, 40 outcomes and four calls covered. The 424 independent cases include
+224 native meshes: 192 crossings and 32 ordinary/rejected cases. Read
+MAIN_DISPATCH_UV_FACE_ALTERNATE_STRIPS.txt for per-vertex versus crossing face
+lighting, signed UVs, retained words and the inherited wide-FMOV guard. Registry:
+1,080 entries / 1,077 unique pairs. Overall remains 10% weighted project
+milestones; goal active on Sol High. Next: 8c61cf9c / 8c61d408 (1,423 exported
+rows byte-checked as analysis only). Six other primitive emitters remain fixtures.
+Unchanged original-model lifetimes do not reach these new helpers. The separate
+non-alternate crossing caller precondition, pixels/gameplay and playable ports
+remain unverified. Earlier source/evidence preserved; no model switch or pause
+advised.
+
+
+Signed-UV constant-factor checkpoint (2026-10-17)
+signed-UV/constant-factor primitives
+8c61cf9c / 8c61d408 are recovered. Strict build, 642 comparisons and 120 lifetime
+regressions / 984 stages passed. All 1,419 reachable rows, 72 outcomes and six
+calls covered; four switch rows/two edges have exhaustive proofs. Independent
+checks verify UV scaling, factor 1.0 on every emitted triangle vertex, retained
+padding, input preservation and near-helper staging. Of 64 connected meshes,
+32 ordinary cases remain native throughout; 32 crossings verify staging to an
+unfinished fixture. Read MAIN_DISPATCH_UV_CONSTANT_PRIMITIVES.txt for scope.
+Registry: 1,082 entries / 1,079 unique pairs. Overall remains 10% weighted project
+milestones; goal active on Sol High. Next: 8c6124c0, then 8c61430e / 8c616068
+(1,352 exported rows byte-checked as analysis only). Three lower helpers and four
+other primitive emitters remain fixtures. Unchanged original-model lifetimes do
+not reach the new family. Full caller contracts, pixels/gameplay and playable
+ports remain unverified. No model switch or pause advised.
+
+
+UV-constant near-plane clipping checkpoint (2026-10-17)
+UV-constant near clipper 8c6124c0 is
+recovered and native at all four parent call sites. Strict build, 764 comparisons
+and 120 lifetime regressions / 984 stages passed. All 553 rows / 14 outcomes
+covered. The 522 independent cases include 192 fully native classified meshes,
+quantized signed UVs, factor 1.0 on every vertex, retained padding and preserved
+inputs. Read MAIN_DISPATCH_UV_CONSTANT_NEAR_CLIP.txt for the saved-pointer guard,
+numerical bounds and remaining rendering limits. Registry: 1,083 entries / 1,080
+unique pairs. Overall remains 10% weighted project milestones; goal active on Sol
+High. Next: 8c61430e / 8c616068 (799 exported rows checked as analysis only).
+Two alternate UV-constant helpers and four other primitive emitters remain
+fixtures. Unchanged original-model lifetimes do not reach the new clipper.
+Earlier face-family caller preconditions, pixels/gameplay and playable ports
+remain unverified. No model switch or pause advised.
+
+
+Alternate UV-constant strip checkpoint (2026-10-17)
+alternate UV-constant helpers
+8c61430e / 8c616068 are recovered with native stub and clipper dependencies.
+Strict build, 768 comparisons and 120 lifetime regressions / 984 stages passed.
+All 799 rows, 40 outcomes and three calls covered. The 648 independent cases
+include 448 fully native meshes: 384 crossings and 64 ordinary/rejected cases.
+Factor 1.0, signed UVs, padding and grouping/counters/cursors are verified. Read
+MAIN_DISPATCH_UV_CONSTANT_ALTERNATE_STRIPS.txt for numerical and guard limits.
+Registry: 1,085 entries / 1,082 unique pairs. Overall remains 10% weighted project
+milestones; goal active on Sol High. Next: 8c61db98 / 8c61e4f4 (2,545 exported
+rows checked as analysis only). All four remaining primitive emitters have 4,334
+exported byte-checked rows. These exports are not recovered source. Unchanged
+original-model lifetimes do not reach the new helpers. Earlier caller contracts,
+pixels/gameplay and playable ports remain unverified. No model switch or pause
+advised.
+
+
+Environment-UV/face-factor checkpoint (2026-10-17)
+environment-UV/face-factor primitives
+8c61db98 / 8c61e4f4 are recovered with native normalization. Strict build, 710
+comparisons and 120 lifetime regressions / 984 stages passed. All 2,541 reachable
+rows, 72 outcomes and 15 calls covered; four switch rows/two edges have exhaustive
+proofs. The 188 independent cases check generated UVs, normalized face factors,
+retained words, caches/matrix publication and clipping argument staging. Of 48
+meshes, 32 ordinary/rejected cases stay native; 16 verify near-helper staging.
+Read MAIN_DISPATCH_ENVIRONMENT_FACE_PRIMITIVES.txt for controlled strip-register
+inputs, pointer/return guards and remaining limits. Registry: 1,087 entries /
+1,084 unique pairs. Overall remains 10% weighted project milestones; goal active
+on Sol High. Next: 8c6173ba, then 8c614580 / 8c616474 (1,322 exported rows
+byte-checked as analysis only). Three lower helpers and two other primitive
+emitters remain fixtures. Original-model lifetimes do not reach the new family.
+Full caller contracts, pixels/gameplay and playable ports remain unverified.
+No model switch or pause advised.
+
+
+Environment-face near-plane clipping checkpoint (2026-10-17)
+environment-face near clipper 8c6173ba
+is recovered and native at all four parent call sites. Strict build, 716
+comparisons and 120 lifetime regressions / 984 stages passed. All 612 rows /
+14 outcomes covered. The 426 independent cases include 96 fully native meshes,
+normal-derived UV generation, initial signed wrap and clipped re-quantization,
+exact supplied face factors, retained earlier factors/padding and preserved inputs.
+Read MAIN_DISPATCH_ENVIRONMENT_FACE_NEAR_CLIP.txt for numerical bounds,
+saved-pointer/parent guards and the controlled strip-register precondition.
+Registry: 1,088 entries / 1,085 unique pairs. Overall remains 10% weighted project
+milestones; goal active on Sol High. Next: 8c614580 / 8c616474 (710 exported rows
+checked as analysis only). Two alternate helpers and two other primitive emitters
+remain fixtures. Original-model lifetimes do not reach the new helper. Full
+caller contracts, pixels/gameplay and playable ports remain unverified.
+No model switch or pause advised.
+
+
+Alternate environment-face strip checkpoint (2026-10-17)
+alternate environment-face helpers
+8c614580 / 8c616474 are recovered with native stub, normalizer and clipper.
+Strict build, 544 comparisons and 120 lifetime regressions / 984 stages passed.
+All 710 rows, 40 outcomes and four calls covered. The 424 independent cases
+include 224 fully native meshes: 192 crossings and 32 ordinary/rejected cases.
+Read MAIN_DISPATCH_ENVIRONMENT_FACE_ALTERNATE_STRIPS.txt for the separate
+prepared-register and published-memory UV paths, shared crossing factors,
+retained words and numerical/caller limits. Registry: 1,090 entries / 1,087 unique
+pairs. Overall remains 10% weighted project milestones; goal active on Sol High.
+Next: 8c61f108 / 8c61f7c8 (1,789 exported rows checked as analysis only). Their
+three lower helpers also have 1,281 byte-checked analysis rows. These exports
+are not recovered C. Original-model lifetimes do not reach the new family.
+Full caller contracts, pixels/gameplay and playable ports remain unverified.
+No model switch or pause advised.
+
+
+Environment-UV/constant-factor checkpoint (2026-10-17)
+environment-UV/constant-factor pair
+8c61f108 / 8c61f7c8 is recovered. Strict build, 666 comparisons and 120 lifetime
+regressions / 984 stages passed. All 1,785 reachable rows, 72 outcomes and six
+calls covered; four switch rows/two edges have exhaustive proofs. The 192
+independent cases verify generated UVs, exact 1.0 factors, retained padding,
+caches/matrix publication and near-pointer staging. Of 96 meshes, 64 ordinary/
+rejected cases remain native; 32 check staging to an unfinished fixture.
+Read MAIN_DISPATCH_ENVIRONMENT_CONSTANT_PRIMITIVES.txt for scope. All primitive
+parent targets in this tested mesh chain now have recovered C bodies; three
+lower helpers remain fixtures. Registry: 1,092 entries / 1,089 unique pairs.
+Overall remains 10% weighted project milestones; goal active on Sol High.
+Next: 8c61295a, then 8c614796 / 8c616844 (1,281 exported rows checked as analysis
+only). Original-model lifetimes do not reach the new pair. Full caller contracts,
+pixels/gameplay and playable ports remain unverified. No model switch or pause
+advised.
+
+
+Environment-constant near-plane clipping checkpoint (2026-10-17)
+environment-constant near clipper
+8c61295a is recovered and native at all four parent call sites. Strict build,
+764 comparisons and 120 lifetime regressions / 984 stages passed. All 611 rows /
+14 outcomes covered. The 522 independent cases include 192 fully native meshes,
+normal-derived UV generation, signed wrap/re-quantization, factor 1.0 on every
+vertex, retained padding and preserved inputs. All 114 focused clipped-parent
+cases complete without special live-register seeding. Read
+MAIN_DISPATCH_ENVIRONMENT_CONSTANT_NEAR_CLIP.txt for numerical and guard limits.
+Registry: 1,093 entries / 1,090 unique pairs. Overall remains 10% weighted project
+milestones; goal active on Sol High. Next: 8c614796 / 8c616844 (670 exported rows
+checked as analysis only), the two remaining explicit primitive fixtures in this
+tested mesh chain. Original-model lifetimes do not reach the new helper. Earlier
+caller contracts, pixels/gameplay and playable ports remain unverified.
+No model switch or pause advised.
+
+
+
+Environment-constant alternate strip checkpoint (2026-10-17)
+
+environment-constant alternate strips
+8c614796 / 8c616844 are recovered and connected to the native renderer chain.
+Strict build, 768 original-code comparisons and 120 lifetime regressions / 984
+stages passed. All 670 rows, 40 outcomes and three calls covered. The 648
+independent cases include 448 fully native meshes: 384 crossings and 64 ordinary/
+rejected cases. Normal-derived UVs, exact factor 1.0 on every emitted vertex,
+retained padding, input preservation and counters/cursors are checked. Read
+MAIN_DISPATCH_ENVIRONMENT_CONSTANT_ALTERNATE_STRIPS.txt for scope and limits.
+Registry: 1,095 entries / 1,092 unique pairs. Overall remains 10% weighted project
+milestones; goal active on Sol High. No explicit primitive fixture targets remain
+in this bounded mesh chain. Unchanged original-model lifetimes do not reach the
+new pair. Next: combined mesh-family integration and the earlier face-family
+strip caller contracts, before broader frame/GPU integration. Hardware pixels,
+full gameplay and playable ports remain unverified. No model switch or pause
+advised.
+
+
+Combined native renderer-family checkpoint (2026-10-17)
+
+combined renderer-family integration
+All nine material families passed 1,040 mixed-family/real-caller comparisons with
+zero external game services: 896 meshes covering both family orders, four topology
+codes and varied near masks, plus 144 face-strip caller tests. All 46 primitive/
+clipper/alternate/normalizer targets were reached. Strict combined build and 120
+lifetime regressions / 984 stages passed. Read MAIN_DISPATCH_MESH_FAMILIES.txt.
+The real material caller supplies segment, renderer-state and material addresses
+at the first non-alternate face-strip crossing; later groups can reuse previous
+cache pointers. This original behavior is preserved, not silently repaired.
+Whether these combinations occur in shipped assets is still unverified.
+No new routine credit: registry remains 1,095 entries / 1,092 unique pairs.
+Overall remains 10% estimated weighted whole-project milestones; goal active on
+Sol High. Next: inventory topology/material combinations in original model data
+before broader native frame/GPU integration. No model switch or pause advised.
+Full gameplay, pixels/hardware and playable ports remain unverified.
+
+
+Original model-stream checkpoint (2026-10-17)
+
+original main-executable model data
+A bounded read-only scan identified 860 structurally valid basic-model candidates
+with 1,905 segment records; 854 candidates have matching structural object-node
+references. All nine static material families occur. The 17 non-alternate 8000
+segments (14 models) use per-vertex or constant lighting, with no default face-
+lighting combination found in this scan. Runtime overrides, other formats and
+external modules remain unverified; this does not prove the face path unreachable.
+Strict native build and 192 comparisons of 24 unchanged original models passed,
+with zero external game services, 976 clipper calls and 96 independent projection/
+stream-count cases. Parser reproduction, 860 raw-header checks, 12 original
+profile literals and 17 malformed-record rejections passed. Read
+MAIN_MODEL_ASSETS.txt. No new routine credit: 1,095 entries / 1,092 unique pairs.
+Overall remains 10% estimated weighted whole-project milestones; goal active on
+Sol High. Next: decoded overlay model data and runtime material overrides before
+broader frame/GPU integration. No model switch or pause advised. Playable ports
+and complete game decompilation remain unfinished.
+
+
+Mapped overlay model/selector checkpoint (2026-10-17)
+
+mapped overlay models and a recovered selector
+The bounded scan now covers all 42 existing overlay mappings: 15,984 structural
+model candidates and 45,425 segment records, with models found in 39 modules.
+Two stored environment-face/8000-strip occurrences were found in AL_MAIN.BIN and
+AL_RACE.BIN. Their unchanged data passed native near-crossing comparisons and
+confirmed the original inherited segment/state/material reads. This overturns
+any assumption that absence from the main executable meant no shipped occurrence.
+Strict builds passed: 392 native overlay-model comparisons and 2,176 full-state
+comparisons for newly recovered AL_MAIN selector 0c905548. All 88 selector rows
+and ten branch outcomes are covered. Flag 10 hex selects the observed AL_MAIN
+model. Read OVERLAY_MODEL_ASSETS.txt for the separate static, selector and
+constructed-camera evidence; full scene/gameplay reachability remains open.
+Registry: 1,096 entries / 1,093 unique pairs. Overall remains 10% estimated
+weighted whole-project milestones; goal active on Sol High. Next: trace/install
+the selector caller and connect selected object rendering, retaining original
+lighting behavior. Runtime material-override tracing remains open. No model
+switch or pause advised. Full decompilation and playable ports remain unfinished.
+
+
+AL_MAIN initializer/selector checkpoint (2026-10-17)
+
+native AL_MAIN selector caller and marker reset
+Recovered initializer 0c90fde4 (145 rows) and marker reset 0c909d40 (nine rows).
+The initializer calls the existing model selector and empty helper natively;
+those reused routines receive no new credit. Strict build and 2,528 original
+comparisons passed: 2,496 completed caller paths and 32 expected dependency-error
+partial states. All 154 new rows, six outcomes and 11 call sites are covered,
+plus 88 reused selector rows and the empty helper's two rows. Independent reset,
+position-copy, mask preservation, model selection, scale and tail-priority checks
+passed. Read OVERLAY_SELECTOR_INITIALIZER.txt for the eight remaining explicit
+service boundaries; this is not a complete initialized scene or playable port.
+Registry: 1,098 entries / 1,095 unique pairs. Overall remains 10% estimated
+weighted whole-project milestones; goal active on Sol High. Next: object setup
+0c904d22 and recursive clone/table-walk dependencies 0c90451c / 0c9044e2 before
+connecting object rendering. No model switch or pause advised. Full game
+code recovery, frame integration and playable ports remain unfinished.
+
+
+AL_MAIN object preparation checkpoint (2026-10-17)
+
+native AL_MAIN object setup, recursive cloning and preorder tables
+Recovered four bodies (0c9044a0 / 0c9044e2 / 0c90451c / 0c904d22), 465 byte-checked
+instruction rows. Strict native build and 1,552 original-code comparisons passed:
+1,532 normal returns (including expected allocation failures), four PR guards,
+four invalid-node guards, six missing services and six injected errors. Tests
+match full RAM/CPU/FPU and 167,449 ordered boundaries. All 52 call sites and all
+seven clone allocation-failure sites are covered; 624 independent cases validate
+copy/traversal/table/type/variant behavior, including shipped 39-node trees.
+Executed 463 rows / 66 outcomes; two rows and two outcomes have explicit invalid-
+read/valid-heap exclusions. Read OVERLAY_OBJECT_SETUP.txt. Three appearance
+variants remain fixtures; old initializer integration is the next step. This
+checkpoint alone does not prove a complete initialized or rendered scene.
+Registry: 1,102 entries / 1,099 unique pairs; 1,050 matches in 10,875 snapshot
+candidates. Audits found zero evidence errors and zero stale source reports.
+Overall remains 10% estimated weighted whole-project milestones; goal active on
+Sol High. Next: connect object setup to the existing initializer, recover variant
+helpers 0c904aea / 0c904bbc / 0c904c80, then object drawing. No model switch or
+pause advised. Full code recovery, frame integration and playable ports remain
+unfinished. Luna Low is suitable for documentation-only work; continue Sol High
+for the next reverse-engineering dependency.
+
+
+AL_MAIN material/initializer integration checkpoint (2026-10-17)
+
+native AL_MAIN material variants and combined object initializer
+Recovered three material helpers (0c904aea / 0c904bbc / 0c904c80), all 267 rows and
+26 conditional outcomes. Their 2,177 original-state comparisons and independent
+material checks passed. The new bridge runs object setup, clone/table walkers,
+these variants, marker/no-op and selector natively inside initializer 0c90fde4.
+The old bodies receive no new credit. The remaining four initialization helpers
+and three outer tails are explicit fixtures; no complete scene/gameplay claim.
+A partial clone can leave selector slot 34 empty. A new support guard preserves
+the original 21-instruction prefix and stops before invalid FMOV at 0c905572;
+384 direct comparisons passed. The unchanged selector handles valid nodes.
+Strict native build and 432 combined comparisons passed: 368 completed tested
+caller paths and 64 expected partial stops. All RAM/CPU/FPU state and 220,980
+ordered boundaries match; independent checks cover shipped trees, tables,
+material changes, model selection, reset/copy/masks and nested tail priorities.
+Read OVERLAY_OBJECT_INITIALIZER.txt for exact tested scope and limitations.
+Seven remaining helper bodies (1,510 rows) are byte-checked analysis exports,
+with zero recovered-code credit. Next: 0c904e80 (813 exported rows; floating-point
+modes and draft warnings require original-instruction recovery), then remaining
+initialization and object-draw integration. Registry: 1,105 entries / 1,102
+unique pairs; 1,053 matches in 10,875 snapshot candidates. Audits found zero
+evidence errors and zero stale source reports. Overall remains 10% estimated
+weighted whole-project milestones; goal active on Sol High. No model switch or
+pause advised. Luna Low is suitable for documentation-only changes; continue
+Sol High for the next reverse-engineering dependency. Full decompilation and
+playable PC/Android/3DS/N64/PlayStation ports remain unfinished.
+
+
+AL_MAIN model morph checkpoint (2026-10-17)
+
+native AL_MAIN model morph and complete word-copy dispatcher
+Recovered model morph 0c904e80 (813 rows) and main helper 8c10cddc (58 rows,
+including 17 short-copy targets missed by the original function snapshot).
+Both strict native builds passed. 1,626 focused original-code comparisons pass,
+including 1,444 independent geometry/material/copy-order checks. Full RAM/CPU/
+FPU/FPUL/MACL and 2,368 ordered boundaries match. All 871 rows are byte-checked;
+856 execute. The exact 15 rows / seven outcomes not executed have qualified
+ordinary-contract explanations, with no universal hardware reachability claim.
+The new bridge connects morph/copy to the existing initializer and object path.
+228 shipped-object comparisons pass: 176 completed tested caller paths and
+52 expected partial stops, with 117,509 ordered boundaries. Three initialization
+helpers and three outer tails remain fixtures; no full scene/gameplay claim.
+Read OVERLAY_MODEL_BLEND.txt for arithmetic order, guards, copy overlap behavior,
+the dynamic coverage exclusions and exact verification limits. Old proofs and
+source files remain preserved. Reused routines receive no new recovery credit.
+Registry: 1,107 entries / 1,104 unique pairs; 1,055 matches in 10,875 snapshot
+candidates. Audits found zero evidence errors and zero stale source reports.
+Overall remains 10% estimated weighted whole-project milestones; goal active
+on Sol High. Next: remaining initializer helpers 0c90bd40 / 0c90853e and its
+lower setters / 0c9048ec, then outer tails and object draw integration. No model
+switch or pause advised. Luna Low is suitable for documentation-only changes;
+continue Sol High for dependency integration. Full decompilation and playable
+PC/Android/3DS/N64/PlayStation ports remain unfinished.
+
+
+Bounded native AL_MAIN initializer checkpoint (2026-10-17)
+
+bounded AL_MAIN initializer now runs with zero game-service fixtures
+Added eight new routines (726 instruction rows), plus a checked guarded
+representation of the existing seven-row link setter with zero new credit.
+The existing RNG and all prior object/morph/selector/heap bodies are reused.
+Both strict native builds passed. 4,464 focused original-state comparisons
+cover all 733 included rows and 64 outcomes; 4,364 normal cases also pass
+independent seed/timer, signed appearance-table, accessory/shared-material and
+tail-material checks. The canonical existing setter source/record is preserved.
+The full bounded initializer passes 402 original comparisons: 378 completed
+paths and 24 expected partial stops, with 214,076 ordered native boundaries.
+All RAM/CPU/FPU/FPUL/MACL state matches. No game hooks or service stand-ins
+remain in this constructor path. Supplied task/entity/appearance/heap records
+are still test inputs; natural creation, scene scheduling and drawing are open.
+Read OVERLAY_INITIALIZER_COMPLETE.txt. An earlier inferred name is corrected:
+0c905666 is a parameter clamp/update helper that can tail-branch to the morph,
+not the draw routine. New byte-checked exports cover its 0c9009d0 callback and
+0c9058a0 draw-callback candidate, plus natural/alternate initializer callers.
+These 1,554 caller rows and 236 update rows are analysis only, with zero new
+recovery credit. Next: recover that update path and trace natural object
+creation/scheduling and actual drawing into the existing native renderer.
+Registry: 1,115 entries / 1,112 unique pairs; 1,063 matches in 10,875 snapshot
+candidates. Audits found zero evidence errors and zero stale source reports.
+Overall remains 10% estimated weighted whole-project milestones; goal active
+on Sol High. No model switch or pause advised. Luna Low is suitable for
+documentation-only changes; continue Sol High for caller/render integration.
+Full game-code recovery and playable PC/Android/3DS/N64/PlayStation ports remain
+unfinished.
+
+
+AL_MAIN parameter/event and scale-smoothing checkpoint (2026-10-17)
+Recovered 0c905618 (39 rows) and 0c905666 (236 rows), connected natively to the
+previously recovered morph and full word-copy dispatcher. No game-service
+fixtures; existing initializer/morph/copy receive zero new recovery credit.
+Strict new DLL build and 1,000 original-state comparisons pass: 928 completed,
+48 unsupported arithmetic/precision boundaries, 16 numerical traps, eight invalid
+RAM guards. All 275 rows and 44 outcomes execute. 902 independent data cases
+and 2,444 ordered entries pass; raw FPU bank/width effects and reached stops
+retain original state. X/Y overshoot can cancel while still requesting a morph;
+a Z-only decrease copies stored Z without requesting one. Original arithmetic
+constants and separate rounding stages are retained in scale smoothing.
+32 original-model constructor/update lifecycles also pass, including all eight
+appearance types, both FPU banks and source accessories: 512 successful stages,
+896 ordered boundaries, 192 native morph calls, 512 independent stage checks.
+The known nine primitive/material families were already recovered. This advances
+object-update dependencies; it does not add a primitive emitter or pixel proof.
+Read OVERLAY_PARAMETER_UPDATE.txt. A byte-checked static inventory gives draw
+candidate 0c9058a0 911 rows / 57 calls / 27 targets, with 13 unregistered; caller
+0c9009d0 has 182 rows / 20 calls / 14 targets, with ten unregistered. These
+inventory rows add zero credit. Next: remaining matrix/draw helpers, actual draw
+callback and natural object creation/task scheduling. No full gameplay claim.
+Registry 1,117 entries / 1,114 unique pairs; 1,065 matches in 10,875 snapshot
+candidates, 211 non-texture binaries without indexes. Audits: zero errors/stale
+source reports. Generator reproduction, registration idempotence, syntax checks
+and 658 dispatcher pointer-load checks pass. Historical aggregate suite was not
+rerun. Overall remains 10% estimated weighted whole-project milestones; goal
+active on Sol High. Continue Sol High for reverse engineering; Luna Low suitable
+for documentation-only maintenance. No model switch or pause recommended.
+
+
+Complete register-input draw matrix checkpoint (2026-10-17)
+Completed guarded 8c63a69c scale (83 rows) and 8c63a878 translation (49 rows),
+including both implicit and explicit matrix paths. Prior limited sources and
+proofs are preserved; two first registry entries, no duplicate old-source credit.
+Strict direct and separate renderer builds passed. 856 original-state comparisons
+cover all 132 rows / four outcomes: 558 completed, 42 numerical traps, 192
+unsupported boundaries, 64 invalid RAM stops. 256 independent dyadic full-matrix
+and RAM-write checks passed. Vector differential comparisons use the existing
+pinned shared upstream core; independent algebra checks are separate.
+64 transformed native model callers passed 2,384 boundaries and 160 mesh calls,
+including 64 scale / 96 translation calls, with independent preorder and matrix-
+stack checks and no game-service fixtures. 800 queue flushes / 8,860 events match.
+120 particle lifetime regressions / 984 stages and 46 existing translation cases
+passed. Their original models do not reach the new pair; invocation counts are
+explicitly zero. New helper reachability comes from transformed caller cases.
+Read DRAW_MATRIX_REGISTERS.txt for guards, numerical and legacy-ABI limitations.
+Nine next draw dependencies have 477 byte-checked read-only export rows, zero
+recovery credit. Targets 8c5fde20 / 8c60e5e4 lack indexed boundaries. The AL_MAIN
+draw candidate has 11 unregistered targets; next 8c038d00 and 8c043a20/8c60edf0,
+then remaining draw/natural-creation/task-scheduling dependencies.
+Registry 1,119 entries / 1,116 unique pairs, 1,067 matches in 10,875 snapshot
+candidates, 211 non-texture binaries without indexes. Zero evidence errors and
+zero stale source reports. Generator reproducibility, registration idempotence,
+syntax and 658 dispatcher pointer-load checks passed. Historical aggregate suite
+was not rerun. Overall remains 10% estimated weighted whole-project milestones;
+goal active on Sol High, no switch/pause recommended. Luna Low is suitable for
+documentation-only work. Full decompilation, hardware pixels/gameplay, high-FPS
+8K settings, SUPIR texture pack and all playable ports remain unfinished.
+
+
+Draw predicate/float-state and partial original draw-entry checkpoint (2026-10-17)
+Recovered predicate 8c038d00 (66 rows), four-float wrapper 8c043a20 (16) and copy
+8c60edf0 (13). Strict support build passed; 676 original-state comparisons cover
+all 95 rows / 14 outcomes, with 516 independent predicate/copy checks and 740
+ordered entries. 548 completed / 16 traps / 48 unsupported / 64 memory-return
+stops match. Original asymmetric final Y projection/bound reuse is retained,
+as are sequential raw copies and wide stack stores overwriting saved PR.
+The entire 911-row AL_MAIN draw candidate is translated and compiles separately,
+with zero complete-function registration credit. 100 original draw-entry checks
+on natively initialized shipped objects pass: 66 rejected returns, 18 expected
+-2 continuation stops, eight unsupported, four invalid RAM, four traps. Only
+86 candidate rows execute; 825 remain unexecuted. 290 ordered boundaries and
+80 independent spring/gate cases pass, with zero game-service fixtures.
+Read DRAW_PREDICATE_SUPPORT.txt. First continuation is already recovered but
+unwired 8c056990; next wire it and other recovered callees, then remaining draw
+paths/services. Nine direct targets remain unregistered. Vector differential
+arithmetic shares the pinned core; independent predicate tests use identity
+XMTRX. No GPU pixels, natural scheduling, complete drawing or gameplay proof.
+Registry: 1,122 entries / 1,119 unique pairs, 1,070 matches in 10,875 snapshot
+candidates, 211 non-texture binaries without indexes. Audits zero errors/stale
+source reports. Generators reproduce; registration repeats without duplicates;
+syntax and 658 dispatcher pointer-load checks pass. Historical aggregate suite
+not rerun. Overall remains 10% estimated weighted whole-project milestones;
+goal active on Sol High, no model switch/pause recommended. Luna Low is suitable
+for documentation only. Complete decompilation and all playable ports unfinished.
+
+
+Accepted-draw native state/matrix integration checkpoint (2026-10-17)
+A separate 25-source DLL reuses fourteen global-state/matrix bodies and removes
+8c056990 as an unwired boundary. All old C/DLL/proofs are preserved, zero new
+routine credit. 244 original comparisons pass: 180 caller cases / 64 direct
+routing cases, 1,506 boundaries, 224 independent state/saved-matrix/stack/spring
+checks. 130 completed returns (66 rejected draws / 64 services), 98 explicit
+continuation stops, eight unsupported modes, four RAM guards and four traps.
+Coverage grows from 86 to 273 of 911 candidate rows; 638 remain unexecuted.
+No candidate registration or whole-draw credit. New stops are 0c90c384 (38),
+8c640128 (40) and already recovered but unwired 8c6215d6 (20). No game fixtures.
+Read OVERLAY_DRAW_STATE.txt for valid-RAM/narrow-FPU/vector/core limits and
+lack of hardware pixels, full-frame ordering or natural task/scene proof.
+Next distance/signed-sqrt exports add 42 byte-checked analysis-only rows. An
+older limited signed-sqrt body and native FSQRT backend exist; preserve/reuse
+them while completing that path, then 0c90c384 and particle/vertex-bus routing.
+Strict build, generator reproduction, registration idempotence, syntax and
+658 dispatcher pointer-load checks pass. Historical aggregate suite not rerun.
+Registry remains 1,122 entries / 1,119 unique pairs; 1,070 matches in 10,875
+snapshot candidates, 211 non-texture binaries without indexes. Audits zero
+errors/stale source reports. Overall remains 10% estimated weighted whole-project
+milestones; goal active on Sol High. No model switch/pause advised; Luna Low
+suits documentation-only work. Full decompilation, gameplay, high-FPS/8K/SUPIR
+features and all playable ports remain unfinished.
+
+
+Distance/signed-sqrt and deeper draw integration checkpoint (2026-10-17)
+Completed 8c640128 (32 rows) and 8c63a9c4 (10), first registry entries. Old limited
+signed-sqrt C/proof and unchanged native FSQRT preserved, zero duplicate credit.
+Strict direct and 27-source integrated builds passed. 578 original comparisons
+cover 42 rows / both outcomes; 736 boundaries, 218 independent geometry/root
+cases and 2,112 independent rational primitive FSQRT checks pass. Supported
+numerical/exception/PR/RM policies are qualified, not new hardware measurements.
+408 original caller/routing comparisons pass 4,442 boundaries, 388 independent
+state/stack/spring cases and 200 independent distance accumulations. Runtime
+position data is supplied; four null records stop before the sqrt tail.
+Candidate coverage 421/911 rows, up from 273; 490 remain unexecuted and candidate
+remains unregistered. Stops: 0c90c384(38), unwired existing 8c6215d6(20),
+8c60e5e4(152), 8c0409c0(16), 8c5fde20(16), 8c041c92(16). No game-service fixtures.
+Read DRAW_DISTANCE_HELPERS.txt. Two previously unindexed targets now have
+read-only temporary CFG proposals / 400 byte-checked analysis rows, zero source
+credit. Computed tails/code ownership still need verification; saved project
+and frozen index are unchanged. Next motion/render services and particle/bus
+integration, then remaining draw and natural task/frame scheduling.
+Generators reproduce, registration repeats without duplicates, syntax and
+658 dispatcher pointer-load checks pass. Historical aggregate suite not rerun.
+Registry: 1,124 entries / 1,121 unique pairs, 1,072 matches in 10,875 snapshots,
+211 non-texture binaries without indexes. Audits zero errors/stale source reports.
+Overall remains 10% estimated weighted whole-project milestones; goal active
+on Sol High, no switch/pause advised. Luna Low suits docs only. Full recovery,
+physical pixels/gameplay, high-FPS/8K/SUPIR and all playable ports unfinished.
+
+2026-10-17 continuation: motion setup/recursive driver and base callbacks
+Seven complete guarded bodies add 286 byte-checked rows / 30 branch outcomes.
+Strict 33-source build passes. 544 original body comparisons match full reached
+RAM/CPU/FPU/FPUL/MACL and 4,688 ordered entries. 506 independent cases check
+setup/base state; 472 exact dyadic world matrices check zero-rotation recursion.
+All 408 original initialized-model comparisons pass, matching 5,050 entries,
+388 independent state/stack/spring cases and 200 distance accumulations.
+152 cases enter both new setup and driver, covering 104 new callee rows and
+now stopping at format-two callback 8c60d094. Parent remains 421/911 rows with
+490 unexecuted and zero parent recovery credit. Seven direct unregistered
+draw targets remain in the static inventory; computed callbacks add more work.
+No external game-service fixtures or physical pixel proof. Supplied renderer
+and position records do not prove natural scene/player initialization.
+Direct successful recursion uses valid acyclic nodes with no rendered mesh or
+the original skip flag; interpolation/nonzero formats remain explicit stops.
+The distinct motion mesh wrapper 8c621574 calls 8c617c34, not static 8c6209a8.
+Read DRAW_MOTION_SETUP.txt. Original source/DLL/evidence artifacts are preserved.
+Generators reproduce exact bytes, repeat registration adds zero entries,
+five Python/three PowerShell syntax checks and 658 pointer-load checks pass.
+Registry: 1,131 entries / 1,128 unique pairs; 1,073 matches in 10,875 snapshots.
+Evidence audit: zero errors, zero stale source reports; 211 binaries unindexed.
+Historical aggregate suite not rerun. Next recover format-two/interpolation,
+then distinct motion mesh output and remaining draw/frame dependencies.
+Overall remains 10% estimated weighted whole-project milestones; goal active
+on Sol High. No switch/pause advised; Luna Low suits documentation only.
+
+2026-10-17 continuation: native animation formats/keyframes/interpolation
+Fifteen new guarded bodies cover all 1,042 original rows / 52 branch outcomes.
+Strict 37-source build and 400 original body comparisons pass, with 2,250
+ordered entries, 276 independent curve/record cases and 32 sampled transforms.
+Includes linear and Catmull-Rom cubic vector/integer-angle interpolation,
+binary-search samplers, compact/alternate record routers and mesh skip routing.
+Native unsigned remainder and eight-byte copy sources are reused, zero credit.
+All 408 initialized-model/routing comparisons pass, matching full reached state
+and 8,698 ordered entries. Format-two and position/rotation samplers run 304
+times each; linear vector/angle curves run 152 each. 341 new callee rows execute.
+The former format-two stop is removed; 152 cases now reach motion mesh 8c621574.
+Parent remains 421/911 rows with 490 unexecuted and no parent recovery credit.
+Other first stops: 0c90c384(38), existing unwired 8c6215d6(20), 8c0409c0(16),
+8c5fde20(16), 8c041c92(16). No fabricated game-service results or pixel proof.
+Alternate-record direct tests use the original empty callback as supplied data;
+they do not prove morph output. Cubic curves are directly tested, not claimed
+naturally reached in this initialized-model suite. Runtime records are supplied.
+Read DRAW_MOTION_FORMATS.txt. Next wrapper/preprocessing exports have 278 byte-
+checked analysis-only rows, zero recovery credit; lower 8c6215ba already exists.
+Generators reproduce exact bytes; registration repeats without additions;
+six Python/four PowerShell syntax checks and 658 pointer-load checks pass.
+Historical aggregate suite not rerun. Source/DLL/proof history is preserved.
+Registry: 1,146 entries / 1,143 unique pairs; old snapshot matches unchanged
+at 1,073/10,875 because none of the fifteen appears in the frozen index.
+Evidence audit: zero errors/stale source reports; 211 binaries remain unindexed.
+Overall remains 10% estimated weighted whole-project milestones; goal active
+on Sol High. No switch/pause advised; Luna Low suits documentation-only work.
+
+2026-10-17 continuation: motion mesh preprocessing and original model packets
+Two first registry entries add 259-row 8c617c34 preprocessing and its 19-row
+8c621574 wrapper. All 278 rows execute. Strict 102-source build and 130 focused
+original comparisons pass, with 98 independent exact matrix/light/projection
+handoffs, 604 software queue flushes and 7,020 events. No lower-game fixtures.
+61 private reporting copies preserve original guest logic exactly; audit strips
+only publication metadata at 31,769 emitted sites. Folded delay-slot numerical
+stops retain their tested PC, including 8c61123e. Old source/DLLs are preserved.
+All 408 initialized-model/routing comparisons pass full reached machine/RAM,
+111,684 ordered entries, queue state and stored event prefixes. 388 cases have
+independent state/stack/spring checks and 200 check distance accumulation.
+Motion wrapper/preprocessing each execute 2,570 times; existing lower wrapper
+executes 2,610 times and previously unwired particle wrapper 40 times.
+There are 138,384 flushes / 1,524,614 counted events. 632,532 stored-prefix
+events match individually; 892,082 beyond the per-call trace cap are counted,
+not individually compared. Complete reached/final packet RAM still matches.
+Parent coverage rises from 421 to 461/911; 450 remain unexecuted and parent
+stays unregistered. First stops: 8c0583a0(132), 0c90c384(94), 8c0409c0(16),
+8c5fde20(16), 8c041c92(16). No accepted full callback or GPU-pixel claim.
+Original geometry/animation retained; supplied renderer globals/scratch/view/
+light/masks and texture metadata are qualified runtime inputs. The shipped
+221-name texture list retains filenames/attributes while its runtime descriptor
+slots are populated. Natural renderer/player/texture initialization unproved.
+Read DRAW_MOTION_MESH.txt. Six next helper proposals have 363 byte-checked rows,
+zero source credit. Next recover newly reached 8c0583a0 / 0c90c384 and remaining
+services, then original draw/frame and natural renderer initialization.
+Generators reproduce exact bytes; repeat registration adds zero; eight Python,
+three PowerShell syntax checks and 658 retail pointer-load checks pass. Full
+historical aggregate suite not rerun. One unreferenced intermediate copy removed.
+Registry: 1,148 entries / 1,145 unique pairs; 1,075 matches in 10,875 snapshots.
+Evidence audit: zero errors/stale source reports; 211 binaries remain unindexed.
+Overall remains 10% estimated weighted whole-project milestones; goal active
+on Sol High. No switch/pause advised; Luna Low suits documentation-only work.
+
+2026-10-17 continuation: hierarchy generation and matrix-cache helpers
+Five first entries add original preparation 8c0583a0, recursive generation
+8c057bc0, copy 8c63a770, retrieval 8c058434 and vector scale 8c63a5ec.
+Existing bank-save 8c638f94 gets extended raw-state evidence, zero new credit.
+The new C retains 844 byte-checked raw rows. 836 reachable rows / 98 outcomes
+execute; eight fallback rows / four outcomes are excluded by a qualified R9
+channel-bound and callee-preservation audit with valid disjoint stack/data.
+Production retains the original unsupported-layout BRA/NOP loop. Research
+builds explicitly bound it after one cycle and compare the exact original
+prefix, not a successful return. Old limited/injected-vector sources remain.
+Strict 104-source build, default-production C syntax, 595 direct comparisons
+and all 12,662 ordered entries pass. There are 463 independent cases, 1,100
+world matrices and 842 angle handoffs. Real vector numerical support is used;
+the shared-core/valid-RAM limits remain explicit. Six Python/three PowerShell
+syntax checks pass; the historical aggregate sequence was not rerun.
+All 408 original-model/routing comparisons pass full reached machine/RAM,
+139,314 ordered entries, queue state and stored prefixes. 388 cases have
+independent state/stack/spring checks and 200 check distance prefixes. The
+caller enters preparation 132 times, generation 4,488, bank-save 4,356,
+vector scale 278 and copy/output 132. It reaches 425 raw rows. Indexed
+retrieval is directly verified but not naturally reached in this suite.
+Parent coverage advances from 461 to 472/911; 439 rows remain unexecuted and
+parent stays unregistered. Next first stops: 8c638ecc(132), 0c90c384(94),
+8c0409c0(16), 8c5fde20(16), 8c041c92(16). No accepted full callback/GPU claim.
+Queue totals remain 138,384 flushes / 1,524,614 counted events: 632,532
+stored-prefix events match individually; 892,082 later events are counted,
+not individually compared. All reached/final packet RAM is still compared.
+The original-model fixture is unchanged; supplied renderer/texture metadata
+is qualified. Natural renderer/texture loading and gameplay remain unfinished.
+Read DRAW_HIERARCHY.txt. Six generated artifacts reproduce exact bytes;
+repeat registration adds zero and leaves registry/status bytes unchanged.
+658 original pointer loads / 80 spans / 83 selectors pass map verification.
+Registry: 1,153 entries / 1,150 unique pairs; 1,080 matches in 10,875 frozen
+candidates. Audit: zero evidence errors/stale reports; 211 binaries unindexed.
+Overall remains 10% estimated weighted whole-project milestones; goal active
+on Sol High. No switch/pause advised; Luna Low suits documentation-only work.
+
+2026-10-17 continuation: original point transformation
+One first entry adds complete guarded 44-row 8c638ecc with explicit FIPR and
+implicit FTRV paths and real numerical support. The old injected-vector source
+and proof remain accessible; no duplicate credit. Strict 105-source build,
+435 direct comparisons and all 435 ordered entries pass. All rows / both
+conditional outcomes execute; 124 independent exact-dyadic cases check point,
+matrix, homogeneous/no-divide, pointers and precise overlap order. The direct
+fixture's DN=1 inheritance and numerical/reference/valid-RAM limits are explicit.
+All 408 original-model/routing cases pass full reached machine/RAM, 139,446
+ordered entries, queue state and stored event prefixes. 388 independent state/
+stack/spring cases and 200 distance prefixes pass. Point transformation executes
+132 times, reaching 38 explicit-path rows; six implicit-only rows execute in
+the direct suite. Parent coverage advances from 472 to 476/911, with 435
+unexecuted rows and zero parent registration credit. Next stops: 0c909d80(132),
+0c90c384(94), 8c0409c0(16), 8c5fde20(16), 8c041c92(16). No accepted full
+callback or physical GPU-pixel claim. Original model/runtime fixture unchanged.
+Queue totals remain 138,384 flushes / 1,524,614 counted events: 632,532 stored
+prefix events match individually; 892,082 later events are counted, not stored
+and individually compared. Full reached/final packet RAM still matches.
+Read DRAW_POINT_TRANSFORM.txt. The next dispatcher/auxiliary proposals have
+2,421 byte-checked rows across 12 read-only exports and 21 unregistered static
+targets after point registration. No draft/source/parent credit; global indexes
+unchanged. Recover this dispatcher/services and remaining drawing dependencies,
+then natural renderer/texture initialization and original frame/gameplay paths.
+Five generated artifacts reproduce exact bytes; repeated registration adds
+zero and leaves registry/status bytes unchanged. Six Python/three PowerShell
+syntax checks, default C syntax and 658 pointer-load checks pass. Historical
+aggregate suite not rerun. Earlier sources/DLLs/proofs remain accessible.
+Registry: 1,154 entries / 1,151 unique pairs; 1,081 matches in 10,875 frozen
+candidates. Audit: zero errors/stale reports; 211 nontexture binaries unindexed.
+Overall remains 10% estimated weighted whole-project milestones; goal active
+on Sol High. No switch/pause advised; Luna Low suits documentation-only work.
+
+2026-10-17 continuation: object-effect profiles and renderer prefixes
+Six first entries add complete 1,492-row / 130-outcome profiles. All rows and
+outcomes execute. Source retains 2,425 rows across twelve new proposed bodies
+plus the existing four-row phase adapter. Six incomplete dispatcher/renderer
+bodies and the AL_MAIN parent remain unregistered, zero credit. Existing phase
+and RNG sources/proofs are preserved, with no duplicate credit or injected
+vector/random outputs in the new connection.
+Strict 106-source build and 1,720 direct comparisons pass: 2,352 ordered entries,
+full reached state and 707 independent cases / 777 checks. Phase reset/advance,
+initialization, unsigned countdown, paired scale, FSCA error-bound and six LCG
+seed checks are included. Direct default DN=1/numerical/valid-RAM domains remain.
+All 408 original-model/routing cases pass full reached machine/RAM, 140,794
+ordered entries, queue state and stored prefixes. 388 independent state/stack/
+spring cases / 200 distance prefixes pass. Dispatcher/profile-zero each execute
+132 times, regular emitter 118, special 14, texture selector 118, material mode
+14 and RNG 28. Caller reaches 599 raw rows. Five other profiles and phase adapter
+are directly checked rather than claimed naturally reached by this first draw.
+Parent remains 476/911; 435 rows unexecuted, zero registration credit. The old
+dispatcher stop is gone. Next missing: 8c655620(118), 8c654e60(14),
+0c90c384(94), 8c0409c0(16), 8c5fde20(16), 8c041c92(16).
+Queue totals remain 138,384 flushes / 1,524,614 counted events; 632,532 stored
+prefix events match individually and 892,082 later events are counted. Final
+queue/QACR/counters and full reached/final packet RAM match. No GPU-pixel proof.
+The new shipped fourteen-name effect list has only runtime descriptor slots
+supplied; names/attributes/geometry/motion remain original. Natural renderer/
+texture initialization and accepted full drawing/gameplay remain unfinished.
+Read DRAW_OBJECT_EFFECTS.txt. Lower three proposals have 916 byte-checked rows,
+zero recovery credit. Two original twelve-selector BRAF tables expose eighteen
+case heads missing from the existing render-state proposal; expand/check CFG
+before recovery/credit. Six artifacts reproduce exact bytes; repeat registration
+adds zero and leaves registry/status bytes unchanged. Six Python/four PowerShell
+syntax checks, default C syntax and 658 pointer-load checks pass. Historical
+aggregate suite not rerun. Earlier sources/DLLs/proofs remain accessible.
+Registry: 1,160 entries / 1,157 unique pairs; 1,087 matches in 10,875 frozen
+candidates. Audit: zero errors/stale reports; 211 nontexture binaries unindexed.
+Overall remains 10% estimated weighted whole-project milestones; goal active
+on Sol High. No switch/pause advised; Luna Low suits documentation-only work.
+
+
+Current update (2026-10-17): expanded renderer state and texture headers
+Four first helper entries add 1,017 original instruction rows. The old 582-row
+state proposal expands to 644 rows: 62 added rows / 18 missing case heads from
+two original twelve-selector tables. Every old byte is retained. New read-only
+exports and source preserve the older snapshot and global indexes.
+All rows, 149 reachable conditional outcomes and 22 computed targets execute.
+One impossible conditional outcome is justified by consecutive tests of an
+unchanged r8; its original source remains intact. Strict 107-source build,
+1,974 direct comparisons, 3,416 ordered entries and 993 independent cases pass.
+All 408 connected original-model/routing comparisons pass: 141,920 ordered
+entries, full reached/final machine/RAM, 388 independent state/stack/spring
+cases and 200 distance prefixes. New helpers contribute 393 reached rows.
+State/header/visibility execute 28/160/132 times. Size conversion is directly
+verified only. The AL_MAIN parent remains 476/911 rows and unregistered.
+Previous state/header stops advance to polygon clipper 8c64f840 (132 calls).
+Other first stops remain 0c90c384 (94), 8c0409c0/5fde20/041c92 (16 each).
+Queue totals match: 138,384 flushes / 1,524,614 counted events. Of those, 632,532
+stored prefix events match individually; 892,082 later events are counted only.
+Full reached/final packet RAM and queue/QACR/counters match; no physical GPU proof.
+Seven upcoming polygon/clipping proposals have 1,720 byte-checked rows, all direct
+branch targets present, zero native recovery credit. Recover 8c64f840 next.
+Registry: 1,164 entries / 1,161 unique pairs; 1,091 matches in 10,875 frozen
+candidates. Audit: zero errors/stale reports; 211 nontexture binaries unindexed.
+Five generated artifacts reproduce exact bytes; repeated registration changes
+neither registry nor status bytes. Seven Python/four PowerShell syntax checks,
+default C syntax and 658 dispatch pointer-load checks pass. Historical aggregate
+suite not rerun. Older sources, DLLs and evidence remain accessible.
+Read DRAW_RENDER_HEADERS.txt for exact scope, paths, numerical/guard/queue limits
+and next steps. Runtime texture/view/renderer metadata are still supplied; full
+natural loading, visible frames/gameplay and all playable ports are unfinished.
+Overall remains 10% estimated weighted whole-project milestones; goal active
+on Sol High. Continue Sol High for clipping/polygon reverse engineering. Luna
+Low is suitable for documentation only; no switch or pause is recommended.
+High-FPS/8K/SUPIR/display options remain planned. Texture Off will disable
+sampling and use vertex/material colours.
+
+
+
+Current update (2026-10-17): original polygon clipping/projection primitives
+Seven first entries add 1,720 original instruction rows / 46 conditional outcomes,
+all executed. They retain original clipping/attribute interpolation, cached header
+acquisition, vertex projection, strip ordering, queue stores and PREF flushes.
+Existing shader/acquisition/finish helpers are routed through the native lower
+chain before observation, with zero duplicate recovery credit. Old code is kept.
+Strict 108-source build and 576 direct comparisons pass: 576 ordered entries,
+389 independent cases / 1,730 checks, complete reached/final machine/RAM and all
+7,347 direct queue events. Four colour/wider projected helpers have direct
+verification only; their natural invocation is not claimed in the caller suite.
+All 408 connected original-model/routing comparisons pass: 145,352 ordered
+entries, 388 independent state/stack/spring cases, 200 distance prefixes and
+354 newly reached primitive rows. Clipper/UV-header/UV-emitter run 250/190/190
+times. The old clipper stop is replaced by 0c90c384 (226 cases); other first
+stops remain 8c0409c0/5fde20/041c92 (16 each). Outer AL_MAIN drawing is now
+479/911 rows, 432 unexecuted and unregistered. Incomplete effect bodies also
+remain unregistered. Accepted full drawing, physical frames/gameplay are unproved.
+Queue totals: 139,334 flushes / 1,532,974 counted events, up 950 / 8,360.
+Stored prefixes compare 632,532 events individually; 900,442 later events are
+counted only. Additional connected events lie beyond those stored prefixes.
+Full reached/final packet RAM and final queue/QACR/counters match; no GPU proof.
+Next overlay fade/draw family: four read-only proposals / 572 byte-checked rows,
+all direct branch targets present, 23 transfer sites, zero native recovery credit.
+Recover 0c90c384 with its real callees; 8c605480 remains a static missing helper.
+Registry: 1,171 entries / 1,168 unique pairs; 1,098 matches in 10,875 frozen
+candidates. Audit: zero errors/stale reports; 211 nontexture binaries unindexed.
+Five generated artifacts reproduce exact bytes; repeated registration changes no
+registry/status bytes. Seven Python/four PowerShell syntax checks, default C
+syntax and 658 original dispatch pointer-load checks pass. Historical aggregate
+suite not rerun. Read DRAW_POLYGON_PRIMITIVES.txt for source paths and limits.
+Original model/motion data are preserved. Renderer/view/texture metadata remain
+supplied fixtures; natural initialization/loading and all playable ports are
+unfinished. Direct fixtures inherit DN=1; special/exception tests use the prior
+qualified probe path. Wider projected geometry lacks a second complete oracle.
+Overall remains 10% estimated weighted whole-project milestones; goal active
+on Sol High. Continue Sol High for overlay/dependency reverse engineering. Luna
+Low suits documentation-only work; no switch/pause is recommended. High-FPS/8K,
+SUPIR/display settings remain planned; Texture Off disables sampling and uses
+vertex/material colours when that setting is implemented.
+
+
+
+Current update (2026-10-17): original fading labels, text and quads
+Five first entries add 607 original rows (602 reachable) / 34 reachable conditional
+outcomes. A guarded 56-row existing matrix translation copy adds zero registration
+credit, preserving canonical source/proof and its narrow FPU entry contract.
+A bad position pointer exposed the old valid-RAM implementation crossing the
+modeled RAM boundary; the new original-instruction copy stops at the exact read
+with matching partial state. All 658 reachable family rows / 36 outcomes execute.
+Five retained glyph fallback rows and two impossible outcomes have checked byte/
+RAM arguments. Real point-output/header-layout alias fixtures cover text rechecks.
+Strict 109-source build and all 556 direct comparisons pass: 10,081 ordered
+entries, 478 independent cases / 855 checks, 2,475 flushes / 21,780 individually
+matched queue events (largest trace 352). No external game-service result injected.
+All 420 connected comparisons pass (408 retained plus 12 explicit label events):
+159,650 ordered entries, full reached/final machine/RAM, 400 independent state/
+stack/spring cases, 212 distance prefixes. The six-body family reaches 590 rows,
+including reused translation. Label/text/glyph/backdrop/selector run 238/12/60/12/24
+times; translation runs 5, 164. Explicit name/alpha/age/activation inputs are saved-
+state fixtures; natural name loading/event generation remains unproved.
+The old 226 label stops disappear. Baseline 408 now has 340 returns: 226 accepted
+object callbacks, 50 outer rejections, 64 direct services. Added 12 event cases all
+return too. Remaining first misses: 8c0409c0/5fde20/041c92, 16 each. Parent 489/911
+rows, 422 unexecuted, unregistered. Accepted callbacks do not prove whole frames.
+Queue totals 151,886 flushes / 1,670,638 counted events; 681,684 stored-prefix events
+match individually, 988,954 later events are counted only. Full reached/final
+packet RAM and queue/QACR/counters match. Baseline 408 queue totals are unchanged;
+extra 12 profiles add 12,552 flushes / 137,664 events including ordinary model
+geometry. Do not attribute the whole increase to text. No physical GPU proof.
+The shipped 22-name font list 0ca540d4 (records 0ca53fcc) has only runtime descriptor
+slots supplied. Texture names/attributes, original geometry/model/motion/templates
+are retained. View/matrix/renderer metadata remain supplied; natural loading and
+initialization, gameplay, high-FPS/8K and all playable ports remain unfinished.
+Next motion/draw family: 10 proposals / 834 byte-checked rows, all direct branch
+targets present, five further unregistered annotated targets. Read-only temporary
+8c5fdbec discovery was discarded; global indexes/old snapshots remain unchanged.
+These proposals receive zero native source credit pending behavior verification.
+Registry 1,176 entries / 1,173 unique pairs; 1,103 matches in 10,875 frozen candidates.
+Audit zero errors/stale reports; 211 nontexture binaries unindexed. Five generated
+artifacts reproduce exact bytes; repeated registration changes no registry/status
+bytes. Seven Python/five PowerShell syntax checks, default C syntax and 658 dispatch
+pointer-load checks pass. Historical aggregate suite not rerun. Old sources/DLLs/
+proofs remain accessible. Read DRAW_OVERLAY_FADE.txt for paths and exact limits.
+Overall remains 10% estimated weighted whole-project milestones; goal active on
+Sol High. Continue Sol High for motion/drawing reverse engineering. Luna Low suits
+documentation-only work; no switch/pause recommended. SUPIR/display settings remain
+planned; Texture Off will disable sampling and use vertex/material colours.
+

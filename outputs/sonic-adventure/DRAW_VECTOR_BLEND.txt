@@ -1,0 +1,144 @@
+Sonic Adventure Dreamcast Rev A - vector and integer-angle blending
+
+Overall estimate: 10%, weighted whole-project milestones rather than measured
+code coverage. Continuing on Sol High; full rendering/gameplay and playable ports
+remain unfinished. No model switch or goal pause is recommended.
+
+Two original straight-line helpers have been recovered as native static C:
+8c60a1f6 - two three-component binary32 vectors, 27 instructions, end 8c60a22c.
+8c60a250 - two signed 32-bit integer-angle triplets, 40 instructions, end 8c60a2a0.
+Names and roles are inferred from the original instructions and observed callers.
+Both take the interpolation weight in the active bank's FR4, source in R4 and
+output in R5. Each source contains a first triplet followed by a second triplet.
+Neither body has conditional branches or calls to missing game services.
+
+The code forms 1-t, rounds the first component's first product with FMUL, then
+adds the weighted second value with FMAC. The remaining components round the
+second product with FMUL, then add the weighted first value with FMAC. These
+orders can produce different binary32 results and are preserved. Later loads
+occur after earlier stores, so overlapping input/output buffers must retain the
+original sequential behavior. The integer helper additionally uses signed FLOAT
+conversion and FTRC truncation/range saturation; there is no shortest-arc angle
+adjustment or additional angle normalization/clamping in this body.
+
+Source and focused workflows in this project directory:
+source/sa_draw_vector_blend.c / source/sa_draw_vector_blend_connected.c
+source/sa_draw_angle_blend.c / source/sa_draw_angle_blend_connected.c
+recover_draw_vector_blend.py / connect_draw_vector_blend.py
+recover_draw_angle_blend.py / connect_draw_angle_blend.py
+build_draw_vector_blend.ps1 / build_draw_angle_blend.ps1
+verify_draw_vector_blend.py / verify_draw_angle_blend.py
+verify_overlay_draw_vector_blend.py / verify_overlay_draw_angle_blend.py
+register_draw_vector_blend.py / register_draw_angle_blend.py
+analysis/draw_vector_blend_translation.json
+analysis/draw_vector_blend_connection.json
+analysis/draw_vector_blend_verification.json
+analysis/overlay_draw_vector_blend_verification.json
+analysis/draw_angle_blend_translation.json
+analysis/draw_angle_blend_connection.json
+analysis/draw_angle_blend_verification.json
+analysis/overlay_draw_angle_blend_verification.json
+
+Strict optimized 118-source and 119-source native builds pass with warnings
+as errors and no standard library. Separate DLLs are retained under workspace
+work/sonic-adventure/build/draw_vector_blend.dll and draw_angle_blend.dll.
+The existing ten-argument public GBR/queue API is retained. Removing each new
+declaration/route and renaming the public symbol reproduces its prior bridge
+exactly. Old source, DLLs, APIs and proofs remain preserved. The inherited bounded
+hierarchy-stall research define remains; default non-research C syntax passes.
+
+Each helper passes 666 focused native/original-model comparisons: 651 returns,
+nine explicit numerical-mode/special-value guards, two memory guards and four
+floating-point traps. All 27 and 40 original instructions execute; there are no
+conditional edges in either body. Combined: 1,332 focused comparisons and 1,332
+ordered entries. All reached/final RAM, integer/FPU state, SR/PR/PC, FPUL/MACL,
+GBR and queue/cache state match. Neither helper generates queue events.
+
+Independent checks cover 644 cases / 3,864 assertions per helper: 1,288 cases /
+7,728 assertions combined. Exact rationals and nearest-even binary32 rounding
+preserve original arithmetic stages. The integer oracle separately interprets
+signed source words, rounds FLOAT, and truncates/saturates the result. Expected
+RAM is updated component by component under overlap. Output values, whole-RAM
+footprint, preserved leaf registers/stack and absence of queue traffic are checked;
+the integer helper additionally preserves the expected final FPUL/R2/R3 state.
+Signed zero is covered by exact original-state comparisons, not rational equality.
+
+Tests include both FPU banks, negative/interior/extrapolated weights, component
+rounding differences, 65535/0 and signed integer limits, eight output placements
+including seven source-relative overlaps, aliases 0c/8c/ac, invalid source/output
+pointers, numerical modes, special weights and 64 deterministic random cases.
+Each case also checks the new DLL's real 41-row renderer/GBR initializer against
+the original instructions, separately from helper instruction coverage.
+
+Original numerical/valid-RAM/MMU-off software-bus domains remain. Explicit guards
+and the exercised traps are not proof of every enabled exception, precision mode,
+physical SH-4 arithmetic bit, natural startup or physical GPU pixels. No missing
+game-service result is supplied. All incomplete parents remain unregistered.
+
+The vector stage passes all 108 original-model comparisons from the preceding
+angle-curve corpus: 60 unchanged returns and all 48 affected cases advance to
+8c60a250. The new vector helper executes 48 times across all 27 rows. There are
+38,412 ordered entry checks. Original model/motion/name/lookup records and real
+GBR/viewport preparation are preserved. The 108-case input/index mapping is
+retained; earlier larger 210/420 reports remain separate historical evidence.
+
+The integer-angle stage passes all 56 newly executed caller comparisons, with
+56 successful returns and no missing-service stop. All 48 previously blocked
+animation cases now finish the tested callback. This stage retests all 48 affected
+inputs plus four direct-service/bank pairs and four ordinary regressions. It is
+56 selected cases, not a full new 108-case run on the 119-source DLL. The other
+52 unaffected cases retain the separate freshly verified 118-source DLL evidence.
+Input records and the original 210-case source mapping are preserved explicitly.
+
+The integer helper executes 336 times across all 40 rows. There are 70,098
+ordered entry checks, 56 independent state/stack/spring cases and 48 distance
+prefixes. Original model/motion/name/lookup records and real native/original
+initialization/viewport preparation remain. No service result is fabricated.
+Preparation is counted separately: vector stage 774 GBR / 48 viewport stages;
+integer stage 722 GBR / 32 viewport stages, including focused helper cases.
+
+Vector-stage queues: 32,990 flushes / 337,426 events, with 114,688 individually
+compared prefix events and 222,738 later count-only events. Integer-stage queues:
+49,230 flushes / 540,526 events, with 196,608 individually compared prefix events
+and 343,918 later count-only events. Each invocation stores at most 4,096 events.
+All final RAM/queue/QACR/counters match. Neither new helper produces queue traffic;
+these are integrated software-rendering results, not physical GPU frames.
+
+The new 56-case subset reaches 393/911 draw-parent rows, 518 unexecuted. The
+preceding broader 108-case corpus reaches 527/911, 384 unexecuted. Different
+selected inputs account for this scope difference; no whole-parent recovery or
+behavior-loss conclusion follows. The full draw parent and remaining fifteen
+motion, three clipping and four geometry/view proposals stay unregistered.
+Bounded callback returns do not prove natural startup, full gameplay or a port.
+
+Both new helpers are registered once. Registry: 1,237 entries /
+1,234 unique module/address pairs; 1,129 matches in 10,875 frozen
+candidate indexes. Another 211 nontexture binaries remain unindexed, so the entire
+game's routine count remains unknown. Audit: zero evidence errors / stale source
+reports. Vector integration attaches zero-credit evidence to 105 existing entries;
+integer integration attaches it to 72 existing entries. No duplicate recovery
+credit is assigned. Both registration scripts are byte-idempotent.
+
+Ten generated artifacts reproduce exactly in memory. Focused Python/PowerShell
+and default C syntax checks pass, as do all 658 dispatcher pointer-load checks
+(80 spans / 83 selectors). The aggregate workflow is extended, not rerun; old
+source/API/DLL/proof files remain preserved.
+
+The next work is CLIPPING_CPU_STATE_PLAN.txt. A new byte-checked audit proves
+eight real SR.RB bank-selection masks (three clear / five set), with 2,104
+independent mask-arithmetic checks. This receives zero native recovery credit.
+The isolated 2,217-case signed-product kernel also remains unconnected. MACH,
+both integer banks, privilege/state semantics and real clipping callers require
+implementation and proof before the remaining primitive family can be credited.
+
+DLL SHA256 values:
+118-source vector stage: 819c81dbaf15b1c4c7639d7cb45a41edce1092f761c3f2627f472dfb4492453c
+119-source integer stage: 2b35b835020d181add4b1f4e11f437197f3dbf8bf368f607b29f1d7ad0de185f
+
+How to check: open this guide and the source/reports listed above. Reports record
+inputs, selection indices, per-case results and file hashes. Project status is
+PARTIALLY VERIFIED: both new helpers have complete qualified instruction proofs;
+the full game remains unfinished. Continue Sol High for clipping CPU-state work.
+Luna Low is suitable for documentation-only work. No model switch/pause is
+recommended. FPS/8K, SUPIR HD textures, true texture-Off vertex colours, display
+settings and all playable ports remain pending.

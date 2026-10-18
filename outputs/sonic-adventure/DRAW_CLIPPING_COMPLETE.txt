@@ -1,0 +1,119 @@
+Sonic Adventure Dreamcast Rev A - complete clipping and primitive family
+
+Overall estimate: 10%, weighted whole-project milestones, not code coverage.
+Goal remains active. Continue Sol High for reverse engineering. Luna Low is
+suitable for documentation work; no model switch or pause is recommended now.
+
+Seven complete native bodies are newly registered within the qualified domains:
+8c037ee0 - UV clipper, 131 rows / 6 conditional outcomes
+8c037ff4 - shared clipped polygon writer, 327 rows / 8 outcomes
+8c038516 - solid clipper, 160 rows / 6 outcomes
+8c038802 - environment clipper, 389 rows / 14 outcomes
+8c037ccc - UV primitive parent, 250 rows / 36 outcomes
+8c038668 - solid primitive parent, 196 rows / 34 outcomes
+8c0382ac - environment primitive parent, 286 rows / 34 outcomes
+Total: 1,739 original rows / 138 conditional outcomes, all executed and matched.
+Names are inferred. The writer 8c037ff4 is a tail continuation sharing its outer
+frame; its proof does not invent a standalone ordinary-call calling convention.
+
+What changed
+The earlier full C proposals now have complete-body and caller evidence. Their
+game C source did not need changes in this milestone. A separate strict optimized
+122-source DLL preserves the earlier DLLs, APIs, processor-state proofs and
+sources. The new verifier extends original-opcode comparisons with independent
+clipping geometry and real native primitive-parent calls. Registration requires
+all original rows/outcomes, source and binary hashes, complete-state comparisons,
+independent assertions and all seven actual entry invocations. Re-running the
+registrar cannot grant duplicate credit. The older prefix-only recorder still
+grants zero credit and leaves the registry alone after the later registrations.
+
+Build and verification
+build_draw_clipping_complete.ps1 builds work/sonic-adventure/build/
+draw_clipping_complete.dll with optimized strict warnings. Its SHA-256 is
+f591fb807d5ac0572a101b242e73f75d659bc172f7b47de5dada1a81d9ad6d23.
+verify_draw_clipping_complete.py passes 682 comparisons:
+618 normal returns; 32 numerical-domain guards; 23 host-memory guards;
+6 unprivileged SR stops; 3 enabled floating-point trap stops.
+No unresolved service (-2) or probe checkpoint (2) is accepted as a return.
+Status codes describe this scoped interface; guard/trap stops are not successful
+guest function completion or full hardware exception-vector delivery.
+
+Full RAM, GPRs, SR, PR, PC, both integer banks, MACH/MACL, FPU/FPUL, GBR,
+ordered entries, queue/cache events and counters match the original model.
+There are 1,926 ordered entry comparisons, 3,469 queue flushes and 31,369
+individually compared queue events; no count-only trace suffix in this corpus.
+One separate current-DLL renderer-initializer stage matches all 41 original rows.
+This is counted once, not once per subsequent prepared-input test.
+
+554 cases add 13,220 independent assertions, including 854 captured clipper
+invocations from real native helper/parent entry states. They check near-plane
+intersections, binary32 operation ordering, signed UVs, normal-matrix environment
+UVs, fixed-point colour/specular interpolation, packet order, cursor/flush counts,
+preserved state and whole direct-helper RAM footprints including scratch/stack.
+The parent fast paths have independent packet, counter and stack checks too.
+Input variation covers inside/outside/equality/negative-depth cases, odd/even
+strips, restarts, material overrides, two floating banks, nonidentity matrices,
+signed UV extremes, randomized colours, viewport/centre and 0c/ac RAM mirrors.
+
+The independent formula oracle initially exposed two assumptions in the test,
+which were corrected after original-instruction inspection: clipped environment
+UVs use the actual 127.5 literal before the original UV scale, and the environment
+parent retains strip counter one on its final exit. The original/native results
+already agreed; no game code was changed to fit the formulas. Boundary equality
+also retains the actual fixed packet ordering and untouched scratch-record reuse.
+The independent rational arithmetic treats signed zeros as numerically equal;
+the separate original-machine comparison remains bit-exact, including zero signs.
+
+Integer-bank setup
+The reference model uses two canonical physical banks; native code swaps the
+visible bank on actual SR transitions. Inactive registers start with varied
+nonzero values. None were read before being written on the tested privileged
+bank-1 paths. This is observed dynamic liveness, not an exhaustive static theorem
+or evidence that arbitrary untested entry state can be replaced with zeros.
+Normal geometry enters with MD=1, RB=1 and FPU enabled (SR.FD=0).
+
+Files in this project directory
+source/sa_draw_clipping_state.c - four complete bodies
+source/sa_draw_primitive_stream.c - three newly proved parents and prior helpers
+source/sa_draw_clipping_state_connected.c - explicit MACH/bank production chain
+source/sh4_integer_state.h and .c - processor-state operation layer
+build_draw_clipping_complete.ps1
+verify_draw_clipping_complete.py
+register_draw_clipping_complete.py
+analysis/draw_clipping_complete_verification.json - cases, coverage and hashes
+analysis/recovered_routines.json - seven new qualified registrations
+project_status.json - native_draw_clipping_complete progress
+DRAW_VECTOR_BLEND.txt - preceding completed angle interpolation task
+
+How to check without programming
+Open this document and SOURCE_HANDOFF.txt. The verification report begins with
+the seven routine inventories and includes cases_passed=682, rows_covered=1739,
+conditional_edges_covered=138 and empty missing_rows/missing_edges lists for every
+body. The source files above contain the recovered C. No playable game executable
+is produced by this milestone. The broad build_and_verify.ps1 has the new focused
+workflow but the entire historical aggregate was not rerun for this milestone.
+
+Registry audit: 1,244 entries / 1,241 unique module/address pairs; 1,136 match the
+10,875 frozen candidate snapshots. Zero evidence errors or stale source reports.
+211 nontexture binaries lack function indexes, so the whole-game count remains
+unknown. All 658 dispatcher pointer checks pass (80 entry spans / 83 selectors).
+Full-proof input hashes remain current after the inventory refresh. Registration
+is byte-idempotent. The earlier zero-credit recorder is compatible with the new
+registrations and also byte-idempotent. Python and PowerShell syntax checks pass.
+
+Remaining work and limits
+These are direct/primitive-parent tests with supplied projected caches,
+UV/normal records, viewport and QACR=12. Actual native parents build their helper
+inputs; this is not natural engine initialization from complete object/world data.
+There is no new full 108/56-case animation-callback replay on this DLL. Earlier
+angle/vector proofs retain their own DLL and corpus scopes.
+MMU-off coherent RAM/software queue, prior qualified floating arithmetic domains
+and explicit typed stops apply. Physical GPU, exception-vector delivery,
+interrupts/timing and all possible floating-point settings remain unproved.
+The local primitive/clipping proposals are now complete within those limits;
+15 older motion proposals, four geometry/view/boot proposals and the full
+AL_MAIN draw parent remain partial and receive no new credit.
+Next broaden actual object/model/camera callers through clipping and recover
+remaining geometry/renderer dependencies, then natural startup/frame execution.
+The full game, PC FPS/8K/display options, SUPIR HD pack, true vertex/material-colour
+texture Off, Android, stereo 3DS and later N64/PS1 demakes remain unfinished.

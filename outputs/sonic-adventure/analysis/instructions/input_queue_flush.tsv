@@ -1,0 +1,35 @@
+address	opcode	instruction	references
+8c65f7cc	d520	mov.l 0x8c65f850,r5	READ:8c65f850=8c8a83b4 
+8c65f7ce	4415	cmp/pl r4	
+8c65f7d0	903b	mov.w 0x8c65f84a,r0	READ:8c65f84a=7000fcc 
+8c65f7d2	6352	mov.l @r5,r3	READ:8c8a83b4 
+8c65f7d4	6103	mov r0,r1	
+8c65f7d6	710c	add #0xc,r1	
+8c65f7d8	6233	mov r3,r2	
+8c65f7da	312c	add r2,r1	
+8c65f7dc	6112	mov.l @r1,r1	
+8c65f7de	23e	mov.l @(r0,r3),r2	
+8c65f7e0	4108	shll2 r1	
+8c65f7e2	9733	mov.w 0x8c65f84c,r7	READ:8c65f84c=fd80700 
+8c65f7e4	321c	add r1,r2	
+8c65f7e6	326	mov.l r2,@(r0,r3)	
+8c65f7e8	6152	mov.l @r5,r1	READ:8c8a83b4 
+8c65f7ea	11e	mov.l @(r0,r1),r1	
+8c65f7ec	8f05	bf/s 0x8c65f7fa	CONDITIONAL_JUMP:8c65f7fa=62529028 
+8c65f7ee	e600	_mov #0x0,r6	
+8c65f7f0	7601	add #0x1,r6	
+8c65f7f2	2172	mov.l r7,@r1	
+8c65f7f4	3643	cmp/ge r4,r6	
+8c65f7f6	8ffb	bf/s 0x8c65f7f0	CONDITIONAL_JUMP:8c65f7f0=21727601 
+8c65f7f8	7104	_add #0x4,r1	
+8c65f7fa	9028	mov.w 0x8c65f84e,r0	READ:8c65f84e=83b40fd8 
+8c65f7fc	6252	mov.l @r5,r2	READ:8c8a83b4 
+8c65f7fe	246	mov.l r4,@(r0,r2)	
+8c65f800	7004	add #0x4,r0	
+8c65f802	6352	mov.l @r5,r3	READ:8c8a83b4 
+8c65f804	4408	shll2 r4	
+8c65f806	23e	mov.l @(r0,r3),r2	
+8c65f808	324c	add r4,r2	
+8c65f80a	326	mov.l r2,@(r0,r3)	
+8c65f80c	b	rts	
+8c65f80e	e000	_mov #0x0,r0	

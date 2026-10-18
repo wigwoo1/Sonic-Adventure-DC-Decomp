@@ -1,0 +1,29 @@
+{
+  "retail_binary_sha256": "45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a",
+  "source": "source/packet_global_setter.c",
+  "source_sha256": "d84d922c6864cb3faf20b872fe175d45805368d5c7d604812b7782e2624e804e",
+  "dll_sha256": "c2a44ca6da0a40752bf138eece5a02f41415fafa31967cf3ddaba29489266cdf",
+  "routines": [
+    {
+      "name": "packet_global_value_set",
+      "routine_start": "0x8c604510",
+      "routine_end_exclusive": "0x8c604516",
+      "cases_passed": 133,
+      "retail_instructions_executed": 399,
+      "scope": "Destination global write comparison for fixed edge values and 128 deterministic 32-bit values, including zero and all-ones.",
+      "retail_span_sha256": "c84fcfd244ac1a34366b5e42ab7379edd390d0800625deecbae8cae4f2808582"
+    },
+    {
+      "name": "packet_callback_reset",
+      "routine_start": "0x8c604546",
+      "routine_end_exclusive": "0x8c604568",
+      "cases_passed": 32,
+      "retail_instructions_executed": 528,
+      "scope": "Two global resets and optional callback dispatch comparison for null and three non-null targets, with eight prior callback-byte values.",
+      "retail_span_sha256": "b5de23ad61ab3d5e14a19ee0343ccb50480a67f2021eb7b68723aa5b6c0c592c"
+    }
+  ],
+  "limitations": [
+    "Callback dispatch is represented by a native resolver for SH-4 target addresses; unmapped-memory exceptions are outside these tests."
+  ]
+}

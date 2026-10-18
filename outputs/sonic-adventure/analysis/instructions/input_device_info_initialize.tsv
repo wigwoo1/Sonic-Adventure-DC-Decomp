@@ -1,0 +1,63 @@
+address	opcode	instruction	references
+8c6602d2	2fe6	mov.l r14,@-r15	DATA:Stack[-0x4] 
+8c6602d4	e61e	mov #0x1e,r6	
+8c6602d6	4f22	sts.l PR,@-r15	DATA:Stack[-0x8] 
+8c6602d8	6e43	mov r4,r14	
+8c6602da	b265	bsr 0x8c6607a8	UNCONDITIONAL_CALL:8c6607a8=e7004615 
+8c6602dc	e500	_mov #0x0,r5	
+8c6602de	62e3	mov r14,r2	
+8c6602e0	e46e	mov #0x6e,r4	
+8c6602e2	e015	mov #0x15,r0	
+8c6602e4	7214	add #0x14,r2	
+8c6602e6	e328	mov #0x28,r3	
+8c6602e8	2230	mov.b r3,@r2	
+8c6602ea	e36f	mov #0x6f,r3	
+8c6602ec	e44	mov.b r4,@(r0,r14)	
+8c6602ee	e016	mov #0x16,r0	
+8c6602f0	e34	mov.b r3,@(r0,r14)	
+8c6602f2	e017	mov #0x17,r0	
+8c6602f4	e44	mov.b r4,@(r0,r14)	
+8c6602f6	e018	mov #0x18,r0	
+8c6602f8	e365	mov #0x65,r3	
+8c6602fa	64e3	mov r14,r4	
+8c6602fc	e34	mov.b r3,@(r0,r14)	
+8c6602fe	e019	mov #0x19,r0	
+8c660300	e229	mov #0x29,r2	
+8c660302	741a	add #0x1a,r4	
+8c660304	e24	mov.b r2,@(r0,r14)	
+8c660306	e520	mov #0x20,r5	
+8c660308	63e3	mov r14,r3	
+8c66030a	2450	mov.b r5,@r4	
+8c66030c	7333	add #0x33,r3	
+8c66030e	7401	add #0x1,r4	
+8c660310	3432	cmp/hs r3,r4	
+8c660312	8bf9	bf 0x8c660308	CONDITIONAL_JUMP:8c660308=245063e3 
+8c660314	e033	mov #0x33,r0	
+8c660316	e300	mov #0x0,r3	
+8c660318	e34	mov.b r3,@(r0,r14)	
+8c66031a	6033	mov r3,r0	
+8c66031c	4f26	lds.l @r15+,PR	DATA:Stack[-0x8] 
+8c66031e	b	rts	
+8c660320	6ef6	_mov.l @r15+,r14	
+8c660322	d315	mov.l 0x8c660378,r3	READ:8c660378=8c6607f4 
+8c660324	4f22	sts.l PR,@-r15	DATA:Stack[-0x4] 
+8c660326	6032	mov.l @r3,r0	READ:8c6607f4=8c6607f8 
+8c660328	401b	tas.b @r0	READ_WRITE:8c6607f8=0 
+8c66032a	8907	bt 0x8c66033c	CONDITIONAL_JUMP:8c66033c=9b007 
+8c66032c	d214	mov.l 0x8c660380,r2	READ:8c660380=8c65f348 
+8c66032e	d113	mov.l 0x8c66037c,r1	READ:8c66037c=8c67249c 
+8c660330	420b	jsr @r2	COMPUTED_CALL:8c65f348=903dd223 
+8c660332	2f16	_mov.l r1,@-r15	DATA:8c67249c=462a2a2a DATA:Stack[-0x8] 
+8c660334	7f04	add #0x4,r15	
+8c660336	4f26	lds.l @r15+,PR	DATA:Stack[-0x4] 
+8c660338	b	rts	
+8c66033a	e0fe	_mov #-0x2,r0	
+8c66033c	b007	bsr 0x8c66034e	UNCONDITIONAL_CALL:8c66034e=7ffc4f22 
+8c66033e	9	_nop	
+8c660340	d30d	mov.l 0x8c660378,r3	READ:8c660378=8c6607f4 
+8c660342	e100	mov #0x0,r1	
+8c660344	6232	mov.l @r3,r2	READ:8c6607f4=8c6607f8 
+8c660346	2210	mov.b r1,@r2	WRITE:8c6607f8=0 
+8c660348	4f26	lds.l @r15+,PR	DATA:Stack[-0x4] 
+8c66034a	b	rts	
+8c66034c	9	_nop	

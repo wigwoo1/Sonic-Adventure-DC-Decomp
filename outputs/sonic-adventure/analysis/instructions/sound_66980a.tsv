@@ -1,0 +1,103 @@
+address	opcode	instruction	references
+8c66980a	4f22	sts.l PR,@-r15	DATA:Stack[-0x4] 
+8c66980c	7ffc	add #-0x4,r15	
+8c66980e	d348	mov.l 0x8c669930,r3	READ:8c669930=8c10eb1c 
+8c669810	d546	mov.l 0x8c66992c,r5	READ:8c66992c=8c6733a8 PARAM:8c6733a8=4d524f46 
+8c669812	2f42	mov.l r4,@r15	DATA:Stack[-0x8] 
+8c669814	430b	jsr @r3	COMPUTED_CALL:8c10eb1c=8f022668 
+8c669816	e604	_mov #0x4,r6	
+8c669818	2008	tst r0,r0	
+8c66981a	8b0b	bf 0x8c669834	CONDITIONAL_JUMP:8c669834=7f04e000 
+8c66981c	64f2	mov.l @r15,r4	DATA:Stack[-0x8] 
+8c66981e	e604	mov #0x4,r6	
+8c669820	d343	mov.l 0x8c669930,r3	READ:8c669930=8c10eb1c 
+8c669822	d544	mov.l 0x8c669934,r5	READ:8c669934=8c6733b0 PARAM:8c6733b0=46464941 
+8c669824	430b	jsr @r3	COMPUTED_CALL:8c10eb1c=8f022668 
+8c669826	7408	_add #0x8,r4	
+8c669828	2008	tst r0,r0	
+8c66982a	8b03	bf 0x8c669834	CONDITIONAL_JUMP:8c669834=7f04e000 
+8c66982c	7f04	add #0x4,r15	
+8c66982e	4f26	lds.l @r15+,PR	DATA:Stack[-0x4] 
+8c669830	b	rts	
+8c669832	e001	_mov #0x1,r0	
+8c669834	e000	mov #0x0,r0	
+8c669836	7f04	add #0x4,r15	
+8c669838	4f26	lds.l @r15+,PR	DATA:Stack[-0x4] 
+8c66983a	b	rts	
+8c66983c	9	_nop	
+8c66983e	4f22	sts.l PR,@-r15	DATA:Stack[-0x4] 
+8c669840	7fe4	add #-0x1c,r15	
+8c669842	9372	mov.w 0x8c66992a,r3	READ:8c66992a=33a81000 
+8c669844	1f44	mov.l r4,@(0x10,r15)	DATA:Stack[-0x10] 
+8c669846	3533	cmp/ge r3,r5	
+8c669848	1f65	mov.l r6,@(0x14,r15)	DATA:Stack[-0xc] 
+8c66984a	8d05	bt/s 0x8c669858	CONDITIONAL_JUMP:8c669858=720c62f3 
+8c66984c	1f76	_mov.l r7,@(0x18,r15)	DATA:Stack[-0x8] 
+8c66984e	51f5	mov.l @(0x14,r15),r1	DATA:Stack[-0xc] 
+8c669850	e200	mov #0x0,r2	
+8c669852	2121	mov.w r2,@r1	
+8c669854	a016	bra 0x8c669884	UNCONDITIONAL_JUMP:8c669884=4f267f1c 
+8c669856	9	_nop	
+8c669858	62f3	mov r15,r2	
+8c66985a	720c	add #0xc,r2	
+8c66985c	2f26	mov.l r2,@-r15	DATA:Stack[-0x24] 
+8c66985e	66f3	mov r15,r6	
+8c669860	65f3	mov r15,r5	
+8c669862	67f3	mov r15,r7	
+8c669864	7504	add #0x4,r5	
+8c669866	770c	add #0xc,r7	
+8c669868	7608	add #0x8,r6	
+8c66986a	be5d	bsr 0x8c669528	UNCONDITIONAL_CALL:8c669528=2fd62fe6 
+8c66986c	54f5	_mov.l @(0x14,r15),r4	DATA:Stack[-0x10] 
+8c66986e	6403	mov r0,r4	
+8c669870	2448	tst r4,r4	
+8c669872	8d07	bt/s 0x8c669884	CONDITIONAL_JUMP:8c669884=4f267f1c 
+8c669874	7f04	_add #0x4,r15	
+8c669876	53f4	mov.l @(0x10,r15),r3	DATA:Stack[-0x10] 
+8c669878	52f5	mov.l @(0x14,r15),r2	DATA:Stack[-0xc] 
+8c66987a	3438	sub r3,r4	
+8c66987c	2241	mov.w r4,@r2	
+8c66987e	644f	exts.w r4,r4	
+8c669880	4415	cmp/pl r4	
+8c669882	8903	bt 0x8c66988c	CONDITIONAL_JUMP:8c66988c=52fb63f2 
+8c669884	7f1c	add #0x1c,r15	
+8c669886	4f26	lds.l @r15+,PR	DATA:Stack[-0x4] 
+8c669888	b	rts	
+8c66988a	e0ff	_mov #-0x1,r0	
+8c66988c	63f2	mov.l @r15,r3	DATA:Stack[-0x20] 
+8c66988e	52fb	mov.l @(0x2c,r15),r2	DATA:Stack[0xc] 
+8c669890	2232	mov.l r3,@r2	
+8c669892	53f1	mov.l @(0x4,r15),r3	DATA:Stack[-0x1c] 
+8c669894	52fa	mov.l @(0x28,r15),r2	DATA:Stack[0x8] 
+8c669896	2230	mov.b r3,@r2	
+8c669898	53f2	mov.l @(0x8,r15),r3	DATA:Stack[-0x18] 
+8c66989a	52f8	mov.l @(0x20,r15),r2	DATA:Stack[0x0] 
+8c66989c	2230	mov.b r3,@r2	
+8c66989e	53f3	mov.l @(0xc,r15),r3	DATA:Stack[-0x14] 
+8c6698a0	52fc	mov.l @(0x30,r15),r2	DATA:Stack[0x10] 
+8c6698a2	2232	mov.l r3,@r2	
+8c6698a4	e3ff	mov #-0x1,r3	
+8c6698a6	52f6	mov.l @(0x18,r15),r2	DATA:Stack[-0x8] 
+8c6698a8	2230	mov.b r3,@r2	
+8c6698aa	53fa	mov.l @(0x28,r15),r3	DATA:Stack[0x8] 
+8c6698ac	52f9	mov.l @(0x24,r15),r2	DATA:Stack[0x4] 
+8c6698ae	6130	mov.b @r3,r1	
+8c6698b0	53f8	mov.l @(0x20,r15),r3	DATA:Stack[0x0] 
+8c6698b2	6330	mov.b @r3,r3	
+8c6698b4	213f	muls.w r3,r1	
+8c6698b6	11a	sts MACL,r1	
+8c6698b8	4111	cmp/pz r1	
+8c6698ba	8900	bt 0x8c6698be	CONDITIONAL_JUMP:8c6698be=41214121 
+8c6698bc	7107	add #0x7,r1	
+8c6698be	4121	shar r1	
+8c6698c0	4121	shar r1	
+8c6698c2	4121	shar r1	
+8c6698c4	2210	mov.b r1,@r2	
+8c6698c6	e301	mov #0x1,r3	
+8c6698c8	52fd	mov.l @(0x34,r15),r2	DATA:Stack[0x14] 
+8c6698ca	e000	mov #0x0,r0	
+8c6698cc	2232	mov.l r3,@r2	
+8c6698ce	7f1c	add #0x1c,r15	
+8c6698d0	4f26	lds.l @r15+,PR	DATA:Stack[-0x4] 
+8c6698d2	b	rts	
+8c6698d4	9	_nop	

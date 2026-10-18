@@ -1,0 +1,151 @@
+Signed texture-coordinate and lighting primitive family
+16 October 2026 — VERIFIED within the bounded scope below.
+Overall completion: 10% estimated weighted project milestones, not code coverage.
+Goal active. Continue Sol High with the lower UV/clipping helpers.
+
+Recovered source
+  8c618d18..8c6192e0: 708 original instruction rows
+  8c619310..8c619bf6: 1,067 original instruction rows
+  source/sa_main_dispatch_uv_lit_primitives.c
+  source/sa_main_dispatch_uv_lit_primitives_connected.c
+Both complete bodies are byte-checked static C translations, preserving original
+instruction order, delay slots and register effects, with no runtime instruction
+decoder. Descriptive names are inferred, not original developer symbols. Earlier
+source, pinned reports and original game files remain preserved.
+
+Behavior and data contract
+The primitive record contains topology at +0, count at +2, index-stream pointer
+at +4 and UV-stream pointer at +14 hexadecimal (+20 decimal). Topology masking
+selects triangles, quads, strips or the alternate helper. Each UV pair contains
+two signed 16-bit values, converted through FPUL/FLOAT and multiplied by the
+literal 1/256. Values outside 0..1 and negative values are preserved.
+
+For accepted vertices the code computes the existing lighting formula from the
+three normal words, global light vector and base. Each emitted packet is:
+  word 0: original vertex/strip-end control
+  words 1..3: projected x, y and reciprocal depth from the cache
+  words 4..5: signed U/256 and V/256
+  word 6: lighting factor
+  word 7: the selected queue's existing value, retained unchanged
+The eight-word acquisition header separately carries material data. These bodies
+do not multiply packet RGB as the earlier non-UV lighting family does, and they
+do not save the computed factor into the input cache's +1c field on tested
+ordinary paths. UV stream consumption continues across rejected primitives.
+Original counters, winding tests, queue movement and retained state are kept.
+
+The clipped body checks common clip flags and stages six signed UV words at
+8c890304 before calling its near helper. The source FLOAT/FTRC staging, R7
+argument and UV words are independently checked for triangle cases. Alternate
+dispatch saves/restores six other-bank FPU registers and loads light/base/scale
+parameters before delegation; all bank/stack effects match original execution.
+
+Three lower helpers remain explicit substitutes, not recovered native code:
+  8c611a14: UV-aware near-plane helper, reached at four parent call sites
+  8c61394a: plain alternate-strip helper
+  8c614f70: clipped alternate-strip helper
+Their fixtures alter scratch CPU/FPU state without generating geometry. Missing
+and failing service partial states are checked for each target. Twelve other
+primitive emitters also remain unfinished, for 15 pending primitive/lower targets.
+This count increases from 14 because two parents were replaced and their three
+previously hidden lower dependencies are now tracked.
+
+Build and tests actually passed
+- Strict Clang build: -O2 -Wall -Wextra -Werror; new separate linked DLL using
+  the existing portable lighting/queue backend, whose earlier source is intact.
+- 638 focused comparisons: 234 plain, 348 clipped, four draws, four particle
+  callbacks and 48 connected meshes. All 1,771 reachable instruction rows, 72
+  branch outcomes and six call sites reached. Four additional rows/two edges
+  are proven unreachable by byte-checked topology switches and exhaustive
+  enumeration of 65,536 input words per switch. All 1,775 rows remain in source.
+- Full 16 MiB RAM, GPRs/SR/PR, both FPU banks/FPSCR, FPUL/MACL and ordered call
+  boundaries match original execution, including matched partial state.
+- 792 boundary comparisons, 11,660 numerical operations, 736 queue transfers
+  and 7,520 ordered queue events checked against independent Python queues.
+- 456 cases complete successfully. Another 176 match unsupported numeric/
+  precision guards (-1); three missing-service cases return -2 and three
+  deliberately failing services return -17. Both banks, inherited precision/
+  width combinations and all four rounding-mode bit patterns are exercised.
+- 164 independent triangle/mesh cases check signed UV scaling including -32768,
+  32767 and negative values, lighting, every packet word, retained queue values,
+  counters/cursors, unchanged input factor slots and/or near-helper UV staging.
+  Two-triangle cases reverse the second triangle's winding so that UV consumption
+  past a rejected triangle is observable. Direct cases start on both queues.
+  Other quad/strip paths have complete original-code comparison and coverage;
+  no separate independent geometry oracle is claimed for all their outputs.
+
+Connected mesh coverage
+The 48 constructed meshes use real material setup, normal projection/
+classification, extended eight-word header acquisition, native UV/lit dispatch
+and finalization. Both FPU banks, winding signs, primary/secondary cursors and
+two queue offsets are covered. Sixteen ordinary meshes use the plain parent;
+sixteen with a partly outside-screen clip mask use the clipped parent without
+near delegation. Those 32 paths have no external geometry substitutes and
+independently check emitted packets/cursors, including rejected orientations.
+Sixteen mixed-near meshes check actual dispatch and independent UV arguments
+with the near-helper fixture explicit. They do not prove UV interpolation or
+clipped geometry. ENV bit 2 is clear to permit real classification.
+The suite reaches 184 external service boundaries in total, all explicit lower
+fixtures; this is not complete native renderer or visible-texture proof.
+
+Lifetime regression
+The new linked build passes 120 unchanged original-model particle lifetimes /
+984 stage comparisons: 23,264 boundaries, 104,016 numerical operations, 10,600
+queue transfers and 117,808 queue events, with zero external game services on
+those paths. Motion/timer, pause, deferred deletion, pool/heap and 46 translation
+cases remain checked. These original models do not reach the new UV family;
+the harness explicitly asserts that. Their results are regression evidence;
+focused/constructed cases provide new-body coverage. Host-selected scheduler
+ordering does not establish the full original frame driver.
+
+How to inspect or repeat
+Read this guide, source and saved evidence:
+  analysis/main_dispatch_uv_lit_primitives_translation.json
+  analysis/main_dispatch_uv_lit_primitives_verification.json
+  analysis/main_dispatch_uv_lit_primitives_lifecycle_verification.json
+From this output directory with the installed project Python:
+  python recover_main_dispatch_uv_lit_primitives.py
+  .\build_main_dispatch_uv_lit_primitives.ps1
+  python verify_main_dispatch_uv_lit_primitives.py
+  python verify_main_dispatch_uv_lit_primitives_lifecycle.py
+  python register_main_dispatch_uv_lit_primitives.py
+  python inventory_main_dispatch_uv_lower.py
+  python map_main_dispatch_cases.py
+  python verify_main_dispatch_case_map.py
+  python audit_recovery_coverage.py
+  python audit_project_completion.py
+The focused stages are included in build_and_verify.ps1. The full accumulated
+suite was not rerun. Rebuilding changes DLL timestamps/hashes, requiring fresh
+focused/lifetime reports before registration.
+
+Registry and next task
+1,061 entries / 1,058 unique module-address pairs; 1,009 match unchanged
+10,875-candidate snapshots, and 211 non-texture modules still lack function
+indexes. These incomplete inventories are not whole-game code coverage.
+Recover 8c611a14 first, then alternate helpers 8c61394a / 8c614f70, reusing the
+existing empty stub 8c611708. Read-only evidence checks 1,455 original rows:
+  8c611a14..8c611f24: 616 rows, no calls
+  8c61394a..8c613be2: 315 rows, calls existing empty stub
+  8c614f70..8c6153bc: 524 rows, calls stub and 8c611a14
+Evidence only, with zero new recovery credit for those helpers:
+  analysis/main-dispatch-uv-lower/
+  analysis/main_dispatch_uv_lower_inventory.json
+  ghidra/export_main_dispatch_uv_lower.ps1
+Draft pseudocode and call hints are analysis input. Enclosing spans can include
+literal pools and are not recovered-code byte counts.
+
+Limits
+Valid bounded RAM/index/UV streams and coherent-RAM/MMU-off queue destinations
+only. Inherited numeric/ABI guards and shared vector-oracle limits apply.
+Physical GPU FIFO, pixels/texture sampling, MMU-on/TLB, cache timing/faults,
+full frame driver, full decompilation/gameplay and playable ports remain
+unfinished. HD/display settings are still planned; Texture Off will disable
+sampling and use vertex colours/material fallback. Keep Sol High for the next
+floating-point clipping recovery; no model switch or goal pause is recommended.
+
+Final integrity: zero registry evidence errors and zero stale whole-source
+reports. Canonical source/translation regeneration reproduced saved hashes;
+registration reran with zero additions. Dispatcher verification passed 658
+original pointer-load checks across 80 spans and 83 selectors. New build/export
+and aggregate PowerShell scripts parsed; five new Python scripts parsed. Lower
+UV-helper original-byte inventory and all current proof hashes passed. The
+whole-project milestone score remains 10%; full goal active and unfinished.

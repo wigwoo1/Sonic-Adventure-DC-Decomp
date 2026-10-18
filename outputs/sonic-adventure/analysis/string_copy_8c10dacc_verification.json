@@ -1,0 +1,593 @@
+{
+  "module": "1ST_READ.BIN",
+  "load_address": "0x8c010000",
+  "address": "0x8c10dacc",
+  "end_exclusive": "0x8c10db16",
+  "retail_span_sha256": "386feb28dd2234873db29a15840a9f8418d5d91ea6b2eee2944f8a4426103611",
+  "source_sha256": "b72266bdda2e6a998bc301300b8ed2b5c01ec0c1315d15651789ff1413122b59",
+  "cases_passed": 64,
+  "comparison_level": "complete 16 MiB RAM and all GPR/SR/PR/PC state against the retail SH-4 interpreter",
+  "scope": "String-copy wrapper with aligned optimized helper and unaligned byte-copy paths, including visible stack writes and return state.",
+  "limitations": [
+    "Overlapping source and destination behavior is not characterized.",
+    "Differential verification uses the project SH-4 interpreter, not Dreamcast hardware or whole-game execution."
+  ],
+  "cases": [
+    {
+      "case": 0,
+      "string_length": 0,
+      "source": "0x8c700000",
+      "destination": "0x8c710000",
+      "source_alignment": 0,
+      "destination_alignment": 0,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 1,
+      "string_length": 1,
+      "source": "0x8c000001",
+      "destination": "0x8c001001",
+      "source_alignment": 1,
+      "destination_alignment": 1,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 2,
+      "string_length": 2,
+      "source": "0x8c10f002",
+      "destination": "0x8c10f402",
+      "source_alignment": 2,
+      "destination_alignment": 2,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 3,
+      "string_length": 3,
+      "source": "0x8c743003",
+      "destination": "0x8c783003",
+      "source_alignment": 3,
+      "destination_alignment": 3,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 4,
+      "string_length": 4,
+      "source": "0x8c744000",
+      "destination": "0x8c784001",
+      "source_alignment": 0,
+      "destination_alignment": 1,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 5,
+      "string_length": 5,
+      "source": "0x8c745001",
+      "destination": "0x8c785000",
+      "source_alignment": 1,
+      "destination_alignment": 0,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 6,
+      "string_length": 7,
+      "source": "0x8c746000",
+      "destination": "0x8c786002",
+      "source_alignment": 0,
+      "destination_alignment": 2,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 7,
+      "string_length": 8,
+      "source": "0x8c747003",
+      "destination": "0x8c787000",
+      "source_alignment": 3,
+      "destination_alignment": 0,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 8,
+      "string_length": 15,
+      "source": "0x8c748000",
+      "destination": "0x8c788000",
+      "source_alignment": 0,
+      "destination_alignment": 0,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 9,
+      "string_length": 16,
+      "source": "0x8c749001",
+      "destination": "0x8c789001",
+      "source_alignment": 1,
+      "destination_alignment": 1,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 10,
+      "string_length": 31,
+      "source": "0x8c74a002",
+      "destination": "0x8c78a002",
+      "source_alignment": 2,
+      "destination_alignment": 2,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 11,
+      "string_length": 32,
+      "source": "0x8c74b003",
+      "destination": "0x8c78b003",
+      "source_alignment": 3,
+      "destination_alignment": 3,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 12,
+      "string_length": 63,
+      "source": "0x8c74c000",
+      "destination": "0x8c78c001",
+      "source_alignment": 0,
+      "destination_alignment": 1,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 13,
+      "string_length": 64,
+      "source": "0x8c74d001",
+      "destination": "0x8c78d000",
+      "source_alignment": 1,
+      "destination_alignment": 0,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 14,
+      "string_length": 127,
+      "source": "0x8c74e000",
+      "destination": "0x8c78e002",
+      "source_alignment": 0,
+      "destination_alignment": 2,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 15,
+      "string_length": 255,
+      "source": "0x8c74f003",
+      "destination": "0x8c78f000",
+      "source_alignment": 3,
+      "destination_alignment": 0,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 16,
+      "string_length": 443,
+      "source": "0x8c750000",
+      "destination": "0x8c790000",
+      "source_alignment": 0,
+      "destination_alignment": 0,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 17,
+      "string_length": 308,
+      "source": "0x8c751001",
+      "destination": "0x8c791001",
+      "source_alignment": 1,
+      "destination_alignment": 1,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 18,
+      "string_length": 380,
+      "source": "0x8c752002",
+      "destination": "0x8c792002",
+      "source_alignment": 2,
+      "destination_alignment": 2,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 19,
+      "string_length": 206,
+      "source": "0x8c753003",
+      "destination": "0x8c793003",
+      "source_alignment": 3,
+      "destination_alignment": 3,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 20,
+      "string_length": 492,
+      "source": "0x8c754000",
+      "destination": "0x8c794001",
+      "source_alignment": 0,
+      "destination_alignment": 1,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 21,
+      "string_length": 280,
+      "source": "0x8c755001",
+      "destination": "0x8c795000",
+      "source_alignment": 1,
+      "destination_alignment": 0,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 22,
+      "string_length": 171,
+      "source": "0x8c756000",
+      "destination": "0x8c796002",
+      "source_alignment": 0,
+      "destination_alignment": 2,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 23,
+      "string_length": 348,
+      "source": "0x8c757003",
+      "destination": "0x8c797000",
+      "source_alignment": 3,
+      "destination_alignment": 0,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 24,
+      "string_length": 470,
+      "source": "0x8c758000",
+      "destination": "0x8c798000",
+      "source_alignment": 0,
+      "destination_alignment": 0,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 25,
+      "string_length": 344,
+      "source": "0x8c759001",
+      "destination": "0x8c799001",
+      "source_alignment": 1,
+      "destination_alignment": 1,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 26,
+      "string_length": 154,
+      "source": "0x8c75a002",
+      "destination": "0x8c79a002",
+      "source_alignment": 2,
+      "destination_alignment": 2,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 27,
+      "string_length": 164,
+      "source": "0x8c75b003",
+      "destination": "0x8c79b003",
+      "source_alignment": 3,
+      "destination_alignment": 3,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 28,
+      "string_length": 101,
+      "source": "0x8c75c000",
+      "destination": "0x8c79c001",
+      "source_alignment": 0,
+      "destination_alignment": 1,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 29,
+      "string_length": 81,
+      "source": "0x8c75d001",
+      "destination": "0x8c79d000",
+      "source_alignment": 1,
+      "destination_alignment": 0,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 30,
+      "string_length": 23,
+      "source": "0x8c75e000",
+      "destination": "0x8c79e002",
+      "source_alignment": 0,
+      "destination_alignment": 2,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 31,
+      "string_length": 314,
+      "source": "0x8c75f003",
+      "destination": "0x8c79f000",
+      "source_alignment": 3,
+      "destination_alignment": 0,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 32,
+      "string_length": 55,
+      "source": "0x8c760000",
+      "destination": "0x8c7a0000",
+      "source_alignment": 0,
+      "destination_alignment": 0,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 33,
+      "string_length": 43,
+      "source": "0x8c761001",
+      "destination": "0x8c7a1001",
+      "source_alignment": 1,
+      "destination_alignment": 1,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 34,
+      "string_length": 400,
+      "source": "0x8c762002",
+      "destination": "0x8c7a2002",
+      "source_alignment": 2,
+      "destination_alignment": 2,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 35,
+      "string_length": 129,
+      "source": "0x8c763003",
+      "destination": "0x8c7a3003",
+      "source_alignment": 3,
+      "destination_alignment": 3,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 36,
+      "string_length": 468,
+      "source": "0x8c764000",
+      "destination": "0x8c7a4001",
+      "source_alignment": 0,
+      "destination_alignment": 1,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 37,
+      "string_length": 94,
+      "source": "0x8c765001",
+      "destination": "0x8c7a5000",
+      "source_alignment": 1,
+      "destination_alignment": 0,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 38,
+      "string_length": 415,
+      "source": "0x8c766000",
+      "destination": "0x8c7a6002",
+      "source_alignment": 0,
+      "destination_alignment": 2,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 39,
+      "string_length": 6,
+      "source": "0x8c767003",
+      "destination": "0x8c7a7000",
+      "source_alignment": 3,
+      "destination_alignment": 0,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 40,
+      "string_length": 4,
+      "source": "0x8c768000",
+      "destination": "0x8c7a8000",
+      "source_alignment": 0,
+      "destination_alignment": 0,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 41,
+      "string_length": 174,
+      "source": "0x8c769001",
+      "destination": "0x8c7a9001",
+      "source_alignment": 1,
+      "destination_alignment": 1,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 42,
+      "string_length": 460,
+      "source": "0x8c76a002",
+      "destination": "0x8c7aa002",
+      "source_alignment": 2,
+      "destination_alignment": 2,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 43,
+      "string_length": 167,
+      "source": "0x8c76b003",
+      "destination": "0x8c7ab003",
+      "source_alignment": 3,
+      "destination_alignment": 3,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 44,
+      "string_length": 114,
+      "source": "0x8c76c000",
+      "destination": "0x8c7ac001",
+      "source_alignment": 0,
+      "destination_alignment": 1,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 45,
+      "string_length": 21,
+      "source": "0x8c76d001",
+      "destination": "0x8c7ad000",
+      "source_alignment": 1,
+      "destination_alignment": 0,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 46,
+      "string_length": 17,
+      "source": "0x8c76e000",
+      "destination": "0x8c7ae002",
+      "source_alignment": 0,
+      "destination_alignment": 2,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 47,
+      "string_length": 396,
+      "source": "0x8c76f003",
+      "destination": "0x8c7af000",
+      "source_alignment": 3,
+      "destination_alignment": 0,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 48,
+      "string_length": 103,
+      "source": "0x8c770000",
+      "destination": "0x8c7b0000",
+      "source_alignment": 0,
+      "destination_alignment": 0,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 49,
+      "string_length": 345,
+      "source": "0x8c771001",
+      "destination": "0x8c7b1001",
+      "source_alignment": 1,
+      "destination_alignment": 1,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 50,
+      "string_length": 433,
+      "source": "0x8c772002",
+      "destination": "0x8c7b2002",
+      "source_alignment": 2,
+      "destination_alignment": 2,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 51,
+      "string_length": 217,
+      "source": "0x8c773003",
+      "destination": "0x8c7b3003",
+      "source_alignment": 3,
+      "destination_alignment": 3,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 52,
+      "string_length": 67,
+      "source": "0x8c774000",
+      "destination": "0x8c7b4001",
+      "source_alignment": 0,
+      "destination_alignment": 1,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 53,
+      "string_length": 278,
+      "source": "0x8c775001",
+      "destination": "0x8c7b5000",
+      "source_alignment": 1,
+      "destination_alignment": 0,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 54,
+      "string_length": 248,
+      "source": "0x8c776000",
+      "destination": "0x8c7b6002",
+      "source_alignment": 0,
+      "destination_alignment": 2,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 55,
+      "string_length": 5,
+      "source": "0x8c777003",
+      "destination": "0x8c7b7000",
+      "source_alignment": 3,
+      "destination_alignment": 0,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 56,
+      "string_length": 70,
+      "source": "0x8c778000",
+      "destination": "0x8c7b8000",
+      "source_alignment": 0,
+      "destination_alignment": 0,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 57,
+      "string_length": 115,
+      "source": "0x8c779001",
+      "destination": "0x8c7b9001",
+      "source_alignment": 1,
+      "destination_alignment": 1,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 58,
+      "string_length": 116,
+      "source": "0x8c77a002",
+      "destination": "0x8c7ba002",
+      "source_alignment": 2,
+      "destination_alignment": 2,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 59,
+      "string_length": 214,
+      "source": "0x8c77b003",
+      "destination": "0x8c7bb003",
+      "source_alignment": 3,
+      "destination_alignment": 3,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 60,
+      "string_length": 310,
+      "source": "0x8c77c000",
+      "destination": "0x8c7bc001",
+      "source_alignment": 0,
+      "destination_alignment": 1,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 61,
+      "string_length": 378,
+      "source": "0x8c77d001",
+      "destination": "0x8c7bd000",
+      "source_alignment": 1,
+      "destination_alignment": 0,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 62,
+      "string_length": 477,
+      "source": "0x8c77e000",
+      "destination": "0x8c7be002",
+      "source_alignment": 0,
+      "destination_alignment": 2,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 63,
+      "string_length": 279,
+      "source": "0x8c77f003",
+      "destination": "0x8c7bf000",
+      "source_alignment": 3,
+      "destination_alignment": 0,
+      "ram_and_cpu_match": true
+    }
+  ]
+}

@@ -1,0 +1,144 @@
+Native animation formats, keyframe sampling and interpolation
+17 October 2026 - recovered helper bodies VERIFIED; original drawing PARTIAL.
+Overall completion: 10% estimated weighted whole-project milestones, not code coverage.
+Goal active on Sol High. No model switch or pause advised.
+
+What changed
+Fifteen original main-executable bodies now have guarded native C, totaling
+1,042 original instruction rows / 2,084 instruction bytes / 52 branch outcomes:
+  8c60d054: format-one callback, 32 rows.
+  8c60d094: format-two callback, 32 rows (the former original draw boundary).
+  8c60d0d4: format-three callback, 32 rows.
+  8c60d140: format-four callback, 32 rows.
+  8c60d180: mesh callback router/skip checks, 15 rows.
+  8c60d19e: alternate format-six/seven record router, 21 rows.
+  8c60d1c8: alternate format-eight record router, 21 rows.
+  8c60c322 / 8c60c3b8: position/scale samplers, 75 rows each.
+  8c60c488 / 8c60c526: angle samplers in two transform orders, 79 rows each.
+  8c60beb0 / 8c60bf5e: linear vector/integer-angle interpolation, 87/100 rows.
+  8c60c026 / 8c60c19c: cubic vector/integer-angle interpolation, 167/195 rows.
+Names describe inferred behavior. Each exported instruction is checked against
+1ST_READ.BIN. Ghidra used read-only temporary discovery, discarded all project
+changes, and preserved the frozen global function index. None of these fifteen
+entries appears in that old index; index-match totals do not measure this work.
+
+Source and reproducible workflow
+Source: source/sa_draw_motion_formats.c
+Bridge: source/sa_draw_motion_formats_connected.c
+Generator: recover_draw_motion_formats.py
+Connection generator: connect_draw_motion_formats.py
+Build: build_draw_motion_formats.ps1
+Focused verifier: verify_draw_motion_formats.py
+Original-model verifier: verify_overlay_draw_motion_formats.py
+Registration: register_draw_motion_formats.py
+Reports: analysis/draw_motion_formats_translation.json
+         analysis/draw_motion_formats_connection.json
+         analysis/draw_motion_formats_verification.json
+         analysis/overlay_draw_motion_formats_verification.json
+
+Original animation behavior
+Compact formats initialize the per-node pointer/count tables and channel index,
+call selected position/rotation/scale handlers in original order, and advance
+the animation record by its original stride. Base handlers do not consume a
+keyframe channel; animated handlers increment the channel index. Missing track
+pointers fall back to the original node's base transform. Alternate record
+routers use a distinct state block and callback slot; they are not equivalent
+to ordinary position/rotation/scale handlers.
+
+Animated samplers binary-search four-word keyframe records using the original
+integer comparisons and frame-to-integer conversion. The interpolation callback
+is selected by the original setup. Linear interpolation uses the current and
+wrapped-next records. Uniform Catmull-Rom cubic interpolation also uses wrapped
+previous and second-next records. Vector tracks store floats; angle tracks
+convert signed integer components to floats and truncate the final values back
+to integers. The original calculation order, fused multiply-add operations,
+FPU flags, wide transfers, banks, register effects and stack effects remain.
+
+Frame labels are unsigned. Their original conversion includes signed conversion
+and correction by 2^32, with separate rounding steps. The interpolation span
+selection uses the signed comparison of the wrapped frame-label difference.
+A nonpositive signed span selects the copied default 1.0, even when another
+conversion produces a large unsigned float. That behavior is retained rather
+than replaced by a conventional frame-count wrap interval. Existing native
+unsigned-remainder and original eight-byte copy dispatcher/tail are connected;
+their source is reused and receives no new recovery credit.
+
+Focused build and tests actually run
+A separate 37-source DLL passes Clang -O2 -Wall -Wextra -Werror without a C
+runtime. 400 comparisons against original instructions pass: 314 complete
+returns, two explicit motion-mesh boundaries, 48 unsupported modes, 28 guarded
+partial states and eight numerical traps. All 1,042 rows and all 52 branch
+outcomes execute; all 2,250 ordered native entries match the original trace.
+Full 16-MiB RAM, all integer registers, SR/PR/PC, both FPU banks/FPSCR,
+FPUL/MACL and reached stop states match.
+
+276 cases independently check exact dyadic linear/Catmull-Rom results, integer
+angle truncation, sample counters, record strides, mesh skip predicates or
+setup-to-format record advancement. This includes 32 sampled-transform argument
+boundaries. Cases cover all four key indices, wrapped neighbors, dyadic times,
+two banks, absent tracks, explicit/implicit matrices, transform order, unsigned
+high frame labels, wide/precision modes, rounding/enables and invalid spans.
+Normal valid-path cases explicitly require successful completion; matching two
+early errors does not count as proof of a normal path.
+
+Original initialized-model integration
+All 408 original-model/service-routing comparisons pass through the new DLL:
+344 caller cases and 64 direct routing cases. There are 130 complete returns
+(rejected draws/direct services), 258 expected missing-service stops, eight
+unsupported modes, eight RAM guards and four traps. All 8,698 ordered entries
+and full reached state match. 388 cases retain independent global/raw-state/
+stack/spring checks and 200 independently check distance accumulation.
+
+The format-two callback executes 304 times. Position and rotation samplers each
+execute 304 times, including absent-track fallback. The original linear vector
+and integer-angle interpolators each execute 152 times. These cases use shipped
+model/animation records reached through the native constructor, with supplied
+valid runtime renderer/position data and drawing/animation flags. They reach
+341 of the newly recovered instruction rows. Cubic interpolation is covered by
+the direct original-body tests, not claimed naturally reached by this caller.
+
+The former format-two stop is gone. First missing services now are:
+  8c621574: 152 cases (distinct motion mesh wrapper);
+  0c90c384: 38; existing but unwired 8c6215d6: 20;
+  8c0409c0: 16; 8c5fde20: 16; 8c041c92: 16.
+Parent coverage remains 421/911 rows, with 490 unexecuted and no parent recovery
+credit. Progress is within the newly connected callees, not extra parent rows.
+Fifteen first registry entries bring totals to 1,146 entries / 1,143 unique
+module/address pairs. Old snapshot matches remain 1,073 of 10,875 candidates;
+none of the fifteen new entries was in that frozen index. Counts are not code
+coverage or a whole-project completion percentage.
+Evidence audit found zero registry errors and zero stale source reports.
+Generators reproduce exact bytes and repeated registration adds no duplicates.
+Six Python/four PowerShell syntax checks and 658 retail dispatcher pointer-load
+checks pass. The historical aggregate test sequence was not rerun.
+
+Limits and next work
+The distinct motion-mesh body at 8c621574 and renderer 8c617c34 remain lower
+dependencies. The recovered 8c60d180 body only routes/checks the supplied mesh
+callback; it does not implement mesh output. Complete alternate record-router
+tests use the real native RTS/NOP callback at 8c611708 as supplied callback
+data. This proves record/control behavior, not the missing morph output.
+No external service result is fabricated or injected into the interpreter.
+
+The legacy native copy/remainder/state/matrix helpers retain valid-RAM and
+bounded ABI requirements. Scalar arithmetic comparisons use the original-code
+executor; independent dyadic curves use exact fractions. The matrix numerical
+reference shares the separately qualified pinned vector core. The exact dyadic
+curve oracle is not a universal hardware floating-point/exception proof.
+The larger AL_MAIN draw candidate remains incomplete and unregistered. Natural
+renderer/player setup, GPU pixels, whole scenes, frame scheduling, gameplay,
+high-FPS/8K/HD settings and playable ports remain unverified.
+Older source, DLLs and proof files are preserved because current evidence uses
+them. No old dependency is deleted merely because a newer bridge exists.
+Next wrapper 8c621574 and preprocessing body 8c617c34 have 278 byte-checked
+analysis rows in analysis/draw-motion-mesh, with zero recovery credit. Their
+inventory identifies already recovered lower mesh wrapper 8c6215ba. Recover
+the missing preprocessing and connect that existing wrapper with its actual
+ABI; do not replace the preprocessing with a direct static-mesh call.
+
+How to check without programming
+Open this report for the plain-language milestone. The JSON reports above list
+each tested input, totals and remaining boundaries. Recovered C and all build/
+verification scripts remain in the project folder. There is no playable game
+executable for this milestone. Continue Sol High for motion mesh rendering and
+the remaining draw/frame dependencies. Luna Low suits documentation-only work.

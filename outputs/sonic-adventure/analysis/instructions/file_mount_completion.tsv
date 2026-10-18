@@ -1,0 +1,12 @@
+address	opcode	instruction	references
+8c5ffcfe	2448	tst r4,r4	
+8c5ffd00	8906	bt 0x8c5ffd10	CONDITIONAL_JUMP:8c5ffd10=9000b 
+8c5ffd02	6342	mov.l @r4,r3	
+8c5ffd04	e202	mov #0x2,r2	
+8c5ffd06	3323	cmp/ge r2,r3	
+8c5ffd08	8b02	bf 0x8c5ffd10	CONDITIONAL_JUMP:8c5ffd10=9000b 
+8c5ffd0a	7410	add #0x10,r4	
+8c5ffd0c	6342	mov.l @r4,r3	
+8c5ffd0e	143b	mov.l r3,@(0x2c,r4)	
+8c5ffd10	b	rts	
+8c5ffd12	9	_nop	

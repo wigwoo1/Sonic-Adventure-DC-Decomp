@@ -1,0 +1,30 @@
+{
+  "cases_passed": 128,
+  "comparison_level": "Complete 16 MiB RAM and all GPRs, SR, PR, and return PC compared against the retail SH-4 interpreter.",
+  "scope": "The 14-byte routine at 0x8c04f786 zero-extends the low bytes in R4 and R5 and stores them as adjacent 16-bit words at 0x8c7493c2 and 0x8c7493c4; the second word store is in the RTS delay slot. Tests cover byte boundaries, discarded upper GPR bits, surrounding RAM guards, and varied CPU state.",
+  "limitations": [
+    "Uses the project SH-4 interpreter rather than Dreamcast hardware or end-to-end gameplay.",
+    "The global fields\u2019 higher-level meaning remains unidentified."
+  ],
+  "binary_sha256": "45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a",
+  "retail_span_sha256": "85dbbd5772d0717c7a83f55730ab5c3b7b80853ec4f88f62f8fbe856c1344c3e",
+  "literal_addresses": [
+    "0x8c04f804",
+    "0x8c04f808"
+  ],
+  "literal_values": [
+    "0x8c7493c2",
+    "0x8c7493c4"
+  ],
+  "source_sha256": "051d7d520e0794f4cb5c5422cf8e4004aa9879f7db08c809dc9ef5d0fe7fb259",
+  "routines": [
+    {
+      "module": "1ST_READ.BIN",
+      "load_address": "0x8c010000",
+      "address": "0x8c04f786",
+      "end_exclusive": "0x8c04f794",
+      "retail_span_sha256": "85dbbd5772d0717c7a83f55730ab5c3b7b80853ec4f88f62f8fbe856c1344c3e",
+      "cases_passed": 128
+    }
+  ]
+}

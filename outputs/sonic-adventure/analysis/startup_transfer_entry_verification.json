@@ -1,0 +1,73 @@
+{
+  "cases_passed": 6,
+  "routine_start": "0x8c011606",
+  "routine_end_exclusive": "0x8c01170e",
+  "instruction_bytes": 264,
+  "retail_span_sha256": "eeb9b6af776d82cf4bf58a9d4391ee2c3243eae7cd385d8415419cd3e685e789",
+  "source_sha256": "5a2623dba735c65dd0c773f74c194f7329142cf228b74a0a429c805b86c1095a",
+  "dll_sha256": "eb0051904dad98952132021bc68748bddb72777fc50f4686b2564a41d692b416",
+  "callback_targets": [
+    "0x8c6033e4",
+    "0x8c602f5c",
+    "0x8c603474",
+    "0x8c010fcc",
+    "0x8c603508",
+    "0x8c0887c8",
+    "0x8c088680"
+  ],
+  "cases": [
+    {
+      "case": 0,
+      "gate": 1,
+      "callback_count": 0,
+      "return": "0xfffffffd",
+      "retail_instructions_executed": 66,
+      "full_state_and_memory_match": true
+    },
+    {
+      "case": 1,
+      "gate": 0,
+      "callback_count": 4,
+      "return": "0xffffffff",
+      "retail_instructions_executed": 89,
+      "full_state_and_memory_match": true
+    },
+    {
+      "case": 2,
+      "gate": 0,
+      "callback_count": 5,
+      "return": "0xffffffff",
+      "retail_instructions_executed": 93,
+      "full_state_and_memory_match": true
+    },
+    {
+      "case": 3,
+      "gate": 0,
+      "callback_count": 9,
+      "return": "0xfffffffe",
+      "retail_instructions_executed": 116,
+      "full_state_and_memory_match": true
+    },
+    {
+      "case": 4,
+      "gate": 0,
+      "callback_count": 9,
+      "return": "0x0",
+      "retail_instructions_executed": 14326,
+      "full_state_and_memory_match": true
+    },
+    {
+      "case": 5,
+      "gate": 0,
+      "callback_count": 12,
+      "return": "0x0",
+      "retail_instructions_executed": 14338,
+      "full_state_and_memory_match": true
+    }
+  ],
+  "scope": "Complete 264-byte indexed body including embedded literals, with runtime paths compared over full 16 MiB RAM, all GPR/SR/PR/PC, stack frame, local identifier, both poll loops, helper/config/read/finalize boundaries, and the 3552-byte triple-copy success path.",
+  "limitations": [
+    "Services at 0x8c6033e4, 0x8c602f5c, 0x8c603474, 0x8c603508, 0x8c0887c8 and 0x8c088680 are deterministic modeled callbacks. The helper at 0x8c010fcc is independently recovered but is also intercepted as a boundary in this coordinator verifier.",
+    "The partial SH-4 interpreter validates retail instruction behavior on these scenarios; it is not a hardware or end-to-end game validation."
+  ]
+}

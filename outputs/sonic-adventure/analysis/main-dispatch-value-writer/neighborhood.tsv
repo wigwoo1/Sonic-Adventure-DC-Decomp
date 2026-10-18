@@ -1,0 +1,54 @@
+address	opcode	instruction	references
+8c07c298	4f22	sts.l PR,@-r15	DATA:Stack[-0x4] 
+8c07c29a	7ff0	add #-0x10,r15	
+8c07c29c	d340	mov.l 0x8c07c3a0,r3	READ:8c07c3a0=8c78c608 
+8c07c29e	2f40	mov.b r4,@r15	DATA:Stack[-0x14] 
+8c07c2a0	1f51	mov.l r5,@(0x4,r15)	DATA:Stack[-0x10] 
+8c07c2a2	67f0	mov.b @r15,r7	DATA:Stack[-0x14] 
+8c07c2a4	677c	extu.b r7,r7	
+8c07c2a6	4708	shll2 r7	
+8c07c2a8	373c	add r3,r7	
+8c07c2aa	1f73	mov.l r7,@(0xc,r15)	DATA:Stack[-0x8] 
+8c07c2ac	6772	mov.l @r7,r7	DATA:8c78c608 
+8c07c2ae	1f72	mov.l r7,@(0x8,r15)	DATA:Stack[-0xc] 
+8c07c2b0	55f2	mov.l @(0x8,r15),r5	DATA:Stack[-0xc] 
+8c07c2b2	56f1	mov.l @(0x4,r15),r6	DATA:Stack[-0x10] 
+8c07c2b4	5555	mov.l @(0x14,r5),r5	
+8c07c2b6	5777	mov.l @(0x1c,r7),r7	
+8c07c2b8	b38b	bsr 0x8c07c9d2	UNCONDITIONAL_CALL:8c07c9d2=644c7ffc 
+8c07c2ba	64f0	_mov.b @r15,r4	DATA:Stack[-0x14] 
+8c07c2bc	53f3	mov.l @(0xc,r15),r3	DATA:Stack[-0x8] 
+8c07c2be	e024	mov #0x24,r0	
+8c07c2c0	6232	mov.l @r3,r2	DATA:8c78c608 
+8c07c2c2	e300	mov #0x0,r3	
+8c07c2c4	512f	mov.l @(0x3c,r2),r1	
+8c07c2c6	134	mov.b r3,@(r0,r1)	
+8c07c2c8	7f10	add #0x10,r15	
+8c07c2ca	4f26	lds.l @r15+,PR	DATA:Stack[-0x4] 
+8c07c2cc	b	rts	
+8c07c2ce	9	_nop	
+8c07c2d0	d033	mov.l 0x8c07c3a0,r0	READ:8c07c3a0=8c78c608 
+8c07c2d2	644c	extu.b r4,r4	
+8c07c2d4	4408	shll2 r4	
+8c07c2d6	34e	mov.l @(r0,r4),r3	DATA:8c78c608 
+8c07c2d8	e024	mov #0x24,r0	
+8c07c2da	e100	mov #0x0,r1	
+8c07c2dc	523f	mov.l @(0x3c,r3),r2	
+8c07c2de	b	rts	
+8c07c2e0	214	_mov.b r1,@(r0,r2)	
+8c07c2e2	d32f	mov.l 0x8c07c3a0,r3	READ:8c07c3a0=8c78c608 
+8c07c2e4	674c	extu.b r4,r7	
+8c07c2e6	4708	shll2 r7	
+8c07c2e8	373c	add r3,r7	
+8c07c2ea	6272	mov.l @r7,r2	DATA:8c78c608 
+8c07c2ec	2228	tst r2,r2	
+8c07c2ee	8911	bt 0x8c07c314	CONDITIONAL_JUMP:8c07c314=9000b 
+8c07c2f0	6472	mov.l @r7,r4	DATA:8c78c608 
+8c07c2f2	e003	mov #0x3,r0	
+8c07c2f4	2668	tst r6,r6	
+8c07c2f6	544f	mov.l @(0x3c,r4),r4	
+8c07c2f8	8044	mov.b r0,@(0x4,r4)	
+8c07c2fa	8d0b	bt/s 0x8c07c314	CONDITIONAL_JUMP:8c07c314=9000b 
+8c07c2fc	1458	_mov.l r5,@(0x20,r4)	
+8c07c2fe	f368	fmov.s @r6,fr3	
+8c07c300	e014	mov #0x14,r0	

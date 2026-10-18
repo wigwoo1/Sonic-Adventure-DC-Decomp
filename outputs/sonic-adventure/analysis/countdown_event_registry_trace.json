@@ -1,0 +1,38 @@
+{
+  "binary_sha256": "45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a",
+  "direct_binary_checks_passed": 9,
+  "event_registry": "0x8c64594c",
+  "registry_records": "0x8c892840",
+  "event_heads": "0x8c893840",
+  "record_bytes": 16,
+  "occupied_bit": "0x80000000",
+  "event_900_special_case": {
+    "service": "0x8c64135a",
+    "installed_callback": "0x8c645b1e",
+    "callback_index": 1,
+    "context_global": "0x8c67c004",
+    "callback_table_offset": "0x230",
+    "entry_bytes": 8
+  },
+  "observations": [
+    "Registration scans priority-ordered event chain and reserves an unused record.",
+    "Event 0x900 equals the special-case threshold; it calls service 0x8c64135a rather than writing the generic VBR dispatch entry.",
+    "Service 0x8c64135a invokes 0x8c658c20 then registers slot 1 using 0x8c6412c2.",
+    "Callback-table updates mask interrupts via SR before changing entries."
+  ],
+  "next_dependencies": [
+    "0x8c645b1e callback instructions (currently not a seeded function)",
+    "Writers/readers of context global 0x8c67c004",
+    "Driver invoking context callback slot 1"
+  ],
+  "limitations": [
+    "Driver event identity and cadence remain unproven.",
+    "No recovered registry source or native frame timing implementation."
+  ],
+  "evidence": [
+    "analysis/instructions/8c64594c.tsv",
+    "analysis/instructions/8c645c54.tsv",
+    "analysis/instructions/8c64135a.tsv",
+    "analysis/instructions/8c6412c2.tsv"
+  ]
+}

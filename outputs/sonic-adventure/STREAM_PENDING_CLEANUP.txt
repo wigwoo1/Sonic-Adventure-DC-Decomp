@@ -1,0 +1,56 @@
+Pending stream cleanup recovery
+===============================
+
+Whole-project weighted milestone score: 10%. The native game and later ports
+remain unfinished; this score is not measured code coverage.
+
+Recovered caller
+----------------
+source/sa_sound_stream_pending_cleanup_8c65bf60.c implements the original
+68-byte routine at 0x8c65bf60. It sets the stream record's +1 state byte to 1.
+When the +2 byte is exactly 1 and its +8 request pointer is nonzero, it reads
+the timer, invokes the request-abort service, reads the timer again, stores
+the wrapping elapsed difference at 0x8c67c1f0, and clears the +2 byte.
+
+The clock at 0x8c60260e and subtraction at 0x8c602618 are linked recovered
+native implementations. The abort at 0x8c6013d2 remains an explicit supplied
+service. The verifier runs that service's retail instructions in the SH-4
+interpreter, so this work does not claim native recovery of the abort routine.
+
+The host API returns zero on completion. It returns minus one for retargeted
+literal slots, or minus two if cleanup needs an absent timer/abort service.
+These checks reject before mutating memory or CPU state. This host result is
+separate from the original game's register state. A read-only observer can
+inspect service-entry CPU/RAM for verification.
+
+Verified scope
+--------------
+96 cases compared complete 16 MiB RAM and GPR/SR/PR/PC at return. They also
+compared 160 service-entry snapshots and 80 ordered MMIO timer reads.
+
+Scenarios include both RAM aliases, random untouched record/stack bytes,
+pending flags 0/1/2/255, null requests, inactive and signed-active status words,
+nonwaiting abort modes, and driver-owner rejection for request modes 2/4.
+Timer samples include rollover boundaries. Four host rejection tests verify
+unchanged RAM and CPU state for missing services and unsupported targets.
+
+Not verified here: the abort service's matching-driver device waits, timeout
+loops, and hardware I/O paths; complete stream closing; or whole-game execution.
+The subsequent STREAM_CLEANUP_ABORT_CONNECTED.txt guide documents native abort
+connected to this caller, with its wait/timeout paths tested using device and
+finalizer fixtures. Full device behavior remains unfinished.
+
+How to run
+----------
+Open PowerShell in outputs/sonic-adventure and run:
+
+  .\build_sound_stream_pending_cleanup_8c65bf60.ps1
+  & 'C:\Users\wigwo\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe' .\verify_sound_stream_pending_cleanup_8c65bf60.py
+
+Expected result:
+  96 cleanup cases, 160 service entries, 80 timer reads, and 4 host rejections passed
+
+Evidence: analysis/sound_stream_pending_cleanup_8c65bf60_verification.json
+Source, DLL, binary, interpreter, and verifier hashes accompany the report.
+Build, verifier, and hash-checked registration are in build_and_verify.ps1.
+The full accumulated project suite was not run for this milestone.

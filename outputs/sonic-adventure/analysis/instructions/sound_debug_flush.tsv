@@ -1,0 +1,17 @@
+address	opcode	instruction	references
+8c65a33e	d30a	mov.l 0x8c65a368,r3	
+8c65a340	2fe6	mov.l r14,@-r15	
+8c65a342	4f22	sts.l PR,@-r15	
+8c65a344	6e32	mov.l @r3,r14	
+8c65a346	2ee8	tst r14,r14	
+8c65a348	8905	bt 0x8c65a356	
+8c65a34a	d108	mov.l 0x8c65a36c,r1	
+8c65a34c	6012	mov.l @r1,r0	
+8c65a34e	8801	cmp/eq #0x1,r0	
+8c65a350	8b01	bf 0x8c65a356	
+8c65a352	4e0b	jsr @r14	
+8c65a354	9	nop	
+8c65a356	4f26	lds.l @r15+,PR	
+8c65a358	e000	mov #0x0,r0	
+8c65a35a	b	rts	
+8c65a35c	6ef6	mov.l @r15+,r14	

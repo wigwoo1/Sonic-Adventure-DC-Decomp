@@ -1,0 +1,10 @@
+from pathlib import Path
+root=Path(__file__).resolve().parent
+text=(root/'verify_magic_update_retail_pipeline.py').read_text()
+text=text.replace("result_get=extra('file_decode_result_get.dll','sa_file_decode_result_get')", "result_get=extra('file_decode_result_get.dll','sa_file_decode_result_get')\ncompact=extra('sound_stream_stereo_compact.dll','sa_sound_stream_stereo_compact')\nsample_copy=extra('sound_stream_sample_copy.dll','sa_sound_stream_sample_copy')")
+text=text.replace("struct.pack_into('<I',ram,0xa70040,512)", "struct.pack_into('<I',ram,0xa70040,128);struct.pack_into('<I',ram,0xa70044,65536)")
+text=text.replace('0x8c644c7e:ack}.get(address)', '0x8c644c7e:ack,0x8c66792c:compact,0x8c667900:sample_copy}.get(address)')
+text=text.replace("assert native[destination:destination+len(samples)*2]==struct.pack('<'+'H'*len(samples),*samples)", "compacted=samples[128:]+samples[128:]\n        assert native[destination:destination+len(samples)*2]==struct.pack('<'+'H'*len(compacted),*compacted)")
+text=text.replace('magic_update_retail_pipeline_verification.json','magic_update_retail_compaction_verification.json').replace('completion count update and acknowledgment comparisons','completion count update, native stereo compaction and acknowledgment comparisons').replace('checks every sample/final history','checks every decoded sample after independent128-sample compaction/final history').replace('native retail audio update comparisons passed','native retail audio compaction update comparisons passed')
+(root/'verify_magic_update_retail_compaction.py').write_text(text)
+text=(root/'register_magic_update_retail_pipeline.py').read_text().replace('magic_update_retail_pipeline','magic_update_retail_compaction').replace("'sa_file_decode_completion_acknowledge'}", "'sa_file_decode_completion_acknowledge','sa_sound_stream_stereo_compact','sa_sound_stream_sample_copy'}").replace('Native retail audio update pipeline:','Native retail audio compaction update:');(root/'register_magic_update_retail_compaction.py').write_text(text)

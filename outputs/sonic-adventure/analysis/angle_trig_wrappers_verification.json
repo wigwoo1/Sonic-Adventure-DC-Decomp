@@ -1,0 +1,38 @@
+{
+  "cases_passed": 131792,
+  "callback_comparisons_passed": 720,
+  "native_fsca_cases_passed": 131072,
+  "numeric_phase_values_exhaustive": 65536,
+  "retail_instructions": 9,
+  "routines": [
+    {
+      "name": "sa_cosine_phase_8c63a970",
+      "module": "1ST_READ.BIN",
+      "load_address": "0x8c010000",
+      "address": "0x8c63a970",
+      "end_exclusive": "0x8c63a97a",
+      "span_bytes": 10,
+      "retail_span_sha256": "ff8114c3e2f428eebf08bec61e73ab6b4be3e828646c029443256d5b3533e891"
+    },
+    {
+      "name": "sa_sincos_phase_8c63a9b8",
+      "module": "1ST_READ.BIN",
+      "load_address": "0x8c010000",
+      "address": "0x8c63a9b8",
+      "end_exclusive": "0x8c63a9c0",
+      "span_bytes": 8,
+      "retail_span_sha256": "7649d8856eaea978ff83abe507bb62810926e7a57a800edc835e1b6214b49f8c"
+    }
+  ],
+  "binary_sha256": "45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a",
+  "source_sha256": "da50d49a6fca05400bf7f31998aed4a3a0da86731e9616e40908c5c95ee6ac1d",
+  "dll_sha256": "3a225757000497709c9afff326a56890433a14412d934eb00f5324bb475cb250",
+  "primary_source": "https://www.renesas.com/en/document/mas/sh-4",
+  "manual_revision": "6.00",
+  "comparison_level": "For named wrappers, all 16 GPRs, SR, PR, PC, FPUL, complete FPU banks and FPSCR are checked. Both named routines are tested for all 65,536 phases; outputs satisfy the SH-4 FSCA absolute-error bound against the mathematical result. Callback integration tests retain injected FSCA values.",
+  "scope": "Two whole retail entry spans: unsigned16 phase masking, LDS FPUL, FSCA result and inexact status, RTS return PC, and cosine FR1-to-FR0 delay behavior. Full phase-space tests vary FR bank, SZ and RM; PR=1 and enabled-inexact cases exercise explicit unsupported/trap statuses.",
+  "limitations": [
+    "The implementation uses a software polynomial meeting the documented FSCA error bound; bit-exact SH7091 hardware output has not been measured.",
+    "Enabled inexact and PR=1 exception vector dispatch is not implemented; these cases return explicit status while preserving destination registers."
+  ]
+}

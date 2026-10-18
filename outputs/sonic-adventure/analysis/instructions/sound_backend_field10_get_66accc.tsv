@@ -1,0 +1,105 @@
+address	opcode	instruction	references
+8c66accc	2fe6	mov.l r14,@-r15	DATA:Stack[-0x4] 
+8c66acce	2fd6	mov.l r13,@-r15	DATA:Stack[-0x8] 
+8c66acd0	2fc6	mov.l r12,@-r15	DATA:Stack[-0xc] 
+8c66acd2	2fb6	mov.l r11,@-r15	DATA:Stack[-0x10] 
+8c66acd4	4f22	sts.l PR,@-r15	DATA:Stack[-0x14] 
+8c66acd6	7fec	add #-0x14,r15	
+8c66acd8	d331	mov.l 0x8c66ada0,r3	READ:8c66ada0=8c67c1d0 
+8c66acda	6053	mov r5,r0	
+8c66acdc	80f4	mov.b r0,@(0x4,r15)	DATA:Stack[-0x24] 
+8c66acde	1f62	mov.l r6,@(0x8,r15)	DATA:Stack[-0x20] 
+8c66ace0	6d32	mov.l @r3,r13	READ:8c67c1d0=0 
+8c66ace2	2dd8	tst r13,r13	
+8c66ace4	8f03	bf/s 0x8c66acee	CONDITIONAL_JUMP:8c66acee=8b022448 
+8c66ace6	ee00	_mov #0x0,r14	
+8c66ace8	de2e	mov.l 0x8c66ada4,r14	READ:8c66ada4=d000001 
+8c66acea	a048	bra 0x8c66ad7e	UNCONDITIONAL_JUMP:8c66ad7e=89032ee8 
+8c66acec	9	_nop	
+8c66acee	2448	tst r4,r4	
+8c66acf0	8b02	bf 0x8c66acf8	CONDITIONAL_JUMP:8c66acf8=222852f2 
+8c66acf2	de2d	mov.l 0x8c66ada8,r14	READ:8c66ada8=7000103 
+8c66acf4	a043	bra 0x8c66ad7e	UNCONDITIONAL_JUMP:8c66ad7e=89032ee8 
+8c66acf6	9	_nop	
+8c66acf8	52f2	mov.l @(0x8,r15),r2	DATA:Stack[-0x20] 
+8c66acfa	2228	tst r2,r2	
+8c66acfc	8b02	bf 0x8c66ad04	CONDITIONAL_JUMP:8c66ad04=e32c8441 
+8c66acfe	de2b	mov.l 0x8c66adac,r14	READ:8c66adac=7000203 
+8c66ad00	a03d	bra 0x8c66ad7e	UNCONDITIONAL_JUMP:8c66ad7e=89032ee8 
+8c66ad02	9	_nop	
+8c66ad04	8441	mov.b @(0x1,r4),r0	
+8c66ad06	e32c	mov #0x2c,r3	
+8c66ad08	9247	mov.w 0x8c66ad9a,r2	READ:8c66ad9a=1b800a8 
+8c66ad0a	65f3	mov r15,r5	
+8c66ad0c	6b03	mov r0,r11	
+8c66ad0e	6cbe	exts.b r11,r12	
+8c66ad10	2c3f	muls.w r3,r12	
+8c66ad12	9043	mov.w 0x8c66ad9c,r0	READ:8c66ad9c=40001b8 
+8c66ad14	32dc	add r13,r2	
+8c66ad16	6bbe	exts.b r11,r11	
+8c66ad18	d325	mov.l 0x8c66adb0,r3	READ:8c66adb0=8c667150 
+8c66ad1a	4de	mov.l @(r0,r13),r4	
+8c66ad1c	4b08	shll2 r11	
+8c66ad1e	c1a	sts MACL,r12	
+8c66ad20	84f4	mov.b @(0x4,r15),r0	DATA:Stack[-0x24] 
+8c66ad22	4b08	shll2 r11	
+8c66ad24	4b08	shll2 r11	
+8c66ad26	3c2c	add r2,r12	
+8c66ad28	9239	mov.w 0x8c66ad9e,r2	READ:8c66ad9e=c1d00400 
+8c66ad2a	4008	shll2 r0	
+8c66ad2c	4008	shll2 r0	
+8c66ad2e	342c	add r2,r4	
+8c66ad30	4000	shll r0	
+8c66ad32	34bc	add r11,r4	
+8c66ad34	340c	add r0,r4	
+8c66ad36	430b	jsr @r3	COMPUTED_CALL:8c667150=7ffc4f22 
+8c66ad38	7418	_add #0x18,r4	
+8c66ad3a	65c3	mov r12,r5	
+8c66ad3c	84f4	mov.b @(0x4,r15),r0	DATA:Stack[-0x24] 
+8c66ad3e	d31e	mov.l 0x8c66adb8,r3	READ:8c66adb8=8c65a900 
+8c66ad40	66f3	mov r15,r6	
+8c66ad42	d41c	mov.l 0x8c66adb4,r4	READ:8c66adb4=52535053 
+8c66ad44	67f3	mov r15,r7	
+8c66ad46	7710	add #0x10,r7	
+8c66ad48	760c	add #0xc,r6	
+8c66ad4a	7507	add #0x7,r5	
+8c66ad4c	430b	jsr @r3	COMPUTED_CALL:8c65a900=2fd62fe6 
+8c66ad4e	55c	_mov.b @(r0,r5),r5	
+8c66ad50	60c2	mov.l @r12,r0	
+8c66ad52	8801	cmp/eq #0x1,r0	
+8c66ad54	8905	bt 0x8c66ad62	CONDITIONAL_JUMP:8c66ad62=623363f2 
+8c66ad56	8800	cmp/eq #0x0,r0	
+8c66ad58	890e	bt 0x8c66ad78	CONDITIONAL_JUMP:8c66ad78=53f262f2 
+8c66ad5a	8802	cmp/eq #0x2,r0	
+8c66ad5c	8906	bt 0x8c66ad6c	CONDITIONAL_JUMP:8c66ad6c=e30061f2 
+8c66ad5e	a00b	bra 0x8c66ad78	UNCONDITIONAL_JUMP:8c66ad78=53f262f2 
+8c66ad60	9	_nop	
+8c66ad62	63f2	mov.l @r15,r3	DATA:Stack[-0x28] 
+8c66ad64	6233	mov r3,r2	
+8c66ad66	323c	add r3,r2	
+8c66ad68	a006	bra 0x8c66ad78	UNCONDITIONAL_JUMP:8c66ad78=53f262f2 
+8c66ad6a	2f22	_mov.l r2,@r15	DATA:Stack[-0x28] 
+8c66ad6c	61f2	mov.l @r15,r1	DATA:Stack[-0x28] 
+8c66ad6e	e300	mov #0x0,r3	
+8c66ad70	3317	cmp/gt r1,r3	
+8c66ad72	313e	addc r3,r1	
+8c66ad74	4121	shar r1	
+8c66ad76	2f12	mov.l r1,@r15	DATA:Stack[-0x28] 
+8c66ad78	62f2	mov.l @r15,r2	DATA:Stack[-0x28] 
+8c66ad7a	53f2	mov.l @(0x8,r15),r3	DATA:Stack[-0x20] 
+8c66ad7c	2322	mov.l r2,@r3	
+8c66ad7e	2ee8	tst r14,r14	
+8c66ad80	8903	bt 0x8c66ad8a	CONDITIONAL_JUMP:8c66ad8a=7f1460e3 
+8c66ad82	d20f	mov.l 0x8c66adc0,r2	READ:8c66adc0=8c65acac 
+8c66ad84	d40d	mov.l 0x8c66adbc,r4	READ:8c66adbc=8c66accc PARAM:8c66accc=2fd62fe6 
+8c66ad86	420b	jsr @r2	COMPUTED_CALL:8c65acac=d203d302 
+8c66ad88	65e3	_mov r14,r5	
+8c66ad8a	60e3	mov r14,r0	
+8c66ad8c	7f14	add #0x14,r15	
+8c66ad8e	4f26	lds.l @r15+,PR	DATA:Stack[-0x14] 
+8c66ad90	6bf6	mov.l @r15+,r11	DATA:Stack[-0x10] 
+8c66ad92	6cf6	mov.l @r15+,r12	DATA:Stack[-0xc] 
+8c66ad94	6df6	mov.l @r15+,r13	DATA:Stack[-0x8] 
+8c66ad96	b	rts	
+8c66ad98	6ef6	_mov.l @r15+,r14	
+8c66adc4	2fe6	mov.l r14,@-r15	DATA:Stack[-0x4] 

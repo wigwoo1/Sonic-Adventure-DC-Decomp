@@ -1,0 +1,17 @@
+address	opcode	instruction	references
+8c07d6c0	2fe6	mov.l r14,@-r15	DATA:Stack[-0x4] 
+8c07d6c2	e078	mov #0x78,r0	
+8c07d6c4	6e43	mov r4,r14	
+8c07d6c6	4f22	sts.l PR,@-r15	DATA:Stack[-0x8] 
+8c07d6c8	3ee	mov.l @(r0,r14),r3	
+8c07d6ca	2338	tst r3,r3	
+8c07d6cc	8905	bt 0x8c07d6da	CONDITIONAL_JUMP:8c07d6da=b4f26 
+8c07d6ce	d34c	mov.l 0x8c07d800,r3	READ:8c07d800=8c098b42 
+8c07d6d0	430b	jsr @r3	COMPUTED_CALL:8c098b42=8b012448 
+8c07d6d2	4ee	_mov.l @(r0,r14),r4	
+8c07d6d4	e078	mov #0x78,r0	
+8c07d6d6	e200	mov #0x0,r2	
+8c07d6d8	e26	mov.l r2,@(r0,r14)	
+8c07d6da	4f26	lds.l @r15+,PR	DATA:Stack[-0x8] 
+8c07d6dc	b	rts	
+8c07d6de	6ef6	_mov.l @r15+,r14	

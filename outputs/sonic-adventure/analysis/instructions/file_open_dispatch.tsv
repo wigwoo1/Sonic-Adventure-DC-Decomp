@@ -1,0 +1,12 @@
+address	opcode	instruction	references
+8c6016d6	d350	mov.l 0x8c601818,r3	READ:8c601818=8c673420 
+8c6016d8	2fe6	mov.l r14,@-r15	DATA:Stack[-0x4] 
+8c6016da	6e32	mov.l @r3,r14	READ:8c673420=0 
+8c6016dc	2ee8	tst r14,r14	
+8c6016de	8902	bt 0x8c6016e6	CONDITIONAL_JUMP:8c6016e6=be000 
+8c6016e0	50ef	mov.l @(0x3c,r14),r0	
+8c6016e2	402b	jmp @r0	
+8c6016e4	6ef6	_mov.l @r15+,r14	DATA:Stack[-0x4] 
+8c6016e6	e000	mov #0x0,r0	
+8c6016e8	b	rts	
+8c6016ea	6ef6	_mov.l @r15+,r14	

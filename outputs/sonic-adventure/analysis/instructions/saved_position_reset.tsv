@@ -1,0 +1,11 @@
+address	opcode	instruction	references
+8c064e80	d657	mov.l 0x8c064fe0,r6	READ:8c064fe0=8c78c590 
+8c064e82	e500	mov #0x0,r5	
+8c064e84	e424	mov #0x24,r4	
+8c064e86	4410	dt r4	
+8c064e88	2650	mov.b r5,@r6	WRITE:8c78c590 WRITE:8c78c591 
+8c064e8a	8ffc	bf/s 0x8c064e86	CONDITIONAL_JUMP:8c064e86=26504410 
+8c064e8c	7601	_add #0x1,r6	
+8c064e8e	b	rts	
+8c064e90	9	_nop	
+8c064e92	4f22	sts.l PR,@-r15	DATA:Stack[-0x4] 

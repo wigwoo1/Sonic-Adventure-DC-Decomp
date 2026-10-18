@@ -1,0 +1,22 @@
+{
+  "scope": "Retail instruction trace discovery; routines are not newly translated or runtime verified.",
+  "backend_initializer": {
+    "entry": "8c65eccc",
+    "last_delay_slot": "8c65eed8",
+    "evidence": "analysis/instructions/input_device_response_processing.tsv",
+    "confirmed_effect": "Writes global 8c8a83b4 to static block 8c8a72b8 at 8c65ecec."
+  },
+  "submission_transition": {
+    "entry": "8c65efda",
+    "last_delay_slot": "8c65f1a8",
+    "evidence": "analysis/instructions/input_device_processing.tsv",
+    "confirmed_effects": [
+      "8c65f17e copies record request byte +6 to +7",
+      "8c65f182 clears request byte +6",
+      "8c65f186 copies pending token +18 to intermediate +1c",
+      "8c65f188 clears pending token +18"
+    ],
+    "final_completion_token_write_identified": false
+  },
+  "next_action": "Recover backend initializer and connect it before active request integration; continue tracing final record+20 completion writer."
+}

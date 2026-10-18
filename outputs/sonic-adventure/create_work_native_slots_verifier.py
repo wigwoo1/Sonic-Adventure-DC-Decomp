@@ -1,0 +1,17 @@
+from pathlib import Path
+p=Path(__file__).resolve().parent
+s=(p/'verify_work_native_allocation.py').read_text()
+s=s.replace('for slot,channels,created,bank in itertools.product(range(9),[0,1,2],[0x8c8d61ac],[0,1]):', 'for slot,channels,stream_slot,bank in itertools.product(range(9),[0,1,2],range(8),[0,1]):\n created=0x8c8d61ac+stream_slot*172;handle_slot=(stream_slot+3)%8;handle=handle_pool+handle_slot*52')
+s=s.replace('0 if index==0 else 1)', '0 if index==stream_slot else 1)',1)
+s=s.replace('0 if index==0 else 1)', '0 if index==handle_slot else 1)',1)
+s=s.replace("obj,8,handle_pool)","obj,8,handle)")
+s=s.replace('wanted_stream[:172]=obj','wanted_stream[stream_slot*172:(stream_slot+1)*172]=obj')
+s=s.replace("obj,0,1,0)","obj,0,1,handle_slot)")
+s=s.replace('native[hs+48:hs+52]', 'native[hs+handle_slot*52+48:hs+(handle_slot+1)*52]')
+s=s.replace('wanted_handles[:52]=obj','wanted_handles[handle_slot*52:(handle_slot+1)*52]=obj')
+s=s.replace('work_native_allocation_verification','work_native_slots_verification').replace('54 full','432 full')
+s=s.replace('first stream/handle slots available.', 'each stream slot0..7 paired with handle slot(stream+3)%8 available; all stream and handle slots exercised.')
+s=s.replace('Other stream/handle free-slot combinations', 'Other stream/handle pair combinations')
+(p/'verify_work_native_slots.py').write_text(s)
+s=(p/'register_work_native_allocation.py').read_text().replace('work_native_allocation','work_native_slots').replace('==54','==432').replace('Fully native work and stream construction:', 'Native work/stream construction across pool slots:')
+(p/'register_work_native_slots.py').write_text(s)

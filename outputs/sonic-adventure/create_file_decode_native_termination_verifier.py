@@ -1,0 +1,15 @@
+from pathlib import Path
+root=Path(__file__).resolve().parent
+text=(root/'verify_sound_decode_stereo_termination.py').read_text()
+text=text.replace("fn=ctypes.CDLL(str(ROOT/'work/sonic-adventure/build/sound_decode_blocks_draft.dll')).sa_sound_decode_block_stereo", "kernel=ctypes.CDLL(str(ROOT/'work/sonic-adventure/build/sound_decode_blocks_draft.dll')).sa_sound_decode_block_stereo\nfn=ctypes.CDLL(str(ROOT/'work/sonic-adventure/build/file_decode_request_process.dll')).sa_file_decode_request_process\nflag=ctypes.CDLL(str(ROOT/'work/sonic-adventure/build/file_decode_odd_flag_set.dll')).sa_file_decode_odd_flag_set")
+text=text.replace('cases=0', 'kernel.argtypes=fn.argtypes;flag.argtypes=fn.argtypes\ncases=0')
+text=text.replace('native=bytearray(ram);', "ram[0xa60000:0xa60040]=bytes([0x55])*64\n    struct.pack_into('<6I',ram,0xa6000c,1,0x55555555,2,0x8ca10000,count,0x8ca20008)\n    struct.pack_into('<I4h2h',ram,0xa60024,0x8ca40008,*history,-321,654,*coefficients)\n    ram[0x673b74:0x673b80]=bytes([0x55])*12;struct.pack_into('<I',ram,0x673b78,0x12345678)\n    native=bytearray(ram);")
+text=text.replace('s.r[4:8]=[0x8ca10000,count,0x8ca20008,0x8ca30000]', 's.r[4]=0x8ca60000').replace('s.pc=0x8c65b238','s.pc=0x8c644cb0')
+text=text.replace("def call(*args):raise AssertionError('Unexpected call')", "def call(ctx,address,mem,fp,srp,r,prp):\n        target={0x8c65b238:kernel,0x8c644c90:flag}[address]\n        return target(mem,fp,srp,r,prp,ctypes.byref(fpul),ctypes.byref(macl),None,call)")
+text=text.replace('assert regs[0]==decoded and regs[15]==0x8cf00000', "assert struct.unpack_from('<2I',native,0xa6000c)==(3,decoded) and regs[15]==0x8cf00000\n    wanted=1 if decoded&1 else 0x12345678\n    assert native[0x673b74:0x673b80]==bytes([0x55])*4+wanted.to_bytes(4,'little')+bytes([0x55])*4\n    assert native[0xa60028:0xa60030]==struct.pack('<4h',*history,-321,654)")
+text=text.replace('sound_decode_stereo_termination_verification.json','file_decode_native_termination_verification.json')
+text=text.replace('96 full retail RAM/CPU/FPU/SR/PR/FPUL/MACL stereo termination comparisons,no modeled calls.', '96 full retail RAM/CPU/FPU/SR/PR/FPUL/MACL connected native file dispatcher, stereo decoder and flag setter termination comparisons,no modeled calls. Independent phase/result/global flag and unchanged file-handle history checks.')
+text=text.replace('stereo decoder termination comparisons passed','native file dispatcher termination comparisons passed')
+(root/'verify_file_decode_native_termination.py').write_text(text)
+registration=(root/'register_file_decode_native_odd.py').read_text().replace('file_decode_native_odd','file_decode_native_termination').replace('== 654','== 96').replace('Native file decoder odd-count pipeline:','Native file decoder termination pipeline:')
+(root/'register_file_decode_native_termination.py').write_text(registration)

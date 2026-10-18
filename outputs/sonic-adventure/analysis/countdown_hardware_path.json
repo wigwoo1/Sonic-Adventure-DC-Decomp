@@ -1,0 +1,40 @@
+{
+  "binary_sha256": "45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a",
+  "direct_binary_checks_passed": 9,
+  "installation": {
+    "caller": "0x8c651520",
+    "service": "0x8c653640",
+    "handler": "0x8c652210",
+    "vector_pointer_offset": "VBR + 0x224",
+    "mask_writes": {
+      "0xa05f6930": "0x002807ec",
+      "0xa05f6938": "0x0000000e"
+    }
+  },
+  "confirmed_countdown_path": [
+    "Hardware handler 0x8c652210 reads status at 0xa05f6900",
+    "Status bit 0x8 invokes helper 0x8c651bc0",
+    "Helper acknowledges 0x8 and sets pending bit 0x2 at 0x8c8a2ffc",
+    "Handler delivers pending index 1 via 0x8c652554",
+    "Callback slot 1 registered to 0x8c645b1e",
+    "Event chain 0x900 invokes registered countdown callback 0x8c051810",
+    "Countdown decrements shared counter 0x8c754ec0"
+  ],
+  "evidence": [
+    "analysis/instructions/8c651520.tsv",
+    "analysis/instructions/8c653640.tsv",
+    "analysis/instructions/8c651bc0.tsv",
+    "analysis/instructions/8c652210.tsv",
+    "analysis/handler_registration_fpu_trace.json"
+  ],
+  "remaining": [
+    "Identify status bit 0x8 from primary hardware documentation",
+    "Trace video mode selection and refresh cadence",
+    "Recover/verify interrupt handler, countdown and FPU wrapper as native source",
+    "Validate gameplay timing before implementing 60/120/240 FPS"
+  ],
+  "limitations": [
+    "Static instruction path established; runtime interrupt timing and mode invariants unmeasured.",
+    "Full decompilation and native ports unfinished."
+  ]
+}

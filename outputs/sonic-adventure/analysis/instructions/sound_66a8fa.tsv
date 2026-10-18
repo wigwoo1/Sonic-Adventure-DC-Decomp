@@ -1,0 +1,123 @@
+address	opcode	instruction	references
+8c66a8fa	2fe6	mov.l r14,@-r15	DATA:Stack[-0x4] 
+8c66a8fc	6e43	mov r4,r14	
+8c66a8fe	2fd6	mov.l r13,@-r15	DATA:Stack[-0x8] 
+8c66a900	6d43	mov r4,r13	
+8c66a902	2fc6	mov.l r12,@-r15	DATA:Stack[-0xc] 
+8c66a904	7d50	add #0x50,r13	
+8c66a906	2fb6	mov.l r11,@-r15	DATA:Stack[-0x10] 
+8c66a908	4f22	sts.l PR,@-r15	DATA:Stack[-0x14] 
+8c66a90a	50e1	mov.l @(0x4,r14),r0	
+8c66a90c	8801	cmp/eq #0x1,r0	
+8c66a90e	8f60	bf/s 0x8c66a9d2	CONDITIONAL_JUMP:8c66a9d2=880250e1 
+8c66a910	6cd2	_mov.l @r13,r12	
+8c66a912	d223	mov.l 0x8c66a9a0,r2	READ:8c66a9a0=8c644c16 
+8c66a914	420b	jsr @r2	COMPUTED_CALL:8c644c16=5043000b 
+8c66a916	54e2	_mov.l @(0x8,r14),r4	
+8c66a918	2008	tst r0,r0	
+8c66a91a	8b5a	bf 0x8c66a9d2	CONDITIONAL_JUMP:8c66a9d2=880250e1 
+8c66a91c	903f	mov.w 0x8c66a99e,r0	READ:8c66a99e=4c160088 
+8c66a91e	66d3	mov r13,r6	
+8c66a920	65d3	mov r13,r5	
+8c66a922	67d3	mov r13,r7	
+8c66a924	2ee	mov.l @(r0,r14),r2	
+8c66a926	7004	add #0x4,r0	
+8c66a928	7520	add #0x20,r5	
+8c66a92a	7728	add #0x28,r7	
+8c66a92c	7624	add #0x24,r6	
+8c66a92e	420b	jsr @r2	
+8c66a930	4ee	_mov.l @(r0,r14),r4	
+8c66a932	54d6	mov.l @(0x18,r13),r4	
+8c66a934	53d8	mov.l @(0x20,r13),r3	
+8c66a936	52d9	mov.l @(0x24,r13),r2	
+8c66a938	3438	sub r3,r4	
+8c66a93a	3427	cmp/gt r2,r4	
+8c66a93c	8f01	bf/s 0x8c66a942	CONDITIONAL_JUMP:8c66a942=8f013427 
+8c66a93e	52d1	_mov.l @(0x4,r13),r2	
+8c66a940	54d9	mov.l @(0x24,r13),r4	
+8c66a942	3427	cmp/gt r2,r4	
+8c66a944	8f01	bf/s 0x8c66a94a	CONDITIONAL_JUMP:8c66a94a=84ee5bd8 
+8c66a946	55d5	_mov.l @(0x14,r13),r5	
+8c66a948	54d1	mov.l @(0x4,r13),r4	
+8c66a94a	5bd8	mov.l @(0x20,r13),r11	
+8c66a94c	84ee	mov.b @(0xe,r14),r0	
+8c66a94e	4b00	shll r11	
+8c66a950	8802	cmp/eq #0x2,r0	
+8c66a952	3b5c	add r5,r11	
+8c66a954	8f26	bf/s 0x8c66a9a4	CONDITIONAL_JUMP:8c66a9a4=4415ed00 
+8c66a956	e700	_mov #0x0,r7	
+8c66a958	51d7	mov.l @(0x1c,r13),r1	
+8c66a95a	53d8	mov.l @(0x20,r13),r3	
+8c66a95c	6d73	mov r7,r13	
+8c66a95e	313c	add r3,r1	
+8c66a960	4100	shll r1	
+8c66a962	4415	cmp/pl r4	
+8c66a964	315c	add r5,r1	
+8c66a966	6573	mov r7,r5	
+8c66a968	8f2a	bf/s 0x8c66a9c0	CONDITIONAL_JUMP:8c66a9c0=e3029077 
+8c66a96a	6673	_mov r7,r6	
+8c66a96c	60c3	mov r12,r0	
+8c66a96e	25c	mov.b @(r0,r5),r2	
+8c66a970	63b3	mov r11,r3	
+8c66a972	336c	add r6,r3	
+8c66a974	622c	extu.b r2,r2	
+8c66a976	6063	mov r6,r0	
+8c66a978	4218	shll8 r2	
+8c66a97a	2321	mov.w r2,@r3	
+8c66a97c	6353	mov r5,r3	
+8c66a97e	7301	add #0x1,r3	
+8c66a980	33cc	add r12,r3	
+8c66a982	6330	mov.b @r3,r3	
+8c66a984	7d01	add #0x1,r13	
+8c66a986	3d43	cmp/ge r4,r13	
+8c66a988	7502	add #0x2,r5	
+8c66a98a	633c	extu.b r3,r3	
+8c66a98c	4318	shll8 r3	
+8c66a98e	135	mov.w r3,@(r0,r1)	
+8c66a990	8fec	bf/s 0x8c66a96c	CONDITIONAL_JUMP:8c66a96c=25c60c3 
+8c66a992	7602	_add #0x2,r6	
+8c66a994	a014	bra 0x8c66a9c0	UNCONDITIONAL_JUMP:8c66a9c0=e3029077 
+8c66a996	9	_nop	
+8c66a9a4	ed00	mov #0x0,r13	
+8c66a9a6	4415	cmp/pl r4	
+8c66a9a8	e500	mov #0x0,r5	
+8c66a9aa	6673	mov r7,r6	
+8c66a9ac	3dcc	add r12,r13	
+8c66a9ae	8f07	bf/s 0x8c66a9c0	CONDITIONAL_JUMP:8c66a9c0=e3029077 
+8c66a9b0	35bc	_add r11,r5	
+8c66a9b2	63d4	mov.b @r13+,r3	
+8c66a9b4	7601	add #0x1,r6	
+8c66a9b6	3643	cmp/ge r4,r6	
+8c66a9b8	633c	extu.b r3,r3	
+8c66a9ba	2531	mov.w r3,@r5	
+8c66a9bc	8ff9	bf/s 0x8c66a9b2	CONDITIONAL_JUMP:8c66a9b2=760163d4 
+8c66a9be	7502	_add #0x2,r5	
+8c66a9c0	9077	mov.w 0x8c66aab2,r0	READ:8c66aab2=a400a0 
+8c66a9c2	e302	mov #0x2,r3	
+8c66a9c4	e46	mov.l r4,@(r0,r14)	
+8c66a9c6	84ee	mov.b @(0xe,r14),r0	
+8c66a9c8	407	mul.l r0,r4	
+8c66a9ca	9073	mov.w 0x8c66aab4,r0	READ:8c66aab4=9000a4 
+8c66a9cc	41a	sts MACL,r4	
+8c66a9ce	e46	mov.l r4,@(r0,r14)	
+8c66a9d0	1e31	mov.l r3,@(0x4,r14)	
+8c66a9d2	50e1	mov.l @(0x4,r14),r0	
+8c66a9d4	8802	cmp/eq #0x2,r0	
+8c66a9d6	8b0a	bf 0x8c66a9ee	CONDITIONAL_JUMP:8c66a9ee=6bf64f26 
+8c66a9d8	906d	mov.w 0x8c66aab6,r0	READ:8c66aab6=880090 
+8c66a9da	3ee	mov.l @(r0,r14),r3	
+8c66a9dc	7010	add #0x10,r0	
+8c66a9de	6ee	mov.l @(r0,r14),r6	
+8c66a9e0	7004	add #0x4,r0	
+8c66a9e2	5ee	mov.l @(r0,r14),r5	
+8c66a9e4	70f0	add #-0x10,r0	
+8c66a9e6	430b	jsr @r3	
+8c66a9e8	4ee	_mov.l @(r0,r14),r4	
+8c66a9ea	e303	mov #0x3,r3	
+8c66a9ec	1e31	mov.l r3,@(0x4,r14)	
+8c66a9ee	4f26	lds.l @r15+,PR	DATA:Stack[-0x14] 
+8c66a9f0	6bf6	mov.l @r15+,r11	DATA:Stack[-0x10] 
+8c66a9f2	6cf6	mov.l @r15+,r12	DATA:Stack[-0xc] 
+8c66a9f4	6df6	mov.l @r15+,r13	DATA:Stack[-0x8] 
+8c66a9f6	b	rts	
+8c66a9f8	6ef6	_mov.l @r15+,r14	

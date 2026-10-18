@@ -1,0 +1,58 @@
+{
+  "binary_sha256": "45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a",
+  "direct_checks_passed": 18,
+  "video_mode_programmer": "0x8c6582e0",
+  "register_writes": [
+    {
+      "offset": "0xd0",
+      "hardware_address": "0xa05f80d0",
+      "state_field": "0x8c8a302c",
+      "callsite": "0x8c6584fe"
+    },
+    {
+      "offset": "0xd8",
+      "hardware_address": "0xa05f80d8",
+      "state_field": "0x8c8a303c",
+      "callsite": "0x8c658506"
+    },
+    {
+      "offset": "0xcc",
+      "hardware_address": "0xa05f80cc",
+      "state_field": "0x8c8a3034",
+      "callsite": "0x8c65850e"
+    },
+    {
+      "offset": "0xd4",
+      "hardware_address": "0xa05f80d4",
+      "state_field": "0x8c8a3038",
+      "callsite": "0x8c658516"
+    },
+    {
+      "offset": "0xdc",
+      "hardware_address": "0xa05f80dc",
+      "state_field": "0x8c8a3040",
+      "callsite": "0x8c65851e"
+    },
+    {
+      "offset": "0xe0",
+      "hardware_address": "0xa05f80e0",
+      "state_field": "0x8c8a3044",
+      "callsite": "0x8c658526"
+    }
+  ],
+  "scan_clock_state_field": "0x8c8a303c",
+  "inference": "Video timing parameters are loaded from mode state and passed via the indirect writer wrapper; direct hardware-address literal search misses this programming path.",
+  "next_work": [
+    "Trace writers of 0x8c8a303c and companion mode fields",
+    "Decode mode tables and mode-selection branches",
+    "Verify runtime mode and refresh cadence before implementing native simulation timing"
+  ],
+  "evidence": [
+    "analysis/instructions/8c6582e0.tsv",
+    "analysis/video-wrapper-references/scheduler_references.tsv"
+  ],
+  "limitations": [
+    "State values at runtime and selected mode remain unproven.",
+    "No native FPS mode, gameplay timing validation, or full decompilation completion."
+  ]
+}

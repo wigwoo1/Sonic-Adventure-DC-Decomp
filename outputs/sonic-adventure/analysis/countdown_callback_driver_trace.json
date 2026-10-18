@@ -1,0 +1,31 @@
+{
+  "binary_sha256": "45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a",
+  "direct_checks_passed": 7,
+  "registered_callback": "0x8c645b1e",
+  "callback_span": [
+    "0x8c645b1e",
+    "0x8c645b44"
+  ],
+  "callback_span_sha256": "df3399712afff1f99c89bbaa2f2b3e86314ae43e89122a1bb29ea9595067bf11",
+  "behavior": [
+    "Set SR interrupt-mask bits to 0x60 while retaining masked other bits.",
+    "Read event head at 0x8c893a80, matching registry base + (0x900 >> 4) * 4.",
+    "For each record call its callback at offset 0 with argument at offset 8.",
+    "Read the next record at offset 4 after callback returns; do not capture next before invocation."
+  ],
+  "driver_initialization": "0x8c6510a4",
+  "driver_context": "0x8c8a2d54",
+  "driver_name_prefix": "VSYN",
+  "evidence": [
+    "analysis/driver-references/scheduler_references.tsv",
+    "analysis/instructions/8c645b1e.tsv",
+    "analysis/instructions/8c6510a4.tsv",
+    "analysis/instructions/8c651368.tsv",
+    "analysis/instructions/8c653f08.tsv"
+  ],
+  "limitations": [
+    "VSYN string suggests a synchronization driver; source and cadence are not yet verified.",
+    "Seeded callback adds an analyzed function, not a compiled recovered routine.",
+    "No native event driver, FPS measurement or gameplay verification."
+  ]
+}

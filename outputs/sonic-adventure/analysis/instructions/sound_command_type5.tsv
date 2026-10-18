@@ -1,0 +1,46 @@
+address	opcode	instruction	references
+8c643d88	d216	mov.l 0x8c643de4,r2	READ:8c643de4=8c67c1d0 
+8c643d8a	2fe6	mov.l r14,@-r15	DATA:Stack[-0x4] 
+8c643d8c	4f22	sts.l PR,@-r15	DATA:Stack[-0x8] 
+8c643d8e	6322	mov.l @r2,r3	READ:8c67c1d0=0 
+8c643d90	2338	tst r3,r3	
+8c643d92	8b02	bf 0x8c643d9a	CONDITIONAL_JUMP:8c643d9a=8b022448 
+8c643d94	de14	mov.l 0x8c643de8,r14	READ:8c643de8=d000001 
+8c643d96	a01a	bra 0x8c643dce	UNCONDITIONAL_JUMP:8c643dce=89032ee8 
+8c643d98	9	_nop	
+8c643d9a	2448	tst r4,r4	
+8c643d9c	8b02	bf 0x8c643da4	CONDITIONAL_JUMP:8c643da4=655e931d 
+8c643d9e	de13	mov.l 0x8c643dec,r14	READ:8c643dec=7000103 
+8c643da0	a015	bra 0x8c643dce	UNCONDITIONAL_JUMP:8c643dce=89032ee8 
+8c643da2	9	_nop	
+8c643da4	931d	mov.w 0x8c643de2,r3	READ:8c643de2=c1d00080 
+8c643da6	655e	exts.b r5,r5	
+8c643da8	d111	mov.l 0x8c643df0,r1	READ:8c643df0=8c890650 
+8c643daa	e205	mov #0x5,r2	
+8c643dac	353c	add r3,r5	
+8c643dae	d311	mov.l 0x8c643df4,r3	READ:8c643df4=8c890654 
+8c643db0	2122	mov.l r2,@r1	WRITE:8c890650 
+8c643db2	7107	add #0x7,r1	
+8c643db4	8441	mov.b @(0x1,r4),r0	
+8c643db6	d210	mov.l 0x8c643df8,r2	READ:8c643df8=8c890656 
+8c643db8	2300	mov.b r0,@r3	WRITE:8c890654 
+8c643dba	7301	add #0x1,r3	
+8c643dbc	2350	mov.b r5,@r3	WRITE:8c890655 
+8c643dbe	e3f8	mov #-0x8,r3	
+8c643dc0	2260	mov.b r6,@r2	WRITE:8c890656 
+8c643dc2	463c	shad r3,r6	
+8c643dc4	d30d	mov.l 0x8c643dfc,r3	READ:8c643dfc=8c65a464 
+8c643dc6	d40a	mov.l 0x8c643df0,r4	READ:8c643df0=8c890650 PARAM:8c890650 
+8c643dc8	430b	jsr @r3	COMPUTED_CALL:8c65a464=4f222fe6 
+8c643dca	2160	_mov.b r6,@r1	WRITE:8c890657 
+8c643dcc	6e03	mov r0,r14	
+8c643dce	2ee8	tst r14,r14	
+8c643dd0	8903	bt 0x8c643dda	CONDITIONAL_JUMP:8c643dda=60e34f26 
+8c643dd2	d30c	mov.l 0x8c643e04,r3	READ:8c643e04=8c65acac 
+8c643dd4	d40a	mov.l 0x8c643e00,r4	READ:8c643e00=8c643d88 PARAM:8c643d88=2fe6d216 
+8c643dd6	430b	jsr @r3	COMPUTED_CALL:8c65acac=d203d302 
+8c643dd8	65e3	_mov r14,r5	
+8c643dda	4f26	lds.l @r15+,PR	DATA:Stack[-0x8] 
+8c643ddc	60e3	mov r14,r0	
+8c643dde	b	rts	
+8c643de0	6ef6	_mov.l @r15+,r14	

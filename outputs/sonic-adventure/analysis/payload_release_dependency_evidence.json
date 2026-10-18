@@ -1,0 +1,133 @@
+{
+  "binary_sha256": "45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a",
+  "exports": [
+    {
+      "entry": "0x8c663950",
+      "instructions_verified": 113,
+      "export_sha256": "55658bd51466100d3b04b36a30e3758da258266fd6133afde2fdb1fce434c8f1",
+      "calls": [
+        {
+          "address": "8c663964",
+          "instruction": "jsr @r3",
+          "reference": "COMPUTED_CALL:8c6652c0=ee012fe6 "
+        },
+        {
+          "address": "8c663a00",
+          "instruction": "bsr 0x8c66385a",
+          "reference": "UNCONDITIONAL_CALL:8c66385a=2fd62fe6 "
+        },
+        {
+          "address": "8c663a12",
+          "instruction": "jsr @r3",
+          "reference": "COMPUTED_CALL:8c665478=e7006642 "
+        },
+        {
+          "address": "8c663a18",
+          "instruction": "jsr @r2",
+          "reference": "COMPUTED_CALL:8c665440=d51f7ffc "
+        }
+      ]
+    },
+    {
+      "entry": "0x8c66385a",
+      "instructions_verified": 72,
+      "export_sha256": "bc79c51f31bb82a29e4aade6b5c8d1486673daddbf8daa094b418f7ffc387131",
+      "calls": [
+        {
+          "address": "8c663866",
+          "instruction": "jsr @r3",
+          "reference": "COMPUTED_CALL:8c664940=6322d24f "
+        },
+        {
+          "address": "8c663894",
+          "instruction": "jsr @r2",
+          "reference": "COMPUTED_CALL:8c664940=6322d24f "
+        },
+        {
+          "address": "8c6638a2",
+          "instruction": "jsr @r3",
+          "reference": "COMPUTED_CALL:8c66497c=2fd62fe6 "
+        },
+        {
+          "address": "8c6638c2",
+          "instruction": "jsr @r3",
+          "reference": "COMPUTED_CALL:8c66497c=2fd62fe6 "
+        },
+        {
+          "address": "8c6638cc",
+          "instruction": "jsr @r3",
+          "reference": "COMPUTED_CALL:8c66497c=2fd62fe6 "
+        },
+        {
+          "address": "8c6638d8",
+          "instruction": "jsr @r3",
+          "reference": "COMPUTED_CALL:8c66497c=2fd62fe6 "
+        }
+      ]
+    },
+    {
+      "entry": "0x8c664940",
+      "instructions_verified": 30,
+      "export_sha256": "f4758bbdc7e65cf8e13172ca4bb2918b103c1a40b8483b51668f810203f2acf8",
+      "calls": []
+    },
+    {
+      "entry": "0x8c66497c",
+      "instructions_verified": 135,
+      "export_sha256": "1822a5501e3078a02dfc42624a17b9d4d8f7650cbad748a777ce098065257ad6",
+      "calls": [
+        {
+          "address": "8c6649ac",
+          "instruction": "bsr 0x8c664b52",
+          "reference": "UNCONDITIONAL_CALL:8c664b52=57617ff8 "
+        },
+        {
+          "address": "8c664a16",
+          "instruction": "bsr 0x8c664aec",
+          "reference": "UNCONDITIONAL_CALL:8c664aec=d5247ffc "
+        },
+        {
+          "address": "8c664a22",
+          "instruction": "bsr 0x8c664b52",
+          "reference": "UNCONDITIONAL_CALL:8c664b52=57617ff8 "
+        },
+        {
+          "address": "8c664aa8",
+          "instruction": "bsr 0x8c664b12",
+          "reference": "UNCONDITIONAL_CALL:8c664b12=23386342 "
+        }
+      ]
+    },
+    {
+      "entry": "0x8c6652c0",
+      "instructions_verified": 105,
+      "export_sha256": "8ccd51fef749e35524db5dd04127de05ff2525bc42166c7f696e8e092a09e685",
+      "calls": [
+        {
+          "address": "8c6653da",
+          "instruction": "jsr @r3",
+          "reference": "COMPUTED_CALL:8c10cb10=2f262008 "
+        }
+      ]
+    },
+    {
+      "entry": "0x8c665478",
+      "instructions_verified": 24,
+      "export_sha256": "56a032c40b5e9c34fbe6fcede4a986f925a22ba3ad0534c2710865751d1972f1",
+      "calls": []
+    },
+    {
+      "entry": "0x8c665440",
+      "instructions_verified": 19,
+      "export_sha256": "5a5e08566e8e163c592210a4f68e7fae7f8c21de85a8c199ea1d65b50f8a3634",
+      "calls": []
+    }
+  ],
+  "status": "Verified instruction evidence; all seven bodies still require source recovery.",
+  "observations": {
+    "8c66385a": "Lookup writes stack result at r5; absent first result returns 7. Paired allocation flag bit 2 selects address +/- global 8c67c2d4 according to signed halfword lookup result. Missing partner releases first allocation and returns 0. Partner flag bit 4 can clear first allocation bit 4; other branch releases both.",
+    "8c663950": "Metadata service fills 20 stack bytes. Traverses global linked list 8c67c308, compares masked header type and payload slot address. Clears selected slot; only when all slots are empty does it release block allocation, unlink block and mark pool record unused. No matching block returns 7.",
+    "8c665478": "Unlinks node using predecessor search and node+4 next pointer; caller is expected to supply an existing node.",
+    "8c665440": "Scans 0x13000-byte pool at 8c8c03e4 with stride 0x4c and clears header bit 0 of matching address."
+  }
+}

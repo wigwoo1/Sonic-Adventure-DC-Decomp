@@ -1,0 +1,66 @@
+address	opcode	instruction	references
+8c64e720	d23b	mov.l 0x8c64e810,r2	READ:8c64e810=8c673484 
+8c64e722	e5ff	mov #-0x1,r5	
+8c64e724	e040	mov #0x40,r0	
+8c64e726	4f22	sts.l PR,@-r15	DATA:Stack[-0x4] 
+8c64e728	2452	mov.l r5,@r4	
+8c64e72a	1451	mov.l r5,@(0x4,r4)	
+8c64e72c	e500	mov #0x0,r5	
+8c64e72e	1455	mov.l r5,@(0x14,r4)	
+8c64e730	1456	mov.l r5,@(0x18,r4)	
+8c64e732	1457	mov.l r5,@(0x1c,r4)	
+8c64e734	1458	mov.l r5,@(0x20,r4)	
+8c64e736	1459	mov.l r5,@(0x24,r4)	
+8c64e738	145a	mov.l r5,@(0x28,r4)	
+8c64e73a	145b	mov.l r5,@(0x2c,r4)	
+8c64e73c	145c	mov.l r5,@(0x30,r4)	
+8c64e73e	145d	mov.l r5,@(0x34,r4)	
+8c64e740	1454	mov.l r5,@(0x10,r4)	
+8c64e742	455	mov.w r5,@(r0,r4)	
+8c64e744	6322	mov.l @r2,r3	READ:8c673484=0 
+8c64e746	3438	sub r3,r4	
+8c64e748	d335	mov.l 0x8c64e820,r3	READ:8c64e820=8c10cb10 
+8c64e74a	6143	mov r4,r1	
+8c64e74c	430b	jsr @r3	COMPUTED_CALL:8c10cb10=2f262008 
+8c64e74e	e044	_mov #0x44,r0	
+8c64e750	d432	mov.l 0x8c64e81c,r4	READ:8c64e81c=8c88f6a0 
+8c64e752	6142	mov.l @r4,r1	READ:8c88f6a0 
+8c64e754	4115	cmp/pl r1	
+8c64e756	8f18	bf/s 0x8c64e78a	CONDITIONAL_JUMP:8c64e78a=6442d623 
+8c64e758	6603	_mov r0,r6	
+8c64e75a	6042	mov.l @r4,r0	READ:8c88f6a0 
+8c64e75c	70ff	add #-0x1,r0	
+8c64e75e	3600	cmp/eq r0,r6	
+8c64e760	8b13	bf 0x8c64e78a	CONDITIONAL_JUMP:8c64e78a=6442d623 
+8c64e762	a003	bra 0x8c64e76c	UNCONDITIONAL_JUMP:8c64e76c=42156242 
+8c64e764	9	_nop	
+8c64e766	6342	mov.l @r4,r3	READ:8c88f6a0 
+8c64e768	73ff	add #-0x1,r3	
+8c64e76a	2432	mov.l r3,@r4	WRITE:8c88f6a0 
+8c64e76c	6242	mov.l @r4,r2	READ:8c88f6a0 
+8c64e76e	4215	cmp/pl r2	
+8c64e770	8b0b	bf 0x8c64e78a	CONDITIONAL_JUMP:8c64e78a=6442d623 
+8c64e772	6042	mov.l @r4,r0	READ:8c88f6a0 
+8c64e774	d126	mov.l 0x8c64e810,r1	READ:8c64e810=8c673484 
+8c64e776	70ff	add #-0x1,r0	
+8c64e778	6303	mov r0,r3	
+8c64e77a	4008	shll2 r0	
+8c64e77c	4008	shll2 r0	
+8c64e77e	6212	mov.l @r1,r2	READ:8c673484=0 
+8c64e780	303c	add r3,r0	
+8c64e782	4008	shll2 r0	
+8c64e784	2e	mov.l @(r0,r2),r0	
+8c64e786	88ff	cmp/eq #-0x1,r0	
+8c64e788	89ed	bt 0x8c64e766	CONDITIONAL_JUMP:8c64e766=73ff6342 
+8c64e78a	d623	mov.l 0x8c64e818,r6	READ:8c64e818=8c673d18 
+8c64e78c	6442	mov.l @r4,r4	READ:8c88f6a0 
+8c64e78e	6262	mov.l @r6,r2	READ:8c673d18=0 
+8c64e790	74ff	add #-0x1,r4	
+8c64e792	3246	cmp/hi r4,r2	
+8c64e794	8b01	bf 0x8c64e79a	CONDITIONAL_JUMP:8c64e79a=4f262652 
+8c64e796	a001	bra 0x8c64e79c	UNCONDITIONAL_JUMP:8c64e79c=b4f26 
+8c64e798	2642	_mov.l r4,@r6	WRITE:8c673d18=0 
+8c64e79a	2652	mov.l r5,@r6	WRITE:8c673d18=0 
+8c64e79c	4f26	lds.l @r15+,PR	DATA:Stack[-0x4] 
+8c64e79e	b	rts	
+8c64e7a0	9	_nop	

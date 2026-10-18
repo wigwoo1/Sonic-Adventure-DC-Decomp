@@ -1,0 +1,50 @@
+Sonic Adventure Dreamcast Rev A - matrix, screen and camera setup
+2026-10-18; whole-project estimate 10% (weighted milestones, not code coverage).
+
+Three original bodies are now qualified and registered once:
+8c638fe4: 71 rows; matrix-stack metadata/template initialization. Stores supplied
+capacity/flags, copies the shipped matrix in its original staged order, negates
+the two default axes, and loads the opposite floating-point register bank.
+8c640528: 10 rows; sequential screen-state field transfer.
+8c6403b0: 50 rows; default camera template and trailing field initialization.
+There are no conditional branches in these three bodies. The matrix initializer
+is not a general memory-clear service. Original instruction order and overlap
+effects are retained; no invented argument validation is added.
+
+Source: source/sa_draw_frame_dependencies.c
+Bridge: source/sa_draw_frame_dependencies_connected.c
+Workflow: recover_draw_frame_dependencies.py, connect_draw_frame_dependencies.py,
+build_draw_frame_dependencies.ps1, verify_draw_frame_setup.py,
+verify_draw_frame_prefix.py, register_draw_frame_setup.py.
+Reports: analysis/draw_frame_dependencies_translation.json,
+analysis/draw_frame_dependencies_connection.json,
+analysis/draw_frame_setup_verification.json,
+analysis/draw_frame_prefix_verification.json.
+
+The separate strict optimized 127-source DLL builds successfully:
+work/sonic-adventure/build/draw_frame_dependencies.dll
+SHA256 dd0099d04508d75066a6991218df25def1c48a672e7543984c97769d8ea20d76.
+All 92 focused comparisons pass: 81 returns, eight numerical-mode guards and
+three memory guards. All 131 rows execute; full machine/RAM, integer banks,
+MACH/MACL, FPU/FPUL, GBR and register storage match original instructions.
+Sixty-two cases add 174 independent assertions, including complete footprints,
+staged overlap, aliases, actual metadata, templates and preserved registers.
+There are 92 compared entry boundaries and no queue or GPU-register writes.
+
+The historical 127-source initializer prefix proof has eight comparisons:
+six stop at the then-missing callback 8c661300 and two at invalid-stack guards.
+It covers 56/141 parent rows, 722 dependency rows and 152 ordered boundaries,
+with twelve independent metadata/screen assertions. This gives zero complete
+initializer credit. The separate later 128-source proof in DRAW_FRAME_SEQUENCE.txt
+supersedes that missing-callback boundary and qualifies the complete initializer.
+The earlier registration preserves the later primary proof when rerun.
+
+The dependency translation contains 36 proposed bodies, 1,463 rows. Only these
+three receive complete-body credit from this setup proof; 33 other local bodies
+retain incomplete qualification, even when reached by later initializer tests.
+Read-only support exports remain available for their future numerical paths.
+Earlier source, APIs, DLLs and proofs are preserved. This is a qualified CPU/RAM
+proof, not natural boot scheduling, GPU execution, visible frames or a playable
+port. Full decompilation, FPS/8K, SUPIR/texture-Off/display settings and ports
+remain unfinished. Continue reverse engineering with Sol High; Luna Low is
+suitable for documentation. No model switch or goal pause is recommended.

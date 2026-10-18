@@ -1,0 +1,29 @@
+address	opcode	instruction	references
+8c098b0c	2fe6	mov.l r14,@-r15	DATA:Stack[-0x4] 
+8c098b0e	6e53	mov r5,r14	
+8c098b10	e3fc	mov #-0x4,r3	
+8c098b12	7e03	add #0x3,r14	
+8c098b14	2e39	and r3,r14	
+8c098b16	e47	mul.l r4,r14	
+8c098b18	4f22	sts.l PR,@-r15	DATA:Stack[-0x8] 
+8c098b1a	e1a	sts MACL,r14	
+8c098b1c	bfb0	bsr 0x8c098a80	UNCONDITIONAL_CALL:8c098a80=89402448 
+8c098b1e	64e3	_mov r14,r4	
+8c098b20	6603	mov r0,r6	
+8c098b22	2668	tst r6,r6	
+8c098b24	8909	bt 0x8c098b3a	CONDITIONAL_JUMP:8c098b3a=60634f26 
+8c098b26	64e3	mov r14,r4	
+8c098b28	4409	shlr2 r4	
+8c098b2a	2448	tst r4,r4	
+8c098b2c	6763	mov r6,r7	
+8c098b2e	8d04	bt/s 0x8c098b3a	CONDITIONAL_JUMP:8c098b3a=60634f26 
+8c098b30	e500	_mov #0x0,r5	
+8c098b32	4410	dt r4	
+8c098b34	2752	mov.l r5,@r7	
+8c098b36	8ffc	bf/s 0x8c098b32	CONDITIONAL_JUMP:8c098b32=27524410 
+8c098b38	7704	_add #0x4,r7	
+8c098b3a	4f26	lds.l @r15+,PR	DATA:Stack[-0x8] 
+8c098b3c	6063	mov r6,r0	
+8c098b3e	b	rts	
+8c098b40	6ef6	_mov.l @r15+,r14	
+8c098b42	2448	tst r4,r4	

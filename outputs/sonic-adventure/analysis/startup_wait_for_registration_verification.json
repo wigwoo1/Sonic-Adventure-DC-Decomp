@@ -1,0 +1,109 @@
+{
+  "cases_passed": 8,
+  "routine_start": "0x8c0114f0",
+  "routine_end_exclusive": "0x8c011524",
+  "retail_span_sha256": "54158da3495c37d92eb0d17525c98701824d0b84c223821e4fb0e25dce3d3bec",
+  "source_sha256": "b6efec02dd2f32baf05c6110234ff468a4fda9c4e8ec32e7238661fa64dd9c41",
+  "dll_sha256": "963f3253b9d87fd0c82a377828f9b87a430f95784ab263d5ab90c556ed389961",
+  "callback_targets": [
+    "0x8c088560",
+    "0x8c6033e4",
+    "0x8c0112e6"
+  ],
+  "cases": [
+    {
+      "case": 0,
+      "flag": "0x1",
+      "poll_returns": [],
+      "helper_return": 0,
+      "calls": 1,
+      "retail_instructions_executed": 16,
+      "full_state_and_call_trace_match": true
+    },
+    {
+      "case": 1,
+      "flag": "0x2",
+      "poll_returns": [],
+      "helper_return": 0,
+      "calls": 1,
+      "retail_instructions_executed": 16,
+      "full_state_and_call_trace_match": true
+    },
+    {
+      "case": 2,
+      "flag": "0xffffffff",
+      "poll_returns": [],
+      "helper_return": 0,
+      "calls": 1,
+      "retail_instructions_executed": 16,
+      "full_state_and_call_trace_match": true
+    },
+    {
+      "case": 3,
+      "flag": "0x0",
+      "poll_returns": [
+        0
+      ],
+      "helper_return": 0,
+      "calls": 3,
+      "retail_instructions_executed": 20,
+      "full_state_and_call_trace_match": true
+    },
+    {
+      "case": 4,
+      "flag": "0x0",
+      "poll_returns": [
+        -1,
+        0
+      ],
+      "helper_return": 7,
+      "calls": 4,
+      "retail_instructions_executed": 24,
+      "full_state_and_call_trace_match": true
+    },
+    {
+      "case": 5,
+      "flag": "0x0",
+      "poll_returns": [
+        -1,
+        -1,
+        1
+      ],
+      "helper_return": -3,
+      "calls": 5,
+      "retail_instructions_executed": 28,
+      "full_state_and_call_trace_match": true
+    },
+    {
+      "case": 6,
+      "flag": "0x0",
+      "poll_returns": [
+        -1,
+        305419896
+      ],
+      "helper_return": 2147483647,
+      "calls": 4,
+      "retail_instructions_executed": 24,
+      "full_state_and_call_trace_match": true
+    },
+    {
+      "case": 7,
+      "flag": "0x0",
+      "poll_returns": [
+        -1,
+        -1,
+        -1,
+        -2
+      ],
+      "helper_return": -2147483648,
+      "calls": 6,
+      "retail_instructions_executed": 32,
+      "full_state_and_call_trace_match": true
+    }
+  ],
+  "scope": "Full 16 MiB RAM and GPR/SR/PR/PC, initializer/poller/helper call order, poll argument, retry count, gate return, callback scratch effects and stack/register restoration compared with retail execution.",
+  "limitations": [
+    "The initializer at 0x8c088560, poll service at 0x8c6033e4, and same-module helper at 0x8c0112e6 are deterministic modeled boundaries, not recovered by this wrapper source.",
+    "The verifier uses a partial SH-4 interpreter and does not establish hardware or complete startup behavior."
+  ]
+}

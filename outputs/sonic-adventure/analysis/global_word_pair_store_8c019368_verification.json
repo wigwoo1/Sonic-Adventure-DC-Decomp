@@ -1,0 +1,30 @@
+{
+  "cases_passed": 96,
+  "comparison_level": "Complete 16 MiB RAM and all GPRs, SR, PR, and return PC compared against the retail SH-4 interpreter.",
+  "scope": "The 14-byte routine at 0x8c019368 sign-extends the low byte in R4 and R5, then stores those 32-bit values to literal destinations 0x8c6b7084 and 0x8c6b7088. Tests cover signed-byte boundaries, discarded upper register bits, varied memory, and varied CPU state.",
+  "limitations": [
+    "Uses the project SH-4 interpreter rather than Dreamcast hardware or end-to-end gameplay.",
+    "The two global fields\u2019 higher-level ownership and game behavior remain unidentified."
+  ],
+  "binary_sha256": "45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a",
+  "retail_span_sha256": "e93e063665e0d68ff0e37afdc9d23d8da8016e0221d509bf5f563dbe3d687e31",
+  "literal_addresses": [
+    "0x8c0193e4",
+    "0x8c0193e8"
+  ],
+  "literal_values": [
+    "0x8c6b7084",
+    "0x8c6b7088"
+  ],
+  "source_sha256": "699191b08cb5c4d3785dbdc7decc03c776181e083676ae937fb5f007b12dc947",
+  "routines": [
+    {
+      "module": "1ST_READ.BIN",
+      "load_address": "0x8c010000",
+      "address": "0x8c019368",
+      "end_exclusive": "0x8c019376",
+      "retail_span_sha256": "e93e063665e0d68ff0e37afdc9d23d8da8016e0221d509bf5f563dbe3d687e31",
+      "cases_passed": 96
+    }
+  ]
+}

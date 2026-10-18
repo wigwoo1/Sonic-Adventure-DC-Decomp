@@ -1,0 +1,30 @@
+{
+  "retail_formatter_cases_passed": 24,
+  "host_guard_cases_passed": 7,
+  "retail_files_compared": [
+    {
+      "path": "1ST_READ.BIN",
+      "sha256": "45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a",
+      "bytes": 6735488
+    },
+    {
+      "path": "ADVLOGOBK.GIF",
+      "sha256": "df06eb6a7b2a55aa833a67711ea633498f4b9b85fb9b2055597f74fb06a3b4e8",
+      "bytes": 1782
+    }
+  ],
+  "interpreter_sha256": "e1dbae17f07354a51fe7b05258895f980bda38d65b615ff2e8fb9b65dabc75e8",
+  "dll_sha256": "37c4e1db19b25e7f56f5837203818baa1a4e44b5b882123866c5d932a7b879a2",
+  "verifier_sha256": "73bf9bda08aa856c4ac1bc12bb9d597229d7f0a2246d37f46e59a4f165ab2363",
+  "inventory_sha256": "354d90b3801ecd0ffd79f32334a4c7fd0a243d5c6af6d9ffa390c6629a66c1fc",
+  "sources": {
+    "source/native_disc_queue.c": "b89c5e71826d28f774f4dceab8b89a987f0a5fba44372c0f3170269a21dc2494",
+    "source/native_disc_queue.h": "c532caa1cf356da8af766e80990c1f2e5a882be63832d6ff7224fa90c48d4226",
+    "source/native_disc_sector_reader.c": "20612dc788901549540e33388ba066b415a57469bf181f2881c79c0440988d1e",
+    "source/native_disc_read_command.c": "90807cfd16669f19c54ef51e067ce9bfc2d72641590f1c7b04a139e8e3bec387",
+    "source/sa_file_device_read.c": "5b3760d9e26356e864e82a4eaeabc601556466d45c393695bf88f6056c435db5",
+    "source/sa_file_bios_request.c": "2e24e36918917a0ff1fc92bb2e1f34d05c6377b6711665b847f95733d56f523f"
+  },
+  "scope": "Retail formatter and request tail match RAM/GPR/SR/PR/FPU at return; native operation-0 read submission queues real disc reads. Both commands, three aliases and aligned/unaligned buffers. No whole firmware ABI claim.",
+  "limitations": "Completion/status/cancel vector adapters, DMA/cache hardware semantics and full-game execution remain unfinished."
+}

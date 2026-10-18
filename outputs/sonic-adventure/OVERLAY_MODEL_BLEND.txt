@@ -1,0 +1,169 @@
+AL_MAIN model morph and full word-copy dispatcher
+17 October 2026 - VERIFIED within the bounded scope and exclusions below.
+Overall completion: 10% estimated weighted whole-project milestones, not code coverage.
+Goal active on Sol High. No model switch or pause advised.
+
+What changed
+Recovered complete static C bodies:
+  AL_MAIN.BIN 0c904e80..0c905548: 813 instruction rows, model morph.
+  1ST_READ.BIN 8c10cddc..8c10ce9c: 58 instruction rows, word-copy dispatcher.
+Together: 871 byte-checked rows / 1,742 instruction bytes. Their 1,928 bytes of
+address span also contain 186 literal/table bytes, which are not instruction
+credit. Descriptive names and field purposes are inferred.
+Source: source/sa_overlay_model_blend.c
+Direct bridge: source/sa_overlay_model_blend_connected.c
+Initializer bridge: source/sa_overlay_model_blend_initializer_connected.c
+
+The original Ghidra copy body exposed only 24 rows and missed its short-copy
+switch. Read-only script ExpandOverlayBlendCopyBody.java verifies all 17 table
+entries, disassembles/adds 34 short-path rows in project memory and exports the
+expanded body. Ghidra explicitly discards those project edits. Original game
+bytes and all earlier sources, DLLs and verification checkpoints are preserved.
+Both bodies compile into native C with no runtime opcode decoding; the test
+reference alone interprets original instructions.
+
+Observed morph behavior
+Appearance+20/+24/+28 provide X/Y/Z parameters. Exactly zero X or Y is replaced
+by original constant 3727c5ac (approximately 0.00001); their signs choose the
+positive/negative source tables, then their magnitudes become weights a and b.
+The unchanged source lists select 12 mesh nodes for type 0 and 14 for other
+types, plus a separate set of 22 object-position nodes.
+For a scalar position/normal component, using neutral source N, sign-selected
+sources X/Y and original base B, the observed mathematical expression is:
+  shape = (a*(a*X + (1-a)*N) + b*(b*Y + (1-b)*N)) / (a+b)
+  output = z*shape + (1-z)*B
+Native C preserves the exact original FMUL/FMAC/FDIV order and rounding rather
+than replacing these steps with the combined expression. Normals are blended
+without an added normalization pass. The 22 object positions use the same
+source selection and blend. Zero vertices/materials and missing mesh models
+follow original branches, including an early return for a missing mesh model.
+
+Material diffuse B/G/R channels use the analogous blend, first clamped to
+0..255. Material-only Z is capped at 1, with no added lower cap. The blend with
+base colour is truncated, reduced to an unsigned byte and converted back to
+float before the original final clamps. Negative extrapolation can therefore
+wrap a channel; tests preserve that ordering. Appearance flag 02 instead
+writes 85 to the three channels. Node index 27 skips the material stage. Other
+material fields, including alpha, IDs and flags, are retained. The first
+material's B/G/R and ff alpha are also written to entity+8c4..8c7 (hex).
+
+The word-copy helper receives byte count in R0, destination R1 and source R2.
+Counts 0/4/.../64 select one of 17 internal targets, copying words in descending
+address order. The larger loop copies words forward and retains its original
+extra read and register effects. These distinct overlap behaviors are tested;
+no generic memcpy/memmove semantics are substituted. Small unaligned table
+indices stop at an unsupported computed jump. The morph calls it with count
+58 hex (88 bytes) to copy the original 22-index object-position list to stack.
+
+Guest state and guards
+All dynamic RAM operations validate their reached address and transfer width
+before effects. Unsupported computed jumps and changed return PR also stop
+at their original boundary. The new bridges preserve explicit FPUL and MACL
+state; FLOAT/FTRC updates are visible through the complete initializer.
+FMOV retains FR/SZ bank, width, overlap and pointer increments. PR=1 stops at
+reached FLDI0; unsupported numeric modes/states and modeled arithmetic traps
+retain exact reached partial state. These are bounded host stops, not hardware
+MMIO, alignment or CPU exception delivery. The existing independent SH-4
+numerical support is reused; no numerical backend source was changed.
+
+Build and tests actually passed
+- Two separate strict Clang -O2 -Wall -Wextra -Werror DLL builds passed.
+- 1,626 focused original-code comparisons passed: 1,538 normal returns,
+  72 expected unsupported-numeric stops, eight modeled numeric trap stops,
+  eight invalid-memory/computed-jump stops. A normal return is not proof of
+  initialized gameplay, and some cases intentionally perform no geometry work.
+- Full 16 MiB RAM, all integer registers, SR/PR/return-or-stop PC, both FPU banks,
+  FPSCR, FPUL and MACL match. All 2,368 ordered function entries match.
+- 1,444 cases also have independent semantic checks: 644 exact dyadic morph
+  fixtures and 800 copy-order fixtures. They check vertex/normal/object position
+  results, all material fields, colour clamps/wrap, untouched source graphs,
+  every short-copy target, bulk lengths and overlapping directions.
+- Sign choices, zero substitutions, extrapolation, zero/multiple counts,
+  appearance types, flag 02, both banks, rounding modes, all eight FR/SZ/PR
+  combinations, denormals, nonfinite classes, enabled traps and reciprocal
+  underflow are represented. Unsupported cases are counted as partial stops.
+- The ordinary arithmetic reference uses independent Python integer/dyadic
+  implementations and the existing exceptional multiply class oracle.
+  Probes of the native numerical backend classify stop/trap states only; no
+  hardware-capture accuracy claim is made for those guard classifications.
+- 856 of 871 byte-checked rows execute: 798 morph / all 58 copy rows, with
+  67 of 74 conditional outcomes. Exact exclusions are described below.
+
+Shipped-object initializer integration
+The new bridge replaces initializer fixture 0c904e80 with this native morph
+and copy dispatcher, following the already native clone, tables and material
+variants. No new credit is assigned to those reused bodies.
+228 comparisons passed with unchanged shipped source models and node lists:
+176 completed tested caller paths and 52 expected partial states (12 missing
+services, 12 injected errors, 15 unsupported-numeric stops, 13 invalid-pointer
+stops). The normal narrow paths cover all eight original appearance types,
+X/Y signs, flags and palette/model priorities. Wide fixtures are checked as
+partial states, not declared successful game initializations.
+Full RAM/CPU/FPU/FPUL/MACL and 117,509 ordered boundaries match. The combined
+path reaches 1,668 native rows, 114 outcomes and 41 call sites. All 176 completed
+cases pass independent pre-morph tree/table/material checks plus post-morph
+selection/reset/mask/copy/tail checks. Exact morph mathematics is independently
+checked in the separate constructed fixtures; shipped cases compare every
+original instruction/state and retain unchanged source overlay bytes.
+Partial clone failures can now stop in the morph's first missing-node read,
+before the later selector guard. The original state at that earlier boundary
+is preserved, not converted into a successful shortened object.
+
+Coverage exclusions
+Two unexecuted rows at 0c904fc0/0c904fc2 are behind the initial non-positive
+loop-count outcome; unchanged code assigns 12 or 14 before that test.
+Thirteen further unexecuted rows are the six final clamp outcomes after the
+truncated channels have been reduced by EXTU.B and reconverted by FLOAT.
+For completed ordinary PR=0/SZ=0 inputs these values are exactly 0..255.
+The earlier necessary clamps are covered by the extrapolation tests.
+The exact 15 rows and seven outcomes are recorded in
+analysis/overlay_model_blend_coverage_notes.json. This explanation is qualified
+to the ordinary narrow finite contract; it does not prove those paths universally
+unreachable for all wide, exceptional or hardware-reentrant states. No added
+coverage credit is assigned to the notes or to the Ghidra draft.
+
+Final integrity results
+Native source, translation manifest and coverage notes reproduce byte-for-byte.
+All 12 translation, 39 focused, 94 combined and one coverage-note script pins
+match. Five new Python and four PowerShell scripts parse; the new Java script
+compiled and ran in read-only Ghidra. Repeat registration adds zero duplicates
+and leaves registry bytes unchanged. Dispatcher verification passes 658 original
+pointer loads, 80 spans and 83 selectors. Audits report 1,107 entries / 1,104
+unique module-address pairs, 1,055 matches in 10,875 snapshot candidates, zero
+evidence errors and zero stale source reports. 211 non-texture binaries still
+lack a function index; these snapshots do not establish whole-game coverage.
+The focused builds/tests, new registration and coverage/project audits were run.
+The entire historical aggregate was not rerun. The earlier focused suite was
+extended after coverage exposed untested extrapolation and underflow paths;
+the final counts above refer to that expanded, successful suite.
+
+Remaining explicit initializer dependencies
+Three initialization helpers still use state-mutating stand-ins:
+  0c90bd40, 0c90853e, 0c9048ec
+Three outer tail-state helpers also remain stand-ins:
+  0c90fb82, 0c90fca0, 0c90fd42
+The new morph/copy path has zero external game-service fixtures. The complete
+initializer still has the six boundaries above. Complete scenes, object draw,
+GPU pixels, input/audio, gameplay and playable ports remain unverified.
+Next: recover the remaining initializer helpers (including the lower setters
+called by 0c90853e), then outer tails and object draw 0c905666. Continue Sol High
+for dependency integration. Luna Low is suitable for documentation-only work.
+
+How to check
+Open this guide and SOURCE_HANDOFF.txt. Recovered C is in source/.
+Evidence:
+  analysis/overlay_model_blend_translation.json
+  analysis/overlay_model_blend_verification.json
+  analysis/overlay_model_blend_coverage_notes.json
+  analysis/overlay_model_blend_initializer_verification.json
+To reproduce this checkpoint from PowerShell in the project folder:
+  python -B recover_overlay_model_blend.py
+  ./build_overlay_model_blend.ps1
+  python -B verify_overlay_model_blend.py
+  python -B audit_overlay_model_blend_coverage.py
+  ./build_overlay_model_blend_initializer.ps1
+  python -B verify_overlay_model_blend_initializer.py
+  python -B register_overlay_model_blend.py
+Read-only copy export: ghidra/export_overlay_model_blend_copy.ps1.
+Morph export is retained in ghidra/export_overlay_initializer_dependencies.ps1.
+The aggregate build_and_verify.ps1 includes the new steps before registry audits.

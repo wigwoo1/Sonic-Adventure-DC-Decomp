@@ -1,0 +1,50 @@
+address	opcode	instruction	references
+8c652554	6a	sts FPSCR,r0	
+8c652556	2f06	mov.l r0,@-r15	DATA:Stack[-0x4] 
+8c652558	e110	mov #0x10,r1	
+8c65255a	4128	shll16 r1	
+8c65255c	6007	not r0,r0	
+8c65255e	201b	or r1,r0	
+8c652560	6007	not r0,r0	
+8c652562	406a	lds r0,fpscr	
+8c652564	ff0b	fmov.s fr0,@-r15	DATA:Stack[-0x8] 
+8c652566	ff1b	fmov.s fr1,@-r15	DATA:Stack[-0xc] 
+8c652568	ff2b	fmov.s fr2,@-r15	DATA:Stack[-0x10] 
+8c65256a	ff3b	fmov.s fr3,@-r15	DATA:Stack[-0x14] 
+8c65256c	ff4b	fmov.s fr4,@-r15	DATA:Stack[-0x18] 
+8c65256e	ff5b	fmov.s fr5,@-r15	DATA:Stack[-0x1c] 
+8c652570	ff6b	fmov.s fr6,@-r15	DATA:Stack[-0x20] 
+8c652572	ff7b	fmov.s fr7,@-r15	DATA:Stack[-0x24] 
+8c652574	ff8b	fmov.s fr8,@-r15	DATA:Stack[-0x28] 
+8c652576	ff9b	fmov.s fr9,@-r15	DATA:Stack[-0x2c] 
+8c652578	ffab	fmov.s fr10,@-r15	DATA:Stack[-0x30] 
+8c65257a	ffbb	fmov.s fr11,@-r15	DATA:Stack[-0x34] 
+8c65257c	ffcb	fmov.s fr12,@-r15	DATA:Stack[-0x38] 
+8c65257e	ffdb	fmov.s fr13,@-r15	DATA:Stack[-0x3c] 
+8c652580	ffeb	fmov.s fr14,@-r15	DATA:Stack[-0x40] 
+8c652582	fffb	fmov.s fr15,@-r15	DATA:Stack[-0x44] 
+8c652584	4f22	sts.l PR,@-r15	DATA:Stack[-0x48] 
+8c652586	6343	mov r4,r3	
+8c652588	430b	jsr @r3	
+8c65258a	6453	_mov r5,r4	
+8c65258c	4f26	lds.l @r15+,PR	DATA:Stack[-0x48] 
+8c65258e	fff9	fmov.s @r15+,fr15	DATA:Stack[-0x44] 
+8c652590	fef9	fmov.s @r15+,fr14	DATA:Stack[-0x40] 
+8c652592	fdf9	fmov.s @r15+,fr13	DATA:Stack[-0x3c] 
+8c652594	fcf9	fmov.s @r15+,fr12	DATA:Stack[-0x38] 
+8c652596	fbf9	fmov.s @r15+,fr11	DATA:Stack[-0x34] 
+8c652598	faf9	fmov.s @r15+,fr10	DATA:Stack[-0x30] 
+8c65259a	f9f9	fmov.s @r15+,fr9	DATA:Stack[-0x2c] 
+8c65259c	f8f9	fmov.s @r15+,fr8	DATA:Stack[-0x28] 
+8c65259e	f7f9	fmov.s @r15+,fr7	DATA:Stack[-0x24] 
+8c6525a0	f6f9	fmov.s @r15+,fr6	DATA:Stack[-0x20] 
+8c6525a2	f5f9	fmov.s @r15+,fr5	DATA:Stack[-0x1c] 
+8c6525a4	f4f9	fmov.s @r15+,fr4	DATA:Stack[-0x18] 
+8c6525a6	f3f9	fmov.s @r15+,fr3	DATA:Stack[-0x14] 
+8c6525a8	f2f9	fmov.s @r15+,fr2	DATA:Stack[-0x10] 
+8c6525aa	f1f9	fmov.s @r15+,fr1	DATA:Stack[-0xc] 
+8c6525ac	f0f9	fmov.s @r15+,fr0	DATA:Stack[-0x8] 
+8c6525ae	60f6	mov.l @r15+,r0	DATA:Stack[-0x4] 
+8c6525b0	406a	lds r0,fpscr	
+8c6525b2	b	rts	
+8c6525b4	9	_nop	

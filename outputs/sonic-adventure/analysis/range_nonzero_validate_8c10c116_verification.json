@@ -1,0 +1,915 @@
+{
+  "module": "1ST_READ.BIN",
+  "load_address": "0x8c010000",
+  "address": "0x8c10c116",
+  "end_exclusive": "0x8c10c12e",
+  "retail_span_sha256": "36cef95b82ccb6dd7dd5ff4a457eb43ff51fdc98d391e8ca3f744f9486400cf1",
+  "source_sha256": "65aeea83e0f6c70bd39165dbd2cb02cf944a80cdf046e4fc65af70b29f0406c6",
+  "limit_literal_address": "0x8c10c1b8",
+  "limit": 256,
+  "cases_passed": 128,
+  "comparison_level": "complete 16 MiB RAM and all GPR/SR/PR/PC state",
+  "scope": "Validates signed index in [0,256) and a nonzero second parameter. Returns 0 on success or -3 on failure; differential tests cover signed boundaries, range edges, both flag outcomes, and arbitrary initial register/PR state.",
+  "limitations": [
+    "The caller-level meaning of the two parameters and error code is not established from this routine alone.",
+    "Synthetic interpreter comparisons are not full-game validation."
+  ],
+  "cases": [
+    {
+      "case": 0,
+      "argument_index": 2147483648,
+      "required_value": 4294967295,
+      "retail_steps": 4,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 1,
+      "argument_index": 4294967294,
+      "required_value": 0,
+      "retail_steps": 4,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 2,
+      "argument_index": 4294967295,
+      "required_value": 4294967295,
+      "retail_steps": 4,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 3,
+      "argument_index": 0,
+      "required_value": 1,
+      "retail_steps": 10,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 4,
+      "argument_index": 1,
+      "required_value": 4294967295,
+      "retail_steps": 10,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 5,
+      "argument_index": 2,
+      "required_value": 4294967295,
+      "retail_steps": 10,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 6,
+      "argument_index": 127,
+      "required_value": 4294967295,
+      "retail_steps": 10,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 7,
+      "argument_index": 254,
+      "required_value": 1,
+      "retail_steps": 10,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 8,
+      "argument_index": 255,
+      "required_value": 4294967295,
+      "retail_steps": 10,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 9,
+      "argument_index": 256,
+      "required_value": 0,
+      "retail_steps": 7,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 10,
+      "argument_index": 257,
+      "required_value": 1,
+      "retail_steps": 7,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 11,
+      "argument_index": 2147483647,
+      "required_value": 1,
+      "retail_steps": 7,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 12,
+      "argument_index": 2147483648,
+      "required_value": 4294967295,
+      "retail_steps": 4,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 13,
+      "argument_index": 4294967294,
+      "required_value": 4294967295,
+      "retail_steps": 4,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 14,
+      "argument_index": 4294967295,
+      "required_value": 0,
+      "retail_steps": 4,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 15,
+      "argument_index": 0,
+      "required_value": 1,
+      "retail_steps": 10,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 16,
+      "argument_index": 1,
+      "required_value": 4294967295,
+      "retail_steps": 10,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 17,
+      "argument_index": 2,
+      "required_value": 4294967295,
+      "retail_steps": 10,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 18,
+      "argument_index": 127,
+      "required_value": 4294967295,
+      "retail_steps": 10,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 19,
+      "argument_index": 254,
+      "required_value": 1,
+      "retail_steps": 10,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 20,
+      "argument_index": 255,
+      "required_value": 0,
+      "retail_steps": 9,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 21,
+      "argument_index": 256,
+      "required_value": 4294967295,
+      "retail_steps": 7,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 22,
+      "argument_index": 257,
+      "required_value": 4294967295,
+      "retail_steps": 7,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 23,
+      "argument_index": 2147483647,
+      "required_value": 4294967295,
+      "retail_steps": 7,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 24,
+      "argument_index": 2147483648,
+      "required_value": 0,
+      "retail_steps": 4,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 25,
+      "argument_index": 4294967294,
+      "required_value": 0,
+      "retail_steps": 4,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 26,
+      "argument_index": 4294967295,
+      "required_value": 0,
+      "retail_steps": 4,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 27,
+      "argument_index": 0,
+      "required_value": 0,
+      "retail_steps": 9,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 28,
+      "argument_index": 1,
+      "required_value": 1,
+      "retail_steps": 10,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 29,
+      "argument_index": 2,
+      "required_value": 0,
+      "retail_steps": 9,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 30,
+      "argument_index": 127,
+      "required_value": 4294967295,
+      "retail_steps": 10,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 31,
+      "argument_index": 254,
+      "required_value": 0,
+      "retail_steps": 9,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 32,
+      "argument_index": 255,
+      "required_value": 4294967295,
+      "retail_steps": 10,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 33,
+      "argument_index": 256,
+      "required_value": 4294967295,
+      "retail_steps": 7,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 34,
+      "argument_index": 257,
+      "required_value": 0,
+      "retail_steps": 7,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 35,
+      "argument_index": 2147483647,
+      "required_value": 0,
+      "retail_steps": 7,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 36,
+      "argument_index": 2147483648,
+      "required_value": 4294967295,
+      "retail_steps": 4,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 37,
+      "argument_index": 4294967294,
+      "required_value": 0,
+      "retail_steps": 4,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 38,
+      "argument_index": 4294967295,
+      "required_value": 1,
+      "retail_steps": 4,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 39,
+      "argument_index": 0,
+      "required_value": 0,
+      "retail_steps": 9,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 40,
+      "argument_index": 1,
+      "required_value": 4294967295,
+      "retail_steps": 10,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 41,
+      "argument_index": 2,
+      "required_value": 0,
+      "retail_steps": 9,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 42,
+      "argument_index": 127,
+      "required_value": 0,
+      "retail_steps": 9,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 43,
+      "argument_index": 254,
+      "required_value": 4294967295,
+      "retail_steps": 10,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 44,
+      "argument_index": 255,
+      "required_value": 1,
+      "retail_steps": 10,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 45,
+      "argument_index": 256,
+      "required_value": 1,
+      "retail_steps": 7,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 46,
+      "argument_index": 257,
+      "required_value": 0,
+      "retail_steps": 7,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 47,
+      "argument_index": 2147483647,
+      "required_value": 4294967295,
+      "retail_steps": 7,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 48,
+      "argument_index": 2147483648,
+      "required_value": 1,
+      "retail_steps": 4,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 49,
+      "argument_index": 4294967294,
+      "required_value": 4294967295,
+      "retail_steps": 4,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 50,
+      "argument_index": 4294967295,
+      "required_value": 1,
+      "retail_steps": 4,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 51,
+      "argument_index": 0,
+      "required_value": 4294967295,
+      "retail_steps": 10,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 52,
+      "argument_index": 1,
+      "required_value": 1,
+      "retail_steps": 10,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 53,
+      "argument_index": 2,
+      "required_value": 4294967295,
+      "retail_steps": 10,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 54,
+      "argument_index": 127,
+      "required_value": 1,
+      "retail_steps": 10,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 55,
+      "argument_index": 254,
+      "required_value": 4294967295,
+      "retail_steps": 10,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 56,
+      "argument_index": 255,
+      "required_value": 0,
+      "retail_steps": 9,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 57,
+      "argument_index": 256,
+      "required_value": 4294967295,
+      "retail_steps": 7,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 58,
+      "argument_index": 257,
+      "required_value": 4294967295,
+      "retail_steps": 7,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 59,
+      "argument_index": 2147483647,
+      "required_value": 0,
+      "retail_steps": 7,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 60,
+      "argument_index": 2147483648,
+      "required_value": 0,
+      "retail_steps": 4,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 61,
+      "argument_index": 4294967294,
+      "required_value": 4294967295,
+      "retail_steps": 4,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 62,
+      "argument_index": 4294967295,
+      "required_value": 4294967295,
+      "retail_steps": 4,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 63,
+      "argument_index": 0,
+      "required_value": 1,
+      "retail_steps": 10,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 64,
+      "argument_index": 1,
+      "required_value": 4294967295,
+      "retail_steps": 10,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 65,
+      "argument_index": 2,
+      "required_value": 4294967295,
+      "retail_steps": 10,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 66,
+      "argument_index": 127,
+      "required_value": 1,
+      "retail_steps": 10,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 67,
+      "argument_index": 254,
+      "required_value": 4294967295,
+      "retail_steps": 10,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 68,
+      "argument_index": 255,
+      "required_value": 1,
+      "retail_steps": 10,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 69,
+      "argument_index": 256,
+      "required_value": 0,
+      "retail_steps": 7,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 70,
+      "argument_index": 257,
+      "required_value": 4294967295,
+      "retail_steps": 7,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 71,
+      "argument_index": 2147483647,
+      "required_value": 0,
+      "retail_steps": 7,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 72,
+      "argument_index": 2147483648,
+      "required_value": 0,
+      "retail_steps": 4,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 73,
+      "argument_index": 4294967294,
+      "required_value": 1,
+      "retail_steps": 4,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 74,
+      "argument_index": 4294967295,
+      "required_value": 4294967295,
+      "retail_steps": 4,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 75,
+      "argument_index": 0,
+      "required_value": 4294967295,
+      "retail_steps": 10,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 76,
+      "argument_index": 1,
+      "required_value": 0,
+      "retail_steps": 9,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 77,
+      "argument_index": 2,
+      "required_value": 0,
+      "retail_steps": 9,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 78,
+      "argument_index": 127,
+      "required_value": 0,
+      "retail_steps": 9,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 79,
+      "argument_index": 254,
+      "required_value": 1,
+      "retail_steps": 10,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 80,
+      "argument_index": 255,
+      "required_value": 1,
+      "retail_steps": 10,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 81,
+      "argument_index": 256,
+      "required_value": 1,
+      "retail_steps": 7,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 82,
+      "argument_index": 257,
+      "required_value": 0,
+      "retail_steps": 7,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 83,
+      "argument_index": 2147483647,
+      "required_value": 1,
+      "retail_steps": 7,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 84,
+      "argument_index": 2147483648,
+      "required_value": 4294967295,
+      "retail_steps": 4,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 85,
+      "argument_index": 4294967294,
+      "required_value": 4294967295,
+      "retail_steps": 4,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 86,
+      "argument_index": 4294967295,
+      "required_value": 1,
+      "retail_steps": 4,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 87,
+      "argument_index": 0,
+      "required_value": 0,
+      "retail_steps": 9,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 88,
+      "argument_index": 1,
+      "required_value": 1,
+      "retail_steps": 10,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 89,
+      "argument_index": 2,
+      "required_value": 1,
+      "retail_steps": 10,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 90,
+      "argument_index": 127,
+      "required_value": 1,
+      "retail_steps": 10,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 91,
+      "argument_index": 254,
+      "required_value": 1,
+      "retail_steps": 10,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 92,
+      "argument_index": 255,
+      "required_value": 0,
+      "retail_steps": 9,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 93,
+      "argument_index": 256,
+      "required_value": 0,
+      "retail_steps": 7,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 94,
+      "argument_index": 257,
+      "required_value": 1,
+      "retail_steps": 7,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 95,
+      "argument_index": 2147483647,
+      "required_value": 0,
+      "retail_steps": 7,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 96,
+      "argument_index": 2147483648,
+      "required_value": 0,
+      "retail_steps": 4,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 97,
+      "argument_index": 4294967294,
+      "required_value": 0,
+      "retail_steps": 4,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 98,
+      "argument_index": 4294967295,
+      "required_value": 0,
+      "retail_steps": 4,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 99,
+      "argument_index": 0,
+      "required_value": 4294967295,
+      "retail_steps": 10,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 100,
+      "argument_index": 1,
+      "required_value": 0,
+      "retail_steps": 9,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 101,
+      "argument_index": 2,
+      "required_value": 0,
+      "retail_steps": 9,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 102,
+      "argument_index": 127,
+      "required_value": 4294967295,
+      "retail_steps": 10,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 103,
+      "argument_index": 254,
+      "required_value": 4294967295,
+      "retail_steps": 10,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 104,
+      "argument_index": 255,
+      "required_value": 0,
+      "retail_steps": 9,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 105,
+      "argument_index": 256,
+      "required_value": 4294967295,
+      "retail_steps": 7,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 106,
+      "argument_index": 257,
+      "required_value": 0,
+      "retail_steps": 7,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 107,
+      "argument_index": 2147483647,
+      "required_value": 1,
+      "retail_steps": 7,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 108,
+      "argument_index": 2147483648,
+      "required_value": 4294967295,
+      "retail_steps": 4,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 109,
+      "argument_index": 4294967294,
+      "required_value": 0,
+      "retail_steps": 4,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 110,
+      "argument_index": 4294967295,
+      "required_value": 4294967295,
+      "retail_steps": 4,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 111,
+      "argument_index": 0,
+      "required_value": 4294967295,
+      "retail_steps": 10,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 112,
+      "argument_index": 1,
+      "required_value": 0,
+      "retail_steps": 9,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 113,
+      "argument_index": 2,
+      "required_value": 4294967295,
+      "retail_steps": 10,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 114,
+      "argument_index": 127,
+      "required_value": 4294967295,
+      "retail_steps": 10,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 115,
+      "argument_index": 254,
+      "required_value": 4294967295,
+      "retail_steps": 10,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 116,
+      "argument_index": 255,
+      "required_value": 0,
+      "retail_steps": 9,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 117,
+      "argument_index": 256,
+      "required_value": 4294967295,
+      "retail_steps": 7,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 118,
+      "argument_index": 257,
+      "required_value": 4294967295,
+      "retail_steps": 7,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 119,
+      "argument_index": 2147483647,
+      "required_value": 1,
+      "retail_steps": 7,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 120,
+      "argument_index": 2147483648,
+      "required_value": 4294967295,
+      "retail_steps": 4,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 121,
+      "argument_index": 4294967294,
+      "required_value": 1,
+      "retail_steps": 4,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 122,
+      "argument_index": 4294967295,
+      "required_value": 4294967295,
+      "retail_steps": 4,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 123,
+      "argument_index": 0,
+      "required_value": 0,
+      "retail_steps": 9,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 124,
+      "argument_index": 1,
+      "required_value": 1,
+      "retail_steps": 10,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 125,
+      "argument_index": 2,
+      "required_value": 0,
+      "retail_steps": 9,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 126,
+      "argument_index": 127,
+      "required_value": 0,
+      "retail_steps": 9,
+      "ram_and_cpu_match": true
+    },
+    {
+      "case": 127,
+      "argument_index": 254,
+      "required_value": 1,
+      "retail_steps": 10,
+      "ram_and_cpu_match": true
+    }
+  ]
+}

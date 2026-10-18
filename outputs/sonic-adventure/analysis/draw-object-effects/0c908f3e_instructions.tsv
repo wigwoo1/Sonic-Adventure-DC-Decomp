@@ -1,0 +1,81 @@
+address	length	bytes	instruction	flows
+0c908f3e	2	e62f	mov.l r14,@-r15	
+0c908f40	2	08ee	mov #0x8,r14	
+0c908f42	2	184e	shll8 r14	
+0c908f44	2	fbff	fmov.s fr15,@-r15	
+0c908f46	2	107e	add #0x10,r14	
+0c908f48	2	5c3e	add r5,r14	
+0c908f4a	2	78e0	mov #0x78,r0	
+0c908f4c	2	224f	sts.l PR,@-r15	
+0c908f4e	2	ed00	mov.w @(r0,r14),r0	
+0c908f50	2	0d60	extu.w r0,r0	
+0c908f52	2	0088	cmp/eq #0x0,r0	
+0c908f54	2	048d	bt/s 0x0c908f60	0c908f60 
+0c908f56	2	9dff	_fldi1 fr15	
+0c908f58	2	0188	cmp/eq #0x1,r0	
+0c908f5a	2	6189	bt 0x0c909020	0c909020 
+0c908f5c	2	71a0	bra 0x0c909042	0c909042 
+0c908f5e	2	0900	_nop	
+0c908f60	2	36e0	mov #0x36,r0	
+0c908f62	2	8df4	fldi0 fr4	
+0c908f64	2	00e4	mov #0x0,r4	
+0c908f66	2	450e	mov.w r4,@(r0,r14)	
+0c908f68	2	44e0	mov #0x44,r0	
+0c908f6a	2	47fe	fmov fr4,@(r0,r14)	
+0c908f6c	2	26c7	mova 0x0c909008,r0	
+0c908f6e	2	08f3	fmov.s @r0,fr3	
+0c908f70	2	48e0	mov #0x48,r0	
+0c908f72	2	01e3	mov #0x1,r3	
+0c908f74	2	37fe	fmov fr3,@(r0,r14)	
+0c908f76	2	4ce0	mov #0x4c,r0	
+0c908f78	2	47fe	fmov fr4,@(r0,r14)	
+0c908f7a	2	24c7	mova 0x0c90900c,r0	
+0c908f7c	2	08f5	fmov.s @r0,fr5	
+0c908f7e	2	5ce0	mov #0x5c,r0	
+0c908f80	2	57fe	fmov fr5,@(r0,r14)	
+0c908f82	2	60e0	mov #0x60,r0	
+0c908f84	2	57fe	fmov fr5,@(r0,r14)	
+0c908f86	2	76e0	mov #0x76,r0	
+0c908f88	2	350e	mov.w r3,@(r0,r14)	
+0c908f8a	2	0e70	add #0xe,r0	
+0c908f8c	2	47fe	fmov fr4,@(r0,r14)	
+0c908f8e	2	0470	add #0x4,r0	
+0c908f90	2	47fe	fmov fr4,@(r0,r14)	
+0c908f92	2	0470	add #0x4,r0	
+0c908f94	2	47fe	fmov fr4,@(r0,r14)	
+0c908f96	2	1070	add #0x10,r0	
+0c908f98	2	f7fe	fmov fr15,@(r0,r14)	
+0c908f9a	2	0470	add #0x4,r0	
+0c908f9c	2	f7fe	fmov fr15,@(r0,r14)	
+0c908f9e	2	4c1e	mov.l r4,@(0x30,r14)	
+0c908fa0	2	78e0	mov #0x78,r0	
+0c908fa2	2	ed03	mov.w @(r0,r14),r3	
+0c908fa4	2	0173	add #0x1,r3	
+0c908fa6	2	4ca0	bra 0x0c909042	0c909042 
+0c908fa8	2	350e	_mov.w r3,@(r0,r14)	
+0c909020	2	5fd3	mov.l 0x0c9091a0,r3	
+0c909022	2	0b43	jsr @r3	8c63a9b8 
+0c909024	2	ec54	_mov.l @(0x30,r14),r4	
+0c909026	2	5fc7	mova 0x0c9091a4,r0	
+0c909028	2	0cf3	fmov fr0,fr3	
+0c90902a	2	08f0	fmov.s @r0,fr0	
+0c90902c	2	9ce0	mov #-0x64,r0	
+0c90902e	2	9df2	fldi1 fr2	
+0c909030	2	20f2	fadd fr2,fr2	
+0c909032	2	0c60	extu.b r0,r0	
+0c909034	2	3eff	fmac fr0,fr3,fr15	
+0c909036	2	f7fe	fmov fr15,@(r0,r14)	
+0c909038	2	e6f3	fmov.s @(r0,r14),fr3	
+0c90903a	2	0470	add #0x4,r0	
+0c90903c	2	4df3	fneg fr3	
+0c90903e	2	20f3	fadd fr2,fr3	
+0c909040	2	37fe	fmov fr3,@(r0,r14)	
+0c909042	2	ec52	mov.l @(0x30,r14),r2	
+0c909044	2	0ce3	mov #0xc,r3	
+0c909046	2	1843	shll8 r3	
+0c909048	2	3c32	add r3,r2	
+0c90904a	2	2c1e	mov.l r2,@(0x30,r14)	
+0c90904c	2	264f	lds.l @r15+,PR	
+0c90904e	2	f9ff	fmov.s @r15+,fr15	
+0c909050	2	0b00	rts	
+0c909052	2	f66e	_mov.l @r15+,r14	

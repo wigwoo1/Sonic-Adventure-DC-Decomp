@@ -1,0 +1,9 @@
+from pathlib import Path
+root=Path(__file__).resolve().parent
+text=(root/'verify_magic_update_native_ack.py').read_text().replace("fn=ctypes.CDLL(str(ROOT/'work/sonic-adventure/build/sound_stream_magic_update.dll')).sa_sound_stream_magic_update", "fn=ctypes.CDLL(str(ROOT/'work/sonic-adventure/build/sound_stream_update_dispatch.dll')).sa_sound_stream_update_dispatch")
+text=text.replace('services=[', "magic=ctypes.CDLL(str(ROOT/'work/sonic-adventure/build/sound_stream_magic_update.dll')).sa_sound_stream_magic_update;magic.argtypes=fn.argtypes\nservices=[",1)
+text=text.replace('    before=bytes(ram[0xa70000:0xa70100]);', "    struct.pack_into('<H',ram,0xa700a8,0)\n    before=bytes(ram[0xa70000:0xa70100]);")
+text=text.replace('        if address==0x8c644c16:', '        if address==0x8c667a5c:return magic(mem,fp,srp,r,prp,ctypes.byref(fpul),ctypes.byref(macl),None,call)\n        if address==0x8c644c16:')
+text=text.replace('s.pc=0x8c667a5c','s.pc=0x8c667ad4').replace('magic_update_native_ack_verification.json','stream_dispatch_native_magic_verification.json').replace('of60-instruction magic stream update667a5c..667ad4','of native33-instruction update dispatcher667ad4..667b16 connected to60-instruction magic stream update667a5c..667ad4').replace('magic stream native-acknowledgment comparisons passed','stream dispatcher native-magic comparisons passed')
+(root/'verify_stream_dispatch_native_magic.py').write_text(text)
+text=(root/'register_magic_update_native_ack.py').read_text().replace('magic_update_native_ack','stream_dispatch_native_magic').replace("'sa_sound_stream_magic_update',", "'sa_sound_stream_update_dispatch', 'sa_sound_stream_magic_update',").replace('Magic update native acknowledgment integration:','Stream dispatcher native magic integration:');(root/'register_stream_dispatch_native_magic.py').write_text(text)

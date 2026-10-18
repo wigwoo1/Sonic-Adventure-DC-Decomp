@@ -1,0 +1,41 @@
+{
+  "functions_verified": 3,
+  "total_full_state_cases": 384,
+  "comparison_level": "Complete 16 MiB RAM and all GPRs, SR, PR, and return PC compared against the retail SH-4 interpreter.",
+  "scope": "The task flag accessors at 0x8c091b54, 0x8c091b5e, and 0x8c091b68 reach a status word through the object pointer at +0x1c and its field at +2. The setters OR masks 0x04 and 0x10, and the getter returns field & 0x04. Tests cover flag edge values, code-alias reads/writes, and the final aligned halfword in RAM.",
+  "limitations": [
+    "Uses the project SH-4 interpreter rather than Dreamcast hardware or end-to-end gameplay.",
+    "The higher-level task state names and lifecycle semantics remain unidentified."
+  ],
+  "binary_sha256": "45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a",
+  "source_sha256": "ca052fb9152d08fa348f6435da3a92c2a4c0c710f25ba7b2fa618baba7f8e27c",
+  "routines": [
+    {
+      "module": "1ST_READ.BIN",
+      "load_address": "0x8c010000",
+      "address": "0x8c091b54",
+      "end_exclusive": "0x8c091b5e",
+      "retail_span_sha256": "455e56fb867c8b9ffbe9d9f93a4b255cc27967243980af6feccf88e135186fb5",
+      "cases_passed": 128,
+      "name": "sa_task_flag_set_0x04_8c091b54"
+    },
+    {
+      "module": "1ST_READ.BIN",
+      "load_address": "0x8c010000",
+      "address": "0x8c091b5e",
+      "end_exclusive": "0x8c091b68",
+      "retail_span_sha256": "9e3e23a40da27f1afcfdb48fd8e2365d5c61a08e8f1d4c95258e8ae3321536ba",
+      "cases_passed": 128,
+      "name": "sa_task_flag_set_0x10_8c091b5e"
+    },
+    {
+      "module": "1ST_READ.BIN",
+      "load_address": "0x8c010000",
+      "address": "0x8c091b68",
+      "end_exclusive": "0x8c091b70",
+      "retail_span_sha256": "f46be89199c39f21405aab1bbdaf66361adffc4ac7957faa1341db1560c2fad2",
+      "cases_passed": 128,
+      "name": "sa_task_flag_test_0x04_8c091b68"
+    }
+  ]
+}

@@ -1,0 +1,114 @@
+Particle rendering-data preparation and model wrapper
+16 October 2026 -- VERIFIED within the bounded scope below.
+Whole-project completion remains 10% estimated weighted milestones.
+The goal stays active. Continue Sol High for recursive model traversal.
+
+Recovered source
+  source/sa_main_dispatch_particle_geometry.c
+    sa_particle_geometry_prepare_8c620f2c: 258 original instruction rows.
+    sa_particle_model_wrapper_8c6215fa: 13 original instruction rows.
+  source/sa_main_dispatch_particle_geometry_connected.c
+Both entries compile with existing native particle/matrix/task/heap dependencies.
+Geometry preparation skips a 12-byte literal pool at 8c62110c..8c621118.
+The exact span hash includes that gap; the 271-row instruction count excludes it.
+There are no conditional branches in these entries and two direct call sites.
+Descriptive names and field meanings are inferred from the original code.
+
+Behavior
+8c620f2c reads the source pointer from 8c8ea3e0 and coefficients at 8c8e9f20.
+It computes nine temporary values and three final output values, using 12
+scalar multiplies and 24 fused multiply-add instructions. The output is stored
+at 8c89023c. It copies source +12c/+128 into 8c890254/8c890258, then calls
+8c6215fa with the original model argument. Calculations retain their original
+instruction order, intermediate rounding, FPSCR effects and reached guards.
+The wrapper calls 8c62113c while saving/restoring R8, PR and its stack frame.
+
+This replaces the former geometry fixture with recovered native preparation.
+Recursive model traversal 8c62113c is now the only explicit game-service fixture
+in this connected particle path. No actual pixel rendering is claimed.
+
+Build and focused proof
+Strict Clang shared-library build passed: -Wall -Wextra -Werror.
+Eight smoke checks passed, followed by 464 full comparisons. Additional inputs
+requiring nontrivial rounding extended the final passing suite to 548 cases:
+  geometry 192, model wrapper 52, draw wrapper 96,
+  primary callback 96, secondary callback 48, internal work update 64.
+All 271 new rows and both call sites were reached. Full 16 MiB RAM, general
+registers, SR/PR, both FPU banks, FPSCR, FPUL and MACL were compared, along with
+1,822 ordered call-boundary states and 7,832 scalar/vector numerical operations.
+232 completed cases passed independent assertions; 316 reached numerical-guard
+or service-error cases matched partial state. There were 240 model-fixture calls.
+
+The suite tests identity/mixed/negative matrices, rounding-sensitive fractions,
+FR/SZ/PR modes, rounding modes 0/1 and reserved modes, enabled traps, denormal
+flush modes, infinity/NaN guards, both models, paused/live mode changes and
+missing/failed model calls. The fixture deliberately changes R8 and renderer
+globals, and selected cases flip the floating-register bank and swap flag.
+Independent matrix/vector algebra checks final values with tolerance 0.0001;
+copy-through words, callback motion and renderer-state restoration are also
+checked separately from the instruction translation.
+
+Complete linked lifetime proof
+Six smoke lifetimes and then 120 full lifetimes / 984 scheduler-stage comparisons
+passed using the new native preparation. Each stage preserves linked RAM/CPU/FPU
+state from the previous stage and compares with original instructions.
+Totals: 17,824 ordered boundaries, 44,800 scalar/vector numerical operations,
+64 parent tasks, 80 particles, 54 paused passes and 880 model-fixture calls.
+Independent checks prove expiration, deferred deletion, exact final task-pool
+order, empty scheduler lists and complete work-heap coalescing in these inputs.
+The existing translation routine also retained its 46-case/56-row regression
+coverage. Existing routines receive integration evidence without extra credit.
+
+Evidence files
+  analysis/main-dispatch-particle-geometry/*_instructions.tsv
+  analysis/main_dispatch_particle_geometry_inventory.json (earlier byte inventory)
+  analysis/main_dispatch_particle_geometry_translation.json
+  analysis/main_dispatch_particle_geometry_verification.json
+  analysis/main_dispatch_particle_geometry_lifecycle_verification.json
+Original spans, source, tools, dependency evidence and the tested DLL are pinned
+by hashes. The registrar validates metrics and hashes before changing inventory.
+The earlier inventory's native_behavior_verified=false describes its original
+inventory-only scope; the later verification reports establish this checkpoint.
+
+Limits
+The model traversal fixture is a substitute with explicit state changes and
+failure cases. Its execution does not prove recursive traversal, model decoding,
+material/texture processing, vertex submission, GPU/MMIO or visible rendering.
+Inputs supply valid constructed pointers and renderer globals. Host-selected
+scheduler-pass order and pause/resume do not establish the original frame driver
+or full primary/secondary phase ordering. All game ports remain unfinished.
+Finite scalar results use the existing C helpers versus Python integer-dyadic
+arithmetic. Numerical guard/trap classification uses native probes; this does
+not prove physical Dreamcast exception dispatch. Vector operations retain the
+shared pinned numerical primitive and earlier hardware-accuracy limits.
+Wide-FMOV fixtures preserve their register-bank/pair behavior; they are not a
+claim that such numerical modes are reached during normal gameplay.
+
+Final audit
+1,032 registered entries / 1,029 unique module-address pairs; zero evidence
+errors and zero stale whole-source reports. 980 match the unchanged 10,875
+candidate snapshot, whose code boundaries remain incomplete. There are still
+211 non-texture decoded modules without a function index. These counts cannot
+be treated as a whole-game decompilation percentage.
+Dispatcher map verification passed 658 original pointer-load checks, accounting
+for 80 spans and 83 selectors. Aggregate PowerShell syntax passed. The full
+accumulated build_and_verify.ps1 workflow was not rerun end-to-end.
+The completion audit remains 10% weighted milestones; goal active.
+
+Repeat using the installed project Python from this document's directory:
+  python -B recover_main_dispatch_particle_geometry.py
+  .\build_main_dispatch_particle_geometry.ps1
+  python -B verify_main_dispatch_particle_geometry.py
+  python -B verify_main_dispatch_particle_geometry_lifecycle.py
+  python -B register_main_dispatch_particle_geometry.py
+  python -B map_main_dispatch_cases.py
+  python -B verify_main_dispatch_case_map.py
+Read-only export, if needed: ghidra/export_main_dispatch_particle_geometry.ps1.
+The focused stages are included in build_and_verify.ps1.
+
+Next task
+Recover recursive model traversal 8c62113c: its existing inventory checks 514
+original rows, 58 conditional outcomes, 40 call sites and 16 register-bank flips.
+Establish its direct/indirect dependencies, node flags, child/sibling ordering
+and matrix-stack semantics before claiming native traversal. Continue Sol High;
+no model switch or pause is recommended for this reverse-engineering work.

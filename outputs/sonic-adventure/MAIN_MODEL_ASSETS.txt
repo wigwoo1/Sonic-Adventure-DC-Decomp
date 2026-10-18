@@ -1,0 +1,135 @@
+Original main-executable model data and native stream verification
+17 October 2026 - VERIFIED within the bounded scope below.
+Overall completion: 10% estimated weighted whole-project milestones, not code coverage.
+Goal active. Continue Sol High; no model switch or pause advised.
+
+What changed
+model_asset_inventory.py is a read-only bounded parser for the basic model layout
+consumed by the recovered code: 40-byte model records, 24-byte segment records,
+20-byte materials and 52-byte object nodes. It inventories vertex/normal arrays,
+material selectors, topology/group streams and optional signed UV arrays. It checks
+image bounds, pointer alignment, finite vectors, positive bounded counts, material
+indices and vertex indices. Alternate c000 strips use the high count bit as a
+winding flag; their length is the low 15 bits. The 8000 group length is unsigned.
+Descriptive field names remain inferred from original instructions.
+
+The original mask at 8c620cb0 is 03600000 hex and the material-index mask at
+8c620b62 is 3fff. Twelve original literal profile values map to nine renderer
+families, including the original alias profiles. Runtime material masks/overrides
+are separate from this static classification. The parser preserves rejected
+headers and does not count structural discovery as recovered game code.
+
+Discovery in 1ST_READ.BIN
+- 865 bounded header candidates, of which 860 satisfy the full parser contract.
+- 1,905 segment records across all nine default material families.
+- Topology records: 153 triangle lists (0000), 256 quad lists (4000), 17 groups
+  using 8000 and 1,479 alternate strips (c000).
+- 858 structurally matching object nodes reference 854 distinct model candidates.
+  Six otherwise-valid records lack a node under this bounded structural search;
+  they remain candidates rather than being discarded or assigned an identity.
+- Five rejected header candidates have unaligned pointers into code/data. Their
+  addresses and rejection reasons remain in the inventory.
+- Existing particle code literals 8c0449fc / 8c044a00 independently identify roots
+  8c19fed8 / 8c1a00a4, which point to models 8c19feb0 / 8c1a007c. Both use
+  ten triangle groups, eleven vertices and default flat-colour material profiles.
+
+The 17 non-alternate 8000 segments occur in 14 model candidates: 14 use
+per-vertex UV lighting, 1 uses constant UV factors and 2 use
+untextured per-vertex lighting.
+None use the three normalized face-lighting families under their original static
+flags. This does not prove the earlier stale-register face-strip behavior
+unreachable: runtime material overrides can select a different family, and decoded
+overlays, alternative formats and dynamically constructed models are outside
+this scan. Original static assets, default selection and actual gameplay
+reachability are distinct evidence.
+
+Native original-asset checks
+A separate DLL links the existing recovered native renderer chain. Selection is
+reproducible: the smallest node-backed example of each of the nine families,
+every inventoried model containing 8000 groups, and both known particle roots,
+deduplicated to 24 original models. Their model, vertex, normal, material, segment,
+index and UV bytes remain exactly unchanged before and after every test.
+
+Runtime camera matrices, projection settings, command buffers and bounded texture
+descriptors are constructed. Texture descriptors stand for loaded textures; their
+pixels and physical GPU texture memory are not supplied. Both the inactive FPU
+matrix bank and published matrix memory are initialized consistently, as required
+by the recovered caller contract. The runtime vertex limit is set to a valid
+capacity, rather than the old four-vertex synthetic-fixture limit.
+
+Build and tests actually passed
+- Strict native Clang build: -O2 -Wall -Wextra -Werror; original recovered C and
+  earlier checkpoint DLLs are preserved unchanged.
+- 192 original-code comparisons: 24 unchanged model streams, front/crossing
+  constructed cameras, both FPU banks and both cursor halves; all complete.
+- Full 16 MiB RAM, CPU/SR/PR, FPU banks/FPSCR, FPUL/MACL, ordered boundaries and
+  queue words/events agree with original instruction execution.
+- 5,680 ordered boundaries, 222,924 numerical operations, 14,280 queue transfers
+  and 146,708 queue events; zero external game-service boundaries.
+- 976 native near-clipper invocations exercised original crossing streams.
+- 96 front-camera cases independently check every projected vertex and exact
+  input counter consumption derived from parsed original groups; material-family
+  selection agrees with original unmodified material flags. Crossing cases retain
+  full original-state/queue comparisons and input preservation evidence.
+- Inventory reproduces byte-for-byte. Independent raw-byte checks validate all
+  860 model headers, recorded object-to-model pointers and twelve profile literals.
+- Seventeen malformed fixtures are rejected: out-of-image/truncated records,
+  invalid counts, bad pointers/alignment, nonfinite vertices/normals, negative
+  radius, missing groups, bad material/vertex indices, truncated index/UV tables
+  and a short alternate strip. A winding-bit change preserves group length and
+  changes orientation rather than being interpreted as a negative count.
+- Early smoke checks exposed incomplete new runtime-fixture setup: the matrix bank
+  lacked the camera translation and the vertex capacity was still four. Both
+  were corrected from original caller requirements. Final smoke and full native
+  suites passed without modifying original model data or recovered game code.
+
+Final integrity checks passed: all three reports match pinned inputs (6 inventory,
+5 parser validation, 324 native validation), five Python and two PowerShell scripts
+parse, and repeated registration adds zero routines. Dispatcher checks validate
+658 pointer loads, 80 spans and 83 selectors. Audits report zero evidence errors
+and zero stale reports. The app goal was checked and remains active.
+
+Evidence and a simple check
+Open this guide and SOURCE_HANDOFF.txt. Reports are:
+  analysis/main_model_assets_inventory.json
+  analysis/main_model_inventory_verification.json
+  analysis/main_model_assets_verification.json
+The native report has cases_passed=192, selected_models=24,
+independent_projection_cases=96 and external_service_boundaries=0. The inventory
+has validated_model_candidates=860 and segment_records=1905. Structural model
+candidates are not newly decompiled routines or proof of a playable scene.
+Scripts:
+  model_asset_inventory.py
+  inventory_main_model_assets.py
+  verify_main_model_inventory.py
+  build_main_model_assets.ps1
+  verify_main_model_assets.py
+  register_main_model_assets.py
+
+Limits and next work
+This bounded aligned scan covers one original executable. It does not discover all
+possible game models, runtime allocations, relocations or alternate model formats.
+Finite/vector/count bounds and positive valid groups are explicit inventory
+preconditions; other records may exist outside them. Object-node searches bound
+flag values and validate pointers/transforms but do not establish gameplay calls.
+No asset names were guessed. Optional unused segment attribute fields are not
+semantically decoded by this parser.
+
+The numerical backend, coherent-RAM/MMU-off queues, inherited guards and simulated
+runtime scope remain. No hardware NaN precision, GPU pixels/cache timing, complete
+frame driver or gameplay is proved. The new strict build and focused suites ran;
+the historical aggregate workflow and particle lifetime suite were not rerun in
+this checkpoint. Their previous pinned evidence remains preserved.
+
+Registry remains 1,095 entries / 1,092 unique module-address pairs; 1,043 matches
+among 10,875 indexed candidates. Another 211 non-texture binaries lack function
+indexes. Model counts are independent of routine recovery counts and do not
+measure whole-game code coverage. No new routine recovery credit was assigned.
+Next: extend discovery to decoded overlays with established load addresses and
+trace runtime material overrides before broader native frame/GPU integration.
+Sol High is appropriate for binary layouts and call tracing. Luna can handle
+routine documentation afterward; no switch or goal pause is advised now.
+
+Full decompilation, native PC/Android/stereo 3DS ports, 60/120/240 FPS, 8K,
+SUPIR/settings and later N64/PS1 work remain unfinished. Texture Off must disable
+sampling and use vertex colours/material fallback, overriding the HD toggle.

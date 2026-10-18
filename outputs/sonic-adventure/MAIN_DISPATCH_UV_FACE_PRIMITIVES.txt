@@ -1,0 +1,113 @@
+Signed UV and face-lighting-factor primitives
+17 October 2026 — VERIFIED within the bounded scope below.
+Overall completion: 10% estimated weighted project milestones, not code coverage.
+Goal active. Continue Sol High with lower clipping helper 8c616f18.
+
+Recovered source
+  8c61be44..8c61c47e: 765 original instruction rows
+  8c61c4b4..8c61cf62: 1,277 original instruction rows
+  source/sa_main_dispatch_uv_face_primitives.c
+  source/sa_main_dispatch_uv_face_primitives_connected.c
+Both complete bodies are byte-checked annotated static C, retaining instruction
+order, register effects and delay slots without runtime opcode decoding. Names
+are descriptive inferences. Older source, proofs and original files are preserved.
+
+Observed behavior
+The material loop selects this pair for layout 1200000 hex. The segment's +14 hex
+field points to signed 16-bit U/V pairs. Values are converted to floats and scaled
+by 1/256. The stream advances across faces and rejected inputs as in the original.
+Accepted ordinary faces sum their vertex normals and call recovered numerical
+normalizer 8c63a94c. Lighting is base minus the normalized normal/light dot product.
+
+Triangle packets contain control, projected x/y/reciprocal depth, U/V, a lighting
+factor word and a retained eighth word. The first two triangle vertices retain
+their selected queue's previous factor word; the final vertex receives the new
+face factor. Input factor caches remain unchanged. These packets carry a factor,
+not the material RGBA layout of the earlier untextured face family.
+
+Near crossings stage vertex pointers and raw signed UVs to lower helper 8c616f18,
+with the calculated face factor in active FR4. Alternate topology c000 delegates
+to 8c614076 / 8c615b84 after original parameter/bank preparation. These three lower
+bodies remain explicit fixtures; their clipped/alternate output is not yet proved.
+The existing numerical normalizer is native and receives no new routine credit.
+
+Build and tests actually passed
+- Strict Clang build: -O2 -Wall -Wextra -Werror; separate connected DLL.
+- 702 original-code comparisons: 250 plain UV-face, 412 clipped UV-face, four
+  draws, four particle callbacks and 32 connected meshes.
+- All 2,038 reachable rows, 72 conditional outcomes and 15 call sites covered.
+  Four additional switch rows/two outcomes have exact-byte checks and exhaustive
+  proofs over all 65,536 input words under the c000 mask.
+- Full 16 MiB RAM, GPRs/SR/PR, both FPU banks/FPSCR, FPUL/MACL, ordered boundaries
+  and queue contents/events match original execution, including partial state.
+- 486 cases complete, 176 match numeric/precision guards (-1), 34 match unsupported
+  pointer/return boundaries (-3), three match missing lower services (-2) and
+  three propagate deliberately injected lower-service errors (-17).
+- 916 ordered boundaries, 13,388 numerical operations, 736 queue transfers and
+  7,072 queue events checked. The native normalizer executes 256 times. The report
+  records 196 external boundaries for the three lower fixtures.
+- 180 independent cases check signed UV/256, normalized face factors, exact early
+  factor/eighth-word retention, input factor preservation, counters/cursors and/or
+  near-helper vertex/UV/FR4 staging. Inputs include -32768/32767, negative/mixed/
+  zero UVs, differing normals, successive triangle faces, both windings/banks,
+  queue halves and inherited precision/rounding variants. Independent face factors
+  use 2e-5 tolerance for the approximate reciprocal-root backend. The shared vector
+  oracle and existing scalar-probe limits remain; arbitrary hardware precision
+  is not established by these checks.
+- All 32 meshes run native material setup, real projection/classification,
+  primary/secondary extended acquisition, one new parent and finalization.
+  Sixteen ordinary cases stay native throughout; 16 crossing cases independently
+  check vertex/UV/factor staging to the unfinished clipper fixture. These meshes
+  do not establish that fixture's clipped output.
+- 120 lifetime regressions / 984 stages passed: 23,264 boundaries, 104,016 numerical
+  operations, 10,600 queue transfers and 117,808 queue events. The 880 original-model
+  mesh iterations use existing native paths without external services. Those models
+  do not reach this new family; focused cases provide its coverage. Independent
+  pool, heap and particle checks pass.
+
+Strip precondition and host boundaries
+The near-crossing non-alternate strip branch reads live R12/R14/R13 vertex pointers
+before ordinary-path initialization, as in the earlier face-lit family. Forty-eight
+controlled cases seed valid cache pointers to cover its body and loops. This is
+controlled body coverage, not proof of the full game caller contract. The guard
+at 8c61cdc6 returns host -3 before an R14 normal read outside modeled RAM.
+Parent RTS guards at 8c61c47a / 8c61cf5e stop before delay-slot effects if stack data
+changed the incoming return address. Original partial state is compared up to
+these boundaries; physical fault/indirect-transfer handling remains unimplemented.
+Bounded constructed streams and coherent-RAM/MMU-off queues remain the scope.
+Physical cache timing, MMU-on behavior, GPU FIFO/pixels and the complete frame driver
+are unverified. Lifetime pass order is host-selected. The whole historical workflow
+was not rerun for this checkpoint.
+Final integrity checks passed: regenerated source/translation are byte-identical;
+all four new reports match pinned inputs; re-registering adds no duplicates;
+five Python and three PowerShell scripts parse. Dispatcher mapping verifies 658
+original pointer loads, 80 spans and 83 selectors. Recovery/completion audits find
+zero evidence errors and zero reports needing source-hash refresh. The app goal
+was checked and remains active.
+
+Evidence and next work
+  recover_main_dispatch_uv_face_primitives.py
+  build_main_dispatch_uv_face_primitives.ps1
+  verify_main_dispatch_uv_face_primitives.py
+  verify_main_dispatch_uv_face_primitives_lifecycle.py
+  register_main_dispatch_uv_face_primitives.py
+  analysis/main_dispatch_uv_face_primitives_translation.json
+  analysis/main_dispatch_uv_face_primitives_verification.json
+  analysis/main_dispatch_uv_face_primitives_lifecycle_verification.json
+Registry: 1,077 entries / 1,074 unique module-address pairs, with 1,025 matches
+among 10,875 indexed candidates. Another 211 non-texture binaries lack function
+indexes. These incomplete discovery counts do not measure whole-game coverage.
+Next lower helpers: 8c616f18 (550 rows), 8c614076 (315 rows), 8c615b84 (572 rows).
+Their 1,437 exported rows are checked against the original binary but are not
+recovered code: analysis/main_dispatch_uv_face_lower_inventory.json. Six other
+primitive emitters also remain unfinished. Full gameplay, visible rendering,
+texture sampling, playable ports, high frame rates/8K/stereo, SUPIR/settings and
+later N64/PS1 work remain unfinished. Texture Off must disable sampling and use
+vertex colours/material fallback.
+
+How to check without programming
+Open this guide and SOURCE_HANDOFF.txt. The focused report has cases_passed=702,
+rows_covered=2038 and call_sites_covered=15. The lifetime report has
+lifecycles_passed=120. There is no new playable game to launch yet.
+Recommended next model: Sol High; the lower clipping/alternate helpers still
+require instruction-level reverse engineering. No model switch or pause advised.

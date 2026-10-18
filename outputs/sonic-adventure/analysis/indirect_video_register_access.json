@@ -1,0 +1,23 @@
+{
+  "binary_sha256": "45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a",
+  "direct_checks_passed": 6,
+  "indirect_register_writer": "0x8c653444",
+  "writer_end_exclusive": "0x8c65344e",
+  "behavior": "Write r5 to 32-bit address 0xa05f8000 + r4; return 1.",
+  "register_reader": "0x8c653476",
+  "reader_behavior": "Return 32-bit value at 0xa05f8000 + r4.",
+  "finding": "Literal base appears as a referenced pool constant, although direct references to hardware base were absent from the graph.",
+  "evidence": [
+    "analysis/instructions/video_setup_region.tsv",
+    "analysis/video-base-references/scheduler_references.tsv"
+  ],
+  "next_work": [
+    "Export references to 0x8c653444 and trace offset/value arguments",
+    "Inspect callers using offset 0xd8 and related video registers",
+    "Confirm actual video mode selection before deriving cadence"
+  ],
+  "limitations": [
+    "Register access helper does not establish which modes execute.",
+    "No native renderer or FPS implementation."
+  ]
+}

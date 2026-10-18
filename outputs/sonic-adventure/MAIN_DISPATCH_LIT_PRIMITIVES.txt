@@ -1,0 +1,145 @@
+Normal-lit primitive-rendering family
+16 October 2026 — VERIFIED within the bounded scope below.
+Overall completion: 10% estimated weighted project milestones, not code coverage.
+Goal active; continue Sol High for the remaining reverse-engineering work.
+
+Recovered source
+  8c617e46..8c6184ba: 769 original instruction rows
+  8c6184f0..8c618cc6: 941 original instruction rows
+  source/sa_main_dispatch_lit_primitives.c
+  source/sa_main_dispatch_lit_primitives_connected.c
+These are complete, byte-checked, annotated static C translations with the
+original instruction ordering, register effects and delay slots. They do not
+decode instructions at runtime. Descriptive names and colour-field meanings are
+inferred; this is not a claim to have recovered the original developers' source.
+Original binary, earlier source and all pinned evidence are preserved.
+
+What the family does
+The entry word selects triangles (0000), quads (4000), strips (8000), or the
+alternate-strip helper (c000), after masking the two high bits of a 16-bit word.
+The first body performs screen-space orientation rejection; the second also
+checks per-vertex clipping masks and delegates near-plane triangles when needed.
+The recovered bodies now run directly inside the native mesh/material chain.
+
+For accepted vertices, the code reads a three-component normal from cache words
+0..2 and computes, in successive binary32 operations:
+  factor = ((base - normal.x * light.x) - normal.y * light.y)
+           - normal.z * light.z
+Light components occupy 8c890248/24c/250; base is at 8c890258. The factor is
+written to the vertex cache at +1c. A packet contains control, projected x/y/depth,
+the unchanged material word at +10 (inferred alpha), and the other three material
+words multiplied by the factor. Negative and greater-than-one factors are
+preserved by these bodies; no artificial clamp has been introduced. Packet
+controls, queue advancement, original counters including wraparound, and cache
+writes retain original behavior.
+
+Alternate dispatch saves/restores ten registers in the other floating-point
+bank around its helper, loading lighting/material values into that bank. The
+complete body and service boundary effects are compared; original FPU bank/width
+handling and inherited numerical guards remain in place.
+
+Three lower helpers are still explicit substitutes, not recovered native code:
+  8c612e64 — near-plane lighting helper, called at four sites
+  8c6136c0 — alternate strip helper for the first body
+  8c614bb0 — alternate strip helper for the clipped body
+Their test effects alter scratch registers/FPU values without producing geometry.
+Missing-helper and failing-helper partial state is checked for every target.
+Fourteen other primitive emitters also remain unfinished, making 17 remaining
+primitive/lower service targets. This increase from 16 reflects discovery of the
+three lower dependencies while replacing the two parent substitutes.
+
+Build and tests actually passed
+- Strict Clang build: -O2 -Wall -Wextra -Werror; new separate linked DLL.
+- 606 focused cases: 218 plain, 332 clipped, four draws, four particle callbacks,
+  and 48 constructed native mesh cases. Full 16 MiB RAM, GPRs/SR/PR, both FPU
+  banks/FPSCR, FPUL/MACL and ordered call boundaries match original execution.
+- All 1,706 reachable instruction rows, 72 conditional outcomes and six call
+  sites reached. Four additional source rows and two edges are proven impossible
+  by byte-checked topology switches and exhaustive enumeration of 65,536 inputs
+  per switch. All 1,710 exported rows remain in the generated source.
+- 728 ordered boundary comparisons, 9,616 numerical operations, 700 queue
+  transfers and 7,392 ordered queue events checked against independent Python
+  queue state. No GPU or visible frame is produced by this test backend.
+- 424 cases complete successfully. Another 176 match the inherited unsupported
+  precision guards (-1); three missing-helper cases return -2 and three explicit
+  helper failures return -17. Complete partial state is compared as well.
+- 116 independent cases check triangle orientation/clip routing, packet words,
+  RGB lighting, unchanged alpha, cached factor, cursors and/or counters, including
+  binary-exact negative and >1 factors and degenerate triangles. The independent
+  scalar lighting formula rounds each original operation; it is not a proof for
+  all floating-point values. All four rounding-mode bit patterns are exercised
+  by original-code comparisons with the established numerical oracle limits.
+
+Connected mesh coverage
+All 48 constructed meshes invoke the plain new body after actual material
+setup, filtering and vertex projection with normals. Both FPU banks, both
+orientation signs and primary/secondary three-word acquisition are covered.
+Thirty-two meshes independently verify final vertex packet colours/cache/cursor.
+The other sixteen place an input behind the near plane while ENV bit 2 bypasses
+classification, so they also select the plain body. These meshes do not call the
+near helper; the clipped body and explicit lower-helper routing were covered by
+direct parent cases. This coverage clarification was discovered while preparing
+the later MAIN_DISPATCH_LIT_NEAR_CLIP.txt checkpoint, which clears that bypass
+bit and explicitly verifies clipped-mesh helper calls and interpolated output.
+With otherwise zero material flags, bit 100000 changes the acquisition cursor;
+bit 200000 also selects a different primitive layout. The latter is not claimed
+as native coverage for this family. Earlier acquisition tests remain separate.
+
+Regression coverage
+The newly linked build passed 120 unchanged original-model particle lifetimes /
+984 stage comparisons, 23,264 ordered boundaries, 104,016 numerical operations,
+10,600 queue transfers and 117,808 queue events with zero external game services
+on those paths. Motion, timer, pause, deferred deletion, pool/heap checks and
+46 matrix-translation cases passed. These particular original models do not
+reach either new lighting body; the harness asserts that explicitly. Their
+regression results are not counted as new-body execution coverage. Host-selected
+scheduler ordering does not establish the complete original frame driver.
+
+How to inspect or repeat
+Read this file first, then the source and these saved reports:
+  analysis/main_dispatch_lit_primitives_translation.json
+  analysis/main_dispatch_lit_primitives_verification.json
+  analysis/main_dispatch_lit_primitives_lifecycle_verification.json
+From this output directory with the installed project Python:
+  python recover_main_dispatch_lit_primitives.py
+  .\build_main_dispatch_lit_primitives.ps1
+  python verify_main_dispatch_lit_primitives.py
+  python verify_main_dispatch_lit_primitives_lifecycle.py
+  python register_main_dispatch_lit_primitives.py
+  python inventory_main_dispatch_lit_lower.py
+  python map_main_dispatch_cases.py
+  python verify_main_dispatch_case_map.py
+  python audit_recovery_coverage.py
+  python audit_project_completion.py
+These stages are included in build_and_verify.ps1. The entire accumulated
+workflow was not rerun. Build timestamps change DLL hashes, so a rebuild must
+be followed by fresh focused/lifetime reports before registration.
+
+Registry and next task
+1,056 entries / 1,053 unique module-address pairs; the incomplete candidate
+inventory is not a measure of whole-game code coverage. Next: recover 8c612e64
+and alternate helpers 8c6136c0 / 8c614bb0, reusing existing empty stub 8c611708.
+Read-only exports and exact-byte inventory cover 1,324 rows with zero new
+recovery credit:
+  analysis/main-dispatch-lit-lower/
+  analysis/main_dispatch_lit_lower_inventory.json
+  ghidra/export_main_dispatch_lit_lower.ps1
+Their enclosing spans include possible literal pools; span sizes are not
+recovered-code byte counts. Ghidra draft pseudocode is analysis input only.
+
+Limits
+Valid bounded RAM/index streams and aligned coherent-RAM/MMU-off destinations
+only. Existing numeric/ABI guards and shared vector-oracle limits apply. Physical
+GPU FIFO, pixels, MMU-on/TLB, cache timing, hardware faults and the full original
+frame driver are unverified. Full decompilation/gameplay, all playable ports and
+HD/display settings remain unfinished. Texture Off remains planned to disable
+texture sampling and use vertex colours (material fallback where necessary).
+No model downgrade or goal pause is recommended for the next dependency.
+
+Final checkpoint integrity: zero registry evidence errors and zero stale source
+reports. Canonical source/manifest regeneration reproduced the saved hashes;
+registration reran with zero additions. Dispatcher verification passed 658 original
+pointer-load checks across 80 spans and 83 selectors. New build/export and
+aggregate PowerShell scripts parsed successfully. Five new Python scripts parsed.
+Candidate snapshot matches: 1,004 of 10,875; 211 non-texture modules still lack
+function indexes. Those counts do not establish an exhaustive game-code total.

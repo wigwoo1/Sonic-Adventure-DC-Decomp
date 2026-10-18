@@ -1,0 +1,125 @@
+{
+  "module": "1ST_READ.BIN",
+  "wrapper": "0x8c6533e0",
+  "helper": "0x8c650f78",
+  "cases_passed": 12,
+  "original_instructions_executed": 1800,
+  "cases": [
+    {
+      "ready_global": 0,
+      "table_pattern": "empty",
+      "result": 0,
+      "helper_calls": 1,
+      "full_cpu_sr_pr_fpu_match": true,
+      "ram_match_outside_stack_saves": true,
+      "retail_instructions_executed": 324
+    },
+    {
+      "ready_global": 0,
+      "table_pattern": "active_match",
+      "result": 17,
+      "helper_calls": 1,
+      "full_cpu_sr_pr_fpu_match": true,
+      "ram_match_outside_stack_saves": true,
+      "retail_instructions_executed": 51
+    },
+    {
+      "ready_global": 0,
+      "table_pattern": "inactive_match",
+      "result": 0,
+      "helper_calls": 1,
+      "full_cpu_sr_pr_fpu_match": true,
+      "ram_match_outside_stack_saves": true,
+      "retail_instructions_executed": 327
+    },
+    {
+      "ready_global": 0,
+      "table_pattern": "active_other_key",
+      "result": 0,
+      "helper_calls": 1,
+      "full_cpu_sr_pr_fpu_match": true,
+      "ram_match_outside_stack_saves": true,
+      "retail_instructions_executed": 324
+    },
+    {
+      "ready_global": 1,
+      "table_pattern": "empty",
+      "result": 0,
+      "helper_calls": 0,
+      "full_cpu_sr_pr_fpu_match": true,
+      "ram_match_outside_stack_saves": true,
+      "retail_instructions_executed": 8
+    },
+    {
+      "ready_global": 1,
+      "table_pattern": "active_match",
+      "result": 0,
+      "helper_calls": 0,
+      "full_cpu_sr_pr_fpu_match": true,
+      "ram_match_outside_stack_saves": true,
+      "retail_instructions_executed": 8
+    },
+    {
+      "ready_global": 1,
+      "table_pattern": "inactive_match",
+      "result": 0,
+      "helper_calls": 0,
+      "full_cpu_sr_pr_fpu_match": true,
+      "ram_match_outside_stack_saves": true,
+      "retail_instructions_executed": 8
+    },
+    {
+      "ready_global": 1,
+      "table_pattern": "active_other_key",
+      "result": 0,
+      "helper_calls": 0,
+      "full_cpu_sr_pr_fpu_match": true,
+      "ram_match_outside_stack_saves": true,
+      "retail_instructions_executed": 8
+    },
+    {
+      "ready_global": 2,
+      "table_pattern": "empty",
+      "result": 0,
+      "helper_calls": 1,
+      "full_cpu_sr_pr_fpu_match": true,
+      "ram_match_outside_stack_saves": true,
+      "retail_instructions_executed": 40
+    },
+    {
+      "ready_global": 2,
+      "table_pattern": "active_match",
+      "result": 17,
+      "helper_calls": 1,
+      "full_cpu_sr_pr_fpu_match": true,
+      "ram_match_outside_stack_saves": true,
+      "retail_instructions_executed": 51
+    },
+    {
+      "ready_global": 2,
+      "table_pattern": "inactive_match",
+      "result": 0,
+      "helper_calls": 1,
+      "full_cpu_sr_pr_fpu_match": true,
+      "ram_match_outside_stack_saves": true,
+      "retail_instructions_executed": 327
+    },
+    {
+      "ready_global": 2,
+      "table_pattern": "active_other_key",
+      "result": 0,
+      "helper_calls": 1,
+      "full_cpu_sr_pr_fpu_match": true,
+      "ram_match_outside_stack_saves": true,
+      "retail_instructions_executed": 324
+    }
+  ],
+  "retail_binary_sha256": "45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a",
+  "wrapper_source_sha256": "3fedb234640feab5bb99c1a9f67d9965e437df43ef7904fdddfc7bd363637ff5",
+  "helper_source_sha256": "9de33bb0afd66702a63e2905b59387d59c46fea63abd7fdeef4e0147b2d028d6",
+  "scope": "Runs the native wrapper with the native scanner and compares full CPU registers, SR/PR, FPU state, return values, and RAM outside retail stack-save bytes against retail execution for 12 global/table combinations.",
+  "limitations": [
+    "Retail wrapper/helper stack-save bytes are excluded from RAM equality.",
+    "This graphics-readiness path test does not verify other renderer paths or full game integration."
+  ]
+}

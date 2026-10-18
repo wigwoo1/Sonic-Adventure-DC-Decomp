@@ -1,0 +1,4 @@
+from pathlib import Path
+p=Path(__file__).resolve().parent
+s=(p/'register_stream_allocation.py').read_text().replace('stream_allocation','file_handle_pool').replace("==36","==18").replace("('sa_sound_stream_create',0x8c6673b4,0x8c667440),('sa_sound_stream_destroy',0x8c667440,0x8c667464)","('sa_file_decode_handle_allocate',0x8c644b6e,0x8c644be6),('sa_file_decode_handle_release',0x8c644bfe,0x8c644c12)").replace('Compiled and matched within report scope; destructor verified on constructor failure only','Compiled and matched within report scope').replace('Sound stream construction:','Decode handle pool:').replace('build_sound_stream_create','build_file_decode_handle_allocate').replace('build_sound_stream_destroy','build_file_decode_handle_release').replace('Stream allocation verification','File handle pool verification')
+(p/'register_file_handle_pool.py').write_text(s)

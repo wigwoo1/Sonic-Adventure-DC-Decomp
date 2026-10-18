@@ -1,0 +1,106 @@
+Alternate UV strip emitters
+17 October 2026 — VERIFIED within the bounded scope below.
+Overall completion: 10% estimated weighted project milestones, not code coverage.
+Goal active. Continue Sol High with the next primitive pair, 8c619c34 / 8c61a488.
+
+Recovered source
+  8c61394a..8c613be2: 315 original instruction rows
+  8c614f70..8c6153bc: 524 original instruction rows
+  source/sa_main_dispatch_uv_alternate_strips.c
+  source/sa_main_dispatch_uv_alternate_strips_connected.c
+Both complete bodies are byte-checked and translated into annotated static C,
+preserving original instruction order, register effects and delay slots. No
+runtime opcode decoder is used. Descriptive function names are inferred.
+Existing source, archived proofs and original game files remain preserved.
+
+Behavior
+The helpers handle alternate strips selected by topology c000. They consume
+signed 16-bit U/V pairs for each strip corner, including rejected triangles,
+and scale them by 1/256. UV consumption continues across successive strips,
+even where vertex indices restart. Strip flip and alternating winding control
+orientation rejection; zero-area triangles are rejected.
+
+The lighting factor is base minus the normal/light dot product. Other-bank FPU
+parameters and FIPR effects are preserved. Packets contain control, projected
+x/y/reciprocal depth, U/V and the lighting factor. The eighth queue word retains
+its previous value. Ordinary emission leaves the vertex-cache factor word
+unchanged and issues no OCBWB write-back event.
+
+The clipped helper first checks common rejection flags and near-plane crossings.
+After orientation acceptance, it disables repeated orientation testing, stages
+the raw signed UVs at 8c890304 and calls recovered UV clipper 8c611a14. That helper
+interpolates geometry and lighting, truncates interpolated UVs back to signed
+16-bit coordinates, then scales by 1/256. Four-vertex output uses order 0,1,3,2.
+Both new bodies reuse the existing empty stub at 8c611708 without new recovery
+credit. The clipped body also reuses the native UV clipper without new credit.
+
+Build and tests actually passed
+- Strict Clang build: -O2 -Wall -Wextra -Werror; separate connected DLL.
+- 512 comparisons: 128 plain alternate, 176 clipped alternate, eight plain UV
+  parents, eight clipped UV parents and 192 connected meshes. All 839 original
+  rows, 40 conditional outcomes and three call sites covered.
+- Full 16 MiB RAM, GPRs/SR/PR, both FPU banks/FPSCR, FPUL/MACL, ordered service
+  boundaries and queue events match original execution, including partial state.
+- 454 successful completions, 56 matching inherited numeric/precision guards
+  (-1), and two matching inherited UV-clipper saved-pointer guards (-3). These
+  are deliberate host boundaries, not implementations of hardware fault dispatch.
+- 2,560 boundary comparisons, 37,092 numerical operations, 1,822 queue transfers
+  and 19,654 ordered queue events. Zero write-back events and zero external
+  game-service boundaries. Existing stub invoked 492 times; UV clipper 132 times.
+- 392 independent cases include all 192 connected meshes. Checks cover signed
+  UV extremes, continuous UV consumption across strips, visible triangle sets,
+  clipped UV quantization/lighting, retained words, grouping and counters/cursors.
+  Direct lengths 3/4/5/6 and successive strips, both windings/flip values, FPU
+  banks and inherited rounding/precision variants exercised. Independent clipped
+  UV quantization uses rounding mode 0; other modes have original comparisons.
+- All 192 connected meshes run material setup, actual projection/classification,
+  extended header acquisition, parent UV primitive, new alternate helper and
+  finalization natively. Six crossing masks, windings/flips, both FPU banks,
+  primary/secondary headers and both queue halves are checked independently.
+- 120 lifetime regressions / 984 stage comparisons passed: 23,264 boundaries,
+  104,016 numerical operations, 10,600 queue transfers and 117,808 queue events.
+  Existing original particle models do not reach the new UV bodies; these runs
+  verify linked regression behavior. Focused meshes provide new-body coverage.
+
+Evidence and limits
+  analysis/main_dispatch_uv_alternate_strips_translation.json
+  analysis/main_dispatch_uv_alternate_strips_verification.json
+  analysis/main_dispatch_uv_alternate_strips_lifecycle_verification.json
+  recover_main_dispatch_uv_alternate_strips.py
+  build_main_dispatch_uv_alternate_strips.ps1
+  verify_main_dispatch_uv_alternate_strips.py
+  verify_main_dispatch_uv_alternate_strips_lifecycle.py
+  register_main_dispatch_uv_alternate_strips.py
+Tests use bounded positive strip counts and lengths >=3, with original lookahead
+indices. Invalid pointer/count loops, physical cache timing, MMU-on behavior,
+GPU FIFO/pixels and complete hardware exception dispatch remain unverified.
+Inherited scalar numerical probes/shared vector-oracle limits remain in effect.
+Host-selected scheduler passes do not prove the complete original frame driver.
+The entire accumulated project suite was not rerun for this checkpoint.
+Final integrity checks passed: regeneration reproduced identical source and
+translation manifest; all four new reports match pinned inputs; registration
+rerun added zero duplicates; five Python and three PowerShell scripts parsed.
+Dispatcher mapping verified 658 original pointer loads, 80 spans and 83 selectors.
+Recovery/completion audits found zero registry evidence errors and zero reports
+requiring source-hash refresh. The aggregate workflow includes the new stages;
+that complete historical workflow was parsed, not executed again.
+
+Registry and next task
+1,064 registry entries / 1,061 unique module-address pairs; 1,012 match the current
+10,875 indexed candidates. Another 211 non-texture binaries lack function indexes.
+These counts are incomplete discovery data, not whole-game coverage percentages.
+Twelve other primitive emitter targets remain unfinished. The next pair,
+8c619c34 / 8c61a488, has 1,001 / 1,152 exported instruction rows (2,153 total).
+Read-only exports and exact-byte inventory are analysis input with zero recovery
+credit: analysis/main_dispatch_uv_family2_inventory.json. Full source recovery,
+visible texture rendering, gameplay and all playable ports remain unfinished.
+SUPIR texture packs and display settings remain planned. Texture Off must disable
+sampling and use vertex colours/material fallback; it overrides the HD toggle.
+
+How to check without programming
+Open this guide and SOURCE_HANDOFF.txt. The focused JSON report records
+cases_passed=512, rows_covered=839, independent_mesh_cases=192 and
+external_service_boundaries=0. The lifetime report records lifecycles_passed=120.
+There is no new playable game to launch at this checkpoint.
+Recommended next model: Sol High; the next pair still requires instruction-level
+reverse engineering and careful integration. No model switch or pause advised.

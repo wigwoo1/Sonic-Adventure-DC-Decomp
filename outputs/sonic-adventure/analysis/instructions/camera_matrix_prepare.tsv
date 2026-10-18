@@ -1,0 +1,51 @@
+address	opcode	instruction	references
+8c057b40	d103	mov.l 0x8c057b50,r1	READ:8c057b50=8c88f698 
+8c057b42	d604	mov.l 0x8c057b54,r6	READ:8c057b54=8c88f69c 
+8c057b44	6312	mov.l @r1,r3	READ:8c88f698 
+8c057b46	6262	mov.l @r6,r2	READ:8c88f69c 
+8c057b48	3233	cmp/ge r3,r2	
+8c057b4a	8b05	bf 0x8c057b58	CONDITIONAL_JUMP:8c057b58=d1147201 
+8c057b4c	b	rts	
+8c057b4e	e000	_mov #0x0,r0	
+8c057b58	7201	add #0x1,r2	
+8c057b5a	d114	mov.l 0x8c057bac,r1	READ:8c057bac=8c88f5f8 
+8c057b5c	2622	mov.l r2,@r6	WRITE:8c88f69c 
+8c057b5e	6512	mov.l @r1,r5	READ:8c88f5f8 
+8c057b60	7540	add #0x40,r5	
+8c057b62	2152	mov.l r5,@r1	WRITE:8c88f5f8 
+8c057b64	6453	mov r5,r4	
+8c057b66	f09d	fldi1 fr0	
+8c057b68	f18d	fldi0 fr1	
+8c057b6a	f28d	fldi0 fr2	
+8c057b6c	f39d	fldi1 fr3	
+8c057b6e	f48d	fldi0 fr4	
+8c057b70	f58d	fldi0 fr5	
+8c057b72	f3fd	fschg	
+8c057b74	f5fb	fmov.s fr15,@-r5	
+8c057b76	f5db	fmov.s fr13,@-r5	
+8c057b78	f5bb	fmov.s fr11,@-r5	
+8c057b7a	f59b	fmov.s fr9,@-r5	
+8c057b7c	f57b	fmov.s fr7,@-r5	
+8c057b7e	f55b	fmov.s fr5,@-r5	
+8c057b80	f53b	fmov.s fr3,@-r5	
+8c057b82	f51b	fmov.s fr1,@-r5	
+8c057b84	7440	add #0x40,r4	
+8c057b86	f10c	fmov fr0,fr1	
+8c057b88	f34c	fmov fr4,fr3	
+8c057b8a	f52c	fmov fr2,fr5	
+8c057b8c	f74c	fmov fr4,fr7	
+8c057b8e	f94c	fmov fr4,fr9	
+8c057b90	fb0c	fmov fr0,fr11	
+8c057b92	fd4c	fmov fr4,fr13	
+8c057b94	ff2c	fmov fr2,fr15	
+8c057b96	f4fb	fmov.s fr15,@-r4	
+8c057b98	f4db	fmov.s fr13,@-r4	
+8c057b9a	f4bb	fmov.s fr11,@-r4	
+8c057b9c	f49b	fmov.s fr9,@-r4	
+8c057b9e	f47b	fmov.s fr7,@-r4	
+8c057ba0	f45b	fmov.s fr5,@-r4	
+8c057ba2	f43b	fmov.s fr3,@-r4	
+8c057ba4	f41b	fmov.s fr1,@-r4	
+8c057ba6	f3fd	fschg	
+8c057ba8	b	rts	
+8c057baa	e001	_mov #0x1,r0	

@@ -1,0 +1,56 @@
+address	opcode	instruction	references
+8c66854e	2fe6	mov.l r14,@-r15	DATA:Stack[-0x4] 
+8c668550	4f22	sts.l PR,@-r15	DATA:Stack[-0x8] 
+8c668552	7fec	add #-0x14,r15	
+8c668554	6053	mov r5,r0	
+8c668556	e300	mov #0x0,r3	
+8c668558	2f42	mov.l r4,@r15	DATA:Stack[-0x1c] 
+8c66855a	80fc	mov.b r0,@(0xc,r15)	DATA:Stack[-0x10] 
+8c66855c	1f61	mov.l r6,@(0x4,r15)	DATA:Stack[-0x18] 
+8c66855e	e620	mov #0x20,r6	
+8c668560	1f74	mov.l r7,@(0x10,r15)	DATA:Stack[-0xc] 
+8c668562	6733	mov r3,r7	
+8c668564	2f36	mov.l r3,@-r15	DATA:Stack[-0x20] 
+8c668566	50f1	mov.l @(0x4,r15),r0	DATA:Stack[-0x1c] 
+8c668568	d15d	mov.l 0x8c6686e0,r1	READ:8c6686e0=8c643624 
+8c66856a	6203	mov r0,r2	
+8c66856c	e010	mov #0x10,r0	
+8c66856e	fc	mov.b @(r0,r15),r0	
+8c668570	7220	add #0x20,r2	
+8c668572	55f5	mov.l @(0x14,r15),r5	DATA:Stack[-0xc] 
+8c668574	6403	mov r0,r4	
+8c668576	4408	shll2 r4	
+8c668578	1f43	mov.l r4,@(0xc,r15)	DATA:Stack[-0x14] 
+8c66857a	342c	add r2,r4	
+8c66857c	410b	jsr @r1	COMPUTED_CALL:8c643624=2fd62fe6 
+8c66857e	6442	_mov.l @r4,r4	
+8c668580	6e03	mov r0,r14	
+8c668582	2ee8	tst r14,r14	
+8c668584	8d06	bt/s 0x8c668594	CONDITIONAL_JUMP:8c668594=53f264f2 
+8c668586	7f04	_add #0x4,r15	
+8c668588	d24d	mov.l 0x8c6686c0,r2	READ:8c6686c0=8c667b7a 
+8c66858a	d456	mov.l 0x8c6686e4,r4	READ:8c6686e4=8c673298 PARAM:8c673298=34323145 
+8c66858c	420b	jsr @r2	COMPUTED_CALL:8c667b7a=4f222fe6 
+8c66858e	9	_nop	
+8c668590	a00f	bra 0x8c6685b2	UNCONDITIONAL_JUMP:8c6685b2=7f1460e3 
+8c668592	9	_nop	
+8c668594	64f2	mov.l @r15,r4	DATA:Stack[-0x1c] 
+8c668596	53f2	mov.l @(0x8,r15),r3	DATA:Stack[-0x14] 
+8c668598	d253	mov.l 0x8c6686e8,r2	READ:8c6686e8=8c65a5dc 
+8c66859a	7420	add #0x20,r4	
+8c66859c	55f1	mov.l @(0x4,r15),r5	DATA:Stack[-0x18] 
+8c66859e	343c	add r3,r4	
+8c6685a0	420b	jsr @r2	COMPUTED_CALL:8c65a5dc=2fd62fe6 
+8c6685a2	6442	_mov.l @r4,r4	
+8c6685a4	6e03	mov r0,r14	
+8c6685a6	2ee8	tst r14,r14	
+8c6685a8	8903	bt 0x8c6685b2	CONDITIONAL_JUMP:8c6685b2=7f1460e3 
+8c6685aa	d245	mov.l 0x8c6686c0,r2	READ:8c6686c0=8c667b7a 
+8c6685ac	d44f	mov.l 0x8c6686ec,r4	READ:8c6686ec=8c6732c8 PARAM:8c6732c8=34323145 
+8c6685ae	420b	jsr @r2	COMPUTED_CALL:8c667b7a=4f222fe6 
+8c6685b0	9	_nop	
+8c6685b2	60e3	mov r14,r0	
+8c6685b4	7f14	add #0x14,r15	
+8c6685b6	4f26	lds.l @r15+,PR	DATA:Stack[-0x8] 
+8c6685b8	b	rts	
+8c6685ba	6ef6	_mov.l @r15+,r14	

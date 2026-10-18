@@ -1,0 +1,109 @@
+{
+  "validated_model_candidates": 860,
+  "segment_records": 1905,
+  "object_node_candidates": 858,
+  "node_backed_model_candidates": 854,
+  "independent_header_checks": 860,
+  "profile_literal_checks": 12,
+  "malformed_cases_rejected": 17,
+  "alternate_winding_flag_check": true,
+  "inventory_reproduces_byte_for_byte": true,
+  "sha256": {
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\verify_main_model_inventory.py": "678401c035e3753ecfcde2aef07c368387138cdb8c1d0756accae6d2e251ca0d",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\model_asset_inventory.py": "9970fc8d1910a6a54676f4b20e3d30bb1e1bb44050ec55a0d2e4fd6ef1e2467b",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\inventory_main_model_assets.py": "2656ddbac8bd49086755b17d69125be227bac5c2ba489229a025b829f4aaf2ec",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\analysis\\main_model_assets_inventory.json": "2b3c45387a4b4704bdfa141527b200a42a5b1c545d39e6017fe964870b1a9e16",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\work\\sonic-adventure\\extracted\\1ST_READ.BIN": "45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a"
+  },
+  "scope": "Read-only inventory reproduction, independent original header/object-pointer/literal checks, malformed-record bounds rejection and alternate-strip high-bit winding semantics. Native instruction/asset-stream behavior is checked separately.",
+  "limitations": [
+    "Structural candidates and bounded malformed inputs only; no completeness, overlay, alternative model format or actual runtime reachability claim."
+  ],
+  "cases": [
+    {
+      "case": "header outside image",
+      "rejected": true,
+      "reason": "outside image: 0x8c00fffc+0x28"
+    },
+    {
+      "case": "truncated header",
+      "rejected": true,
+      "reason": "outside image: 0x8c010000+0x28"
+    },
+    {
+      "case": "zero vertices",
+      "rejected": true,
+      "reason": "invalid bounded counts"
+    },
+    {
+      "case": "negative signed vertex count",
+      "rejected": true,
+      "reason": "invalid bounded counts"
+    },
+    {
+      "case": "positions outside image",
+      "rejected": true,
+      "reason": "outside image: 0x8c67c67c+0x84"
+    },
+    {
+      "case": "unaligned positions",
+      "rejected": true,
+      "reason": "unaligned pointer"
+    },
+    {
+      "case": "infinite positions",
+      "rejected": true,
+      "reason": "nonfinite or implausible vector data"
+    },
+    {
+      "case": "NaN normals",
+      "rejected": true,
+      "reason": "nonfinite or implausible vector data"
+    },
+    {
+      "case": "zero materials",
+      "rejected": true,
+      "reason": "invalid bounded counts"
+    },
+    {
+      "case": "negative radius",
+      "rejected": true,
+      "reason": "invalid bounds"
+    },
+    {
+      "case": "material index beyond table",
+      "rejected": true,
+      "reason": "material index outside table"
+    },
+    {
+      "case": "zero primitive groups",
+      "rejected": true,
+      "reason": "zero primitive group count outside inventory contract"
+    },
+    {
+      "case": "out-of-range vertex index",
+      "rejected": true,
+      "reason": "vertex index outside table"
+    },
+    {
+      "case": "index stream outside image",
+      "rejected": true,
+      "reason": "outside image: 0x8c67c67e+0x6"
+    },
+    {
+      "case": "UV table outside image",
+      "rejected": true,
+      "reason": "outside image: 0x8c67c67e+0x78"
+    },
+    {
+      "case": "unaligned UV table",
+      "rejected": true,
+      "reason": "unaligned UV pointer"
+    },
+    {
+      "case": "short alternate strip",
+      "rejected": true,
+      "reason": "group length outside bounded inventory contract"
+    }
+  ]
+}
