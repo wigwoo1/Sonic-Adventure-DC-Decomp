@@ -1,0 +1,105 @@
+Sonic Adventure Rev A - original loader with native disc I/O (2026-10-24)
+
+Estimated whole-project completion remains 10% weighted milestones, not code
+coverage. The optimized strict 145-source boot_disc.dll is an incomplete Windows
+research library. There is no playable port yet. Previous sources, APIs, proof
+files, canonical registry fields and research builds remain preserved.
+
+The original 50-row loader at 8c09cc80 now executes through real host sector I/O,
+including open, size, remainder/division, rounded read and close. All 50 original
+rows and all four conditional outcomes are covered. This is one newly registered
+game body; it reuses unchanged source/sa_boot_file.c. Firmware is not recovered.
+
+82 direct complete-state comparisons pass: 78 normal returns and four explicit
+missing-uncached-block stops. There are 406 independent semantic assertions.
+Cases cover zero and rounded sizes, the two read-command modes, FPU bank modes,
+missing files, complete reads, failures before any data and after one sector,
+ordinary read/wait/cancel/close/pump paths, and small/large cache dispatch paths.
+The original loader discards its read result and returns zero after closing even
+when transport fails. Tests preserve that behavior and verify that unread bytes
+are unchanged. A zero loader return must not be treated as proof of successful
+I/O. Native terminal status consumes the queue handle; tests check ownership.
+
+Four uninterrupted outer boot prefixes execute the actual original MOVIE.BIN
+request. Each reads 91 sectors starting at FAD 510488 through the original
+read/service/status/close chain. The 184592-byte payload at guest 8ceb0000 hashes
+to the independently extracted SONICADV/MOVIE.BIN value:
+  84489968b607f6f80a7ad04ad402224ddd951a65e3ae8e18429ecfa17525614b
+There are 28 independent boot assertions. Both renderer fixtures and both tested
+FPU modes match. Boot advances from 25 to 30 of its 51 original instruction rows
+and stops at its next actual dependency, uncached cache code at ac5fc0c2. The boot
+caller still has zero complete-body credit. Natural startup remains unproved.
+
+The new API adds an explicit caller-owned native disc queue and firmware-vector
+address to the existing complete-machine interface. Native queue context is per
+call; ownership survives nested calls. The caller supplies stable 16 MiB RAM,
+initialized queue/track/read-at service and valid machine/FPU/register pointers.
+The configured firmware vector must be a separate platform target. The bridge
+dispatches to the already tested native_disc_queue.c, native_disc_sector_reader.c
+and native_disc_read_command.c. No game-service override callback is introduced.
+Original functions still stop at missing game targets rather than receiving a
+fabricated return. Old boot_file and all earlier APIs/DLLs are unchanged.
+
+This deliberately reuses declared host policies: one MODE1 sector per pump,
+queued request handles, terminal handle consumption, read-only drive status,
+native platform identity, cancellation and generic host I/O error reporting.
+These policies are not a decompilation of Dreamcast firmware, cache hardware or
+physical drive timing. Actual transport offsets and every read attempt, complete
+queue ownership/progress (including inactive-slot fields), caller machine state,
+RAM, both integer banks, CPU/FPU, SR/PR/FPUL/MACH/MACL/GBR/VBR, native boundaries
+and software graphics/input/event/clock effects match an independent Python model.
+Pointers in queue snapshots are compared as guest offsets; callback identities
+are independently configured transport inputs, not purported firmware state.
+
+Four additional game adapters are generated from byte-checked listings: the
+93-row status formatter, six-row status BIOS tail and two 58-row cache bodies.
+The two cache bodies contain indirect jumps to internal blocks. Their declared
+listing targets are followed only when the actual computed target matches;
+unknown targets remain external boundaries. Large cache paths reach unexported
+uncached aliases, so neither cache function gets full recovery credit. The status
+formatter's error mappings beyond the host policies also remain incomplete.
+Read/retry, cancellation and pump parents retain their existing partial scopes.
+The BIOS tail was already registered and gets no duplicate credit.
+
+The separate vertex_bus_disc.c adds explicit coherent-RAM OCBP/purge policy to
+the prior backend. Operation 3 emits trace event 18 and increments the software
+invalidation count; it does not model dirty cache lines or physical writeback.
+34 independent backend/API checks cover all three valid RAM aliases, unaligned
+cache operands, invalid regions with unchanged state, trace overflow, reset,
+retained RAM and four new-API missing-state rejections.
+
+Six generated artifacts reproduce byte-for-byte. Registration is idempotent.
+447 pinned inputs are current. Nine Python and three PowerShell workflows parse;
+all 145 C sources pass strict checks with original retry loops retained. Against
+the previous published ead9826c08a5 commit, 3717 source/proof files and all 1293
+original canonical registry records remain preserved. All 2549 work files from
+the previous research-build archive are byte-identical locally.
+Registry is now 1294 entries / 1291 unique module-address pairs, with 1184 matches
+in 10875 frozen indexed candidates. 211 nontexture binaries still lack indexes;
+the game's total routine count is not established. Evidence audit: zero errors
+and zero stale source hashes. All 658 dispatcher pointer checks also pass.
+
+Reproduce from the workspace with the configured toolchain and local retail track:
+  powershell -File outputs/sonic-adventure/ghidra/export_boot_disc.ps1
+  python -B outputs/sonic-adventure/recover_boot_disc.py
+  python -B outputs/sonic-adventure/connect_boot_disc.py
+  powershell -File outputs/sonic-adventure/build_boot_disc.ps1
+  python -B outputs/sonic-adventure/verify_boot_disc.py
+  python -B outputs/sonic-adventure/verify_boot_disc_prefix.py
+  python -B outputs/sonic-adventure/verify_boot_disc_backend.py
+  python -B outputs/sonic-adventure/qualify_boot_disc.py
+  python -B outputs/sonic-adventure/register_boot_disc.py
+  python -B outputs/sonic-adventure/verify_boot_disc_workflow.py
+  python -B outputs/sonic-adventure/audit_recovery_coverage.py
+  python -B outputs/sonic-adventure/map_main_dispatch_cases.py
+  python -B outputs/sonic-adventure/verify_main_dispatch_case_map.py
+The focused workflow is added to build_and_verify.ps1; the full accumulated suite
+was not rerun end-to-end. Tests require the user's original disc track and
+extracted files. No retail image, module, texture, sound or model is published.
+
+Next: export/recover the reached ac5fc0c2 uncached cache code and its P1 entry,
+verify aliases/cache effects and resume the same original boot caller. Continue
+Sol High for that reverse engineering; Luna Low is adequate for documentation-
+only tasks. Keep the full goal active. Gameplay, natural boot, physical devices,
+PC/Android/3DS ports, stereo 3D, demakes and requested display/texture settings
+remain unfinished.

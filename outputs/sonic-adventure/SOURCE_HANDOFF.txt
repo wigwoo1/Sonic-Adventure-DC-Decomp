@@ -1,5 +1,19 @@
 Sonic Adventure Dreamcast Rev A - source access and handoff
 
+Latest update (2026-10-24): original loader with native disc I/O
+The strict 145-source boot_disc.dll connects the existing native disc platform
+through the original game read/status/close path. 82 complete-state comparisons,
+406 independent assertions, 34 backend/API checks and four actual boot prefixes
+pass. Each prefix loads the 184592-byte MOVIE.BIN with the extracted file's SHA256.
+Boot reaches 30/51 rows and stops at uncached cache code ac5fc0c2; zero boot credit.
+One new registration qualifies the original 50-row loader / four outcomes,
+reusing unchanged sa_boot_file.c. It preserves the original zero return even
+after an I/O failure; unread bytes remain unchanged. Firmware is not recovered.
+Read BOOT_DISC.txt for exact host policies, fixtures, limitations and reproduction.
+Registry: 1294 entries / 1291 unique pairs; zero evidence errors/stale hashes.
+Original source/proof/build bytes remain preserved. Overall estimate stays 10%.
+Continue Sol High with the reached uncached cache routine; goal active.
+
 Latest update (2026-10-24): native file-handle foundation
 Eight new helpers qualify all 222 original rows / 30 outcomes. The strict
 141-source boot_file.dll passes 403 direct comparisons with 1137 independent
