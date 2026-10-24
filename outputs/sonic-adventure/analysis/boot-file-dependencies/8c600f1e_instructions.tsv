@@ -1,0 +1,72 @@
+address	length	bytes	instruction	flows
+8c600f1e	2	e62f	mov.l r14,@-r15	
+8c600f20	2	1fe3	mov #0x1f,r3	
+8c600f22	2	d62f	mov.l r13,@-r15	
+8c600f24	2	436e	mov r4,r14	
+8c600f26	2	c62f	mov.l r12,@-r15	
+8c600f28	2	536c	mov r5,r12	
+8c600f2a	2	b62f	mov.l r11,@-r15	
+8c600f2c	2	636b	mov r6,r11	
+8c600f2e	2	a62f	mov.l r10,@-r15	
+8c600f30	2	b823	tst r11,r3	
+8c600f32	2	962f	mov.l r9,@-r15	
+8c600f34	2	862f	mov.l r8,@-r15	
+8c600f36	2	224f	sts.l PR,@-r15	
+8c600f38	2	028f	bf/s 0x8c600f40	8c600f40 
+8c600f3a	2	00e4	_mov #0x0,r4	
+8c600f3c	2	01a0	bra 0x8c600f42	8c600f42 
+8c600f3e	2	01e9	_mov #0x1,r9	
+8c600f40	2	4369	mov r4,r9	
+8c600f42	2	5c9a	mov.w 0x8c600ffe,r10	
+8c600f44	2	2ed8	mov.l 0x8c601000,r8	
+8c600f46	2	1ca0	bra 0x8c600f82	8c600f82 
+8c600f48	2	436d	_mov r4,r13	
+8c600f4a	2	9360	mov r9,r0	
+8c600f4c	2	0188	cmp/eq #0x1,r0	
+8c600f4e	2	058b	bf 0x8c600f5c	8c600f5c 
+8c600f50	2	c365	mov r12,r5	
+8c600f52	2	b366	mov r11,r6	
+8c600f54	2	96b0	bsr 0x8c601084	8c601084 
+8c600f56	2	e364	_mov r14,r4	
+8c600f58	2	04a0	bra 0x8c600f64	8c600f64 
+8c600f5a	2	0900	_nop	
+8c600f5c	2	c365	mov r12,r5	
+8c600f5e	2	b366	mov r11,r6	
+8c600f60	2	24b0	bsr 0x8c600fac	8c600fac 
+8c600f62	2	e364	_mov r14,r4	
+8c600f64	2	0364	mov r0,r4	
+8c600f66	2	4824	tst r4,r4	
+8c600f68	2	0d8b	bf 0x8c600f86	8c600f86 
+8c600f6a	2	c82c	tst r12,r12	
+8c600f6c	2	0b89	bt 0x8c600f86	8c600f86 
+8c600f6e	2	e552	mov.l @(0x14,r14),r2	
+8c600f70	2	e453	mov.l @(0x10,r14),r3	
+8c600f72	2	3332	cmp/ge r3,r2	
+8c600f74	2	0789	bt 0x8c600f86	8c600f86 
+8c600f76	2	01a0	bra 0x8c600f7c	8c600f7c 
+8c600f78	2	8365	_mov r8,r5	
+8c600f7a	2	ff75	add #-0x1,r5	
+8c600f7c	2	5825	tst r5,r5	
+8c600f7e	2	fc8b	bf 0x8c600f7a	8c600f7a 
+8c600f80	2	017d	add #0x1,r13	
+8c600f82	2	a33d	cmp/ge r10,r13	
+8c600f84	2	e18b	bf 0x8c600f4a	8c600f4a 
+8c600f86	2	a03d	cmp/eq r10,r13	
+8c600f88	2	018b	bf 0x8c600f8e	8c600f8e 
+8c600f8a	2	06a0	bra 0x8c600f9a	8c600f9a 
+8c600f8c	2	ebe0	_mov #-0x15,r0	
+8c600f8e	2	1144	cmp/pz r4	
+8c600f90	2	028b	bf 0x8c600f98	8c600f98 
+8c600f92	2	adbe	bsr 0x8c600cf0	8c600cf0 
+8c600f94	2	e364	_mov r14,r4	
+8c600f96	2	0364	mov r0,r4	
+8c600f98	2	4360	mov r4,r0	
+8c600f9a	2	264f	lds.l @r15+,PR	
+8c600f9c	2	f668	mov.l @r15+,r8	
+8c600f9e	2	f669	mov.l @r15+,r9	
+8c600fa0	2	f66a	mov.l @r15+,r10	
+8c600fa2	2	f66b	mov.l @r15+,r11	
+8c600fa4	2	f66c	mov.l @r15+,r12	
+8c600fa6	2	f66d	mov.l @r15+,r13	
+8c600fa8	2	0b00	rts	
+8c600faa	2	f66e	_mov.l @r15+,r14	

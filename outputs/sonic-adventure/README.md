@@ -16,7 +16,8 @@ Public repository: [wigwoo1/Sonic-Adventure-DC-Decomp](https://github.com/wigwoo
 - `project_status.json` records requirements and progress evidence.
 - `HD_TEXTURE_AND_DISPLAY_PLAN.txt` records the planned SUPIR HD texture pack, HD toggle, texture percentages, render resolution, and aspect-ratio settings. These features are pending.
 - `SOURCE_HANDOFF.txt` contains the source-access and handoff notes.
-- `BOOT_EVENT.txt` records native integration of nine existing event bodies, with zero duplicate credit: 544 comparisons, 8,192 VBR checks, full 529-row/72-outcome coverage and eight extended boot prefixes. The next frontier is the file-load path `0x8c09da40 -> 0x8c09cc80`.
+- `BOOT_FILE.txt` records eight qualified file helpers: 403 direct comparisons, all 222 qualified rows / 30 outcomes, six five-stage handle lifecycles and four boot prefixes reaching the actual `MOVIE.BIN` firmware read boundary. The loader and firmware-dependent parents remain partial; the next step reuses the existing native disc platform.
+- `BOOT_EVENT.txt` preserves native integration of nine existing event bodies, with zero duplicate credit: 544 comparisons, 8,192 VBR checks, full 529-row/72-outcome coverage and eight earlier boot prefixes to the file-load path.
 - `BOOT_INPUT.txt` preserves six new input bodies and the complete wait caller: 503 direct comparisons, four three-poll lifecycles and 24 earlier connected wait/boot checks.
 - `BOOT_INTERRUPT.txt` preserves nine completed interrupt/completion/submission bodies: 589 comparisons, all 2,180 adapter rows, 66 backend checks and sixteen earlier wait/boot prefixes.
 - `BOOT_SUBMIT.txt` preserves the earlier transfer-ring/draining milestone and its partial submission evidence, superseded by the qualified software completion paths in `BOOT_INTERRUPT.txt`.

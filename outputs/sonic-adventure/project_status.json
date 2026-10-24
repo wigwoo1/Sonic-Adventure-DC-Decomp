@@ -129,7 +129,7 @@
     "prs_trailing_bytes": 0,
     "main_binary_indexed_functions": 3637,
     "main_binary_draft_pseudocode_functions": 3631,
-    "recovered_buildable_routines": 1285,
+    "recovered_buildable_routines": 1293,
     "recovered_routine_tests": "analysis/startup_verification.json",
     "recovered_routine_test_cases": 17,
     "main_binary_draft_export_failures": 6,
@@ -137992,6 +137992,42 @@
         "VBR is an explicit additional readonly register input in the separate pipeline ABI. Existing source/APIs/proofs remain unchanged.",
         "Whole-game recovery, gameplay, ports/demakes and requested display/texture features remain unfinished."
       ]
+    },
+    "boot_file_integration": {
+      "verification": "analysis/boot_file_qualification.json",
+      "verification_sha256": "4839872bb46efdd3cf231102122bf829134ebcaeeb22e05f9de93d152bcdcb06",
+      "prefix_verification": "analysis/boot_file_prefix_verification.json",
+      "prefix_verification_sha256": "9e0bcd544d824d3bbb2c418322fcf729e6c5381a9dd9c06bad18815b2bbfbf1f",
+      "adapter_source": "source/sa_boot_file.c",
+      "adapter_source_sha256": "8574d636b57727d82669066a2b695fe396e6bf757d06d616c3cd2b7435155270",
+      "compiled_source_count": 141,
+      "newly_registered_entries": 8,
+      "qualified_original_rows": 222,
+      "qualified_conditional_outcomes": 30,
+      "direct_comparisons": 403,
+      "independent_direct_checks": 1137,
+      "lifecycle_sequences": 6,
+      "lifecycle_stage_comparisons": 30,
+      "lifecycle_independent_checks": 144,
+      "boot_prefix_comparisons": 4,
+      "boot_prefix_independent_checks": 32,
+      "boot_rows_covered": 25,
+      "boot_static_rows": 51,
+      "boot_recovery_credit": 0,
+      "loader_recovery_credit": 0,
+      "next_dependency": "Actual GD-ROM firmware vector; reuse existing native_disc_queue/native_disc_sector_reader/native_disc_read_command platform with explicit host policies, then complete cache and service paths.",
+      "guide": "BOOT_FILE.txt",
+      "scope": "Original directory/name/handle/open/size/temporary/status/close and file/read/driver proposals. Complete reached/final RAM/machine/FPU/banks/MACH/MACL/GBR/VBR and software peripheral state match. Driver/context/directory snapshots use original table layouts. Real byte code executes until missing firmware/cache/game dependencies; no file or firmware return is supplied.",
+      "limitations": [
+        "Firmware vector contents and driver/filesystem/directory/handle tables are explicit runtime fixtures. No BIOS ROM code, firmware service result, physical disc read, natural filesystem initialization or completion is fabricated.",
+        "File loader, read/wait/cancellation/service and callback parents remain partial at their real platform/game boundaries unless separately qualified. No full-parent credit is inferred from missing-file or zero-byte cases.",
+        "Known cache routines with unexported uncached alias blocks and large discontiguous initialization are retained as unverified research exports, not connected as completed helpers.",
+        "The finite 50000-iteration retry delay is bounded only in research builds: -4 stops on the second continued loop test. Without SA_BOUND_RETAIL_STALLS the original finite delay/retry loops remain.",
+        "Immutable code/literals, distinct initialized terminated names/directories/handles/stack, valid qualified CPU/MMU-off and inherited numeric/device domains apply. Gameplay, ports/demakes and display/texture features remain unfinished.",
+        "The two 12-row status/poll wrappers are qualified through their original tail transfer to the selected driver; underlying firmware-dependent driver bodies remain partial. The close caller is also retained as partial when cancellation is required.",
+        "No physical disc bytes are transferred and no firmware completion, natural initialization, IRQ delivery or playable boot is claimed.",
+        "The parent file loader and outer boot remain partial. Existing native disc queue/sector-reader/service code is the next reusable platform dependency."
+      ]
     }
   },
   "milestones": [
@@ -138165,10 +138201,10 @@
     "report": "analysis/recovery_coverage_audit.json",
     "candidate_inventory": "analysis/unrecovered_function_candidates.tsv",
     "boundary_inventory": "analysis/unresolved_module_boundaries.json",
-    "registered_routines": 1285,
-    "registered_unique_module_address_pairs": 1282,
+    "registered_routines": 1293,
+    "registered_unique_module_address_pairs": 1290,
     "indexed_candidates_in_export_snapshots": 10875,
-    "registered_entries_matching_export_snapshots": 1176,
+    "registered_entries_matching_export_snapshots": 1183,
     "non_texture_binaries_without_function_index": 211,
     "registry_evidence_errors": 0,
     "stale_whole_source_hash_reports": 0,
@@ -145493,5 +145529,5 @@
   },
   "unverified_work": {},
   "unverified_drafts": {},
-  "recovered_buildable_routines": 1285
+  "recovered_buildable_routines": 1293
 }
