@@ -1,5 +1,21 @@
 Sonic Adventure Dreamcast Rev A - source access and handoff
 
+Latest update (2026-10-24): original context initialization and native staging
+The 157-source movie_context.dll executes the original 193-row initializer,
+99-row descriptor reset and 20-row window setter. Seventy direct comparisons /
+514 checks, 144 register cases / 432 alias reads / 28 API checks, three failed
+initialization cases / 12 checks and six startup profiles / 120 checks pass.
+The new native initialized entry retains state between original initialization
+and the requested next entry, stopping immediately on a real first-stage error.
+Four initialized profiles advance to renderer configuration 8c6526bc; both cold
+controls retain the original null-context stop. This is declared native staging,
+not proof of reset-to-main call order, physical DMA/IRQs, audio, pixels or gameplay.
+The prior hardware source gains the modeled channel aperture only in a separate
+copy; original source/proof/build bytes survive. Three original bodies already
+had four canonical registrations; no new routine credit. Counts remain 1302 /
+1299 unique pairs. Read MOVIE_CONTEXT.txt for evidence and commands. Keep Sol
+High for renderer configuration; overall estimate stays 10%, goal active.
+
 Latest update (2026-10-24): synchronized control and transfer family
 The 155-source movie_hardware.dll connects twelve original bodies. Four newly
 qualified routines cover 400 rows / 78 conditional outcomes; eight existing
