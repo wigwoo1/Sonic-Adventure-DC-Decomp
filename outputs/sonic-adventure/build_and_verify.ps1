@@ -8639,6 +8639,15 @@ if($LASTEXITCODE -ne 0){throw 'Boot wait connection failed'}
 if($LASTEXITCODE -ne 0){throw 'Boot wait comparisons failed'}
 & $python (Join-Path $PSScriptRoot 'register_boot_wait.py')
 if($LASTEXITCODE -ne 0){throw 'Boot wait helper registration failed'}
+& $python (Join-Path $PSScriptRoot 'recover_boot_device.py')
+if($LASTEXITCODE -ne 0){throw 'Frame command dependency recovery failed'}
+& $python (Join-Path $PSScriptRoot 'connect_boot_device.py')
+if($LASTEXITCODE -ne 0){throw 'Frame command dependency connection failed'}
+& (Join-Path $PSScriptRoot 'build_boot_device.ps1') -Workspace $Workspace
+& $python (Join-Path $PSScriptRoot 'verify_boot_device.py')
+if($LASTEXITCODE -ne 0){throw 'Frame command and backend comparisons failed'}
+& $python (Join-Path $PSScriptRoot 'register_boot_device.py')
+if($LASTEXITCODE -ne 0){throw 'Frame command dependency registration failed'}
 & $python (Join-Path $PSScriptRoot 'inventory_draw_geometry_frontier.py')
 if($LASTEXITCODE -ne 0){throw 'Post-view geometry inventory failed'}
 foreach($inventory in @('inventory_draw_primitive_frontier.py','inventory_draw_primitive_cpu.py','inventory_draw_continuation_frontier.py','inventory_draw_angle_frontier.py','inventory_draw_post_angle_frontier.py','inventory_draw_post_blend_frontier.py')){

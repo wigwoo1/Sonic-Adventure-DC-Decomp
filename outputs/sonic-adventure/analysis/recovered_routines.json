@@ -14995,7 +14995,39 @@
       "retail_span_sha256": "2e3716c25e101a7bf73ad56ae4d7ad2f618c4c7cbf439d1efb8dc49f0ef280c4",
       "source": "source/sa_engine_render_ready_table_scan.c",
       "verification": "analysis/engine_render_ready_table_scan_verification.json",
-      "status": "native table scan matches selected retail outputs and preserved state in 190 differential cases; retail stack-save bytes excluded"
+      "status": "native table scan matches selected retail outputs and preserved state in 190 differential cases; retail stack-save bytes excluded",
+      "boot_device_integration": {
+        "verification": "analysis/boot_device_verification.json",
+        "verification_sha256": "a984c1a4f4a32699bb8064bc76c89e504974945547d51a47c3ef5a18ccd0f43e",
+        "adapter_source": "source/sa_boot_device.c",
+        "adapter_source_sha256": "3cd6f52af22dd765ff94b5c47ddc0e3013cb1c0fd88fd249944185bbc48a4663",
+        "direct_comparisons": 418,
+        "newly_registered_entries": 6,
+        "frame_rows": 631,
+        "frame_conditional_outcomes": 70,
+        "compiled_source_count": 132,
+        "native_producer_sequences": 12,
+        "sequence_stage_comparisons": 24,
+        "boot_wait_prefix_cases": 8,
+        "wait_rows_covered": 57,
+        "wait_static_rows": 91,
+        "wait_recovery_credit": 0,
+        "boot_rows_covered": 16,
+        "boot_static_rows": 51,
+        "boot_recovery_credit": 0,
+        "command_packets": 5,
+        "backend_independent_checks": 737,
+        "external_game_service_fixtures": 0,
+        "natural_boot_order_verified": false,
+        "next_dependency": "0x8c641f00",
+        "guide": "BOOT_DEVICE.txt",
+        "scope": "Full reached/final machine, RAM, FPU/banks, integer banks, MACL/MACH/GBR, register/queue/timer and command-packet comparisons. Independent copy, selection, readiness, callback, packet/history/length/maximum and frame return checks. Twelve actual native selector -> frame sequences preserve RAM/machine state. Registration remains separate.",
+        "limitations": [
+          "Direct runtime command-buffer fixtures and explicit selector -> frame call boundaries do not establish natural boot scheduling or a playable frame.",
+          "The bounded host packet sink captures polygon-window SQ transfers, not GPU consumption, rendering, interrupt/status behavior, backpressure or timing. Capacity exhaustion is an explicit -4 host stop.",
+          "Inherited privileged bank-1/FD=0, MMU-off RAM, numerical and typed guard domains apply. Readiness entry edge proof excludes self-modifying code and stack/literal aliasing."
+        ]
+      }
     },
     {
       "module": "1ST_READ.BIN",
@@ -34896,7 +34928,39 @@
       "limitations": [
         "The callback body and runtime setup of the global callback slot are outside this 10-byte wrapper.",
         "Differential verification uses the project SH-4 interpreter, not Dreamcast hardware or whole-game execution."
-      ]
+      ],
+      "boot_device_integration": {
+        "verification": "analysis/boot_device_verification.json",
+        "verification_sha256": "a984c1a4f4a32699bb8064bc76c89e504974945547d51a47c3ef5a18ccd0f43e",
+        "adapter_source": "source/sa_boot_device.c",
+        "adapter_source_sha256": "3cd6f52af22dd765ff94b5c47ddc0e3013cb1c0fd88fd249944185bbc48a4663",
+        "direct_comparisons": 418,
+        "newly_registered_entries": 6,
+        "frame_rows": 631,
+        "frame_conditional_outcomes": 70,
+        "compiled_source_count": 132,
+        "native_producer_sequences": 12,
+        "sequence_stage_comparisons": 24,
+        "boot_wait_prefix_cases": 8,
+        "wait_rows_covered": 57,
+        "wait_static_rows": 91,
+        "wait_recovery_credit": 0,
+        "boot_rows_covered": 16,
+        "boot_static_rows": 51,
+        "boot_recovery_credit": 0,
+        "command_packets": 5,
+        "backend_independent_checks": 737,
+        "external_game_service_fixtures": 0,
+        "natural_boot_order_verified": false,
+        "next_dependency": "0x8c641f00",
+        "guide": "BOOT_DEVICE.txt",
+        "scope": "Full reached/final machine, RAM, FPU/banks, integer banks, MACL/MACH/GBR, register/queue/timer and command-packet comparisons. Independent copy, selection, readiness, callback, packet/history/length/maximum and frame return checks. Twelve actual native selector -> frame sequences preserve RAM/machine state. Registration remains separate.",
+        "limitations": [
+          "Direct runtime command-buffer fixtures and explicit selector -> frame call boundaries do not establish natural boot scheduling or a playable frame.",
+          "The bounded host packet sink captures polygon-window SQ transfers, not GPU consumption, rendering, interrupt/status behavior, backpressure or timing. Capacity exhaustion is an explicit -4 host stop.",
+          "Inherited privileged bank-1/FD=0, MMU-off RAM, numerical and typed guard domains apply. Readiness entry edge proof excludes self-modifying code and stack/literal aliasing."
+        ]
+      }
     },
     {
       "module": "1ST_READ.BIN",
@@ -151618,6 +151682,96 @@
         "The wait/setup entry remains partial at its first unresolved frame/device call 8c642440, with zero parent recovery credit. The later 8c641f00/8c601e2a calls and final snapshot have not executed.",
         "The known callback is the actual byte-proved RTS/NOP function; arbitrary callback bodies remain explicit unresolved targets.",
         "Qualified privileged bank-1/FD=0, MMU-off RAM and prior numerical/backend domains apply. Typed memory/peripheral failures are not complete hardware exception delivery. Natural boot order, visible rendering, gameplay/settings and ports remain incomplete."
+      ]
+    },
+    {
+      "module": "1ST_READ.BIN",
+      "name": "sa_boot_device_8c642440",
+      "address": "0x8c642440",
+      "end_exclusive": "0x8c642a00",
+      "retail_span_sha256": "fd69542046774ef8b77fff67ef4fb366ad7541075b091c564a31af2e2ab2bb1c",
+      "source": "source/sa_boot_device.c",
+      "verification": "analysis/boot_device_verification.json",
+      "status": "All 631 original rows and 70 conditional outcomes covered in the 418-case connected frame/dependency suite; qualified full-state comparisons and independent semantic checks.",
+      "limitations": [
+        "Direct runtime command-buffer fixtures and explicit selector -> frame call boundaries do not establish natural boot scheduling or a playable frame.",
+        "The bounded host packet sink captures polygon-window SQ transfers, not GPU consumption, rendering, interrupt/status behavior, backpressure or timing. Capacity exhaustion is an explicit -4 host stop.",
+        "Inherited privileged bank-1/FD=0, MMU-off RAM, numerical and typed guard domains apply. Readiness entry edge proof excludes self-modifying code and stack/literal aliasing."
+      ]
+    },
+    {
+      "module": "1ST_READ.BIN",
+      "name": "sa_boot_device_8c641bc0",
+      "address": "0x8c641bc0",
+      "end_exclusive": "0x8c641c16",
+      "retail_span_sha256": "10141213b8be657aa7ef1feecd9f6970566eaf256a37cac8e9c925d480c9904d",
+      "source": "source/sa_boot_device.c",
+      "verification": "analysis/boot_device_verification.json",
+      "status": "All 43 original rows and 2 conditional outcomes covered in the 418-case connected frame/dependency suite; qualified full-state comparisons and independent semantic checks.",
+      "limitations": [
+        "Direct runtime command-buffer fixtures and explicit selector -> frame call boundaries do not establish natural boot scheduling or a playable frame.",
+        "The bounded host packet sink captures polygon-window SQ transfers, not GPU consumption, rendering, interrupt/status behavior, backpressure or timing. Capacity exhaustion is an explicit -4 host stop.",
+        "Inherited privileged bank-1/FD=0, MMU-off RAM, numerical and typed guard domains apply. Readiness entry edge proof excludes self-modifying code and stack/literal aliasing."
+      ]
+    },
+    {
+      "module": "1ST_READ.BIN",
+      "name": "sa_boot_device_8c65253e",
+      "address": "0x8c65253e",
+      "end_exclusive": "0x8c65254e",
+      "retail_span_sha256": "2abd71d9bc72b4f74660ebb28aa0cd470ce6fc276c953e5ff31c728ea8d9a7ff",
+      "source": "source/sa_boot_device.c",
+      "verification": "analysis/boot_device_verification.json",
+      "status": "All 8 original rows and 2 conditional outcomes covered in the 418-case connected frame/dependency suite; qualified full-state comparisons and independent semantic checks.",
+      "limitations": [
+        "Direct runtime command-buffer fixtures and explicit selector -> frame call boundaries do not establish natural boot scheduling or a playable frame.",
+        "The bounded host packet sink captures polygon-window SQ transfers, not GPU consumption, rendering, interrupt/status behavior, backpressure or timing. Capacity exhaustion is an explicit -4 host stop.",
+        "Inherited privileged bank-1/FD=0, MMU-off RAM, numerical and typed guard domains apply. Readiness entry edge proof excludes self-modifying code and stack/literal aliasing."
+      ]
+    },
+    {
+      "module": "1ST_READ.BIN",
+      "name": "sa_boot_device_8c6564e0",
+      "address": "0x8c6564e0",
+      "end_exclusive": "0x8c656566",
+      "retail_span_sha256": "5e5e0b45026ea8c1259116600be5407505eb05a9b52788d47bdcea3a10a0e0d3",
+      "source": "source/sa_boot_device.c",
+      "verification": "analysis/boot_device_verification.json",
+      "status": "All 67 original rows and 6 conditional outcomes covered in the 418-case connected frame/dependency suite; qualified full-state comparisons and independent semantic checks.",
+      "limitations": [
+        "Direct runtime command-buffer fixtures and explicit selector -> frame call boundaries do not establish natural boot scheduling or a playable frame.",
+        "The bounded host packet sink captures polygon-window SQ transfers, not GPU consumption, rendering, interrupt/status behavior, backpressure or timing. Capacity exhaustion is an explicit -4 host stop.",
+        "Inherited privileged bank-1/FD=0, MMU-off RAM, numerical and typed guard domains apply. Readiness entry edge proof excludes self-modifying code and stack/literal aliasing."
+      ]
+    },
+    {
+      "module": "1ST_READ.BIN",
+      "name": "sa_boot_device_8c65661c",
+      "address": "0x8c65661c",
+      "end_exclusive": "0x8c656638",
+      "retail_span_sha256": "09728291e277a5adcdaf9a474b739400679c4d35c5e26b7991bbc72e39b8c2f7",
+      "source": "source/sa_boot_device.c",
+      "verification": "analysis/boot_device_verification.json",
+      "status": "All 14 original rows and 2 conditional outcomes covered in the 418-case connected frame/dependency suite; qualified full-state comparisons and independent semantic checks.",
+      "limitations": [
+        "Direct runtime command-buffer fixtures and explicit selector -> frame call boundaries do not establish natural boot scheduling or a playable frame.",
+        "The bounded host packet sink captures polygon-window SQ transfers, not GPU consumption, rendering, interrupt/status behavior, backpressure or timing. Capacity exhaustion is an explicit -4 host stop.",
+        "Inherited privileged bank-1/FD=0, MMU-off RAM, numerical and typed guard domains apply. Readiness entry edge proof excludes self-modifying code and stack/literal aliasing."
+      ]
+    },
+    {
+      "module": "1ST_READ.BIN",
+      "name": "sa_boot_device_8c652520",
+      "address": "0x8c652520",
+      "end_exclusive": "0x8c65253e",
+      "retail_span_sha256": "234640d885fe1bae525ddb678bc8ed9090f9764e7605d43cc8c912afee0c300b",
+      "source": "source/sa_boot_device.c",
+      "verification": "analysis/boot_device_verification.json",
+      "status": "All 15 original rows and 4 conditional outcomes covered in the 418-case connected frame/dependency suite; qualified full-state comparisons and independent semantic checks.",
+      "limitations": [
+        "Direct runtime command-buffer fixtures and explicit selector -> frame call boundaries do not establish natural boot scheduling or a playable frame.",
+        "The bounded host packet sink captures polygon-window SQ transfers, not GPU consumption, rendering, interrupt/status behavior, backpressure or timing. Capacity exhaustion is an explicit -4 host stop.",
+        "Inherited privileged bank-1/FD=0, MMU-off RAM, numerical and typed guard domains apply. Readiness entry edge proof excludes self-modifying code and stack/literal aliasing."
       ]
     }
   ],

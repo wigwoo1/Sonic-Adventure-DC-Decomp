@@ -1,4 +1,4 @@
-"""Byte-checked wait/setup proposals with an explicit SH-4 timer bus boundary."""
+"""Byte-checked frame command-buffer and actual dependency proposals."""
 import csv,hashlib,json,re
 from pathlib import Path
 PROJECT=Path(__file__).resolve().parent;WAIT_PARENT=PROJECT/'recover_draw_view_registers.py'
@@ -10,8 +10,20 @@ notes=list(csv.DictReader(diagnostics.open(),delimiter='\t'));assert len(notes)=
 functions=[];routines=[]
 for note in notes:
  start=int(note['address'],16);listing=directory/f'{start:08x}_instructions.tsv';rows=list(csv.DictReader(listing.open(),delimiter='\t'));end=max(int(r['address'],16)+2 for r in rows)
- chosen=BASE_CHOSEN.replace('main-dispatch-model-traversal/',folder+'/');exec(compile(chosen,str(TEMPLATE),'exec'),globals())
+ chosen=BASE_CHOSEN.replace('main-dispatch-model-traversal/',folder+'/')
+ if start==0x8c652520:
+  # The alignment selector's BF enters the adjacent word-copy function without
+  # setting PR. Keep that original tail edge and reuse the real native body.
+  assert binary[0x8c652528-0x8c010000:0x8c65252a-0x8c010000]==bytes.fromhex('098b')
+  marker='for target in (a+4+2*signed(w&255,8),fall):todo.append(target);edges.add((a,target))'
+  assert chosen.count(marker)==1
+  chosen=chosen.replace(marker,'for target in (a+4+2*signed(w&255,8),fall):\n                edges.add((a,target))\n                if target!=0x8c65253e:todo.append(target)')
+ exec(compile(chosen,str(TEMPLATE),'exec'),globals())
  function,record=recover(start,end,f'sa_boot_device_{start:08x}',len(rows))
+ if start==0x8c652520:
+  assert function.endswith('\n}\n') and function.count('goto L8c65253e;')==1
+  function=function[:-3]+'\nL8c65253e: if(!call)return -2;return call(ctx,0x8c65253eu,m,f,sr,r,pr);\n}\n'
+  record['external_tail_edges']=[['0x8c652528','0x8c65253e']]
  assert function.count('sa_shared_service call,uint32_t *stop){')==1
  function=function.replace('sa_shared_service call,uint32_t *stop){','sa_shared_service call,uint32_t *stop,uint32_t *gbr,const struct sa_vertex_bus *bus){\n int io_status=0;(void)io_status;(void)bus;')
  function=function.replace('(void)entry_pr;','(void)entry_pr;(void)sr;(void)sx;(void)m;(void)wr;(void)fload;(void)fstore;(void)gbr;')

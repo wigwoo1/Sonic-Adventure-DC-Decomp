@@ -16,6 +16,7 @@ Public repository: [wigwoo1/Sonic-Adventure-DC-Decomp](https://github.com/wigwoo
 - `project_status.json` records requirements and progress evidence.
 - `HD_TEXTURE_AND_DISPLAY_PLAN.txt` records the planned SUPIR HD texture pack, HD toggle, texture percentages, render resolution, and aspect-ratio settings. These features are pending.
 - `SOURCE_HANDOFF.txt` contains the source-access and handoff notes.
+- `BOOT_DEVICE.txt` records the complete 631-row frame command finalizer and five new dependencies, 418 direct comparisons, twelve actual selector/frame sequences and bounded command-packet capture. Wait execution now reaches `0x8c641f00` at 57/91 rows; complete rendering remains unfinished.
 - `BOOT_WAIT.txt` records four complete clock/arithmetic/callback helpers, 304 direct comparisons and twelve actual boot prefixes. The wait/setup routine remains partial at 46/91 rows and stops at device callee `0x8c642440`.
 - `BOOT_SETUP.txt` records native task cleanup and render-register setup, 106 direct comparisons, and 12 partial boot-caller prefixes that reach the next actual wait/setup dependency. It also documents the corrected callback return-address test and preserved earlier artifacts.
 - `STARTUP_CALLBACK_FLAG_RESET.txt` records the complete 14-instruction helper called first by the partial boot caller at `0x8c10b840`, with 48 full-state comparisons. The indirect task-disposal callback remains a modeled boundary in that helper test, so natural boot ordering is still pending.

@@ -1,0 +1,91 @@
+Sonic Adventure Rev A - frame command finalization and dependencies (2026-10-24)
+
+The separate strict optimized 132-source boot_device.dll executes the original
+frame command-buffer finalizer and seven original dependency adapters. Earlier
+source, DLLs, historical proofs and original export bytes remain preserved.
+Overall weighted milestone estimate remains 10%; this is not code coverage.
+
+Six newly complete original bodies:
+  8c642440  five-lane command finalization, 631 rows / 70 conditional outcomes
+  8c641bc0  four store-queue header copies and cursor advance, 43 rows
+  8c65253e  unconditional word-copy loop, eight rows
+  8c6564e0  buffer selection, snapshot and per-lane cursor offsets, 67 rows
+  8c65661c  native readiness-query wrapper, 14 rows
+  8c652520  alignment/floating-copy selector with a real word-copy tail, 15 rows
+The existing readiness scan 8c650f78 and callback tail 8c6514e0 are reused with
+new guarded adapters and receive no duplicate registration credit.
+
+418 direct comparisons pass: 369 successful returns, eight explicit unsupported
+floating-mode stops, 14 invalid-memory stops, 26 unknown-callback stops and one
+explicit packet-capacity stop. All 829 original instruction rows execute.
+The six newly registered bodies cover every conditional outcome. The reused
+readiness scan covers nine of ten outcomes; its sole unexecuted entry outcome
+is structurally false with the original immutable base/512-byte extent literals.
+The report records the exact instructions, constants and qualification for that
+argument. Self-modifying code and stack/code/literal aliasing are excluded.
+
+Full reached/final RAM, CPU/FPU state, both register banks, MACL/MACH/GBR,
+software graphics registers, store queues, clock samples, packet contents and
+ordered native boundaries match the original instruction model. Independent
+checks cover forward/overlapping copies, signed pointer differences rounded
+toward zero, masks, selected lanes, inactive lengths, overflow header resets,
+terminators, history slots, maxima, alternating buffers, callback return address
+and restored stack/callee-preserved registers. There are 8,406 independent direct
+checks. A zero copy count retains the original unconditional loop: bounded tests
+reach the real next invalid read rather than manufacturing a successful no-op.
+The aligned floating copy preserves the original FSCHG behavior, including its
+different width/stride when entered with SZ=1 and its qualified PR-mode stops.
+
+Twelve selector -> frame sequences (24 stage comparisons, 736 independent checks) execute the actual
+native buffer producer first, then carry RAM and machine state into the frame
+finalizer. Eight real wait/outer-boot prefixes now reach 8c641f00. The wait body
+advances from 46/91 to 57/91 reached rows; the outer boot body remains at 16/51.
+These parents retain zero complete-routine credit. Later 8c601e2a work and the
+wait's final snapshot remain unexecuted. Natural boot/scheduling is unproved.
+
+All 209 unique pinned verification inputs match their hashes; five generated
+artifacts reproduce byte-for-byte and registration is byte-idempotent. Audits
+report 1,267 entries / 1,264 unique pairs, zero evidence errors or stale reports,
+1,158 frozen-candidate matches and 211 binaries without complete function indexes.
+All 658 dispatcher pointer checks pass. The next two read-only draft/listing
+exports are in analysis/boot-device-frontier and receive zero recovery credit.
+
+The new frame_command_bus wrapper preserves the earlier RAM/register backend
+and captures 32-byte SQ packets in a bounded 64-packet host buffer. Only SQ
+destinations in physical 10000000..107fffff are accepted by that capture path;
+other destinations retain the earlier explicit status. The new event kind 9
+records the packet destination, queue and 32-byte size. Capacity exhaustion
+returns -4 after the observed PREF, without claiming successful submission.
+737 independent backend checks exercise both queues, packet order/content,
+the window boundaries, exhaustion, hard capacity even if configured above 64,
+unsupported destinations, register delegation, invalid widths and trace overflow.
+Packet storage is preserved when the older diagnostic trace is full.
+
+Hardware context consulted (not a claim of full hardware emulation):
+  https://mc.pp.se/dc/memory.html
+  https://raw.githubusercontent.com/KallistiOS/KallistiOS/master/kernel/arch/dreamcast/include/dc/memory.h
+The packet sink does not consume/render GPU commands or implement GPU status,
+interrupts, FIFO backpressure, physical timing or pixels. The inherited qualified
+privileged bank-1/FD=0, MMU-off RAM and prior numerical/backend domains apply.
+Host guard statuses are not complete Dreamcast hardware exceptions. No playable
+game, FPS/resolution/texture settings, Android/3DS port or demake is established.
+
+Source: source/sa_boot_device.c and source/sa_boot_device_connected.c
+Backend: source/frame_command_bus.c and source/frame_command_bus.h
+Evidence: analysis/boot_device_translation.json
+          analysis/boot_device_connection.json
+          analysis/boot_device_verification.json
+Original immutable exports: analysis/boot-device/
+
+From the workspace root in PowerShell:
+  $Python = 'C:\Users\wigwo\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe'
+  & $Python -B outputs/sonic-adventure/recover_boot_device.py
+  & $Python -B outputs/sonic-adventure/connect_boot_device.py
+  .\outputs\sonic-adventure\build_boot_device.ps1 -Workspace (Get-Location).Path
+  & $Python -B outputs/sonic-adventure/verify_boot_device.py
+  & $Python -B outputs/sonic-adventure/register_boot_device.py
+
+--smoke performs nine exploratory comparisons without overwriting the full
+verification report. The accumulated build/test workflow is extended separately;
+the entire historical suite has not been rerun for this milestone. Continue
+Sol High with actual reached dependency 8c641f00. Keep the full goal active.

@@ -129,7 +129,7 @@
     "prs_trailing_bytes": 0,
     "main_binary_indexed_functions": 3637,
     "main_binary_draft_pseudocode_functions": 3631,
-    "recovered_buildable_routines": 1261,
+    "recovered_buildable_routines": 1267,
     "recovered_routine_tests": "analysis/startup_verification.json",
     "recovered_routine_test_cases": 17,
     "main_binary_draft_export_failures": 6,
@@ -137824,6 +137824,38 @@
         "The known callback is the actual byte-proved RTS/NOP function; arbitrary callback bodies remain explicit unresolved targets.",
         "Qualified privileged bank-1/FD=0, MMU-off RAM and prior numerical/backend domains apply. Typed memory/peripheral failures are not complete hardware exception delivery. Natural boot order, visible rendering, gameplay/settings and ports remain incomplete."
       ]
+    },
+    "boot_device_integration": {
+      "verification": "analysis/boot_device_verification.json",
+      "verification_sha256": "a984c1a4f4a32699bb8064bc76c89e504974945547d51a47c3ef5a18ccd0f43e",
+      "adapter_source": "source/sa_boot_device.c",
+      "adapter_source_sha256": "3cd6f52af22dd765ff94b5c47ddc0e3013cb1c0fd88fd249944185bbc48a4663",
+      "direct_comparisons": 418,
+      "newly_registered_entries": 6,
+      "frame_rows": 631,
+      "frame_conditional_outcomes": 70,
+      "compiled_source_count": 132,
+      "native_producer_sequences": 12,
+      "sequence_stage_comparisons": 24,
+      "boot_wait_prefix_cases": 8,
+      "wait_rows_covered": 57,
+      "wait_static_rows": 91,
+      "wait_recovery_credit": 0,
+      "boot_rows_covered": 16,
+      "boot_static_rows": 51,
+      "boot_recovery_credit": 0,
+      "command_packets": 5,
+      "backend_independent_checks": 737,
+      "external_game_service_fixtures": 0,
+      "natural_boot_order_verified": false,
+      "next_dependency": "0x8c641f00",
+      "guide": "BOOT_DEVICE.txt",
+      "scope": "Full reached/final machine, RAM, FPU/banks, integer banks, MACL/MACH/GBR, register/queue/timer and command-packet comparisons. Independent copy, selection, readiness, callback, packet/history/length/maximum and frame return checks. Twelve actual native selector -> frame sequences preserve RAM/machine state. Registration remains separate.",
+      "limitations": [
+        "Direct runtime command-buffer fixtures and explicit selector -> frame call boundaries do not establish natural boot scheduling or a playable frame.",
+        "The bounded host packet sink captures polygon-window SQ transfers, not GPU consumption, rendering, interrupt/status behavior, backpressure or timing. Capacity exhaustion is an explicit -4 host stop.",
+        "Inherited privileged bank-1/FD=0, MMU-off RAM, numerical and typed guard domains apply. Readiness entry edge proof excludes self-modifying code and stack/literal aliasing."
+      ]
     }
   },
   "milestones": [
@@ -137997,10 +138029,10 @@
     "report": "analysis/recovery_coverage_audit.json",
     "candidate_inventory": "analysis/unrecovered_function_candidates.tsv",
     "boundary_inventory": "analysis/unresolved_module_boundaries.json",
-    "registered_routines": 1261,
-    "registered_unique_module_address_pairs": 1258,
+    "registered_routines": 1267,
+    "registered_unique_module_address_pairs": 1264,
     "indexed_candidates_in_export_snapshots": 10875,
-    "registered_entries_matching_export_snapshots": 1152,
+    "registered_entries_matching_export_snapshots": 1158,
     "non_texture_binaries_without_function_index": 211,
     "registry_evidence_errors": 0,
     "stale_whole_source_hash_reports": 0,
@@ -145325,5 +145357,5 @@
   },
   "unverified_work": {},
   "unverified_drafts": {},
-  "recovered_buildable_routines": 1261
+  "recovered_buildable_routines": 1267
 }
