@@ -16,7 +16,8 @@ Public repository: [wigwoo1/Sonic-Adventure-DC-Decomp](https://github.com/wigwoo
 - `project_status.json` records requirements and progress evidence.
 - `HD_TEXTURE_AND_DISPLAY_PLAN.txt` records the planned SUPIR HD texture pack, HD toggle, texture percentages, render resolution, and aspect-ratio settings. These features are pending.
 - `SOURCE_HANDOFF.txt` contains the source-access and handoff notes.
-- `BOOT_INTERRUPT.txt` records nine newly completed interrupt/completion/submission bodies: 589 comparisons, all 2,180 adapter rows, 66 backend checks and sixteen actual wait/boot prefixes. The next dependency is input processing at `0x8c601e2a`; hardware IRQ delivery and visible rendering remain unfinished.
+- `BOOT_INPUT.txt` records six new input bodies and the complete wait caller: 503 direct comparisons, four three-poll lifecycles and 24 connected wait/boot checks. The outer startup path now reaches `0x8c605234`; hardware transport and natural startup remain unfinished.
+- `BOOT_INTERRUPT.txt` preserves nine completed interrupt/completion/submission bodies: 589 comparisons, all 2,180 adapter rows, 66 backend checks and sixteen earlier wait/boot prefixes.
 - `BOOT_SUBMIT.txt` preserves the earlier transfer-ring/draining milestone and its partial submission evidence, superseded by the qualified software completion paths in `BOOT_INTERRUPT.txt`.
 - `BOOT_DEVICE.txt` records the complete 631-row frame command finalizer and five new dependencies, 418 direct comparisons, twelve actual selector/frame sequences and bounded command-packet capture. Wait execution now reaches `0x8c641f00` at 57/91 rows; complete rendering remains unfinished.
 - `BOOT_WAIT.txt` records four complete clock/arithmetic/callback helpers, 304 direct comparisons and twelve actual boot prefixes. The wait/setup routine remains partial at 46/91 rows and stops at device callee `0x8c642440`.

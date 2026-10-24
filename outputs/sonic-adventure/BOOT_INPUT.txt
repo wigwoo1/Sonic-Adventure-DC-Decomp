@@ -1,0 +1,90 @@
+Sonic Adventure Rev A - input update and complete wait caller (2026-10-24)
+
+Whole-project estimate remains 10% weighted milestones, not code coverage.
+The separate strict optimized 137-source boot_input.dll is an incomplete research
+library. There is no playable game. Existing source, proofs and DLLs are preserved.
+
+Seven newly registered bodies:
+  8c601e2a  24-slot input update and button change masks    133 rows
+  8c601df6  device type classification                      26 rows
+  8c601bb2  disconnected-device state                     31 rows
+  8c601da6  capability metadata and optional remapping    40 rows
+  8c601bf0  trigger hysteresis, buttons and signed axes   143 rows
+  8c601d84  capability bit remapping                      17 rows
+  8c6050b0  complete wait/frame/submission/input snapshot  91 rows
+
+The six input bodies total 390 rows, of which 386 execute. Four capability-read
+error rows remain explicitly unexecuted. In the qualified synchronous domain,
+the capability helper tests bit zero present and its nested metadata locator
+requests that same bit from the same unchanged bitmap. The locator must return
+a nonzero data pointer and the reader returns success, excluding the negative
+return branch. qualify_boot_input.py checks the original instructions and adds
+96 independent original locator comparisons, including every single-bit bitmap
+and 64 varied bit-zero-present bitmaps. No executed-row credit is assigned to
+the four error rows. Concurrent driver writes are outside that proof domain.
+
+The source retains all four error rows. Eighteen existing descriptor, driver
+record, directory-slot, signed-remainder and metadata helpers are adapted with
+guarded memory and receive no duplicate registration credit. The complete input
+adapter unit has 708 rows: 704 execute and four are structurally excluded.
+All 69 feasible outcomes of the six new input bodies execute.
+
+503 direct original-model comparisons pass: 493 successful returns and ten
+invalid-stack/address stops. They include 407 broad input cases and 96 locator
+checks. All final/reached RAM, CPU/FPU, both integer banks, SR/PR/FPUL, GBR/MACH/
+MACL, ordered native boundaries and inherited software peripheral state match.
+There are 8,884 independent direct assertions. Cases cover disabled updates,
+24-slot traversal, four processed primary slots, device type/status/feature
+variants, normal/inverted button masks, disconnected state, metadata packing,
+all ten getter selectors, signed remainder, trigger thresholds/hysteresis,
+signed analogue axes and guarded memory failures. Original capability scratch
+RAM is retained when the original skips reading metadata; it is not zeroed by
+the translation. That prior guest stack word is an explicit input fixture.
+
+Four three-poll sequences (12 stages, 1,608 independent assertions) carry RAM,
+CPU/FPU and actual MACL results while external controller payloads change.
+Trigger history survives high/middle/low and low/middle/high transitions.
+Independent checks cover button changes and every processed slot's analogue
+fields. The updater generates no device/clock/VRAM events and does not change
+GBR/MACH/inactive integer banks, so the reinitialized empty backend is identical
+between these particular stages. This is not a general device scheduler.
+
+Twenty-four uninterrupted connected comparisons include twelve complete wait
+returns and twelve outer-boot prefixes. Original frame, submission, software IRQ
+callbacks, input processing, clock sampling and five-word active-controller
+snapshot now execute together. All 91 wait rows and eight conditional outcomes
+execute, with 192 independent sequence assertions. Outer boot advances from
+16/51 to 20/51 rows and stops at the actual next dependency 8c605234. That outer
+caller remains partial and receives zero complete-body credit.
+
+Driver record contents, frame tables, active-controller selection, initial CPU/
+device state and finite timer samples are explicit runtime fixtures. No game
+service return is substituted. This does not establish Maple/controller hardware
+transport, natural driver/startup ordering, asynchronous IRQ delivery, physical
+DMA/GPU execution, visible pixels or timing. The inherited immutable-code/literal,
+distinct valid RAM/stack/data, privileged/MMU-off and numeric/backend domains
+still apply. Requested gameplay, ports/demakes, SUPIR textures and settings remain
+unfinished; texture Off remains planned as vertex/material color only.
+
+Registry: 1,285 entries / 1,282 unique module-address pairs, with 1,176 matches
+to 10,875 frozen indexed candidates. These are not whole-game coverage. The
+true routine total is unknown and 211 non-texture binaries remain unindexed.
+Registry audit found zero evidence errors and zero stale whole-source reports.
+All 658 original dispatcher pointer checks pass after the registry-map refresh.
+All 311 unique pinned inputs match. Five generated artifacts reproduce exactly;
+registration is byte-idempotent. Seven Python and seven PowerShell files parse,
+and all 137 sources pass strict syntax checks with research wait bounds disabled.
+The historical aggregate workflow is extended; it was not rerun in full.
+
+Reproduce with matching local retail inputs and the configured compiler:
+  python -B outputs/sonic-adventure/recover_boot_input.py
+  python -B outputs/sonic-adventure/connect_boot_input.py
+  ./outputs/sonic-adventure/build_boot_input.ps1
+  python -B outputs/sonic-adventure/verify_boot_input.py
+  python -B outputs/sonic-adventure/verify_boot_input_sequence.py
+  python -B outputs/sonic-adventure/verify_boot_input_lifecycle.py
+  python -B outputs/sonic-adventure/qualify_boot_input.py
+  python -B outputs/sonic-adventure/register_boot_input.py
+
+Next recover indexed 54-byte entry 8c605234 and continue the actual outer-boot
+path. Continue Sol High. The full goal stays active at the 10% milestone estimate.
