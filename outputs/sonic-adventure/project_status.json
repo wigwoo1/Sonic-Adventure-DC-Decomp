@@ -129,7 +129,7 @@
     "prs_trailing_bytes": 0,
     "main_binary_indexed_functions": 3637,
     "main_binary_draft_pseudocode_functions": 3631,
-    "recovered_buildable_routines": 1257,
+    "recovered_buildable_routines": 1259,
     "recovered_routine_tests": "analysis/startup_verification.json",
     "recovered_routine_test_cases": 17,
     "main_binary_draft_export_failures": 6,
@@ -137764,6 +137764,40 @@
       "guide": "DRAW_ANGLE_CURVE.txt",
       "next_task": "Actual boot/loading dependency recovery; natural producer/initializer order remains unproved.",
       "recommended_model": "Sol High"
+    },
+    "startup_callback_flag_reset_8c107aaa": {
+      "verification": "analysis/startup_callback_flag_reset_8c107aaa_verification.json",
+      "cases": 48,
+      "retail_span_sha256": "44fd8e428ac9efe8101e4fc5c33ef98112e04d9ebc7bacee3f916e2e3b4f9b5d",
+      "scope": "Complete 14-instruction conditional flag-reset helper compared against the retail interpreter across zero/nonzero gates, randomized registers/SR, all RAM and callback side effects. The original callback target and call arguments are checked.",
+      "limitations": [
+        "The indirect callback at 0x8c09865c is a deterministic service boundary here; its independent task-disposal report covers its own routine with destructor/children/work/free services hooked.",
+        "The SH-4 interpreter is a software model. This does not prove the complete boot chain, natural scheduling, Dreamcast hardware behavior, visible rendering or gameplay."
+      ]
+    },
+    "boot_setup_integration": {
+      "verification": "analysis/boot_setup_verification.json",
+      "verification_sha256": "cfd0951f9cf4a23c6cd4ac06cce5a0f0fb73bb27c89a55c387ce139f6af62334",
+      "adapter_source": "source/sa_boot_setup.c",
+      "adapter_source_sha256": "61b819514aeff9d47d73597be381c8018a42818db424d54a2c5699b105c5f2ea",
+      "cases": 106,
+      "prefix_cases": 12,
+      "parent_address": "0x8c10b840",
+      "parent_rows_covered": 16,
+      "parent_static_rows": 51,
+      "parent_recovery_credit": 0,
+      "callback_return_pc": "0x8c107aba",
+      "external_game_service_fixtures": 0,
+      "natural_boot_order_verified": false,
+      "next_dependency": "0x8c6050b0",
+      "guide": "BOOT_SETUP.txt",
+      "scope": "Three original setup bodies, native task deletion for valid resource-free task records, exact register address/value and complete stack footprints. All reached/final RAM/CPU/FPU/banks/MACH/MACL/GBR, register map and ordered native boundaries match the original instruction model. Boot caller remains partial.",
+      "limitations": [
+        "Synthetic valid task/list fixtures cover native task deletion with no destructor, child, work or heap payload. Arbitrary task graphs/resources are outside these direct cases.",
+        "Cold boot prefixes start from loaded MAIN/AL_MAIN in zero-initialized RAM. They do not prove natural boot prerequisites or startup/scheduler order.",
+        "Register effects are bounded host storage, not GPU command consumption, timing or pixels. Typed invalid-memory and missing/rejected bus stops do not implement full hardware exception delivery.",
+        "Qualified MMU-off RAM and processor/numerical domains inherited from the frame pipeline; whole gameplay, settings and ports remain unfinished."
+      ]
     }
   },
   "milestones": [
@@ -137937,10 +137971,10 @@
     "report": "analysis/recovery_coverage_audit.json",
     "candidate_inventory": "analysis/unrecovered_function_candidates.tsv",
     "boundary_inventory": "analysis/unresolved_module_boundaries.json",
-    "registered_routines": 1257,
-    "registered_unique_module_address_pairs": 1254,
+    "registered_routines": 1259,
+    "registered_unique_module_address_pairs": 1256,
     "indexed_candidates_in_export_snapshots": 10875,
-    "registered_entries_matching_export_snapshots": 1148,
+    "registered_entries_matching_export_snapshots": 1150,
     "non_texture_binaries_without_function_index": 211,
     "registry_evidence_errors": 0,
     "stale_whole_source_hash_reports": 0,
@@ -145265,5 +145299,5 @@
   },
   "unverified_work": {},
   "unverified_drafts": {},
-  "recovered_buildable_routines": 900
+  "recovered_buildable_routines": 1259
 }

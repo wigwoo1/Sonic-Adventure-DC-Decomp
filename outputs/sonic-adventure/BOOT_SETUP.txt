@@ -1,0 +1,59 @@
+Sonic Adventure Rev A - native boot setup dependencies (2026-10-24)
+
+The original caller 8c10b840 now advances past its first three calls. Twelve
+cold-memory comparisons execute 16 of its 51 instruction rows and stop explicitly
+at the real next callee 8c6050b0. No caller recovery credit or complete boot claim.
+
+The separate 129-source boot_setup.dll connects:
+  8c107aaa  conditional task disposal and global pointer clear (14 rows, reused)
+  8c605c10  guest-stack argument setup around register command (12 rows, new)
+  8c652f56  existing selector-0x40 wrapper (8 rows, reused)
+The original register writer 8c653444 stores the requested value at a05f8040.
+Task disposal executes the existing native 8c09865c body. Tests supply valid
+resource-free tasks and vary next/previous/parent links, list heads, attachments,
+free-list presence, both floating banks and guest stack aliases. No game-service
+callback fixtures are used in this connection.
+
+Strict optimized compilation passed. 106 direct comparisons cover all 34 rows
+and both conditional outcomes: 96 returns, six invalid-stack stops, two rejected
+register writes and two missing-bus stops. 624 independent assertions check task
+list/pointer cleanup, stack/RAM footprints and exact register address/value.
+All reached/final machine/RAM/FPU/integer-bank/MACH/MACL/GBR/register-map state and
+ordered native boundary states match the retail instruction model. Twelve caller
+prefixes separately match the actual native setup path; 35 caller rows remain
+unexecuted. Full natural startup prerequisites, scheduling, GPU execution and
+visible gameplay remain unfinished. Overall weighted project estimate stays 10%.
+
+Source: source/sa_boot_setup.c
+Connection: source/sa_boot_setup_connected.c
+Evidence: analysis/boot_setup_translation.json
+          analysis/boot_setup_connection.json
+          analysis/boot_setup_verification.json
+Read-only original export: analysis/boot-setup/
+
+Reproduce from the workspace root:
+  python -B outputs/sonic-adventure/recover_boot_setup.py
+  python -B outputs/sonic-adventure/connect_boot_setup.py
+  .\outputs\sonic-adventure\build_boot_setup.ps1 -Workspace (Get-Location).Path
+  python -B outputs/sonic-adventure/verify_boot_setup.py
+  python -B outputs/sonic-adventure/register_boot_setup.py
+Use the workstation Python executable from GITHUB_PUBLISHING.txt if Python is
+not on PATH. The full accumulated build/test sequence was extended, not rerun.
+
+Correction to the previous standalone helper proof
+The prior helper source supplied callback return PC 8c107ab8 instead of the SH-4
+JSR return PC 8c107aba. Its test hardcoded that field and only caught final-state
+differences. The helper and test now compare actual callback-entry registers,
+SR and PR, and incorporate PR into modeled effects. All 48 cases pass; the same
+strengthened test rejects the preserved original DLL at the callback boundary.
+Five original artifacts and their SHA256 records remain available under
+analysis/history/startup_callback_flag_reset_v1/PRESERVED_INPUTS.json and the
+recorded build/history path. These historical files document the defect and are
+superseded by the corrected current source/proof. Read:
+  analysis/startup_callback_flag_reset_regression.json
+  verify_startup_callback_flag_reset_regression.py
+
+Next: recover the actual 8c6050b0 wait/setup body and its reached clock/device
+dependencies. Current exports show a timer read, conditional elapsed-time loop,
+three setup calls and a five-word snapshot. Their intended natural startup and
+hardware behavior must be established through actual dependencies.

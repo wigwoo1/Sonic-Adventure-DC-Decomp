@@ -1,5 +1,47 @@
 Sonic Adventure Dreamcast Rev A - source access and handoff
 
+Current update (2026-10-24): corrected callback boundary and native boot setup
+The previous helper proof missed a callback-entry return address defect. Current
+source now supplies original JSR return PC 8c107aba; the test compares actual
+callback-entry registers/SR/PR. All 48 comparisons pass and the strengthened test
+rejects the preserved old DLL. Five original artifacts retain their SHA256 hashes
+in analysis/history/startup_callback_flag_reset_v1/PRESERVED_INPUTS.json.
+
+A distinct strict optimized 129-source pipeline now connects the helper to real
+native task deletion and the next register setup/wrapper. 106 direct comparisons
+cover all 34 rows / both outcomes, with 624 independent assertions; 96 returns,
+six bad-stack stops and four missing/rejected bus stops. Twelve actual boot-caller
+prefixes match full machine/RAM/FPU/integer banks/MACH/MACL/GBR/register state and
+ordered boundaries through 16/51 caller rows, stopping at real callee 8c6050b0.
+The parent remains partial with 35 unexecuted rows and zero recovery credit.
+One new 12-row routine (8c605c10) is registered; two helper/wrapper adaptations
+and the existing task disposal attach reuse evidence without duplicate credit.
+Read BOOT_SETUP.txt. Natural startup order, GPU execution, full gameplay/settings
+and all ports remain unfinished. Overall weighted estimate remains 10%.
+Registry: 1,259 entries / 1,256 unique module/address pairs; 1,150 frozen-candidate
+matches, zero evidence errors/stale sources and 211 binaries still unindexed.
+All 658 dispatcher pointer checks pass. Five generated artifacts reproduce
+exactly and registration is byte-idempotent. The accumulated suite was extended,
+not rerun in full. Next actual dependency is the wait/setup routine 8c6050b0.
+
+Previous update (2026-10-24): first boot-caller dependency recovered
+Recovered startup callback/flag reset helper 8c107aaa: all 14 instruction rows
+were reached across both gate outcomes and matched all 16 MiB of RAM plus
+GPR/SR/PR/PC in 48 retail-interpreter comparisons. The actual callback target
+8c09865c and arguments were checked; its body is a deterministic service boundary
+in this wrapper test, with its separate task-disposal report retaining its own
+callback limits. New source/build/verifier/registration workflow is included in
+build_and_verify.ps1. Read STARTUP_CALLBACK_FLAG_RESET.txt.
+
+The next renderer/boot task remains caller 8c10b840. Its earlier geometry suite
+stopped at first callee 8c107aaa. The dependency is now natively connected as a
+verified helper, but the caller still has 46/51 listed instruction rows untested
+and natural setup/loading/scheduler ordering is not established. Whole-game
+function counts and executable code/data boundaries remain unknown. Overall
+weighted project estimate remains 10%; all ports, settings, full gameplay,
+visible GPU output and hardware behavior are unfinished. Continue with Sol High
+for reverse engineering; Luna is suitable for documentation-only maintenance.
+
 Current update (2026-10-18): angle replay and persistent renderer initialization
 The requested integer-angle helper 8c609d68 was already recovered. A fresh replay
 now passes all 60 signed/wrap/rounding/saturation boundary cases in both floating

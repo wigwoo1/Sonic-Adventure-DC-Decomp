@@ -1,0 +1,33 @@
+Startup callback flag reset at 0x8c107aaa
+========================================
+
+Correction (2026-10-24): the original native source used the wrong callback
+return PC, 8c107ab8. It now supplies 8c107aba, matching the original JSR. The
+test compares actual callback-entry registers/SR/PR and rejects the preserved
+old DLL. See BOOT_SETUP.txt and analysis/startup_callback_flag_reset_regression.json.
+
+The 14-instruction helper reads its flag address from the executable literal at
+0x8c107b80 and reads the flag from that address. A zero flag skips the indirect
+callback. A nonzero flag calls the target loaded from 0x8c107b84 with the flag
+value in R4, then stores zero through the flag pointer. In both branches it
+restores PR and the stack before returning.
+
+Recovered source: source/startup_callback_flag_reset_8c107aaa.c
+Build: build_startup_callback_flag_reset_8c107aaa.ps1
+Verification: verify_startup_callback_flag_reset_8c107aaa.py
+Registration: register_startup_callback_flag_reset_8c107aaa.py
+Evidence: analysis/startup_callback_flag_reset_8c107aaa_verification.json
+
+The focused test compares all 14 instruction rows, all 16 MiB of guest RAM and
+GPR/SR/PR/PC in 48 cases. It reaches both gate outcomes and records 36 callback
+calls with the exact retail target and arguments. The callback is a deterministic
+service boundary in this test; its separate task-disposal report tests that
+callee with destructor/children/work/free callbacks modeled. This helper result
+does not establish natural boot ordering, Dreamcast hardware behavior, rendering
+or gameplay.
+
+Run from the workspace root in PowerShell:
+
+    .\outputs\sonic-adventure\build_startup_callback_flag_reset_8c107aaa.ps1 -Workspace (Get-Location).Path
+    & 'C:\Users\wigwo\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe' -B .\outputs\sonic-adventure\verify_startup_callback_flag_reset_8c107aaa.py
+    & 'C:\Users\wigwo\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe' -B .\outputs\sonic-adventure\register_startup_callback_flag_reset_8c107aaa.py

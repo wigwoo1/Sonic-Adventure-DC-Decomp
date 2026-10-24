@@ -113,6 +113,11 @@ if ($LASTEXITCODE -ne 0) { throw 'Startup event-poll registration failed' }
 if ($LASTEXITCODE -ne 0) { throw 'Startup boot orchestrator equivalence check failed' }
 & $python (Join-Path $PSScriptRoot 'register_startup_boot.py')
 if ($LASTEXITCODE -ne 0) { throw 'Startup boot orchestrator registration failed' }
+& (Join-Path $PSScriptRoot 'build_startup_callback_flag_reset_8c107aaa.ps1') -Workspace $Workspace
+& $python (Join-Path $PSScriptRoot 'verify_startup_callback_flag_reset_8c107aaa.py')
+if ($LASTEXITCODE -ne 0) { throw 'Startup callback flag-reset verification failed' }
+& $python (Join-Path $PSScriptRoot 'register_startup_callback_flag_reset_8c107aaa.py')
+if ($LASTEXITCODE -ne 0) { throw 'Startup callback flag-reset registration failed' }
 & $clang -shared -O2 -fuse-ld=lld -nostdlib '-Wl,/noentry' (Join-Path $PSScriptRoot 'source/startup_sections.c') -o $output
 if ($LASTEXITCODE -ne 0) { throw 'Native startup compilation failed' }
 & $python (Join-Path $PSScriptRoot 'verify_startup.py')
@@ -8616,6 +8621,15 @@ if($LASTEXITCODE -ne 0){throw 'Frame context comparisons failed'}
 if($LASTEXITCODE -ne 0){throw 'Persistent renderer-initialization comparisons failed'}
 & $python (Join-Path $PSScriptRoot 'register_draw_frame_sequence.py')
 if($LASTEXITCODE -ne 0){throw 'Renderer initializer registration failed'}
+& $python (Join-Path $PSScriptRoot 'recover_boot_setup.py')
+if($LASTEXITCODE -ne 0){throw 'Boot setup recovery failed'}
+& $python (Join-Path $PSScriptRoot 'connect_boot_setup.py')
+if($LASTEXITCODE -ne 0){throw 'Boot setup connection failed'}
+& (Join-Path $PSScriptRoot 'build_boot_setup.ps1') -Workspace $Workspace
+& $python (Join-Path $PSScriptRoot 'verify_boot_setup.py')
+if($LASTEXITCODE -ne 0){throw 'Boot setup comparisons failed'}
+& $python (Join-Path $PSScriptRoot 'register_boot_setup.py')
+if($LASTEXITCODE -ne 0){throw 'Boot setup registration failed'}
 & $python (Join-Path $PSScriptRoot 'inventory_draw_geometry_frontier.py')
 if($LASTEXITCODE -ne 0){throw 'Post-view geometry inventory failed'}
 foreach($inventory in @('inventory_draw_primitive_frontier.py','inventory_draw_primitive_cpu.py','inventory_draw_continuation_frontier.py','inventory_draw_angle_frontier.py','inventory_draw_post_angle_frontier.py','inventory_draw_post_blend_frontier.py')){

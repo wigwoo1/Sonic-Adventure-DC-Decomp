@@ -3560,6 +3560,30 @@
             "Inherits numerical guards and constructed-data limitations of the focused particle report. Full game/ports remain unfinished."
           ]
         }
+      },
+      "boot_setup_integration": {
+        "verification": "analysis/boot_setup_verification.json",
+        "verification_sha256": "cfd0951f9cf4a23c6cd4ac06cce5a0f0fb73bb27c89a55c387ce139f6af62334",
+        "adapter_source": "source/sa_boot_setup.c",
+        "adapter_source_sha256": "61b819514aeff9d47d73597be381c8018a42818db424d54a2c5699b105c5f2ea",
+        "cases": 106,
+        "prefix_cases": 12,
+        "parent_address": "0x8c10b840",
+        "parent_rows_covered": 16,
+        "parent_static_rows": 51,
+        "parent_recovery_credit": 0,
+        "callback_return_pc": "0x8c107aba",
+        "external_game_service_fixtures": 0,
+        "natural_boot_order_verified": false,
+        "next_dependency": "0x8c6050b0",
+        "guide": "BOOT_SETUP.txt",
+        "scope": "Three original setup bodies, native task deletion for valid resource-free task records, exact register address/value and complete stack footprints. All reached/final RAM/CPU/FPU/banks/MACH/MACL/GBR, register map and ordered native boundaries match the original instruction model. Boot caller remains partial.",
+        "limitations": [
+          "Synthetic valid task/list fixtures cover native task deletion with no destructor, child, work or heap payload. Arbitrary task graphs/resources are outside these direct cases.",
+          "Cold boot prefixes start from loaded MAIN/AL_MAIN in zero-initialized RAM. They do not prove natural boot prerequisites or startup/scheduler order.",
+          "Register effects are bounded host storage, not GPU command consumption, timing or pixels. Typed invalid-memory and missing/rejected bus stops do not implement full hardware exception delivery.",
+          "Qualified MMU-off RAM and processor/numerical domains inherited from the frame pipeline; whole gameplay, settings and ports remain unfinished."
+        ]
       }
     },
     {
@@ -14513,7 +14537,31 @@
       "retail_span_sha256": "7f85247dc6c1504a408ef4341ccd33204b574a433551683f72ab6a360710e603",
       "source": "source/engine_dispatch_wrappers.c",
       "verification": "analysis/engine_dispatch_8c652f56_verification.json",
-      "status": "native C matches full RAM/CPU/FPU state and dispatcher arguments in 24 retail-instruction comparisons; dispatcher body remains external"
+      "status": "native C matches full RAM/CPU/FPU state and dispatcher arguments in 24 retail-instruction comparisons; dispatcher body remains external",
+      "boot_setup_integration": {
+        "verification": "analysis/boot_setup_verification.json",
+        "verification_sha256": "cfd0951f9cf4a23c6cd4ac06cce5a0f0fb73bb27c89a55c387ce139f6af62334",
+        "adapter_source": "source/sa_boot_setup.c",
+        "adapter_source_sha256": "61b819514aeff9d47d73597be381c8018a42818db424d54a2c5699b105c5f2ea",
+        "cases": 106,
+        "prefix_cases": 12,
+        "parent_address": "0x8c10b840",
+        "parent_rows_covered": 16,
+        "parent_static_rows": 51,
+        "parent_recovery_credit": 0,
+        "callback_return_pc": "0x8c107aba",
+        "external_game_service_fixtures": 0,
+        "natural_boot_order_verified": false,
+        "next_dependency": "0x8c6050b0",
+        "guide": "BOOT_SETUP.txt",
+        "scope": "Three original setup bodies, native task deletion for valid resource-free task records, exact register address/value and complete stack footprints. All reached/final RAM/CPU/FPU/banks/MACH/MACL/GBR, register map and ordered native boundaries match the original instruction model. Boot caller remains partial.",
+        "limitations": [
+          "Synthetic valid task/list fixtures cover native task deletion with no destructor, child, work or heap payload. Arbitrary task graphs/resources are outside these direct cases.",
+          "Cold boot prefixes start from loaded MAIN/AL_MAIN in zero-initialized RAM. They do not prove natural boot prerequisites or startup/scheduler order.",
+          "Register effects are bounded host storage, not GPU command consumption, timing or pixels. Typed invalid-memory and missing/rejected bus stops do not implement full hardware exception delivery.",
+          "Qualified MMU-off RAM and processor/numerical domains inherited from the frame pipeline; whole gameplay, settings and ports remain unfinished."
+        ]
+      }
     },
     {
       "module": "1ST_READ.BIN",
@@ -151407,6 +151455,60 @@
           "new_recovery_credit": 0
         }
       }
+    },
+    {
+      "module": "1ST_READ.BIN",
+      "name": "sa_startup_callback_flag_reset_8c107aaa",
+      "address": "0x8c107aaa",
+      "end_exclusive": "0x8c107ac6",
+      "retail_span_sha256": "44fd8e428ac9efe8101e4fc5c33ef98112e04d9ebc7bacee3f916e2e3b4f9b5d",
+      "source": "source/startup_callback_flag_reset_8c107aaa.c",
+      "verification": "analysis/startup_callback_flag_reset_8c107aaa_verification.json",
+      "status": "14-row callback gate and flag reset matched in 48 full-state cases",
+      "limitations": [
+        "The indirect callback at 0x8c09865c is a deterministic service boundary here; its independent task-disposal report covers its own routine with destructor/children/work/free services hooked.",
+        "The SH-4 interpreter is a software model. This does not prove the complete boot chain, natural scheduling, Dreamcast hardware behavior, visible rendering or gameplay."
+      ],
+      "boot_setup_integration": {
+        "verification": "analysis/boot_setup_verification.json",
+        "verification_sha256": "cfd0951f9cf4a23c6cd4ac06cce5a0f0fb73bb27c89a55c387ce139f6af62334",
+        "adapter_source": "source/sa_boot_setup.c",
+        "adapter_source_sha256": "61b819514aeff9d47d73597be381c8018a42818db424d54a2c5699b105c5f2ea",
+        "cases": 106,
+        "prefix_cases": 12,
+        "parent_address": "0x8c10b840",
+        "parent_rows_covered": 16,
+        "parent_static_rows": 51,
+        "parent_recovery_credit": 0,
+        "callback_return_pc": "0x8c107aba",
+        "external_game_service_fixtures": 0,
+        "natural_boot_order_verified": false,
+        "next_dependency": "0x8c6050b0",
+        "guide": "BOOT_SETUP.txt",
+        "scope": "Three original setup bodies, native task deletion for valid resource-free task records, exact register address/value and complete stack footprints. All reached/final RAM/CPU/FPU/banks/MACH/MACL/GBR, register map and ordered native boundaries match the original instruction model. Boot caller remains partial.",
+        "limitations": [
+          "Synthetic valid task/list fixtures cover native task deletion with no destructor, child, work or heap payload. Arbitrary task graphs/resources are outside these direct cases.",
+          "Cold boot prefixes start from loaded MAIN/AL_MAIN in zero-initialized RAM. They do not prove natural boot prerequisites or startup/scheduler order.",
+          "Register effects are bounded host storage, not GPU command consumption, timing or pixels. Typed invalid-memory and missing/rejected bus stops do not implement full hardware exception delivery.",
+          "Qualified MMU-off RAM and processor/numerical domains inherited from the frame pipeline; whole gameplay, settings and ports remain unfinished."
+        ]
+      }
+    },
+    {
+      "module": "1ST_READ.BIN",
+      "name": "sa_boot_setup_8c605c10",
+      "address": "0x8c605c10",
+      "end_exclusive": "0x8c605c28",
+      "retail_span_sha256": "68238676ba7162fce0f29607033631f36f481ee9a2e8016078a05088c4078047",
+      "source": "source/sa_boot_setup.c",
+      "verification": "analysis/boot_setup_verification.json",
+      "status": "All 12 original instructions matched: 36 native returns and six explicit stack/bus stops through real register writer",
+      "limitations": [
+        "Synthetic valid task/list fixtures cover native task deletion with no destructor, child, work or heap payload. Arbitrary task graphs/resources are outside these direct cases.",
+        "Cold boot prefixes start from loaded MAIN/AL_MAIN in zero-initialized RAM. They do not prove natural boot prerequisites or startup/scheduler order.",
+        "Register effects are bounded host storage, not GPU command consumption, timing or pixels. Typed invalid-memory and missing/rejected bus stops do not implement full hardware exception delivery.",
+        "Qualified MMU-off RAM and processor/numerical domains inherited from the frame pipeline; whole gameplay, settings and ports remain unfinished."
+      ]
     }
   ],
   "whole_game_decompilation_complete": false,
