@@ -129,7 +129,7 @@
     "prs_trailing_bytes": 0,
     "main_binary_indexed_functions": 3637,
     "main_binary_draft_pseudocode_functions": 3631,
-    "recovered_buildable_routines": 1298,
+    "recovered_buildable_routines": 1302,
     "recovered_routine_tests": "analysis/startup_verification.json",
     "recovered_routine_test_cases": 17,
     "main_binary_draft_export_failures": 6,
@@ -138190,6 +138190,41 @@
         "This original body was already registered. Canonical historical source and proof remain immutable, with the identified mask limitation recorded in new metadata. This milestone adds zero routine credit.",
         "Four advancing-input boot profiles reach 8c6046c0; four exhausted-input cases stop at the original read 8c60459e; two finite-clock controls stop at 8c602612. None establishes full startup."
       ]
+    },
+    "movie_hardware_integration": {
+      "verification": "analysis/movie_hardware_qualification.json",
+      "verification_sha256": "871469685009f651798de598545e1dedd51a3ac0d48b5d3b720ebed8e2be4804",
+      "adapter_source": "source/sa_movie_hardware_connected.c",
+      "adapter_source_sha256": "f3e393d19ae2ac7efc502013c2f7df29798e8eadf9f77c654124884cf21d7564",
+      "compiled_source_count": 155,
+      "newly_registered_entries": 4,
+      "reused_entries": 8,
+      "qualified_rows": 400,
+      "qualified_conditional_outcomes": 78,
+      "integrated_rows": 560,
+      "integrated_conditional_outcomes": 92,
+      "direct_comparisons": 400,
+      "independent_direct_checks": 2450,
+      "backend_sampled_words": 5000,
+      "control_subword_cases": 168,
+      "backend_checks": 40,
+      "boot_prefix_comparisons": 4,
+      "boot_prefix_independent_checks": 80,
+      "boot_rows_covered": 33,
+      "boot_static_rows": 51,
+      "boot_recovery_credit": 0,
+      "movie_startup_recovery_credit": 0,
+      "next_dependency": "Original context initializer 8c10d5a8; current cold startup preserves null 8c5fbb14 and the reached read fault at 8c10d4bc.",
+      "guide": "MOVIE_HARDWARE.txt",
+      "scope": "Twelve original control/copy/query/synchronization bodies with full machine, RAM, FPU, banked/special/interrupt-mask state, boundaries and software platform comparison. FIFO words are borrowed raw input; the 32-bit control register is declared host storage. No game-service result is fabricated.",
+      "limitations": [
+        "Direct initialized channel tables and software device state are explicit fixtures, not proof of natural driver initialization.",
+        "Hardware FIFO progression, physical AICA reset, G2 arbitration, electrical timing, IRQs, audio and pixels are not modeled. Missing/exhausted input stops at the reached original read.",
+        "Whole startup, game, ports and requested settings remain unfinished.",
+        "Startup tables and prior software peripheral state remain fixtures. Native disc/coherent-cache/CCR behavior is declared platform policy. No natural boot, physical BIOS/devices, gameplay or playable port is implied.",
+        "Four counter/stack-overlap cases cover reachable repeated-test branches under explicitly overlapping valid RAM; they do not represent normal initialized driver scheduling.",
+        "The four continuous startup cases retain their missing-context fault. Direct initialized-table cases do not establish natural initialization or full MOVIE/boot recovery."
+      ]
     }
   },
   "milestones": [
@@ -138363,10 +138398,10 @@
     "report": "analysis/recovery_coverage_audit.json",
     "candidate_inventory": "analysis/unrecovered_function_candidates.tsv",
     "boundary_inventory": "analysis/unresolved_module_boundaries.json",
-    "registered_routines": 1298,
-    "registered_unique_module_address_pairs": 1295,
+    "registered_routines": 1302,
+    "registered_unique_module_address_pairs": 1299,
     "indexed_candidates_in_export_snapshots": 11411,
-    "registered_entries_matching_export_snapshots": 1187,
+    "registered_entries_matching_export_snapshots": 1191,
     "non_texture_binaries_without_function_index": 211,
     "registry_evidence_errors": 0,
     "stale_whole_source_hash_reports": 0,
@@ -145691,5 +145726,5 @@
   },
   "unverified_work": {},
   "unverified_drafts": {},
-  "recovered_buildable_routines": 1298
+  "recovered_buildable_routines": 1302
 }

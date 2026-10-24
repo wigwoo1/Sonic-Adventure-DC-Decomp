@@ -1,0 +1,104 @@
+Sonic Adventure Dreamcast Rev A - control and synchronized transfer family
+Whole-project estimate: 10% weighted milestones, not recovered-code coverage.
+Incomplete research libraries; no playable game or validated native port.
+
+What is recovered
+source/sa_movie_hardware.c contains twelve original bodies, 560 instruction
+rows and 92 conditional outcomes. The new 155-source movie_hardware.dll routes
+the actual control/copy/query/wait chain after the original display wait.
+Four newly qualified bodies cover 400 rows and 78 conditional outcomes:
+  8c6046c0: 33-row control-word read/modify/write wrapper.
+  8c10d460: 148-row synchronized transfer with byte/word/longword variants.
+  8c10d770: 194-row synchronized transfer with periodic readiness checks.
+  8c10ebac: 25-row FIFO readiness wait and context-counter update.
+Eight existing helper bodies are integrated with their complete machine effects;
+their canonical names, source files, proof files and hashes remain preserved.
+They receive zero duplicate credit. Registry becomes 1302 entries / 1299 unique
+module/address pairs. No full MOVIE startup or outer boot credit is added.
+
+The copies retain original source/destination stride selectors, signed counts,
+transfer widths, interrupt-mask save/restore, channel installation/restoration,
+FIFO polling and counter updates. No called game service returns an assumed
+success. All services in this family execute their original translated bodies.
+
+Explicit native hardware interface
+source/hardware_transfer_bus.c/h wraps the previous display/A/V/cache interface.
+It accepts borrowed raw 32-bit FIFO status observations at physical 005f688c.
+One supported read consumes one unchanged word. Exhaustion returns host -4 at
+the reached instruction; missing or rejected input retains partial guest state.
+The caller must retain the observation array until reset or reconfiguration.
+Writes to this status input and unsupported reads are rejected without mutation.
+
+The reached word at physical 00702c00 uses declared little-endian host storage.
+Aligned byte/word/longword reads and writes preserve unaffected bytes and share
+the same value across physical/P1/P2 aliases. This storage is not an electrical
+device model, audio output, physical reset, FIFO implementation, G2 arbitration,
+IRQ delivery or automatic completion. Prior scan, A/V, CCR, register and cache
+policies remain explicit. Actual presentation timing and 60/120/240 FPS are
+future PC port work. The requested graphics/settings/other ports remain pending.
+
+Evidence
+analysis/movie_hardware_verification.json: 396 full-state comparisons pass:
+372 normal returns, 16 expected raw-input exhaustion stops, four missing-service
+stops and four rejected-access stops. There are 2430 independent assertions.
+Tests vary both FPU modes, transfer widths/counts/directions, zero and negative
+counts, default stride paths, interrupt-mask conditions, channel flags, counter
+wrap and byte/word/longword device accesses. An isolated copy of the independent
+instruction executor gains byte/word device access support; original executor
+source/proofs remain unchanged. Device width tests exercise this extension.
+
+analysis/movie_hardware_edges_verification.json adds four complete-state
+comparisons and 20 assertions. A deliberately overlapping valid-RAM context
+counter aliases the original stack-local readiness output. Incrementing one to
+two reaches the second polling branch; subsequent real queries rewrite one.
+Finite raw observations stop at their actual exhausted read. These cases cover
+otherwise missed reachable edges; they do not represent normal initialization.
+Combined: 400 direct comparisons / 2450 assertions, all 560 rows / 92 outcomes.
+
+analysis/movie_hardware_backend_verification.json: 5000 FIFO words, 168 randomized
+control-subword cases and 40 backend/API checks pass. Tests cover aliases, caller
+ownership/immutability, trace/drop count, exact exhaustion, invalid accesses
+without mutation, reconfiguration/reset, untouched RAM and inherited interfaces.
+
+analysis/movie_hardware_prefix_verification.json: four uninterrupted boot
+profiles cross both prior renderers/FPU modes and represent all four cable
+states. All original MOVIE load bytes, 91 sector reads, closed request ownership,
+cache/scan effects, module stores and complete reached/final machine state match.
+There are 80 extra assertions. All four preserve the actual uninitialized
+transfer context: pointer 8c5fbb14 is zero; original read 8c10d4bc attempts address
+000000d4 and stops with -3 before FIFO/device access. Direct initialized-context
+fixtures are not inserted into startup to bypass this missing initialization.
+Outer boot remains partial at 33/51 tested rows, with zero parent recovery credit.
+This does not establish natural boot, complete MOVIE initialization or gameplay.
+
+Next dependency and its producer
+Read-only references identify the original context writer at 8c10d5c8 inside
+8c10d5a8. analysis/movie_hardware_context_frontier.json byte-checks that 193-row
+initializer and its literal inputs. It aligns 8c7ac7ab down to 8c7ac7a0, writes
+the root, clears/setup state and sets the underlying channel base a05f7800.
+Its existing canonical recovery stays preserved. Its actual native startup
+integration, descriptor helpers and event registration must be connected next.
+No context pointer or readiness result is fabricated. This frontier earns no
+new recovery credit. Keep Sol High for that initialization/dependency work.
+
+Reproduce from the workspace root (matching retail inputs required locally)
+python -B outputs/sonic-adventure/recover_movie_hardware.py
+python -B outputs/sonic-adventure/connect_movie_hardware.py
+python -B outputs/sonic-adventure/inventory_movie_hardware_context.py
+& ./outputs/sonic-adventure/build_movie_hardware.ps1 -Workspace (Get-Location).Path
+python -B outputs/sonic-adventure/verify_movie_hardware.py
+python -B outputs/sonic-adventure/verify_movie_hardware_edges.py
+python -B outputs/sonic-adventure/verify_movie_hardware_backend.py
+python -B outputs/sonic-adventure/verify_movie_hardware_prefix.py
+python -B outputs/sonic-adventure/qualify_movie_hardware.py
+python -B outputs/sonic-adventure/register_movie_hardware.py
+python -B outputs/sonic-adventure/verify_movie_hardware_workflow.py
+
+The focused workflow reproduces six generated artifacts, checks registration
+idempotence/current proof pins, parses ten Python/seven PowerShell scripts,
+checks all 155 unbounded C sources with strict warnings, and verifies original
+source/proof/registration/build preservation against published baseline
+92fc42c557a4. The aggregate recipe includes this family after its dependencies.
+The focused milestone is tested; the whole accumulated suite is not claimed to
+have been rerun. All sources and evidence remain available for public review.
+Overall estimate remains 10%; the complete long-term goal stays active.

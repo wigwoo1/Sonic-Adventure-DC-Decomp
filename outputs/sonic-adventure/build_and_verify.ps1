@@ -8738,6 +8738,15 @@ foreach($taskScript in @('verify_movie_transition.py','verify_movie_transition_b
  & $python (Join-Path $PSScriptRoot $taskScript)
  if($LASTEXITCODE -ne 0){throw "MOVIE transition qualification failed: $taskScript"}
 }
+foreach($taskScript in @('recover_movie_hardware.py','connect_movie_hardware.py','inventory_movie_hardware_context.py')){
+ & $python (Join-Path $PSScriptRoot $taskScript)
+ if($LASTEXITCODE -ne 0){throw "MOVIE hardware preparation failed: $taskScript"}
+}
+& (Join-Path $PSScriptRoot 'build_movie_hardware.ps1') -Workspace $Workspace
+foreach($taskScript in @('verify_movie_hardware.py','verify_movie_hardware_edges.py','verify_movie_hardware_backend.py','verify_movie_hardware_prefix.py','qualify_movie_hardware.py','register_movie_hardware.py','verify_movie_hardware_workflow.py')){
+ & $python (Join-Path $PSScriptRoot $taskScript)
+ if($LASTEXITCODE -ne 0){throw "MOVIE hardware qualification failed: $taskScript"}
+}
 & $python (Join-Path $PSScriptRoot 'inventory_draw_geometry_frontier.py')
 if($LASTEXITCODE -ne 0){throw 'Post-view geometry inventory failed'}
 foreach($inventory in @('inventory_draw_primitive_frontier.py','inventory_draw_primitive_cpu.py','inventory_draw_continuation_frontier.py','inventory_draw_angle_frontier.py','inventory_draw_post_angle_frontier.py','inventory_draw_post_blend_frontier.py')){
