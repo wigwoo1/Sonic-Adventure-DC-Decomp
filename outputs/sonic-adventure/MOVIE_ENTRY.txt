@@ -1,0 +1,124 @@
+Sonic Adventure Rev A - raw MOVIE runtime entry (2026-10-24)
+
+Estimated whole-project completion remains 10% weighted milestones, not code
+coverage. The 149-source movie_entry.dll is an incomplete Windows research
+library. MOVIE startup is PARTIALLY VERIFIED; there is no playable movie/game.
+The full PC/Android/3DS/demake and display/texture goals remain active/unfinished.
+
+The original boot loads the raw, uncompressed SONICADV/MOVIE.BIN to 8ceb0000 and
+calls that address. The original file is 184592 bytes, SHA256:
+  84489968b607f6f80a7ad04ad402224ddd951a65e3ae8e18429ecfa17525614b
+Its identity is work/sonic-adventure/extracted/files/SONICADV/MOVIE.BIN. No decoded
+copy is substituted. A dedicated Ghidra project imports those bytes at the
+observed EB runtime base, rather than the 0c900000 base used by other overlays.
+It indexes 536 candidate functions, all with draft pseudocode. That candidate
+index is nonexhaustive; it is not 536 recovered functions or full code/data
+boundary analysis. Original raw input bytes are never modified or published.
+
+The two-instruction entry at 8ceb0000 branches to the 364-row startup at 8ceb0020.
+Both now have guarded static C proposals in source/sa_movie_entry.c. Startup
+executes its real mode/global stores, callback installation and frame wait;
+the connected path then enters the original main-binary cleanup/setup services.
+source/sa_movie_main.c contains 16 byte-checked main adapter proposals / 1637
+indexed rows. Existing original resource/allocation/helper registrations and
+proofs are retained. Proposals and partial parent execution receive no automatic
+recovery credit, and no game callback/device query return is fabricated.
+
+Three newly qualified bodies have 36 original instruction rows and two branch
+outcomes in total:
+  MOVIE.BIN 8ceb0000: two-instruction entry branch thunk only
+  1ST_READ  8c6436d0: eight-row nullable driver-field setter
+  1ST_READ  8c041e60: 26-row view-default/word copy, including original FPU load
+The MOVIE registration explicitly records its original raw input path, full
+hash and 8ceb0000 load address. It does not register the 364-row startup parent.
+Reused byte-fill, constant setter, allocation, release and tail helpers receive
+no duplicate credit. Their original canonical source/proof fields survive.
+
+62 direct complete-state comparisons pass, with 594 independent assertions.
+46 return normally across null/live driver pointers, argument values, varied
+view words, FPU banks, fill sizes/bytes and constant-setter inputs. Sixteen
+direct module-entry/startup cases retain the actual invalid-memory stop from
+uninitialized frame fixtures; they are negative cold-entry evidence, not proof
+of valid standalone startup. Every qualified helper row/outcome executes.
+
+Eight uninterrupted actual boot prefixes carry the initialized state through
+the real 91-sector load, cache request and MOVIE entry. The payload hash is
+captured at the entry boundary, before the module legitimately changes mutable
+runtime data. All reached/final machine, RAM/FPU, integer banks, special registers,
+native call boundaries, disc ownership/progress/transport events and software
+peripheral/CCR state match independent instruction/platform execution.
+
+Four prefixes retain the old finite clock samples and stop with input exhaustion
+at 8c602612. Four separately labeled elapsed-time profiles advance the clock
+again after the file load; the original frame wait completes, without replacing
+any callback return. Those paths reach unrecovered status query 8c10d914 from
+the original 8c6049c0 setup service. All profiles retain their distinct outcomes.
+There are 72 counted independent boot assertions plus the startup/global-store
+checks. Natural physical timing, event/IRQ delivery and cold initialization are
+not proved by these explicit runtime fixtures and host platform policies.
+
+The union of tested paths reaches 53/364 MOVIE startup rows. The outer boot
+remains at 33/51 rows, with zero complete-body credit for either parent. Resource
+cleanup, view setup, larger input initialization and other SDK parents remain
+partial according to their own reached-path evidence. No rendering, movie
+decoding/audio playback or complete game/port behavior is claimed.
+
+The next query 8c10d914 already has a separate historical recovery/proof. Its
+read-only export here confirms a call to 8c10d926 followed by extraction of status
+bits 8-9 from MMIO ff800030. Those services are not connected to this pipeline yet.
+The hardware meaning/host policy for that input still needs explicit validation;
+do not invent a convenient return value to advance startup. Next work should
+connect the original nested read/query and a declared, tested register interface.
+
+The registry auditor now supports raw executable inputs with explicit exact-name
+path, full input hash and load base. Seven wrong/missing provenance or unapproved
+module cases are rejected. Every legacy module path/base rule is unchanged;
+1297 legacy records and the one new raw-module record are checked. MOVIE's new
+536-candidate snapshot is included in the audit. Registry: 1298 entries / 1295
+unique module-address pairs. Audits, reproducibility and preservation evidence
+are in analysis/movie_entry_workflow_verification.json and the standard coverage
+reports. Candidate counts still do not establish the game's total routine count.
+Current audit totals: 11411 indexed candidates, 1187 registered snapshot matches
+and 211 nontexture binaries without indexes. There are zero registry evidence
+errors or stale source hashes; all 658 dispatcher pointer checks pass.
+
+Eight generated artifacts reproduce byte-for-byte and registration is idempotent.
+523 pinned inputs are current. Eleven Python and nine PowerShell workflows parse;
+all 149 C sources pass strict checks with original retry loops retained. Against
+the previous published 44831fa18efc commit, 3732 source/proof files and all 1295
+original canonical registry records are preserved. All 2553 work files from its
+research-build archive remain byte-identical locally.
+
+A reproducibility check caught an overbroad generator metadata wildcard that
+picked up an unused research export script. The generator now pins exactly its
+four actual export inputs. Every tested C source, build recipe and DLL stayed
+byte-identical; the direct and continuous proofs were rerun with the corrected
+metadata. Earlier local proof/generator snapshots and hashes are retained under
+work/sonic-adventure/movie_entry_pre_manifest_revalidation. Previous published
+source/proof/API/build bytes remain preserved.
+
+Reproduce with the configured tools and matching local retail inputs:
+  powershell -File outputs/sonic-adventure/ghidra/analyze_movie_runtime.ps1
+  powershell -File outputs/sonic-adventure/ghidra/export_movie_entry.ps1
+  powershell -File outputs/sonic-adventure/ghidra/export_movie_main_prefix.ps1
+  powershell -File outputs/sonic-adventure/ghidra/export_movie_main_setup.ps1
+  powershell -File outputs/sonic-adventure/ghidra/export_movie_main_services.ps1
+  powershell -File outputs/sonic-adventure/ghidra/export_movie_main_allocation.ps1
+  python -B outputs/sonic-adventure/inventory_movie_runtime.py
+  python -B outputs/sonic-adventure/recover_movie_entry.py
+  python -B outputs/sonic-adventure/recover_movie_main.py
+  python -B outputs/sonic-adventure/connect_movie_entry.py
+  powershell -File outputs/sonic-adventure/build_movie_entry.ps1
+  python -B outputs/sonic-adventure/verify_movie_entry.py
+  python -B outputs/sonic-adventure/verify_movie_entry_prefix.py
+  python -B outputs/sonic-adventure/verify_movie_module_inputs.py
+  python -B outputs/sonic-adventure/qualify_movie_entry.py
+  python -B outputs/sonic-adventure/register_movie_entry.py
+  python -B outputs/sonic-adventure/verify_movie_entry_workflow.py
+  python -B outputs/sonic-adventure/audit_recovery_coverage.py
+  python -B outputs/sonic-adventure/map_main_dispatch_cases.py
+  python -B outputs/sonic-adventure/verify_main_dispatch_case_map.py
+The focused workflow is included in build_and_verify.ps1. The complete accumulated
+suite was not rerun end-to-end. No retail image/module/texture/model/audio is
+published. Continue Sol High for the MMIO-query dependency; Luna Low is adequate
+for documentation-only work. Keep the full goal active.

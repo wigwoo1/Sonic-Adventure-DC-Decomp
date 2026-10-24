@@ -8711,6 +8711,15 @@ foreach($taskScript in @('verify_boot_cache.py','verify_boot_cache_prefix.py','v
  & $python (Join-Path $PSScriptRoot $taskScript)
  if($LASTEXITCODE -ne 0){throw "Cache integration qualification failed: $taskScript"}
 }
+foreach($taskScript in @('inventory_movie_runtime.py','recover_movie_entry.py','recover_movie_main.py','connect_movie_entry.py')){
+ & $python (Join-Path $PSScriptRoot $taskScript)
+ if($LASTEXITCODE -ne 0){throw "MOVIE entry preparation failed: $taskScript"}
+}
+& (Join-Path $PSScriptRoot 'build_movie_entry.ps1') -Workspace $Workspace
+foreach($taskScript in @('verify_movie_entry.py','verify_movie_entry_prefix.py','verify_movie_module_inputs.py','qualify_movie_entry.py','register_movie_entry.py','verify_movie_entry_workflow.py')){
+ & $python (Join-Path $PSScriptRoot $taskScript)
+ if($LASTEXITCODE -ne 0){throw "MOVIE entry qualification failed: $taskScript"}
+}
 & $python (Join-Path $PSScriptRoot 'inventory_draw_geometry_frontier.py')
 if($LASTEXITCODE -ne 0){throw 'Post-view geometry inventory failed'}
 foreach($inventory in @('inventory_draw_primitive_frontier.py','inventory_draw_primitive_cpu.py','inventory_draw_continuation_frontier.py','inventory_draw_angle_frontier.py','inventory_draw_post_angle_frontier.py','inventory_draw_post_blend_frontier.py')){

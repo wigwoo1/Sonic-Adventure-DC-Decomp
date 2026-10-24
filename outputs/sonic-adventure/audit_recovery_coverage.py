@@ -1,10 +1,23 @@
 """Audit registry evidence and indexed candidates without claiming whole-game coverage."""
-import csv,hashlib,json
+import csv,hashlib,json,re
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2]
 OUT=ROOT/'outputs/sonic-adventure'
 def read_json(path):return json.loads(path.read_text(encoding='utf-8-sig'))
 def sha(data):return hashlib.sha256(data).hexdigest()
+def retail_input(routine,module):
+    default='work/sonic-adventure/extracted/1ST_READ.BIN' if module=='1ST_READ.BIN' else f'work/sonic-adventure/decoded/SONICADV/{module}'
+    selected=routine.get('retail_binary',default)
+    if 'retail_binary' in routine:
+        assert re.fullmatch(r'[A-Z0-9_]+\.BIN',module),module
+        allowed=f'work/sonic-adventure/extracted/files/SONICADV/{module}'
+        assert module!='1ST_READ.BIN' and selected==allowed,selected
+        assert routine.get('retail_binary_sha256') and 'load_address' in routine
+    path=ROOT/selected
+    if routine.get('retail_binary_sha256'):assert sha(path.read_bytes())==routine['retail_binary_sha256'],selected
+    base=0x8c010000 if module=='1ST_READ.BIN' else int(routine.get('load_address','0x0c900000'),16)
+    return path,base
+
 def main():
     registry=read_json(OUT/'analysis/recovered_routines.json')
     fixes={'sa_prs_decompress_8c04c5e0':'source/prs_decompress.c','sa_load_compressed_module_8c09da44':'source/module_loader.c'}
@@ -13,8 +26,7 @@ def main():
         module=routine.setdefault('module','1ST_READ.BIN')
         if not routine.get('source') and routine['name'] in fixes:routine['source']=fixes[routine['name']]
         address=int(routine['address'],16);end=int(routine['end_exclusive'],16)
-        binary_path=ROOT/('work/sonic-adventure/extracted/1ST_READ.BIN' if module=='1ST_READ.BIN' else f'work/sonic-adventure/decoded/SONICADV/{module}')
-        base=0x8c010000 if module=='1ST_READ.BIN' else int(routine.get('load_address','0x0c900000'),16)
+        binary_path,base=retail_input(routine,module)
         data=binary_path.read_bytes();span=data[address-base:end-base]
         expected=routine.get('retail_span_sha256',routine.get('instruction_sha256'))
         span_matches=len(span)==end-address and sha(span)==expected
@@ -36,6 +48,8 @@ def main():
     indexes=[('1ST_READ.BIN',OUT/'analysis/ghidra-all/function_index.tsv')]
     for group in ['overlays','common-overlays','additional-modules']:
         indexes.extend((path.parent.name,path) for path in sorted((OUT/'analysis'/group).glob('*/function_index.tsv')))
+    movie_index=OUT/'analysis/movie-runtime/function_index.tsv'
+    if movie_index.is_file():indexes.append(('MOVIE.BIN',movie_index))
     candidates=[];modules=[];seen=set()
     for module,path in indexes:
         rows=list(csv.DictReader(path.open(encoding='utf-8-sig'),delimiter='\t'))
