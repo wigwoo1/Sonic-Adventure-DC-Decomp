@@ -1,0 +1,95 @@
+Sonic Adventure Rev A - native event registration and VBR state (2026-10-24)
+
+Whole-project estimate remains 10% weighted milestones, not code coverage.
+The separate strict optimized 140-source boot_event.dll is an incomplete research
+library, not a playable port. Previous source, APIs, proofs and DLLs are preserved.
+
+This milestone connects nine already registered bodies, with zero new routine
+credit. The 27-row entry 8c605234 was already counted as
+sa_countdown_register_8c605234 in source/frame_countdown.c. Its original name,
+source and frame_registration_verification.json proof reference are retained.
+New integration metadata points to the stronger complete-machine native proof.
+The remaining reused bodies are event insertion/removal 8c64594c/8c645c54,
+callback wrappers 8c64135a/8c64137c, the two actual two-row enable-return stubs
+8c658c20/8c658c24, callback installation 8c6412c2 and default restoration 8c6411b0.
+The enable stubs really return one in the original bytes; no device result is
+mocked to obtain that return.
+
+All 529 original rows and all 72 conditional outcomes execute in 544 complete
+state comparisons: 520 returns, 17 invalid-memory/rejected-mask stops, three
+privilege stops and four missing-bus stops. There are 2,002 independent direct
+assertions and 32 matched event-mask writes. Coverage includes empty/full pools,
+priority insertion at head/middle/tail, unlinking and absent handles, vector
+table updates, both mask words, callback defaults and all nine callback indices,
+interrupt-mask restoration, signed event values and VBR aliases. Four added
+cases exercise free records with stale next pointers: inactive records must not
+be mistaken for live predecessors. No outcomes are structurally excluded here.
+Original SR-related blocks discarded by the Ghidra draft remain in C and execute
+in the instruction-model proof; draft warnings are not accepted as recovery.
+
+All reached/final RAM, CPU/FPU, both integer banks, SR/PR/FPUL, GBR/MACH/MACL,
+explicit VBR, ordered native boundaries, two event masks and inherited software
+device state match. The new pipeline has an additional mandatory readonly VBR
+pointer. Existing APIs and old integer-extra structures are unchanged. The new
+sh4_vector_base.c implements the reached privileged STC VBR operation using the
+existing host fault convention. It does not implement VBR writes or exception
+delivery. Its 8,192 independent cases cover privileged/user modes, delay-slot
+fault classification, arbitrary SR bits, all copied VBR bits (including aliases
+and unaligned values), preserved error outputs and adjacent words.
+Primary instruction reference, STC VBR section:
+https://www.st.com/resource/en/user_manual/cd00147165.pdf
+
+event_register_bus.c adds bounded word storage at physical 005f6920/005f6924.
+Event kinds 16/17 record mask writes/reads. Forty-three independent backend/API
+checks cover aliases, rejected widths/alignment/neighbors, inherited VRAM,
+acknowledgement, DMA and render-register delegation, trace overflow/reset and
+rejection of missing extra/VBR pointers before any guest state is changed.
+The mask words do not deliver IRQs or implement hardware priority acceptance.
+
+Two actual create/replace/disable lifecycles carry RAM/CPU/FPU through six
+stages, with 30 independent assertions. They verify handle reuse, priority and
+callback records, the driver's original event-dispatch callback, and restoration
+of its original default. Those particular calls do not change MACL/GBR/VBR/MACH/
+inactive bank state or emit device/clock events; reinitializing the unchanged
+empty software device model therefore retains identical state. This is not a
+general persistent device scheduler.
+
+Eight uninterrupted outer-boot comparisons run the original frame/wait,
+submission, synchronous IRQ callbacks, 24-slot input, controller snapshot and
+event registration, including replacing an existing event. Eighty independent
+assertions check the installed callback/handle/priority and snapshot. Outer boot
+advances from 20 to 25 of 51 rows and stops at branch thunk 8c09da40. That thunk
+is already separately recovered in source/retail_branch_thunks.c and targets the
+unrecovered file-load body 8c09cc80. Neither is connected here, and no file result
+is fabricated. The outer caller retains zero complete-body recovery credit.
+
+Event pools and sorted acyclic live chains, driver/frame/input tables, selected
+controller, VBR/masks and finite timer samples are explicit runtime fixtures.
+Natural startup, file loading, IRQ acceptance/vectoring, exception delivery,
+controller hardware, physical DMA/GPU output, pixels and timing remain unproved.
+Inherited immutable-code/literal, distinct valid RAM/stack/data and qualified
+CPU/MMU-off/numerical/backend domains apply. Gameplay, all requested ports and
+demakes, SUPIR textures and display/settings work remain unfinished.
+
+Registry remains 1,285 entries / 1,282 unique module-address pairs, with 1,176
+matches to 10,875 frozen candidates. The real game routine total is unknown;
+211 non-texture binaries remain unindexed. Registry audit: zero evidence errors
+and zero stale reports. All 658 original dispatcher pointer checks pass. The
+348 unique pinned inputs match; five generated artifacts reproduce exactly and
+metadata attachment is byte-idempotent. Seven Python and six PowerShell files
+parse. All 140 sources pass strict syntax checks with research bounds disabled.
+The original countdown source/proof bytes match the prior published versions.
+historical aggregate workflow is extended, not rerun in full.
+
+Reproduce with matching local retail inputs and the configured compiler:
+  python -B outputs/sonic-adventure/recover_boot_event.py
+  python -B outputs/sonic-adventure/connect_boot_event.py
+  ./outputs/sonic-adventure/build_boot_event.ps1
+  python -B outputs/sonic-adventure/verify_boot_event.py
+  python -B outputs/sonic-adventure/verify_boot_event_state.py
+  python -B outputs/sonic-adventure/verify_boot_event_sequences.py
+  python -B outputs/sonic-adventure/qualify_boot_event.py
+  python -B outputs/sonic-adventure/register_boot_event.py
+
+Next connect the already recovered 8c09da40 thunk and recover its actual file-load
+dependency 8c09cc80. Continue Sol High. The full goal remains active at 10%.

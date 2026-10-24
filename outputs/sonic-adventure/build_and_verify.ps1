@@ -8675,6 +8675,15 @@ foreach($taskScript in @('verify_boot_input.py','verify_boot_input_sequence.py',
  & $python (Join-Path $PSScriptRoot $taskScript)
  if($LASTEXITCODE -ne 0){throw "Input/wait qualification failed: $taskScript"}
 }
+& $python (Join-Path $PSScriptRoot 'recover_boot_event.py')
+if($LASTEXITCODE -ne 0){throw 'Event integration recovery failed'}
+& $python (Join-Path $PSScriptRoot 'connect_boot_event.py')
+if($LASTEXITCODE -ne 0){throw 'Event integration connection failed'}
+& (Join-Path $PSScriptRoot 'build_boot_event.ps1') -Workspace $Workspace
+foreach($taskScript in @('verify_boot_event.py','verify_boot_event_state.py','verify_boot_event_sequences.py','qualify_boot_event.py','register_boot_event.py')){
+ & $python (Join-Path $PSScriptRoot $taskScript)
+ if($LASTEXITCODE -ne 0){throw "Event integration qualification failed: $taskScript"}
+}
 & $python (Join-Path $PSScriptRoot 'inventory_draw_geometry_frontier.py')
 if($LASTEXITCODE -ne 0){throw 'Post-view geometry inventory failed'}
 foreach($inventory in @('inventory_draw_primitive_frontier.py','inventory_draw_primitive_cpu.py','inventory_draw_continuation_frontier.py','inventory_draw_angle_frontier.py','inventory_draw_post_angle_frontier.py','inventory_draw_post_blend_frontier.py')){
