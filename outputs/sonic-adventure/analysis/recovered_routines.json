@@ -14925,7 +14925,38 @@
       "retail_span_sha256": "be4e30497eeb26a16582a9253cc581c25d65f7c9b7cb90325bca5b1b11d4bf22",
       "source": "source/sa_engine_mmio_read32.c",
       "verification": "analysis/engine_mmio_read32_verification.json",
-      "status": "native C matches full RAM/CPU/FPU state and MMIO read boundary in 48 cases (144 retail instructions)"
+      "status": "native C matches full RAM/CPU/FPU state and MMIO read boundary in 48 cases (144 retail instructions)",
+      "boot_submit_integration": {
+        "verification": "analysis/boot_submit_verification.json",
+        "verification_sha256": "9a1c1ca1d31e7453cf210982fbf2c732c33f28cc50a0dcd1c6a29092fc1b6df8",
+        "adapter_source": "source/sa_boot_submit.c",
+        "adapter_source_sha256": "9a143bd8a0e6dce60c1480138eeead5d8cddf25bc3d12d47dc173f8a3eb9f8e4",
+        "direct_comparisons": 580,
+        "newly_registered_entries": 2,
+        "compiled_source_count": 134,
+        "helper_rows": 295,
+        "helper_conditional_outcomes": 34,
+        "parent_rows_covered": 236,
+        "parent_static_rows": 267,
+        "parent_recovery_credit": 0,
+        "frame_producer_sequences": 6,
+        "sequence_stage_comparisons": 12,
+        "independent_checks": 2406,
+        "backend_independent_checks": 36,
+        "dma_register_writes": 1064,
+        "physical_dma_or_interrupt_completion": false,
+        "natural_boot_order_verified": false,
+        "next_dependency": "0x8c651bc0 interrupt/completion behavior",
+        "guide": "BOOT_SUBMIT.txt",
+        "scope": "Original transfer-ring record building, lane draining, register reading and submission paths; full reached/final machine/RAM/FPU/banks/MACH/MACL/GBR, timer, software graphics/transfer registers, ordered native boundaries, store queues and captured packets. Independent complete ring-builder RAM/stack footprint, wrap/alignment/record/start-register/interrupt-mask checks and drain semantics. Six actual frame-finalizer -> submission sequences reach the unresolved completion wait.",
+        "limitations": [
+          "The seven DMA command words are bounded host storage only; no asynchronous hardware transfer, interrupt delivery, completion or pixels are fabricated.",
+          "Research retry/wait bounds stop with -4 before the second continued branch test; builds without SA_BOUND_RETAIL_STALLS retain original unbounded loops. Typed host failures are not complete hardware exceptions.",
+          "Submission remains partial at its real callback/interrupt-dependent wait paths, with zero parent recovery credit. Initial runtime tables, native no-op/unknown callbacks and finite timer samples are explicit fixtures. Complete direct submission returns exercise explicit skip-submit state; starting a real transfer still reaches a pending completion wait.",
+          "The six producer/consumer sequences carry RAM and CPU/FPU state. The producer makes no bus/clock effects, so the reinitialized backend has identical empty state; the finalizer does not alter the extra integer/MACH/MACL/GBR state. This is not a general persistent interrupt/device scheduler.",
+          "Inherited privileged bank-1/FD=0, immutable code/literals, valid distinct stack/data and MMU-off domains apply. Gameplay, natural boot/scheduling and all requested ports/settings remain incomplete."
+        ]
+      }
     },
     {
       "module": "1ST_READ.BIN",
@@ -151697,7 +151728,38 @@
         "Direct runtime command-buffer fixtures and explicit selector -> frame call boundaries do not establish natural boot scheduling or a playable frame.",
         "The bounded host packet sink captures polygon-window SQ transfers, not GPU consumption, rendering, interrupt/status behavior, backpressure or timing. Capacity exhaustion is an explicit -4 host stop.",
         "Inherited privileged bank-1/FD=0, MMU-off RAM, numerical and typed guard domains apply. Readiness entry edge proof excludes self-modifying code and stack/literal aliasing."
-      ]
+      ],
+      "boot_submit_integration": {
+        "verification": "analysis/boot_submit_verification.json",
+        "verification_sha256": "9a1c1ca1d31e7453cf210982fbf2c732c33f28cc50a0dcd1c6a29092fc1b6df8",
+        "adapter_source": "source/sa_boot_submit.c",
+        "adapter_source_sha256": "9a143bd8a0e6dce60c1480138eeead5d8cddf25bc3d12d47dc173f8a3eb9f8e4",
+        "direct_comparisons": 580,
+        "newly_registered_entries": 2,
+        "compiled_source_count": 134,
+        "helper_rows": 295,
+        "helper_conditional_outcomes": 34,
+        "parent_rows_covered": 236,
+        "parent_static_rows": 267,
+        "parent_recovery_credit": 0,
+        "frame_producer_sequences": 6,
+        "sequence_stage_comparisons": 12,
+        "independent_checks": 2406,
+        "backend_independent_checks": 36,
+        "dma_register_writes": 1064,
+        "physical_dma_or_interrupt_completion": false,
+        "natural_boot_order_verified": false,
+        "next_dependency": "0x8c651bc0 interrupt/completion behavior",
+        "guide": "BOOT_SUBMIT.txt",
+        "scope": "Original transfer-ring record building, lane draining, register reading and submission paths; full reached/final machine/RAM/FPU/banks/MACH/MACL/GBR, timer, software graphics/transfer registers, ordered native boundaries, store queues and captured packets. Independent complete ring-builder RAM/stack footprint, wrap/alignment/record/start-register/interrupt-mask checks and drain semantics. Six actual frame-finalizer -> submission sequences reach the unresolved completion wait.",
+        "limitations": [
+          "The seven DMA command words are bounded host storage only; no asynchronous hardware transfer, interrupt delivery, completion or pixels are fabricated.",
+          "Research retry/wait bounds stop with -4 before the second continued branch test; builds without SA_BOUND_RETAIL_STALLS retain original unbounded loops. Typed host failures are not complete hardware exceptions.",
+          "Submission remains partial at its real callback/interrupt-dependent wait paths, with zero parent recovery credit. Initial runtime tables, native no-op/unknown callbacks and finite timer samples are explicit fixtures. Complete direct submission returns exercise explicit skip-submit state; starting a real transfer still reaches a pending completion wait.",
+          "The six producer/consumer sequences carry RAM and CPU/FPU state. The producer makes no bus/clock effects, so the reinitialized backend has identical empty state; the finalizer does not alter the extra integer/MACH/MACL/GBR state. This is not a general persistent interrupt/device scheduler.",
+          "Inherited privileged bank-1/FD=0, immutable code/literals, valid distinct stack/data and MMU-off domains apply. Gameplay, natural boot/scheduling and all requested ports/settings remain incomplete."
+        ]
+      }
     },
     {
       "module": "1ST_READ.BIN",
@@ -151772,6 +151834,40 @@
         "Direct runtime command-buffer fixtures and explicit selector -> frame call boundaries do not establish natural boot scheduling or a playable frame.",
         "The bounded host packet sink captures polygon-window SQ transfers, not GPU consumption, rendering, interrupt/status behavior, backpressure or timing. Capacity exhaustion is an explicit -4 host stop.",
         "Inherited privileged bank-1/FD=0, MMU-off RAM, numerical and typed guard domains apply. Readiness entry edge proof excludes self-modifying code and stack/literal aliasing."
+      ]
+    },
+    {
+      "module": "1ST_READ.BIN",
+      "name": "sa_boot_submit_8c641e00",
+      "address": "0x8c641e00",
+      "end_exclusive": "0x8c641eb2",
+      "retail_span_sha256": "8613007cb44fe8303b092d0144b5d448204d108fbeac24c908c2643e8db9c03f",
+      "source": "source/sa_boot_submit.c",
+      "verification": "analysis/boot_submit_verification.json",
+      "status": "All 89 original rows and 16 outcomes covered in 580 full-state comparisons, including bounded research-only stops for nonprogressing waits. Original loops also compile without the research limit.",
+      "limitations": [
+        "The seven DMA command words are bounded host storage only; no asynchronous hardware transfer, interrupt delivery, completion or pixels are fabricated.",
+        "Research retry/wait bounds stop with -4 before the second continued branch test; builds without SA_BOUND_RETAIL_STALLS retain original unbounded loops. Typed host failures are not complete hardware exceptions.",
+        "Submission remains partial at its real callback/interrupt-dependent wait paths, with zero parent recovery credit. Initial runtime tables, native no-op/unknown callbacks and finite timer samples are explicit fixtures. Complete direct submission returns exercise explicit skip-submit state; starting a real transfer still reaches a pending completion wait.",
+        "The six producer/consumer sequences carry RAM and CPU/FPU state. The producer makes no bus/clock effects, so the reinitialized backend has identical empty state; the finalizer does not alter the extra integer/MACH/MACL/GBR state. This is not a general persistent interrupt/device scheduler.",
+        "Inherited privileged bank-1/FD=0, immutable code/literals, valid distinct stack/data and MMU-off domains apply. Gameplay, natural boot/scheduling and all requested ports/settings remain incomplete."
+      ]
+    },
+    {
+      "module": "1ST_READ.BIN",
+      "name": "sa_boot_submit_8c650bc8",
+      "address": "0x8c650bc8",
+      "end_exclusive": "0x8c650de8",
+      "retail_span_sha256": "541394758e0c6ad82ef0e25e939f5abdc15ae9d90137270b37207d8d9ed92237",
+      "source": "source/sa_boot_submit.c",
+      "verification": "analysis/boot_submit_verification.json",
+      "status": "All 206 original rows and 18 outcomes covered in 580 full-state comparisons, including bounded research-only stops for nonprogressing waits. Original loops also compile without the research limit.",
+      "limitations": [
+        "The seven DMA command words are bounded host storage only; no asynchronous hardware transfer, interrupt delivery, completion or pixels are fabricated.",
+        "Research retry/wait bounds stop with -4 before the second continued branch test; builds without SA_BOUND_RETAIL_STALLS retain original unbounded loops. Typed host failures are not complete hardware exceptions.",
+        "Submission remains partial at its real callback/interrupt-dependent wait paths, with zero parent recovery credit. Initial runtime tables, native no-op/unknown callbacks and finite timer samples are explicit fixtures. Complete direct submission returns exercise explicit skip-submit state; starting a real transfer still reaches a pending completion wait.",
+        "The six producer/consumer sequences carry RAM and CPU/FPU state. The producer makes no bus/clock effects, so the reinitialized backend has identical empty state; the finalizer does not alter the extra integer/MACH/MACL/GBR state. This is not a general persistent interrupt/device scheduler.",
+        "Inherited privileged bank-1/FD=0, immutable code/literals, valid distinct stack/data and MMU-off domains apply. Gameplay, natural boot/scheduling and all requested ports/settings remain incomplete."
       ]
     }
   ],

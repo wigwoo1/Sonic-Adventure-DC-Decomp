@@ -129,7 +129,7 @@
     "prs_trailing_bytes": 0,
     "main_binary_indexed_functions": 3637,
     "main_binary_draft_pseudocode_functions": 3631,
-    "recovered_buildable_routines": 1267,
+    "recovered_buildable_routines": 1269,
     "recovered_routine_tests": "analysis/startup_verification.json",
     "recovered_routine_test_cases": 17,
     "main_binary_draft_export_failures": 6,
@@ -137856,6 +137856,37 @@
         "The bounded host packet sink captures polygon-window SQ transfers, not GPU consumption, rendering, interrupt/status behavior, backpressure or timing. Capacity exhaustion is an explicit -4 host stop.",
         "Inherited privileged bank-1/FD=0, MMU-off RAM, numerical and typed guard domains apply. Readiness entry edge proof excludes self-modifying code and stack/literal aliasing."
       ]
+    },
+    "boot_submit_integration": {
+      "verification": "analysis/boot_submit_verification.json",
+      "verification_sha256": "9a1c1ca1d31e7453cf210982fbf2c732c33f28cc50a0dcd1c6a29092fc1b6df8",
+      "adapter_source": "source/sa_boot_submit.c",
+      "adapter_source_sha256": "9a143bd8a0e6dce60c1480138eeead5d8cddf25bc3d12d47dc173f8a3eb9f8e4",
+      "direct_comparisons": 580,
+      "newly_registered_entries": 2,
+      "compiled_source_count": 134,
+      "helper_rows": 295,
+      "helper_conditional_outcomes": 34,
+      "parent_rows_covered": 236,
+      "parent_static_rows": 267,
+      "parent_recovery_credit": 0,
+      "frame_producer_sequences": 6,
+      "sequence_stage_comparisons": 12,
+      "independent_checks": 2406,
+      "backend_independent_checks": 36,
+      "dma_register_writes": 1064,
+      "physical_dma_or_interrupt_completion": false,
+      "natural_boot_order_verified": false,
+      "next_dependency": "0x8c651bc0 interrupt/completion behavior",
+      "guide": "BOOT_SUBMIT.txt",
+      "scope": "Original transfer-ring record building, lane draining, register reading and submission paths; full reached/final machine/RAM/FPU/banks/MACH/MACL/GBR, timer, software graphics/transfer registers, ordered native boundaries, store queues and captured packets. Independent complete ring-builder RAM/stack footprint, wrap/alignment/record/start-register/interrupt-mask checks and drain semantics. Six actual frame-finalizer -> submission sequences reach the unresolved completion wait.",
+      "limitations": [
+        "The seven DMA command words are bounded host storage only; no asynchronous hardware transfer, interrupt delivery, completion or pixels are fabricated.",
+        "Research retry/wait bounds stop with -4 before the second continued branch test; builds without SA_BOUND_RETAIL_STALLS retain original unbounded loops. Typed host failures are not complete hardware exceptions.",
+        "Submission remains partial at its real callback/interrupt-dependent wait paths, with zero parent recovery credit. Initial runtime tables, native no-op/unknown callbacks and finite timer samples are explicit fixtures. Complete direct submission returns exercise explicit skip-submit state; starting a real transfer still reaches a pending completion wait.",
+        "The six producer/consumer sequences carry RAM and CPU/FPU state. The producer makes no bus/clock effects, so the reinitialized backend has identical empty state; the finalizer does not alter the extra integer/MACH/MACL/GBR state. This is not a general persistent interrupt/device scheduler.",
+        "Inherited privileged bank-1/FD=0, immutable code/literals, valid distinct stack/data and MMU-off domains apply. Gameplay, natural boot/scheduling and all requested ports/settings remain incomplete."
+      ]
     }
   },
   "milestones": [
@@ -138029,10 +138060,10 @@
     "report": "analysis/recovery_coverage_audit.json",
     "candidate_inventory": "analysis/unrecovered_function_candidates.tsv",
     "boundary_inventory": "analysis/unresolved_module_boundaries.json",
-    "registered_routines": 1267,
-    "registered_unique_module_address_pairs": 1264,
+    "registered_routines": 1269,
+    "registered_unique_module_address_pairs": 1266,
     "indexed_candidates_in_export_snapshots": 10875,
-    "registered_entries_matching_export_snapshots": 1158,
+    "registered_entries_matching_export_snapshots": 1160,
     "non_texture_binaries_without_function_index": 211,
     "registry_evidence_errors": 0,
     "stale_whole_source_hash_reports": 0,
@@ -145357,5 +145388,5 @@
   },
   "unverified_work": {},
   "unverified_drafts": {},
-  "recovered_buildable_routines": 1267
+  "recovered_buildable_routines": 1269
 }

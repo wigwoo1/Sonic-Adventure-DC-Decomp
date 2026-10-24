@@ -1,5 +1,36 @@
 Sonic Adventure Dreamcast Rev A - source access and handoff
 
+Current update (2026-10-24): transfer ring and lane draining
+The separate strict optimized 134-source boot_submit.dll passes 580 direct
+comparisons, with 2,406 independent direct checks, 36 independent backend checks
+and 1,064 matched transfer-command writes. Two newly registered helpers cover
+all 295 rows / 34 conditional outcomes. The existing register reader is reused
+without duplicate credit. Earlier source, original exports, proofs and DLLs
+remain preserved. Read BOOT_SUBMIT.txt for exact scope and reproduction commands.
+
+Six actual frame-finalizer -> submission sequences (12 stage comparisons) reach
+the real completion wait. The 267-row submission parent covers 236 rows and
+18/30 outcomes, retaining zero complete-body credit. Successful direct returns
+use explicit skip-submit input; actual transfer initiation still leaves a
+pending completion flag. Seven command registers have bounded host storage;
+physical DMA, interrupts, GPU consumption/pixels and timing remain unproved.
+No game-service result is substituted. Wait/outer boot remain at 57/91 and
+16/51 reached rows, with zero complete-parent credit.
+
+Next recover actual interrupt handler 8c651bc0 and completion behavior. The
+nearby unindexed 8c65261c entry waits for a counter change; it does not supply
+the increment. Read-only interrupt/callback investigation exports are unverified
+drafts and receive zero recovery credit. Continue Sol High; the whole goal stays
+active. Overall weighted milestone estimate remains 10%; full decompilation,
+gameplay, all requested ports/demakes and display/texture features are unfinished.
+Registry now has 1,269 entries / 1,266 unique pairs and 1,160 frozen-candidate
+matches. Audits found zero evidence errors or stale reports; 211 binaries remain
+unindexed. All 658 dispatcher pointer checks pass. All 227 unique pinned inputs
+match, five generated artifacts reproduce, registration is byte-idempotent and
+four Python / six PowerShell scripts parse. The historical aggregate workflow
+was extended, not rerun in full. Investigation byte matches and call sites are
+recorded in analysis/boot_submit_investigation.json without granting draft credit.
+
 Current update (2026-10-24): complete frame command finalizer and dependencies
 The separate strict optimized 132-source boot_device.dll passes 418 direct
 comparisons, covering all 829 original rows across eight bodies. The frame

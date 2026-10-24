@@ -1,0 +1,103 @@
+Sonic Adventure Rev A - transfer ring, draining and submission (2026-10-24)
+
+The separate strict optimized 134-source boot_submit.dll adds guarded original
+submission, lane-draining, transfer-record building and register-read adapters.
+Earlier source, original exports, proofs and DLLs remain preserved. Whole-project
+weighted milestone completion remains 10%, not a recovered-code measurement.
+
+Two newly completed original bodies:
+  8c641e00  nonempty lane draining and optional lane-1/3 headers, 89 rows
+  8c650bc8  two eight-slot transfer rings and command-register setup, 206 rows
+All 295 helper rows and 34 conditional outcomes execute. The already registered
+three-row reader 8c653476 is reused with an explicit failure-capable bus adapter;
+it receives no duplicate recovery credit. The generated submission parent
+8c641f00 remains partial at 236/267 rows and 18/30 conditional outcomes, with
+zero complete-parent credit. Its 31 unexecuted rows are recorded explicitly.
+
+580 direct original-model comparisons pass: 510 returns, 11 missing-service/bus
+stops, 23 invalid-memory/rejected-register stops and 36 bounded-wait/privilege
+stops. All reached/final RAM, CPU/FPU and both integer banks, SR/PR/FPUL,
+MACL/MACH/GBR, finite timer samples, software registers/queues/packets and ordered
+native boundary states match. There are 2,406 independent direct checks and
+1,064 matched writes to seven transfer-command registers.
+
+Independent record-builder checks reconstruct the entire RAM footprint,
+including saved registers and temporary guest stack slots. They cover two rings,
+free/busy slots, zero-size error 259, full-slot result 256, allocation result 0,
+32-byte upward alignment and unsigned wrap, output record pointer, sequence wrap,
+ring-index wrap, current-record selection, conditional hardware-command writes,
+control variants, callee-preserved registers and interrupt-mask restoration.
+Draining checks validate excluded/empty lanes, rounded sizes, optional lane-1/3
+header tagging, enqueued record order and restored frame state. Source also
+compiles with strict warnings without the research wait-limit define; unbounded
+hardware-dependent loops are not executed as a successful completion test.
+
+Six actual frame-finalizer -> submission sequences (12 stage comparisons,
+378 independent checks) carry
+RAM and CPU/FPU state into real transfer record creation. The producer has no
+bus/clock effects in these fixtures, and does not change extra integer/MACH/MACL/
+GBR state, so the reinitialized backend retains identical empty state. This is
+not a general persistent device/interrupt scheduler. Every sequence reaches the
+real pending completion wait at 8c64207e; no completion result is substituted.
+Complete direct submission returns use explicit skip-submit state. Initiating
+a real transfer sets the pending flag and still requires interrupt processing.
+
+submit_register_bus.c wraps the prior frame backend with bounded storage for
+ffa00020/24/28/2c and a05f6800/04/08. Event kinds 10/11 record writes/reads.
+The 36 independent backend checks cover every word, invalid widths/alignment,
+neighboring unsupported addresses, read-result preservation on error, graphics
+register delegation, trace overflow and reset. Storage does not perform DMA,
+deliver interrupts, produce completion, consume GPU commands or render pixels.
+
+Research builds use explicit -4 wait stops before a second continued branch
+test. Original retry/wait loops remain in source when SA_BOUND_RETAIL_STALLS is
+not defined. These stops distinguish unfinished hardware progress from a game
+return; they do not prove exception-vector delivery or physical timing. The
+qualified privileged bank-1/FD=0, immutable code/literals, distinct valid stack/
+data and inherited MMU-off/backend/numerical domains remain in force.
+
+A new Python callback wrapper initially retained a live view of a callback
+field. Replacing that field changed the saved target and caused recursion.
+An isolated ctypes experiment identified the issue; the new verifier now copies
+the native address before installing wrappers. Existing source/proofs remain
+unchanged. The successful suite exercises both delegated reads and writes.
+
+Read-only investigation exports remain under analysis/boot-submit-callbacks/
+and analysis/boot-submit-interrupt-frontier/. They are unverified drafts, with
+zero recovery credit. Pointer-reference analysis shows the small entry at
+8c65261c waits for the counter to change; it does not increment it. The actual
+counter increment and pending-flag processing are in interrupt handler
+8c651bc0 (338 exported instruction rows). That handler, completion behavior and
+the parent's timeout/recovery paths are next. Wait/outer-boot coverage remains
+57/91 and 16/51 rows; neither unfinished caller receives complete-body credit.
+
+analysis/boot_submit_investigation.json pins the read-only investigation exports
+and their byte matches. The frozen function index omits the eight-row counter
+wait entry, reinforcing that its candidate count is not a whole-game denominator.
+All 227 unique pinned verification inputs match; five generated artifacts
+reproduce byte-for-byte and registration is byte-idempotent. Four Python and six
+PowerShell scripts parse. Coverage audits show 1,269 entries / 1,266 unique pairs,
+1,160 frozen-candidate matches, zero evidence errors or stale source reports,
+and 211 binaries still without complete function indexes. All 658 dispatcher
+pointer checks pass. The full accumulated test suite was not rerun.
+
+Source: source/sa_boot_submit.c and source/sa_boot_submit_connected.c
+Backend: source/submit_register_bus.c and source/submit_register_bus.h
+Evidence: analysis/boot_submit_translation.json
+          analysis/boot_submit_connection.json
+          analysis/boot_submit_verification.json
+Original exports: analysis/boot-submit/
+
+From the workspace root in PowerShell:
+  $Python = 'C:\Users\wigwo\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe'
+  & $Python -B outputs/sonic-adventure/recover_boot_submit.py
+  & $Python -B outputs/sonic-adventure/connect_boot_submit.py
+  .\outputs\sonic-adventure\build_boot_submit.ps1 -Workspace (Get-Location).Path
+  & $Python -B outputs/sonic-adventure/verify_boot_submit.py
+  & $Python -B outputs/sonic-adventure/register_boot_submit.py
+
+--smoke performs seven checks without replacing the full report. The historical
+aggregate workflow is extended separately, not rerun in full for this milestone.
+Natural boot, actual DMA/GPU/interrupt behavior, gameplay, FPS/resolution/texture
+settings, Android/stereo-3DS and later demakes remain unfinished. Continue Sol
+High with the actual interrupt/completion dependency. Keep the full goal active.
