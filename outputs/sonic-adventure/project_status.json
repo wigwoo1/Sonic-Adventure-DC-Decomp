@@ -129,7 +129,7 @@
     "prs_trailing_bytes": 0,
     "main_binary_indexed_functions": 3637,
     "main_binary_draft_pseudocode_functions": 3631,
-    "recovered_buildable_routines": 1259,
+    "recovered_buildable_routines": 1261,
     "recovered_routine_tests": "analysis/startup_verification.json",
     "recovered_routine_test_cases": 17,
     "main_binary_draft_export_failures": 6,
@@ -137798,6 +137798,32 @@
         "Register effects are bounded host storage, not GPU command consumption, timing or pixels. Typed invalid-memory and missing/rejected bus stops do not implement full hardware exception delivery.",
         "Qualified MMU-off RAM and processor/numerical domains inherited from the frame pipeline; whole gameplay, settings and ports remain unfinished."
       ]
+    },
+    "boot_wait_integration": {
+      "verification": "analysis/boot_wait_verification.json",
+      "verification_sha256": "48370526587343824eae92e420f7f0018f1d54fd7e4c6c62967a30e3a0bd627d",
+      "adapter_source": "source/sa_boot_wait.c",
+      "adapter_source_sha256": "0c3b867f34955bf7781f0630765818323b2ed58afa30552aac328392cb2d0447",
+      "direct_comparisons": 304,
+      "helper_rows": 32,
+      "wait_rows_covered": 46,
+      "wait_static_rows": 91,
+      "wait_recovery_credit": 0,
+      "boot_prefix_cases": 12,
+      "boot_parent_rows": 16,
+      "boot_parent_static_rows": 51,
+      "external_game_service_fixtures": 0,
+      "timer_samples": "Finite explicit peripheral fixtures; frequency/interrupt timing unverified",
+      "natural_boot_order_verified": false,
+      "next_dependency": "0x8c642440",
+      "guide": "BOOT_WAIT.txt",
+      "scope": "Original clock, wrapped difference, elapsed conversion and optional callback bodies, plus actual wait/setup and outer boot prefixes. Full reached/final RAM/machine/FPU/banks/MACH/MACL/GBR/register map, ordered native boundaries and every timer read match the instruction model. Independent arithmetic/footprint/callback-return/counter checks.",
+      "limitations": [
+        "Hardware timer samples are finite explicit peripheral fixtures. No physical timer frequency, interrupt timing or frame-rate behavior is proved. Exhausted samples stop explicitly with -4; they do not fabricate elapsed time or a successful wait.",
+        "The wait/setup entry remains partial at its first unresolved frame/device call 8c642440, with zero parent recovery credit. The later 8c641f00/8c601e2a calls and final snapshot have not executed.",
+        "The known callback is the actual byte-proved RTS/NOP function; arbitrary callback bodies remain explicit unresolved targets.",
+        "Qualified privileged bank-1/FD=0, MMU-off RAM and prior numerical/backend domains apply. Typed memory/peripheral failures are not complete hardware exception delivery. Natural boot order, visible rendering, gameplay/settings and ports remain incomplete."
+      ]
     }
   },
   "milestones": [
@@ -137971,10 +137997,10 @@
     "report": "analysis/recovery_coverage_audit.json",
     "candidate_inventory": "analysis/unrecovered_function_candidates.tsv",
     "boundary_inventory": "analysis/unresolved_module_boundaries.json",
-    "registered_routines": 1259,
-    "registered_unique_module_address_pairs": 1256,
+    "registered_routines": 1261,
+    "registered_unique_module_address_pairs": 1258,
     "indexed_candidates_in_export_snapshots": 10875,
-    "registered_entries_matching_export_snapshots": 1150,
+    "registered_entries_matching_export_snapshots": 1152,
     "non_texture_binaries_without_function_index": 211,
     "registry_evidence_errors": 0,
     "stale_whole_source_hash_reports": 0,
@@ -145299,5 +145325,5 @@
   },
   "unverified_work": {},
   "unverified_drafts": {},
-  "recovered_buildable_routines": 1259
+  "recovered_buildable_routines": 1261
 }

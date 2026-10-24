@@ -1,6 +1,33 @@
 Sonic Adventure Dreamcast Rev A - source access and handoff
 
-Current update (2026-10-24): corrected callback boundary and native boot setup
+Current update (2026-10-24): clock/elapsed/callback helpers and actual wait prefixes
+A separate strict optimized 130-source DLL adds the original wait/setup entry
+8c6050b0 and four complete 32-row helpers. 304 direct comparisons pass, including
+248 helper returns, missing/invalid peripheral and callback stops, and explicit
+finite-sample exhaustion. All reached/final machine/RAM/FPU/bank/MACH/MACL/GBR/
+register and ordered native/timer state match, with 1,052 independent assertions.
+The 13-row unsigned elapsed conversion and 11-row optional callback are newly
+registered; existing timer/subtraction/empty callback bodies retain reuse credit.
+Read BOOT_WAIT.txt. The actual timer is a finite peripheral fixture here, so its
+physical frequency, interrupt delivery and FPS behavior remain unproved.
+
+All eight wait conditional outcomes and 46/91 parent rows execute; 45 rows remain
+unexecuted beyond the real frame/device boundary at 8c642440. Twelve actual boot
+prefixes also reach that callee. The outer caller remains at 16/51 rows and both
+partial parents receive zero recovery credit. New adapter failure tests caught
+and corrected premature destination-register writes on a failed timer read.
+No external game-service result is substituted. Natural boot/scheduling, GPU
+execution, full gameplay/settings and all requested ports remain unfinished.
+Overall weighted milestone estimate remains 10%. Continue Sol High with actual
+callee 8c642440; its read-only draft/listing export is prepared for the next task.
+Registry: 1,261 entries / 1,258 unique pairs, with 1,152 frozen-candidate matches.
+Audit found zero evidence errors/stale sources; 211 binaries remain unindexed.
+All 188 unique pinned wait inputs match, five generated artifacts reproduce and
+registration is byte-idempotent. All 658 dispatcher pointer checks pass. The
+next callee's 631 exported instruction rows match the original binary bytes;
+they remain unverified analysis. The accumulated test suite was not fully rerun.
+
+Previous update (2026-10-24): corrected callback boundary and native boot setup
 The previous helper proof missed a callback-entry return address defect. Current
 source now supplies original JSR return PC 8c107aba; the test compares actual
 callback-entry registers/SR/PR. All 48 comparisons pass and the strengthened test

@@ -1,0 +1,70 @@
+Sonic Adventure Rev A - clock, elapsed conversion and wait prefixes (2026-10-24)
+
+The separate strict optimized 130-source boot_wait.dll executes the actual
+wait/setup entry 8c6050b0 and its four original clock/arithmetic/callback helpers.
+Earlier source, APIs, libraries and proofs remain preserved.
+
+Complete helper bodies:
+  8c60260e  timer read/complement, five rows (existing routine, new bus adapter)
+  8c602618  wrapped second-argument minus first, three rows (existing routine)
+  8c602652  unsigned elapsed conversion, 13 rows (newly registered)
+  8c60509a  optional callback and saved R14/PR restoration, 11 rows (new)
+
+The conversion independently matches floor(input * 100 / 128) using widened
+integer arithmetic. Tests cover 0/1/127/128 boundaries, signed-bit boundaries,
+the largest unsigned inputs, random values, MACL, complete GPR/RAM footprints
+and all eight tested floating-mode combinations. The optional callback uses the
+actual byte-proved RTS/NOP function 8c63eeb0, with original return PC 8c6050aa.
+Arbitrary callbacks stop explicitly; no game-service result is fabricated.
+
+304 direct comparisons passed: 248 complete helper returns, 46 explicit missing
+callee/peripheral stops, six invalid-stack/rejected-read stops and four finite
+timer-input exhaustion stops. All 32 helper rows and both callback outcomes are
+covered. There are 1,052 independent direct assertions and 166 successful direct
+timer reads. Full reached/final RAM/machine/FPU/integer banks/MACH/MACL/GBR,
+register maps, native boundary state and timer sample ordering match the original
+instruction model. Timer sampling position is also compared at every boundary.
+
+The wait entry itself is partial: all eight conditional outcomes and 46 of its
+91 instruction rows execute. It reaches actual callee 8c642440 after the wait
+decision, with the original pending flag set. Its remaining 45 rows, including
+later 8c641f00/8c601e2a calls and the final five-word snapshot, are unexecuted.
+No complete-wait registration credit is granted. Twelve outer boot prefixes
+also reach 8c642440 through real setup/cleanup code, with 60 independent checks.
+The outer caller remains at 16/51 rows because it has not returned from this
+wait/setup dependency. Overall weighted project completion remains 10%.
+
+Timer access is an explicit peripheral boundary at ffd8000c. Finite scripted
+counter values cover repeated polling, equality/above-limit exits and wrapped
+subtraction. Exhausted samples stop with -4 instead of manufacturing elapsed
+time or a successful return. These tests do not establish physical frequency,
+interrupt delivery, FPS, real scheduling or natural boot order. Register effects
+remain bounded host storage; GPU execution, visible gameplay, settings and ports
+are unfinished. Qualified privileged bank-1/FD=0, MMU-off and prior numerical
+domains apply. Host failure statuses are not complete hardware exceptions.
+
+A failure-path comparison caught a new adapter committing its destination
+register before reporting a failed peripheral read. The generator now commits
+the loaded register only after a successful read. Missing/rejected/null-bus and
+exhausted-input comparisons pass with the original pre-read register state.
+
+Source: source/sa_boot_wait.c
+Bridge: source/sa_boot_wait_connected.c
+Evidence: analysis/boot_wait_translation.json
+          analysis/boot_wait_connection.json
+          analysis/boot_wait_verification.json
+Original exports: analysis/boot-wait/
+Next callee's draft/listing: analysis/boot-wait-frontier/ (unverified analysis)
+
+From the workspace root in PowerShell:
+  $Python = 'C:\Users\wigwo\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe'
+  & $Python -B outputs/sonic-adventure/recover_boot_wait.py
+  & $Python -B outputs/sonic-adventure/connect_boot_wait.py
+  .\outputs\sonic-adventure\build_boot_wait.ps1 -Workspace (Get-Location).Path
+  & $Python -B outputs/sonic-adventure/verify_boot_wait.py
+  & $Python -B outputs/sonic-adventure/register_boot_wait.py
+
+Use --smoke for a small exploratory run or --failure-check for the explicit
+peripheral failure cases; neither mode overwrites the full verification report.
+The accumulated build/test sequence was extended, not rerun in full. Next work
+is recovering the reached frame/device body 8c642440 and its real dependencies.
