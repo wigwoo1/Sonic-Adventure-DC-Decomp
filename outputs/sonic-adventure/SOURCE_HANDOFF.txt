@@ -1,5 +1,22 @@
 Sonic Adventure Dreamcast Rev A - source access and handoff
 
+Latest update (2026-10-24): interrupt/completion and full submission
+Nine newly registered bodies cover 1,995 rows. The separate strict 136-source
+boot_interrupt.dll passes 589 direct comparisons across all 2,180 adapter rows,
+with 1,678 independent assertions, 66 backend checks and sixteen uninterrupted
+wait/boot prefixes. Four existing helpers receive no duplicate credit. Three
+structurally unreachable outcomes are explicitly excluded, not marked executed.
+Read BOOT_INTERRUPT.txt for exact coverage, limitations and reproduction.
+
+Submission's former pending wait now runs actual IRQ callbacks through normal
+and timeout/recovery paths. Wait reaches input entry 8c601e2a at 60/91 rows;
+outer boot remains 16/51. Those parents retain zero complete-body credit.
+The software backend stores eight MiB of VRAM and interrupt acknowledgement;
+physical IRQ delivery, DMA, GPU/pixels, timing and natural startup remain unproved.
+Registry: 1,278 entries / 1,275 unique pairs, 1,169 frozen-index matches; zero
+evidence errors or stale reports. Overall weighted milestone estimate remains
+10%. Continue Sol High; the goal stays active. Prior milestone notes follow.
+
 Current update (2026-10-24): transfer ring and lane draining
 The separate strict optimized 134-source boot_submit.dll passes 580 direct
 comparisons, with 2,406 independent direct checks, 36 independent backend checks

@@ -129,7 +129,7 @@
     "prs_trailing_bytes": 0,
     "main_binary_indexed_functions": 3637,
     "main_binary_draft_pseudocode_functions": 3631,
-    "recovered_buildable_routines": 1269,
+    "recovered_buildable_routines": 1278,
     "recovered_routine_tests": "analysis/startup_verification.json",
     "recovered_routine_test_cases": 17,
     "main_binary_draft_export_failures": 6,
@@ -137887,6 +137887,37 @@
         "The six producer/consumer sequences carry RAM and CPU/FPU state. The producer makes no bus/clock effects, so the reinitialized backend has identical empty state; the finalizer does not alter the extra integer/MACH/MACL/GBR state. This is not a general persistent interrupt/device scheduler.",
         "Inherited privileged bank-1/FD=0, immutable code/literals, valid distinct stack/data and MMU-off domains apply. Gameplay, natural boot/scheduling and all requested ports/settings remain incomplete."
       ]
+    },
+    "boot_interrupt_integration": {
+      "verification": "analysis/boot_interrupt_qualification.json",
+      "verification_sha256": "282e0e8a4ac4eb44f3816a72870230eff3762102b15ab5047e18e4f3a6852d8a",
+      "adapter_source": "source/sa_boot_interrupt.c",
+      "adapter_source_sha256": "2ed40c4c05b27e2f7e6c23064da7fc490e607ed7708262e87d2f136f3b10d464",
+      "direct_comparisons": 589,
+      "newly_registered_entries": 9,
+      "compiled_source_count": 136,
+      "total_adapter_rows": 2180,
+      "reused_entries": 4,
+      "independent_checks": 1678,
+      "backend_independent_checks": 66,
+      "wait_boot_prefix_comparisons": 16,
+      "wait_rows_covered": 60,
+      "wait_static_rows": 91,
+      "boot_rows_covered": 16,
+      "boot_static_rows": 51,
+      "submission_rows": 267,
+      "submission_feasible_outcomes": 30,
+      "physical_dma_or_interrupt_completion": false,
+      "natural_boot_order_verified": false,
+      "next_dependency": "0x8c601e2a input processing",
+      "guide": "BOOT_INTERRUPT.txt",
+      "scope": "Original interrupt/completion/buffer family and existing arithmetic/copy adapters, with full reached/final machine/RAM/FPU/banks/MACH/MACL/GBR, eight-MiB VRAM, IRQ acknowledge state, register/queue/packet state and every timer/busy input matched. Native IRQ callbacks execute actual guest code; no game-service result is replaced. Registration remains separate.",
+      "limitations": [
+        "Direct software entry/callback tests do not establish hardware IRQ delivery, acceptance/vectoring, physical DMA/GPU execution, timing, visible pixels or natural startup.",
+        "Bounded 32-bit VRAM aperture and normal-event write-one-to-clear acknowledgement only. Other VRAM apertures and full device semantics are not implemented. Finite busy/timer samples are explicit peripheral inputs; exhaustion stops with -4.",
+        "Original waits are unbounded without the research define. The research callback waits permit 64 continued tests, while transfer retry/reset limits remain two; no successful game return is fabricated by a limit.",
+        "Runtime table/buffer and CPU state fixtures, inherited immutable code/literal, distinct stack/data and qualified numeric/MMU-off domains apply. All ports, gameplay and requested graphics/settings goals remain unfinished."
+      ]
     }
   },
   "milestones": [
@@ -138060,10 +138091,10 @@
     "report": "analysis/recovery_coverage_audit.json",
     "candidate_inventory": "analysis/unrecovered_function_candidates.tsv",
     "boundary_inventory": "analysis/unresolved_module_boundaries.json",
-    "registered_routines": 1269,
-    "registered_unique_module_address_pairs": 1266,
+    "registered_routines": 1278,
+    "registered_unique_module_address_pairs": 1275,
     "indexed_candidates_in_export_snapshots": 10875,
-    "registered_entries_matching_export_snapshots": 1160,
+    "registered_entries_matching_export_snapshots": 1169,
     "non_texture_binaries_without_function_index": 211,
     "registry_evidence_errors": 0,
     "stale_whole_source_hash_reports": 0,
@@ -145388,5 +145419,5 @@
   },
   "unverified_work": {},
   "unverified_drafts": {},
-  "recovered_buildable_routines": 1269
+  "recovered_buildable_routines": 1278
 }

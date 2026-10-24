@@ -151759,6 +151759,37 @@
           "The six producer/consumer sequences carry RAM and CPU/FPU state. The producer makes no bus/clock effects, so the reinitialized backend has identical empty state; the finalizer does not alter the extra integer/MACH/MACL/GBR state. This is not a general persistent interrupt/device scheduler.",
           "Inherited privileged bank-1/FD=0, immutable code/literals, valid distinct stack/data and MMU-off domains apply. Gameplay, natural boot/scheduling and all requested ports/settings remain incomplete."
         ]
+      },
+      "boot_interrupt_integration": {
+        "verification": "analysis/boot_interrupt_qualification.json",
+        "verification_sha256": "282e0e8a4ac4eb44f3816a72870230eff3762102b15ab5047e18e4f3a6852d8a",
+        "adapter_source": "source/sa_boot_interrupt.c",
+        "adapter_source_sha256": "2ed40c4c05b27e2f7e6c23064da7fc490e607ed7708262e87d2f136f3b10d464",
+        "direct_comparisons": 589,
+        "newly_registered_entries": 9,
+        "compiled_source_count": 136,
+        "total_adapter_rows": 2180,
+        "reused_entries": 4,
+        "independent_checks": 1678,
+        "backend_independent_checks": 66,
+        "wait_boot_prefix_comparisons": 16,
+        "wait_rows_covered": 60,
+        "wait_static_rows": 91,
+        "boot_rows_covered": 16,
+        "boot_static_rows": 51,
+        "submission_rows": 267,
+        "submission_feasible_outcomes": 30,
+        "physical_dma_or_interrupt_completion": false,
+        "natural_boot_order_verified": false,
+        "next_dependency": "0x8c601e2a input processing",
+        "guide": "BOOT_INTERRUPT.txt",
+        "scope": "Original interrupt/completion/buffer family and existing arithmetic/copy adapters, with full reached/final machine/RAM/FPU/banks/MACH/MACL/GBR, eight-MiB VRAM, IRQ acknowledge state, register/queue/packet state and every timer/busy input matched. Native IRQ callbacks execute actual guest code; no game-service result is replaced. Registration remains separate.",
+        "limitations": [
+          "Direct software entry/callback tests do not establish hardware IRQ delivery, acceptance/vectoring, physical DMA/GPU execution, timing, visible pixels or natural startup.",
+          "Bounded 32-bit VRAM aperture and normal-event write-one-to-clear acknowledgement only. Other VRAM apertures and full device semantics are not implemented. Finite busy/timer samples are explicit peripheral inputs; exhaustion stops with -4.",
+          "Original waits are unbounded without the research define. The research callback waits permit 64 continued tests, while transfer retry/reset limits remain two; no successful game return is fabricated by a limit.",
+          "Runtime table/buffer and CPU state fixtures, inherited immutable code/literal, distinct stack/data and qualified numeric/MMU-off domains apply. All ports, gameplay and requested graphics/settings goals remain unfinished."
+        ]
       }
     },
     {
@@ -151868,6 +151899,159 @@
         "Submission remains partial at its real callback/interrupt-dependent wait paths, with zero parent recovery credit. Initial runtime tables, native no-op/unknown callbacks and finite timer samples are explicit fixtures. Complete direct submission returns exercise explicit skip-submit state; starting a real transfer still reaches a pending completion wait.",
         "The six producer/consumer sequences carry RAM and CPU/FPU state. The producer makes no bus/clock effects, so the reinitialized backend has identical empty state; the finalizer does not alter the extra integer/MACH/MACL/GBR state. This is not a general persistent interrupt/device scheduler.",
         "Inherited privileged bank-1/FD=0, immutable code/literals, valid distinct stack/data and MMU-off domains apply. Gameplay, natural boot/scheduling and all requested ports/settings remain incomplete."
+      ]
+    },
+    {
+      "module": "1ST_READ.BIN",
+      "name": "sa_boot_interrupt_8c651bc0",
+      "address": "0x8c651bc0",
+      "end_exclusive": "0x8c651f1e",
+      "retail_span_sha256": "6c37617ed0a42fc2de7ccd1c48d78011e4aba5bb61d9bf35627abd9541747e3f",
+      "source": "source/sa_boot_interrupt.c",
+      "verification": "analysis/boot_interrupt_qualification.json",
+      "status": "All 338 original rows execute across 589 full-state comparisons. All feasible conditional outcomes covered; 0 explicitly proved unreachable outcomes. Original software IRQ callbacks execute without game-service result substitution; hardware IRQ delivery remains separate.",
+      "limitations": [
+        "Direct software entry/callback tests do not establish hardware IRQ delivery, acceptance/vectoring, physical DMA/GPU execution, timing, visible pixels or natural startup.",
+        "Bounded 32-bit VRAM aperture and normal-event write-one-to-clear acknowledgement only. Other VRAM apertures and full device semantics are not implemented. Finite busy/timer samples are explicit peripheral inputs; exhaustion stops with -4.",
+        "Original waits are unbounded without the research define. The research callback waits permit 64 continued tests, while transfer retry/reset limits remain two; no successful game return is fabricated by a limit.",
+        "Runtime table/buffer and CPU state fixtures, inherited immutable code/literal, distinct stack/data and qualified numeric/MMU-off domains apply. All ports, gameplay and requested graphics/settings goals remain unfinished.",
+        "Three excluded outcomes remain explicitly unexecuted: SELECT R4 is constant one; SELECT reloads its own just-written seven rather than minus three; FLIP R14 remains one across the layout callee that saves/restores it. Immutable literals/code, distinct valid stack/RAM/MMIO and synchronous software entry apply. No concurrent external RAM writer is modeled."
+      ]
+    },
+    {
+      "module": "1ST_READ.BIN",
+      "name": "sa_boot_interrupt_8c650b60",
+      "address": "0x8c650b60",
+      "end_exclusive": "0x8c650bc8",
+      "retail_span_sha256": "64392a299a96c48c6b9622aa5f6f7746e1dbdcbd0600bcae5f0269e7cba29c13",
+      "source": "source/sa_boot_interrupt.c",
+      "verification": "analysis/boot_interrupt_qualification.json",
+      "status": "All 52 original rows execute across 589 full-state comparisons. All feasible conditional outcomes covered; 0 explicitly proved unreachable outcomes. Original software IRQ callbacks execute without game-service result substitution; hardware IRQ delivery remains separate.",
+      "limitations": [
+        "Direct software entry/callback tests do not establish hardware IRQ delivery, acceptance/vectoring, physical DMA/GPU execution, timing, visible pixels or natural startup.",
+        "Bounded 32-bit VRAM aperture and normal-event write-one-to-clear acknowledgement only. Other VRAM apertures and full device semantics are not implemented. Finite busy/timer samples are explicit peripheral inputs; exhaustion stops with -4.",
+        "Original waits are unbounded without the research define. The research callback waits permit 64 continued tests, while transfer retry/reset limits remain two; no successful game return is fabricated by a limit.",
+        "Runtime table/buffer and CPU state fixtures, inherited immutable code/literal, distinct stack/data and qualified numeric/MMU-off domains apply. All ports, gameplay and requested graphics/settings goals remain unfinished.",
+        "Three excluded outcomes remain explicitly unexecuted: SELECT R4 is constant one; SELECT reloads its own just-written seven rather than minus three; FLIP R14 remains one across the layout callee that saves/restores it. Immutable literals/code, distinct valid stack/RAM/MMIO and synchronous software entry apply. No concurrent external RAM writer is modeled."
+      ]
+    },
+    {
+      "module": "1ST_READ.BIN",
+      "name": "sa_boot_interrupt_8c665fa8",
+      "address": "0x8c665fa8",
+      "end_exclusive": "0x8c666692",
+      "retail_span_sha256": "d58eec7622d765d75770e23489eae9a180fad3e59624d0652aadb54e6b00813c",
+      "source": "source/sa_boot_interrupt.c",
+      "verification": "analysis/boot_interrupt_qualification.json",
+      "status": "All 638 original rows execute across 589 full-state comparisons. All feasible conditional outcomes covered; 0 explicitly proved unreachable outcomes. Original software IRQ callbacks execute without game-service result substitution; hardware IRQ delivery remains separate.",
+      "limitations": [
+        "Direct software entry/callback tests do not establish hardware IRQ delivery, acceptance/vectoring, physical DMA/GPU execution, timing, visible pixels or natural startup.",
+        "Bounded 32-bit VRAM aperture and normal-event write-one-to-clear acknowledgement only. Other VRAM apertures and full device semantics are not implemented. Finite busy/timer samples are explicit peripheral inputs; exhaustion stops with -4.",
+        "Original waits are unbounded without the research define. The research callback waits permit 64 continued tests, while transfer retry/reset limits remain two; no successful game return is fabricated by a limit.",
+        "Runtime table/buffer and CPU state fixtures, inherited immutable code/literal, distinct stack/data and qualified numeric/MMU-off domains apply. All ports, gameplay and requested graphics/settings goals remain unfinished.",
+        "Three excluded outcomes remain explicitly unexecuted: SELECT R4 is constant one; SELECT reloads its own just-written seven rather than minus three; FLIP R14 remains one across the layout callee that saves/restores it. Immutable literals/code, distinct valid stack/RAM/MMIO and synchronous software entry apply. No concurrent external RAM writer is modeled."
+      ]
+    },
+    {
+      "module": "1ST_READ.BIN",
+      "name": "sa_boot_interrupt_8c651570",
+      "address": "0x8c651570",
+      "end_exclusive": "0x8c651634",
+      "retail_span_sha256": "75a2874c80d5da706e618afa078c80664fc4131edd8f2cca2c4cdb0d6c5f2a18",
+      "source": "source/sa_boot_interrupt.c",
+      "verification": "analysis/boot_interrupt_qualification.json",
+      "status": "All 98 original rows execute across 589 full-state comparisons. All feasible conditional outcomes covered; 2 explicitly proved unreachable outcomes. Original software IRQ callbacks execute without game-service result substitution; hardware IRQ delivery remains separate.",
+      "limitations": [
+        "Direct software entry/callback tests do not establish hardware IRQ delivery, acceptance/vectoring, physical DMA/GPU execution, timing, visible pixels or natural startup.",
+        "Bounded 32-bit VRAM aperture and normal-event write-one-to-clear acknowledgement only. Other VRAM apertures and full device semantics are not implemented. Finite busy/timer samples are explicit peripheral inputs; exhaustion stops with -4.",
+        "Original waits are unbounded without the research define. The research callback waits permit 64 continued tests, while transfer retry/reset limits remain two; no successful game return is fabricated by a limit.",
+        "Runtime table/buffer and CPU state fixtures, inherited immutable code/literal, distinct stack/data and qualified numeric/MMU-off domains apply. All ports, gameplay and requested graphics/settings goals remain unfinished.",
+        "Three excluded outcomes remain explicitly unexecuted: SELECT R4 is constant one; SELECT reloads its own just-written seven rather than minus three; FLIP R14 remains one across the layout callee that saves/restores it. Immutable literals/code, distinct valid stack/RAM/MMIO and synchronous software entry apply. No concurrent external RAM writer is modeled."
+      ]
+    },
+    {
+      "module": "1ST_READ.BIN",
+      "name": "sa_boot_interrupt_8c6516a0",
+      "address": "0x8c6516a0",
+      "end_exclusive": "0x8c65194a",
+      "retail_span_sha256": "6ad97e09c023fd6506f1e9be8b9df38fe343116363c9d749d75f10d4dde08101",
+      "source": "source/sa_boot_interrupt.c",
+      "verification": "analysis/boot_interrupt_qualification.json",
+      "status": "All 269 original rows execute across 589 full-state comparisons. All feasible conditional outcomes covered; 0 explicitly proved unreachable outcomes. Original software IRQ callbacks execute without game-service result substitution; hardware IRQ delivery remains separate.",
+      "limitations": [
+        "Direct software entry/callback tests do not establish hardware IRQ delivery, acceptance/vectoring, physical DMA/GPU execution, timing, visible pixels or natural startup.",
+        "Bounded 32-bit VRAM aperture and normal-event write-one-to-clear acknowledgement only. Other VRAM apertures and full device semantics are not implemented. Finite busy/timer samples are explicit peripheral inputs; exhaustion stops with -4.",
+        "Original waits are unbounded without the research define. The research callback waits permit 64 continued tests, while transfer retry/reset limits remain two; no successful game return is fabricated by a limit.",
+        "Runtime table/buffer and CPU state fixtures, inherited immutable code/literal, distinct stack/data and qualified numeric/MMU-off domains apply. All ports, gameplay and requested graphics/settings goals remain unfinished.",
+        "Three excluded outcomes remain explicitly unexecuted: SELECT R4 is constant one; SELECT reloads its own just-written seven rather than minus three; FLIP R14 remains one across the layout callee that saves/restores it. Immutable literals/code, distinct valid stack/RAM/MMIO and synchronous software entry apply. No concurrent external RAM writer is modeled."
+      ]
+    },
+    {
+      "module": "1ST_READ.BIN",
+      "name": "sa_boot_interrupt_8c65194a",
+      "address": "0x8c65194a",
+      "end_exclusive": "0x8c651b60",
+      "retail_span_sha256": "a8dab17e2569d2de5cdf06023561d11959fd91195923cf5fec13b6852a34b251",
+      "source": "source/sa_boot_interrupt.c",
+      "verification": "analysis/boot_interrupt_qualification.json",
+      "status": "All 189 original rows execute across 589 full-state comparisons. All feasible conditional outcomes covered; 1 explicitly proved unreachable outcomes. Original software IRQ callbacks execute without game-service result substitution; hardware IRQ delivery remains separate.",
+      "limitations": [
+        "Direct software entry/callback tests do not establish hardware IRQ delivery, acceptance/vectoring, physical DMA/GPU execution, timing, visible pixels or natural startup.",
+        "Bounded 32-bit VRAM aperture and normal-event write-one-to-clear acknowledgement only. Other VRAM apertures and full device semantics are not implemented. Finite busy/timer samples are explicit peripheral inputs; exhaustion stops with -4.",
+        "Original waits are unbounded without the research define. The research callback waits permit 64 continued tests, while transfer retry/reset limits remain two; no successful game return is fabricated by a limit.",
+        "Runtime table/buffer and CPU state fixtures, inherited immutable code/literal, distinct stack/data and qualified numeric/MMU-off domains apply. All ports, gameplay and requested graphics/settings goals remain unfinished.",
+        "Three excluded outcomes remain explicitly unexecuted: SELECT R4 is constant one; SELECT reloads its own just-written seven rather than minus three; FLIP R14 remains one across the layout callee that saves/restores it. Immutable literals/code, distinct valid stack/RAM/MMIO and synchronous software entry apply. No concurrent external RAM writer is modeled."
+      ]
+    },
+    {
+      "module": "1ST_READ.BIN",
+      "name": "sa_boot_interrupt_8c665e3c",
+      "address": "0x8c665e3c",
+      "end_exclusive": "0x8c665f42",
+      "retail_span_sha256": "063530a21e5afa1c45745175d3bc45d13156321208cfda6a3041d15a965c3d33",
+      "source": "source/sa_boot_interrupt.c",
+      "verification": "analysis/boot_interrupt_qualification.json",
+      "status": "All 93 original rows execute across 589 full-state comparisons. All feasible conditional outcomes covered; 0 explicitly proved unreachable outcomes. Original software IRQ callbacks execute without game-service result substitution; hardware IRQ delivery remains separate.",
+      "limitations": [
+        "Direct software entry/callback tests do not establish hardware IRQ delivery, acceptance/vectoring, physical DMA/GPU execution, timing, visible pixels or natural startup.",
+        "Bounded 32-bit VRAM aperture and normal-event write-one-to-clear acknowledgement only. Other VRAM apertures and full device semantics are not implemented. Finite busy/timer samples are explicit peripheral inputs; exhaustion stops with -4.",
+        "Original waits are unbounded without the research define. The research callback waits permit 64 continued tests, while transfer retry/reset limits remain two; no successful game return is fabricated by a limit.",
+        "Runtime table/buffer and CPU state fixtures, inherited immutable code/literal, distinct stack/data and qualified numeric/MMU-off domains apply. All ports, gameplay and requested graphics/settings goals remain unfinished.",
+        "Three excluded outcomes remain explicitly unexecuted: SELECT R4 is constant one; SELECT reloads its own just-written seven rather than minus three; FLIP R14 remains one across the layout callee that saves/restores it. Immutable literals/code, distinct valid stack/RAM/MMIO and synchronous software entry apply. No concurrent external RAM writer is modeled."
+      ]
+    },
+    {
+      "module": "1ST_READ.BIN",
+      "name": "sa_boot_interrupt_8c665f42",
+      "address": "0x8c665f42",
+      "end_exclusive": "0x8c665fa8",
+      "retail_span_sha256": "19e23e219393fc02a975eefc05d387b0c3f6a658000abfb02682e7fcf6dec3a6",
+      "source": "source/sa_boot_interrupt.c",
+      "verification": "analysis/boot_interrupt_qualification.json",
+      "status": "All 51 original rows execute across 589 full-state comparisons. All feasible conditional outcomes covered; 0 explicitly proved unreachable outcomes. Original software IRQ callbacks execute without game-service result substitution; hardware IRQ delivery remains separate.",
+      "limitations": [
+        "Direct software entry/callback tests do not establish hardware IRQ delivery, acceptance/vectoring, physical DMA/GPU execution, timing, visible pixels or natural startup.",
+        "Bounded 32-bit VRAM aperture and normal-event write-one-to-clear acknowledgement only. Other VRAM apertures and full device semantics are not implemented. Finite busy/timer samples are explicit peripheral inputs; exhaustion stops with -4.",
+        "Original waits are unbounded without the research define. The research callback waits permit 64 continued tests, while transfer retry/reset limits remain two; no successful game return is fabricated by a limit.",
+        "Runtime table/buffer and CPU state fixtures, inherited immutable code/literal, distinct stack/data and qualified numeric/MMU-off domains apply. All ports, gameplay and requested graphics/settings goals remain unfinished.",
+        "Three excluded outcomes remain explicitly unexecuted: SELECT R4 is constant one; SELECT reloads its own just-written seven rather than minus three; FLIP R14 remains one across the layout callee that saves/restores it. Immutable literals/code, distinct valid stack/RAM/MMIO and synchronous software entry apply. No concurrent external RAM writer is modeled."
+      ]
+    },
+    {
+      "module": "1ST_READ.BIN",
+      "name": "sa_boot_interrupt_8c641f00",
+      "address": "0x8c641f00",
+      "end_exclusive": "0x8c6421d6",
+      "retail_span_sha256": "e4e53b184c3b074d56ba7c41967b7bf1fd13b5b30d5b8939dc1e06c056ea7533",
+      "source": "source/sa_boot_interrupt.c",
+      "verification": "analysis/boot_interrupt_qualification.json",
+      "status": "All 267 original rows execute across 589 full-state comparisons. All feasible conditional outcomes covered; 0 explicitly proved unreachable outcomes. Original software IRQ callbacks execute without game-service result substitution; hardware IRQ delivery remains separate.",
+      "limitations": [
+        "Direct software entry/callback tests do not establish hardware IRQ delivery, acceptance/vectoring, physical DMA/GPU execution, timing, visible pixels or natural startup.",
+        "Bounded 32-bit VRAM aperture and normal-event write-one-to-clear acknowledgement only. Other VRAM apertures and full device semantics are not implemented. Finite busy/timer samples are explicit peripheral inputs; exhaustion stops with -4.",
+        "Original waits are unbounded without the research define. The research callback waits permit 64 continued tests, while transfer retry/reset limits remain two; no successful game return is fabricated by a limit.",
+        "Runtime table/buffer and CPU state fixtures, inherited immutable code/literal, distinct stack/data and qualified numeric/MMU-off domains apply. All ports, gameplay and requested graphics/settings goals remain unfinished.",
+        "Three excluded outcomes remain explicitly unexecuted: SELECT R4 is constant one; SELECT reloads its own just-written seven rather than minus three; FLIP R14 remains one across the layout callee that saves/restores it. Immutable literals/code, distinct valid stack/RAM/MMIO and synchronous software entry apply. No concurrent external RAM writer is modeled."
       ]
     }
   ],

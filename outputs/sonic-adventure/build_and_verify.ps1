@@ -8657,6 +8657,15 @@ if($LASTEXITCODE -ne 0){throw 'Submission dependency connection failed'}
 if($LASTEXITCODE -ne 0){throw 'Submission dependency comparisons failed'}
 & $python (Join-Path $PSScriptRoot 'register_boot_submit.py')
 if($LASTEXITCODE -ne 0){throw 'Submission helper registration failed'}
+& $python (Join-Path $PSScriptRoot 'recover_boot_interrupt.py')
+if($LASTEXITCODE -ne 0){throw 'Interrupt dependency recovery failed'}
+& $python (Join-Path $PSScriptRoot 'connect_boot_interrupt.py')
+if($LASTEXITCODE -ne 0){throw 'Interrupt dependency connection failed'}
+& (Join-Path $PSScriptRoot 'build_boot_interrupt.ps1') -Workspace $Workspace
+foreach($taskScript in @('verify_boot_interrupt.py','verify_boot_interrupt_bus.py','verify_boot_interrupt_prefix.py','qualify_boot_interrupt.py','register_boot_interrupt.py')){
+ & $python (Join-Path $PSScriptRoot $taskScript)
+ if($LASTEXITCODE -ne 0){throw "Interrupt/completion qualification failed: $taskScript"}
+}
 & $python (Join-Path $PSScriptRoot 'inventory_draw_geometry_frontier.py')
 if($LASTEXITCODE -ne 0){throw 'Post-view geometry inventory failed'}
 foreach($inventory in @('inventory_draw_primitive_frontier.py','inventory_draw_primitive_cpu.py','inventory_draw_continuation_frontier.py','inventory_draw_angle_frontier.py','inventory_draw_post_angle_frontier.py','inventory_draw_post_blend_frontier.py')){

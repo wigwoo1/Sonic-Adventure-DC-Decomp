@@ -1,0 +1,92 @@
+Sonic Adventure Rev A - interrupt/completion and submission (2026-10-24)
+
+Whole-project estimate remains 10% weighted milestones, not code coverage.
+The separate strict optimized 136-source boot_interrupt.dll is an incomplete
+research library, not a playable port. Earlier source, proofs and DLLs remain.
+
+Nine newly registered original bodies, 1,995 instruction rows:
+  8c651bc0  software interrupt handler/counter/completion       338 rows
+  8c650b60  transfer-ring reset                                52 rows
+  8c665fa8  tile/object-list layout and optional backdrop       638 rows
+  8c651570  completed-buffer selection                         98 rows
+  8c6516a0  transfer scheduling                               269 rows
+  8c65194a  render-buffer launch                              189 rows
+  8c665e3c  seven render metadata/control writes                93 rows
+  8c665f42  raw backdrop command construction                   51 rows
+  8c641f00  full submission, waits and timeout/recovery         267 rows
+
+The existing unsigned division/remainder and word/VRAM copy bodies are adapted
+without duplicate registration credit. All thirteen adapters total 2,180 rows.
+DIV1 logic is copied exactly from the previously verified remainder helper.
+No runtime opcode decoder or substituted game-service result is used in C.
+
+589 full-state comparisons pass: 566 returns, seven bounded waits/peripheral
+exhaustions, four invalid-address stops and twelve unsupported-FPU-mode stops.
+All 2,180 original rows execute. All 203 feasible outcomes of the nine new bodies
+execute. Three additional outcomes are explicitly unexecuted and structurally
+excluded: SELECT's R4 is constant one; SELECT reloads the seven it just stored
+rather than minus three; FLIP's R14 remains one across its preserving callee.
+qualify_boot_interrupt.py checks the original disassembly supporting these
+arguments. Immutable code/literals and distinct RAM/stack/MMIO apply; concurrent
+external writes to those RAM slots are outside this synchronous entry model.
+The Ghidra warning about 8c666228 does not remove that instruction: it executes
+in the original-model coverage and remains present in generated C.
+
+The comparisons check complete RAM, CPU/FPU, both integer banks, SR/PR/FPUL,
+GBR/MACH/MACL, ordered reached-call boundary states, timer and busy samples,
+transfer/graphics registers, store queues, captured packets, IRQ status and all
+eight MiB of bounded video memory. 1,678 independent direct assertions accompany
+the differential checks. Eight special submissions exercise the separately
+identified 8c8a316c bit-32 path, including its exact captured command word.
+
+Original IRQ callbacks now execute software counter increments, ring reset,
+state selection, scheduling and render launch. Submission normal exits, second
+wait exits and timeout recovery execute. Blocking completion leaves its pending
+flag set and invokes the original callback tail after the retail counter limit;
+it is not relabeled as hardware completion. Original waits remain unbounded
+without SA_BOUND_RETAIL_STALLS. Research callback waits permit 64 continued tests;
+transfer retry/reset waits permit two. Bounds return -4, not a game result.
+
+Sixteen uninterrupted wait/outer-boot comparisons pass through actual frame,
+submission and IRQ code to unresolved input entry 8c601e2a. They carry RAM and
+device state within each call and perform 48 independent checks. Wait coverage
+advances from 57 to 60 of 91 rows; outer boot remains 16 of 51. Both parents
+remain partial and receive zero complete-body credit. Runtime tables, initial
+CPU/device state and finite device-input samples are explicit fixtures; natural
+startup and asynchronous scheduling remain unverified.
+
+interrupt_bus.c wraps the previous bus with word-addressed 32-bit-aperture VRAM
+and normal-event write-one-to-clear storage at physical 005f6900. Event kinds
+12/13 are acknowledge writes/reads; 14/15 are VRAM writes/reads. Sixty-six
+independent checks cover aliases, first/last words, rejected widths/alignment,
+unsupported apertures/neighbors, error output preservation, delegation, trace
+overflow and reset. This storage does not deliver interrupts, execute physical
+DMA, emulate the GPU, produce visible pixels or establish hardware timing.
+The normal-event acknowledgement behavior is consistent with the primary KOS
+ASIC implementation (no KOS source copied):
+https://raw.githubusercontent.com/KallistiOS/KallistiOS/master/kernel/arch/dreamcast/hardware/asic.c
+
+The 136 sources also pass strict syntax checking with research bounds disabled.
+All 262 unique pinned inputs match. Five generated artifacts reproduce exactly;
+registration is byte-idempotent, seven Python scripts and four PowerShell files
+parse, and all 658 dispatcher pointer checks pass after the registry map refresh.
+The accumulated historical aggregate suite was extended, not rerun in full.
+The registry has 1,278 entries / 1,275 unique module-address pairs; 1,169 match
+10,875 frozen indexed candidates. These are not whole-game coverage: 211
+non-texture binaries remain unindexed and the true routine total is unknown.
+Registry audit: zero evidence errors and zero stale whole-source reports.
+
+Reproduce from the workspace with its matching local retail inputs:
+  python -B outputs/sonic-adventure/recover_boot_interrupt.py
+  python -B outputs/sonic-adventure/connect_boot_interrupt.py
+  ./outputs/sonic-adventure/build_boot_interrupt.ps1
+  python -B outputs/sonic-adventure/verify_boot_interrupt.py
+  python -B outputs/sonic-adventure/verify_boot_interrupt_bus.py
+  python -B outputs/sonic-adventure/verify_boot_interrupt_prefix.py
+  python -B outputs/sonic-adventure/qualify_boot_interrupt.py
+  python -B outputs/sonic-adventure/register_boot_interrupt.py
+
+Next recover 8c601e2a and its actual input dependencies. Continue Sol High.
+The goal stays active. Full decompilation, gameplay, PC/mobile/console ports,
+SUPIR textures, texture-off vertex/material color and display settings remain
+unfinished.
