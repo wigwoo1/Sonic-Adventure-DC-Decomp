@@ -8716,7 +8716,7 @@ foreach($taskScript in @('inventory_movie_runtime.py','recover_movie_entry.py','
  if($LASTEXITCODE -ne 0){throw "MOVIE entry preparation failed: $taskScript"}
 }
 & (Join-Path $PSScriptRoot 'build_movie_entry.ps1') -Workspace $Workspace
-foreach($taskScript in @('verify_movie_entry.py','verify_movie_entry_prefix.py','verify_movie_module_inputs.py','qualify_movie_entry.py','register_movie_entry.py','verify_movie_entry_workflow.py')){
+foreach($taskScript in @('verify_movie_entry.py','verify_movie_entry_prefix.py','verify_movie_module_inputs.py','qualify_movie_entry.py','register_movie_entry.py','verify_movie_entry_workflow_current.py')){
  & $python (Join-Path $PSScriptRoot $taskScript)
  if($LASTEXITCODE -ne 0){throw "MOVIE entry qualification failed: $taskScript"}
 }
@@ -8728,6 +8728,15 @@ foreach($taskScript in @('recover_movie_status.py','connect_movie_status.py')){
 foreach($taskScript in @('verify_movie_status.py','verify_movie_status_backend.py','verify_movie_status_prefix.py','qualify_movie_status.py','register_movie_status.py','verify_movie_status_workflow.py')){
  & $python (Join-Path $PSScriptRoot $taskScript)
  if($LASTEXITCODE -ne 0){throw "MOVIE status qualification failed: $taskScript"}
+}
+foreach($taskScript in @('recover_movie_transition.py','connect_movie_transition.py','inventory_movie_hardware_frontier.py')){
+ & $python (Join-Path $PSScriptRoot $taskScript)
+ if($LASTEXITCODE -ne 0){throw "MOVIE transition preparation failed: $taskScript"}
+}
+& (Join-Path $PSScriptRoot 'build_movie_transition.ps1') -Workspace $Workspace
+foreach($taskScript in @('verify_movie_transition.py','verify_movie_transition_backend.py','verify_movie_transition_prefix.py','qualify_movie_transition.py','register_movie_transition.py','verify_movie_transition_workflow.py')){
+ & $python (Join-Path $PSScriptRoot $taskScript)
+ if($LASTEXITCODE -ne 0){throw "MOVIE transition qualification failed: $taskScript"}
 }
 & $python (Join-Path $PSScriptRoot 'inventory_draw_geometry_frontier.py')
 if($LASTEXITCODE -ne 0){throw 'Post-view geometry inventory failed'}

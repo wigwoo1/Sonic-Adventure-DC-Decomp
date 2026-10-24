@@ -1,5 +1,22 @@
 Sonic Adventure Dreamcast Rev A - source access and handoff
 
+Latest update (2026-10-24): original display wait and historical mask correction
+The 153-source movie_transition.dll preserves the original ten-row display
+wait and actual 01ff literal. 103 direct comparisons / 945 independent checks,
+5000 backend observations / 23 API checks and ten startup profiles / 160 added
+assertions pass. Twelve regression cases expose extra reads in the historical
+packet_mmio.c helper's ff0f01ff mask. That source/proof/DLL remains preserved;
+the new native path uses original instructions and does not call that helper.
+Four advancing profiles reach MMIO control 8c6046c0, four exhausted-input cases
+stop at original read 8c60459e, and finite clock controls preserve 8c602612.
+Sampled status words are explicit input fixtures, not generated scan timing,
+physical display synchronization, IRQs or pixels. The next 33-row control body
+and its two service targets are byte-checked research evidence, not recovered
+code. Zero new routine credit; 1298 entries / 1295 unique pairs remain. Read
+MOVIE_TRANSITION.txt for evidence and commands. The current entry runner also
+fixes export discovery without modifying historical source/proof bytes. Keep
+Sol High for the next MMIO dependency; overall estimate stays 10%, goal active.
+
 Latest update (2026-10-24): MOVIE A/V status native integration
 The 151-source movie_status.dll connects the original nine-row wrapper and
 six-row sampled-port read. 118 direct comparisons / 1568 independent assertions,

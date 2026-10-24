@@ -1,0 +1,110 @@
+Sonic Adventure Dreamcast Rev A - original display transition wait
+Whole-project estimate: 10% weighted milestones, not recovered-code coverage.
+This remains incomplete research code, not a playable game or a working port.
+
+Original code and a historical mismatch
+8c604594 is a ten-instruction leaf. It loads a05f810c, then the original 16-bit
+literal at 8c604618: 01ff. It reads status into R2 until the low nine bits are
+zero, then into R3 until those bits are nonzero. T, registers, exact read order,
+return and delay slot are retained in source/sa_movie_transition.c.
+KallistiOS identifies the register at offset 010c from a05f8000 as sync status:
+https://github.com/KallistiOS/KallistiOS/blob/master/kernel/arch/dreamcast/include/dc/pvr/pvr_regs.h
+The game's exact phase/order and mask come from its own original instructions,
+not from a replacement wait implementation or a copied KallistiOS routine.
+
+The old source/packet_mmio.c helper used ff0f01ff, testing additional high bits.
+Its earlier 25 selected sequences did not distinguish those masks. We retain
+that source, original proof and compiled DLL unchanged as historical artifacts.
+The new complete-state path uses the actual 000001ff literal and does not call
+the old helper. Twenty-three outside-field bit cases compare against original
+instruction execution; twelve show the old helper takes four reads when the
+original and new native path take two. Its old evidence must not be interpreted
+as proof of arbitrary 32-bit status behavior. New registry integration metadata
+records this limitation and identifies the preferred corrected native source.
+
+Native timing input interface
+source/display_timing_bus.c/h wraps the existing A/V/cache/peripheral interface.
+The caller supplies borrowed raw 32-bit SPG_STATUS observations. Every supported
+read consumes one unchanged word, stores it in the existing register bank and
+records the original address/raw value. Unsupported widths, null output and
+writes are rejected without state changes. Physical/P1/P2 aliases use the
+inherited address normalization. Exhaustion returns host status -4 at the
+reached read; it does not generate a clear/busy transition or a game result.
+Reconfiguration starts a new observation stream; the caller retains ownership
+and must keep the sample storage alive until reconfiguration/reset.
+
+This is an explicit input boundary for native integration and comparison.
+It does not generate scan timing, synchronize a PC display, deliver physical
+IRQs, emulate electrical devices or render pixels. A real host presentation
+clock and the requested 60/120/240 FPS behavior remain future port work.
+
+Build and evidence
+build_movie_transition.ps1 compiles 153 C translation units with strict warnings
+and the established research-stall policy. Previous APIs and builds survive.
+analysis/movie_transition_verification.json: 103 direct full-state comparisons,
+86 normal returns, 14 expected sample-exhaustion stops, two -2 and one -3 policy
+rejections; 945 independent assertions. All ten rows and four branch outcomes
+execute. Tests vary both FPU modes, interrupt masks/T, leading/trailing polls,
+all 23 outside-field bits, rejected reads and exhaustion in both phases.
+Registers, RAM, FPU/banked/special state, boundaries, stack, every observation,
+disc ownership and software cache/peripheral state match independent execution.
+
+analysis/movie_transition_backend_verification.json: 5000 raw words across
+three address aliases, 23 API/backend checks, and 23 historical mask regression
+cases pass. Tests check borrowed-storage immutability, exact trace/drop counts,
+exhaustion without mutation, invalid input/reconfiguration/reset, retained RAM,
+and delegation to prior A/V, CCR, mask, render-register and cache interfaces.
+
+analysis/movie_transition_prefix_verification.json: ten uninterrupted startup
+profiles compare both FPU modes and both prior renderers with advancing and
+exhausted scan inputs, plus two finite-clock controls. All four cable statuses
+appear across renderer/FPU pairs; this is not their full Cartesian product.
+Four advancing profiles now pass the original wait and reach 8c6046c0. Four
+exhausted profiles stop at its second-phase read 8c60459e. Two finite-clock
+controls retain the earlier 8c602612 stop. There are 160 additional assertions.
+The original disc request, 91 sector reads, closed request ownership and raw
+184592-byte MOVIE entry image are retained with SHA256:
+84489968b607f6f80a7ad04ad402224ddd951a65e3ae8e18429ecfa17525614b.
+Entry bytes are checked before the module modifies its own data. Original module
+and cleanup stores remain checked. Startup tables and prior device state are
+fixtures; no natural boot, complete MOVIE startup or gameplay is established.
+
+This body was already registered: zero new routine credit. Registry remains
+1298 entries / 1295 unique module/address pairs. Boot stays partial at 33/51
+tested rows, with zero parent credit. The full game and requested features
+remain unfinished; overall estimate remains 10% and the goal stays active.
+
+Next actual dependency
+analysis/movie_hardware_frontier.json byte-checks the next 33-row control body
+8c6046c0, exported read-only. It passes a0702c00 and a stack-local word through
+services 8c10d460 and 8c10d770. Neither service is substituted. This is an
+unrecovered MMIO control frontier; it is not assumed to be a video setup routine.
+The Ghidra draft is not verified native code and receives no recovery credit.
+The two services also have byte-checked research exports: 148 and 194 rows.
+Their listed lower call targets are 8c10ee9c, 8c10eee0, 8c10ee20 and 8c10ebac.
+These drafts receive no credit; their synchronization and bus behavior must be
+recovered rather than replaced with assumed successes.
+
+Reproduce (workspace root; matching original retail inputs required locally)
+python -B outputs/sonic-adventure/recover_movie_transition.py
+python -B outputs/sonic-adventure/connect_movie_transition.py
+python -B outputs/sonic-adventure/inventory_movie_hardware_frontier.py
+& ./outputs/sonic-adventure/build_movie_transition.ps1 -Workspace (Get-Location).Path
+python -B outputs/sonic-adventure/verify_movie_transition.py
+python -B outputs/sonic-adventure/verify_movie_transition_backend.py
+python -B outputs/sonic-adventure/verify_movie_transition_prefix.py
+python -B outputs/sonic-adventure/qualify_movie_transition.py
+python -B outputs/sonic-adventure/register_movie_transition.py
+python -B outputs/sonic-adventure/verify_movie_entry_workflow_current.py
+python -B outputs/sonic-adventure/verify_movie_transition_workflow.py
+
+The current entry-workflow runner selects its original six export scripts
+explicitly. Later research exports no longer trip its historical script-count
+assertion. It preserves the frozen original workflow/report and writes a new
+current verification report. The aggregate workflow calls this current runner.
+The transition workflow reproduces six generated artifacts, checks registration
+idempotence and evidence pins, parses ten Python/five PowerShell scripts, checks
+all 153 unbounded C sources with strict warnings, and compares original source,
+proofs, registrations and build bytes with published baseline c048073bb59d.
+Focused workflows are tested; the entire accumulated suite is not claimed to
+have been rerun. Keep Sol High for the next original MMIO service dependency.
