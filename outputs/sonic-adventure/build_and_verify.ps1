@@ -8720,6 +8720,15 @@ foreach($taskScript in @('verify_movie_entry.py','verify_movie_entry_prefix.py',
  & $python (Join-Path $PSScriptRoot $taskScript)
  if($LASTEXITCODE -ne 0){throw "MOVIE entry qualification failed: $taskScript"}
 }
+foreach($taskScript in @('recover_movie_status.py','connect_movie_status.py')){
+ & $python (Join-Path $PSScriptRoot $taskScript)
+ if($LASTEXITCODE -ne 0){throw "MOVIE status preparation failed: $taskScript"}
+}
+& (Join-Path $PSScriptRoot 'build_movie_status.ps1') -Workspace $Workspace
+foreach($taskScript in @('verify_movie_status.py','verify_movie_status_backend.py','verify_movie_status_prefix.py','qualify_movie_status.py','register_movie_status.py','verify_movie_status_workflow.py')){
+ & $python (Join-Path $PSScriptRoot $taskScript)
+ if($LASTEXITCODE -ne 0){throw "MOVIE status qualification failed: $taskScript"}
+}
 & $python (Join-Path $PSScriptRoot 'inventory_draw_geometry_frontier.py')
 if($LASTEXITCODE -ne 0){throw 'Post-view geometry inventory failed'}
 foreach($inventory in @('inventory_draw_primitive_frontier.py','inventory_draw_primitive_cpu.py','inventory_draw_continuation_frontier.py','inventory_draw_angle_frontier.py','inventory_draw_post_angle_frontier.py','inventory_draw_post_blend_frontier.py')){

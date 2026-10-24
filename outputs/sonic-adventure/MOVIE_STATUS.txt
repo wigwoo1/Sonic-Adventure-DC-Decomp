@@ -1,0 +1,85 @@
+Sonic Adventure Dreamcast Rev A - MOVIE A/V status integration
+Whole-project estimate: 10% weighted milestones, not recovered-code coverage.
+This is incomplete research code, not a playable game or a full MOVIE recovery.
+
+Original code and interpretation
+The nine-instruction wrapper 8c10d914 calls the six-instruction leaf 8c10d926.
+The leaf reads a signed 16-bit word at ff800030, zero-extends it, and masks 0300.
+The wrapper shifts the result eight places and masks to values 0 through 3.
+Original instruction order, delay slot, PR save/restore, registers and stack
+effects are retained in source/sa_movie_status.c. The generator also retains
+the destination register on a rejected signed read, before returning the host
+failure status. This local fix does not modify earlier source or proof files.
+
+KallistiOS identifies this port as PDTRA and uses these same bits for cable
+status: 0 VGA, 1 nothing connected, 2 RGB, 3 composite. This supports the cable
+status interpretation of the original routine; it does not prove all callers'
+meaning or establish physical GPIO behavior. No KallistiOS code is copied.
+Primary references:
+https://github.com/KallistiOS/KallistiOS/blob/master/kernel/arch/dreamcast/hardware/video.c
+https://github.com/KallistiOS/KallistiOS/blob/master/kernel/arch/dreamcast/include/dc/video.h
+
+Native platform interface
+source/video_signal_bus.c/h adds an explicit caller-sampled 16-bit input at
+ff800030 to the existing cache/register/peripheral chain. It accepts word reads
+only, logs raw samples with event 21, rejects writes and other widths, and
+delegates other accesses to the previous backend. Initial samples clamp to
+16 bits. This is host policy, not a physical cable detector. PCTRA direction,
+electrical inputs, Area-7 aliases, real exception vectors and output pixels
+are not implemented. No game query or callback return is supplied as a fixture.
+
+source/sa_movie_status_connected.c routes both original bodies in the existing
+MOVIE startup chain. build_movie_status.ps1 builds 151 translation units with
+strict warnings and the existing bounded-stall research policy. Previous APIs,
+source, proofs and compiled artifacts retain their original bytes.
+
+Evidence and limits
+analysis/movie_status_verification.json: 118 direct comparisons, 112 normal
+returns, four -2 and two -3 intentional host-policy stops, 1568 independent
+assertions; all 15 original instruction rows execute. Both FPU modes, seeded
+port words, interrupt mask/T combinations and read rejection cases are tested.
+Complete registers, RAM, FPU, banked/special state, call boundaries, disc state
+and software peripheral/cache state match independent instruction execution.
+
+analysis/movie_status_backend_verification.json: all 65536 sampled words,
+all four extracted status values, and 24 backend/API checks pass, including
+trace/drop count, unsupported access rejection without mutation and inherited
+CCR/register/queue/purge delegation.
+
+analysis/movie_status_prefix_verification.json: 18 continuous boot profiles
+cross both FPU modes, both prior renderer paths and all four status values,
+plus two finite-clock controls. Original disc requests load all 184592 MOVIE
+bytes at 8ceb0000; entry-boundary SHA256 is
+84489968b607f6f80a7ad04ad402224ddd951a65e3ae8e18429ecfa17525614b.
+Native and independent execution retain matching loader ownership, original
+module initialization stores, cache requests, port reads and complete state.
+There are 216 additional assertions. Sixteen elapsed-clock profiles now reach
+8c604594, the PVR transition wait. Two finite-clock controls retain sample
+exhaustion at 8c602612. Clock samples, startup tables and earlier peripheral
+state are explicit fixtures; these do not establish natural boot or real timing.
+
+Both bodies were already registered under their original canonical source and
+proof names. New integration metadata preserves those fields and adds ZERO
+routine credit. Registry remains 1298 entries / 1295 unique module/address
+pairs. Boot remains partial at 33/51 tested rows with zero parent credit.
+MOVIE startup, the complete game, all ports and user-facing settings remain
+unfinished. All indexed Ghidra candidates remain drafts until qualified.
+
+Reproduce (from workspace root; matching retail inputs required locally)
+Use the configured Python executable and PowerShell:
+python -B outputs/sonic-adventure/recover_movie_status.py
+python -B outputs/sonic-adventure/connect_movie_status.py
+& ./outputs/sonic-adventure/build_movie_status.ps1 -Workspace (Get-Location).Path
+python -B outputs/sonic-adventure/verify_movie_status.py
+python -B outputs/sonic-adventure/verify_movie_status_backend.py
+python -B outputs/sonic-adventure/verify_movie_status_prefix.py
+python -B outputs/sonic-adventure/qualify_movie_status.py
+python -B outputs/sonic-adventure/register_movie_status.py
+python -B outputs/sonic-adventure/verify_movie_status_workflow.py
+
+The workflow verifies deterministic generation, registration idempotence,
+evidence pins, Python/PowerShell parsing, all 151 unbounded C sources with
+strict syntax checks, and preservation against published commit de5ea3f39a60.
+The focused milestone is tested; the entire accumulated test suite is not
+claimed to have been rerun for this update. Keep Sol High for the next display
+transition wait and its explicit timing model. The overall goal stays active.

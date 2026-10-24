@@ -26270,7 +26270,37 @@
       "comparison_level": "complete 16 MiB RAM and all GPR/SR/PR/PC state; MMIO callback address/count checked",
       "limitations": [
         "The peripheral register hardware meaning and caller interpretation remain unidentified."
-      ]
+      ],
+      "movie_status_integration": {
+        "verification": "analysis/movie_status_qualification.json",
+        "verification_sha256": "210e93018ac34c4f5ff3a1dcf29093ce0e89b8ebda9acc249895bbe2cfad2300",
+        "adapter_source": "source/sa_movie_status_connected.c",
+        "adapter_source_sha256": "60dddaf882f097315b42afdcbd9f1fd5bce30403284a79b59caf53ef031e568b",
+        "compiled_source_count": 151,
+        "newly_registered_entries": 0,
+        "integrated_original_rows": 15,
+        "direct_comparisons": 118,
+        "independent_direct_checks": 1568,
+        "exhaustive_sampled_words": 65536,
+        "backend_checks": 24,
+        "boot_prefix_comparisons": 18,
+        "boot_prefix_independent_checks": 216,
+        "boot_rows_covered": 33,
+        "boot_static_rows": 51,
+        "boot_recovery_credit": 0,
+        "movie_startup_recovery_credit": 0,
+        "next_dependency": "8c604594 PVR transition wait; finite clock controls retain input exhaustion at 8c602612.",
+        "guide": "MOVIE_STATUS.txt",
+        "scope": "Original nine-row wrapper and nested six-row query with sampled PDTRA word input. Complete machine/RAM/FPU/stack, boundaries, disc/cache/peripheral state and every word read match independent instruction/platform execution. No game query return is supplied.",
+        "limitations": [
+          "Caller-supplied sampled port state and privileged MMU-off execution are explicit preconditions. GPIO direction/electrical inputs, physical cable detection, system timing and exceptions are not modeled.",
+          "This models the reached word-only read interface; PCTRA and writes/byte/longword/Area-7 access are not implemented here.",
+          "MOVIE startup, natural boot, pixels, playback and the full game/ports/settings remain unfinished.",
+          "Startup tables and prior software peripheral state remain fixtures. Native disc/coherent-cache/CCR behavior is declared platform policy. No natural boot, physical BIOS/devices, gameplay or playable port is implied.",
+          "Both original query bodies were already registered. This milestone adds complete-state native integration and an explicit sampled-port host interface, with zero new routine credit.",
+          "Sixteen elapsed-clock profiles reach the original PVR transition wait at 8c604594; two finite-clock controls retain input exhaustion at 8c602612. No natural boot or complete MOVIE startup is established."
+        ]
+      }
     },
     {
       "module": "1ST_READ.BIN",
@@ -26285,7 +26315,37 @@
       "comparison_level": "complete 16 MiB RAM and all GPR/SR/PR/PC state; MMIO callback and stack write checked",
       "limitations": [
         "The device register hardware semantics and system-level meaning of its two status bits remain unidentified."
-      ]
+      ],
+      "movie_status_integration": {
+        "verification": "analysis/movie_status_qualification.json",
+        "verification_sha256": "210e93018ac34c4f5ff3a1dcf29093ce0e89b8ebda9acc249895bbe2cfad2300",
+        "adapter_source": "source/sa_movie_status_connected.c",
+        "adapter_source_sha256": "60dddaf882f097315b42afdcbd9f1fd5bce30403284a79b59caf53ef031e568b",
+        "compiled_source_count": 151,
+        "newly_registered_entries": 0,
+        "integrated_original_rows": 15,
+        "direct_comparisons": 118,
+        "independent_direct_checks": 1568,
+        "exhaustive_sampled_words": 65536,
+        "backend_checks": 24,
+        "boot_prefix_comparisons": 18,
+        "boot_prefix_independent_checks": 216,
+        "boot_rows_covered": 33,
+        "boot_static_rows": 51,
+        "boot_recovery_credit": 0,
+        "movie_startup_recovery_credit": 0,
+        "next_dependency": "8c604594 PVR transition wait; finite clock controls retain input exhaustion at 8c602612.",
+        "guide": "MOVIE_STATUS.txt",
+        "scope": "Original nine-row wrapper and nested six-row query with sampled PDTRA word input. Complete machine/RAM/FPU/stack, boundaries, disc/cache/peripheral state and every word read match independent instruction/platform execution. No game query return is supplied.",
+        "limitations": [
+          "Caller-supplied sampled port state and privileged MMU-off execution are explicit preconditions. GPIO direction/electrical inputs, physical cable detection, system timing and exceptions are not modeled.",
+          "This models the reached word-only read interface; PCTRA and writes/byte/longword/Area-7 access are not implemented here.",
+          "MOVIE startup, natural boot, pixels, playback and the full game/ports/settings remain unfinished.",
+          "Startup tables and prior software peripheral state remain fixtures. Native disc/coherent-cache/CCR behavior is declared platform policy. No natural boot, physical BIOS/devices, gameplay or playable port is implied.",
+          "Both original query bodies were already registered. This milestone adds complete-state native integration and an explicit sampled-port host interface, with zero new routine credit.",
+          "Sixteen elapsed-clock profiles reach the original PVR transition wait at 8c604594; two finite-clock controls retain input exhaustion at 8c602612. No natural boot or complete MOVIE startup is established."
+        ]
+      }
     },
     {
       "module": "1ST_READ.BIN",
