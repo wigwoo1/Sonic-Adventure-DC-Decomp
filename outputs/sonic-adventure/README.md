@@ -16,7 +16,8 @@ Public repository: [wigwoo1/Sonic-Adventure-DC-Decomp](https://github.com/wigwoo
 - `project_status.json` records requirements and progress evidence.
 - `HD_TEXTURE_AND_DISPLAY_PLAN.txt` records the planned SUPIR HD texture pack, HD toggle, texture percentages, render resolution, and aspect-ratio settings. These features are pending.
 - `SOURCE_HANDOFF.txt` contains the source-access and handoff notes.
-- `BOOT_DISC.txt` records the original 50-row loader with native disc I/O: 82 direct comparisons, 34 backend/API checks and four boot prefixes loading the actual `MOVIE.BIN` with its verified file hash. Boot now reaches the uncached cache frontier at `0xac5fc0c2`; the loader has one new registration under explicit host platform policies.
+- `BOOT_CACHE.txt` records the original cache-invalidation leaf at both address aliases: 88 direct comparisons, 130 CCR backend cases, 20 additional checks and four boot prefixes that reach the loaded `MOVIE.BIN` entry at `0x8ceb0000`. One physical body is registered; boot remains partial at 33/51 rows.
+- `BOOT_DISC.txt` preserves the original 50-row loader with native disc I/O: 82 direct comparisons, 34 backend/API checks and four earlier boot prefixes loading `MOVIE.BIN` with its verified file hash before the uncached cache frontier.
 - `BOOT_FILE.txt` preserves eight qualified file helpers: 403 direct comparisons, all 222 qualified rows / 30 outcomes, six five-stage handle lifecycles and four earlier boot prefixes reaching the `MOVIE.BIN` firmware read boundary.
 - `BOOT_EVENT.txt` preserves native integration of nine existing event bodies, with zero duplicate credit: 544 comparisons, 8,192 VBR checks, full 529-row/72-outcome coverage and eight earlier boot prefixes to the file-load path.
 - `BOOT_INPUT.txt` preserves six new input bodies and the complete wait caller: 503 direct comparisons, four three-poll lifecycles and 24 earlier connected wait/boot checks.

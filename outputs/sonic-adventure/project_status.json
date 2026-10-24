@@ -129,7 +129,7 @@
     "prs_trailing_bytes": 0,
     "main_binary_indexed_functions": 3637,
     "main_binary_draft_pseudocode_functions": 3631,
-    "recovered_buildable_routines": 1294,
+    "recovered_buildable_routines": 1295,
     "recovered_routine_tests": "analysis/startup_verification.json",
     "recovered_routine_test_cases": 17,
     "main_binary_draft_export_failures": 6,
@@ -138060,6 +138060,34 @@
         "The original loader ignores its read result and returns zero after closing even when transport fails. Failed/unread payload bytes remain unchanged; zero return must not be advertised as successful I/O.",
         "Status formatter error branches outside the host service policies, driver/read/cancellation parents and cache uncached blocks remain partial; no new credit is assigned to them."
       ]
+    },
+    "boot_cache_integration": {
+      "verification": "analysis/boot_cache_qualification.json",
+      "verification_sha256": "93ae7157b913296465d178f3ba6dc4aa30e94fffed106c0e8550ea5d1b0f9703",
+      "adapter_source": "source/sa_boot_cache_connected.c",
+      "adapter_source_sha256": "ef9d019a8b13dbf394d5e3744f70ae12cdb56769c870248fccd59fd706e61eab",
+      "compiled_source_count": 147,
+      "newly_registered_entries": 1,
+      "alias_duplicate_credit": 0,
+      "direct_comparisons": 88,
+      "independent_direct_checks": 984,
+      "ccr_write_read_cases": 130,
+      "backend_checks": 20,
+      "boot_prefix_comparisons": 4,
+      "boot_prefix_independent_checks": 36,
+      "boot_rows_covered": 33,
+      "boot_static_rows": 51,
+      "boot_recovery_credit": 0,
+      "natural_boot_verified": false,
+      "next_dependency": "0x8ceb0000 entry in the just-loaded MOVIE.BIN image",
+      "guide": "BOOT_CACHE.txt",
+      "scope": "Original six-instruction CCR leaf under both P1 and P2 PCs; full machine/RAM/FPU/boundaries, disc and software peripheral/cache-control state match. Canonical and alias bodies share physical bytes; duplicate recovery credit is zero.",
+      "limitations": [
+        "CCR uses coherent-RAM storage: invalidation commands read zero, other bits are explicit host storage including reserved fixture inputs. Physical cache contents, timing, MMU translation and exception delivery are not modeled.",
+        "Qualified CCR leaf domain is privileged MMU-off execution with immutable code/literals and explicit software peripheral/drive fixtures.",
+        "Whole game, natural boot and requested ports/features remain unfinished.",
+        "Startup tables and prior software peripheral state remain fixtures. Native disc/coherent-cache/CCR behavior is declared platform policy. No natural boot, physical BIOS/devices, gameplay or playable port is implied."
+      ]
     }
   },
   "milestones": [
@@ -138233,8 +138261,8 @@
     "report": "analysis/recovery_coverage_audit.json",
     "candidate_inventory": "analysis/unrecovered_function_candidates.tsv",
     "boundary_inventory": "analysis/unresolved_module_boundaries.json",
-    "registered_routines": 1294,
-    "registered_unique_module_address_pairs": 1291,
+    "registered_routines": 1295,
+    "registered_unique_module_address_pairs": 1292,
     "indexed_candidates_in_export_snapshots": 10875,
     "registered_entries_matching_export_snapshots": 1184,
     "non_texture_binaries_without_function_index": 211,
@@ -145561,5 +145589,5 @@
   },
   "unverified_work": {},
   "unverified_drafts": {},
-  "recovered_buildable_routines": 1294
+  "recovered_buildable_routines": 1295
 }

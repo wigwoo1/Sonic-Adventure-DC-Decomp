@@ -1,0 +1,101 @@
+Sonic Adventure Rev A - uncached instruction-cache request (2026-10-24)
+
+Estimated whole-project completion remains 10% weighted milestones, not code
+coverage. The strict optimized 147-source boot_cache.dll is an incomplete Windows
+research library, not a playable port. Previous source, proof, API and build bytes
+are preserved. The full goal remains active.
+
+The six original instructions at 8c5fc0c2 load the cache-control register address,
+read it, set the instruction-cache invalidation command and write it in the RTS
+delay slot. Actual boot invokes the same physical bytes through uncached alias
+ac5fc0c2. Both native entries retain their real PCs and PC-relative literal
+addresses. They share one physical body and receive one new registry entry;
+the alias receives no duplicate credit. The C code is statically translated,
+with no runtime opcode interpreter in the research DLL.
+
+88 complete-state comparisons pass: 82 returns, two missing-bus stops and four
+rejected register-read/write stops. All six instructions execute at both aliases.
+984 independent assertions cover arbitrary stored CCR bits, the two tested FPU
+bank modes, SR interrupt masks/T, request-counter wrap, unchanged guest RAM/FPU,
+preserved registers/SR/PR, exact requested register words and ordered events.
+Read/write rejection checks include the actual delay-slot fault PC at each alias.
+The tested CPU domain is privileged and MMU-off; no hardware exception delivery
+or user-mode P4-access equivalence is claimed.
+
+The new cache_register_bus.c/h layer keeps explicit CCR and instruction/operand
+invalidation-request counts above the unchanged event/peripheral bus. Register
+reads/writes are four bytes at ff00001c. Trace event 20 records reads; event 19
+records the original requested write word. CCR command bits ICI/OCI read zero;
+other bits are host storage, including reserved bits supplied by test fixtures.
+Writes immediately count requests and retain the noncommand bits. Coherent host
+RAM needs no instruction/data cache flush; physical cache lines, dirty data,
+timing, MMU Area-7 mapping and exception vectoring are not simulated.
+
+Primary register reference:
+  https://www.st.com/resource/en/user_manual/cd00147165.pdf
+  SH-4 CPU Core Architecture, Table 18, PDF pages 77-79.
+The reference specifies that OCI/ICI commands read zero. Reserved-bit retention,
+immediate software request counters and coherent-RAM behavior are explicit host
+platform policies, not broader claims about physical SH7750 behavior.
+
+130 independent backend write/read cases cover all individual bits, complements,
+zeros/ones and random words. Twenty additional checks cover invalid widths/null
+output, unmapped neighbors and unsupported Area-7 access without state changes,
+trace/counter overflow, delegation to queue-address registers and purge, retained
+RAM and initialization/reset. No game callback return is substituted.
+
+Four uninterrupted boot prefixes again read all 91 sectors of MOVIE.BIN. The
+184592-byte payload at guest 8ceb0000 retains the extracted SHA256:
+  84489968b607f6f80a7ad04ad402224ddd951a65e3ae8e18429ecfa17525614b
+Each then runs the original uncached cache request, records one instruction-
+cache command and reaches the actual loaded module entry at 8ceb0000. All
+reached/final machine, RAM, CPU/FPU, both integer banks, SR/PR/FPUL/MACH/MACL/GBR/
+VBR, disc ownership/progress/transport attempts, prior software peripherals and
+CCR state match the independent instruction/platform model. There are 36
+independent boot assertions. Boot advances from 30 to 33 of 51 original rows;
+the unknown MOVIE entry remains an explicit stop, with zero complete-boot credit.
+Runtime driver/directory/input/event tables and prior finite software peripheral
+samples remain fixtures. This does not prove natural cold startup or gameplay.
+
+Read-only Ghidra listings/drafts also retain nearby 8c5fc06c and 8c5fc0b8 as
+research evidence. They are not connected or credited here. The current reached
+leaf does not require their initialization/epilogue behavior. Large cache alias
+blocks retained by the prior disc milestone remain incomplete.
+
+Five generated artifacts reproduce byte-for-byte; registration is idempotent.
+467 pinned inputs are current. Eight Python and three PowerShell workflows parse;
+all 147 C sources pass strict checks without research loop bounds. Against the
+previous published 33ffac5403ad commit, 3724 original source/proof files and all
+1294 canonical registry records remain preserved. All 2551 work files from the
+previous research-build archive remain byte-identical locally.
+Registry: 1295 entries / 1292 unique module-address pairs, with 1184 matches in
+10875 frozen indexed candidates. 211 nontexture binaries still lack indexes;
+the game's total routine count is unknown. The registry audit finds zero errors
+and stale source hashes. All 658 dispatcher pointer checks pass.
+
+Reproduce from the workspace using the configured Python/PowerShell/toolchain:
+  powershell -File outputs/sonic-adventure/ghidra/export_boot_cache.ps1
+  python -B outputs/sonic-adventure/recover_boot_cache.py
+  python -B outputs/sonic-adventure/connect_boot_cache.py
+  powershell -File outputs/sonic-adventure/build_boot_cache.ps1
+  python -B outputs/sonic-adventure/verify_boot_cache.py
+  python -B outputs/sonic-adventure/verify_boot_cache_prefix.py
+  python -B outputs/sonic-adventure/verify_boot_cache_backend.py
+  python -B outputs/sonic-adventure/qualify_boot_cache.py
+  python -B outputs/sonic-adventure/register_boot_cache.py
+  python -B outputs/sonic-adventure/verify_boot_cache_workflow.py
+  python -B outputs/sonic-adventure/audit_recovery_coverage.py
+  python -B outputs/sonic-adventure/map_main_dispatch_cases.py
+  python -B outputs/sonic-adventure/verify_main_dispatch_case_map.py
+The focused workflow is included in build_and_verify.ps1. The complete accumulated
+suite was not rerun end-to-end. Retail-dependent checks require local matching
+inputs; no retail image/module/texture/model/audio is published.
+
+Next: inspect/import the actual uncompressed extracted/files/SONICADV/MOVIE.BIN
+at its observed load address 8ceb0000 and recover its reached entry. Do not assume
+the 0c900000 load base used by other modules, or substitute a different decoded
+image: the decoded/SONICADV/MOVIE.BIN path currently does not exist. Preserve
+original bytes and runtime identity when extending the module registry/auditor.
+Continue Sol High for that reverse engineering. Luna Low is suitable for
+documentation-only work. Full decompilation, gameplay, native PC/Android/3DS,
+stereo 3D, demakes and requested texture/display features remain unfinished.

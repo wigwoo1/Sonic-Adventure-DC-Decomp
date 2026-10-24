@@ -8702,6 +8702,15 @@ foreach($taskScript in @('verify_boot_disc.py','verify_boot_disc_prefix.py','ver
  & $python (Join-Path $PSScriptRoot $taskScript)
  if($LASTEXITCODE -ne 0){throw "Disc integration qualification failed: $taskScript"}
 }
+& $python (Join-Path $PSScriptRoot 'recover_boot_cache.py')
+if($LASTEXITCODE -ne 0){throw 'Cache integration recovery failed'}
+& $python (Join-Path $PSScriptRoot 'connect_boot_cache.py')
+if($LASTEXITCODE -ne 0){throw 'Cache integration connection failed'}
+& (Join-Path $PSScriptRoot 'build_boot_cache.ps1') -Workspace $Workspace
+foreach($taskScript in @('verify_boot_cache.py','verify_boot_cache_prefix.py','verify_boot_cache_backend.py','qualify_boot_cache.py','register_boot_cache.py','verify_boot_cache_workflow.py')){
+ & $python (Join-Path $PSScriptRoot $taskScript)
+ if($LASTEXITCODE -ne 0){throw "Cache integration qualification failed: $taskScript"}
+}
 & $python (Join-Path $PSScriptRoot 'inventory_draw_geometry_frontier.py')
 if($LASTEXITCODE -ne 0){throw 'Post-view geometry inventory failed'}
 foreach($inventory in @('inventory_draw_primitive_frontier.py','inventory_draw_primitive_cpu.py','inventory_draw_continuation_frontier.py','inventory_draw_angle_frontier.py','inventory_draw_post_angle_frontier.py','inventory_draw_post_blend_frontier.py')){

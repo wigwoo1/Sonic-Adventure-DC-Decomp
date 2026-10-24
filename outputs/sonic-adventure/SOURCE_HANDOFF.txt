@@ -1,5 +1,19 @@
 Sonic Adventure Dreamcast Rev A - source access and handoff
 
+Latest update (2026-10-24): uncached instruction-cache request
+The strict 147-source boot_cache.dll recovers the six-instruction leaf at
+8c5fc0c2 and its actual uncached PC alias ac5fc0c2. 88 full-state comparisons,
+984 independent assertions, 130 CCR write/read cases and 20 backend checks pass.
+Both aliases receive one physical-body registration, with zero duplicate credit.
+Four actual boot prefixes load MOVIE.BIN with the correct SHA256, issue the cache
+request and reach the loaded module entry 8ceb0000. Boot advances to 33/51 rows
+and still receives zero full-body credit. Read BOOT_CACHE.txt for CCR policy,
+fixtures, limits and reproduction. Registry: 1295 entries / 1292 unique pairs;
+audits find zero evidence errors/stale hashes. Original source/proof/build bytes
+remain preserved. Next: recover the actual uncompressed MOVIE entry at its
+observed 8ceb0000 load address. Overall estimate stays 10%; keep Sol High and
+the full goal active.
+
 Latest update (2026-10-24): original loader with native disc I/O
 The strict 145-source boot_disc.dll connects the existing native disc platform
 through the original game read/status/close path. 82 complete-state comparisons,
