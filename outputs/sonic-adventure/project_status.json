@@ -129,7 +129,7 @@
     "prs_trailing_bytes": 0,
     "main_binary_indexed_functions": 3637,
     "main_binary_draft_pseudocode_functions": 3631,
-    "recovered_buildable_routines": 1367,
+    "recovered_buildable_routines": 1369,
     "recovered_routine_tests": "analysis/startup_verification.json",
     "recovered_routine_test_cases": 17,
     "main_binary_draft_export_failures": 6,
@@ -142064,6 +142064,66 @@
       "verification": "analysis/movie_console_qualification.json",
       "verification_sha256": "9aba08878e81a2e8c67feb0361b0845c4b6a444ea670eb399cfe5a39f20f81b1",
       "guide": "MOVIE_CONSOLE.txt"
+    },
+    "movie_init_records_integration": {
+      "newly_registered_entries": 2,
+      "qualified_rows": 113,
+      "executed_rows": 113,
+      "qualified_conditional_outcomes": 34,
+      "executed_conditional_outcomes": 34,
+      "compiled_source_count": 174,
+      "static_adapter_bodies": 22,
+      "static_adapter_rows": 882,
+      "direct_comparisons": 59,
+      "independent_direct_checks": 309,
+      "prefix_comparisons": 2,
+      "independent_prefix_checks": 31,
+      "total_comparisons": 287,
+      "new_cold_prefix_reexecuted": true,
+      "cold_prefix_steps": 1363211,
+      "cold_prefix_boundaries": 56915,
+      "cold_prefix_disc_reads": 89,
+      "cold_filesystem_root": "0x8c6946e0",
+      "masaru_bytes": 33408,
+      "masaru_sha256": "5ab700a241e5d5e164c104a76555b35002a6a84370aea17bf8c34d713cdc2cb9",
+      "masaru_native_load_address": "0x0cd00000",
+      "parent_bodies_qualified": false,
+      "next_dependency": "0x8c666e50",
+      "canonical_reuse": [
+        {
+          "address": "0x8c5ff2cc",
+          "name": "sa_store_nonzero_second_global_pointer_8c5ff2cc",
+          "source": "source/sa_store_nonzero_second_global_pointer_8c5ff2cc.c",
+          "verification": "analysis/store_nonzero_second_global_pointer_8c5ff2cc_verification.json"
+        },
+        {
+          "address": "0x8c5ff2de",
+          "name": "sa_zero_global_return_value_8c5ff2de",
+          "source": "source/retail_compact_state_setters.c",
+          "verification": "analysis/retail_compact_state_setters_verification.json"
+        },
+        {
+          "address": "0x8c65acac",
+          "name": "sa_engine_error_record",
+          "source": "source/sa_engine_error_record.c",
+          "verification": "analysis/engine_error_record_verification.json"
+        }
+      ],
+      "reused_additional_credit": 0,
+      "dll_sha256": "a4ed3b3c297b639da4083a115d7ff52272a8eec844b707ebf75fba87ca65f7ba",
+      "scope": "Two complete original request-pool allocation bodies qualify. Three canonical helpers receive zero extra credit. Actual original caller, cold filesystem and driver load replay in a new full original/native comparison; driver/setup parents remain partial at missing 8c666e50.",
+      "limitations": [
+        "Direct request-pool tests use explicit root/slot/flag/output preconditions and exact RAM/stack/error-record oracles, not a claim that every test pool was naturally constructed.",
+        "Cold startup explicitly zeros filesystem/interface roots before original producers; the warm prepared-root control retains its actual missing-file behavior. No descriptor, file read or driver result is supplied.",
+        "The driver byte hash proves the 33408 original bytes were loaded at 0cd00000 through actual 17-sector transport following 72 initialization reads. It does not establish driver execution, hardware output or a fully recovered driver module.",
+        "Both caller profiles retain every full eight-MiB clear write, and all reached/final machine, RAM, FPU, software-device, disc/input state and ordered boundaries match.",
+        "Native peripheral/console/flash/disc behavior remains declared host policy. Natural reset, physical hardware, graphics/gameplay and all requested playable ports/settings remain unfinished."
+      ],
+      "regression_comparisons": 226,
+      "regression_saved_record_checks": 13738,
+      "verification": "analysis/movie_init_records_qualification.json",
+      "verification_sha256": "fd3aa50d507861faba6b14e1a51e74ed3bd816aa7241cb6bb90ee095698bd0b2",
+      "guide": "MOVIE_INIT_RECORDS.txt"
     }
   },
   "milestones": [
@@ -142237,10 +142297,10 @@
     "report": "analysis/recovery_coverage_audit.json",
     "candidate_inventory": "analysis/unrecovered_function_candidates.tsv",
     "boundary_inventory": "analysis/unresolved_module_boundaries.json",
-    "registered_routines": 1367,
-    "registered_unique_module_address_pairs": 1364,
+    "registered_routines": 1369,
+    "registered_unique_module_address_pairs": 1366,
     "indexed_candidates_in_export_snapshots": 11411,
-    "registered_entries_matching_export_snapshots": 1253,
+    "registered_entries_matching_export_snapshots": 1255,
     "non_texture_binaries_without_function_index": 211,
     "registry_evidence_errors": 0,
     "stale_whole_source_hash_reports": 0,
@@ -149565,5 +149625,5 @@
   },
   "unverified_work": {},
   "unverified_drafts": {},
-  "recovered_buildable_routines": 1367
+  "recovered_buildable_routines": 1369
 }
