@@ -1,0 +1,29 @@
+address	length	bytes	instruction	flows
+8c10fb5c	2	262f	mov.l r2,@-r15	
+8c10fb5e	2	362f	mov.l r3,@-r15	
+8c10fb60	2	462f	mov.l r4,@-r15	
+8c10fb62	2	0088	cmp/eq #0x0,r0	
+8c10fb64	2	1289	bt 0x8c10fb8c	8c10fb8c 
+8c10fb66	2	2364	mov r2,r4	
+8c10fb68	2	0c34	add r0,r4	
+8c10fb6a	2	2460	mov.b @r2+,r0	
+8c10fb6c	2	0021	mov.b r0,@r1	
+8c10fb6e	2	2634	cmp/hi r2,r4	
+8c10fb70	2	0c8b	bf 0x8c10fb8c	8c10fb8c 
+8c10fb72	2	2460	mov.b @r2+,r0	
+8c10fb74	2	1180	mov.b r0,@(0x1,r1)	
+8c10fb76	2	2634	cmp/hi r2,r4	
+8c10fb78	2	088b	bf 0x8c10fb8c	8c10fb8c 
+8c10fb7a	2	2460	mov.b @r2+,r0	
+8c10fb7c	2	1280	mov.b r0,@(0x2,r1)	
+8c10fb7e	2	2634	cmp/hi r2,r4	
+8c10fb80	2	048b	bf 0x8c10fb8c	8c10fb8c 
+8c10fb82	2	2460	mov.b @r2+,r0	
+8c10fb84	2	1380	mov.b r0,@(0x3,r1)	
+8c10fb86	2	2634	cmp/hi r2,r4	
+8c10fb88	2	0471	add #0x4,r1	
+8c10fb8a	2	ee89	bt 0x8c10fb6a	8c10fb6a 
+8c10fb8c	2	f664	mov.l @r15+,r4	
+8c10fb8e	2	f663	mov.l @r15+,r3	
+8c10fb90	2	0b00	rts	
+8c10fb92	2	f662	_mov.l @r15+,r2	

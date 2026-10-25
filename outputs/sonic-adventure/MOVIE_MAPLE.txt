@@ -1,0 +1,102 @@
+Sonic Adventure Dreamcast Rev A - controller setup and command packets
+2026-10-25. Whole-project weighted milestone estimate: 10%; goal active.
+
+Result
+Eleven original bodies now qualify: 915 instruction rows and 78 conditional
+outcomes, all executed in the declared tests. Three previously partial parents
+are included. Three already registered flag/field/mask helpers are reused with
+zero duplicate credit. Registry: 1348 entries / 1345 unique module-address pairs.
+Neither count establishes the total number of game routines or code coverage.
+
+Qualified body                Rows  Conditional outcomes
+8c65f558 controller context    254  14
+8c6607a8 signed-count fill      11   4
+8c6602d2 empty record format    40   2
+8c10fb5c forward byte copy      28  10
+8c6603b0 command-one wrapper    12   0
+8c660794 end marker            10   0
+8c65f810 command builder       288  30
+8c65f7cc padding writer         34   4
+8c601a34 initialization caller  79   6
+8c646304 initialization bridge 41   0
+8c65ebb0 buffer/context setup  118   8
+
+Canonical helpers 8c65f44a (7 rows), 8c6607c8 (6 rows) and 8c6607be (3 rows)
+retain their earlier source, name, proof and status. New adapters do not replace
+that evidence. Parent source is the retained sa_movie_revision.c; new bodies
+are sa_movie_maple.c. The connected bridge/probe replaces neither older build.
+
+Verification and build
+movie_maple.dll compiles from 167 sources. All 80 original-instruction/native
+comparisons and 748 independent assertions pass. Full CPU, RAM, FPU, special
+registers, software peripheral storage, sample cursors and ordered ordinary
+boundaries are compared. The previously qualified independent full-clear
+decoder/probe remains unchanged. The actual early caller executes 2,097,152
+clear-helper stores, clearing the complete eight-MiB software VRAM image.
+Long clear traces retain the earlier documented compression/fingerprint limits;
+this is not a new claim that every large trace was stored uncompressed.
+
+Host results: 67 normal returns, 10 expected invalid-memory stops (-3), two
+actual unrecovered-callee stops (-2), and one expected privilege stop (-4).
+These negative statuses are intentional test outcomes, not ignored failures.
+All fourteen integrated routine coverage records have no missing rows/outcomes.
+The eleven new registrations exclude the three canonical reused helpers.
+
+The independent record oracle checks all 24 blank records and both 24-entry
+buffer tables. Original library flag bytes at 8c672498 are explicit test inputs;
+they are not measurements of physical controller presence. Revision-zero/one
+and eleven profiles exercise the original flag masks. The forward copy uses
+the special R0=count, R1=destination, R2=source convention, preserves R2/R3/R4,
+and deliberately propagates forward overlapping writes. It is not memmove.
+Signed zero/negative fill counts, tails, boundaries and partial faults are tested.
+
+The command oracle checks the complete context and command buffer, both word
+orders, both payloads, both buffer banks, busy rejection, final unit, command
+byte truncation, serial wrap and padding conditions. Serial is at context+4064;
+wrap skips zero. The parent takes buffer pointers in R4 and R6, independently
+checked for 32-byte upward alignment and the original address alias. Ordinary
+ABI assumptions about R5 would miss the second alignment path.
+
+Actual startup and remaining boundaries
+The precision-zero early caller 8c010180 uses original producers to establish
+heap 8c88ef1c, device context 8c7ac7a0 and controller context 8c8a72b8. It clears
+VRAM and completes controller/command setup, then stops at real RTC reader
+8c10be78. Its 46-row read-only export is retained as the next research frontier;
+it is not connected or granted routine credit. Earlier caller/driver parents
+remain partial outside the newly closed controller bodies.
+
+The revision-eleven profile is the prior explicit raw hardware observation,
+supported by pinned Flycast source in MOVIE_REVISION.txt. The default platform
+has not silently changed. A revision-zero control still reaches unchanged
+callback 8c000000. No constructor, firmware, callback, input reply or clock
+result is substituted. Precision-one is not supported throughout startup.
+
+No physical controller reply, DMA execution, hardware interrupt, actual timing,
+visible pixels, natural complete boot or playable port is established here.
+60/120/240 FPS, 8K, Android, stereoscopic 3DS, N64/PS1 and SUPIR/texture/display
+settings remain pending. Texture Off remains planned as untextured vertex color.
+
+Reproduce (PowerShell, from the original workspace)
+Use the configured Python executable in place of python if needed. Matching
+retail input, retained earlier builds and the project's Ghidra/tool paths are
+required; retail data/tool bundles are deliberately absent from public GitHub.
+
+python -B outputs/sonic-adventure/recover_movie_maple.py
+python -B outputs/sonic-adventure/connect_movie_maple.py
+& outputs/sonic-adventure/build_movie_maple.ps1
+python -B outputs/sonic-adventure/verify_movie_maple.py
+python -B outputs/sonic-adventure/qualify_movie_maple.py
+python -B outputs/sonic-adventure/register_movie_maple.py
+python -B outputs/sonic-adventure/verify_movie_maple_workflow.py
+
+The focused workflow reproduces six generated artifacts, checks registration
+idempotence, source/input hashes, Python/PowerShell parsing, strict unbounded C
+syntax and every previously published source/proof/build byte in its stated
+baseline scope. It does not claim a rerun of the entire accumulated test suite.
+Preserved historical reports intentionally continue to show their earlier
+partial frontiers. Read the new qualification for later closure evidence.
+
+Public source and source-matched DLL/import-library archives are published to
+https://github.com/wigwoo1/Sonic-Adventure-DC-Decomp as incomplete research
+prereleases. See GITHUB_PUBLISHING.txt. Next: original RTC reader and its actual
+lower services. Keep Sol High for this hardware/processor integration work.

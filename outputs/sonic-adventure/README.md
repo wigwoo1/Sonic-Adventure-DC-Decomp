@@ -8,7 +8,7 @@ Public repository: [wigwoo1/Sonic-Adventure-DC-Decomp](https://github.com/wigwoo
 
 ## Latest verified milestone
 
-Five original post-driver services qualify (**211 instruction rows / eight branch outcomes**) in the new 166-source research DLL. All **50 full-state comparisons and 202 independent checks** pass. An explicit, sourced system-bus revision profile lets the original driver return without changing its callback. Startup now creates its device context and reaches the next controller-context producer. Driver/controller/clock parents remain partial. See `MOVIE_REVISION.txt` and `analysis/movie_revision_qualification.json`. The overall estimate remains **10%**.
+Eleven original controller setup, context/record and command-packet bodies qualify (**915 instruction rows / 78 branch outcomes**) in the new 167-source research DLL. All **80 full-state comparisons and 748 independent checks** pass, including both buffer alignment paths, both packet word orders, busy/serial/padding cases and expected faults. Three existing helpers are reused without duplicate credit. Actual startup clears all 8 MiB of software VRAM, completes controller setup and reaches the next RTC reader. Physical controller I/O, complete boot and playable ports remain unfinished. Registry: **1,348 entries / 1,345 unique module-address pairs**. See `MOVIE_MAPLE.txt` and `analysis/movie_maple_qualification.json`. The overall estimate remains **10%**.
 
 ## Project files
 
