@@ -1,0 +1,128 @@
+Sonic Adventure Dreamcast Rev A - request queue and transfer descriptor
+2026-10-25 | Whole-project estimate 10% weighted milestones, not code coverage.
+
+Three complete own routines newly qualify:
+8c667080 queue enqueue: 90 original instruction rows / 8 conditional outcomes;
+8c666f98 queue dequeue: 105 rows / 6 outcomes;
+8c10f9f4 nine-argument transfer descriptor configuration: 47 rows / 4 outcomes.
+All 242 rows / 18 outcomes execute. The actual empty server at 8c666e02
+(RTS/NOP, two rows) is already registered; its adapter receives zero new credit.
+Registry: 1385 entries / 1382 unique module-address pairs. Whole-game routine
+count and recovered-code percentage remain unknown. No playable port exists.
+
+Original behavior retained
+The SDK root global at 8c67c1d0 points to queue fields: buffer+194, capacity+198,
+tail+19c, head+1a0 and count+1a4 (hex offsets). Entries are pairs of four-byte
+words. Enqueue uses the original signed count/capacity comparison, writes both
+words, increments the tail, wraps only on exact equality with capacity and
+increments count modulo 2^32. Dequeue has no empty check: it copies the selected
+pair to the two outputs in order, clears both entry words, advances/wraps head
+and decrements count modulo 2^32. Empty-count underflow and unusual invalid
+indices are preserved as actual caller-precondition behavior. Output aliasing
+tests retain sequential effects. Root rereads, stack writes, original interrupt
+mask restoration and error-log writes are executed rather than substituted.
+
+Descriptor setup masks original source/destination and size arguments, writes
+the low direction bit, callback and callback argument, clears its +30 field,
+and retains untouched storage. Flag updates deliberately retain the original
+odd behavior: first false branch clears bit1, second false branch clears bit0;
+the final flags are limited to bits0..2. Nine arguments include five caller-
+stack words. This leaf returns zero by its actual original instructions.
+
+Native integration and limits
+The new 184-source Windows DLL connects six byte-checked adapters / 456 rows.
+Only the three complete bodies above receive new registration. Request start
+666d10 and synchronous submission666c2c remain partial, with actual missing
+dependencies and invalid-context controls preserved. Descriptor setup and the
+queue bodies do not fabricate a transfer, asynchronous completion or interrupt.
+The existing empty server's canonical metadata and source/proof remain intact.
+Earlier original read/write bodies, RTC/device buses, software sound RAM,
+console/disc/flash services and full-clear verifier remain unchanged.
+
+Verification actually run
+- All184 sources compile/link with strict warnings. An additional unbounded
+  syntax-only check covers every source. Production C contains static translated
+  bodies; instruction decoding is confined to the independent test model.
+- 479 focused original/native comparisons pass with3433 independent checks.
+  These include16 interrupt masks, both register banks, three FPU modes,
+  queue wrap/counter extremes, signed behavior, aliases, null roots, real
+  unknown-service/input/privilege/address stops and partial paired writes.
+  Descriptor tests cover flag combinations, pointer/size masks, extremes,
+  callback fields, stack arguments and unchanged bytes. Every own row/outcome
+  of all three qualified bodies executes; parent proposals remain partial.
+- 27 chained comparisons /333 checks pass. Nine explicit ABI calls in each
+  of three FPU modes fill capacity3, reject a fourth entry, dequeue one,
+  insert a replacement through wraparound, then drain in FIFO order. Actual
+  queue RAM/general CPU/FPU state survives between calls. Device state resets
+  per explicit ABI call; this is not a natural IRQ-driven execution claim.
+- 1145 regressions pass:945 earlier direct controls,199 retained bulk-family
+  controls and the earlier warm/full-video-clear startup. Saved records pass
+  60963 checks. Two valid prior request controls
+  intentionally advance and are covered by the new startup/submission evidence.
+  The distinct full89abcdef fill reexecutes all524288 stores in this new DLL.
+  Removing only six added routes/declarations and reversing export names makes
+  the new bridge byte-identical to the published183-source bridge.
+- Two fresh uninterrupted caller comparisons /45 independent checks pass.
+  Cold filesystem/interface roots start at zero. Original producers make root
+  8c6946e0, set its initialized flag, perform89 disc reads and load the exact
+  original33408-byte MASARU.DRV at0cd00000. SHA256:
+  5ab700a241e5d5e164c104a76555b35002a6a84370aea17bf8c34d713cdc2cb9
+  Cold matches319996 ordinary boundaries and
+  14788681 original ordinary steps, executes all2097152 native stores
+  clearing8MiB VRAM, then all524288 original stores filling2MiB software
+  sound RAM with the retail SEGA word41474553 (not zero). It executes enqueue,
+  dequeue and descriptor setup and reaches the actual next transfer dependency
+  8c10faa4. Warm missing-file control matches1549
+  boundaries, retains64bddc and performs no disc reads or sound-RAM writes.
+- The exact-page checker compares RAM/VRAM/sound RAM at every ordinary recorded
+  boundary, followed by complete final-byte comparisons. Full ordered sound
+  trace bytes compare,524288 events with zero drops. All original loops retain
+  their counts. Completed full executions are saved before endpoint validation;
+  no execution checkpoint, helper return or completion is supplied. Cold keeps
+  the declared finite262144 zero-FIFO observations; exhaustion remains a stop.
+- Current total:1653 original/native comparisons. Previously published485
+  sound-bus unit checks and1272 Windows page-tracker checks remain historical,
+  unchanged evidence; they are not counted as newly rerun. Initial lifecycle
+  harness checks caught a missing input-fixture field and tuple/list assertion
+  mismatch; both were corrected before the final27 comparisons passed.
+  An initial regression run matched every execution but its report referenced
+  a discarded local value. The final workflow reexecutes all cases, retains
+  the warm result separately and saves completed comparison summaries before
+  writing the published report. Failed report generation receives no credit.
+- Generated artifacts reproduce, registration is byte-idempotent, and old
+  selected source/proof/build bytes, canonical metadata and user requirements
+  are checked against publication82cd3ebd47dc. Ten existing documentation,
+  status, registry and audit paths are intentionally refreshed. All prior
+  selected build bytes are preserved; the whole historical suite is not rerun.
+
+Remaining work
+The next cold dependency10faa4 has71 static rows; callback668f40 has77.
+Both are exported/read-only byte-checked drafts, with zero recovery credit.
+Mode-zero submission still reaches669088; warm missing-file retains64bddc.
+Physical DMA/IRQ timing, arbitration, interrupt acceptance, ARM/driver execution,
+audio output, complete startup and gameplay are unfinished. MASARU is loaded,
+not executed/decompiled. Host guards preserve partial states without claiming
+physical exception-vector delivery. Earlier full-video-clear decoder/fingerprint
+and Windows single-thread page-tracker limitations remain unchanged.
+
+Requested60/120/240FPS,8K, Android/3DS stereoscopic ports, N64/PlayStation
+demakes, SUPIR HD texture toggle/resolution settings and texture-Off vertex
+colors remain requirements, not implemented features. Overall estimate10%.
+
+Reproduce (matching local retail inputs and toolchain required)
+python -B outputs/sonic-adventure/recover_movie_queue_family.py
+python -B outputs/sonic-adventure/connect_movie_queue_family.py
+powershell -File outputs/sonic-adventure/build_movie_queue_family.ps1
+python -B outputs/sonic-adventure/verify_movie_queue_family.py
+python -B outputs/sonic-adventure/verify_movie_queue_family_lifecycle.py
+python -B outputs/sonic-adventure/verify_movie_queue_family_regression.py
+python -B outputs/sonic-adventure/capture_movie_queue_family_prefix.py
+python -B outputs/sonic-adventure/verify_movie_queue_family_prefix.py
+python -B outputs/sonic-adventure/inventory_movie_queue_family_frontier.py
+python -B outputs/sonic-adventure/qualify_movie_queue_family.py
+python -B outputs/sonic-adventure/register_movie_queue_family.py
+python -B outputs/sonic-adventure/verify_movie_queue_family_workflow.py
+Export scripts:ghidra/export_movie_queue_family.ps1 and export_movie_queue_hal.ps1.
+The full-size original comparisons take minutes; preserve live process handles.
+Read analysis/movie_queue_family_qualification.json for proof hashes and scope.
+Next: recover10faa4 and its actual services. Keep Sol High; goal stays active.
