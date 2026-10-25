@@ -1,0 +1,87 @@
+Sonic Adventure Dreamcast Rev A - three completed timing constructors
+Whole-project estimate: 10% weighted milestones, not recovered-code coverage.
+Incomplete research libraries; the game and requested ports remain unfinished.
+
+Result (2026-10-24)
+This follow-up closes the three partial constructors from MOVIE_RENDER_CONFIG.txt:
+  8c657e00: layout, 424 executed / 4 proven unreachable instruction rows;
+             68 executed / 6 proven unreachable conditional outcomes.
+  8c6585c0: built-in type zero, 204 executed / 4 unreachable rows;
+             33 executed / 9 unreachable conditional outcomes.
+  8c658804: built-in type one, 239 executed / 4 unreachable rows;
+             45 executed / 11 unreachable conditional outcomes.
+Total: 879 original rows, with 867 executed and 12 proven unreachable. All 172
+conditional outcomes are accounted for: 146 executed, 26 proven unreachable.
+Unreachable code and branches remain in the original translation and are never
+counted as dynamically executed. These three bodies now receive recovery credit.
+Registry: 1311 entries / 1308 unique module/address pairs.
+
+The existing 158-source movie_render_config.dll and all original C/proof files
+are unchanged. DLL SHA256:
+28846d078807b97537fd9c81ab1ffa4b384d382b2d5ca3b1d9f9d136abfce4fe
+The thirteen-body renderer family now has 1802 executed / 12 unreachable rows,
+and 255 executed / 27 unreachable conditional outcomes, across 1814 static rows.
+This is family accounting, not a percentage of the entire game.
+
+New evidence
+analysis/movie_timing_constructors_verification.json records 134 additional
+direct comparisons, all normal returns, with 670 independent assertions.
+The comparison retains full RAM/CPU/FPU/banked/special state, actual original
+helpers, call boundaries and software peripheral/input state. Mode flags at
+8c8a2d78 are independent of flags at 8c8a2d5c. Tests vary those mode flags,
+timing selector zero/six, interlace, antialiasing, pixel formats, integer bank
+selection, and signed size arithmetic. These are explicit direct fixtures.
+The previously published 753 comparisons / 2950 checks are retained evidence,
+not newly rerun. New and retained comparisons together total 887 / 3620 checks.
+
+The original layout routine does not check pixel-index bounds. Four explicit
+cases select index six and seed the adjacent scratch-RAM word with 15 or -8.
+They exercise its original fallback/negative arithmetic without changing code
+or literals. Negative/zero dimensions and this invalid index are research
+fixtures, not supported display modes or an intended settings interface.
+
+analysis/movie_timing_static_verification.json proves the remaining unreachable
+paths by conservative joined constant propagation over byte-checked original
+instructions. Unknown values explore both outcomes; branch delay slots execute
+before transfer. Memory loads remain unknown except PC-relative literals. Calls
+destroy all register/T knowledge, except original division leaf 8c10ca5c is
+byte-checked to have no call, bank switch or reference to r4..r14, so cannot
+change them. No assumed calling convention supplies that fact. Propagation
+visits 429/207/242 abstract PC/delay states for layout/type-zero/type-one.
+
+Repeated TST instructions test registers already set to zero or one; the dead
+outcomes cannot execute from the named entry with immutable instructions and
+literals, ordinary RAM fixtures, and no asynchronous register mutation or jump
+into the function interior. The proof reports all 12 unreachable rows and 26
+outcomes separately. Ghidra warnings or observed tests do not choose its result.
+
+Preservation and limits
+analysis/movie_timing_workflow_verification.json reproduces the new proof and
+qualification byte-for-byte, verifies registration idempotence/current evidence
+hashes, checks Python syntax and all 158 unbounded C sources with strict Clang
+warnings, and checks source/proof/registry/build preservation against published
+commit 55222ff04ce0579ecde41a8c0c4eac9dc7acf657. Original bodies keep their
+existing source files. New proof files do not replace historical evidence.
+The existing aggregate recipe is preserved because historical proofs pin its
+bytes; run this focused follow-up separately after the prior renderer workflow.
+The complete accumulated test suite is not claimed to have run again.
+
+Startup is unchanged: retain six prior profiles / 120 checks, four initialized
+stops at 8c653386 and two cold missing-context stops at 8c10d4bc. This update
+does not advance boot, generate pixels or prove physical display timing. The
+software register interface, direct runtime/device fixtures and declared native
+initialization staging retain their previous limitations. Outer boot remains
+partial at 33/51 rows with no parent recovery credit.
+
+Reproduce from the workspace root (matching retail inputs required locally)
+python -B outputs/sonic-adventure/verify_movie_timing_constructors.py
+python -B outputs/sonic-adventure/verify_movie_timing_static.py
+python -B outputs/sonic-adventure/qualify_movie_timing_constructors.py
+python -B outputs/sonic-adventure/register_movie_timing_constructors.py
+python -B outputs/sonic-adventure/verify_movie_timing_workflow.py
+
+Next: integrate existing helper 8c653386 and continue original renderer setup.
+Keep Sol High for reverse engineering; goal active, overall estimate 10%.
+User-facing 60/120/240 FPS, 8K, resolution/aspect controls, SUPIR HD textures and
+texture percentages/Off (vertex/material colors only) remain pending, along with
+Android/stereoscopic 3DS and subsequent demake targets.
