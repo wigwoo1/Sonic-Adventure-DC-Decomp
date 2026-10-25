@@ -1,0 +1,27 @@
+{
+  "entry": "0x8c6526bc",
+  "original_rows_byte_checked": 164,
+  "abstract_states_explored": 184,
+  "constant_definition": "0x8c65270e",
+  "constant_r4": 1,
+  "test_pc": "0x8c6527c4",
+  "test_instruction": "tst r4,r4",
+  "t_after_test": 0,
+  "branch_pc": "0x8c6527c6",
+  "proven_unreachable_edges": [
+    [
+      "0x8c6527c6",
+      "0x8c6527cc"
+    ]
+  ],
+  "scope": "Conservative control-flow exploration of original byte-checked instructions from the routine entry. Both outcomes of every conditional are explored, branch delay slots run on each path, and returning calls clobber R4 knowledge. Every reached abstract state at the test has R4=1; TST sets T=0, so the immediately following BT cannot be taken.",
+  "preconditions": [
+    "Entry at 8c6526bc with immutable code/literals; no asynchronous register changes or branch into the function interior.",
+    "Called services may clobber R4 arbitrarily when returning. Non-returning calls cannot reach the later test."
+  ],
+  "sha256": {
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\verify_movie_render_static.py": "fd84c507ede2c7fe4e350e9cc240acc6a801e8b2ba437651e7ad39996d6d6a64",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\analysis\\movie-context-frontier\\8c6526bc_instructions.tsv": "54e264138ea81719088f8219f81800b278d8c12537d0c9699ab709370840b388",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\work\\sonic-adventure\\extracted\\1ST_READ.BIN": "45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a"
+  }
+}

@@ -129,7 +129,7 @@
     "prs_trailing_bytes": 0,
     "main_binary_indexed_functions": 3637,
     "main_binary_draft_pseudocode_functions": 3631,
-    "recovered_buildable_routines": 1302,
+    "recovered_buildable_routines": 1308,
     "recovered_routine_tests": "analysis/startup_verification.json",
     "recovered_routine_test_cases": 17,
     "main_binary_draft_export_failures": 6,
@@ -138264,6 +138264,44 @@
         "Three unique original bodies already have four canonical registrations, including two historical names at 8c10ee64. All are preserved; this integration adds zero routine credit.",
         "The exported native entry calls original initialization and then the requested next entry with state retained. It establishes a declared native two-stage sequence, not the original reset/startup invocation order."
       ]
+    },
+    "movie_render_config_integration": {
+      "verification": "analysis/movie_render_config_qualification.json",
+      "verification_sha256": "cee192505ca9c129f874eb463bcc93267561b236cbe6a110d3018fe8ba98dc07",
+      "adapter_source": "source/sa_movie_render_config_connected.c",
+      "adapter_source_sha256": "850ccd87ce61df2eec3f01205610f6fc47f42540d95be850f6a5c7ce17ddd28e",
+      "compiled_source_count": 158,
+      "newly_registered_entries": 6,
+      "reused_qualified_bodies": 4,
+      "qualified_rows": 822,
+      "qualified_static_conditional_outcomes": 60,
+      "qualified_executed_conditional_outcomes": 59,
+      "qualified_proven_unreachable_outcomes": 1,
+      "integrated_static_rows": 1814,
+      "integrated_tested_rows": 1761,
+      "partial_constructor_count": 3,
+      "direct_comparisons": 753,
+      "independent_direct_checks": 2950,
+      "startup_profiles": 6,
+      "startup_independent_checks": 120,
+      "boot_rows_covered": 33,
+      "boot_static_rows": 51,
+      "boot_recovery_credit": 0,
+      "movie_startup_recovery_credit": 0,
+      "next_dependency": "Integrate existing five-row helper 8c653386; finish untested paths in timing constructors 8c657e00, 8c6585c0 and 8c658804.",
+      "guide": "MOVIE_RENDER_CONFIG.txt",
+      "scope": "Original configuration, option selection/comparison, mode-table construction and register packing. Complete machine/RAM/FPU/banked/special state, call boundaries and software peripheral/input state match independent instructions. Existing native register-read adapter remains unchanged. No service return is fabricated.",
+      "limitations": [
+        "Direct renderer/global/stack/string fixtures and raw status samples are explicit inputs. Full coverage is evaluated per body; generated proposals are not automatically recovered credit.",
+        "Software register writes are not a physical display, native presentation backend, rendered pixels, or verified requested FPS/resolutions/settings. Natural reset/startup, whole game and other ports remain unfinished.",
+        "Entry at 8c6526bc with immutable code/literals; no asynchronous register changes or branch into the function interior.",
+        "Called services may clobber R4 arbitrarily when returning. Non-returning calls cannot reach the later test.",
+        "One original configuration branch is proven unreachable by conservative original-code dataflow; it is not counted as dynamically executed.",
+        "The three larger timing constructors remain partial, despite their tested default/variant paths. They receive no recovery credit.",
+        "The test labeled unknown_callback selects the reserved configured firmware target with invalid read arguments; the real host disc service returns -8. This is a retained platform-error case, not an invented callback result.",
+        "Pending-word completion edge cases invoke the actual original memory-fill body as an explicitly configured direct callback fixture; natural callback installation is not claimed.",
+        "Native register writes establish software state only; no pixels, playable output, requested display settings or completed full renderer are established."
+      ]
     }
   },
   "milestones": [
@@ -138437,10 +138475,10 @@
     "report": "analysis/recovery_coverage_audit.json",
     "candidate_inventory": "analysis/unrecovered_function_candidates.tsv",
     "boundary_inventory": "analysis/unresolved_module_boundaries.json",
-    "registered_routines": 1302,
-    "registered_unique_module_address_pairs": 1299,
+    "registered_routines": 1308,
+    "registered_unique_module_address_pairs": 1305,
     "indexed_candidates_in_export_snapshots": 11411,
-    "registered_entries_matching_export_snapshots": 1191,
+    "registered_entries_matching_export_snapshots": 1197,
     "non_texture_binaries_without_function_index": 211,
     "registry_evidence_errors": 0,
     "stale_whole_source_hash_reports": 0,
@@ -145765,5 +145803,5 @@
   },
   "unverified_work": {},
   "unverified_drafts": {},
-  "recovered_buildable_routines": 1302
+  "recovered_buildable_routines": 1308
 }

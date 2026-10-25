@@ -8756,6 +8756,15 @@ foreach($taskScript in @('verify_movie_context.py','verify_movie_context_backend
  & $python (Join-Path $PSScriptRoot $taskScript)
  if($LASTEXITCODE -ne 0){throw "MOVIE context qualification failed: $taskScript"}
 }
+foreach($taskScript in @('recover_movie_render_config.py','connect_movie_render_config.py','inventory_movie_render_frontier.py')){
+ & $python (Join-Path $PSScriptRoot $taskScript)
+ if($LASTEXITCODE -ne 0){throw "MOVIE renderer preparation failed: $taskScript"}
+}
+& (Join-Path $PSScriptRoot 'build_movie_render_config.ps1') -Workspace $Workspace
+foreach($taskScript in @('verify_movie_render_config.py','verify_movie_render_edges.py','verify_movie_render_static.py','verify_movie_render_config_prefix.py','qualify_movie_render_config.py','register_movie_render_config.py','verify_movie_render_config_workflow.py')){
+ & $python (Join-Path $PSScriptRoot $taskScript)
+ if($LASTEXITCODE -ne 0){throw "MOVIE renderer qualification failed: $taskScript"}
+}
 & $python (Join-Path $PSScriptRoot 'inventory_draw_geometry_frontier.py')
 if($LASTEXITCODE -ne 0){throw 'Post-view geometry inventory failed'}
 foreach($inventory in @('inventory_draw_primitive_frontier.py','inventory_draw_primitive_cpu.py','inventory_draw_continuation_frontier.py','inventory_draw_angle_frontier.py','inventory_draw_post_angle_frontier.py','inventory_draw_post_blend_frontier.py')){
