@@ -1,0 +1,114 @@
+Sonic Adventure Dreamcast Rev A - original diagnostics and format integration
+2026-10-25 | Overall estimate 10% weighted milestones, not recovered-code coverage.
+
+Two new complete own diagnostic wrappers qualify: 8c65a2fc (33 rows) and
+8c65a33e (16 rows). Forty-five of their 49 rows and nine of ten branch outcomes
+execute; four logger rows/one outcome are proven unreachable under its valid
+four-byte-aligned stack ABI. All original source rows remain present. Registry:
+1376 entries / 1373 unique module-address pairs. Whole-game count is unknown.
+
+The original logger checks its actual callback and enable globals, formats to
+guest RAM when enabled, then invokes the callback. The separate output wrapper
+performs the same gate and original call. Disabled paths execute their original
+instructions and return zero. Unknown callbacks/callees remain explicit stops.
+Direct callback fixtures invoke existing retail code at 8c5ff2cc; no callback,
+formatter or driver return is supplied. These fixtures are not physical output.
+
+The 177-source DLL statically connects 15 byte-checked adapters / 2805 rows plus
+new native CPU support. Eight already registered formatting/string/copy/query
+bodies retain canonical names, source, verification and status, with zero extra
+credit. Complete integrated own-body scope is 500 rows / 142 outcomes: 496 rows
+and 141 outcomes execute, plus the logger's four-row/one-outcome ABI proof.
+Remaining large formatter/floating/decimal/rounding bodies are partial; no new
+routine credit is assigned to them. Native production executes static C; the
+original instruction decoder is confined to verification.
+
+Verification
+- 351 original/native comparisons pass: 333 normal returns, 15 missing-callee
+  stops, two actual FPU exception controls, and one isolated SDK context fault.
+  They include literal/string/integer format outputs, gated callbacks, stream
+  status/termination, copy directions/alignment/overlap, rounding and float-path
+  prefixes. Selected formatted outputs have independent literal checks.
+- 568 additional independent semantic checks compute output/query/copy/rounding/
+  append/callback effects. Their second RAM oracle excludes only 1024 bytes below
+  the initial SP; the primary original/native oracle checks every stack byte,
+  full CPU/FPU/special/banked state, software devices and ordered boundaries.
+- Original-instruction selection searches 5040 integer-format scenarios and
+  retains 25 cases that expand coverage; each then passes fresh full comparison.
+  Another 45 full comparisons / 225 checks preserve the default branch using an
+  explicit unsupported specifier with incoming R8 radix 8/10/16. This does not
+  claim normal callers use that specifier. Combined integer body: 257/257 rows
+  and 88/88 branch outcomes, with zero duplicate canonical credit.
+- The aligned logger proof checks exact retail opcodes and control-flow entry,
+  derives R0 = entry_SP + 4 before TST with mask 3, and executes 64 concrete
+  original prefixes. It assumes valid aligned stack, immutable code and no
+  asynchronous register/stack corruption; unaligned/physical trap behavior is
+  outside this qualified ABI.
+- New CPU conversion/comparison passes 52815 backend cases: 28032 FCNVSD,
+  14400 double comparisons, 10368 retained single comparisons and 15 contract
+  rejection checks. Independent Python struct-based finite results and explicit
+  exceptional rules check every FPU byte and SR. Includes FR/SZ, signed zeros,
+  NaN classes, denormals, sticky flags/cause reset and preserved results/T on
+  exceptions. Return 1 records modeled exception state, without physical trap
+  vector delivery. PR=0 denormal comparisons with DN=0 retain the previous
+  explicit unsupported contract. This is CPU support, not a game-routine credit.
+  Primary specification: Renesas SH-4 Software Manual Rev.6.00, 9.27 and 9.29:
+  https://www.renesas.com/us/en/node/735531
+- Two uninterrupted original 8c0546c0 caller profiles / 31 checks pass in the new
+  DLL. Both retain all 2097152 native writes clearing eight MiB of video memory,
+  and advance to missing original request-state getter 8c65a568.
+- The newly executed cold-filesystem comparison starts filesystem/interface
+  roots at zero. Original producers construct root 8c6946e0, flag 1; perform
+  72 initialization reads plus 17 driver reads (89 total); and load 33408 exact
+  original MASARU.DRV bytes at 0cd00000. It matches 57706
+  ordinary service boundaries and 1414954 original ordinary steps;
+  the full clear loop retains its separately documented decoder scope.
+  Loaded/expected SHA256:
+  5ab700a241e5d5e164c104a76555b35002a6a84370aea17bf8c34d713cdc2cb9
+  This is a new comparison, not borrowed earlier cold evidence.
+- The warm prepared-filesystem control matches 1515
+  boundaries, performs zero disc reads and keeps its actual missing-file behavior.
+  Driver code is loaded, not executed or decompiled. The direct isolated SDK
+  fixture lacks its earlier record-database producer and keeps its real -3 stop
+  at 8c10ec58; the uninterrupted caller provides that earlier state itself.
+- 349 earlier direct controls plus the earlier warm full-clear startup replay:
+  350 regression comparisons / 21302 saved-record checks. Three prior caller
+  prefixes and two constructor controls intentionally advance; new prefix and
+  direct evidence describe their actual later stops. Total comparisons: 748,
+  plus the separate CPU backend cases and 64 invariant prefixes.
+- Focused DLL compilation/linking and all 177 sources' strict unbounded compiler
+  checks pass. The workflow verifies generator/proof/selection/registration
+  reproducibility and all prior published source/proof/build bytes and canonical
+  fields against commit 92cbbcf5627c. The full accumulated suite is not rerun.
+
+Limits
+Console/flash/disc/timing/status behavior remains explicit software-host policy,
+not BIOS decompilation or physical hardware measurement. Clear compression keeps
+its established fingerprints/invariants, not a cryptographic collision-proof
+trace claim. Natural reset, complete startup, graphics/gameplay and requested
+PC/Android/3DS/N64/PlayStation ports/settings remain unfinished. Public builds are
+incomplete research libraries, with no playable EXE. Retail assets, game inputs,
+toolchains, caches and credentials are excluded from publication.
+
+Reproduction and evidence
+Matching local Rev A inputs and documented compiler/runtime are required.
+python -B outputs/sonic-adventure/recover_movie_diagnostics.py
+python -B outputs/sonic-adventure/connect_movie_diagnostics.py
+powershell -File outputs/sonic-adventure/build_movie_diagnostics.ps1
+python -B outputs/sonic-adventure/verify_sh4_widen_compare.py
+python -B outputs/sonic-adventure/select_movie_diagnostics_integer_cases.py
+python -B outputs/sonic-adventure/verify_movie_diagnostics_semantics.py
+python -B outputs/sonic-adventure/verify_movie_diagnostics_default_base.py
+python -B outputs/sonic-adventure/prove_movie_diagnostics_alignment.py
+python -B outputs/sonic-adventure/verify_movie_diagnostics_prefix.py
+python -B outputs/sonic-adventure/verify_movie_diagnostics_regression.py
+python -B outputs/sonic-adventure/inventory_movie_diagnostics_frontier.py
+python -B outputs/sonic-adventure/qualify_movie_diagnostics.py
+python -B outputs/sonic-adventure/register_movie_diagnostics.py
+python -B outputs/sonic-adventure/verify_movie_diagnostics_workflow.py
+analysis/movie_diagnostics_qualification.json links the focused reports and hashes.
+The cold comparison takes tens of minutes; retain its live process/handle.
+
+Next: recover original request-state getter 8c65a568 and actual dependencies;
+continue the still partial formatting/decimal/rounding paths. Keep Sol High.
+Goal active; overall estimate 10%.
