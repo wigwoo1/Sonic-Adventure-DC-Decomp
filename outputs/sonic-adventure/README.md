@@ -6,6 +6,10 @@ This workspace is a continuing reverse-engineering project for the user's Dreamc
 
 Public repository: [wigwoo1/Sonic-Adventure-DC-Decomp](https://github.com/wigwoo1/Sonic-Adventure-DC-Decomp). See `GITHUB_PUBLISHING.txt` for source snapshots, research-build prereleases, exclusions and the daily 18:00 America/Indianapolis update check. Builds are test libraries, not a playable game.
 
+## Latest verified milestone
+
+Ten original renderer startup helpers qualify (934 instruction rows / 50 branch outcomes), with seven older helpers reused without duplicate credit. The new 164-source research DLL passes 90 full-state comparisons, 337 independent checks, 98 platform API checks and six retained startup controls. Driver/reset/VRAM-clear parents remain partial; the two-million-call clear has an explicit research limit. See `MOVIE_DRIVER.txt` and `analysis/movie_driver_qualification.json`. Overall estimate stays **10%**.
+
 ## Project files
 
 - `source/` contains recovered C and support code.

@@ -1,5 +1,19 @@
 Sonic Adventure Dreamcast Rev A - source access and handoff
 
+Latest update (2026-10-24): renderer startup dependencies
+Ten new original helpers qualify: 934 rows / 50 outcomes in movie_driver.dll
+(164 sources). Ninety full-state comparisons, 337 independent checks, 98 bus API
+checks and six retained startup profiles / 120 checks pass. Seven older routines
+are reused without duplicate credit. Registry: 1331 entries / 1328 unique pairs.
+Driver, reset, memory-manager and clear paths remain partial. The original
+2,097,152-call VRAM clear and hardware-failure self-loop have explicit research
+stops only under SA_BOUND_RETAIL_STALLS; normal source retains the original
+loops. Both early-caller profiles create heap and library via real code before
+the clear limit; one direct driver profile reaches unknown callback 8c000000.
+Read MOVIE_DRIVER.txt and analysis/movie_driver_qualification.json. Next: verify
+the full clear efficiently, then close its callers and trace the callback producer.
+Keep Sol High. Overall estimate 10%, goal active, playable output unfinished.
+
 Latest update (2026-10-24): original early platform/heap caller
 Seven new platform/vector/cache bodies qualify: 337 rows / 26 outcomes in the
 162-source movie_startup.dll. Sixty direct full-state comparisons / 136 checks

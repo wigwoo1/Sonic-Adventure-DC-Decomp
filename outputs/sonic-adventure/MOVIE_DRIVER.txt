@@ -1,0 +1,94 @@
+Sonic Adventure Dreamcast Rev A - original renderer startup dependencies
+
+Whole-project estimate: 10% weighted milestones, not recovered-code coverage.
+Goal active. This is an incomplete research DLL, not a playable PC port.
+
+Completed milestone
+Ten new original helpers qualify: 934 instruction rows / 50 conditional outcomes.
+8c6045b4  synchronization and transfer-channel enable restoration (92 rows)
+8c6510a4  renderer library initialization, including cold root creation (264)
+8c641160  original callback/default table setup (40)
+8c66120c  state/constant table initialization (48)
+8c665a00  original register lookup-table setup (42)
+8c666706  frame-memory layout configuration (244)
+8c653640  vector-base-relative handler and register setup (38)
+8c663080  linked descriptor/pool reset (80)
+8c650aa0  DMA/register and two-bank descriptor setup (56)
+8c665e00  indexed allocation-size calculation (30)
+
+Seven existing bodies receive complete-state adapters with zero duplicate credit:
+8c6045a8, 8c64241a, 8c653440, 8c6666c0, 8c651520, 8c664aec, 8c665440.
+Their canonical source, proof, name and status fields remain unchanged. Registry:
+1331 entries / 1328 unique module-address pairs; no exhaustive game total known.
+
+Build and verification
+The 164-source movie_driver.dll compiles with Clang -O2 -Wall -Wextra -Werror,
+without the C runtime. Ninety original-instruction/native comparisons pass:
+49 normal returns, five reached-memory faults, five missing-service/platform
+stops and 31 explicit research/privilege/input stops. There are 337 independent
+semantic checks, 98 bus API checks and six retained startup profiles / 120 checks.
+Comparisons retain complete 16 MiB RAM, CPU, both FPU banks, special/banked state,
+ordered boundaries, software registers, VRAM and finite input cursors. Coverage
+is reported separately for each body; proposals are not automatic recovery.
+
+The raw normal-IRQ-status stream is a borrowed finite array of 32-bit words.
+Each valid read consumes one observation, exposing that last status. Writes keep
+the old write-one-to-clear acknowledgement. Empty/exhausted reads return host
+-4 before changing cursor, last status, output or trace. Unconfigured reads keep
+the old stored-status policy. Physical/P1/P2 aliases and rejected widths are
+checked. No completion event or interrupt delivery is invented.
+
+DMA operation register ffa00040 has explicit software word storage, with trace
+29 reads / 30 writes. It does not execute DMA or reproduce physical hardware.
+Raw PVR ID/revision observations, FIFO/scan/clock samples, VBR/runtime state and
+existing host fixtures are declared inputs. The original clock routing survives.
+
+Unfinished paths and research limits
+Six bodies remain partial, with zero recovery credit in this milestone:
+8c604702 driver: 233/255 instruction rows, six missing branch outcomes.
+8c65262c mode selection: 24/28 rows; reset has not completed.
+8c651384 renderer reset: 8/53 rows before the clear's research stop.
+8c6656e2 register initialization/VRAM clear: 225/234 rows.
+8c663140 memory-manager construction: 88/159 rows.
+8c664ac0 pool allocation: all 22 rows but one untested branch outcome.
+
+The original clear invokes helper 8c65253e 2,097,152 times, writing eight MiB.
+Full per-boundary state hashing makes this prohibitively expensive for the
+current verifier. With SA_BOUND_RETAIL_STALLS, the research DLL stops at
+8c665998 before its second continued loop test, after two actual word copies.
+The original hardware-failure infinite loop 8c665968 similarly stops on its
+second visit. Without that macro both original loops remain unchanged. Syntax
+checking covers all 164 sources without the macro. These limits do not establish
+completion of the clear or its callers and must not become port behavior.
+
+Both early-caller profiles execute real original code that creates heap root
+8c88ef1c and renderer root 8c8a2d54, then stop at the bounded clear. The original
+early caller 8c010180 stays partial; no later startup stage is silently chained.
+Six separate late-boot controls retain their genuine zero heap and prior faults
+8c6021fe / 8c10d4bc. They do not claim to run completed early startup.
+
+Driver R4 is mode/size flags, R5 is pixel format, R6 the additional configuration
+word, R7 extra input. One invalid-mode profile follows the real mode error return
+and subsequently stops at the actual unresolved indirect callback 8c000000.
+No callback result is substituted. Full natural boot, rendered pixels, gameplay,
+requested FPS/8K/display settings, SUPIR textures and other ports remain pending.
+
+Reproduce from the workspace root using the bundled Python (or adapt paths):
+python -B outputs/sonic-adventure/recover_movie_driver.py
+python -B outputs/sonic-adventure/connect_movie_driver.py
+powershell -File outputs/sonic-adventure/build_movie_driver.ps1
+python -B outputs/sonic-adventure/verify_movie_driver.py
+python -B outputs/sonic-adventure/verify_driver_signal_bus.py
+python -B outputs/sonic-adventure/verify_movie_driver_prefix.py
+python -B outputs/sonic-adventure/qualify_movie_driver.py
+python -B outputs/sonic-adventure/register_movie_driver.py
+python -B outputs/sonic-adventure/verify_movie_driver_workflow.py
+Matching local retail inputs are required; they are excluded from publication.
+
+Next milestone: verify the full original clear efficiently, keeping its exact
+loop/helper semantics and clear evidence of any verifier acceleration, then
+close reset/mode/driver paths and trace the unresolved callback's producer.
+Keep Sol High for this reverse-engineering work. Luna Low is suitable for routine
+publication checks after the implementation and qualification are stable.
+
+Qualified DLL SHA256: 9d620eb38fe4f3a8f4f6625075e62c0db443b4eb0114a5b5e284b2697c0dfd63
