@@ -1,5 +1,22 @@
 Sonic Adventure Dreamcast Rev A - source access and handoff
 
+Latest update (2026-10-24): original early platform/heap caller
+Seven new platform/vector/cache bodies qualify: 337 rows / 26 outcomes in the
+162-source movie_startup.dll. Sixty direct full-state comparisons / 136 checks
+and register/cache storage tests pass, including retained raw-clock routing.
+The real early caller 8c010180 executes 40/109 rows and calls the original heap
+initializer with 8cf00000 / one MiB, creating root 8c88ef1c before reaching
+actual missing driver 8c604702. No heap or service result is inserted. The
+caller stays partial and receives no additional credit; its canonical source/
+proof remain unchanged. Two original stubs, clock regression and P2 aliases
+receive zero duplicate credit. Registry: 1321 entries / 1318 unique pairs.
+Retained late-boot controls remain separate and keep their real null-heap/
+context faults. Original source/proof/API/older-build bytes are preserved.
+Read MOVIE_STARTUP.txt for software device policies, alias/vector details,
+verification and commands. Next driver export has 255 unqualified rows. Keep
+Sol High for driver/FPU/flag initialization. Overall estimate 10%, goal active;
+natural full boot and playable output remain unfinished.
+
 Latest update (2026-10-24): original circular-list heap routines
 Three new bodies qualify: allocator 8c6021d6, initializer 8c602128 and release/
 coalescing 8c602288, totaling 178 rows / 22 outcomes. The existing two-row entry

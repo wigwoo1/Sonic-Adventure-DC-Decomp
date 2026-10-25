@@ -1,0 +1,133 @@
+Sonic Adventure Dreamcast Rev A - original early platform and heap caller
+Whole-project estimate: 10% weighted milestones, not recovered-code coverage.
+Incomplete research libraries; natural full boot and playable output unfinished.
+
+Result (2026-10-24)
+Seven newly qualified complete original bodies: 337 rows / 26 conditional outcomes.
+  8c6024d0: platform startup dispatcher, 21 rows.
+  8c602570: initial register table, 20 rows / two outcomes.
+  8c645de0: vector/template setup, 158 rows / sixteen outcomes.
+  8c6025e8: timer/control stores, 19 rows.
+  8c5fc81c: privileged cache helper and uncached tail jump, 18 rows.
+  8c5fc848: cache-array clearing and return tail, 58 rows / eight outcomes.
+  8c5fc06c: cache-control setup including shared return tail, 43 rows.
+Two already registered empty bodies, 8c02e720 and 8c645f80, are reused without
+new credit. The existing original clock leaf is also checked in two regressions.
+P2 entries ac5fc06c and ac5fc848 share the canonical bodies; zero duplicate
+credit. Registry becomes 1321 entries / 1318 unique module/address pairs.
+
+New 162-source movie_startup.dll SHA256:
+abb3a6cd7ec851efa31334db638a05e6c654075b3a775ab9079273f4c60c94ec
+Original source/proof/name fields, APIs and older build bytes remain intact.
+New full-state versions and the bridge reside in separate source files.
+
+Original caller now creates its heap
+The existing early caller 8c010180 runs 40/109 original instruction rows in the
+new complete-state connection. Its real preceding services initialize register
+storage, vector templates and cache control. The original caller then computes
+the heap arguments and calls the original 8c602128, which invokes real release
+8c602288. Both tested caller profiles produce:
+  heap start 8cf00000, size 00100000 (one MiB), root 8c88ef1c.
+No host expression substitutes for these instructions; no heap root, free-list
+node, allocation pointer or game-service return is inserted.
+The caller then reaches the actual unconnected driver entry 8c604702 with
+R4..R7 = 0, 0, 0, 0000000f in these explicit input profiles, and stops -2.
+Those registers are observed original effects, not assumed driver semantics.
+
+The caller remains partial: 69 rows and all ten conditional outcomes are still
+unexecuted. Its original canonical startup_boot.c/proof remain unchanged; the
+new partial integration receives no additional parent recovery credit. The
+new driver frontier is exported read-only (255 rows), not recovered credit.
+
+Software platform policy
+startup_platform_bus.c adds explicit storage for nine system/timer registers
+with their reached byte/word/long widths, new word slots in the 005f6800..7cff
+window, and 512 cache-array tag words at f4000000 with 32-byte spacing. Only
+the newly stored word slots gain physical/P1/P2 aliases. Existing DMA, IRQ
+status/mask, context, CCR and raw input routes retain their earlier handlers.
+This storage does not deliver interrupts, progress DMA, generate timer ticks,
+execute exception vectors, model dirty cache lines/MMU timing or render pixels.
+
+Counter-reset writes are stored. Guest clock reads continue consuming the
+existing explicit raw observation stream and do not restart it. The standalone
+storage API exposes the stored counter; the host clock-read producer supplies
+guest timer observations, as in the previous verification pipeline. The first
+regression attempt exposed a reference adapter that shadowed this producer;
+it was corrected before qualification. Two actual original-clock comparisons
+and five routing checks now verify stream consumption with separate reset state.
+
+Cache P2 aliases move instruction PCs, labels and PC-relative ADDRESS operands.
+Loaded literal DATA stays original, including the cached 8c5fc81c helper pointer
+called from uncached cache setup. Tests verify that call boundary explicitly.
+The separately indexed five-row return tail at 8c5fc0b8 is combined into the
+cache-setup listing without rewriting either historical Ghidra export. Shared
+tail bytes and alias executions do not create extra recovery credit.
+
+Original vector setup first patches two handler-pointer fields in its source
+templates, then copies them to VBR+100/400/600. The independent copy check uses
+those original patches. The original cache-purge bases are separate literals:
+VBR+400/1000/1800, each with the following 32-byte line. These addresses are
+preserved exactly rather than inferred from copy destinations. Cache-purge
+operations retain the existing coherent-RAM bus policy.
+
+Evidence
+analysis/movie_startup_verification.json: 60 full-state comparisons / 136
+independent checks pass: 44 normal returns, eight -2 stops (two real missing
+driver stops and six absent-bus cases), five CPU privilege faults (-4), and
+three invalid-stack faults (-3). VBR, selector/argument, FPU mode, CCR layout
+bit, cache entry alias, stored register/tag patterns and fault inputs vary.
+All seven new bodies and both empty bodies have complete row/outcome coverage;
+aliases also execute completely. Of 551 integrated rows including aliases,
+482 execute; the remaining 69 belong only to the partial caller. Canonical
+physical scope is 450 rows. No unexecuted branch is hidden as completed code.
+
+analysis/startup_platform_bus_verification.json: all 1289 new word slots pass
+physical/P1/P2 write/read checks, plus all nine width-specific system registers
+and all 512 cache-tag slots. There are 4388 successful writes / 12122 reads,
+64 rejected-access checks, four retained-route cases / eleven checks, two trace
+capacity checks (4096 kept / 12446 dropped events) and five clock-routing checks.
+These API checks validate storage and routing, not physical device behavior.
+
+All guest RAM/CPU/FPU/FPUL, banked/special registers, MACL/MACH, GBR/VBR,
+ordered boundaries, software registers/cache arrays and prior transport/input
+state compare against independent original instructions. Reset/reference
+fixtures are explicit; failed calls retain actual earlier instruction effects.
+
+analysis/movie_startup_prefix_verification.json retains six late-boot controls /
+120 checks. Four device-initialized controls still have their actual zero heap
+and fault at 8c6021fe; both cold controls retain 8c10d4bc. The unfinished early
+caller is not silently chained past its driver stop into those controls. The
+original MOVIE load/hash, 91 reads, ownership, module/cleanup stores, CCR and
+raw clock/scan checks remain. Outer boot stays partial at 33/51 rows, zero
+additional parent credit. Early-caller heap creation and these late controls
+are distinct, explicitly identified entry profiles.
+
+Preservation and reproduction
+The new focused workflow reproduces generated sources/listings/metadata,
+checks registration idempotence/current hashes, parses Python/PowerShell,
+strictly checks all 162 unbounded C sources, and verifies earlier source/proof,
+canonical registry fields and builds against baseline
+01dff4d62e99f2fdf229c69cfb59c36c1fdbfd31. The new DLL compiled and linked.
+The full accumulated project suite was not rerun. Historical aggregate recipes
+stay intact because earlier proofs pin their bytes; run this focused follow-up.
+
+From the workspace root (matching retail inputs required locally):
+& ./outputs/sonic-adventure/ghidra/export_movie_startup_platform.ps1 -Workspace (Get-Location).Path
+& ./outputs/sonic-adventure/ghidra/export_movie_startup_cache.ps1 -Workspace (Get-Location).Path
+& ./outputs/sonic-adventure/ghidra/export_movie_startup_driver.ps1 -Workspace (Get-Location).Path
+python -B outputs/sonic-adventure/recover_movie_startup.py
+python -B outputs/sonic-adventure/connect_movie_startup.py
+& ./outputs/sonic-adventure/build_movie_startup.ps1 -Workspace (Get-Location).Path
+python -B outputs/sonic-adventure/verify_movie_startup.py
+python -B outputs/sonic-adventure/verify_startup_platform_bus.py
+python -B outputs/sonic-adventure/verify_movie_startup_prefix.py
+python -B outputs/sonic-adventure/inventory_movie_startup_frontier.py
+python -B outputs/sonic-adventure/qualify_movie_startup.py
+python -B outputs/sonic-adventure/register_movie_startup.py
+python -B outputs/sonic-adventure/verify_movie_startup_workflow.py
+
+Next: original driver entry 8c604702 and its reached dependencies. Keep Sol High
+for its original FPU/flag/global setup and remaining initialization. Goal active;
+overall estimate stays 10%. Requested FPS/resolutions/settings, SUPIR textures,
+texture Off with vertex/material colors, Android/stereoscopic 3DS and later
+demakes remain pending port features.
