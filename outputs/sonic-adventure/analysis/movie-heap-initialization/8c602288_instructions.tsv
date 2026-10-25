@@ -1,0 +1,78 @@
+address	length	bytes	instruction	flows
+8c602288	2	0200	stc SR,r0	
+8c60228a	2	7e93	mov.w 0x8c60238a,r3	
+8c60228c	2	0940	shlr2 r0	
+8c60228e	2	0940	shlr2 r0	
+8c602290	2	0fc9	and #0xf,r0	
+8c602292	2	0367	mov r0,r7	
+8c602294	2	0200	stc SR,r0	
+8c602296	2	3920	and r3,r0	
+8c602298	2	f0cb	or #0xf0,r0	
+8c60229a	2	0e40	ldc r0,SR	
+8c60229c	2	4824	tst r4,r4	
+8c60229e	2	3589	bt 0x8c60230c	8c60230c 
+8c6022a0	2	3ad3	mov.l 0x8c60238c,r3	
+8c6022a2	2	4365	mov r4,r5	
+8c6022a4	2	e075	add #-0x20,r5	
+8c6022a6	2	08a0	bra 0x8c6022ba	8c6022ba 
+8c6022a8	2	3264	_mov.l @r3,r4	
+8c6022aa	2	4266	mov.l @r4,r6	
+8c6022ac	2	6234	cmp/hs r6,r4	
+8c6022ae	2	038b	bf 0x8c6022b8	8c6022b8 
+8c6022b0	2	4635	cmp/hi r4,r5	
+8c6022b2	2	0789	bt 0x8c6022c4	8c6022c4 
+8c6022b4	2	6235	cmp/hs r6,r5	
+8c6022b6	2	058b	bf 0x8c6022c4	8c6022c4 
+8c6022b8	2	4264	mov.l @r4,r4	
+8c6022ba	2	4635	cmp/hi r4,r5	
+8c6022bc	2	f58b	bf 0x8c6022aa	8c6022aa 
+8c6022be	2	4262	mov.l @r4,r2	
+8c6022c0	2	2235	cmp/hs r2,r5	
+8c6022c2	2	f289	bt 0x8c6022aa	8c6022aa 
+8c6022c4	2	5151	mov.l @(0x4,r5),r1	
+8c6022c6	2	4263	mov.l @r4,r3	
+8c6022c8	2	0841	shll2 r1	
+8c6022ca	2	0841	shll2 r1	
+8c6022cc	2	0041	shll r1	
+8c6022ce	2	5c31	add r5,r1	
+8c6022d0	2	3031	cmp/eq r3,r1	
+8c6022d2	2	088b	bf 0x8c6022e6	8c6022e6 
+8c6022d4	2	4261	mov.l @r4,r1	
+8c6022d6	2	5152	mov.l @(0x4,r5),r2	
+8c6022d8	2	1153	mov.l @(0x4,r1),r3	
+8c6022da	2	3c32	add r3,r2	
+8c6022dc	2	2115	mov.l r2,@(0x4,r5)	
+8c6022de	2	4261	mov.l @r4,r1	
+8c6022e0	2	1263	mov.l @r1,r3	
+8c6022e2	2	02a0	bra 0x8c6022ea	8c6022ea 
+8c6022e4	2	3225	_mov.l r3,@r5	
+8c6022e6	2	4261	mov.l @r4,r1	
+8c6022e8	2	1225	mov.l r1,@r5	
+8c6022ea	2	4153	mov.l @(0x4,r4),r3	
+8c6022ec	2	0843	shll2 r3	
+8c6022ee	2	0843	shll2 r3	
+8c6022f0	2	0043	shll r3	
+8c6022f2	2	4c33	add r4,r3	
+8c6022f4	2	5033	cmp/eq r5,r3	
+8c6022f6	2	068b	bf 0x8c602306	8c602306 
+8c6022f8	2	4152	mov.l @(0x4,r4),r2	
+8c6022fa	2	5153	mov.l @(0x4,r5),r3	
+8c6022fc	2	3c32	add r3,r2	
+8c6022fe	2	2114	mov.l r2,@(0x4,r4)	
+8c602300	2	5261	mov.l @r5,r1	
+8c602302	2	01a0	bra 0x8c602308	8c602308 
+8c602304	2	1224	_mov.l r1,@r4	
+8c602306	2	5224	mov.l r5,@r4	
+8c602308	2	20d2	mov.l 0x8c60238c,r2	
+8c60230a	2	4222	mov.l r4,@r2	
+8c60230c	2	0203	stc SR,r3	
+8c60230e	2	7d60	extu.w r7,r0	
+8c602310	2	3b92	mov.w 0x8c60238a,r2	
+8c602312	2	0fc9	and #0xf,r0	
+8c602314	2	0840	shll2 r0	
+8c602316	2	2923	and r2,r3	
+8c602318	2	0840	shll2 r0	
+8c60231a	2	3b20	or r3,r0	
+8c60231c	2	0e40	ldc r0,SR	
+8c60231e	2	0b00	rts	
+8c602320	2	0900	_nop	

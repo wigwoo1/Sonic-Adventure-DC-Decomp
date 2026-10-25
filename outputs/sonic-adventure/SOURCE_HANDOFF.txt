@@ -1,5 +1,20 @@
 Sonic Adventure Dreamcast Rev A - source access and handoff
 
+Latest update (2026-10-24): original circular-list heap routines
+Three new bodies qualify: allocator 8c6021d6, initializer 8c602128 and release/
+coalescing 8c602288, totaling 178 rows / 22 outcomes. The existing two-row entry
+thunk is reused without duplicate credit in a new 160-source build. All 365
+direct full-state comparisons / 2362 independent checks and six startup
+profiles / 120 checks pass. Four initialized-device profiles execute allocation
+and stop at their actual null-heap read 8c6021fe; both cold controls keep the
+missing-context fault. No heap root or allocation result is inserted. The
+earlier original initialization caller 8c010180 and preceding services are
+exported for the next task. Registry: 1314 entries / 1311 unique pairs. Original
+source/proofs/canonical fields and older builds survive. Read MOVIE_HEAP.txt
+for direct fixtures, fault meanings, actual heap observation and reproduction.
+Full startup and playable output remain incomplete. Keep Sol High for original
+initialization/driver/cache dependencies. Overall estimate stays 10%, goal active.
+
 Latest update (2026-10-24): renderer callback setup and allocation frontier
 The 159-source movie_render_setup.dll connects four existing bodies: decrement
 helper and primary/index-five/index-eight callback setters. The shared original

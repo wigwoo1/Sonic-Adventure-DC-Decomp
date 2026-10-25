@@ -1,0 +1,118 @@
+Sonic Adventure Dreamcast Rev A - original circular-list heap recovery
+Whole-project estimate: 10% weighted milestones, not recovered-code coverage.
+Incomplete research libraries; no playable game or complete natural startup.
+
+Result (2026-10-24)
+Three newly qualified original bodies:
+  8c6021d6: allocator, 74 instruction rows / six conditional outcomes.
+  8c602128: heap initializer, 27 rows / no conditional outcomes.
+  8c602288: release and adjacent-block coalescing, 77 rows / sixteen outcomes.
+Total new credit: 178 rows / 22 outcomes. The already recovered two-row thunk
+8c6021d2 gains full-state native integration with zero duplicate credit. All
+180 integrated rows / 22 outcomes execute in comparisons. Registry becomes
+1314 entries / 1311 unique module/address pairs.
+
+The new 160-source movie_heap.dll compiles/links and retains previous renderer
+configuration, timing constructors, callback setup, context staging and software
+device/disc policies. DLL SHA256:
+87c142e80598e7b303c12426d916ad9d5276a93961d27025be15b381d1b7fdc9
+Older source/proof/DLL bytes and canonical thunk fields remain unchanged.
+
+What the original code does
+Allocation adds 31 to the request with 32-bit wrapping arithmetic, converts it
+to 32-byte units and adds a header unit. It searches the circular free list from
+the current cursor's successor. An exact match is unlinked; a larger block is
+trimmed at its end. The cursor is updated and the payload pointer is returned.
+A complete unsuccessful pass returns null. Interrupt-mask and stack/register
+effects remain original. The very-large-request wrapping behavior is preserved;
+this recovery does not introduce a different validated host allocation policy.
+
+The initializer aligns the supplied pool upward and size downward to 32 bytes,
+stores the pool/size globals, creates the fixed sentinel at 8c88ef1c, and invokes
+the actual original release routine to insert the pool. Release finds the
+address-ordered insertion point, joins an adjacent successor and/or predecessor,
+updates the circular links/cursor, and restores the interrupt mask. Releasing
+null follows its original no-op path. Native code does not substitute malloc,
+an allocation pointer, a release callback, or a successful result.
+
+Direct evidence
+analysis/movie_heap_verification.json: 238 full-state comparisons / 1624
+independent checks pass: 228 normal returns, eight memory/stack faults (-3),
+two privilege faults (-4). Tests cover exact/split/later-block allocation,
+wrapped cursors, empty/insufficient heaps, alignment boundaries, 32-bit request
+overflow, malformed root/link addresses, invalid stacks and unprivileged entry.
+Four retained-state allocation sequences account for 36 comparisons and check
+that successful allocations never overlap earlier live blocks.
+
+analysis/movie_heap_initialization_verification.json: 127 comparisons / 738
+checks pass: 122 normal returns, three memory/stack faults and two privilege
+faults. Initialization varies pool alignment, zero/small/unaligned size, SR and
+FPU mode. Release varies cursor position, isolated insertion, predecessor,
+successor or both-neighbor joins, insertion below/above existing blocks, empty
+lists, null payload, privilege and invalid-memory conditions. An independent
+interval model checks the resulting live free ranges and total free capacity.
+Unused/stale headers and all other memory still compare against original code.
+
+Combined: 365 direct comparisons / 2362 independent checks, with 350 normal
+returns, eleven memory/stack faults and four CPU privilege faults. Complete
+16-MiB RAM, GPR/SR/PR/PC, FPU/FPUL, banked/special registers, MACL/MACH,
+GBR/VBR, ordered boundaries and reached software platform/input state compare.
+Direct lists/pools are explicit fixtures; corrupted cycles that cannot return
+to the cursor are outside these finite fixtures. Fault comparisons retain all
+actual earlier instruction effects, including partial initializer writes. They
+do not imply whole-call rollback or physical CPU exception-vector delivery.
+
+Actual startup heap and remaining work
+analysis/movie_heap_state_probe.json observes the retained prior build paused
+at the original allocation boundary, with request 80752 and root word
+8c88ef3c equal to zero. No heap is written by the probe.
+
+analysis/movie_heap_prefix_verification.json: six startup profiles / 120 checks
+pass using the newly connected original allocator. Four initialized-device
+profiles now stop at the real null-heap access at 8c6021fe, after loading the
+zero cursor. Both cold controls retain the prior missing-device-context stop
+at 8c10d4bc. All profiles retain zero in the heap root. This is evidence of
+missing earlier initialization, not a successful full boot. The original 91
+sector reads, closed ownership, raw MOVIE hash, cleanup/module stores, CCR,
+raw status streams and complete comparison checks remain. Outer boot stays
+partial at 33/51 rows and receives no parent recovery credit.
+
+analysis/movie_heap_frontier.json pins the original earlier caller 8c010180
+(109 rows), its preceding service 8c6024d0 (21 rows) and the empty original
+8c02e720 body (two rows). Original call site 8c0101c2 invokes 8c602128 with a
+one-MiB pool after computing the address from original literals/live state:
+  ((load32(8c66c2f8) & e0000000) | 0d000000) + fff00000, modulo 2^32.
+It next calls driver setup 8c604702. These caller exports are not connected,
+registered or replaced by a host expression. No pool, heap root or allocation
+result has been injected into startup. Recovering this original initialization
+path and its preceding services is the next task.
+
+Preservation and reproduction
+analysis/movie_heap_workflow_verification.json checks generated-file byte
+reproducibility, registration idempotence/current proof hashes, Python and
+PowerShell syntax, all 160 C sources with strict unbounded compilation checks,
+and source/proof/canonical-registration/older-build preservation against public
+baseline ffb3e355e4bb55d58b164fc754f47e6c517d08ba. The new research DLL was
+compiled and tested; the full accumulated project suite was not rerun. The
+earlier aggregate recipe stays intact because historical proofs pin its bytes.
+Run this focused follow-up separately after the prior renderer workflows.
+
+From the workspace root (matching retail inputs required locally):
+& ./outputs/sonic-adventure/ghidra/export_movie_heap_initialization.ps1 -Workspace (Get-Location).Path
+& ./outputs/sonic-adventure/ghidra/export_movie_heap_caller.ps1 -Workspace (Get-Location).Path
+python -B outputs/sonic-adventure/recover_movie_heap.py
+python -B outputs/sonic-adventure/connect_movie_heap.py
+& ./outputs/sonic-adventure/build_movie_heap.ps1 -Workspace (Get-Location).Path
+python -B outputs/sonic-adventure/verify_movie_heap.py
+python -B outputs/sonic-adventure/verify_movie_heap_initialization.py
+python -B outputs/sonic-adventure/probe_movie_heap_state.py
+python -B outputs/sonic-adventure/verify_movie_heap_prefix.py
+python -B outputs/sonic-adventure/inventory_movie_heap_frontier.py
+python -B outputs/sonic-adventure/qualify_movie_heap.py
+python -B outputs/sonic-adventure/register_movie_heap.py
+python -B outputs/sonic-adventure/verify_movie_heap_workflow.py
+
+Keep Sol High for the original initialization/driver/cache dependencies. Goal
+active; overall estimate stays 10%. Requested 60/120/240 FPS, 8K, resolution and
+aspect controls, SUPIR HD textures and texture percentages/Off (vertex/material
+colors only), Android/stereoscopic 3DS and later demakes remain pending.
