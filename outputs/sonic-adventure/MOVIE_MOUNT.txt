@@ -1,0 +1,60 @@
+Sonic Adventure Dreamcast Rev A - initializer media branch evidence
+2026-10-25. Whole-project weighted estimate: approximately 10%.
+
+Thirteen direct original-instruction/native comparisons and 171 independent
+checks pass through the unchanged 171-source movie_disc_paths.dll. New evidence
+executes 54 previously uncovered initializer rows. Combined with the retained
+movie_disc_init_verification.json evidence, initializer 8c600038 reaches 463/479
+rows and 44/58 conditional outcomes, up from 409/479 and 28/58. It remains
+partial. No whole-body registration or additional routine credit is awarded.
+The registry remains 1365 entries / 1362 unique module-address pairs.
+
+The generated media contain thirty-two 2048-byte sectors with invented volume,
+path and directory records. Explicit volume FAD 45166 matches the existing seed.
+The header at 8c0080f0 is an explicit direct-call input: twelve name bytes,
+type byte and extra byte. It is not a claim that the original reset path has
+produced this header. The original initializer constructs its context and
+descriptor links; their expected offsets 1080/10d4 come from original literals.
+Native transport reads the actual generated files. No helper, firmware or lookup
+return is supplied by the verifier. Raw fixture binaries remain private; the
+generator and abstract field/record/hash metadata are public.
+
+Cases cover normal success, invalid volume signature, empty root, full root
+table, special directory selection, names terminated by space and twelve-byte
+names, missing/empty names, empty/full selected directories, and transport
+failures on each of three reads. Original guest errors -4, -5 and -12 remain
+observable. All cases return normally at the host level; that does not imply
+that the original guest operation succeeded. The original initialized flag is
+set only for successful fixtures. Independent assertions check guest results,
+read counts, stack/return preservation, context links, path metadata, selected
+header fields, directory count and initialization flags.
+
+Every comparison retains complete CPU/RAM/FPU/special/banked state, software
+device and disc-queue state, raw-input cursors and ordered service boundaries.
+The 171-source native C and earlier source/proof/build bytes are unchanged.
+The workflow regenerates all thirteen streams and their manifest byte-for-byte,
+checks evidence hashes and Python syntax, checks the 171 unbounded C sources
+with warnings treated as errors, and preserves the published source/proof/build
+baseline. It does not claim a newly compiled DLL or replay the accumulated suite.
+
+Sixteen initializer rows and fourteen outcomes remain unexecuted in the combined
+evidence. They belong to early request admission/status/error decisions before
+the new volume/directory work. Existing native command/status policy does not
+establish all original firmware outcomes. They are not proven unreachable, and
+no constant return or weakened coverage rule closes them. Next: inspect original
+request/drive-status producers and legal queue/descriptor states, then extend
+explicit inputs only where the original behavior and declared platform agree.
+
+This evidence does not establish a fresh reset-to-gameplay boot, physical drive
+behavior/timing, graphics output, or a playable port. All requested ports,
+frame-rate/resolution and texture/display settings remain unfinished.
+
+Reproduce with matching local retail inputs and the retained build/tool setup:
+python -B outputs/sonic-adventure/prepare_movie_mount_media.py
+python -B outputs/sonic-adventure/verify_movie_mount.py
+python -B outputs/sonic-adventure/verify_movie_mount_workflow.py
+
+Reports: analysis/movie_mount_media.json, movie_mount_verification.json and
+movie_mount_workflow_verification.json. Keep Sol High for the next original
+request/firmware boundary task. See GITHUB_PUBLISHING.txt for reviewed public
+source and incomplete research artifacts. No retail game assets are published.
