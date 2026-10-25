@@ -1,0 +1,97 @@
+Sonic Adventure Dreamcast Rev A - original driver control-word update
+2026-10-25 | Overall estimate 10% weighted milestones, not code coverage.
+
+Original 8c65a200 newly qualifies: all 52 instruction rows and both conditional
+outcomes execute. It saves the interrupt mask, masks interrupts, reads the
+declared control port a0702c00 through original 10d460 into guest RAM 8c8a3408,
+sets bit 0, writes the word through original 10d770, restores the interrupt mask
+and runs all 256 delay iterations. Both transfer services retain their canonical
+names, source, proof and status, with zero duplicate routine credit. Registry:
+1379 entries / 1376 unique module-address pairs. Whole-game routine count unknown.
+
+Verification
+- The 179-source research DLL compiles and links. Production runs static C from
+  byte-checked original instructions; the independent decoder is test-only.
+- 121 direct original/native comparisons / 1978 additional checks pass: 108
+  normal returns, six exhausted-input/privilege stops (-4), three missing or
+  rejected-bus stops (-2), and four address/rejected-bus controls (-3).
+- Normal cases cover every interrupt mask, both register banks, three FPU modes,
+  zero/all-one/high-bit/control words, optional helper interrupt handling and
+  wrapping counters. Complete original/native CPU, FPU, banked/special state,
+  all RAM bytes, software devices, immutable inputs and ordered boundaries match.
+- Independent checks verify the exact read/write arguments and device events,
+  control word OR 1, restored interrupt mask, return/link/stack registers, T=1,
+  and 256 actual loop tests. They also check exact shadow/channel/status/counter
+  effects and unchanged other RAM, except a declared 128-byte helper stack
+  window. The primary oracle still checks every stack byte. Channel tables and
+  initial device storage are explicit fixtures, not natural initialization.
+- 824 earlier direct cases and an earlier warm full-clear startup replay pass:
+  825 regression comparisons / 50277 saved-record checks. Prior bridge bytes
+  normalize exactly after removing only the new declaration/route/export names.
+  Three historical caller prefixes and two constructor controls intentionally
+  advance and retain the later evidence in the current pipeline.
+- Two newly executed uninterrupted caller comparisons / 39 additional checks
+  pass. Both start at original 8c0546c0 and call initialization with original
+  arguments [1,0,1,3]. They retain all 2097152 writes clearing eight MiB of VRAM,
+  including the established separate decoder/fingerprint scope.
+- Fresh cold execution starts filesystem/interface roots at zero, builds root
+  8c6946e0 with flag 1, performs 72 initialization reads plus 17 driver reads,
+  and loads 33408 byte-exact MASARU.DRV bytes at 0cd00000. It matches
+  57760 service boundaries / 1416632 ordinary
+  original steps, executes the control update, leaves the modeled control word
+  equal to 1, and reaches missing wrapper 8c65a8c8. Loaded/expected SHA256:
+  5ab700a241e5d5e164c104a76555b35002a6a84370aea17bf8c34d713cdc2cb9
+- The warm prepared-filesystem control matches 1549
+  boundaries, performs zero disc reads and retains its distinct missing-file
+  path to 8c64bddc. No driver or game-helper result is supplied. Driver bytes
+  are loaded, not executed or decompiled. Total current comparisons: 948.
+- Completed comparisons are captured before separate endpoint validation, with
+  source/DLL/input hashes. No guest checkpoint, skipped execution or supplied
+  callee return replaces original code. The fast native-only frontier pilot is
+  explicitly not original/native proof and is excluded from comparison counts.
+- The workflow reproduces seven generated artifacts and idempotent registration,
+  parses scripts and runs strict unbounded compiler checks on all 179 sources.
+  It preserves prior selected files except ten reviewed documentation/status/
+  audit/registry paths, all canonical fields and requirements against commit
+  5a31dbbe6b6a. All prior published build bytes remain unchanged.
+
+Limits and next work
+FIFO values, control storage, console/flash/disc/status/timing remain explicit
+software-host policies. They are not BIOS decompilation or measurements of
+physical G2/AICA arbitration, electrical timing, interrupt acceptance or audio.
+The delay is an instruction-counted loop, not a promise of physical time.
+Fault controls preserve partial state without physical exception-vector delivery.
+The full-clear proof retains its existing fingerprints/invariants, not a
+cryptographic collision-proof trace. Earlier CPU-backend tests and component
+lifecycle proofs are historical; the entire accumulated suite is not rerun.
+Natural reset, complete startup, larger partial formatting paths, graphics and
+gameplay remain unfinished. Requested playable PC/Android/3DS ports, stereoscopic
+3D, 60/120/240 FPS, up-to-8K resolutions, demakes, SUPIR HD textures and settings
+remain requirements. Texture Off must disable textures and use vertex colors.
+Public DLLs/import libraries are incomplete research artifacts with no playable
+EXE. Retail inputs/assets, toolchains, caches and credentials are excluded.
+
+Next prioritize original wrapper 8c65a8c8 and related driver-transfer dependencies
+as a family; retain warm 8c64bddc as a distinct control. Its read-only byte-checked
+draft has 18 rows and zero new recovery credit. Keep Sol High for this work.
+
+Reproduction (matching local Rev A inputs and documented compiler/runtime)
+python -B outputs/sonic-adventure/recover_movie_driver_control.py
+python -B outputs/sonic-adventure/connect_movie_driver_control.py
+powershell -File outputs/sonic-adventure/build_movie_driver_control.ps1
+python -B outputs/sonic-adventure/verify_movie_driver_control.py
+python -B outputs/sonic-adventure/verify_movie_driver_control_regression.py
+python -B outputs/sonic-adventure/capture_movie_driver_control_prefix.py
+python -B outputs/sonic-adventure/verify_movie_driver_control_prefix.py
+powershell -File outputs/sonic-adventure/ghidra/export_movie_driver_control_frontier.ps1
+python -B outputs/sonic-adventure/inventory_movie_driver_control_frontier.py
+python -B outputs/sonic-adventure/qualify_movie_driver_control.py
+python -B outputs/sonic-adventure/register_movie_driver_control.py
+python -B outputs/sonic-adventure/verify_movie_driver_control_workflow.py
+
+Recovery uses the already preserved listing/export in movie-request-fields-frontier;
+its old read-only export script can recreate it if absent. The capture runner
+writes private metadata captures under work/; the validator checks their hashes
+and endpoints. It takes tens of minutes; retain the running process/handle.
+analysis/movie_driver_control_qualification.json links focused reports and hashes.
+Goal active; overall estimate remains 10%.

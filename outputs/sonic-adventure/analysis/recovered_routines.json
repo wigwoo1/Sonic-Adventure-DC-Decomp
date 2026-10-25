@@ -174543,6 +174543,61 @@
         "guide": "MOVIE_RTC.txt",
         "adapter_source": "source/sa_movie_rtc_connected.c",
         "adapter_source_sha256": "52a5e3a4551f5c6e9b12938d29f2c150d982963ac20566fda19bbac2a99ca798"
+      },
+      "movie_driver_control_integration": {
+        "newly_registered_entries": 1,
+        "qualified_rows": 52,
+        "executed_rows": 52,
+        "qualified_conditional_outcomes": 2,
+        "executed_conditional_outcomes": 2,
+        "compiled_source_count": 179,
+        "direct_comparisons": 121,
+        "independent_direct_checks": 1978,
+        "prefix_comparisons": 2,
+        "independent_prefix_checks": 39,
+        "regression_comparisons": 825,
+        "regression_record_checks": 50277,
+        "total_comparisons": 948,
+        "new_cold_prefix_reexecuted": true,
+        "cold_prefix_steps": 1416632,
+        "cold_prefix_boundaries": 57760,
+        "cold_prefix_disc_reads": 89,
+        "masaru_bytes": 33408,
+        "masaru_sha256": "5ab700a241e5d5e164c104a76555b35002a6a84370aea17bf8c34d713cdc2cb9",
+        "masaru_native_load_address": "0x0cd00000",
+        "canonical_reuse": [
+          {
+            "address": "0x8c10d460",
+            "name": "sa_movie_hardware_8c10d460",
+            "source": "source/sa_movie_hardware.c",
+            "verification": "analysis/movie_hardware_qualification.json"
+          },
+          {
+            "address": "0x8c10d770",
+            "name": "sa_movie_hardware_8c10d770",
+            "source": "source/sa_movie_hardware.c",
+            "verification": "analysis/movie_hardware_qualification.json"
+          }
+        ],
+        "reused_additional_credit": 0,
+        "next_dependency": "0x8c65a8c8",
+        "next_dependencies": {
+          "cold_valid_driver": "0x8c65a8c8",
+          "warm_missing_file": "0x8c64bddc"
+        },
+        "dll_sha256": "cc3cedab13dfecfdc602aaeb2d2dc549cfa944aa423a0538b9ffda83c3befb0d",
+        "scope": "Complete original control-word read, bit-0 set and write, interrupt-mask save/restore and 256-iteration delay. Both existing transfer services execute their real code and receive zero duplicate recovery credit. Fresh valid-driver cold execution reaches original wrapper 65a8c8; warm missing-file control retains 64bddc.",
+        "limitations": [
+          "Direct initialized channel/context tables, finite FIFO samples and control-register storage are explicit software-host fixtures. No game helper return value is supplied. This does not model physical electrical timing, interrupt acceptance, audio or driver execution.",
+          "The independent RAM oracle checks exact shadow/channel/status/counter effects and unchanged remaining RAM outside a 128-byte callee stack window. The primary original/native oracle checks every stack byte and full CPU/FPU/special/banked/device/boundary state.",
+          "Fault controls preserve actual partial state but do not implement physical address or privilege exception-vector delivery. Valid SR modes are declared; the normal routine preserves the original interrupt mask and ends with T=1.",
+          "Both caller profiles execute newly in this build. Full eight-MiB clear writes retain the established decoder/fingerprint scope, not a cryptographic collision-proof trace. Loaded MASARU bytes are not executed or decompiled.",
+          "Earlier CPU-backend tests and older component lifecycle evidence remain historical; 824 earlier direct controls and one earlier warm full-clear startup replay run in the current DLL. The full accumulated historical suite is not claimed.",
+          "Natural reset, complete startup, graphics/gameplay, playable ports, requested FPS/resolutions, SUPIR and settings remain unfinished."
+        ],
+        "verification": "analysis/movie_driver_control_qualification.json",
+        "verification_sha256": "2f88f5075c84b6ffa19882771eb94712ffa529314630429a12cbe7791d47dc97",
+        "guide": "MOVIE_DRIVER_CONTROL.txt"
       }
     },
     {
@@ -174561,7 +174616,62 @@
         "Startup tables and prior software peripheral state remain fixtures. Native disc/coherent-cache/CCR behavior is declared platform policy. No natural boot, physical BIOS/devices, gameplay or playable port is implied.",
         "Four counter/stack-overlap cases cover reachable repeated-test branches under explicitly overlapping valid RAM; they do not represent normal initialized driver scheduling.",
         "The four continuous startup cases retain their missing-context fault. Direct initialized-table cases do not establish natural initialization or full MOVIE/boot recovery."
-      ]
+      ],
+      "movie_driver_control_integration": {
+        "newly_registered_entries": 1,
+        "qualified_rows": 52,
+        "executed_rows": 52,
+        "qualified_conditional_outcomes": 2,
+        "executed_conditional_outcomes": 2,
+        "compiled_source_count": 179,
+        "direct_comparisons": 121,
+        "independent_direct_checks": 1978,
+        "prefix_comparisons": 2,
+        "independent_prefix_checks": 39,
+        "regression_comparisons": 825,
+        "regression_record_checks": 50277,
+        "total_comparisons": 948,
+        "new_cold_prefix_reexecuted": true,
+        "cold_prefix_steps": 1416632,
+        "cold_prefix_boundaries": 57760,
+        "cold_prefix_disc_reads": 89,
+        "masaru_bytes": 33408,
+        "masaru_sha256": "5ab700a241e5d5e164c104a76555b35002a6a84370aea17bf8c34d713cdc2cb9",
+        "masaru_native_load_address": "0x0cd00000",
+        "canonical_reuse": [
+          {
+            "address": "0x8c10d460",
+            "name": "sa_movie_hardware_8c10d460",
+            "source": "source/sa_movie_hardware.c",
+            "verification": "analysis/movie_hardware_qualification.json"
+          },
+          {
+            "address": "0x8c10d770",
+            "name": "sa_movie_hardware_8c10d770",
+            "source": "source/sa_movie_hardware.c",
+            "verification": "analysis/movie_hardware_qualification.json"
+          }
+        ],
+        "reused_additional_credit": 0,
+        "next_dependency": "0x8c65a8c8",
+        "next_dependencies": {
+          "cold_valid_driver": "0x8c65a8c8",
+          "warm_missing_file": "0x8c64bddc"
+        },
+        "dll_sha256": "cc3cedab13dfecfdc602aaeb2d2dc549cfa944aa423a0538b9ffda83c3befb0d",
+        "scope": "Complete original control-word read, bit-0 set and write, interrupt-mask save/restore and 256-iteration delay. Both existing transfer services execute their real code and receive zero duplicate recovery credit. Fresh valid-driver cold execution reaches original wrapper 65a8c8; warm missing-file control retains 64bddc.",
+        "limitations": [
+          "Direct initialized channel/context tables, finite FIFO samples and control-register storage are explicit software-host fixtures. No game helper return value is supplied. This does not model physical electrical timing, interrupt acceptance, audio or driver execution.",
+          "The independent RAM oracle checks exact shadow/channel/status/counter effects and unchanged remaining RAM outside a 128-byte callee stack window. The primary original/native oracle checks every stack byte and full CPU/FPU/special/banked/device/boundary state.",
+          "Fault controls preserve actual partial state but do not implement physical address or privilege exception-vector delivery. Valid SR modes are declared; the normal routine preserves the original interrupt mask and ends with T=1.",
+          "Both caller profiles execute newly in this build. Full eight-MiB clear writes retain the established decoder/fingerprint scope, not a cryptographic collision-proof trace. Loaded MASARU bytes are not executed or decompiled.",
+          "Earlier CPU-backend tests and older component lifecycle evidence remain historical; 824 earlier direct controls and one earlier warm full-clear startup replay run in the current DLL. The full accumulated historical suite is not claimed.",
+          "Natural reset, complete startup, graphics/gameplay, playable ports, requested FPS/resolutions, SUPIR and settings remain unfinished."
+        ],
+        "verification": "analysis/movie_driver_control_qualification.json",
+        "verification_sha256": "2f88f5075c84b6ffa19882771eb94712ffa529314630429a12cbe7791d47dc97",
+        "guide": "MOVIE_DRIVER_CONTROL.txt"
+      }
     },
     {
       "module": "1ST_READ.BIN",
@@ -176035,6 +176145,24 @@
         "Driver bytes are loaded, not executed/decompiled. Full eight-MiB clear writes and its established decoder/fingerprint scope are retained; this is not a cryptographic collision-proof trace claim.",
         "The new DLL replays previous diagnostic/float controls; the earlier 52815 CPU-backend cases remain historical rather than newly rerun in this stage. Larger formatter/decimal/rounding paths remain partial.",
         "Console/flash/disc/timing/status remain explicit host policy. Natural reset, complete startup, graphics/gameplay and all requested playable ports/settings are unfinished."
+      ]
+    },
+    {
+      "module": "1ST_READ.BIN",
+      "name": "sa_movie_driver_control_8c65a200",
+      "address": "0x8c65a200",
+      "end_exclusive": "0x8c65a268",
+      "source": "source/sa_movie_driver_control.c",
+      "retail_span_sha256": "5bd9cf59ca5e733b6937295b55acc139c0b30be15c4af48793498040f0b2fb17",
+      "verification": "analysis/movie_driver_control_qualification.json",
+      "status": "Qualified complete own original driver-control body. Every own row and conditional outcome executes in full-state comparisons with independent control/channel/counter/interrupt/delay checks; full original/native stack bytes compare. Explicit input/ABI/platform preconditions apply.",
+      "limitations": [
+        "Direct initialized channel/context tables, finite FIFO samples and control-register storage are explicit software-host fixtures. No game helper return value is supplied. This does not model physical electrical timing, interrupt acceptance, audio or driver execution.",
+        "The independent RAM oracle checks exact shadow/channel/status/counter effects and unchanged remaining RAM outside a 128-byte callee stack window. The primary original/native oracle checks every stack byte and full CPU/FPU/special/banked/device/boundary state.",
+        "Fault controls preserve actual partial state but do not implement physical address or privilege exception-vector delivery. Valid SR modes are declared; the normal routine preserves the original interrupt mask and ends with T=1.",
+        "Both caller profiles execute newly in this build. Full eight-MiB clear writes retain the established decoder/fingerprint scope, not a cryptographic collision-proof trace. Loaded MASARU bytes are not executed or decompiled.",
+        "Earlier CPU-backend tests and older component lifecycle evidence remain historical; 824 earlier direct controls and one earlier warm full-clear startup replay run in the current DLL. The full accumulated historical suite is not claimed.",
+        "Natural reset, complete startup, graphics/gameplay, playable ports, requested FPS/resolutions, SUPIR and settings remain unfinished."
       ]
     }
   ],

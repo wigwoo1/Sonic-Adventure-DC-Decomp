@@ -129,7 +129,7 @@
     "prs_trailing_bytes": 0,
     "main_binary_indexed_functions": 3637,
     "main_binary_draft_pseudocode_functions": 3631,
-    "recovered_buildable_routines": 1378,
+    "recovered_buildable_routines": 1379,
     "recovered_routine_tests": "analysis/startup_verification.json",
     "recovered_routine_test_cases": 17,
     "main_binary_draft_export_failures": 6,
@@ -142461,6 +142461,61 @@
       "verification": "analysis/movie_request_fields_qualification.json",
       "verification_sha256": "09fb9eb08fd2016764b267560b6d3e00f33a8f8bef2e50231d505fee5dd82f34",
       "guide": "MOVIE_REQUEST_FIELDS.txt"
+    },
+    "movie_driver_control_integration": {
+      "newly_registered_entries": 1,
+      "qualified_rows": 52,
+      "executed_rows": 52,
+      "qualified_conditional_outcomes": 2,
+      "executed_conditional_outcomes": 2,
+      "compiled_source_count": 179,
+      "direct_comparisons": 121,
+      "independent_direct_checks": 1978,
+      "prefix_comparisons": 2,
+      "independent_prefix_checks": 39,
+      "regression_comparisons": 825,
+      "regression_record_checks": 50277,
+      "total_comparisons": 948,
+      "new_cold_prefix_reexecuted": true,
+      "cold_prefix_steps": 1416632,
+      "cold_prefix_boundaries": 57760,
+      "cold_prefix_disc_reads": 89,
+      "masaru_bytes": 33408,
+      "masaru_sha256": "5ab700a241e5d5e164c104a76555b35002a6a84370aea17bf8c34d713cdc2cb9",
+      "masaru_native_load_address": "0x0cd00000",
+      "canonical_reuse": [
+        {
+          "address": "0x8c10d460",
+          "name": "sa_movie_hardware_8c10d460",
+          "source": "source/sa_movie_hardware.c",
+          "verification": "analysis/movie_hardware_qualification.json"
+        },
+        {
+          "address": "0x8c10d770",
+          "name": "sa_movie_hardware_8c10d770",
+          "source": "source/sa_movie_hardware.c",
+          "verification": "analysis/movie_hardware_qualification.json"
+        }
+      ],
+      "reused_additional_credit": 0,
+      "next_dependency": "0x8c65a8c8",
+      "next_dependencies": {
+        "cold_valid_driver": "0x8c65a8c8",
+        "warm_missing_file": "0x8c64bddc"
+      },
+      "dll_sha256": "cc3cedab13dfecfdc602aaeb2d2dc549cfa944aa423a0538b9ffda83c3befb0d",
+      "scope": "Complete original control-word read, bit-0 set and write, interrupt-mask save/restore and 256-iteration delay. Both existing transfer services execute their real code and receive zero duplicate recovery credit. Fresh valid-driver cold execution reaches original wrapper 65a8c8; warm missing-file control retains 64bddc.",
+      "limitations": [
+        "Direct initialized channel/context tables, finite FIFO samples and control-register storage are explicit software-host fixtures. No game helper return value is supplied. This does not model physical electrical timing, interrupt acceptance, audio or driver execution.",
+        "The independent RAM oracle checks exact shadow/channel/status/counter effects and unchanged remaining RAM outside a 128-byte callee stack window. The primary original/native oracle checks every stack byte and full CPU/FPU/special/banked/device/boundary state.",
+        "Fault controls preserve actual partial state but do not implement physical address or privilege exception-vector delivery. Valid SR modes are declared; the normal routine preserves the original interrupt mask and ends with T=1.",
+        "Both caller profiles execute newly in this build. Full eight-MiB clear writes retain the established decoder/fingerprint scope, not a cryptographic collision-proof trace. Loaded MASARU bytes are not executed or decompiled.",
+        "Earlier CPU-backend tests and older component lifecycle evidence remain historical; 824 earlier direct controls and one earlier warm full-clear startup replay run in the current DLL. The full accumulated historical suite is not claimed.",
+        "Natural reset, complete startup, graphics/gameplay, playable ports, requested FPS/resolutions, SUPIR and settings remain unfinished."
+      ],
+      "verification": "analysis/movie_driver_control_qualification.json",
+      "verification_sha256": "2f88f5075c84b6ffa19882771eb94712ffa529314630429a12cbe7791d47dc97",
+      "guide": "MOVIE_DRIVER_CONTROL.txt"
     }
   },
   "milestones": [
@@ -142634,10 +142689,10 @@
     "report": "analysis/recovery_coverage_audit.json",
     "candidate_inventory": "analysis/unrecovered_function_candidates.tsv",
     "boundary_inventory": "analysis/unresolved_module_boundaries.json",
-    "registered_routines": 1378,
-    "registered_unique_module_address_pairs": 1375,
+    "registered_routines": 1379,
+    "registered_unique_module_address_pairs": 1376,
     "indexed_candidates_in_export_snapshots": 11411,
-    "registered_entries_matching_export_snapshots": 1264,
+    "registered_entries_matching_export_snapshots": 1265,
     "non_texture_binaries_without_function_index": 211,
     "registry_evidence_errors": 0,
     "stale_whole_source_hash_reports": 0,
@@ -149962,5 +150017,5 @@
   },
   "unverified_work": {},
   "unverified_drafts": {},
-  "recovered_buildable_routines": 1378
+  "recovered_buildable_routines": 1379
 }
