@@ -1,5 +1,22 @@
 Sonic Adventure Dreamcast Rev A - source access and handoff
 
+Latest update (2026-10-25): original cold filesystem initialization returns
+The cold earlier caller starts with explicit zero filesystem/interface roots,
+creates context 8c6946e0 through original code, performs 72 real track-sector
+reads, sets its initialized flag and returns guest zero. All 56648 ordinary
+service boundaries and full final state match; the full eight-MiB clear is
+retained. The old warm seed's filesystem at 8cc80000 is reported separately.
+Seven helpers qualify: 144 rows / ten outcomes in the 170-source build. All
+85 full-state cases / 259 independent checks plus 34 version-backend checks
+pass. The native backend is unchanged; a new versioned Python model corrects
+its prior seventeen-byte assignment to a sixteen-byte identity response.
+Older source/proof/build bytes remain preserved. Registry: 1361 entries /
+1358 unique module-address pairs. Initializer/directory/path parents remain
+partial and receive no credit. Read MOVIE_DISC_INIT.txt and its qualification.
+Next: remaining media/error/path branches, then original caller/MOVIE boot
+integration. Keep Sol High. Overall 10%, goal active; natural complete boot,
+physical timing, pixels/gameplay, ports and requested settings are unfinished.
+
 Latest update (2026-10-25): original clock read, consistency and initialization
 Six bodies qualify: 217 rows / 38 outcomes, comprising 209/30 executed and 8/8
 conditionally unreachable under explicit ABI/non-aliasing assumptions. Original

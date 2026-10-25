@@ -1,0 +1,125 @@
+Sonic Adventure Dreamcast Rev A - cold filesystem initialization
+2026-10-25. Whole-project weighted milestone estimate: 10%; goal active.
+
+Result
+The original earlier caller now returns normally from an explicit cold-filesystem
+profile: original code creates filesystem context 8c6946e0, performs 72 real
+track-sector reads, sets its initialized flag and returns guest zero. No directory,
+callback, filesystem constructor or success result is inserted. Seven helpers
+qualify; the larger initializer, directory loader and path resolver remain partial.
+Registry: 1361 entries / 1358 unique module-address pairs. These are not whole-game
+code coverage or a count of all game routines.
+
+Newly qualified original body                  Rows  Conditional outcomes
+8c601618 interface installation wrapper          14  0
+8c5ffc98 sector-reading wrapper                  31  2
+8c5ff9e6 CD001 signature check                   17  4
+8c5ff9c0 four-byte little-endian decoder          19  0
+8c60041a directory lookup/output helper          37  2
+8c64530a native version-request wrapper          15  0
+8c60167e optional interface method tail          11  2
+Total                                          144 10
+
+Seven canonical helpers are reused without duplicate credit: 8c600032, 8c600dd0,
+8c5ffcfe, 8c64535c, 8c645468, 8c600ddc and 8c10d974. Their original names, source,
+proof and status remain retained. New complete-state adapters do not replace them.
+
+Build and comparisons
+movie_disc_init.dll compiles from 170 sources. Seventeen adapter bodies include
+951 original instruction rows / 138 conditional outcomes. Qualified helper counts
+are separate from those proposal/integration totals. The focused main suite passes
+82 full-state comparisons / 243 independent checks; three descriptor controls add
+16 checks, for 85 comparisons / 259 checks. Thirty-four additional native-version
+backend checks pass. Main results: 78 normal returns and four expected invalid
+memory stops. Descriptor results: two normal guest -13 returns and one retained
+finite-wait research stop at 8c600f7e. Host zero means an original routine returned;
+the guest result in R0 may still report an error.
+
+The independent executor and native code compare complete CPU/RAM/FPU, banked and
+special state, software peripherals, input cursors and ordered ordinary service
+boundaries. The cold earlier caller executes 1345913 ordinary original steps and
+compares all 56648 service boundaries. The unchanged full-clear decoder/probe also
+checks every original loop/helper iteration: 2097152 native stores clear the full
+eight-MiB software VRAM image. Ordinary step counts exclude that separate decoder.
+Its preceding compression/fingerprint limits remain documented in MOVIE_CLEAR.txt.
+
+The cold comparison can take substantially longer than direct tests because each
+ordinary boundary includes full RAM/peripheral-state checks. A live stack profile
+confirmed genuine progress in reference/native memory hashing; the run completed
+without restarting it or reducing its comparison scope.
+
+Warm and cold controls
+The retained common RAM seed has a prepared filesystem at 8cc80000. The warm
+earlier-caller profile retains it, reads no media and returns guest -8. It is not
+evidence of fresh filesystem creation. The new cold-filesystem control clears the
+filesystem and interface roots explicitly to their original zero values, then
+executes original producers and the existing supplied software hardware profile.
+It creates root 8c6946e0, reads real image sectors and returns zero with flag one.
+This is staged initialization in declared RAM/peripheral conditions; it is not
+proof of complete retail reset ordering, physical hardware timing or gameplay.
+
+Small direct contexts with four-entry directory capacity legitimately return
+guest -12 after two reads. Misaligned contexts return -14, transport-failure
+profiles return -4, and an already-initialized context returns zero. These error
+paths execute original code; no return is supplied to make the caller advance.
+Null/owned temporary descriptors return -13 before queuing media I/O. The separate
+free-descriptor profile retains the existing bounded read-wait stop. Original
+signed byte-copy, record/parser, signature, endian and lookup fields are checked
+independently, including overlap, guards, empty/missing records and memory faults.
+
+Version-model correction
+The unchanged native platform copies exactly sixteen bytes of its identity string,
+SA-NATIVE v 1.00. This identifies the host backend; it is not copied Dreamcast
+firmware. The old Python test model appended NUL and assigned seventeen bytes to
+a sixteen-byte slice, growing simulated RAM and shifting subsequent data, including
+saved return addresses. That previously unexercised path is corrected in the new
+disc_init_platform_reference.py. boot_disc_reference.py and older proof/source/build
+bytes are intentionally preserved. Use the new model for this integration.
+
+The correction passes explicit C/model comparisons at all three address aliases,
+with unchanged buffer guards, fixed RAM length, matching queue/status state and
+no transport call for the identity response. A retained regression witness
+demonstrates the old model's extra byte. No native backend code or identity bytes
+were changed. The auxiliary py-spy profiler is a toolchain diagnostic, excluded
+from published game/source-matched build archives:
+https://github.com/benfred/py-spy
+
+Control flow and remaining work
+The original thunk 8c600032 jumps to 8c601618. That wrapper installs the original
+interface table 8c66c4b4 and calls its 8c600038 method. The adjacent original body
+is therefore reached through the interface, rather than directly by the thunk.
+The system interface returned by 8c645328 is also original data. Native disc queue
+policies, finite raw clocks, revision profile and all prior research wait limits
+remain unchanged; no new firmware, IRQ, DMA or timing model is introduced.
+
+Remaining unqualified parents in this integration:
+  8c600038 initializer:       409/479 rows; 28/58 conditional outcomes.
+  8c6454fe directory loader:   92/99 rows; 21/30 conditional outcomes.
+  8c6002a2 path helper:        69/113 rows; 7/22 conditional outcomes.
+They receive zero completion credit. Missing branches are not declared unreachable
+without proof. The earlier caller's return likewise does not grant complete
+caller/driver/reset-to-main coverage. Next: remaining media/error/path branches,
+then connect cold initialization to the original caller and existing MOVIE boot
+flow. Keep Sol High for this reverse-engineering work.
+
+Reproduce (PowerShell, original workspace)
+Supply matching original Rev A input locally. Use the configured Python executable
+if python is not on PATH. Existing Ghidra/Clang paths and earlier research builds
+are required; these inputs/tools are deliberately excluded from public packages.
+
+python -B outputs/sonic-adventure/recover_movie_disc_init.py
+python -B outputs/sonic-adventure/connect_movie_disc_init.py
+& outputs/sonic-adventure/build_movie_disc_init.ps1
+python -B outputs/sonic-adventure/verify_movie_disc_init.py
+python -B outputs/sonic-adventure/verify_movie_disc_init_sector.py
+python -B outputs/sonic-adventure/qualify_movie_disc_init.py
+python -B outputs/sonic-adventure/register_movie_disc_init.py
+python -B outputs/sonic-adventure/verify_movie_disc_init_workflow.py
+
+The focused workflow checks generated artifacts, registration idempotence, pinned
+inputs, script parsing, strict unbounded C syntax and retained published source/
+proof/build bytes in its stated baseline scope. It does not rerun the complete
+accumulated project suite. Reports identify their own tested domains. All ports,
+playable pixels/gameplay, 60/120/240 FPS, 8K and planned texture/display settings
+remain unfinished. GITHUB_PUBLISHING.txt describes public source, research
+prereleases, checksums and exclusions.
