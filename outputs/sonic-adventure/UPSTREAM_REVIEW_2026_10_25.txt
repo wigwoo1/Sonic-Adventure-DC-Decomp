@@ -1,0 +1,49 @@
+Public source review - 2026-10-25
+
+Purpose: check whether public decompilation work can accelerate this USA Rev A
+full-code/native-port goal. These are research references, not recovery credit.
+No third-party game source, retail assets or SDK/toolchain material was imported.
+
+1. consolesplayingconsoles/sonic-adventure-decomp
+Reviewed README at commit a06f0c01d97f676cb673b4bfffe6f26e6a69f07b:
+https://github.com/consolesplayingconsoles/sonic-adventure-decomp/blob/a06f0c01d97f676cb673b4bfffe6f26e6a69f07b/README.md
+It targets the European MK-5100050 V1.003 executable. Its README reports an
+assembly rebuild baseline, 5179 executable functions, 1088 named functions and
+zero equivalent/matching C functions. Names are not decompilation completion.
+Its executable is 6735296 bytes, SHA1 7ca46c7d78f9bd869fdf5d8b6fa93da516dffded.
+The user's local USA executable is 6735488 bytes, SHA1
+e74c849806db103aa87f84e41a382873bc96b6df (SHA256 remains the pinned 45bc5d3c...).
+Those are different inputs. Its single-executable count is not a measured
+whole-game USA denominator, including overlays and other modules. Its symbol/
+structure/tooling approach may inform later work, but cross-version addresses
+or names require local evidence. Its build description also requires a Katana
+SDK; no such material was obtained for this review.
+
+2. FraGag/sadx_decomp
+Reviewed README.txt and repository root at commit
+ca40cd33e71e04fd21d3a4ff159ca80d5b5780dd:
+https://github.com/FraGag/sadx_decomp/blob/ca40cd33e71e04fd21d3a4ff159ca80d5b5780dd/README.txt
+The primary README describes the Windows PC Director's Cut project, initially
+focused on CHRMODELS.DLL model/animation data. The inspected root contains
+CHRMODELS, Structs.h and SonicAdventureDXPC.sln. This is not evidence of a full
+Dreamcast USA game-code recovery. Another project's description of this as a
+GameCube decompilation does not override its own README and files. Structures
+could be a reference after checking version and provenance; no model/data code
+was copied into this project.
+
+3. LuckyLuke00/sadx-decomp
+Reviewed README at commit 8f9d62ff23a5fd95b27c3675ca80c850aa950c96:
+https://github.com/LuckyLuke00/sadx-decomp/blob/8f9d62ff23a5fd95b27c3675ca80c850aa950c96/README.md
+It targets the 2014 Steam Windows DX executable, not this Dreamcast image. Its
+stated aim is a full matching rebuild; that aim is not evidence that it is done.
+Its README distinguishes MIT tools/build/tests/guides from game src/data for
+which it grants no license. No source or data was imported. It remains a
+possible logic/tooling reference, with target compatibility and permissions
+checked before any future reuse.
+
+Decision: continue the verified USA instruction-to-native-C integration.
+Public references can inform names, structure hypotheses or independently
+verified tooling; no reviewed project supplies a verified complete native USA
+Dreamcast replacement. This review does not change the 10% weighted project
+estimate or the unknown whole-game routine count. Future source reuse must
+preserve attribution and verify behavior against the user's pinned game bytes.

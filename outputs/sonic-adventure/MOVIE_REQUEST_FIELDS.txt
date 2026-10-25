@@ -1,0 +1,114 @@
+Sonic Adventure Dreamcast Rev A - request-state getter and configuration caller
+2026-10-25 | Overall estimate 10% weighted milestones, not code coverage.
+
+Two complete own bodies newly qualify: state getter 8c65a568 (25 rows) and
+configuration caller 8c643624 (64 rows). All 89 rows and 14 conditional outcomes
+execute in original/native comparisons. The caller's C already existed as a
+partial body in source/sa_movie_init_records.c; its newly connected original
+providers close that dependency without modifying the older source file.
+Registry: 1378 entries / 1375 unique module-address pairs. The complete number
+of routines in this USA revision is still unknown.
+
+The getter reads the record's state through a caller output pointer, with its
+original null/error paths. The configuration caller checks its real root,
+record and busy state, then writes the supplied fields and resets state. Four
+existing canonical field providers keep their earlier names, source, proof and
+status, with zero duplicate recovery credit. Five new byte-checked adapters
+contain 44 instruction rows; together with the existing caller, the connected
+family covers all 108 rows / 16 conditional outcomes. Production executes
+statically translated C; the original decoder is verification-only.
+
+Verification
+- 79 direct original/native comparisons and 425 independent checks pass: 66
+  normal returns and 13 deliberate host fault controls. Every family row and
+  conditional outcome executes. Tests cover null/root/busy conditions, alias
+  addresses, output overlap, invalid pointers/stack and paired-store boundaries.
+  The exact independent RAM oracle includes every stack and error-state write.
+  A paired-store fault retains the actual first write before the second fails.
+- Three ten-call API sequences pass (30 comparisons / 222 checks), using three
+  FPU modes. Each sequence retains actual RAM, ordinary CPU and FPU results
+  across busy rejection, state reset, successful configuration, field updates
+  and subsequent reads. Call entry/return link and arguments are explicit ABI
+  inputs; named special-register inputs remain fixed. These integer bodies leave
+  MACL unchanged. This verifies component lifecycles, not natural full startup.
+- Two newly executed uninterrupted original/native caller profiles pass
+  37 additional checks. Each starts at original 8c0546c0,
+  invokes initialization with original arguments [1,0,1,3] and retains all
+  2097152 native writes clearing eight MiB of video memory. Full CPU/RAM/FPU,
+  special/banked registers, declared devices and ordered boundaries match.
+- Cold filesystem/interface roots start at zero. Original producers build root
+  8c6946e0 with initialized flag 1, perform 72 filesystem reads plus 17 driver
+  reads (89 total), and load 33408 byte-exact original MASARU.DRV bytes at
+  0cd00000. This fresh comparison matches 57713 service
+  boundaries and 1415050 ordinary original steps. The separate full-clear
+  decoder/fingerprint scope remains unchanged. Loaded/expected SHA256:
+  5ab700a241e5d5e164c104a76555b35002a6a84370aea17bf8c34d713cdc2cb9
+- The valid loaded SDRV header (magic 56524453, bytes 4 and 5 both 1) follows
+  original validation at 8c643e6c and reaches missing service 8c65a200. The warm
+  prepared-filesystem control performs zero reads, keeps its missing-file path,
+  matches 1549 boundaries and instead reaches 8c64bddc.
+  The two paths have distinct expected stops. No getter, setter, driver or
+  firmware return value is supplied. Driver bytes are loaded, not executed or
+  decompiled. Neither endpoint is presented as successful complete startup.
+- Full comparison results are saved before a separate endpoint validator, with
+  current DLL/input/source hashes. This preserves finished verification results
+  if an expectation needs correction. It does not reuse a guest checkpoint,
+  replace any original execution, or skip a callee. The first cold run matched
+  original/native state but failed an incorrect shared-endpoint expectation;
+  the newly captured run and corrected validator provide the final evidence.
+- 745 prior direct controls and one retained warm full-clear startup replay
+  pass: 746 regression comparisons / 45458 saved-record checks. Three historical
+  caller cases and two old constructor controls intentionally advance and are
+  covered by the new direct/caller evidence. Total current game comparisons:
+  857. The earlier 52815 CPU backend cases are historical and were not rerun for
+  this DLL; retained diagnostic/floating controls do replay. The entire
+  accumulated historical suite is not claimed.
+- The 178-source DLL compiles and links; strict unbounded compiler checks cover
+  every source. The workflow reproduces generated artifacts and registration,
+  checks all prior canonical registry fields/requirements, and preserves every
+  prior selected file except ten reviewed documentation/status/audit/registry
+  paths against published commit 7c05bfc715dc. Prior build bytes remain intact.
+- Read-only byte-checked drafts for both next frontiers have zero recovery
+  credit. Cold 65a200 changes interrupt-mask state, calls 10d460/10d770, sets a
+  word bit and counts a delay. Warm 64bddc calls configuration/status services.
+  Both still require original dependency recovery and execution verification.
+
+Limits
+Explicit direct/ABI preconditions and finite software-host inputs remain.
+Host address-fault stops do not implement physical exception delivery.
+Console/flash/disc/timing/status policy is not physical hardware measurement
+or BIOS decompilation. The clear proof keeps its established compression,
+fingerprints and invariants; it is not a cryptographic collision-proof trace.
+Large formatter/decimal/rounding paths remain partial. Natural reset, complete
+startup, graphics/gameplay, PC 60/120/240 FPS and up-to-8K operation, later
+Android/3DS stereoscopic ports, demakes and SUPIR/settings work remain unfinished.
+Texture setting Off is still required to disable textures and use vertex color.
+Public builds are incomplete research libraries, with no playable EXE. Retail
+inputs/assets, toolchain bundles, caches and credentials stay outside publication.
+
+Reproduction and evidence
+Matching local Rev A inputs and documented compiler/runtime are required.
+First rerun read-only exports in ghidra/export_movie_request_fields.ps1 and
+ghidra/export_movie_request_fields_frontier.ps1 if exported evidence is absent.
+python -B outputs/sonic-adventure/recover_movie_request_fields.py
+python -B outputs/sonic-adventure/connect_movie_request_fields.py
+powershell -File outputs/sonic-adventure/build_movie_request_fields.ps1
+python -B outputs/sonic-adventure/verify_movie_request_fields.py
+python -B outputs/sonic-adventure/verify_movie_request_fields_lifecycle.py
+python -B outputs/sonic-adventure/capture_movie_request_fields_prefix.py
+python -B outputs/sonic-adventure/verify_movie_request_fields_prefix.py
+python -B outputs/sonic-adventure/verify_movie_request_fields_regression.py
+python -B outputs/sonic-adventure/inventory_movie_request_fields_frontier.py
+python -B outputs/sonic-adventure/qualify_movie_request_fields.py
+python -B outputs/sonic-adventure/register_movie_request_fields.py
+python -B outputs/sonic-adventure/verify_movie_request_fields_workflow.py
+
+analysis/movie_request_fields_qualification.json links the focused evidence and
+hashes. The capture runner performs both full comparisons and writes private
+work-area capture files; the following validator checks their pins and expected
+endpoints. Capture files contain execution metadata, not copied retail RAM.
+The cold comparison takes tens of minutes; retain its running process/handle.
+
+Next: prioritize original 8c65a200 and its actual dependencies on the valid-driver
+cold path; retain warm 8c64bddc as a distinct control. Keep Sol High for reverse
+engineering. The goal is active; overall estimate remains 10%.
