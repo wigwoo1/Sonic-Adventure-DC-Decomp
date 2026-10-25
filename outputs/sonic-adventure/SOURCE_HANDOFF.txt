@@ -1,5 +1,21 @@
 Sonic Adventure Dreamcast Rev A - source access and handoff
 
+Latest update (2026-10-25): original clock read, consistency and initialization
+Six bodies qualify: 217 rows / 38 outcomes, comprising 209/30 executed and 8/8
+conditionally unreachable under explicit ABI/non-aliasing assumptions. Original
+error arms remain in C. All 91 full-state comparisons / 571 independent checks
+and 43 backend checks pass in the 169-source movie_rtc.dll. Borrowed finite raw
+words drive the original reading/retry/logging logic; no OS-clock value, fake
+return or extrapolation is inserted. The prior transfer helper is reused with
+zero extra credit. Registry: 1354 entries / 1351 unique module-address pairs.
+Actual early startup clears VRAM, consumes twelve raw clock words, registers its
+original clock-update callback and reaches thunk 8c600032. Its real jump target
+is 8c601618; adjacent export 8c600038 is separate research. Earlier source/proof/
+build bytes remain retained. Read MOVIE_RTC.txt and the matching qualification.
+Next: initializer thunk/actual target and reached lower services. Keep Sol High.
+Overall 10%, goal active; complete boot, physical hardware, pixels and playable
+ports/settings remain unfinished.
+
 Latest update (2026-10-25): original controller/context and packet construction
 Eleven bodies qualify: all 915 rows / 78 outcomes execute in 80 full-state
 comparisons / 748 independent checks. The 167-source movie_maple.dll retains

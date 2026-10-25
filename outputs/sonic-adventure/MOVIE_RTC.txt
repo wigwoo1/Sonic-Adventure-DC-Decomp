@@ -1,0 +1,117 @@
+Sonic Adventure Dreamcast Rev A - original clock read and initialization
+2026-10-25. Whole-project weighted milestone estimate: 10%; goal active.
+
+Result
+Six original bodies qualify within the stated connected software model:
+
+Body                           Static rows  Executed  Conditional outcomes
+8c10be78 two-word clock read         46         41       1 executed / 1 unreachable
+8c10c018 diagnostic word sink        16         16       4 executed
+8c10bd96 two-reading consistency     59         58       9 executed / 3 unreachable
+8c10be0c stable-reading loop         54         52      12 executed / 4 unreachable
+8c10ba80 cached clock update         21         21       4 executed
+8c10ba48 clock callback setup        21         21       0
+Total                              217        209      30 executed / 8 unreachable
+
+Eight original rows and eight branch outcomes are conditionally unreachable
+under the assumptions below. Their code is retained. The separate adapter for
+already registered synchronized transfer 8c10d460 earns zero duplicate credit.
+Registry: 1354 entries / 1351 unique module-address pairs. These counts do not
+establish a total number of game routines or whole-game recovered-code coverage.
+
+Build and verification
+movie_rtc.dll compiles from 169 sources. All 91 full-state comparisons and 571
+independent checks pass, plus 43 direct backend checks. Outcomes: 78 normal
+returns, three expected invalid-memory stops (-3), seven expected finite-input
+exhaustion stops (-4), and three missing-input/bus/service stops (-2). Negative
+statuses are compared expected outcomes, not ignored failures. The three retained
+controller constructor/command profiles also pass through the new build.
+
+CPU/RAM/FPU, special and banked registers, software peripheral storage, input
+cursors and ordered ordinary call boundaries match original-instruction execution.
+The preceding full-clear decoder/probe is retained unchanged, with its documented
+trace compression/fingerprint limits. The actual early caller clears the complete
+eight-MiB software VRAM image; no new claim of physical display output follows.
+
+Raw clock input and original behavior
+rtc_sample_bus.c wraps the existing driver backend. It consumes borrowed finite
+32-bit words in exact read order at physical 00710000/00710004 through P0/P1/P2
+aliases. The game reads two words and combines their low 16 bits. Full raw words
+are retained for diagnostic logging. There is no OS-clock query, calendar
+conversion, automatic increment, stable-value generator or fabricated return.
+
+Unconfigured input stops -2. Configured empty/exhausted input stops -4. Wrong
+width/null output stops -3 without consuming a sample or changing the output.
+The six alias/address combinations, full-width values, borrowed-input immutability,
+reset and invalid-configuration behavior pass direct checks. Writes to these two
+words are unsupported in this model. Other accesses retain previous routes.
+These rules describe this software test backend, not an electrical specification
+or a measurement of the user's Dreamcast.
+
+The original diagnostic sink writes only when shared clock/diagnostic flags have
+bit 8 set and its cursor is below its limit. Tests check disabled/full/one-slot/
+two-slot buffers, cursor boundaries and invalid storage, including guard bytes.
+Clock update bits 1 and 2 share that same flag word: all four combinations are
+tested while preserving diagnostic bit 8. The consistency helper accepts two
+matching readings and otherwise retains the supplied earlier timestamp. The
+stable loop compares against its initial sample until three subsequent readings
+match; changing and exhausted streams retain real retry/stop behavior.
+
+Conditional-unreachability evidence
+Read analysis/movie_rtc_qualification.json for checked instructions and addresses.
+Every selected instruction's bytes are checked against the original input, with
+critical instruction checks and the transfer's normal epilogue/entry targets.
+The proof assumes immutable code/literals, no asynchronous RAM mutation, normal
+original entry/return ABI, valid mapped stack scratch, and disabled diagnostic
+storage or storage separate from active frames, control globals and code.
+
+The synchronized transfer's sole normal RTS is preceded by mov #0,r0; its
+subsequent restores do not change R0. The RTC read likewise assigns R0=0 after
+logging. Host faults stop execution before a caller resumes; they are not guest
+error returns. Thus the callers' guest-error arms cannot execute in this domain.
+The stable reader's first successful call sets its preserved flag to one, ruling
+out its initial failure retry/fallback. In the two-sample comparator, the relevant
+scratch pointers are exactly four bytes apart, then equal after one increment;
+two unsigned-loop outcomes cannot execute. Valid mapped scratch avoids wrap.
+
+This is a conditional proof for the declared input/ABI model, not a claim covering
+arbitrary self-aliasing buffer corruption, modified code or asynchronous mutation.
+The native C retains every original branch/error arm. No outcome is manufactured
+merely to increase recovery counts. The existing transfer adapter covers 101/148
+rows in this suite; its earlier canonical qualification is preserved, not replaced.
+
+Actual startup and next work
+The precision-zero original early caller establishes its real heap, device and
+controller contexts, clears VRAM, consumes twelve supplied raw clock words and
+registers the original clock-update callback through event registration 8c64594c.
+It then stops at actual missing initializer thunk 8c600032, called from 8c010212.
+The thunk's original indirect jump targets 8c601618; the adjacent 8c600038 body
+is separate research evidence. Fresh read-only exports retain these frontiers.
+They are not connected or granted new credit. The early caller/driver remain
+partial. No clock, constructor, firmware, helper or callback result is inserted.
+
+Natural complete boot, physical clocks/input/DMA/IRQs, timing, visible pixels,
+gameplay and all requested ports/display/texture settings remain unfinished.
+The prior legacy zero-revision callback and precision limitations remain in force.
+Keep Sol High for the next initializer and its subsystem dependencies.
+
+Reproduce from the original workspace (PowerShell)
+Use the configured Python executable if python is not on PATH. Matching original
+retail inputs, retained earlier builds and the configured Clang/Ghidra paths are
+needed. They are excluded from public GitHub source and research archives.
+
+python -B outputs/sonic-adventure/recover_movie_rtc.py
+python -B outputs/sonic-adventure/connect_movie_rtc.py
+& outputs/sonic-adventure/build_movie_rtc.ps1
+python -B outputs/sonic-adventure/verify_movie_rtc.py
+python -B outputs/sonic-adventure/qualify_movie_rtc.py
+python -B outputs/sonic-adventure/register_movie_rtc.py
+python -B outputs/sonic-adventure/verify_movie_rtc_workflow.py
+
+The focused workflow reproduces generated artifacts, checks registration
+idempotence, pinned inputs, Python/PowerShell parsing and strict unbounded C
+syntax, and preserves the prior published source/proof/build bytes in its stated
+scope. It does not claim a rerun of the entire accumulated project suite. Older
+proof reports retain their historical partial frontiers; use the new integration
+evidence for later closures. GITHUB_PUBLISHING.txt describes reviewed source and
+matching incomplete research prereleases, including hashes and asset exclusions.

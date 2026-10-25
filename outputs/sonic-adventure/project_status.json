@@ -129,7 +129,7 @@
     "prs_trailing_bytes": 0,
     "main_binary_indexed_functions": 3637,
     "main_binary_draft_pseudocode_functions": 3631,
-    "recovered_buildable_routines": 1348,
+    "recovered_buildable_routines": 1354,
     "recovered_routine_tests": "analysis/startup_verification.json",
     "recovered_routine_test_cases": 17,
     "main_binary_draft_export_failures": 6,
@@ -140234,6 +140234,349 @@
       "guide": "MOVIE_MAPLE.txt",
       "adapter_source": "source/sa_movie_maple_connected.c",
       "adapter_source_sha256": "e02b337259b8df7075571b085483146d806aff12deee532677caf6186d9b4c5c"
+    },
+    "movie_rtc_integration": {
+      "newly_registered_entries": 6,
+      "qualified_rows": 217,
+      "executed_rows": 209,
+      "proven_unreachable_rows": 8,
+      "qualified_conditional_outcomes": 38,
+      "executed_conditional_outcomes": 30,
+      "proven_unreachable_conditional_outcomes": 8,
+      "conditional_unreachability": {
+        "checked_original_instruction_rows": 365,
+        "critical_instructions": 43,
+        "unexecuted_rows": {
+          "0x8c10be78": [
+            [
+              "0x8c10be9c",
+              "0x8c10be9e",
+              "0x8c10bea0",
+              "0x8c10bea2",
+              "0x8c10bea4"
+            ],
+            [
+              [
+                "0x8c10be98",
+                "0x8c10be9c"
+              ]
+            ]
+          ],
+          "0x8c10bd96": [
+            [
+              "0x8c10bdc2"
+            ],
+            [
+              [
+                "0x8c10bdc0",
+                "0x8c10bdc2"
+              ],
+              [
+                "0x8c10bdd6",
+                "0x8c10bdf0"
+              ],
+              [
+                "0x8c10bdec",
+                "0x8c10bddc"
+              ]
+            ]
+          ],
+          "0x8c10be0c": [
+            [
+              "0x8c10be36",
+              "0x8c10be38"
+            ],
+            [
+              [
+                "0x8c10be2a",
+                "0x8c10be2e"
+              ],
+              [
+                "0x8c10be30",
+                "0x8c10be20"
+              ],
+              [
+                "0x8c10be34",
+                "0x8c10be36"
+              ],
+              [
+                "0x8c10be46",
+                "0x8c10be5a"
+              ]
+            ]
+          ]
+        },
+        "assumptions": [
+          "Immutable original code/literals; no asynchronous RAM mutation.",
+          "Normal original entry/return ABI and valid mapped stack scratch; host faults stop rather than become guest return values.",
+          "Diagnostic output storage is disabled or separate from active frames, control globals and code; the direct tests declare those buffers explicitly."
+        ],
+        "arguments": [
+          "The synchronized transfer has one original RTS. All ordinary epilogue entries pass mov #0,r0 at 8c10d586; subsequent restores do not write R0. RTC read uses its pinned literal target. Host errors propagate out before the caller resumes, so the guest error-return arm at 8c10be9c cannot execute in this connected domain.",
+          "The RTC reader likewise sets R0=0 at 8c10beca immediately before its normal epilogue. Its logging calls execute before that assignment. Therefore the coherence fallback store at 8c10bdc2 and the two stable-reader guest-error branch outcomes cannot execute.",
+          "After a successful first read, stable-reader R14 becomes one and is preserved through the original callee ABI. Its initial retry outcome and zero-R14 fallback arm cannot execute. The two fallback rows remain in C; genuine unstable samples still exercise the separate equality/retry loop.",
+          "In the two-sample coherence comparator, initial R4 is stack-scratch+4 and R14 is scratch+8. The initial unsigned >= outcome is false. After the sole equal comparison R4 advances by four and equals R14, so the backwards unsigned < outcome is false. Valid mapped scratch avoids 32-bit wrap. The unequal-sample path retains the supplied earlier timestamp."
+        ]
+      },
+      "reused_existing_entries": [
+        "0x8c10d460"
+      ],
+      "reused_additional_credit": 0,
+      "compiled_source_count": 169,
+      "direct_comparisons": 91,
+      "independent_checks": 571,
+      "backend_checks": 43,
+      "coverage_by_routine": [
+        {
+          "address": "0x8c10be78",
+          "static_rows": 46,
+          "covered_rows": 41,
+          "missing_rows": [
+            "0x8c10be9c",
+            "0x8c10be9e",
+            "0x8c10bea0",
+            "0x8c10bea2",
+            "0x8c10bea4"
+          ],
+          "conditional_edges_covered": 1,
+          "missing_edges": [
+            [
+              "0x8c10be98",
+              "0x8c10be9c"
+            ]
+          ]
+        },
+        {
+          "address": "0x8c10c018",
+          "static_rows": 16,
+          "covered_rows": 16,
+          "missing_rows": [],
+          "conditional_edges_covered": 4,
+          "missing_edges": []
+        },
+        {
+          "address": "0x8c10d460",
+          "static_rows": 148,
+          "covered_rows": 101,
+          "missing_rows": [
+            "0x8c10d488",
+            "0x8c10d48a",
+            "0x8c10d48c",
+            "0x8c10d48e",
+            "0x8c10d490",
+            "0x8c10d492",
+            "0x8c10d498",
+            "0x8c10d4a4",
+            "0x8c10d4a6",
+            "0x8c10d4a8",
+            "0x8c10d4aa",
+            "0x8c10d4ac",
+            "0x8c10d4ae",
+            "0x8c10d4b4",
+            "0x8c10d4f0",
+            "0x8c10d4f2",
+            "0x8c10d4f4",
+            "0x8c10d4f6",
+            "0x8c10d4f8",
+            "0x8c10d4fa",
+            "0x8c10d4fc",
+            "0x8c10d4fe",
+            "0x8c10d500",
+            "0x8c10d502",
+            "0x8c10d504",
+            "0x8c10d506",
+            "0x8c10d508",
+            "0x8c10d50a",
+            "0x8c10d50c",
+            "0x8c10d50e",
+            "0x8c10d510",
+            "0x8c10d512",
+            "0x8c10d514",
+            "0x8c10d516",
+            "0x8c10d518",
+            "0x8c10d51a",
+            "0x8c10d51c",
+            "0x8c10d51e",
+            "0x8c10d520",
+            "0x8c10d522",
+            "0x8c10d524",
+            "0x8c10d526",
+            "0x8c10d528",
+            "0x8c10d52a",
+            "0x8c10d52c",
+            "0x8c10d52e",
+            "0x8c10d530"
+          ],
+          "conditional_edges_covered": 14,
+          "missing_edges": [
+            [
+              "0x8c10d480",
+              "0x8c10d490"
+            ],
+            [
+              "0x8c10d486",
+              "0x8c10d488"
+            ],
+            [
+              "0x8c10d48a",
+              "0x8c10d48c"
+            ],
+            [
+              "0x8c10d48a",
+              "0x8c10d498"
+            ],
+            [
+              "0x8c10d49e",
+              "0x8c10d4ac"
+            ],
+            [
+              "0x8c10d4a2",
+              "0x8c10d4a4"
+            ],
+            [
+              "0x8c10d4a6",
+              "0x8c10d4a8"
+            ],
+            [
+              "0x8c10d4a6",
+              "0x8c10d4b4"
+            ],
+            [
+              "0x8c10d4e6",
+              "0x8c10d4f4"
+            ],
+            [
+              "0x8c10d4ea",
+              "0x8c10d510"
+            ],
+            [
+              "0x8c10d4ee",
+              "0x8c10d4f0"
+            ],
+            [
+              "0x8c10d4fa",
+              "0x8c10d4fe"
+            ],
+            [
+              "0x8c10d4fa",
+              "0x8c10d562"
+            ],
+            [
+              "0x8c10d508",
+              "0x8c10d4fe"
+            ],
+            [
+              "0x8c10d508",
+              "0x8c10d50c"
+            ],
+            [
+              "0x8c10d51c",
+              "0x8c10d520"
+            ],
+            [
+              "0x8c10d51c",
+              "0x8c10d562"
+            ],
+            [
+              "0x8c10d52a",
+              "0x8c10d520"
+            ],
+            [
+              "0x8c10d52a",
+              "0x8c10d52e"
+            ],
+            [
+              "0x8c10d550",
+              "0x8c10d562"
+            ]
+          ]
+        },
+        {
+          "address": "0x8c10bd96",
+          "static_rows": 59,
+          "covered_rows": 58,
+          "missing_rows": [
+            "0x8c10bdc2"
+          ],
+          "conditional_edges_covered": 9,
+          "missing_edges": [
+            [
+              "0x8c10bdc0",
+              "0x8c10bdc2"
+            ],
+            [
+              "0x8c10bdd6",
+              "0x8c10bdf0"
+            ],
+            [
+              "0x8c10bdec",
+              "0x8c10bddc"
+            ]
+          ]
+        },
+        {
+          "address": "0x8c10ba48",
+          "static_rows": 21,
+          "covered_rows": 21,
+          "missing_rows": [],
+          "conditional_edges_covered": 0,
+          "missing_edges": []
+        },
+        {
+          "address": "0x8c10be0c",
+          "static_rows": 54,
+          "covered_rows": 52,
+          "missing_rows": [
+            "0x8c10be36",
+            "0x8c10be38"
+          ],
+          "conditional_edges_covered": 12,
+          "missing_edges": [
+            [
+              "0x8c10be2a",
+              "0x8c10be2e"
+            ],
+            [
+              "0x8c10be30",
+              "0x8c10be20"
+            ],
+            [
+              "0x8c10be34",
+              "0x8c10be36"
+            ],
+            [
+              "0x8c10be46",
+              "0x8c10be5a"
+            ]
+          ]
+        },
+        {
+          "address": "0x8c10ba80",
+          "static_rows": 21,
+          "covered_rows": 21,
+          "missing_rows": [],
+          "conditional_edges_covered": 4,
+          "missing_edges": []
+        }
+      ],
+      "actual_next_dependency": "0x8c600032",
+      "next_thunk_target": "0x8c601618",
+      "next_task": "Recover original initializer thunk 8c600032, its actual indirect-jump target 8c601618 and reached subsystem dependencies. The adjacent 8c600038 export is separate research, not that thunk target. Keep finite hardware input exhaustion explicit.",
+      "dll_sha256": "da8b4da711dc8d54d5937adbd08750b68053ebd204dd557c24b80e9e9d67586d",
+      "scope": "Six original RTC/diagnostic/consistency/stability/update/initialization bodies qualify within the declared non-aliasing software model. Of 217 rows and 38 branch outcomes, 209/30 execute and 8/8 are justified unreachable under explicit assumptions. Retained C includes those arms; the hardware transfer adapter earns zero extra credit.",
+      "limitations": [
+        "Borrowed full-width raw words are finite explicit inputs. The original code selects their low 16 bits and performs the retries; the backend supplies no OS clock, calendar conversion, generated stable value, fake helper result or extrapolation.",
+        "Both original RTC addresses are modeled for aligned 32-bit reads at P0/P1/P2 aliases. Unconfigured input stops -2, exhausted input stops -4, bad widths/null output stop -3 without consuming a sample. Writes are unsupported. This is not an electrical/timing specification or console measurement.",
+        "The six qualified bodies retain their original integer branches and error arms. Conditional-unreachability depends on the stated connected callee ABI, immutable code, valid scratch and separate diagnostic storage; it does not cover arbitrary buffer corruption or asynchronous mutation.",
+        "The synchronized transfer was already registered. Its new separate adapter permits RTC accesses without modifying the older canonical source/proof/build. This suite covers 101/148 adapter rows, not a second complete qualification; prior canonical evidence remains retained.",
+        "The actual early caller executes original heap/device/controller producers, full eight-MiB clear, twelve supplied raw RTC reads and original clock callback registration before stopping at 8c600032. Earlier caller/driver remain partial. No startup service or callback return is substituted.",
+        "Three retained controller constructor/packet profiles pass through the new build. Full accumulated-suite rerun, physical RTC/controller/DMA/IRQ behavior, complete natural boot, rendered pixels, gameplay and playable ports/settings remain unverified. Whole-project estimate remains ten percent."
+      ],
+      "verification": "analysis/movie_rtc_qualification.json",
+      "verification_sha256": "3960a4a2c4348ae22545398637e2b14303e6590e5066fcf6274760e97fd3c251",
+      "guide": "MOVIE_RTC.txt",
+      "adapter_source": "source/sa_movie_rtc_connected.c",
+      "adapter_source_sha256": "52a5e3a4551f5c6e9b12938d29f2c150d982963ac20566fda19bbac2a99ca798"
     }
   },
   "milestones": [
@@ -140407,10 +140750,10 @@
     "report": "analysis/recovery_coverage_audit.json",
     "candidate_inventory": "analysis/unrecovered_function_candidates.tsv",
     "boundary_inventory": "analysis/unresolved_module_boundaries.json",
-    "registered_routines": 1348,
-    "registered_unique_module_address_pairs": 1345,
+    "registered_routines": 1354,
+    "registered_unique_module_address_pairs": 1351,
     "indexed_candidates_in_export_snapshots": 11411,
-    "registered_entries_matching_export_snapshots": 1236,
+    "registered_entries_matching_export_snapshots": 1242,
     "non_texture_binaries_without_function_index": 211,
     "registry_evidence_errors": 0,
     "stale_whole_source_hash_reports": 0,
@@ -147735,5 +148078,5 @@
   },
   "unverified_work": {},
   "unverified_drafts": {},
-  "recovered_buildable_routines": 1348
+  "recovered_buildable_routines": 1354
 }
