@@ -1,0 +1,110 @@
+Sonic Adventure Dreamcast Rev A - native console/flash inputs and original queries
+2026-10-25. Whole-project weighted estimate remains approximately 10%.
+
+Two original bodies qualify: region-byte classifier 8c10c044 (29 rows/eight
+outcomes) and combined cable/region query 8c10c07e (35 rows/ten outcomes).
+All 29 classifier rows and 33 query rows execute. Two query rows and one outcome
+are impossible under a byte-checked range lemma; every original instruction
+and branch remains in source/sa_movie_initialize.c. Total: 64 qualified rows,
+62 executed plus two unreachable, 17 executed outcomes plus one unreachable.
+Seven canonical helpers retain their names/source/proof/status with zero extra
+credit. Registry: 1367 entries / 1364 unique module-address pairs. This is not
+a whole-game routine total or measured recovered-code percentage.
+
+The actual caller 8c0546c0 now reaches 65/177 rows. Three explicit native profiles
+take its three real initialization paths with R4/R5/R6 = 1/0/1, 58/0/1 and 56/0/1,
+then store mode values two/one/zero. Each calls original 8c010180, retains the real
+heap/driver/controller/clock/library work and every write of its eight-MiB clear.
+All three reach the next missing original function 8c092fa0. The caller remains
+partial. Its next 36-row/four-call export is research only; no recovery credit.
+
+Native host service, not decompiled BIOS
+source/native_console_service.c/h adds a separate API using immutable borrowed
+24-byte information and flash byte spans. No default identity/flash image is
+manufactured. Binding writes only the configured sysinfo/flash vector slots,
+8c0000b0 and 8c0000b8, using distinct native markers 8c00f110/8c00f120. The older
+disc service and all original game adapters retain their bytes and behavior.
+
+Info selector zero copies the explicit information bytes to guest 8c000068..7f;
+void initialization preserves R0. Selector three returns that guest pointer after
+initialization. Flash selector one copies requested bytes from the supplied
+read-only image, returning its byte count or guest -1 for an out-of-range read.
+Invalid pointers/aliases and unsupported/unconfigured operations remain host
+stops without manufactured success. Input spans cannot alias guest RAM and stay
+borrowed/immutable until reconfiguration. Guest RAM must be a stable sixteen-MiB
+array. Host output/state storage must be valid and separate from guest inputs.
+
+These are explicit native platform choices, not physical BIOS measurements or
+recovered BIOS scratch-register clobbers/data extraction. Raw test bytes are
+invented records, not authentic console data. Vector binding is host setup, not
+a claim that original reset produced those pointers. Writable flash, erase,
+icons/fonts and other selectors remain unsupported. No missing game callback or
+query result is supplied; original game instructions decode the returned bytes.
+
+Primary ABI evidence is pinned to KallistiOS commit
+368a2eb9584a7d130a6e77e299468c0b64fa1a9f:
+https://github.com/KallistiOS/KallistiOS/blob/368a2eb9584a7d130a6e77e299468c0b64fa1a9f/kernel/arch/dreamcast/hardware/syscalls.c
+https://github.com/KallistiOS/KallistiOS/blob/368a2eb9584a7d130a6e77e299468c0b64fa1a9f/kernel/arch/dreamcast/include/dc/syscalls.h
+The wrapper/header confirms vectors/selectors, pointer return and documented
+flash byte-count return. Exact copied bytes and host ordering/register policy
+are separately declared. No third-party implementation is copied into source.
+Original 8c603b84 checks for a zero result after requesting two flash bytes.
+The count-returning host service does not invent that zero to cover its optional
+override/cache path; that original parent remains partial.
+
+Verification
+The new movie_console.dll builds from 173 sources with strict warnings.
+228 direct original/native complete-state comparisons / 2077 independent checks
+pass across three FPU modes, every raw cable state and varied information bytes,
+including signed bytes. Configured, unconfigured, absent-bus, invalid-memory and
+uninitialized-pointer controls preserve their actual outcomes. All reached/final
+CPU/RAM/FPU/special/banked state, software devices, ordered service boundaries,
+input cursors, disc ownership and console state match. Borrowed inputs remain
+unchanged. The provider has no access to override an original game helper.
+
+43 independent modeled backend API cases plus additional guard/lifecycle checks
+pass, totaling 405 checks. Oracles compare all sixteen MiB of RAM and input/state
+bytes; aliases, exact ends, zero lengths, count/offset overflow, initialization
+order, vector binding, rejected setters, null outputs and overlapping inputs are
+covered. No BIOS-cycle or physical flash fidelity is claimed by these API tests.
+
+68 previous direct controls replay and match every retained saved-record field.
+One earlier warm-startup/full-clear regression also matches. This gives 297 game
+comparisons overall, with 4298 saved-record regression checks in addition to
+direct/backend checks. The separate long cold benchmark is retained, not rerun.
+The old dispatch bridge is byte-identical after removing the explicit console
+interface additions and export renames. All older source/proof/build bytes and
+previous canonical registration fields remain unchanged.
+
+prove_movie_console_queries.py checks all 64 original query rows and executes
+the actual post-call classification suffix for every possible byte (256 cases).
+The classifier's normal result is 0/1/2/3. Its caller preserves that value and
+eliminates 1, 3 and 2 before its final equality-to-zero test. That test cannot
+fall through; rows 8c10c0ae/8c10c0b0 and outcome 8c10c0ac -> 8c10c0ae are impossible.
+The proof assumes immutable instructions, normal call/return ABI, faults stopping,
+and no asynchronous register changes/stack corruption. Its suffix range lemma
+is separate from complete-function comparisons and never substitutes a helper
+or BIOS result in those comparisons.
+
+The focused workflow reproduces seven artifacts, checks registration byte
+idempotence, current input hashes, script parsing, strict unbounded C and previous
+source/proof/build preservation. The entire accumulated suite is not rerun.
+
+Reproduce with matching original inputs and retained tools/build setup:
+python -B outputs/sonic-adventure/fetch_console_abi_evidence.py
+python -B outputs/sonic-adventure/inventory_console_abi.py
+python -B outputs/sonic-adventure/connect_movie_console.py
+& outputs/sonic-adventure/build_movie_console.ps1
+python -B outputs/sonic-adventure/verify_console_service_backend.py
+python -B outputs/sonic-adventure/verify_movie_console.py
+python -B outputs/sonic-adventure/prove_movie_console_queries.py
+python -B outputs/sonic-adventure/verify_movie_console_regression.py
+python -B outputs/sonic-adventure/inventory_movie_console_frontier.py
+python -B outputs/sonic-adventure/qualify_movie_console.py
+python -B outputs/sonic-adventure/register_movie_console.py
+python -B outputs/sonic-adventure/verify_movie_console_workflow.py
+
+Next: recover original 8c092fa0 and the reached initialization dependencies.
+Keep Sol High. Natural boot, physical devices, pixels/gameplay, playable ports,
+and requested FPS/resolution/texture/display settings remain unfinished. Read
+GITHUB_PUBLISHING.txt for reviewed source and incomplete research prereleases.

@@ -1,0 +1,36 @@
+{
+  "region_return_values": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "exhaustive_original_suffix_inputs": 256,
+  "checked_original_rows": 64,
+  "region_suffix_dominates_normal_return": true,
+  "query_callee_result_dominates_test": true,
+  "unreachable_instruction_rows": [
+    "0x8c10c0ae",
+    "0x8c10c0b0"
+  ],
+  "unreachable_edge": [
+    "0x8c10c0ac",
+    "0x8c10c0ae"
+  ],
+  "argument": "All normal region-helper returns are 0/1/2/3. The query preserves that result while eliminating 1, 3 and 2 before its final equality-to-zero check. Reaching that check leaves only zero; its false outcome and the following branch/delay slot cannot execute. Every original instruction and branch remains in C.",
+  "assumptions": [
+    "Immutable original instructions and normal call/return ABI.",
+    "Invalid reads or failed host services stop execution.",
+    "No asynchronous CPU-register changes or stack corruption."
+  ],
+  "scope": "Byte-checked original CFG domination and exhaustive execution of the original post-call byte-classification suffix. This range lemma is separate from full-function execution and does not substitute a helper/BIOS result in any integration case.",
+  "sha256": {
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\analysis\\movie-initialize-queries\\8c10c044_instructions.tsv": "67834f724ad8601ff0e723a6c8590a82b9425ac3d4b3464f99bf7a6f1ec93c39",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\analysis\\movie-initialize-caller-lower\\8c10c07e_instructions.tsv": "9f22cbe7c364dafe0fe3a4cc83cf757e1ce0ceb8bd9878b3a29a8d3e0621528c",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\prove_movie_console_queries.py": "ac6d14cb2d88c9d8d7d5a80e52bb48cfbfcbdb4d3fed2f8429d533ed6fac7ef1",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\verify_startup.py": "e1dbae17f07354a51fe7b05258895f980bda38d65b615ff2e8fb9b65dabc75e8",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\analysis\\movie_initialize_translation.json": "84b30f45374326388580942de1743ee10fcd17f62bdf1445b9aa9b676951a1ce",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\source\\sa_movie_initialize.c": "5d63623fc21a25fccfdbc2926ba4e5aacb22e88532b1be809af7e1ab65f66e7d",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\work\\sonic-adventure\\extracted\\1ST_READ.BIN": "45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a"
+  }
+}

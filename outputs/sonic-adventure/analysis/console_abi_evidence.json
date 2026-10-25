@@ -1,0 +1,39 @@
+{
+  "primary_project": "KallistiOS",
+  "commit": "368a2eb9584a7d130a6e77e299468c0b64fa1a9f",
+  "sources": [
+    {
+      "url": "https://github.com/KallistiOS/KallistiOS/blob/368a2eb9584a7d130a6e77e299468c0b64fa1a9f/kernel/arch/dreamcast/hardware/syscalls.c",
+      "sha256": "23d04411b38a0cfb6b1a2b5b0d42b02e21d7015926e8955a1e4a7b8391f858b3"
+    },
+    {
+      "url": "https://github.com/KallistiOS/KallistiOS/blob/368a2eb9584a7d130a6e77e299468c0b64fa1a9f/kernel/arch/dreamcast/include/dc/syscalls.h",
+      "sha256": "392031cdd59e3ddf758d9f5cf66497437e14fecef17081023f77b57bf6a43ebd"
+    }
+  ],
+  "abi_facts": [
+    "The sysinfo and flash groups use separate vectors at 8c0000b0 and 8c0000b8.",
+    "R7 selects the function. Sysinfo selectors zero and three initialize and return an information pointer; the KOS ID wrapper dereferences that pointer.",
+    "Flash selector one takes offset, destination and byte count in R4/R5/R6. The documented result is bytes read, or -1.",
+    "The KOS header documents sysinfo initialization preparing data in guest 8c000068..8c00007f."
+  ],
+  "declared_host_choices": [
+    "Immutable caller-supplied 24-byte information and independent flash byte spans; no default console identity or flash image.",
+    "Information init copies those explicit bytes to guest 8c000068. Pointer query requires successful init. Exact BIOS data extraction and scratch register clobbers are not recovered.",
+    "Void initialization preserves R0; all unrelated CPU registers are preserved.",
+    "Read-only flash service returns a count or guest -1. Unconfigured/unsupported operations are explicit host stops.",
+    "Native callbacks use separate non-game markers 8c00f110/8c00f120, distinct from the existing disc marker."
+  ],
+  "game_evidence": [
+    "Original 8c10c0d0/8c10c0f8/8c10da50 match the vector/selectors.",
+    "Original 8c10c044 classifies the returned information byte at offset twelve.",
+    "Original 8c603b84 requests two flash bytes at offset 1a05e and checks for a zero result before an optional override/cache path. The count-returning host policy leaves that override path unverified; no successful zero result is invented."
+  ],
+  "no_third_party_implementation_copied": true,
+  "scope": "Primary wrapper/header ABI evidence and separately declared host policy; not decompiled BIOS, measured hardware data or a claim that private synthetic inputs are authentic console records.",
+  "sha256": {
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\inventory_console_abi.py": "4eee9802b357dabac50461364ab0883ac95e7fc0ca0541c494192e41fad5558e",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\work\\sonic-adventure\\evidence\\console-abi\\syscalls.c": "23d04411b38a0cfb6b1a2b5b0d42b02e21d7015926e8955a1e4a7b8391f858b3",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\work\\sonic-adventure\\evidence\\console-abi\\syscalls.h": "392031cdd59e3ddf758d9f5cf66497437e14fecef17081023f77b57bf6a43ebd"
+  }
+}
