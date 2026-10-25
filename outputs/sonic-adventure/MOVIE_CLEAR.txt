@@ -1,0 +1,87 @@
+Sonic Adventure Dreamcast Rev A - full original video-memory clear
+
+Whole-project estimate: 10% weighted milestones, not recovered-code coverage.
+Goal active. Windows research DLL only; no playable game or rendered pixels.
+
+Qualified body
+Original 8c6656e2 register initialization and VRAM clear now qualifies. Every
+complete profile executes 2,097,152 original calls to helper 8c65253e and writes
+all eight MiB (8,388,608 bytes). The new movie_clear.dll keeps the original
+finite loop unbounded. Previous movie_driver.dll/source/proofs remain intact.
+
+Of 234 static instruction rows, 233 execute; one is proved unreachable under
+the declared model. Of 32 conditional outcomes, 31 execute and one is proved
+unreachable. Reaching 8c66596c requires RAM word 8c8a2d58 to equal six. No store
+or call occurs before its second load and comparison, so BF/S 8c665972 cannot
+branch to 8c66597c. Its delay slot still executes. This assumes original immutable
+instructions/literals and no asynchronous RAM mutation; dead code is not counted
+as execution. The original copy helper is reused with no additional credit.
+
+Registry: 1332 entries / 1329 unique module-address pairs. The total number of
+routines in the entire game is not yet established. The separate verification
+interpreter and probe earn no recovered-game-code credit.
+
+Verification
+The existing strict 165-source build compiles with Clang -O2 -Wall -Wextra
+-Werror without the C runtime. All 19 full-state comparisons pass: ten normal
+complete direct-clear profiles, four injected write failures, three original
+hardware-failure loop profiles, a returning mode-selector profile and an earlier
+startup caller that completes its clear before its actual unresolved callback.
+Six calibration profiles independently match the compiled decoder against the
+existing Python instruction executor for 1, 2, 3, 17, 257 and 4096 iterations.
+
+Every original native loop/helper call runs. A separate verification-only C
+instruction decoder also executes every original loop/helper instruction:
+33,554,432 instructions per complete clear, including delay slots. It does not
+replace the loop with memset, a bulk fill, a guessed return or a skipped callee.
+Its 16 code rows and three setup literal words are checked against the retail
+instruction evidence. The port itself still uses statically translated C.
+
+At every native helper boundary, exact register-sequence and FPU/FPUL invariants
+are checked; every successful write checks address, zero value and four-byte
+width. Counts, first/last states and ordered streaming fingerprints additionally
+match independently decoded execution. Fingerprints are not treated as
+collision-free proofs. The clear's logical reference event span is compressed
+in memory; all native writes/reference instructions still execute. Reports label
+sampled VRAM write lists as truncated and retain exact full-stream counts.
+
+Final comparisons retain full 16-MiB RAM, eight-MiB VRAM, all CPU registers,
+FPU banks, FPSCR/FPUL, special and banked state, software device state, finite
+input cursors and ordinary prefix/suffix call boundaries. Initial VRAM has a
+nonzero byte pattern, so missed or partial writes are visible. Faults before
+write 0, 1, 1,048,576 and 2,097,151 preserve the exact partial state at 8c652544.
+The first and last words and complete byte image are covered by the full compare.
+
+Limits and next dependency
+Only the finite clear-loop bound is removed in this new source/DLL. The actual
+hardware-failure infinite loop at 8c665968 still stops on its second visit when
+SA_BOUND_RETAIL_STALLS is enabled; normal source preserves that loop. Syntax
+checks cover every compiled source without that research macro.
+
+The mode-selection profile now returns normally. The original earlier caller
+creates its heap and renderer state through real code, clears all VRAM, then
+stops at actual indirect callback 8c000000. Callback word 8c6734c4 and its runtime
+producer/ownership are the next reverse-engineering target. No callback result
+is supplied. These parent observations do not grant full parent recovery credit.
+Earlier late-boot controls remain separately documented in MOVIE_DRIVER.txt.
+
+Software registers, raw hardware-ID/status/FIFO/scan/clock observations and
+runtime/VBR fixtures remain explicit platform policies. Physical DMA, IRQ
+acceptance, hardware timing, display output, pixels, natural full boot and
+playable ports are not established. FPS/8K, SUPIR textures, display/texture
+settings, Android/3DS and other planned targets remain unfinished.
+
+Reproduce from the workspace root (adapt local Python/compiler paths as needed):
+python -B outputs/sonic-adventure/recover_movie_clear.py
+python -B outputs/sonic-adventure/connect_movie_clear.py
+powershell -File outputs/sonic-adventure/build_movie_clear.ps1
+python -B outputs/sonic-adventure/verify_movie_clear.py
+python -B outputs/sonic-adventure/qualify_movie_clear.py
+python -B outputs/sonic-adventure/register_movie_clear.py
+python -B outputs/sonic-adventure/verify_movie_clear_workflow.py
+Matching local retail inputs are required; they are excluded from publication.
+
+Keep Sol High for callback/runtime ownership and remaining startup qualification.
+Luna Low is suitable for routine publication checks once these changes are stable.
+
+Qualified DLL SHA256: 7d9d5af7c1cfd0e60f97f4f163c6786c2b6acaf1833df7dc37b93ff04e62c988

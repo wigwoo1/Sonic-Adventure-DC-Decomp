@@ -21286,6 +21286,60 @@
         "guide": "MOVIE_DRIVER.txt",
         "adapter_source": "source/sa_movie_driver_connected.c",
         "adapter_source_sha256": "ae56659dd6e2ca45d163734ea95f179a39f19ba70f7fba4ad72b549cfbfaf7d3"
+      },
+      "movie_clear_integration": {
+        "newly_registered_entries": 1,
+        "qualified_rows": 234,
+        "executed_rows": 233,
+        "proven_unreachable_rows": 1,
+        "executed_conditional_outcomes": 31,
+        "proven_unreachable_conditional_outcomes": 1,
+        "unreachable_proof": {
+          "unreachable_row": "0x8c66597c",
+          "unreachable_edge": [
+            "0x8c665972",
+            "0x8c66597c"
+          ],
+          "checked_instructions": 11,
+          "global_word": "0x8c8a2d58",
+          "argument": "Reaching 8c66596c requires the first load of this word to equal six. The intervening path has no store or call; the second load is from the same word and therefore also equals six. The following BF/S cannot branch under the declared single-threaded, no-asynchronous-mutation model. Its delay slot still executes.",
+          "assumptions": [
+            "Immutable original code/literals.",
+            "No asynchronous CPU or RAM mutation.",
+            "Software register/callback policies stated in the verification report."
+          ]
+        },
+        "direct_comparisons": 19,
+        "complete_direct_clear_profiles": 10,
+        "failure_profiles": 4,
+        "hardware_self_loop_profiles": 3,
+        "calibration_profiles": 6,
+        "full_clear_bytes": 8388608,
+        "full_clear_helper_calls": 2097152,
+        "decoded_instructions_per_complete_clear": 33554432,
+        "compiled_source_count": 165,
+        "verification_interpreter_recovery_credit": 0,
+        "reused_copy_helper_additional_credit": 0,
+        "parent_additional_credit": 0,
+        "mode_selector_observed_return": 0,
+        "early_caller_next_dependency": "0x8c000000",
+        "next_task": "Trace the producer and runtime ownership of callback word 8c6734c4, which still resolves to 8c000000 in the actual early-caller profile; separately qualify remaining driver/reset/mode parents.",
+        "dll_sha256": "7d9d5af7c1cfd0e60f97f4f163c6786c2b6acaf1833df7dc37b93ff04e62c988",
+        "scope": "Original 8c6656e2 executes its full finite eight-MiB clear and qualifies under the documented software-platform domain. Native code performs every original helper call/write. Verification-only decoding executes every original loop/helper instruction and earns no game-code recovery credit.",
+        "limitations": [
+          "Native helper boundaries check exact register-sequence, address/value/width and FPU/FPUL invariants on every iteration. Counts, endpoints and streaming fingerprints also match the independently decoded execution. Fingerprints alone are not collision-free proofs.",
+          "The constant clear event run is stored compactly in the reference trace. All native writes and all reference instructions execute; this is trace compression, not a bulk-fill replacement. Full final 16-MiB RAM, eight-MiB VRAM, machine/FPU/special/banked state and prefix/suffix ordered boundaries are compared.",
+          "Nonzero patterned initial VRAM exposes missed or partial writes. Verification-only bus faults at zero, one, half and last-word completion retain exact faulting CPU/memory state. These hooks cannot supply game-service results.",
+          "Only the finite clear bound is removed in the new source/DLL. The hardware-failure infinite self-loop still stops on its second visit under SA_BOUND_RETAIL_STALLS; normal source preserves that infinite loop. Hardware storage/ID/status/timer observations remain explicit host inputs.",
+          "One row/outcome is proved unreachable under immutable literals and no asynchronous RAM mutation, rather than falsely counted as executed. No physical hardware timing, DMA, interrupt delivery, pixels or natural full boot is established.",
+          "The mode-selector profile now returns and the actual early caller clears all VRAM before reaching unresolved callback 8c000000. Parent recovery is not inferred from these profiles. All prior source/proof/canonical fields and build bytes remain preserved.",
+          "The complete game, playable ports, FPS/resolution settings, SUPIR textures and other targets remain unfinished; whole-project weighted estimate remains ten percent."
+        ],
+        "verification": "analysis/movie_clear_qualification.json",
+        "verification_sha256": "31da3ae16d0cc8568712d0bd3a554db02ecb6056305cf75735c606b64d3813dc",
+        "guide": "MOVIE_CLEAR.txt",
+        "adapter_source": "source/sa_movie_clear_connected.c",
+        "adapter_source_sha256": "3c70f73bcbe3199046de5a2076b8cea32bfcc21e38c4f4730767e56dc83f0bdc"
       }
     },
     {
@@ -159792,7 +159846,61 @@
         "Direct runtime command-buffer fixtures and explicit selector -> frame call boundaries do not establish natural boot scheduling or a playable frame.",
         "The bounded host packet sink captures polygon-window SQ transfers, not GPU consumption, rendering, interrupt/status behavior, backpressure or timing. Capacity exhaustion is an explicit -4 host stop.",
         "Inherited privileged bank-1/FD=0, MMU-off RAM, numerical and typed guard domains apply. Readiness entry edge proof excludes self-modifying code and stack/literal aliasing."
-      ]
+      ],
+      "movie_clear_integration": {
+        "newly_registered_entries": 1,
+        "qualified_rows": 234,
+        "executed_rows": 233,
+        "proven_unreachable_rows": 1,
+        "executed_conditional_outcomes": 31,
+        "proven_unreachable_conditional_outcomes": 1,
+        "unreachable_proof": {
+          "unreachable_row": "0x8c66597c",
+          "unreachable_edge": [
+            "0x8c665972",
+            "0x8c66597c"
+          ],
+          "checked_instructions": 11,
+          "global_word": "0x8c8a2d58",
+          "argument": "Reaching 8c66596c requires the first load of this word to equal six. The intervening path has no store or call; the second load is from the same word and therefore also equals six. The following BF/S cannot branch under the declared single-threaded, no-asynchronous-mutation model. Its delay slot still executes.",
+          "assumptions": [
+            "Immutable original code/literals.",
+            "No asynchronous CPU or RAM mutation.",
+            "Software register/callback policies stated in the verification report."
+          ]
+        },
+        "direct_comparisons": 19,
+        "complete_direct_clear_profiles": 10,
+        "failure_profiles": 4,
+        "hardware_self_loop_profiles": 3,
+        "calibration_profiles": 6,
+        "full_clear_bytes": 8388608,
+        "full_clear_helper_calls": 2097152,
+        "decoded_instructions_per_complete_clear": 33554432,
+        "compiled_source_count": 165,
+        "verification_interpreter_recovery_credit": 0,
+        "reused_copy_helper_additional_credit": 0,
+        "parent_additional_credit": 0,
+        "mode_selector_observed_return": 0,
+        "early_caller_next_dependency": "0x8c000000",
+        "next_task": "Trace the producer and runtime ownership of callback word 8c6734c4, which still resolves to 8c000000 in the actual early-caller profile; separately qualify remaining driver/reset/mode parents.",
+        "dll_sha256": "7d9d5af7c1cfd0e60f97f4f163c6786c2b6acaf1833df7dc37b93ff04e62c988",
+        "scope": "Original 8c6656e2 executes its full finite eight-MiB clear and qualifies under the documented software-platform domain. Native code performs every original helper call/write. Verification-only decoding executes every original loop/helper instruction and earns no game-code recovery credit.",
+        "limitations": [
+          "Native helper boundaries check exact register-sequence, address/value/width and FPU/FPUL invariants on every iteration. Counts, endpoints and streaming fingerprints also match the independently decoded execution. Fingerprints alone are not collision-free proofs.",
+          "The constant clear event run is stored compactly in the reference trace. All native writes and all reference instructions execute; this is trace compression, not a bulk-fill replacement. Full final 16-MiB RAM, eight-MiB VRAM, machine/FPU/special/banked state and prefix/suffix ordered boundaries are compared.",
+          "Nonzero patterned initial VRAM exposes missed or partial writes. Verification-only bus faults at zero, one, half and last-word completion retain exact faulting CPU/memory state. These hooks cannot supply game-service results.",
+          "Only the finite clear bound is removed in the new source/DLL. The hardware-failure infinite self-loop still stops on its second visit under SA_BOUND_RETAIL_STALLS; normal source preserves that infinite loop. Hardware storage/ID/status/timer observations remain explicit host inputs.",
+          "One row/outcome is proved unreachable under immutable literals and no asynchronous RAM mutation, rather than falsely counted as executed. No physical hardware timing, DMA, interrupt delivery, pixels or natural full boot is established.",
+          "The mode-selector profile now returns and the actual early caller clears all VRAM before reaching unresolved callback 8c000000. Parent recovery is not inferred from these profiles. All prior source/proof/canonical fields and build bytes remain preserved.",
+          "The complete game, playable ports, FPS/resolution settings, SUPIR textures and other targets remain unfinished; whole-project weighted estimate remains ten percent."
+        ],
+        "verification": "analysis/movie_clear_qualification.json",
+        "verification_sha256": "31da3ae16d0cc8568712d0bd3a554db02ecb6056305cf75735c606b64d3813dc",
+        "guide": "MOVIE_CLEAR.txt",
+        "adapter_source": "source/sa_movie_clear_connected.c",
+        "adapter_source_sha256": "3c70f73bcbe3199046de5a2076b8cea32bfcc21e38c4f4730767e56dc83f0bdc"
+      }
     },
     {
       "module": "1ST_READ.BIN",
@@ -161160,6 +161268,25 @@
         "Driver input R4 contains mode/size flags, R5 selects the pixel format, R6 is the additional configuration word and R7 is the extra input. An invalid display-mode profile follows its real error return and later stops at unresolved callback 8c000000; no callback result is supplied.",
         "Pool allocator 8c664ac0 reaches all 22 rows but lacks one branch outcome; it is deliberately uncredited here. Memory-manager constructor 8c663140 also remains partial. Canonical earlier source/proof/status fields and builds are preserved.",
         "The six retained late-boot controls remain separate from unfinished early startup and keep their genuine zero-heap/context faults. Full-game decompilation, playable ports and requested display/texture settings remain unfinished."
+      ]
+    },
+    {
+      "module": "1ST_READ.BIN",
+      "name": "sa_movie_clear_8c6656e2",
+      "address": "0x8c6656e2",
+      "end_exclusive": "0x8c6659ac",
+      "source": "source/sa_movie_clear.c",
+      "retail_span_sha256": "00b76be70a58c0236ae077dda186942b7dc91d799d91a67e0f5c7bf1c7da60b6",
+      "verification": "analysis/movie_clear_qualification.json",
+      "status": "Qualified original register initialization and complete eight-MiB clear: all 2,097,152 native helper calls execute. 233 instruction rows and 31 branch outcomes execute; one row/outcome is separately proved unreachable. Verification-only interpreter and parents earn no duplicate credit.",
+      "limitations": [
+        "Native helper boundaries check exact register-sequence, address/value/width and FPU/FPUL invariants on every iteration. Counts, endpoints and streaming fingerprints also match the independently decoded execution. Fingerprints alone are not collision-free proofs.",
+        "The constant clear event run is stored compactly in the reference trace. All native writes and all reference instructions execute; this is trace compression, not a bulk-fill replacement. Full final 16-MiB RAM, eight-MiB VRAM, machine/FPU/special/banked state and prefix/suffix ordered boundaries are compared.",
+        "Nonzero patterned initial VRAM exposes missed or partial writes. Verification-only bus faults at zero, one, half and last-word completion retain exact faulting CPU/memory state. These hooks cannot supply game-service results.",
+        "Only the finite clear bound is removed in the new source/DLL. The hardware-failure infinite self-loop still stops on its second visit under SA_BOUND_RETAIL_STALLS; normal source preserves that infinite loop. Hardware storage/ID/status/timer observations remain explicit host inputs.",
+        "One row/outcome is proved unreachable under immutable literals and no asynchronous RAM mutation, rather than falsely counted as executed. No physical hardware timing, DMA, interrupt delivery, pixels or natural full boot is established.",
+        "The mode-selector profile now returns and the actual early caller clears all VRAM before reaching unresolved callback 8c000000. Parent recovery is not inferred from these profiles. All prior source/proof/canonical fields and build bytes remain preserved.",
+        "The complete game, playable ports, FPS/resolution settings, SUPIR textures and other targets remain unfinished; whole-project weighted estimate remains ten percent."
       ]
     }
   ],

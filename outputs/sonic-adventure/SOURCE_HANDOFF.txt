@@ -1,5 +1,18 @@
 Sonic Adventure Dreamcast Rev A - source access and handoff
 
+Latest update (2026-10-25): full original eight-MiB VRAM clear
+Original 8c6656e2 now qualifies: all 2,097,152 helper calls execute per complete
+profile. Of 234 rows / 32 branch outcomes, 233 / 31 execute and one row/outcome
+is proved unreachable. Nineteen full-state comparisons and six independent
+decoder calibrations pass in the 165-source movie_clear.dll. Verification-only
+probe/decoder and the reused helper earn no game-code credit. Registry: 1332
+entries / 1329 unique pairs. Every older source/proof/build is retained.
+The mode-selector profile returns normally; earlier startup clears all VRAM
+then reaches actual unresolved callback 8c000000 via word 8c6734c4. Parent
+recovery remains separate. Next: trace that callback's producer and runtime
+ownership, then qualify remaining startup paths. Read MOVIE_CLEAR.txt and
+analysis/movie_clear_qualification.json. Keep Sol High. Overall 10%, goal active.
+
 Latest update (2026-10-24): renderer startup dependencies
 Ten new original helpers qualify: 934 rows / 50 outcomes in movie_driver.dll
 (164 sources). Ninety full-state comparisons, 337 independent checks, 98 bus API
