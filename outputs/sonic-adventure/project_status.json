@@ -129,7 +129,7 @@
     "prs_trailing_bytes": 0,
     "main_binary_indexed_functions": 3637,
     "main_binary_draft_pseudocode_functions": 3631,
-    "recovered_buildable_routines": 1379,
+    "recovered_buildable_routines": 1382,
     "recovered_routine_tests": "analysis/startup_verification.json",
     "recovered_routine_test_cases": 17,
     "main_binary_draft_export_failures": 6,
@@ -142544,6 +142544,69 @@
       ],
       "verification": "analysis/write_watch_qualification.json",
       "verification_sha256": "835f4ba00cf26466d73fc25365dd148230eb756df0ac7e7c703a64c52f182f38"
+    },
+    "movie_bulk_family_integration": {
+      "newly_registered_entries": 3,
+      "qualified_rows": 104,
+      "executed_rows": 104,
+      "qualified_conditional_outcomes": 10,
+      "executed_conditional_outcomes": 10,
+      "compiled_source_count": 183,
+      "static_family_adapter_rows": 410,
+      "partial_family_bodies": [
+        "0x8c65a5dc",
+        "0x8c65aaf4"
+      ],
+      "direct_comparisons": 201,
+      "independent_direct_checks": 1682,
+      "prefix_comparisons": 2,
+      "independent_prefix_checks": 41,
+      "regression_comparisons": 946,
+      "regression_record_checks": 57779,
+      "total_comparisons": 1149,
+      "sound_bus_unit_checks": 485,
+      "full_original_transfer_words": 524288,
+      "full_original_transfer_bytes": 2097152,
+      "complete_direct_pattern": "0x89abcdef",
+      "complete_cold_pattern": "0x41474553 (SEGA)",
+      "cold_prefix_boundaries": 319990,
+      "cold_prefix_steps": 14788356,
+      "cold_prefix_disc_reads": 89,
+      "masaru_bytes": 33408,
+      "masaru_sha256": "5ab700a241e5d5e164c104a76555b35002a6a84370aea17bf8c34d713cdc2cb9",
+      "canonical_reuse": [
+        {
+          "address": "0x8c10d460",
+          "name": "sa_movie_hardware_8c10d460",
+          "source": "source/sa_movie_hardware.c",
+          "verification": "analysis/movie_hardware_qualification.json"
+        },
+        {
+          "address": "0x8c10d770",
+          "name": "sa_movie_hardware_8c10d770",
+          "source": "source/sa_movie_hardware.c",
+          "verification": "analysis/movie_hardware_qualification.json"
+        }
+      ],
+      "reused_additional_credit": 0,
+      "next_dependency": "0x8c667080",
+      "other_frontiers": [
+        "0x8c666c2c",
+        "0x8c64bddc"
+      ],
+      "dll_sha256": "ca1cff4d62a0ca79f02ce6080a351ed4119a76d0212d748415cd7f204d6eadcd",
+      "scope": "Complete own two-MiB repeating-word transfer wrapper, bit-0 release/control routine and completion/callback dispatcher qualify with every own row/outcome executed. Original cold fill word is SEGA, not zero; a different full nonzero direct pattern also executes. Two extended canonical read/write providers receive zero duplicate credit. Actual request/info child dependencies remain missing, never replaced.",
+      "limitations": [
+        "Mutable two-MiB software sound RAM, finite FIFO observations and direct initialized channel/context fixtures are explicit inputs. This does not execute ARM/driver code or model physical arbitration, timing, audio or interrupt acceptance.",
+        "Both full-sized runs execute all 524288 original word stores; no shortened loop, supplied game-helper return or guest checkpoint is used. Complete ordered sound-bus traces are retained and compared with zero dropped entries.",
+        "Exact boundary/final RAM, VRAM and sound RAM use the previously qualified Windows single-thread page tracker. Immutable graphics-register tuple snapshots share storage only after exact equality. The old full-VRAM-clear decoder/fingerprint limitations remain.",
+        "Direct callback fixtures invoke existing original code or retain an unknown-callback stop. Real input/privilege/address failures preserve partial writes; no physical exception-vector delivery is claimed.",
+        "The fresh cold caller starts filesystem roots at zero and loads exact original MASARU bytes before its full SEGA fill. Its longer raw zero-FIFO sequence is declared explicitly; warm missing-file input remains separate. Startup stops at original SDK mode-one provider 667080.",
+        "Request/info adapters remain partial proposals. Natural reset, complete startup, gameplay, graphics, all requested playable ports, FPS/resolution/texture settings and SUPIR work remain unfinished."
+      ],
+      "verification": "analysis/movie_bulk_family_qualification.json",
+      "verification_sha256": "a280a807843edb2115b14f1e84aec6bc32119a3eecf18fc1b3632fd10b6db878",
+      "guide": "MOVIE_BULK_FAMILY.txt"
     }
   },
   "milestones": [
@@ -142717,10 +142780,10 @@
     "report": "analysis/recovery_coverage_audit.json",
     "candidate_inventory": "analysis/unrecovered_function_candidates.tsv",
     "boundary_inventory": "analysis/unresolved_module_boundaries.json",
-    "registered_routines": 1379,
-    "registered_unique_module_address_pairs": 1376,
+    "registered_routines": 1382,
+    "registered_unique_module_address_pairs": 1379,
     "indexed_candidates_in_export_snapshots": 11411,
-    "registered_entries_matching_export_snapshots": 1265,
+    "registered_entries_matching_export_snapshots": 1268,
     "non_texture_binaries_without_function_index": 211,
     "registry_evidence_errors": 0,
     "stale_whole_source_hash_reports": 0,
@@ -150045,5 +150108,5 @@
   },
   "unverified_work": {},
   "unverified_drafts": {},
-  "recovered_buildable_routines": 1379
+  "recovered_buildable_routines": 1382
 }

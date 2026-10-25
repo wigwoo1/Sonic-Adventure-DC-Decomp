@@ -1,0 +1,134 @@
+Sonic Adventure Dreamcast Rev A - full sound-RAM transfer and control family
+2026-10-25 | Overall estimate 10% weighted milestones, not code coverage.
+
+Three complete own routines newly qualify, every own row and outcome executed:
+8c65a8c8 full-size repeating-word transfer wrapper: 18 rows / no branches;
+8c65a27c bit-0 control release with interrupt-mask restore: 53 rows / 2 outcomes;
+8c65a518 completion/callback dispatcher: 33 rows / 8 outcomes.
+Total 104 rows / 10 outcomes. Registry: 1382 entries / 1379 unique module-address
+pairs. Whole-game routine count and complete recovered-code percentage unknown.
+
+Original behavior
+The wrapper invokes existing 65a200, then original 10d770 with source 8c67c1c4,
+destination a0800000, width 4, count 80000 hex and source/destination strides 0/1.
+All 524288 word stores execute, writing the complete 2-MiB destination. The
+retail source word is 41474553, little-endian ASCII SEGA. This is a repeating
+SEGA fill, NOT zero clearing. A separate direct fixture supplies 89abcdef and
+also executes the entire original transfer. No guest count or loop is shortened.
+The release routine clears bit 0 using its distinct retail scratch address
+8c67c1c0; the earlier set-bit routine uses 8c8a3408. Both retain original mask
+operations, nested calls and 256 actual delay iterations. The callback routine
+retains null/error, no-callback, completion-sentinel and real callback paths.
+Tests invoke existing retail callback 5ff2cc or keep an unknown-callback stop;
+no callback/game-helper return is supplied.
+
+Native/source integration
+The 183-source research DLL retains all earlier source and connects five
+byte-checked proposals / 410 rows. Only the three complete bodies qualify.
+Request body 65a5dc and information body 65aaf4 remain partial and uncredited.
+Two already registered transfer providers keep canonical name/source/proof/
+status and receive zero duplicate credit. Separate extended source adapters
+retain the exact current instruction bodies and headers: READ uses the existing
+RTC adapter, WRITE uses the existing hardware adapter. Only export names and
+aligned 1/2/4-byte access validation for the new 2-MiB domain change. Existing
+RTC and other domain behavior remains covered by the regression replay.
+
+An outer software bus provides borrowed mutable RAM over physical offsets
+00800000..009fffff and an explicit borrowed ordered trace buffer. It delegates
+other addresses/cache requests to the existing bus, preserves errors and does
+not execute ARM code or invent device progress. Full runs store every sound
+access trace event and compare its complete ordered bytes with the independent
+original model: 524288 events, zero dropped. The qualified exact-page checker
+compares RAM, VRAM and the extra RAM at every recorded ordinary boundary and
+again completely at the end. Immutable graphics-register tuple snapshots share
+storage only after exact equality; this saves duplicate storage, not execution.
+Address naming corroboration (facts only; no external code imported):
+https://github.com/torvalds/linux/blob/master/sound/sh/aica.h
+
+Verification
+- Compilation/linking of all 183 sources passes. Strict unbounded compiler
+  diagnostics also cover all sources; static production C decodes no opcodes.
+- 485 independent native/reference bus checks pass: byte/word/long accesses,
+  P0/P1/P2 aliases, alignment/end boundaries, invalid widths, absent storage,
+  null arguments, exact parent forwarding and bounded trace accounting.
+- 201 original/native comparisons / 1682 additional checks pass: 188 normal
+  returns, six missing/unavailable service stops, five raw-input/privilege stops
+  and two address controls. Cases cover all interrupt masks, both register
+  banks, three FPU modes, completion/callback/error paths, partial request/info
+  frontiers and 72 actual new-domain read/write combinations with ramp data,
+  widths 1/2/4, counts 0/1/3/17 and fixed/incrementing/decrementing strides.
+- The direct full 89abcdef fixture and fresh real-caller SEGA fill each execute
+  all 524288 stores. Independent checks compare the entire two-MiB result with
+  the expected repeating word. A finite-input failure preserves exactly its
+  actual first 232 stores / 928 bytes, followed by untouched initial RAM.
+  Callback independent RAM checks include every guest-stack/error/global write.
+- 945 earlier direct controls plus the earlier warm full-video-clear startup
+  replay pass: 946 comparisons / 57779 saved-record checks. The bridge matches
+  the prior bridge exactly after reversing five added routes/declarations and
+  the two explicit provider export changes. Three earlier caller prefixes and
+  two constructor controls intentionally advance into their later evidence.
+- Two newly executed uninterrupted caller profiles / 41 checks pass. Cold
+  filesystem/interface roots start at zero; original producers build root
+  8c6946e0 with flag 1, perform 89 real disc reads and load exact original
+  MASARU.DRV bytes (33408 bytes at 0cd00000), SHA256:
+  5ab700a241e5d5e164c104a76555b35002a6a84370aea17bf8c34d713cdc2cb9
+- Cold execution matches 319990 ordinary service
+  boundaries / 14788356 original ordinary steps. It retains all 2097152
+  native writes clearing eight MiB of VRAM, performs the entire sound-RAM SEGA
+  fill, then reaches the actual missing mode-one provider 8c667080. That static
+  frontier is a request-queue enqueue body; mode-zero sibling 666c2c is also
+  exported read-only. Draft evidence gives neither function recovery credit.
+- Warm missing-file control matches 1549 boundaries,
+  performs zero reads and zero sound-RAM writes, and retains stop 8c64bddc.
+  Cold explicitly supplies a longer finite sequence of 262144 raw zero FIFO
+  words via a count recipe; warm keeps its earlier input list. Exhaustion is
+  still a real stop. The instruction watchdog grows to permit the actual
+  original loop, without changing guest code or supplying completion.
+- Completed expensive caller comparisons are saved before endpoint validation.
+  Earlier test expectations incorrectly assumed shared scratch storage and a
+  zero fill; original/native state matched, and retail literals established the
+  correct addresses and SEGA pattern. Final proofs use the corrected checks.
+  A private early pilot hit a missing postvalidation import; it receives no
+  qualification credit. The final direct/caller proofs execute fully and pass.
+- Total current original/native comparisons: 1149, plus 485 bus unit checks.
+  Earlier CPU-backend/lifecycle proofs remain historical; the entire accumulated
+  suite is not rerun. The reproducibility workflow preserves all prior selected
+  files except ten reviewed documentation/status/audit/registry paths against
+  commit 9354f4430083. All prior canonical fields, requirements, source/proof and
+  build bytes remain intact.
+
+Limits
+This is declared software RAM plus finite device inputs, not physical AICA/G2
+arbitration, IRQ acceptance, electrical timing, ARM execution or audio output.
+MASARU bytes are loaded, not executed/decompiled. Host faults preserve partial
+state without physical exception-vector delivery. The established full-video-
+clear decoder/fingerprint limitations remain; its compressed trace is not a
+cryptographic collision-proof claim. Exact-page checking retains the qualified
+Windows single-thread/ownership contract. Natural reset, complete startup,
+gameplay/graphics, all requested playable ports, FPS/resolution/texture settings,
+SUPIR and stereoscopic 3D remain unfinished. Texture Off must disable textures
+and use vertex colors. Research libraries are incomplete artifacts, not a
+playable game. Retail inputs/assets, toolchains, caches and credentials are not
+published. The full goal stays active.
+
+Reproduction (matching local Rev A inputs/compiler/runtime required)
+python -B outputs/sonic-adventure/recover_movie_bulk_family.py
+python -B outputs/sonic-adventure/recover_movie_bulk_transfer.py
+python -B outputs/sonic-adventure/connect_movie_bulk_family.py
+powershell -File outputs/sonic-adventure/build_movie_bulk_family.ps1
+python -B outputs/sonic-adventure/verify_sound_ram_bus.py
+python -B outputs/sonic-adventure/verify_movie_bulk_family.py
+python -B outputs/sonic-adventure/verify_movie_bulk_family_regression.py
+python -B outputs/sonic-adventure/capture_movie_bulk_family_prefix.py
+python -B outputs/sonic-adventure/verify_movie_bulk_family_prefix.py
+powershell -File outputs/sonic-adventure/ghidra/export_movie_bulk_family_frontier.ps1
+python -B outputs/sonic-adventure/inventory_movie_bulk_family_frontier.py
+python -B outputs/sonic-adventure/qualify_movie_bulk_family.py
+python -B outputs/sonic-adventure/register_movie_bulk_family.py
+python -B outputs/sonic-adventure/verify_movie_bulk_family_workflow.py
+Preserved family listings can be regenerated with ghidra/export_movie_bulk_family.ps1.
+The full-size direct/caller runs take minutes; retain their live process handles.
+analysis/movie_bulk_family_qualification.json links focused reports and hashes.
+
+Next prioritize original queue provider 667080 and actual dependencies, retaining
+mode-zero666c2c and warm64bddc controls. Keep Sol High. Overall estimate10%.
