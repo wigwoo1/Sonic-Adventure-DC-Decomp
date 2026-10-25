@@ -1,0 +1,67 @@
+Sonic Adventure Dreamcast Rev A - initializer queue scenarios
+2026-10-25. Whole-project weighted estimate remains approximately 10%.
+
+All 33 full-state original-instruction/native comparisons and 333 independent
+checks pass in three FPU modes using the unchanged 171-source research DLL.
+Combined with retained media and prior initializer evidence, original 8c600038
+now reaches 472/479 rows and 49/58 conditional outcomes. Nine more rows execute.
+Seven rows and nine outcomes remain unverified. The body stays partial and
+receives zero new registry credit. Registry stays 1365 entries / 1362 unique pairs.
+
+External queue activity is an explicit software-platform input. It uses actual
+exported sa_disc_queue_submit, step and cancel APIs. No CPU register, RAM result,
+original helper or firmware return is replaced. Other-client operations happen
+after the service-entry snapshot and before the unchanged native service call;
+the independent model applies the same declared operations after its snapshot.
+Every subsequent boundary and final queue/CPU/RAM/device state must match.
+This models single-threaded interleaving, not a race or physical drive interrupt.
+
+The eleven profiles run in FPU modes 0, 1 and 4. They include a normal control;
+zero-sector media; one, seven or eight already-owned completed requests; the
+eight-request case with zero sectors; cancellation before the first or second
+pump; and seven/eight other-client submissions immediately before command 24.
+Seven submissions are also combined with cancellation of another client's
+first request. Zero-byte requests create real queue ownership without borrowing
+invalid output pointers or causing invented reads. An owner retains each request
+until the real release/status behavior releases it.
+
+One or more already-owned requests make the original initial service stop with
+host -6 at 8c00f100. Those cases do not have an original guest return; R0 is an
+incidental live register. Filling all eight slots later makes actual admission
+fail and original code returns guest -2. Zero-sector media reaches the original
+drive-type mismatch and returns guest -5. Cancelling the first request produces
+guest -27 through the actual queue status and original decoder. Cancelling the
+version request skips version parsing and still permits the normal mount. With
+seven other-client requests, cancelling that client's first handle leaves the
+initializer able to finish; every retained owner/handle/state is compared.
+
+Independent checks cover the declared external action sequence, original guest
+errors/success, read counts, return stack/PR, original context/initialized flag,
+and retained queue ownership. Full-state comparisons retain all earlier machine,
+memory, FPU, software-device, input cursor and ordered service-boundary checks.
+The invented normal media and prepared library/header assumptions remain those
+in MOVIE_MOUNT.txt. These scenarios do not prove that reset or physical hardware
+naturally generates the scheduled external actions.
+
+The seven missing rows are the early -29-specific error decisions. Current host
+queue cancellation produces category zero and guest -27; it does not establish
+the original category-two response required by that arm. The remaining branch
+outcomes also include admission/status paths constrained by current constructor
+and platform contracts. No firmware result is fabricated to close those gaps,
+and they are not declared dead. Preserve them while recovering original status
+producers and progressing original caller/MOVIE boot integration.
+
+Original C, all historical source/proof bytes and all 2591 archived build files
+are preserved. No native C changes or newly compiled DLL are claimed. The
+workflow checks Python syntax, current evidence/media pins and the 171 unbounded
+C sources with warnings as errors. It does not rerun the accumulated suite.
+
+Reproduce with matching local retail inputs and retained build/tool setup:
+python -B outputs/sonic-adventure/verify_movie_queue_scenarios.py
+python -B outputs/sonic-adventure/verify_movie_queue_scenarios_workflow.py
+
+Reports: analysis/movie_queue_scenarios_verification.json and
+analysis/movie_queue_scenarios_workflow_verification.json. Keep Sol High for
+the remaining reverse engineering. Full natural boot/gameplay, playable ports,
+physical device behavior and requested frame-rate/display/texture settings are
+unfinished. See GITHUB_PUBLISHING.txt for reviewed source/research publication.
