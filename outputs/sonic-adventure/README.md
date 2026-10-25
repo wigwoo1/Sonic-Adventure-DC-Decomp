@@ -8,7 +8,7 @@ Public repository: [wigwoo1/Sonic-Adventure-DC-Decomp](https://github.com/wigwoo
 
 ## Latest verified milestone
 
-The original video-memory clear now executes all **2,097,152 helper calls** and clears **8 MiB**. The new 165-source research DLL passes 19 full-state comparisons and six independent decoder calibrations. One routine qualifies: 233 instruction rows and 31 branch outcomes execute; one row/outcome is separately proved unreachable. Previous source and builds remain intact. See `MOVIE_CLEAR.txt` and `analysis/movie_clear_qualification.json`. Startup still reaches an unresolved callback; the overall estimate remains **10%**.
+Five original post-driver services qualify (**211 instruction rows / eight branch outcomes**) in the new 166-source research DLL. All **50 full-state comparisons and 202 independent checks** pass. An explicit, sourced system-bus revision profile lets the original driver return without changing its callback. Startup now creates its device context and reaches the next controller-context producer. Driver/controller/clock parents remain partial. See `MOVIE_REVISION.txt` and `analysis/movie_revision_qualification.json`. The overall estimate remains **10%**.
 
 ## Project files
 

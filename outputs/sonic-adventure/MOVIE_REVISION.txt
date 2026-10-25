@@ -1,0 +1,95 @@
+Sonic Adventure Dreamcast Rev A - explicit revision and post-driver services
+
+Whole-project estimate: 10% weighted milestones, not recovered-code coverage.
+Goal active. This remains an incomplete research DLL, not a playable port.
+
+Finding and platform profile
+The callback at 8c6734c4 initially contains 8c000000. The original driver reads
+system-bus register a05f689c, takes its low byte and compares it with ten. Values
+below ten execute the legacy fallback; ten or higher take the original return
+path. No callback target, return value or game instruction has been rewritten.
+
+The pinned Flycast implementation identifies 005f689c as SB_SBREV (system-bus
+revision) and initializes it to hexadecimal B (decimal eleven). This milestone
+uses eleven as an explicit raw platform observation. It does not change the
+old backend default, measure the user's console or guarantee every hardware
+revision. Revision zero/nine controls still reach the genuine unknown callback.
+The original slot remains 8c000000 before and after all fifty comparisons.
+
+Primary evidence, commit e88b0ced2243de137bcccac0072f0c1dd00d41bd:
+https://github.com/flyinghead/flycast/blob/e88b0ced2243de137bcccac0072f0c1dd00d41bd/core/hw/holly/sb.cpp#L289
+https://github.com/flyinghead/flycast/blob/e88b0ced2243de137bcccac0072f0c1dd00d41bd/core/hw/holly/sb.cpp#L663
+The source snapshot is hashed privately under work/sonic-adventure for research
+reproduction; no emulator implementation is compiled into the game. The evidence
+report retains only small identifying excerpts and source metadata.
+
+The read-only seeded Ghidra inventory shows a read and data reference for the
+callback slot, with no WRITE reference. That is not proof that no computed or
+external writer exists. The raw executable has one literal occurrence of that
+slot address, at 8c6049bc. Original branch bytes and literals are checked.
+
+Qualified services
+Five closed original bodies qualify: 211 instruction rows / eight outcomes.
+8c6024fa (8 rows): event/device startup wrapper, calling real device initialization.
+8c6458fc (40 rows): event-table and head reset with mask restoration.
+8c6461f0 (82 rows): controller event registration and buffer initialization.
+8c65262c (28 rows): renderer mode selection, including original invalid-mode result.
+8c651384 (53 rows): renderer reset sequence, including the full eight-MiB clear.
+
+Existing table-copy body 8c6461ae (33 rows) has a new complete-state adapter and
+an explicit 24-record source fixture. Its canonical source, proof, name and status
+remain intact; it receives zero duplicate recovery credit. Registry: 1337 entries
+/ 1334 unique module-address pairs. The exhaustive game routine total is unknown.
+
+Build and tests
+The new 166-source movie_revision.dll compiles with strict Clang warnings and no
+C runtime. Fifty full-state comparisons / 202 independent checks pass. Statuses:
+32 normal returns, two reached unsupported-precision stops, ten genuine missing
+service stops, three explicit privilege/input stops, and three memory faults.
+Every qualified body covers all own static instruction rows and conditional
+outcomes. Successful driver calls preserve their stack/return state, and all
+profiles preserve the original callback word.
+
+The earlier full-clear decoder/probe checks remain unchanged. Every native clear
+helper call/write and independently decoded loop instruction executes; full final
+16-MiB RAM/eight-MiB VRAM, CPU/FPU/banked/special state, software device state,
+finite raw input cursors and ordinary ordered call boundaries are compared.
+No game-service result, allocation return or clock result is supplied by a stub.
+
+Actual startup progress and remaining work
+The supported precision-zero earlier caller now initializes its real heap root
+8c88ef1c and device-context root 8c7ac7a0 through original code, clears all VRAM,
+then reaches real missing controller-context producer 8c65f558. Its 254-row
+Ghidra export is retained as unqualified research evidence for the next task.
+RTC read helper 8c10be78 (46 rows) is also exported and remains unconnected.
+
+The driver returns in nineteen profiles, but remains partial: 246/255 rows and
+27/30 outcomes are covered, with three outcomes and the legacy callback unresolved.
+It receives no completion credit here. Controller parent 8c601a34 reaches all
+79 own rows but lacks an outcome and stops in its supplied-buffer path. The
+controller-buffer and clock parents remain partial too. Unsupported precision-one
+controls stop at the reached floating-point operations; blanket double-precision
+support is not claimed. The ordinary precision-zero and alternate-bank supported
+profiles are separately compared.
+
+The platform remains software storage plus explicit ID/revision/status/FIFO/
+scan/clock observations. Controller replies, DMA execution, interrupt delivery,
+physical timing, pixels, natural complete boot and playable PC/other ports are
+not established. Requested FPS/8K/settings/SUPIR texture work remains unfinished.
+
+Reproduce from the workspace root (adapt Python/compiler paths):
+python -B outputs/sonic-adventure/recover_movie_revision.py
+python -B outputs/sonic-adventure/connect_movie_revision.py
+powershell -File outputs/sonic-adventure/build_movie_revision.ps1
+python -B outputs/sonic-adventure/inventory_movie_revision.py
+python -B outputs/sonic-adventure/verify_movie_revision.py
+python -B outputs/sonic-adventure/qualify_movie_revision.py
+python -B outputs/sonic-adventure/register_movie_revision.py
+python -B outputs/sonic-adventure/verify_movie_revision_workflow.py
+Matching retail inputs and the pinned research source snapshot are required for
+local reproduction; both stay outside the public source/build archive.
+
+Next: recover controller-context producer 8c65f558 and its actual lower services,
+then RTC reader 8c10be78. Keep Sol High for these hardware/runtime dependencies.
+
+Qualified DLL SHA256: d699296906f3f2aa2ba12225294336dbbc37986e1111b68cadb828936b1694ae

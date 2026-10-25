@@ -1,0 +1,53 @@
+{
+  "callback_word": "0x8c6734c4",
+  "retail_callback_value": "0x8c000000",
+  "literal_occurrences": [
+    "0x8c6049bc"
+  ],
+  "callback_references": [
+    {
+      "target": "8c6734c4",
+      "from": "8c604926",
+      "type": "READ",
+      "instruction": "mov.l @r2,r3",
+      "function_entry": "8c604702",
+      "function_name": "FUN_8c604702"
+    },
+    {
+      "target": "8c6734c4",
+      "from": "8c6049bc",
+      "type": "DATA",
+      "instruction": "",
+      "function_entry": "",
+      "function_name": ""
+    }
+  ],
+  "revision_register": "0xa05f689c",
+  "reference_revision": 11,
+  "source_commit": "e88b0ced2243de137bcccac0072f0c1dd00d41bd",
+  "source_url": "https://github.com/flyinghead/flycast/blob/e88b0ced2243de137bcccac0072f0c1dd00d41bd/core/hw/holly/sb.cpp",
+  "source_lines": {
+    "register": 289,
+    "reset": 663
+  },
+  "source_excerpt": [
+    "//0x005F689C    SB_SBREV    R   System bus revision number",
+    "SB_SBREV = 0xB;"
+  ],
+  "interpretation": "The original driver tests the low revision byte against ten. Values below ten reach the stored fallback callback; ten or higher take the original return path. The explicit Flycast reference profile supplies eleven without rewriting the callback or any game instructions.",
+  "limitations": [
+    "This is an emulator-supported raw hardware profile, not a measurement of the user console or a guarantee covering every Dreamcast revision.",
+    "No WRITE reference is present in this seeded Ghidra inventory; this does not prove that no computed or external writer exists.",
+    "The historical revision-zero control and its genuine unknown target remain preserved. Current platform defaults are not changed.",
+    "The external source is retained privately for reproducibility/hash checking; no emulator implementation is compiled into the recovered game."
+  ],
+  "sha256": {
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\inventory_movie_revision.py": "8b630eae9585d706ad1f141031ad47c7e4dca5dfe31b3c124c770824772e84f7",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\work\\sonic-adventure\\flycast-sb-e88b0ced2243de137bcccac0072f0c1dd00d41bd.cpp": "d9d78058632037b566b6e9419e365071d02e6c0cc3615a61fdbe6800ce1830a2",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\work\\sonic-adventure\\extracted\\1ST_READ.BIN": "45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\analysis\\movie-startup-driver-frontier\\8c604702_instructions.tsv": "872c88d0a9ddb21ec2661083bd684d73bd4af1b14a19a598ab1d990091d10239",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\analysis\\movie-startup-platform-references\\references.tsv": "b305bd748caa03b6d165582f4e869472894e7da3038535a1c4041f01f3b743b4",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\ghidra\\export_movie_startup_platform_references.ps1": "ecb9eecb9cefc93317938b66fe13a55e8c3186ea274f5cd716318dcef2e5c8b5",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\ghidra\\ExportOverlaySelectorReferences.java": "13bb93dbc257abe137571afd7892ae50b61a55c2bbca8496780d747f1a6c296b"
+  }
+}

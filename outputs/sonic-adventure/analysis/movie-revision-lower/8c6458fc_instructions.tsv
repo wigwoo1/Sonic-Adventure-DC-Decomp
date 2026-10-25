@@ -1,0 +1,41 @@
+address	length	bytes	instruction	flows
+8c6458fc	2	fc7f	add #-0x4,r15	
+8c6458fe	2	0200	stc SR,r0	
+8c645900	2	7c93	mov.w 0x8c6459fc,r3	
+8c645902	2	0940	shlr2 r0	
+8c645904	2	0940	shlr2 r0	
+8c645906	2	0fc9	and #0xf,r0	
+8c645908	2	012f	mov.w r0,@r15	
+8c64590a	2	0200	stc SR,r0	
+8c64590c	2	3920	and r3,r0	
+8c64590e	2	f0cb	or #0xf0,r0	
+8c645910	2	0e40	ldc r0,SR	
+8c645912	2	7496	mov.w 0x8c6459fe,r6	
+8c645914	2	00e5	mov #0x0,r5	
+8c645916	2	3dd7	mov.l 0x8c645a0c,r7	
+8c645918	2	7c36	add r7,r6	
+8c64591a	2	7364	mov r7,r4	
+8c64591c	2	5314	mov.l r5,@(0xc,r4)	
+8c64591e	2	1074	add #0x10,r4	
+8c645920	2	6234	cmp/hs r6,r4	
+8c645922	2	fb8b	bf 0x8c64591c	8c64591c 
+8c645924	2	6c96	mov.w 0x8c645a00,r6	
+8c645926	2	3ad7	mov.l 0x8c645a10,r7	
+8c645928	2	7c36	add r7,r6	
+8c64592a	2	7364	mov r7,r4	
+8c64592c	2	5224	mov.l r5,@r4	
+8c64592e	2	0474	add #0x4,r4	
+8c645930	2	6234	cmp/hs r6,r4	
+8c645932	2	fb8b	bf 0x8c64592c	8c64592c 
+8c645934	2	f160	mov.w @r15,r0	
+8c645936	2	0203	stc SR,r3	
+8c645938	2	0d60	extu.w r0,r0	
+8c64593a	2	5f92	mov.w 0x8c6459fc,r2	
+8c64593c	2	0fc9	and #0xf,r0	
+8c64593e	2	0840	shll2 r0	
+8c645940	2	2923	and r2,r3	
+8c645942	2	0840	shll2 r0	
+8c645944	2	3b20	or r3,r0	
+8c645946	2	0e40	ldc r0,SR	
+8c645948	2	0b00	rts	
+8c64594a	2	047f	_add #0x4,r15	
