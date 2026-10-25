@@ -5401,7 +5401,618 @@
       "retail_span_sha256": "eda301c3f4ca3dc78390ea9dd84d7f2042f4be4ca8d67ea09055ff66e582b4f5",
       "source": "source/frame_countdown.c",
       "verification": "analysis/frame_countdown_verification.json",
-      "status": "compiled and matched state writes, service ordering and mutation within scope; registration and finish bodies hooked"
+      "status": "compiled and matched state writes, service ordering and mutation within scope; registration and finish bodies hooked",
+      "movie_initialize_integration": {
+        "compiled_source_count": 172,
+        "static_adapter_bodies": 11,
+        "static_adapter_rows": 332,
+        "executed_adapter_rows": 83,
+        "direct_comparisons": 68,
+        "independent_checks": 294,
+        "retained_warm_startup_comparisons": 1,
+        "total_comparisons": 69,
+        "canonical_reuse": [
+          {
+            "address": "0x8c051760",
+            "name": "sa_frame_countdown_configure_8c051760",
+            "source": "source/frame_countdown.c",
+            "verification": "analysis/frame_countdown_verification.json"
+          },
+          {
+            "address": "0x8c055c44",
+            "name": "sa_retail_constant_setter_8c055c44",
+            "source": "source/retail_constant_setters.c",
+            "verification": "analysis/retail_constant_setters_verification.json"
+          },
+          {
+            "address": "0x8c10ba1e",
+            "name": "sa_platform_signature_value_8c10ba1e",
+            "source": "source/sa_platform_signature_value_8c10ba1e.c",
+            "verification": "analysis/platform_signature_value_8c10ba1e_verification.json"
+          },
+          {
+            "address": "0x8c10c0d0",
+            "name": "sa_indirect_global_tail_call_8c10c0d0",
+            "source": "source/sa_indirect_global_tail_call_8c10c0d0.c",
+            "verification": "analysis/indirect_global_tail_call_8c10c0d0_verification.json"
+          },
+          {
+            "address": "0x8c10c0f8",
+            "name": "sa_indirect_global_tail_call_three_8c10c0f8",
+            "source": "source/sa_indirect_global_tail_call_three_8c10c0f8.c",
+            "verification": "analysis/indirect_global_tail_call_three_8c10c0f8_verification.json"
+          },
+          {
+            "address": "0x8c10da50",
+            "name": "sa_indirect_literal_tail_call_8c10da50",
+            "source": "source/sa_indirect_literal_tail_call_cluster.c",
+            "verification": "analysis/indirect_literal_tail_call_cluster_verification.json"
+          },
+          {
+            "address": "0x8c604510",
+            "name": "sa_packet_global_value_set_8c604510",
+            "source": "source/packet_global_setter.c",
+            "verification": "analysis/packet_global_setter_verification.json"
+          }
+        ],
+        "reused_additional_credit": 0,
+        "new_registry_credit": 0,
+        "parent_bodies_qualified": false,
+        "coverage_by_routine": [
+          {
+            "address": "0x8c0546c0",
+            "static_rows": 177,
+            "covered_rows": 15,
+            "missing_rows": [
+              "0x8c0546de",
+              "0x8c0546e0",
+              "0x8c0546e2",
+              "0x8c0546e4",
+              "0x8c0546e6",
+              "0x8c0546e8",
+              "0x8c0546ea",
+              "0x8c0546ec",
+              "0x8c0546ee",
+              "0x8c0546f0",
+              "0x8c0546f2",
+              "0x8c0546f4",
+              "0x8c0546f6",
+              "0x8c0546f8",
+              "0x8c0546fa",
+              "0x8c0546fc",
+              "0x8c0546fe",
+              "0x8c054700",
+              "0x8c054702",
+              "0x8c054704",
+              "0x8c054706",
+              "0x8c054708",
+              "0x8c05470a",
+              "0x8c05470c",
+              "0x8c05470e",
+              "0x8c054710",
+              "0x8c054712",
+              "0x8c054714",
+              "0x8c054716",
+              "0x8c054718",
+              "0x8c05471a",
+              "0x8c05471c",
+              "0x8c05471e",
+              "0x8c054720",
+              "0x8c054722",
+              "0x8c054724",
+              "0x8c054726",
+              "0x8c054728",
+              "0x8c05472a",
+              "0x8c05472c",
+              "0x8c05472e",
+              "0x8c054730",
+              "0x8c054732",
+              "0x8c054734",
+              "0x8c054736",
+              "0x8c054738",
+              "0x8c05473a",
+              "0x8c05473c",
+              "0x8c05473e",
+              "0x8c054740",
+              "0x8c054742",
+              "0x8c054744",
+              "0x8c054746",
+              "0x8c054748",
+              "0x8c05474a",
+              "0x8c05474c",
+              "0x8c05474e",
+              "0x8c054750",
+              "0x8c054752",
+              "0x8c054754",
+              "0x8c054756",
+              "0x8c054758",
+              "0x8c05475a",
+              "0x8c05475c",
+              "0x8c05475e",
+              "0x8c054760",
+              "0x8c054762",
+              "0x8c054764",
+              "0x8c054766",
+              "0x8c054768",
+              "0x8c05476a",
+              "0x8c05476c",
+              "0x8c05476e",
+              "0x8c054770",
+              "0x8c054772",
+              "0x8c054774",
+              "0x8c054776",
+              "0x8c054778",
+              "0x8c05477a",
+              "0x8c05477c",
+              "0x8c05477e",
+              "0x8c054780",
+              "0x8c054782",
+              "0x8c054784",
+              "0x8c054786",
+              "0x8c054788",
+              "0x8c05478a",
+              "0x8c05478c",
+              "0x8c05478e",
+              "0x8c054790",
+              "0x8c054792",
+              "0x8c054794",
+              "0x8c054796",
+              "0x8c054798",
+              "0x8c05479a",
+              "0x8c05479c",
+              "0x8c05479e",
+              "0x8c0547a0",
+              "0x8c0547a2",
+              "0x8c0547a4",
+              "0x8c0547a6",
+              "0x8c0547a8",
+              "0x8c0547aa",
+              "0x8c0547ac",
+              "0x8c0547ae",
+              "0x8c0547b0",
+              "0x8c0547b2",
+              "0x8c0547b4",
+              "0x8c0547b6",
+              "0x8c0547b8",
+              "0x8c0547ba",
+              "0x8c0547bc",
+              "0x8c0547be",
+              "0x8c0547c0",
+              "0x8c0547c2",
+              "0x8c0547c4",
+              "0x8c0547c6",
+              "0x8c0547c8",
+              "0x8c0547ca",
+              "0x8c0547cc",
+              "0x8c0547ce",
+              "0x8c0547d0",
+              "0x8c0547d2",
+              "0x8c0547d4",
+              "0x8c0547d6",
+              "0x8c0547d8",
+              "0x8c0547da",
+              "0x8c0547dc",
+              "0x8c054860",
+              "0x8c054862",
+              "0x8c054864",
+              "0x8c054866",
+              "0x8c054868",
+              "0x8c05486a",
+              "0x8c05486c",
+              "0x8c05486e",
+              "0x8c054870",
+              "0x8c054872",
+              "0x8c054874",
+              "0x8c054876",
+              "0x8c054878",
+              "0x8c05487a",
+              "0x8c05487c",
+              "0x8c05487e",
+              "0x8c054880",
+              "0x8c054882",
+              "0x8c054884",
+              "0x8c054886",
+              "0x8c054888",
+              "0x8c05488a",
+              "0x8c05488c",
+              "0x8c05488e",
+              "0x8c054890",
+              "0x8c054892",
+              "0x8c054894",
+              "0x8c054896",
+              "0x8c054898",
+              "0x8c05489a",
+              "0x8c05489c",
+              "0x8c05489e",
+              "0x8c0548a0",
+              "0x8c0548a2"
+            ],
+            "conditional_edges_covered": 0,
+            "missing_edges": [
+              [
+                "0x8c0546e6",
+                "0x8c0546ea"
+              ],
+              [
+                "0x8c0546e6",
+                "0x8c0546f8"
+              ],
+              [
+                "0x8c054708",
+                "0x8c05470a"
+              ],
+              [
+                "0x8c054708",
+                "0x8c054716"
+              ],
+              [
+                "0x8c05470c",
+                "0x8c05470e"
+              ],
+              [
+                "0x8c05470c",
+                "0x8c054722"
+              ],
+              [
+                "0x8c054714",
+                "0x8c054716"
+              ],
+              [
+                "0x8c054714",
+                "0x8c054722"
+              ],
+              [
+                "0x8c054790",
+                "0x8c054792"
+              ],
+              [
+                "0x8c054790",
+                "0x8c054796"
+              ],
+              [
+                "0x8c0547a4",
+                "0x8c0547a6"
+              ],
+              [
+                "0x8c0547a4",
+                "0x8c0547aa"
+              ],
+              [
+                "0x8c0547b0",
+                "0x8c0547b2"
+              ],
+              [
+                "0x8c0547b0",
+                "0x8c0547ca"
+              ],
+              [
+                "0x8c0547b4",
+                "0x8c0547b6"
+              ],
+              [
+                "0x8c0547b4",
+                "0x8c054866"
+              ],
+              [
+                "0x8c0547b8",
+                "0x8c0547ba"
+              ],
+              [
+                "0x8c0547b8",
+                "0x8c0547d4"
+              ],
+              [
+                "0x8c0547bc",
+                "0x8c0547be"
+              ],
+              [
+                "0x8c0547bc",
+                "0x8c0547d8"
+              ],
+              [
+                "0x8c0547c0",
+                "0x8c0547c2"
+              ],
+              [
+                "0x8c0547c0",
+                "0x8c054860"
+              ],
+              [
+                "0x8c0547c4",
+                "0x8c0547c6"
+              ],
+              [
+                "0x8c0547c4",
+                "0x8c054866"
+              ]
+            ]
+          },
+          {
+            "address": "0x8c604510",
+            "static_rows": 3,
+            "covered_rows": 3,
+            "missing_rows": [],
+            "conditional_edges_covered": 0,
+            "missing_edges": []
+          },
+          {
+            "address": "0x8c10c07e",
+            "static_rows": 35,
+            "covered_rows": 7,
+            "missing_rows": [
+              "0x8c10c08c",
+              "0x8c10c08e",
+              "0x8c10c090",
+              "0x8c10c092",
+              "0x8c10c094",
+              "0x8c10c096",
+              "0x8c10c098",
+              "0x8c10c09a",
+              "0x8c10c09c",
+              "0x8c10c09e",
+              "0x8c10c0a0",
+              "0x8c10c0a2",
+              "0x8c10c0a4",
+              "0x8c10c0a6",
+              "0x8c10c0a8",
+              "0x8c10c0aa",
+              "0x8c10c0ac",
+              "0x8c10c0ae",
+              "0x8c10c0b0",
+              "0x8c10c0b2",
+              "0x8c10c0b4",
+              "0x8c10c0b6",
+              "0x8c10c0b8",
+              "0x8c10c0ba",
+              "0x8c10c0bc",
+              "0x8c10c0be",
+              "0x8c10c0c0",
+              "0x8c10c0c2"
+            ],
+            "conditional_edges_covered": 0,
+            "missing_edges": [
+              [
+                "0x8c10c092",
+                "0x8c10c094"
+              ],
+              [
+                "0x8c10c092",
+                "0x8c10c09c"
+              ],
+              [
+                "0x8c10c0a0",
+                "0x8c10c0a2"
+              ],
+              [
+                "0x8c10c0a0",
+                "0x8c10c0b2"
+              ],
+              [
+                "0x8c10c0a4",
+                "0x8c10c0a6"
+              ],
+              [
+                "0x8c10c0a4",
+                "0x8c10c0b2"
+              ],
+              [
+                "0x8c10c0a8",
+                "0x8c10c0aa"
+              ],
+              [
+                "0x8c10c0a8",
+                "0x8c10c0ba"
+              ],
+              [
+                "0x8c10c0ac",
+                "0x8c10c0ae"
+              ],
+              [
+                "0x8c10c0ac",
+                "0x8c10c0ba"
+              ]
+            ]
+          },
+          {
+            "address": "0x8c10ba1e",
+            "static_rows": 11,
+            "covered_rows": 11,
+            "missing_rows": [],
+            "conditional_edges_covered": 2,
+            "missing_edges": []
+          },
+          {
+            "address": "0x8c051760",
+            "static_rows": 18,
+            "covered_rows": 18,
+            "missing_rows": [],
+            "conditional_edges_covered": 0,
+            "missing_edges": []
+          },
+          {
+            "address": "0x8c10c044",
+            "static_rows": 29,
+            "covered_rows": 4,
+            "missing_rows": [
+              "0x8c10c04c",
+              "0x8c10c04e",
+              "0x8c10c050",
+              "0x8c10c052",
+              "0x8c10c054",
+              "0x8c10c056",
+              "0x8c10c058",
+              "0x8c10c05a",
+              "0x8c10c05c",
+              "0x8c10c05e",
+              "0x8c10c060",
+              "0x8c10c062",
+              "0x8c10c064",
+              "0x8c10c066",
+              "0x8c10c068",
+              "0x8c10c06a",
+              "0x8c10c06c",
+              "0x8c10c06e",
+              "0x8c10c070",
+              "0x8c10c072",
+              "0x8c10c074",
+              "0x8c10c076",
+              "0x8c10c078",
+              "0x8c10c07a",
+              "0x8c10c07c"
+            ],
+            "conditional_edges_covered": 0,
+            "missing_edges": [
+              [
+                "0x8c10c058",
+                "0x8c10c05a"
+              ],
+              [
+                "0x8c10c058",
+                "0x8c10c06a"
+              ],
+              [
+                "0x8c10c05c",
+                "0x8c10c05e"
+              ],
+              [
+                "0x8c10c05c",
+                "0x8c10c06e"
+              ],
+              [
+                "0x8c10c060",
+                "0x8c10c062"
+              ],
+              [
+                "0x8c10c060",
+                "0x8c10c072"
+              ],
+              [
+                "0x8c10c064",
+                "0x8c10c066"
+              ],
+              [
+                "0x8c10c064",
+                "0x8c10c076"
+              ]
+            ]
+          },
+          {
+            "address": "0x8c055c44",
+            "static_rows": 4,
+            "covered_rows": 4,
+            "missing_rows": [],
+            "conditional_edges_covered": 0,
+            "missing_edges": []
+          },
+          {
+            "address": "0x8c603b84",
+            "static_rows": 40,
+            "covered_rows": 6,
+            "missing_rows": [
+              "0x8c603b90",
+              "0x8c603b92",
+              "0x8c603b94",
+              "0x8c603b96",
+              "0x8c603b98",
+              "0x8c603b9a",
+              "0x8c603b9c",
+              "0x8c603b9e",
+              "0x8c603ba0",
+              "0x8c603ba2",
+              "0x8c603ba4",
+              "0x8c603ba6",
+              "0x8c603ba8",
+              "0x8c603baa",
+              "0x8c603bac",
+              "0x8c603bae",
+              "0x8c603bb0",
+              "0x8c603bb2",
+              "0x8c603bb4",
+              "0x8c603bb6",
+              "0x8c603bb8",
+              "0x8c603bba",
+              "0x8c603bbc",
+              "0x8c603bbe",
+              "0x8c603bc0",
+              "0x8c603bc2",
+              "0x8c603bc4",
+              "0x8c603bc6",
+              "0x8c603bc8",
+              "0x8c603bca",
+              "0x8c603bcc",
+              "0x8c603bce",
+              "0x8c603bd0",
+              "0x8c603bd2"
+            ],
+            "conditional_edges_covered": 0,
+            "missing_edges": [
+              [
+                "0x8c603ba2",
+                "0x8c603ba4"
+              ],
+              [
+                "0x8c603ba2",
+                "0x8c603bca"
+              ],
+              [
+                "0x8c603bac",
+                "0x8c603bae"
+              ],
+              [
+                "0x8c603bac",
+                "0x8c603bb6"
+              ],
+              [
+                "0x8c603bb4",
+                "0x8c603bb6"
+              ],
+              [
+                "0x8c603bb4",
+                "0x8c603bca"
+              ]
+            ]
+          },
+          {
+            "address": "0x8c10c0f8",
+            "static_rows": 5,
+            "covered_rows": 5,
+            "missing_rows": [],
+            "conditional_edges_covered": 0,
+            "missing_edges": []
+          },
+          {
+            "address": "0x8c10c0d0",
+            "static_rows": 5,
+            "covered_rows": 5,
+            "missing_rows": [],
+            "conditional_edges_covered": 0,
+            "missing_edges": []
+          },
+          {
+            "address": "0x8c10da50",
+            "static_rows": 5,
+            "covered_rows": 5,
+            "missing_rows": [],
+            "conditional_edges_covered": 0,
+            "missing_edges": []
+          }
+        ],
+        "caller_address": "0x8c0546c0",
+        "caller_rows_executed": 15,
+        "caller_rows_total": 177,
+        "original_initializer_reached_from_caller": false,
+        "missing_service_vectors": [
+          "0x8c0000b0",
+          "0x8c0000b8"
+        ],
+        "cold_start_reexecuted_in_new_dll": false,
+        "dll_sha256": "774b7ab287f63bc468a18a33be680bb4e2a00400089c503b5e099c2995335786",
+        "next_task": "Establish explicit native console-information/flash service input contracts from original syscall wrappers and primary ABI evidence; preserve the unresolved-callback controls and resume this original caller.",
+        "scope": "Reached original caller and new static adapters are partial. Seven canonical helpers retain names/source/proof and receive zero extra credit. Unresolved BIOS callbacks record entry and stop; the verifier never supplies a result or continues. New 172-source build retains the warm/full-clear regression; old cold evidence remains separate. No natural boot, pixels or playable port claim.",
+        "verification": "analysis/movie_initialize_integration.json",
+        "verification_sha256": "b60e1e5156fad26c7e751398d9120598e97b9febfb4d3b17f5d771da6de00102",
+        "guide": "MOVIE_INITIALIZE.txt"
+      }
     },
     {
       "module": "1ST_READ.BIN",
@@ -19437,7 +20048,618 @@
       "retail_span_sha256": "c84fcfd244ac1a34366b5e42ab7379edd390d0800625deecbae8cae4f2808582",
       "source": "source/packet_global_setter.c",
       "verification": "analysis/packet_global_setter_verification.json",
-      "status": "bounded packet_global_value_set behavior matched in 133 cases"
+      "status": "bounded packet_global_value_set behavior matched in 133 cases",
+      "movie_initialize_integration": {
+        "compiled_source_count": 172,
+        "static_adapter_bodies": 11,
+        "static_adapter_rows": 332,
+        "executed_adapter_rows": 83,
+        "direct_comparisons": 68,
+        "independent_checks": 294,
+        "retained_warm_startup_comparisons": 1,
+        "total_comparisons": 69,
+        "canonical_reuse": [
+          {
+            "address": "0x8c051760",
+            "name": "sa_frame_countdown_configure_8c051760",
+            "source": "source/frame_countdown.c",
+            "verification": "analysis/frame_countdown_verification.json"
+          },
+          {
+            "address": "0x8c055c44",
+            "name": "sa_retail_constant_setter_8c055c44",
+            "source": "source/retail_constant_setters.c",
+            "verification": "analysis/retail_constant_setters_verification.json"
+          },
+          {
+            "address": "0x8c10ba1e",
+            "name": "sa_platform_signature_value_8c10ba1e",
+            "source": "source/sa_platform_signature_value_8c10ba1e.c",
+            "verification": "analysis/platform_signature_value_8c10ba1e_verification.json"
+          },
+          {
+            "address": "0x8c10c0d0",
+            "name": "sa_indirect_global_tail_call_8c10c0d0",
+            "source": "source/sa_indirect_global_tail_call_8c10c0d0.c",
+            "verification": "analysis/indirect_global_tail_call_8c10c0d0_verification.json"
+          },
+          {
+            "address": "0x8c10c0f8",
+            "name": "sa_indirect_global_tail_call_three_8c10c0f8",
+            "source": "source/sa_indirect_global_tail_call_three_8c10c0f8.c",
+            "verification": "analysis/indirect_global_tail_call_three_8c10c0f8_verification.json"
+          },
+          {
+            "address": "0x8c10da50",
+            "name": "sa_indirect_literal_tail_call_8c10da50",
+            "source": "source/sa_indirect_literal_tail_call_cluster.c",
+            "verification": "analysis/indirect_literal_tail_call_cluster_verification.json"
+          },
+          {
+            "address": "0x8c604510",
+            "name": "sa_packet_global_value_set_8c604510",
+            "source": "source/packet_global_setter.c",
+            "verification": "analysis/packet_global_setter_verification.json"
+          }
+        ],
+        "reused_additional_credit": 0,
+        "new_registry_credit": 0,
+        "parent_bodies_qualified": false,
+        "coverage_by_routine": [
+          {
+            "address": "0x8c0546c0",
+            "static_rows": 177,
+            "covered_rows": 15,
+            "missing_rows": [
+              "0x8c0546de",
+              "0x8c0546e0",
+              "0x8c0546e2",
+              "0x8c0546e4",
+              "0x8c0546e6",
+              "0x8c0546e8",
+              "0x8c0546ea",
+              "0x8c0546ec",
+              "0x8c0546ee",
+              "0x8c0546f0",
+              "0x8c0546f2",
+              "0x8c0546f4",
+              "0x8c0546f6",
+              "0x8c0546f8",
+              "0x8c0546fa",
+              "0x8c0546fc",
+              "0x8c0546fe",
+              "0x8c054700",
+              "0x8c054702",
+              "0x8c054704",
+              "0x8c054706",
+              "0x8c054708",
+              "0x8c05470a",
+              "0x8c05470c",
+              "0x8c05470e",
+              "0x8c054710",
+              "0x8c054712",
+              "0x8c054714",
+              "0x8c054716",
+              "0x8c054718",
+              "0x8c05471a",
+              "0x8c05471c",
+              "0x8c05471e",
+              "0x8c054720",
+              "0x8c054722",
+              "0x8c054724",
+              "0x8c054726",
+              "0x8c054728",
+              "0x8c05472a",
+              "0x8c05472c",
+              "0x8c05472e",
+              "0x8c054730",
+              "0x8c054732",
+              "0x8c054734",
+              "0x8c054736",
+              "0x8c054738",
+              "0x8c05473a",
+              "0x8c05473c",
+              "0x8c05473e",
+              "0x8c054740",
+              "0x8c054742",
+              "0x8c054744",
+              "0x8c054746",
+              "0x8c054748",
+              "0x8c05474a",
+              "0x8c05474c",
+              "0x8c05474e",
+              "0x8c054750",
+              "0x8c054752",
+              "0x8c054754",
+              "0x8c054756",
+              "0x8c054758",
+              "0x8c05475a",
+              "0x8c05475c",
+              "0x8c05475e",
+              "0x8c054760",
+              "0x8c054762",
+              "0x8c054764",
+              "0x8c054766",
+              "0x8c054768",
+              "0x8c05476a",
+              "0x8c05476c",
+              "0x8c05476e",
+              "0x8c054770",
+              "0x8c054772",
+              "0x8c054774",
+              "0x8c054776",
+              "0x8c054778",
+              "0x8c05477a",
+              "0x8c05477c",
+              "0x8c05477e",
+              "0x8c054780",
+              "0x8c054782",
+              "0x8c054784",
+              "0x8c054786",
+              "0x8c054788",
+              "0x8c05478a",
+              "0x8c05478c",
+              "0x8c05478e",
+              "0x8c054790",
+              "0x8c054792",
+              "0x8c054794",
+              "0x8c054796",
+              "0x8c054798",
+              "0x8c05479a",
+              "0x8c05479c",
+              "0x8c05479e",
+              "0x8c0547a0",
+              "0x8c0547a2",
+              "0x8c0547a4",
+              "0x8c0547a6",
+              "0x8c0547a8",
+              "0x8c0547aa",
+              "0x8c0547ac",
+              "0x8c0547ae",
+              "0x8c0547b0",
+              "0x8c0547b2",
+              "0x8c0547b4",
+              "0x8c0547b6",
+              "0x8c0547b8",
+              "0x8c0547ba",
+              "0x8c0547bc",
+              "0x8c0547be",
+              "0x8c0547c0",
+              "0x8c0547c2",
+              "0x8c0547c4",
+              "0x8c0547c6",
+              "0x8c0547c8",
+              "0x8c0547ca",
+              "0x8c0547cc",
+              "0x8c0547ce",
+              "0x8c0547d0",
+              "0x8c0547d2",
+              "0x8c0547d4",
+              "0x8c0547d6",
+              "0x8c0547d8",
+              "0x8c0547da",
+              "0x8c0547dc",
+              "0x8c054860",
+              "0x8c054862",
+              "0x8c054864",
+              "0x8c054866",
+              "0x8c054868",
+              "0x8c05486a",
+              "0x8c05486c",
+              "0x8c05486e",
+              "0x8c054870",
+              "0x8c054872",
+              "0x8c054874",
+              "0x8c054876",
+              "0x8c054878",
+              "0x8c05487a",
+              "0x8c05487c",
+              "0x8c05487e",
+              "0x8c054880",
+              "0x8c054882",
+              "0x8c054884",
+              "0x8c054886",
+              "0x8c054888",
+              "0x8c05488a",
+              "0x8c05488c",
+              "0x8c05488e",
+              "0x8c054890",
+              "0x8c054892",
+              "0x8c054894",
+              "0x8c054896",
+              "0x8c054898",
+              "0x8c05489a",
+              "0x8c05489c",
+              "0x8c05489e",
+              "0x8c0548a0",
+              "0x8c0548a2"
+            ],
+            "conditional_edges_covered": 0,
+            "missing_edges": [
+              [
+                "0x8c0546e6",
+                "0x8c0546ea"
+              ],
+              [
+                "0x8c0546e6",
+                "0x8c0546f8"
+              ],
+              [
+                "0x8c054708",
+                "0x8c05470a"
+              ],
+              [
+                "0x8c054708",
+                "0x8c054716"
+              ],
+              [
+                "0x8c05470c",
+                "0x8c05470e"
+              ],
+              [
+                "0x8c05470c",
+                "0x8c054722"
+              ],
+              [
+                "0x8c054714",
+                "0x8c054716"
+              ],
+              [
+                "0x8c054714",
+                "0x8c054722"
+              ],
+              [
+                "0x8c054790",
+                "0x8c054792"
+              ],
+              [
+                "0x8c054790",
+                "0x8c054796"
+              ],
+              [
+                "0x8c0547a4",
+                "0x8c0547a6"
+              ],
+              [
+                "0x8c0547a4",
+                "0x8c0547aa"
+              ],
+              [
+                "0x8c0547b0",
+                "0x8c0547b2"
+              ],
+              [
+                "0x8c0547b0",
+                "0x8c0547ca"
+              ],
+              [
+                "0x8c0547b4",
+                "0x8c0547b6"
+              ],
+              [
+                "0x8c0547b4",
+                "0x8c054866"
+              ],
+              [
+                "0x8c0547b8",
+                "0x8c0547ba"
+              ],
+              [
+                "0x8c0547b8",
+                "0x8c0547d4"
+              ],
+              [
+                "0x8c0547bc",
+                "0x8c0547be"
+              ],
+              [
+                "0x8c0547bc",
+                "0x8c0547d8"
+              ],
+              [
+                "0x8c0547c0",
+                "0x8c0547c2"
+              ],
+              [
+                "0x8c0547c0",
+                "0x8c054860"
+              ],
+              [
+                "0x8c0547c4",
+                "0x8c0547c6"
+              ],
+              [
+                "0x8c0547c4",
+                "0x8c054866"
+              ]
+            ]
+          },
+          {
+            "address": "0x8c604510",
+            "static_rows": 3,
+            "covered_rows": 3,
+            "missing_rows": [],
+            "conditional_edges_covered": 0,
+            "missing_edges": []
+          },
+          {
+            "address": "0x8c10c07e",
+            "static_rows": 35,
+            "covered_rows": 7,
+            "missing_rows": [
+              "0x8c10c08c",
+              "0x8c10c08e",
+              "0x8c10c090",
+              "0x8c10c092",
+              "0x8c10c094",
+              "0x8c10c096",
+              "0x8c10c098",
+              "0x8c10c09a",
+              "0x8c10c09c",
+              "0x8c10c09e",
+              "0x8c10c0a0",
+              "0x8c10c0a2",
+              "0x8c10c0a4",
+              "0x8c10c0a6",
+              "0x8c10c0a8",
+              "0x8c10c0aa",
+              "0x8c10c0ac",
+              "0x8c10c0ae",
+              "0x8c10c0b0",
+              "0x8c10c0b2",
+              "0x8c10c0b4",
+              "0x8c10c0b6",
+              "0x8c10c0b8",
+              "0x8c10c0ba",
+              "0x8c10c0bc",
+              "0x8c10c0be",
+              "0x8c10c0c0",
+              "0x8c10c0c2"
+            ],
+            "conditional_edges_covered": 0,
+            "missing_edges": [
+              [
+                "0x8c10c092",
+                "0x8c10c094"
+              ],
+              [
+                "0x8c10c092",
+                "0x8c10c09c"
+              ],
+              [
+                "0x8c10c0a0",
+                "0x8c10c0a2"
+              ],
+              [
+                "0x8c10c0a0",
+                "0x8c10c0b2"
+              ],
+              [
+                "0x8c10c0a4",
+                "0x8c10c0a6"
+              ],
+              [
+                "0x8c10c0a4",
+                "0x8c10c0b2"
+              ],
+              [
+                "0x8c10c0a8",
+                "0x8c10c0aa"
+              ],
+              [
+                "0x8c10c0a8",
+                "0x8c10c0ba"
+              ],
+              [
+                "0x8c10c0ac",
+                "0x8c10c0ae"
+              ],
+              [
+                "0x8c10c0ac",
+                "0x8c10c0ba"
+              ]
+            ]
+          },
+          {
+            "address": "0x8c10ba1e",
+            "static_rows": 11,
+            "covered_rows": 11,
+            "missing_rows": [],
+            "conditional_edges_covered": 2,
+            "missing_edges": []
+          },
+          {
+            "address": "0x8c051760",
+            "static_rows": 18,
+            "covered_rows": 18,
+            "missing_rows": [],
+            "conditional_edges_covered": 0,
+            "missing_edges": []
+          },
+          {
+            "address": "0x8c10c044",
+            "static_rows": 29,
+            "covered_rows": 4,
+            "missing_rows": [
+              "0x8c10c04c",
+              "0x8c10c04e",
+              "0x8c10c050",
+              "0x8c10c052",
+              "0x8c10c054",
+              "0x8c10c056",
+              "0x8c10c058",
+              "0x8c10c05a",
+              "0x8c10c05c",
+              "0x8c10c05e",
+              "0x8c10c060",
+              "0x8c10c062",
+              "0x8c10c064",
+              "0x8c10c066",
+              "0x8c10c068",
+              "0x8c10c06a",
+              "0x8c10c06c",
+              "0x8c10c06e",
+              "0x8c10c070",
+              "0x8c10c072",
+              "0x8c10c074",
+              "0x8c10c076",
+              "0x8c10c078",
+              "0x8c10c07a",
+              "0x8c10c07c"
+            ],
+            "conditional_edges_covered": 0,
+            "missing_edges": [
+              [
+                "0x8c10c058",
+                "0x8c10c05a"
+              ],
+              [
+                "0x8c10c058",
+                "0x8c10c06a"
+              ],
+              [
+                "0x8c10c05c",
+                "0x8c10c05e"
+              ],
+              [
+                "0x8c10c05c",
+                "0x8c10c06e"
+              ],
+              [
+                "0x8c10c060",
+                "0x8c10c062"
+              ],
+              [
+                "0x8c10c060",
+                "0x8c10c072"
+              ],
+              [
+                "0x8c10c064",
+                "0x8c10c066"
+              ],
+              [
+                "0x8c10c064",
+                "0x8c10c076"
+              ]
+            ]
+          },
+          {
+            "address": "0x8c055c44",
+            "static_rows": 4,
+            "covered_rows": 4,
+            "missing_rows": [],
+            "conditional_edges_covered": 0,
+            "missing_edges": []
+          },
+          {
+            "address": "0x8c603b84",
+            "static_rows": 40,
+            "covered_rows": 6,
+            "missing_rows": [
+              "0x8c603b90",
+              "0x8c603b92",
+              "0x8c603b94",
+              "0x8c603b96",
+              "0x8c603b98",
+              "0x8c603b9a",
+              "0x8c603b9c",
+              "0x8c603b9e",
+              "0x8c603ba0",
+              "0x8c603ba2",
+              "0x8c603ba4",
+              "0x8c603ba6",
+              "0x8c603ba8",
+              "0x8c603baa",
+              "0x8c603bac",
+              "0x8c603bae",
+              "0x8c603bb0",
+              "0x8c603bb2",
+              "0x8c603bb4",
+              "0x8c603bb6",
+              "0x8c603bb8",
+              "0x8c603bba",
+              "0x8c603bbc",
+              "0x8c603bbe",
+              "0x8c603bc0",
+              "0x8c603bc2",
+              "0x8c603bc4",
+              "0x8c603bc6",
+              "0x8c603bc8",
+              "0x8c603bca",
+              "0x8c603bcc",
+              "0x8c603bce",
+              "0x8c603bd0",
+              "0x8c603bd2"
+            ],
+            "conditional_edges_covered": 0,
+            "missing_edges": [
+              [
+                "0x8c603ba2",
+                "0x8c603ba4"
+              ],
+              [
+                "0x8c603ba2",
+                "0x8c603bca"
+              ],
+              [
+                "0x8c603bac",
+                "0x8c603bae"
+              ],
+              [
+                "0x8c603bac",
+                "0x8c603bb6"
+              ],
+              [
+                "0x8c603bb4",
+                "0x8c603bb6"
+              ],
+              [
+                "0x8c603bb4",
+                "0x8c603bca"
+              ]
+            ]
+          },
+          {
+            "address": "0x8c10c0f8",
+            "static_rows": 5,
+            "covered_rows": 5,
+            "missing_rows": [],
+            "conditional_edges_covered": 0,
+            "missing_edges": []
+          },
+          {
+            "address": "0x8c10c0d0",
+            "static_rows": 5,
+            "covered_rows": 5,
+            "missing_rows": [],
+            "conditional_edges_covered": 0,
+            "missing_edges": []
+          },
+          {
+            "address": "0x8c10da50",
+            "static_rows": 5,
+            "covered_rows": 5,
+            "missing_rows": [],
+            "conditional_edges_covered": 0,
+            "missing_edges": []
+          }
+        ],
+        "caller_address": "0x8c0546c0",
+        "caller_rows_executed": 15,
+        "caller_rows_total": 177,
+        "original_initializer_reached_from_caller": false,
+        "missing_service_vectors": [
+          "0x8c0000b0",
+          "0x8c0000b8"
+        ],
+        "cold_start_reexecuted_in_new_dll": false,
+        "dll_sha256": "774b7ab287f63bc468a18a33be680bb4e2a00400089c503b5e099c2995335786",
+        "next_task": "Establish explicit native console-information/flash service input contracts from original syscall wrappers and primary ABI evidence; preserve the unresolved-callback controls and resume this original caller.",
+        "scope": "Reached original caller and new static adapters are partial. Seven canonical helpers retain names/source/proof and receive zero extra credit. Unresolved BIOS callbacks record entry and stop; the verifier never supplies a result or continues. New 172-source build retains the warm/full-clear regression; old cold evidence remains separate. No natural boot, pixels or playable port claim.",
+        "verification": "analysis/movie_initialize_integration.json",
+        "verification_sha256": "b60e1e5156fad26c7e751398d9120598e97b9febfb4d3b17f5d771da6de00102",
+        "guide": "MOVIE_INITIALIZE.txt"
+      }
     },
     {
       "module": "1ST_READ.BIN",
@@ -31280,7 +32502,618 @@
       "limitations": [
         "These are isolated leaf state setters; their broader caller and game systems remain incomplete.",
         "Verification uses the project partial SH-4 interpreter, not hardware or whole-game execution."
-      ]
+      ],
+      "movie_initialize_integration": {
+        "compiled_source_count": 172,
+        "static_adapter_bodies": 11,
+        "static_adapter_rows": 332,
+        "executed_adapter_rows": 83,
+        "direct_comparisons": 68,
+        "independent_checks": 294,
+        "retained_warm_startup_comparisons": 1,
+        "total_comparisons": 69,
+        "canonical_reuse": [
+          {
+            "address": "0x8c051760",
+            "name": "sa_frame_countdown_configure_8c051760",
+            "source": "source/frame_countdown.c",
+            "verification": "analysis/frame_countdown_verification.json"
+          },
+          {
+            "address": "0x8c055c44",
+            "name": "sa_retail_constant_setter_8c055c44",
+            "source": "source/retail_constant_setters.c",
+            "verification": "analysis/retail_constant_setters_verification.json"
+          },
+          {
+            "address": "0x8c10ba1e",
+            "name": "sa_platform_signature_value_8c10ba1e",
+            "source": "source/sa_platform_signature_value_8c10ba1e.c",
+            "verification": "analysis/platform_signature_value_8c10ba1e_verification.json"
+          },
+          {
+            "address": "0x8c10c0d0",
+            "name": "sa_indirect_global_tail_call_8c10c0d0",
+            "source": "source/sa_indirect_global_tail_call_8c10c0d0.c",
+            "verification": "analysis/indirect_global_tail_call_8c10c0d0_verification.json"
+          },
+          {
+            "address": "0x8c10c0f8",
+            "name": "sa_indirect_global_tail_call_three_8c10c0f8",
+            "source": "source/sa_indirect_global_tail_call_three_8c10c0f8.c",
+            "verification": "analysis/indirect_global_tail_call_three_8c10c0f8_verification.json"
+          },
+          {
+            "address": "0x8c10da50",
+            "name": "sa_indirect_literal_tail_call_8c10da50",
+            "source": "source/sa_indirect_literal_tail_call_cluster.c",
+            "verification": "analysis/indirect_literal_tail_call_cluster_verification.json"
+          },
+          {
+            "address": "0x8c604510",
+            "name": "sa_packet_global_value_set_8c604510",
+            "source": "source/packet_global_setter.c",
+            "verification": "analysis/packet_global_setter_verification.json"
+          }
+        ],
+        "reused_additional_credit": 0,
+        "new_registry_credit": 0,
+        "parent_bodies_qualified": false,
+        "coverage_by_routine": [
+          {
+            "address": "0x8c0546c0",
+            "static_rows": 177,
+            "covered_rows": 15,
+            "missing_rows": [
+              "0x8c0546de",
+              "0x8c0546e0",
+              "0x8c0546e2",
+              "0x8c0546e4",
+              "0x8c0546e6",
+              "0x8c0546e8",
+              "0x8c0546ea",
+              "0x8c0546ec",
+              "0x8c0546ee",
+              "0x8c0546f0",
+              "0x8c0546f2",
+              "0x8c0546f4",
+              "0x8c0546f6",
+              "0x8c0546f8",
+              "0x8c0546fa",
+              "0x8c0546fc",
+              "0x8c0546fe",
+              "0x8c054700",
+              "0x8c054702",
+              "0x8c054704",
+              "0x8c054706",
+              "0x8c054708",
+              "0x8c05470a",
+              "0x8c05470c",
+              "0x8c05470e",
+              "0x8c054710",
+              "0x8c054712",
+              "0x8c054714",
+              "0x8c054716",
+              "0x8c054718",
+              "0x8c05471a",
+              "0x8c05471c",
+              "0x8c05471e",
+              "0x8c054720",
+              "0x8c054722",
+              "0x8c054724",
+              "0x8c054726",
+              "0x8c054728",
+              "0x8c05472a",
+              "0x8c05472c",
+              "0x8c05472e",
+              "0x8c054730",
+              "0x8c054732",
+              "0x8c054734",
+              "0x8c054736",
+              "0x8c054738",
+              "0x8c05473a",
+              "0x8c05473c",
+              "0x8c05473e",
+              "0x8c054740",
+              "0x8c054742",
+              "0x8c054744",
+              "0x8c054746",
+              "0x8c054748",
+              "0x8c05474a",
+              "0x8c05474c",
+              "0x8c05474e",
+              "0x8c054750",
+              "0x8c054752",
+              "0x8c054754",
+              "0x8c054756",
+              "0x8c054758",
+              "0x8c05475a",
+              "0x8c05475c",
+              "0x8c05475e",
+              "0x8c054760",
+              "0x8c054762",
+              "0x8c054764",
+              "0x8c054766",
+              "0x8c054768",
+              "0x8c05476a",
+              "0x8c05476c",
+              "0x8c05476e",
+              "0x8c054770",
+              "0x8c054772",
+              "0x8c054774",
+              "0x8c054776",
+              "0x8c054778",
+              "0x8c05477a",
+              "0x8c05477c",
+              "0x8c05477e",
+              "0x8c054780",
+              "0x8c054782",
+              "0x8c054784",
+              "0x8c054786",
+              "0x8c054788",
+              "0x8c05478a",
+              "0x8c05478c",
+              "0x8c05478e",
+              "0x8c054790",
+              "0x8c054792",
+              "0x8c054794",
+              "0x8c054796",
+              "0x8c054798",
+              "0x8c05479a",
+              "0x8c05479c",
+              "0x8c05479e",
+              "0x8c0547a0",
+              "0x8c0547a2",
+              "0x8c0547a4",
+              "0x8c0547a6",
+              "0x8c0547a8",
+              "0x8c0547aa",
+              "0x8c0547ac",
+              "0x8c0547ae",
+              "0x8c0547b0",
+              "0x8c0547b2",
+              "0x8c0547b4",
+              "0x8c0547b6",
+              "0x8c0547b8",
+              "0x8c0547ba",
+              "0x8c0547bc",
+              "0x8c0547be",
+              "0x8c0547c0",
+              "0x8c0547c2",
+              "0x8c0547c4",
+              "0x8c0547c6",
+              "0x8c0547c8",
+              "0x8c0547ca",
+              "0x8c0547cc",
+              "0x8c0547ce",
+              "0x8c0547d0",
+              "0x8c0547d2",
+              "0x8c0547d4",
+              "0x8c0547d6",
+              "0x8c0547d8",
+              "0x8c0547da",
+              "0x8c0547dc",
+              "0x8c054860",
+              "0x8c054862",
+              "0x8c054864",
+              "0x8c054866",
+              "0x8c054868",
+              "0x8c05486a",
+              "0x8c05486c",
+              "0x8c05486e",
+              "0x8c054870",
+              "0x8c054872",
+              "0x8c054874",
+              "0x8c054876",
+              "0x8c054878",
+              "0x8c05487a",
+              "0x8c05487c",
+              "0x8c05487e",
+              "0x8c054880",
+              "0x8c054882",
+              "0x8c054884",
+              "0x8c054886",
+              "0x8c054888",
+              "0x8c05488a",
+              "0x8c05488c",
+              "0x8c05488e",
+              "0x8c054890",
+              "0x8c054892",
+              "0x8c054894",
+              "0x8c054896",
+              "0x8c054898",
+              "0x8c05489a",
+              "0x8c05489c",
+              "0x8c05489e",
+              "0x8c0548a0",
+              "0x8c0548a2"
+            ],
+            "conditional_edges_covered": 0,
+            "missing_edges": [
+              [
+                "0x8c0546e6",
+                "0x8c0546ea"
+              ],
+              [
+                "0x8c0546e6",
+                "0x8c0546f8"
+              ],
+              [
+                "0x8c054708",
+                "0x8c05470a"
+              ],
+              [
+                "0x8c054708",
+                "0x8c054716"
+              ],
+              [
+                "0x8c05470c",
+                "0x8c05470e"
+              ],
+              [
+                "0x8c05470c",
+                "0x8c054722"
+              ],
+              [
+                "0x8c054714",
+                "0x8c054716"
+              ],
+              [
+                "0x8c054714",
+                "0x8c054722"
+              ],
+              [
+                "0x8c054790",
+                "0x8c054792"
+              ],
+              [
+                "0x8c054790",
+                "0x8c054796"
+              ],
+              [
+                "0x8c0547a4",
+                "0x8c0547a6"
+              ],
+              [
+                "0x8c0547a4",
+                "0x8c0547aa"
+              ],
+              [
+                "0x8c0547b0",
+                "0x8c0547b2"
+              ],
+              [
+                "0x8c0547b0",
+                "0x8c0547ca"
+              ],
+              [
+                "0x8c0547b4",
+                "0x8c0547b6"
+              ],
+              [
+                "0x8c0547b4",
+                "0x8c054866"
+              ],
+              [
+                "0x8c0547b8",
+                "0x8c0547ba"
+              ],
+              [
+                "0x8c0547b8",
+                "0x8c0547d4"
+              ],
+              [
+                "0x8c0547bc",
+                "0x8c0547be"
+              ],
+              [
+                "0x8c0547bc",
+                "0x8c0547d8"
+              ],
+              [
+                "0x8c0547c0",
+                "0x8c0547c2"
+              ],
+              [
+                "0x8c0547c0",
+                "0x8c054860"
+              ],
+              [
+                "0x8c0547c4",
+                "0x8c0547c6"
+              ],
+              [
+                "0x8c0547c4",
+                "0x8c054866"
+              ]
+            ]
+          },
+          {
+            "address": "0x8c604510",
+            "static_rows": 3,
+            "covered_rows": 3,
+            "missing_rows": [],
+            "conditional_edges_covered": 0,
+            "missing_edges": []
+          },
+          {
+            "address": "0x8c10c07e",
+            "static_rows": 35,
+            "covered_rows": 7,
+            "missing_rows": [
+              "0x8c10c08c",
+              "0x8c10c08e",
+              "0x8c10c090",
+              "0x8c10c092",
+              "0x8c10c094",
+              "0x8c10c096",
+              "0x8c10c098",
+              "0x8c10c09a",
+              "0x8c10c09c",
+              "0x8c10c09e",
+              "0x8c10c0a0",
+              "0x8c10c0a2",
+              "0x8c10c0a4",
+              "0x8c10c0a6",
+              "0x8c10c0a8",
+              "0x8c10c0aa",
+              "0x8c10c0ac",
+              "0x8c10c0ae",
+              "0x8c10c0b0",
+              "0x8c10c0b2",
+              "0x8c10c0b4",
+              "0x8c10c0b6",
+              "0x8c10c0b8",
+              "0x8c10c0ba",
+              "0x8c10c0bc",
+              "0x8c10c0be",
+              "0x8c10c0c0",
+              "0x8c10c0c2"
+            ],
+            "conditional_edges_covered": 0,
+            "missing_edges": [
+              [
+                "0x8c10c092",
+                "0x8c10c094"
+              ],
+              [
+                "0x8c10c092",
+                "0x8c10c09c"
+              ],
+              [
+                "0x8c10c0a0",
+                "0x8c10c0a2"
+              ],
+              [
+                "0x8c10c0a0",
+                "0x8c10c0b2"
+              ],
+              [
+                "0x8c10c0a4",
+                "0x8c10c0a6"
+              ],
+              [
+                "0x8c10c0a4",
+                "0x8c10c0b2"
+              ],
+              [
+                "0x8c10c0a8",
+                "0x8c10c0aa"
+              ],
+              [
+                "0x8c10c0a8",
+                "0x8c10c0ba"
+              ],
+              [
+                "0x8c10c0ac",
+                "0x8c10c0ae"
+              ],
+              [
+                "0x8c10c0ac",
+                "0x8c10c0ba"
+              ]
+            ]
+          },
+          {
+            "address": "0x8c10ba1e",
+            "static_rows": 11,
+            "covered_rows": 11,
+            "missing_rows": [],
+            "conditional_edges_covered": 2,
+            "missing_edges": []
+          },
+          {
+            "address": "0x8c051760",
+            "static_rows": 18,
+            "covered_rows": 18,
+            "missing_rows": [],
+            "conditional_edges_covered": 0,
+            "missing_edges": []
+          },
+          {
+            "address": "0x8c10c044",
+            "static_rows": 29,
+            "covered_rows": 4,
+            "missing_rows": [
+              "0x8c10c04c",
+              "0x8c10c04e",
+              "0x8c10c050",
+              "0x8c10c052",
+              "0x8c10c054",
+              "0x8c10c056",
+              "0x8c10c058",
+              "0x8c10c05a",
+              "0x8c10c05c",
+              "0x8c10c05e",
+              "0x8c10c060",
+              "0x8c10c062",
+              "0x8c10c064",
+              "0x8c10c066",
+              "0x8c10c068",
+              "0x8c10c06a",
+              "0x8c10c06c",
+              "0x8c10c06e",
+              "0x8c10c070",
+              "0x8c10c072",
+              "0x8c10c074",
+              "0x8c10c076",
+              "0x8c10c078",
+              "0x8c10c07a",
+              "0x8c10c07c"
+            ],
+            "conditional_edges_covered": 0,
+            "missing_edges": [
+              [
+                "0x8c10c058",
+                "0x8c10c05a"
+              ],
+              [
+                "0x8c10c058",
+                "0x8c10c06a"
+              ],
+              [
+                "0x8c10c05c",
+                "0x8c10c05e"
+              ],
+              [
+                "0x8c10c05c",
+                "0x8c10c06e"
+              ],
+              [
+                "0x8c10c060",
+                "0x8c10c062"
+              ],
+              [
+                "0x8c10c060",
+                "0x8c10c072"
+              ],
+              [
+                "0x8c10c064",
+                "0x8c10c066"
+              ],
+              [
+                "0x8c10c064",
+                "0x8c10c076"
+              ]
+            ]
+          },
+          {
+            "address": "0x8c055c44",
+            "static_rows": 4,
+            "covered_rows": 4,
+            "missing_rows": [],
+            "conditional_edges_covered": 0,
+            "missing_edges": []
+          },
+          {
+            "address": "0x8c603b84",
+            "static_rows": 40,
+            "covered_rows": 6,
+            "missing_rows": [
+              "0x8c603b90",
+              "0x8c603b92",
+              "0x8c603b94",
+              "0x8c603b96",
+              "0x8c603b98",
+              "0x8c603b9a",
+              "0x8c603b9c",
+              "0x8c603b9e",
+              "0x8c603ba0",
+              "0x8c603ba2",
+              "0x8c603ba4",
+              "0x8c603ba6",
+              "0x8c603ba8",
+              "0x8c603baa",
+              "0x8c603bac",
+              "0x8c603bae",
+              "0x8c603bb0",
+              "0x8c603bb2",
+              "0x8c603bb4",
+              "0x8c603bb6",
+              "0x8c603bb8",
+              "0x8c603bba",
+              "0x8c603bbc",
+              "0x8c603bbe",
+              "0x8c603bc0",
+              "0x8c603bc2",
+              "0x8c603bc4",
+              "0x8c603bc6",
+              "0x8c603bc8",
+              "0x8c603bca",
+              "0x8c603bcc",
+              "0x8c603bce",
+              "0x8c603bd0",
+              "0x8c603bd2"
+            ],
+            "conditional_edges_covered": 0,
+            "missing_edges": [
+              [
+                "0x8c603ba2",
+                "0x8c603ba4"
+              ],
+              [
+                "0x8c603ba2",
+                "0x8c603bca"
+              ],
+              [
+                "0x8c603bac",
+                "0x8c603bae"
+              ],
+              [
+                "0x8c603bac",
+                "0x8c603bb6"
+              ],
+              [
+                "0x8c603bb4",
+                "0x8c603bb6"
+              ],
+              [
+                "0x8c603bb4",
+                "0x8c603bca"
+              ]
+            ]
+          },
+          {
+            "address": "0x8c10c0f8",
+            "static_rows": 5,
+            "covered_rows": 5,
+            "missing_rows": [],
+            "conditional_edges_covered": 0,
+            "missing_edges": []
+          },
+          {
+            "address": "0x8c10c0d0",
+            "static_rows": 5,
+            "covered_rows": 5,
+            "missing_rows": [],
+            "conditional_edges_covered": 0,
+            "missing_edges": []
+          },
+          {
+            "address": "0x8c10da50",
+            "static_rows": 5,
+            "covered_rows": 5,
+            "missing_rows": [],
+            "conditional_edges_covered": 0,
+            "missing_edges": []
+          }
+        ],
+        "caller_address": "0x8c0546c0",
+        "caller_rows_executed": 15,
+        "caller_rows_total": 177,
+        "original_initializer_reached_from_caller": false,
+        "missing_service_vectors": [
+          "0x8c0000b0",
+          "0x8c0000b8"
+        ],
+        "cold_start_reexecuted_in_new_dll": false,
+        "dll_sha256": "774b7ab287f63bc468a18a33be680bb4e2a00400089c503b5e099c2995335786",
+        "next_task": "Establish explicit native console-information/flash service input contracts from original syscall wrappers and primary ABI evidence; preserve the unresolved-callback controls and resume this original caller.",
+        "scope": "Reached original caller and new static adapters are partial. Seven canonical helpers retain names/source/proof and receive zero extra credit. Unresolved BIOS callbacks record entry and stop; the verifier never supplies a result or continues. New 172-source build retains the warm/full-clear regression; old cold evidence remains separate. No natural boot, pixels or playable port claim.",
+        "verification": "analysis/movie_initialize_integration.json",
+        "verification_sha256": "b60e1e5156fad26c7e751398d9120598e97b9febfb4d3b17f5d771da6de00102",
+        "guide": "MOVIE_INITIALIZE.txt"
+      }
     },
     {
       "module": "1ST_READ.BIN",
@@ -45286,7 +47119,618 @@
       "limitations": [
         "The callback body is outside this ten-byte wrapper.",
         "Differential verification uses the project SH-4 interpreter, not Dreamcast hardware or whole-game execution."
-      ]
+      ],
+      "movie_initialize_integration": {
+        "compiled_source_count": 172,
+        "static_adapter_bodies": 11,
+        "static_adapter_rows": 332,
+        "executed_adapter_rows": 83,
+        "direct_comparisons": 68,
+        "independent_checks": 294,
+        "retained_warm_startup_comparisons": 1,
+        "total_comparisons": 69,
+        "canonical_reuse": [
+          {
+            "address": "0x8c051760",
+            "name": "sa_frame_countdown_configure_8c051760",
+            "source": "source/frame_countdown.c",
+            "verification": "analysis/frame_countdown_verification.json"
+          },
+          {
+            "address": "0x8c055c44",
+            "name": "sa_retail_constant_setter_8c055c44",
+            "source": "source/retail_constant_setters.c",
+            "verification": "analysis/retail_constant_setters_verification.json"
+          },
+          {
+            "address": "0x8c10ba1e",
+            "name": "sa_platform_signature_value_8c10ba1e",
+            "source": "source/sa_platform_signature_value_8c10ba1e.c",
+            "verification": "analysis/platform_signature_value_8c10ba1e_verification.json"
+          },
+          {
+            "address": "0x8c10c0d0",
+            "name": "sa_indirect_global_tail_call_8c10c0d0",
+            "source": "source/sa_indirect_global_tail_call_8c10c0d0.c",
+            "verification": "analysis/indirect_global_tail_call_8c10c0d0_verification.json"
+          },
+          {
+            "address": "0x8c10c0f8",
+            "name": "sa_indirect_global_tail_call_three_8c10c0f8",
+            "source": "source/sa_indirect_global_tail_call_three_8c10c0f8.c",
+            "verification": "analysis/indirect_global_tail_call_three_8c10c0f8_verification.json"
+          },
+          {
+            "address": "0x8c10da50",
+            "name": "sa_indirect_literal_tail_call_8c10da50",
+            "source": "source/sa_indirect_literal_tail_call_cluster.c",
+            "verification": "analysis/indirect_literal_tail_call_cluster_verification.json"
+          },
+          {
+            "address": "0x8c604510",
+            "name": "sa_packet_global_value_set_8c604510",
+            "source": "source/packet_global_setter.c",
+            "verification": "analysis/packet_global_setter_verification.json"
+          }
+        ],
+        "reused_additional_credit": 0,
+        "new_registry_credit": 0,
+        "parent_bodies_qualified": false,
+        "coverage_by_routine": [
+          {
+            "address": "0x8c0546c0",
+            "static_rows": 177,
+            "covered_rows": 15,
+            "missing_rows": [
+              "0x8c0546de",
+              "0x8c0546e0",
+              "0x8c0546e2",
+              "0x8c0546e4",
+              "0x8c0546e6",
+              "0x8c0546e8",
+              "0x8c0546ea",
+              "0x8c0546ec",
+              "0x8c0546ee",
+              "0x8c0546f0",
+              "0x8c0546f2",
+              "0x8c0546f4",
+              "0x8c0546f6",
+              "0x8c0546f8",
+              "0x8c0546fa",
+              "0x8c0546fc",
+              "0x8c0546fe",
+              "0x8c054700",
+              "0x8c054702",
+              "0x8c054704",
+              "0x8c054706",
+              "0x8c054708",
+              "0x8c05470a",
+              "0x8c05470c",
+              "0x8c05470e",
+              "0x8c054710",
+              "0x8c054712",
+              "0x8c054714",
+              "0x8c054716",
+              "0x8c054718",
+              "0x8c05471a",
+              "0x8c05471c",
+              "0x8c05471e",
+              "0x8c054720",
+              "0x8c054722",
+              "0x8c054724",
+              "0x8c054726",
+              "0x8c054728",
+              "0x8c05472a",
+              "0x8c05472c",
+              "0x8c05472e",
+              "0x8c054730",
+              "0x8c054732",
+              "0x8c054734",
+              "0x8c054736",
+              "0x8c054738",
+              "0x8c05473a",
+              "0x8c05473c",
+              "0x8c05473e",
+              "0x8c054740",
+              "0x8c054742",
+              "0x8c054744",
+              "0x8c054746",
+              "0x8c054748",
+              "0x8c05474a",
+              "0x8c05474c",
+              "0x8c05474e",
+              "0x8c054750",
+              "0x8c054752",
+              "0x8c054754",
+              "0x8c054756",
+              "0x8c054758",
+              "0x8c05475a",
+              "0x8c05475c",
+              "0x8c05475e",
+              "0x8c054760",
+              "0x8c054762",
+              "0x8c054764",
+              "0x8c054766",
+              "0x8c054768",
+              "0x8c05476a",
+              "0x8c05476c",
+              "0x8c05476e",
+              "0x8c054770",
+              "0x8c054772",
+              "0x8c054774",
+              "0x8c054776",
+              "0x8c054778",
+              "0x8c05477a",
+              "0x8c05477c",
+              "0x8c05477e",
+              "0x8c054780",
+              "0x8c054782",
+              "0x8c054784",
+              "0x8c054786",
+              "0x8c054788",
+              "0x8c05478a",
+              "0x8c05478c",
+              "0x8c05478e",
+              "0x8c054790",
+              "0x8c054792",
+              "0x8c054794",
+              "0x8c054796",
+              "0x8c054798",
+              "0x8c05479a",
+              "0x8c05479c",
+              "0x8c05479e",
+              "0x8c0547a0",
+              "0x8c0547a2",
+              "0x8c0547a4",
+              "0x8c0547a6",
+              "0x8c0547a8",
+              "0x8c0547aa",
+              "0x8c0547ac",
+              "0x8c0547ae",
+              "0x8c0547b0",
+              "0x8c0547b2",
+              "0x8c0547b4",
+              "0x8c0547b6",
+              "0x8c0547b8",
+              "0x8c0547ba",
+              "0x8c0547bc",
+              "0x8c0547be",
+              "0x8c0547c0",
+              "0x8c0547c2",
+              "0x8c0547c4",
+              "0x8c0547c6",
+              "0x8c0547c8",
+              "0x8c0547ca",
+              "0x8c0547cc",
+              "0x8c0547ce",
+              "0x8c0547d0",
+              "0x8c0547d2",
+              "0x8c0547d4",
+              "0x8c0547d6",
+              "0x8c0547d8",
+              "0x8c0547da",
+              "0x8c0547dc",
+              "0x8c054860",
+              "0x8c054862",
+              "0x8c054864",
+              "0x8c054866",
+              "0x8c054868",
+              "0x8c05486a",
+              "0x8c05486c",
+              "0x8c05486e",
+              "0x8c054870",
+              "0x8c054872",
+              "0x8c054874",
+              "0x8c054876",
+              "0x8c054878",
+              "0x8c05487a",
+              "0x8c05487c",
+              "0x8c05487e",
+              "0x8c054880",
+              "0x8c054882",
+              "0x8c054884",
+              "0x8c054886",
+              "0x8c054888",
+              "0x8c05488a",
+              "0x8c05488c",
+              "0x8c05488e",
+              "0x8c054890",
+              "0x8c054892",
+              "0x8c054894",
+              "0x8c054896",
+              "0x8c054898",
+              "0x8c05489a",
+              "0x8c05489c",
+              "0x8c05489e",
+              "0x8c0548a0",
+              "0x8c0548a2"
+            ],
+            "conditional_edges_covered": 0,
+            "missing_edges": [
+              [
+                "0x8c0546e6",
+                "0x8c0546ea"
+              ],
+              [
+                "0x8c0546e6",
+                "0x8c0546f8"
+              ],
+              [
+                "0x8c054708",
+                "0x8c05470a"
+              ],
+              [
+                "0x8c054708",
+                "0x8c054716"
+              ],
+              [
+                "0x8c05470c",
+                "0x8c05470e"
+              ],
+              [
+                "0x8c05470c",
+                "0x8c054722"
+              ],
+              [
+                "0x8c054714",
+                "0x8c054716"
+              ],
+              [
+                "0x8c054714",
+                "0x8c054722"
+              ],
+              [
+                "0x8c054790",
+                "0x8c054792"
+              ],
+              [
+                "0x8c054790",
+                "0x8c054796"
+              ],
+              [
+                "0x8c0547a4",
+                "0x8c0547a6"
+              ],
+              [
+                "0x8c0547a4",
+                "0x8c0547aa"
+              ],
+              [
+                "0x8c0547b0",
+                "0x8c0547b2"
+              ],
+              [
+                "0x8c0547b0",
+                "0x8c0547ca"
+              ],
+              [
+                "0x8c0547b4",
+                "0x8c0547b6"
+              ],
+              [
+                "0x8c0547b4",
+                "0x8c054866"
+              ],
+              [
+                "0x8c0547b8",
+                "0x8c0547ba"
+              ],
+              [
+                "0x8c0547b8",
+                "0x8c0547d4"
+              ],
+              [
+                "0x8c0547bc",
+                "0x8c0547be"
+              ],
+              [
+                "0x8c0547bc",
+                "0x8c0547d8"
+              ],
+              [
+                "0x8c0547c0",
+                "0x8c0547c2"
+              ],
+              [
+                "0x8c0547c0",
+                "0x8c054860"
+              ],
+              [
+                "0x8c0547c4",
+                "0x8c0547c6"
+              ],
+              [
+                "0x8c0547c4",
+                "0x8c054866"
+              ]
+            ]
+          },
+          {
+            "address": "0x8c604510",
+            "static_rows": 3,
+            "covered_rows": 3,
+            "missing_rows": [],
+            "conditional_edges_covered": 0,
+            "missing_edges": []
+          },
+          {
+            "address": "0x8c10c07e",
+            "static_rows": 35,
+            "covered_rows": 7,
+            "missing_rows": [
+              "0x8c10c08c",
+              "0x8c10c08e",
+              "0x8c10c090",
+              "0x8c10c092",
+              "0x8c10c094",
+              "0x8c10c096",
+              "0x8c10c098",
+              "0x8c10c09a",
+              "0x8c10c09c",
+              "0x8c10c09e",
+              "0x8c10c0a0",
+              "0x8c10c0a2",
+              "0x8c10c0a4",
+              "0x8c10c0a6",
+              "0x8c10c0a8",
+              "0x8c10c0aa",
+              "0x8c10c0ac",
+              "0x8c10c0ae",
+              "0x8c10c0b0",
+              "0x8c10c0b2",
+              "0x8c10c0b4",
+              "0x8c10c0b6",
+              "0x8c10c0b8",
+              "0x8c10c0ba",
+              "0x8c10c0bc",
+              "0x8c10c0be",
+              "0x8c10c0c0",
+              "0x8c10c0c2"
+            ],
+            "conditional_edges_covered": 0,
+            "missing_edges": [
+              [
+                "0x8c10c092",
+                "0x8c10c094"
+              ],
+              [
+                "0x8c10c092",
+                "0x8c10c09c"
+              ],
+              [
+                "0x8c10c0a0",
+                "0x8c10c0a2"
+              ],
+              [
+                "0x8c10c0a0",
+                "0x8c10c0b2"
+              ],
+              [
+                "0x8c10c0a4",
+                "0x8c10c0a6"
+              ],
+              [
+                "0x8c10c0a4",
+                "0x8c10c0b2"
+              ],
+              [
+                "0x8c10c0a8",
+                "0x8c10c0aa"
+              ],
+              [
+                "0x8c10c0a8",
+                "0x8c10c0ba"
+              ],
+              [
+                "0x8c10c0ac",
+                "0x8c10c0ae"
+              ],
+              [
+                "0x8c10c0ac",
+                "0x8c10c0ba"
+              ]
+            ]
+          },
+          {
+            "address": "0x8c10ba1e",
+            "static_rows": 11,
+            "covered_rows": 11,
+            "missing_rows": [],
+            "conditional_edges_covered": 2,
+            "missing_edges": []
+          },
+          {
+            "address": "0x8c051760",
+            "static_rows": 18,
+            "covered_rows": 18,
+            "missing_rows": [],
+            "conditional_edges_covered": 0,
+            "missing_edges": []
+          },
+          {
+            "address": "0x8c10c044",
+            "static_rows": 29,
+            "covered_rows": 4,
+            "missing_rows": [
+              "0x8c10c04c",
+              "0x8c10c04e",
+              "0x8c10c050",
+              "0x8c10c052",
+              "0x8c10c054",
+              "0x8c10c056",
+              "0x8c10c058",
+              "0x8c10c05a",
+              "0x8c10c05c",
+              "0x8c10c05e",
+              "0x8c10c060",
+              "0x8c10c062",
+              "0x8c10c064",
+              "0x8c10c066",
+              "0x8c10c068",
+              "0x8c10c06a",
+              "0x8c10c06c",
+              "0x8c10c06e",
+              "0x8c10c070",
+              "0x8c10c072",
+              "0x8c10c074",
+              "0x8c10c076",
+              "0x8c10c078",
+              "0x8c10c07a",
+              "0x8c10c07c"
+            ],
+            "conditional_edges_covered": 0,
+            "missing_edges": [
+              [
+                "0x8c10c058",
+                "0x8c10c05a"
+              ],
+              [
+                "0x8c10c058",
+                "0x8c10c06a"
+              ],
+              [
+                "0x8c10c05c",
+                "0x8c10c05e"
+              ],
+              [
+                "0x8c10c05c",
+                "0x8c10c06e"
+              ],
+              [
+                "0x8c10c060",
+                "0x8c10c062"
+              ],
+              [
+                "0x8c10c060",
+                "0x8c10c072"
+              ],
+              [
+                "0x8c10c064",
+                "0x8c10c066"
+              ],
+              [
+                "0x8c10c064",
+                "0x8c10c076"
+              ]
+            ]
+          },
+          {
+            "address": "0x8c055c44",
+            "static_rows": 4,
+            "covered_rows": 4,
+            "missing_rows": [],
+            "conditional_edges_covered": 0,
+            "missing_edges": []
+          },
+          {
+            "address": "0x8c603b84",
+            "static_rows": 40,
+            "covered_rows": 6,
+            "missing_rows": [
+              "0x8c603b90",
+              "0x8c603b92",
+              "0x8c603b94",
+              "0x8c603b96",
+              "0x8c603b98",
+              "0x8c603b9a",
+              "0x8c603b9c",
+              "0x8c603b9e",
+              "0x8c603ba0",
+              "0x8c603ba2",
+              "0x8c603ba4",
+              "0x8c603ba6",
+              "0x8c603ba8",
+              "0x8c603baa",
+              "0x8c603bac",
+              "0x8c603bae",
+              "0x8c603bb0",
+              "0x8c603bb2",
+              "0x8c603bb4",
+              "0x8c603bb6",
+              "0x8c603bb8",
+              "0x8c603bba",
+              "0x8c603bbc",
+              "0x8c603bbe",
+              "0x8c603bc0",
+              "0x8c603bc2",
+              "0x8c603bc4",
+              "0x8c603bc6",
+              "0x8c603bc8",
+              "0x8c603bca",
+              "0x8c603bcc",
+              "0x8c603bce",
+              "0x8c603bd0",
+              "0x8c603bd2"
+            ],
+            "conditional_edges_covered": 0,
+            "missing_edges": [
+              [
+                "0x8c603ba2",
+                "0x8c603ba4"
+              ],
+              [
+                "0x8c603ba2",
+                "0x8c603bca"
+              ],
+              [
+                "0x8c603bac",
+                "0x8c603bae"
+              ],
+              [
+                "0x8c603bac",
+                "0x8c603bb6"
+              ],
+              [
+                "0x8c603bb4",
+                "0x8c603bb6"
+              ],
+              [
+                "0x8c603bb4",
+                "0x8c603bca"
+              ]
+            ]
+          },
+          {
+            "address": "0x8c10c0f8",
+            "static_rows": 5,
+            "covered_rows": 5,
+            "missing_rows": [],
+            "conditional_edges_covered": 0,
+            "missing_edges": []
+          },
+          {
+            "address": "0x8c10c0d0",
+            "static_rows": 5,
+            "covered_rows": 5,
+            "missing_rows": [],
+            "conditional_edges_covered": 0,
+            "missing_edges": []
+          },
+          {
+            "address": "0x8c10da50",
+            "static_rows": 5,
+            "covered_rows": 5,
+            "missing_rows": [],
+            "conditional_edges_covered": 0,
+            "missing_edges": []
+          }
+        ],
+        "caller_address": "0x8c0546c0",
+        "caller_rows_executed": 15,
+        "caller_rows_total": 177,
+        "original_initializer_reached_from_caller": false,
+        "missing_service_vectors": [
+          "0x8c0000b0",
+          "0x8c0000b8"
+        ],
+        "cold_start_reexecuted_in_new_dll": false,
+        "dll_sha256": "774b7ab287f63bc468a18a33be680bb4e2a00400089c503b5e099c2995335786",
+        "next_task": "Establish explicit native console-information/flash service input contracts from original syscall wrappers and primary ABI evidence; preserve the unresolved-callback controls and resume this original caller.",
+        "scope": "Reached original caller and new static adapters are partial. Seven canonical helpers retain names/source/proof and receive zero extra credit. Unresolved BIOS callbacks record entry and stop; the verifier never supplies a result or continues. New 172-source build retains the warm/full-clear regression; old cold evidence remains separate. No natural boot, pixels or playable port claim.",
+        "verification": "analysis/movie_initialize_integration.json",
+        "verification_sha256": "b60e1e5156fad26c7e751398d9120598e97b9febfb4d3b17f5d771da6de00102",
+        "guide": "MOVIE_INITIALIZE.txt"
+      }
     },
     {
       "module": "1ST_READ.BIN",
@@ -45301,7 +47745,618 @@
       "limitations": [
         "The callback body is outside this ten-byte wrapper.",
         "Differential verification uses the project SH-4 interpreter, not Dreamcast hardware or whole-game execution."
-      ]
+      ],
+      "movie_initialize_integration": {
+        "compiled_source_count": 172,
+        "static_adapter_bodies": 11,
+        "static_adapter_rows": 332,
+        "executed_adapter_rows": 83,
+        "direct_comparisons": 68,
+        "independent_checks": 294,
+        "retained_warm_startup_comparisons": 1,
+        "total_comparisons": 69,
+        "canonical_reuse": [
+          {
+            "address": "0x8c051760",
+            "name": "sa_frame_countdown_configure_8c051760",
+            "source": "source/frame_countdown.c",
+            "verification": "analysis/frame_countdown_verification.json"
+          },
+          {
+            "address": "0x8c055c44",
+            "name": "sa_retail_constant_setter_8c055c44",
+            "source": "source/retail_constant_setters.c",
+            "verification": "analysis/retail_constant_setters_verification.json"
+          },
+          {
+            "address": "0x8c10ba1e",
+            "name": "sa_platform_signature_value_8c10ba1e",
+            "source": "source/sa_platform_signature_value_8c10ba1e.c",
+            "verification": "analysis/platform_signature_value_8c10ba1e_verification.json"
+          },
+          {
+            "address": "0x8c10c0d0",
+            "name": "sa_indirect_global_tail_call_8c10c0d0",
+            "source": "source/sa_indirect_global_tail_call_8c10c0d0.c",
+            "verification": "analysis/indirect_global_tail_call_8c10c0d0_verification.json"
+          },
+          {
+            "address": "0x8c10c0f8",
+            "name": "sa_indirect_global_tail_call_three_8c10c0f8",
+            "source": "source/sa_indirect_global_tail_call_three_8c10c0f8.c",
+            "verification": "analysis/indirect_global_tail_call_three_8c10c0f8_verification.json"
+          },
+          {
+            "address": "0x8c10da50",
+            "name": "sa_indirect_literal_tail_call_8c10da50",
+            "source": "source/sa_indirect_literal_tail_call_cluster.c",
+            "verification": "analysis/indirect_literal_tail_call_cluster_verification.json"
+          },
+          {
+            "address": "0x8c604510",
+            "name": "sa_packet_global_value_set_8c604510",
+            "source": "source/packet_global_setter.c",
+            "verification": "analysis/packet_global_setter_verification.json"
+          }
+        ],
+        "reused_additional_credit": 0,
+        "new_registry_credit": 0,
+        "parent_bodies_qualified": false,
+        "coverage_by_routine": [
+          {
+            "address": "0x8c0546c0",
+            "static_rows": 177,
+            "covered_rows": 15,
+            "missing_rows": [
+              "0x8c0546de",
+              "0x8c0546e0",
+              "0x8c0546e2",
+              "0x8c0546e4",
+              "0x8c0546e6",
+              "0x8c0546e8",
+              "0x8c0546ea",
+              "0x8c0546ec",
+              "0x8c0546ee",
+              "0x8c0546f0",
+              "0x8c0546f2",
+              "0x8c0546f4",
+              "0x8c0546f6",
+              "0x8c0546f8",
+              "0x8c0546fa",
+              "0x8c0546fc",
+              "0x8c0546fe",
+              "0x8c054700",
+              "0x8c054702",
+              "0x8c054704",
+              "0x8c054706",
+              "0x8c054708",
+              "0x8c05470a",
+              "0x8c05470c",
+              "0x8c05470e",
+              "0x8c054710",
+              "0x8c054712",
+              "0x8c054714",
+              "0x8c054716",
+              "0x8c054718",
+              "0x8c05471a",
+              "0x8c05471c",
+              "0x8c05471e",
+              "0x8c054720",
+              "0x8c054722",
+              "0x8c054724",
+              "0x8c054726",
+              "0x8c054728",
+              "0x8c05472a",
+              "0x8c05472c",
+              "0x8c05472e",
+              "0x8c054730",
+              "0x8c054732",
+              "0x8c054734",
+              "0x8c054736",
+              "0x8c054738",
+              "0x8c05473a",
+              "0x8c05473c",
+              "0x8c05473e",
+              "0x8c054740",
+              "0x8c054742",
+              "0x8c054744",
+              "0x8c054746",
+              "0x8c054748",
+              "0x8c05474a",
+              "0x8c05474c",
+              "0x8c05474e",
+              "0x8c054750",
+              "0x8c054752",
+              "0x8c054754",
+              "0x8c054756",
+              "0x8c054758",
+              "0x8c05475a",
+              "0x8c05475c",
+              "0x8c05475e",
+              "0x8c054760",
+              "0x8c054762",
+              "0x8c054764",
+              "0x8c054766",
+              "0x8c054768",
+              "0x8c05476a",
+              "0x8c05476c",
+              "0x8c05476e",
+              "0x8c054770",
+              "0x8c054772",
+              "0x8c054774",
+              "0x8c054776",
+              "0x8c054778",
+              "0x8c05477a",
+              "0x8c05477c",
+              "0x8c05477e",
+              "0x8c054780",
+              "0x8c054782",
+              "0x8c054784",
+              "0x8c054786",
+              "0x8c054788",
+              "0x8c05478a",
+              "0x8c05478c",
+              "0x8c05478e",
+              "0x8c054790",
+              "0x8c054792",
+              "0x8c054794",
+              "0x8c054796",
+              "0x8c054798",
+              "0x8c05479a",
+              "0x8c05479c",
+              "0x8c05479e",
+              "0x8c0547a0",
+              "0x8c0547a2",
+              "0x8c0547a4",
+              "0x8c0547a6",
+              "0x8c0547a8",
+              "0x8c0547aa",
+              "0x8c0547ac",
+              "0x8c0547ae",
+              "0x8c0547b0",
+              "0x8c0547b2",
+              "0x8c0547b4",
+              "0x8c0547b6",
+              "0x8c0547b8",
+              "0x8c0547ba",
+              "0x8c0547bc",
+              "0x8c0547be",
+              "0x8c0547c0",
+              "0x8c0547c2",
+              "0x8c0547c4",
+              "0x8c0547c6",
+              "0x8c0547c8",
+              "0x8c0547ca",
+              "0x8c0547cc",
+              "0x8c0547ce",
+              "0x8c0547d0",
+              "0x8c0547d2",
+              "0x8c0547d4",
+              "0x8c0547d6",
+              "0x8c0547d8",
+              "0x8c0547da",
+              "0x8c0547dc",
+              "0x8c054860",
+              "0x8c054862",
+              "0x8c054864",
+              "0x8c054866",
+              "0x8c054868",
+              "0x8c05486a",
+              "0x8c05486c",
+              "0x8c05486e",
+              "0x8c054870",
+              "0x8c054872",
+              "0x8c054874",
+              "0x8c054876",
+              "0x8c054878",
+              "0x8c05487a",
+              "0x8c05487c",
+              "0x8c05487e",
+              "0x8c054880",
+              "0x8c054882",
+              "0x8c054884",
+              "0x8c054886",
+              "0x8c054888",
+              "0x8c05488a",
+              "0x8c05488c",
+              "0x8c05488e",
+              "0x8c054890",
+              "0x8c054892",
+              "0x8c054894",
+              "0x8c054896",
+              "0x8c054898",
+              "0x8c05489a",
+              "0x8c05489c",
+              "0x8c05489e",
+              "0x8c0548a0",
+              "0x8c0548a2"
+            ],
+            "conditional_edges_covered": 0,
+            "missing_edges": [
+              [
+                "0x8c0546e6",
+                "0x8c0546ea"
+              ],
+              [
+                "0x8c0546e6",
+                "0x8c0546f8"
+              ],
+              [
+                "0x8c054708",
+                "0x8c05470a"
+              ],
+              [
+                "0x8c054708",
+                "0x8c054716"
+              ],
+              [
+                "0x8c05470c",
+                "0x8c05470e"
+              ],
+              [
+                "0x8c05470c",
+                "0x8c054722"
+              ],
+              [
+                "0x8c054714",
+                "0x8c054716"
+              ],
+              [
+                "0x8c054714",
+                "0x8c054722"
+              ],
+              [
+                "0x8c054790",
+                "0x8c054792"
+              ],
+              [
+                "0x8c054790",
+                "0x8c054796"
+              ],
+              [
+                "0x8c0547a4",
+                "0x8c0547a6"
+              ],
+              [
+                "0x8c0547a4",
+                "0x8c0547aa"
+              ],
+              [
+                "0x8c0547b0",
+                "0x8c0547b2"
+              ],
+              [
+                "0x8c0547b0",
+                "0x8c0547ca"
+              ],
+              [
+                "0x8c0547b4",
+                "0x8c0547b6"
+              ],
+              [
+                "0x8c0547b4",
+                "0x8c054866"
+              ],
+              [
+                "0x8c0547b8",
+                "0x8c0547ba"
+              ],
+              [
+                "0x8c0547b8",
+                "0x8c0547d4"
+              ],
+              [
+                "0x8c0547bc",
+                "0x8c0547be"
+              ],
+              [
+                "0x8c0547bc",
+                "0x8c0547d8"
+              ],
+              [
+                "0x8c0547c0",
+                "0x8c0547c2"
+              ],
+              [
+                "0x8c0547c0",
+                "0x8c054860"
+              ],
+              [
+                "0x8c0547c4",
+                "0x8c0547c6"
+              ],
+              [
+                "0x8c0547c4",
+                "0x8c054866"
+              ]
+            ]
+          },
+          {
+            "address": "0x8c604510",
+            "static_rows": 3,
+            "covered_rows": 3,
+            "missing_rows": [],
+            "conditional_edges_covered": 0,
+            "missing_edges": []
+          },
+          {
+            "address": "0x8c10c07e",
+            "static_rows": 35,
+            "covered_rows": 7,
+            "missing_rows": [
+              "0x8c10c08c",
+              "0x8c10c08e",
+              "0x8c10c090",
+              "0x8c10c092",
+              "0x8c10c094",
+              "0x8c10c096",
+              "0x8c10c098",
+              "0x8c10c09a",
+              "0x8c10c09c",
+              "0x8c10c09e",
+              "0x8c10c0a0",
+              "0x8c10c0a2",
+              "0x8c10c0a4",
+              "0x8c10c0a6",
+              "0x8c10c0a8",
+              "0x8c10c0aa",
+              "0x8c10c0ac",
+              "0x8c10c0ae",
+              "0x8c10c0b0",
+              "0x8c10c0b2",
+              "0x8c10c0b4",
+              "0x8c10c0b6",
+              "0x8c10c0b8",
+              "0x8c10c0ba",
+              "0x8c10c0bc",
+              "0x8c10c0be",
+              "0x8c10c0c0",
+              "0x8c10c0c2"
+            ],
+            "conditional_edges_covered": 0,
+            "missing_edges": [
+              [
+                "0x8c10c092",
+                "0x8c10c094"
+              ],
+              [
+                "0x8c10c092",
+                "0x8c10c09c"
+              ],
+              [
+                "0x8c10c0a0",
+                "0x8c10c0a2"
+              ],
+              [
+                "0x8c10c0a0",
+                "0x8c10c0b2"
+              ],
+              [
+                "0x8c10c0a4",
+                "0x8c10c0a6"
+              ],
+              [
+                "0x8c10c0a4",
+                "0x8c10c0b2"
+              ],
+              [
+                "0x8c10c0a8",
+                "0x8c10c0aa"
+              ],
+              [
+                "0x8c10c0a8",
+                "0x8c10c0ba"
+              ],
+              [
+                "0x8c10c0ac",
+                "0x8c10c0ae"
+              ],
+              [
+                "0x8c10c0ac",
+                "0x8c10c0ba"
+              ]
+            ]
+          },
+          {
+            "address": "0x8c10ba1e",
+            "static_rows": 11,
+            "covered_rows": 11,
+            "missing_rows": [],
+            "conditional_edges_covered": 2,
+            "missing_edges": []
+          },
+          {
+            "address": "0x8c051760",
+            "static_rows": 18,
+            "covered_rows": 18,
+            "missing_rows": [],
+            "conditional_edges_covered": 0,
+            "missing_edges": []
+          },
+          {
+            "address": "0x8c10c044",
+            "static_rows": 29,
+            "covered_rows": 4,
+            "missing_rows": [
+              "0x8c10c04c",
+              "0x8c10c04e",
+              "0x8c10c050",
+              "0x8c10c052",
+              "0x8c10c054",
+              "0x8c10c056",
+              "0x8c10c058",
+              "0x8c10c05a",
+              "0x8c10c05c",
+              "0x8c10c05e",
+              "0x8c10c060",
+              "0x8c10c062",
+              "0x8c10c064",
+              "0x8c10c066",
+              "0x8c10c068",
+              "0x8c10c06a",
+              "0x8c10c06c",
+              "0x8c10c06e",
+              "0x8c10c070",
+              "0x8c10c072",
+              "0x8c10c074",
+              "0x8c10c076",
+              "0x8c10c078",
+              "0x8c10c07a",
+              "0x8c10c07c"
+            ],
+            "conditional_edges_covered": 0,
+            "missing_edges": [
+              [
+                "0x8c10c058",
+                "0x8c10c05a"
+              ],
+              [
+                "0x8c10c058",
+                "0x8c10c06a"
+              ],
+              [
+                "0x8c10c05c",
+                "0x8c10c05e"
+              ],
+              [
+                "0x8c10c05c",
+                "0x8c10c06e"
+              ],
+              [
+                "0x8c10c060",
+                "0x8c10c062"
+              ],
+              [
+                "0x8c10c060",
+                "0x8c10c072"
+              ],
+              [
+                "0x8c10c064",
+                "0x8c10c066"
+              ],
+              [
+                "0x8c10c064",
+                "0x8c10c076"
+              ]
+            ]
+          },
+          {
+            "address": "0x8c055c44",
+            "static_rows": 4,
+            "covered_rows": 4,
+            "missing_rows": [],
+            "conditional_edges_covered": 0,
+            "missing_edges": []
+          },
+          {
+            "address": "0x8c603b84",
+            "static_rows": 40,
+            "covered_rows": 6,
+            "missing_rows": [
+              "0x8c603b90",
+              "0x8c603b92",
+              "0x8c603b94",
+              "0x8c603b96",
+              "0x8c603b98",
+              "0x8c603b9a",
+              "0x8c603b9c",
+              "0x8c603b9e",
+              "0x8c603ba0",
+              "0x8c603ba2",
+              "0x8c603ba4",
+              "0x8c603ba6",
+              "0x8c603ba8",
+              "0x8c603baa",
+              "0x8c603bac",
+              "0x8c603bae",
+              "0x8c603bb0",
+              "0x8c603bb2",
+              "0x8c603bb4",
+              "0x8c603bb6",
+              "0x8c603bb8",
+              "0x8c603bba",
+              "0x8c603bbc",
+              "0x8c603bbe",
+              "0x8c603bc0",
+              "0x8c603bc2",
+              "0x8c603bc4",
+              "0x8c603bc6",
+              "0x8c603bc8",
+              "0x8c603bca",
+              "0x8c603bcc",
+              "0x8c603bce",
+              "0x8c603bd0",
+              "0x8c603bd2"
+            ],
+            "conditional_edges_covered": 0,
+            "missing_edges": [
+              [
+                "0x8c603ba2",
+                "0x8c603ba4"
+              ],
+              [
+                "0x8c603ba2",
+                "0x8c603bca"
+              ],
+              [
+                "0x8c603bac",
+                "0x8c603bae"
+              ],
+              [
+                "0x8c603bac",
+                "0x8c603bb6"
+              ],
+              [
+                "0x8c603bb4",
+                "0x8c603bb6"
+              ],
+              [
+                "0x8c603bb4",
+                "0x8c603bca"
+              ]
+            ]
+          },
+          {
+            "address": "0x8c10c0f8",
+            "static_rows": 5,
+            "covered_rows": 5,
+            "missing_rows": [],
+            "conditional_edges_covered": 0,
+            "missing_edges": []
+          },
+          {
+            "address": "0x8c10c0d0",
+            "static_rows": 5,
+            "covered_rows": 5,
+            "missing_rows": [],
+            "conditional_edges_covered": 0,
+            "missing_edges": []
+          },
+          {
+            "address": "0x8c10da50",
+            "static_rows": 5,
+            "covered_rows": 5,
+            "missing_rows": [],
+            "conditional_edges_covered": 0,
+            "missing_edges": []
+          }
+        ],
+        "caller_address": "0x8c0546c0",
+        "caller_rows_executed": 15,
+        "caller_rows_total": 177,
+        "original_initializer_reached_from_caller": false,
+        "missing_service_vectors": [
+          "0x8c0000b0",
+          "0x8c0000b8"
+        ],
+        "cold_start_reexecuted_in_new_dll": false,
+        "dll_sha256": "774b7ab287f63bc468a18a33be680bb4e2a00400089c503b5e099c2995335786",
+        "next_task": "Establish explicit native console-information/flash service input contracts from original syscall wrappers and primary ABI evidence; preserve the unresolved-callback controls and resume this original caller.",
+        "scope": "Reached original caller and new static adapters are partial. Seven canonical helpers retain names/source/proof and receive zero extra credit. Unresolved BIOS callbacks record entry and stop; the verifier never supplies a result or continues. New 172-source build retains the warm/full-clear regression; old cold evidence remains separate. No natural boot, pixels or playable port claim.",
+        "verification": "analysis/movie_initialize_integration.json",
+        "verification_sha256": "b60e1e5156fad26c7e751398d9120598e97b9febfb4d3b17f5d771da6de00102",
+        "guide": "MOVIE_INITIALIZE.txt"
+      }
     },
     {
       "module": "1ST_READ.BIN",
@@ -45421,7 +48476,618 @@
       "limitations": [
         "Callback body behavior is outside this ten-byte wrapper.",
         "Differential verification uses the project SH-4 interpreter, not Dreamcast hardware or whole-game execution."
-      ]
+      ],
+      "movie_initialize_integration": {
+        "compiled_source_count": 172,
+        "static_adapter_bodies": 11,
+        "static_adapter_rows": 332,
+        "executed_adapter_rows": 83,
+        "direct_comparisons": 68,
+        "independent_checks": 294,
+        "retained_warm_startup_comparisons": 1,
+        "total_comparisons": 69,
+        "canonical_reuse": [
+          {
+            "address": "0x8c051760",
+            "name": "sa_frame_countdown_configure_8c051760",
+            "source": "source/frame_countdown.c",
+            "verification": "analysis/frame_countdown_verification.json"
+          },
+          {
+            "address": "0x8c055c44",
+            "name": "sa_retail_constant_setter_8c055c44",
+            "source": "source/retail_constant_setters.c",
+            "verification": "analysis/retail_constant_setters_verification.json"
+          },
+          {
+            "address": "0x8c10ba1e",
+            "name": "sa_platform_signature_value_8c10ba1e",
+            "source": "source/sa_platform_signature_value_8c10ba1e.c",
+            "verification": "analysis/platform_signature_value_8c10ba1e_verification.json"
+          },
+          {
+            "address": "0x8c10c0d0",
+            "name": "sa_indirect_global_tail_call_8c10c0d0",
+            "source": "source/sa_indirect_global_tail_call_8c10c0d0.c",
+            "verification": "analysis/indirect_global_tail_call_8c10c0d0_verification.json"
+          },
+          {
+            "address": "0x8c10c0f8",
+            "name": "sa_indirect_global_tail_call_three_8c10c0f8",
+            "source": "source/sa_indirect_global_tail_call_three_8c10c0f8.c",
+            "verification": "analysis/indirect_global_tail_call_three_8c10c0f8_verification.json"
+          },
+          {
+            "address": "0x8c10da50",
+            "name": "sa_indirect_literal_tail_call_8c10da50",
+            "source": "source/sa_indirect_literal_tail_call_cluster.c",
+            "verification": "analysis/indirect_literal_tail_call_cluster_verification.json"
+          },
+          {
+            "address": "0x8c604510",
+            "name": "sa_packet_global_value_set_8c604510",
+            "source": "source/packet_global_setter.c",
+            "verification": "analysis/packet_global_setter_verification.json"
+          }
+        ],
+        "reused_additional_credit": 0,
+        "new_registry_credit": 0,
+        "parent_bodies_qualified": false,
+        "coverage_by_routine": [
+          {
+            "address": "0x8c0546c0",
+            "static_rows": 177,
+            "covered_rows": 15,
+            "missing_rows": [
+              "0x8c0546de",
+              "0x8c0546e0",
+              "0x8c0546e2",
+              "0x8c0546e4",
+              "0x8c0546e6",
+              "0x8c0546e8",
+              "0x8c0546ea",
+              "0x8c0546ec",
+              "0x8c0546ee",
+              "0x8c0546f0",
+              "0x8c0546f2",
+              "0x8c0546f4",
+              "0x8c0546f6",
+              "0x8c0546f8",
+              "0x8c0546fa",
+              "0x8c0546fc",
+              "0x8c0546fe",
+              "0x8c054700",
+              "0x8c054702",
+              "0x8c054704",
+              "0x8c054706",
+              "0x8c054708",
+              "0x8c05470a",
+              "0x8c05470c",
+              "0x8c05470e",
+              "0x8c054710",
+              "0x8c054712",
+              "0x8c054714",
+              "0x8c054716",
+              "0x8c054718",
+              "0x8c05471a",
+              "0x8c05471c",
+              "0x8c05471e",
+              "0x8c054720",
+              "0x8c054722",
+              "0x8c054724",
+              "0x8c054726",
+              "0x8c054728",
+              "0x8c05472a",
+              "0x8c05472c",
+              "0x8c05472e",
+              "0x8c054730",
+              "0x8c054732",
+              "0x8c054734",
+              "0x8c054736",
+              "0x8c054738",
+              "0x8c05473a",
+              "0x8c05473c",
+              "0x8c05473e",
+              "0x8c054740",
+              "0x8c054742",
+              "0x8c054744",
+              "0x8c054746",
+              "0x8c054748",
+              "0x8c05474a",
+              "0x8c05474c",
+              "0x8c05474e",
+              "0x8c054750",
+              "0x8c054752",
+              "0x8c054754",
+              "0x8c054756",
+              "0x8c054758",
+              "0x8c05475a",
+              "0x8c05475c",
+              "0x8c05475e",
+              "0x8c054760",
+              "0x8c054762",
+              "0x8c054764",
+              "0x8c054766",
+              "0x8c054768",
+              "0x8c05476a",
+              "0x8c05476c",
+              "0x8c05476e",
+              "0x8c054770",
+              "0x8c054772",
+              "0x8c054774",
+              "0x8c054776",
+              "0x8c054778",
+              "0x8c05477a",
+              "0x8c05477c",
+              "0x8c05477e",
+              "0x8c054780",
+              "0x8c054782",
+              "0x8c054784",
+              "0x8c054786",
+              "0x8c054788",
+              "0x8c05478a",
+              "0x8c05478c",
+              "0x8c05478e",
+              "0x8c054790",
+              "0x8c054792",
+              "0x8c054794",
+              "0x8c054796",
+              "0x8c054798",
+              "0x8c05479a",
+              "0x8c05479c",
+              "0x8c05479e",
+              "0x8c0547a0",
+              "0x8c0547a2",
+              "0x8c0547a4",
+              "0x8c0547a6",
+              "0x8c0547a8",
+              "0x8c0547aa",
+              "0x8c0547ac",
+              "0x8c0547ae",
+              "0x8c0547b0",
+              "0x8c0547b2",
+              "0x8c0547b4",
+              "0x8c0547b6",
+              "0x8c0547b8",
+              "0x8c0547ba",
+              "0x8c0547bc",
+              "0x8c0547be",
+              "0x8c0547c0",
+              "0x8c0547c2",
+              "0x8c0547c4",
+              "0x8c0547c6",
+              "0x8c0547c8",
+              "0x8c0547ca",
+              "0x8c0547cc",
+              "0x8c0547ce",
+              "0x8c0547d0",
+              "0x8c0547d2",
+              "0x8c0547d4",
+              "0x8c0547d6",
+              "0x8c0547d8",
+              "0x8c0547da",
+              "0x8c0547dc",
+              "0x8c054860",
+              "0x8c054862",
+              "0x8c054864",
+              "0x8c054866",
+              "0x8c054868",
+              "0x8c05486a",
+              "0x8c05486c",
+              "0x8c05486e",
+              "0x8c054870",
+              "0x8c054872",
+              "0x8c054874",
+              "0x8c054876",
+              "0x8c054878",
+              "0x8c05487a",
+              "0x8c05487c",
+              "0x8c05487e",
+              "0x8c054880",
+              "0x8c054882",
+              "0x8c054884",
+              "0x8c054886",
+              "0x8c054888",
+              "0x8c05488a",
+              "0x8c05488c",
+              "0x8c05488e",
+              "0x8c054890",
+              "0x8c054892",
+              "0x8c054894",
+              "0x8c054896",
+              "0x8c054898",
+              "0x8c05489a",
+              "0x8c05489c",
+              "0x8c05489e",
+              "0x8c0548a0",
+              "0x8c0548a2"
+            ],
+            "conditional_edges_covered": 0,
+            "missing_edges": [
+              [
+                "0x8c0546e6",
+                "0x8c0546ea"
+              ],
+              [
+                "0x8c0546e6",
+                "0x8c0546f8"
+              ],
+              [
+                "0x8c054708",
+                "0x8c05470a"
+              ],
+              [
+                "0x8c054708",
+                "0x8c054716"
+              ],
+              [
+                "0x8c05470c",
+                "0x8c05470e"
+              ],
+              [
+                "0x8c05470c",
+                "0x8c054722"
+              ],
+              [
+                "0x8c054714",
+                "0x8c054716"
+              ],
+              [
+                "0x8c054714",
+                "0x8c054722"
+              ],
+              [
+                "0x8c054790",
+                "0x8c054792"
+              ],
+              [
+                "0x8c054790",
+                "0x8c054796"
+              ],
+              [
+                "0x8c0547a4",
+                "0x8c0547a6"
+              ],
+              [
+                "0x8c0547a4",
+                "0x8c0547aa"
+              ],
+              [
+                "0x8c0547b0",
+                "0x8c0547b2"
+              ],
+              [
+                "0x8c0547b0",
+                "0x8c0547ca"
+              ],
+              [
+                "0x8c0547b4",
+                "0x8c0547b6"
+              ],
+              [
+                "0x8c0547b4",
+                "0x8c054866"
+              ],
+              [
+                "0x8c0547b8",
+                "0x8c0547ba"
+              ],
+              [
+                "0x8c0547b8",
+                "0x8c0547d4"
+              ],
+              [
+                "0x8c0547bc",
+                "0x8c0547be"
+              ],
+              [
+                "0x8c0547bc",
+                "0x8c0547d8"
+              ],
+              [
+                "0x8c0547c0",
+                "0x8c0547c2"
+              ],
+              [
+                "0x8c0547c0",
+                "0x8c054860"
+              ],
+              [
+                "0x8c0547c4",
+                "0x8c0547c6"
+              ],
+              [
+                "0x8c0547c4",
+                "0x8c054866"
+              ]
+            ]
+          },
+          {
+            "address": "0x8c604510",
+            "static_rows": 3,
+            "covered_rows": 3,
+            "missing_rows": [],
+            "conditional_edges_covered": 0,
+            "missing_edges": []
+          },
+          {
+            "address": "0x8c10c07e",
+            "static_rows": 35,
+            "covered_rows": 7,
+            "missing_rows": [
+              "0x8c10c08c",
+              "0x8c10c08e",
+              "0x8c10c090",
+              "0x8c10c092",
+              "0x8c10c094",
+              "0x8c10c096",
+              "0x8c10c098",
+              "0x8c10c09a",
+              "0x8c10c09c",
+              "0x8c10c09e",
+              "0x8c10c0a0",
+              "0x8c10c0a2",
+              "0x8c10c0a4",
+              "0x8c10c0a6",
+              "0x8c10c0a8",
+              "0x8c10c0aa",
+              "0x8c10c0ac",
+              "0x8c10c0ae",
+              "0x8c10c0b0",
+              "0x8c10c0b2",
+              "0x8c10c0b4",
+              "0x8c10c0b6",
+              "0x8c10c0b8",
+              "0x8c10c0ba",
+              "0x8c10c0bc",
+              "0x8c10c0be",
+              "0x8c10c0c0",
+              "0x8c10c0c2"
+            ],
+            "conditional_edges_covered": 0,
+            "missing_edges": [
+              [
+                "0x8c10c092",
+                "0x8c10c094"
+              ],
+              [
+                "0x8c10c092",
+                "0x8c10c09c"
+              ],
+              [
+                "0x8c10c0a0",
+                "0x8c10c0a2"
+              ],
+              [
+                "0x8c10c0a0",
+                "0x8c10c0b2"
+              ],
+              [
+                "0x8c10c0a4",
+                "0x8c10c0a6"
+              ],
+              [
+                "0x8c10c0a4",
+                "0x8c10c0b2"
+              ],
+              [
+                "0x8c10c0a8",
+                "0x8c10c0aa"
+              ],
+              [
+                "0x8c10c0a8",
+                "0x8c10c0ba"
+              ],
+              [
+                "0x8c10c0ac",
+                "0x8c10c0ae"
+              ],
+              [
+                "0x8c10c0ac",
+                "0x8c10c0ba"
+              ]
+            ]
+          },
+          {
+            "address": "0x8c10ba1e",
+            "static_rows": 11,
+            "covered_rows": 11,
+            "missing_rows": [],
+            "conditional_edges_covered": 2,
+            "missing_edges": []
+          },
+          {
+            "address": "0x8c051760",
+            "static_rows": 18,
+            "covered_rows": 18,
+            "missing_rows": [],
+            "conditional_edges_covered": 0,
+            "missing_edges": []
+          },
+          {
+            "address": "0x8c10c044",
+            "static_rows": 29,
+            "covered_rows": 4,
+            "missing_rows": [
+              "0x8c10c04c",
+              "0x8c10c04e",
+              "0x8c10c050",
+              "0x8c10c052",
+              "0x8c10c054",
+              "0x8c10c056",
+              "0x8c10c058",
+              "0x8c10c05a",
+              "0x8c10c05c",
+              "0x8c10c05e",
+              "0x8c10c060",
+              "0x8c10c062",
+              "0x8c10c064",
+              "0x8c10c066",
+              "0x8c10c068",
+              "0x8c10c06a",
+              "0x8c10c06c",
+              "0x8c10c06e",
+              "0x8c10c070",
+              "0x8c10c072",
+              "0x8c10c074",
+              "0x8c10c076",
+              "0x8c10c078",
+              "0x8c10c07a",
+              "0x8c10c07c"
+            ],
+            "conditional_edges_covered": 0,
+            "missing_edges": [
+              [
+                "0x8c10c058",
+                "0x8c10c05a"
+              ],
+              [
+                "0x8c10c058",
+                "0x8c10c06a"
+              ],
+              [
+                "0x8c10c05c",
+                "0x8c10c05e"
+              ],
+              [
+                "0x8c10c05c",
+                "0x8c10c06e"
+              ],
+              [
+                "0x8c10c060",
+                "0x8c10c062"
+              ],
+              [
+                "0x8c10c060",
+                "0x8c10c072"
+              ],
+              [
+                "0x8c10c064",
+                "0x8c10c066"
+              ],
+              [
+                "0x8c10c064",
+                "0x8c10c076"
+              ]
+            ]
+          },
+          {
+            "address": "0x8c055c44",
+            "static_rows": 4,
+            "covered_rows": 4,
+            "missing_rows": [],
+            "conditional_edges_covered": 0,
+            "missing_edges": []
+          },
+          {
+            "address": "0x8c603b84",
+            "static_rows": 40,
+            "covered_rows": 6,
+            "missing_rows": [
+              "0x8c603b90",
+              "0x8c603b92",
+              "0x8c603b94",
+              "0x8c603b96",
+              "0x8c603b98",
+              "0x8c603b9a",
+              "0x8c603b9c",
+              "0x8c603b9e",
+              "0x8c603ba0",
+              "0x8c603ba2",
+              "0x8c603ba4",
+              "0x8c603ba6",
+              "0x8c603ba8",
+              "0x8c603baa",
+              "0x8c603bac",
+              "0x8c603bae",
+              "0x8c603bb0",
+              "0x8c603bb2",
+              "0x8c603bb4",
+              "0x8c603bb6",
+              "0x8c603bb8",
+              "0x8c603bba",
+              "0x8c603bbc",
+              "0x8c603bbe",
+              "0x8c603bc0",
+              "0x8c603bc2",
+              "0x8c603bc4",
+              "0x8c603bc6",
+              "0x8c603bc8",
+              "0x8c603bca",
+              "0x8c603bcc",
+              "0x8c603bce",
+              "0x8c603bd0",
+              "0x8c603bd2"
+            ],
+            "conditional_edges_covered": 0,
+            "missing_edges": [
+              [
+                "0x8c603ba2",
+                "0x8c603ba4"
+              ],
+              [
+                "0x8c603ba2",
+                "0x8c603bca"
+              ],
+              [
+                "0x8c603bac",
+                "0x8c603bae"
+              ],
+              [
+                "0x8c603bac",
+                "0x8c603bb6"
+              ],
+              [
+                "0x8c603bb4",
+                "0x8c603bb6"
+              ],
+              [
+                "0x8c603bb4",
+                "0x8c603bca"
+              ]
+            ]
+          },
+          {
+            "address": "0x8c10c0f8",
+            "static_rows": 5,
+            "covered_rows": 5,
+            "missing_rows": [],
+            "conditional_edges_covered": 0,
+            "missing_edges": []
+          },
+          {
+            "address": "0x8c10c0d0",
+            "static_rows": 5,
+            "covered_rows": 5,
+            "missing_rows": [],
+            "conditional_edges_covered": 0,
+            "missing_edges": []
+          },
+          {
+            "address": "0x8c10da50",
+            "static_rows": 5,
+            "covered_rows": 5,
+            "missing_rows": [],
+            "conditional_edges_covered": 0,
+            "missing_edges": []
+          }
+        ],
+        "caller_address": "0x8c0546c0",
+        "caller_rows_executed": 15,
+        "caller_rows_total": 177,
+        "original_initializer_reached_from_caller": false,
+        "missing_service_vectors": [
+          "0x8c0000b0",
+          "0x8c0000b8"
+        ],
+        "cold_start_reexecuted_in_new_dll": false,
+        "dll_sha256": "774b7ab287f63bc468a18a33be680bb4e2a00400089c503b5e099c2995335786",
+        "next_task": "Establish explicit native console-information/flash service input contracts from original syscall wrappers and primary ABI evidence; preserve the unresolved-callback controls and resume this original caller.",
+        "scope": "Reached original caller and new static adapters are partial. Seven canonical helpers retain names/source/proof and receive zero extra credit. Unresolved BIOS callbacks record entry and stop; the verifier never supplies a result or continues. New 172-source build retains the warm/full-clear regression; old cold evidence remains separate. No natural boot, pixels or playable port claim.",
+        "verification": "analysis/movie_initialize_integration.json",
+        "verification_sha256": "b60e1e5156fad26c7e751398d9120598e97b9febfb4d3b17f5d771da6de00102",
+        "guide": "MOVIE_INITIALIZE.txt"
+      }
     },
     {
       "module": "1ST_READ.BIN",
@@ -50772,7 +54438,618 @@
       "limitations": [
         "The meaning and lifetime of the platform value are not established by this helper alone.",
         "Differential verification uses the project SH-4 interpreter, not Dreamcast hardware or whole-game execution."
-      ]
+      ],
+      "movie_initialize_integration": {
+        "compiled_source_count": 172,
+        "static_adapter_bodies": 11,
+        "static_adapter_rows": 332,
+        "executed_adapter_rows": 83,
+        "direct_comparisons": 68,
+        "independent_checks": 294,
+        "retained_warm_startup_comparisons": 1,
+        "total_comparisons": 69,
+        "canonical_reuse": [
+          {
+            "address": "0x8c051760",
+            "name": "sa_frame_countdown_configure_8c051760",
+            "source": "source/frame_countdown.c",
+            "verification": "analysis/frame_countdown_verification.json"
+          },
+          {
+            "address": "0x8c055c44",
+            "name": "sa_retail_constant_setter_8c055c44",
+            "source": "source/retail_constant_setters.c",
+            "verification": "analysis/retail_constant_setters_verification.json"
+          },
+          {
+            "address": "0x8c10ba1e",
+            "name": "sa_platform_signature_value_8c10ba1e",
+            "source": "source/sa_platform_signature_value_8c10ba1e.c",
+            "verification": "analysis/platform_signature_value_8c10ba1e_verification.json"
+          },
+          {
+            "address": "0x8c10c0d0",
+            "name": "sa_indirect_global_tail_call_8c10c0d0",
+            "source": "source/sa_indirect_global_tail_call_8c10c0d0.c",
+            "verification": "analysis/indirect_global_tail_call_8c10c0d0_verification.json"
+          },
+          {
+            "address": "0x8c10c0f8",
+            "name": "sa_indirect_global_tail_call_three_8c10c0f8",
+            "source": "source/sa_indirect_global_tail_call_three_8c10c0f8.c",
+            "verification": "analysis/indirect_global_tail_call_three_8c10c0f8_verification.json"
+          },
+          {
+            "address": "0x8c10da50",
+            "name": "sa_indirect_literal_tail_call_8c10da50",
+            "source": "source/sa_indirect_literal_tail_call_cluster.c",
+            "verification": "analysis/indirect_literal_tail_call_cluster_verification.json"
+          },
+          {
+            "address": "0x8c604510",
+            "name": "sa_packet_global_value_set_8c604510",
+            "source": "source/packet_global_setter.c",
+            "verification": "analysis/packet_global_setter_verification.json"
+          }
+        ],
+        "reused_additional_credit": 0,
+        "new_registry_credit": 0,
+        "parent_bodies_qualified": false,
+        "coverage_by_routine": [
+          {
+            "address": "0x8c0546c0",
+            "static_rows": 177,
+            "covered_rows": 15,
+            "missing_rows": [
+              "0x8c0546de",
+              "0x8c0546e0",
+              "0x8c0546e2",
+              "0x8c0546e4",
+              "0x8c0546e6",
+              "0x8c0546e8",
+              "0x8c0546ea",
+              "0x8c0546ec",
+              "0x8c0546ee",
+              "0x8c0546f0",
+              "0x8c0546f2",
+              "0x8c0546f4",
+              "0x8c0546f6",
+              "0x8c0546f8",
+              "0x8c0546fa",
+              "0x8c0546fc",
+              "0x8c0546fe",
+              "0x8c054700",
+              "0x8c054702",
+              "0x8c054704",
+              "0x8c054706",
+              "0x8c054708",
+              "0x8c05470a",
+              "0x8c05470c",
+              "0x8c05470e",
+              "0x8c054710",
+              "0x8c054712",
+              "0x8c054714",
+              "0x8c054716",
+              "0x8c054718",
+              "0x8c05471a",
+              "0x8c05471c",
+              "0x8c05471e",
+              "0x8c054720",
+              "0x8c054722",
+              "0x8c054724",
+              "0x8c054726",
+              "0x8c054728",
+              "0x8c05472a",
+              "0x8c05472c",
+              "0x8c05472e",
+              "0x8c054730",
+              "0x8c054732",
+              "0x8c054734",
+              "0x8c054736",
+              "0x8c054738",
+              "0x8c05473a",
+              "0x8c05473c",
+              "0x8c05473e",
+              "0x8c054740",
+              "0x8c054742",
+              "0x8c054744",
+              "0x8c054746",
+              "0x8c054748",
+              "0x8c05474a",
+              "0x8c05474c",
+              "0x8c05474e",
+              "0x8c054750",
+              "0x8c054752",
+              "0x8c054754",
+              "0x8c054756",
+              "0x8c054758",
+              "0x8c05475a",
+              "0x8c05475c",
+              "0x8c05475e",
+              "0x8c054760",
+              "0x8c054762",
+              "0x8c054764",
+              "0x8c054766",
+              "0x8c054768",
+              "0x8c05476a",
+              "0x8c05476c",
+              "0x8c05476e",
+              "0x8c054770",
+              "0x8c054772",
+              "0x8c054774",
+              "0x8c054776",
+              "0x8c054778",
+              "0x8c05477a",
+              "0x8c05477c",
+              "0x8c05477e",
+              "0x8c054780",
+              "0x8c054782",
+              "0x8c054784",
+              "0x8c054786",
+              "0x8c054788",
+              "0x8c05478a",
+              "0x8c05478c",
+              "0x8c05478e",
+              "0x8c054790",
+              "0x8c054792",
+              "0x8c054794",
+              "0x8c054796",
+              "0x8c054798",
+              "0x8c05479a",
+              "0x8c05479c",
+              "0x8c05479e",
+              "0x8c0547a0",
+              "0x8c0547a2",
+              "0x8c0547a4",
+              "0x8c0547a6",
+              "0x8c0547a8",
+              "0x8c0547aa",
+              "0x8c0547ac",
+              "0x8c0547ae",
+              "0x8c0547b0",
+              "0x8c0547b2",
+              "0x8c0547b4",
+              "0x8c0547b6",
+              "0x8c0547b8",
+              "0x8c0547ba",
+              "0x8c0547bc",
+              "0x8c0547be",
+              "0x8c0547c0",
+              "0x8c0547c2",
+              "0x8c0547c4",
+              "0x8c0547c6",
+              "0x8c0547c8",
+              "0x8c0547ca",
+              "0x8c0547cc",
+              "0x8c0547ce",
+              "0x8c0547d0",
+              "0x8c0547d2",
+              "0x8c0547d4",
+              "0x8c0547d6",
+              "0x8c0547d8",
+              "0x8c0547da",
+              "0x8c0547dc",
+              "0x8c054860",
+              "0x8c054862",
+              "0x8c054864",
+              "0x8c054866",
+              "0x8c054868",
+              "0x8c05486a",
+              "0x8c05486c",
+              "0x8c05486e",
+              "0x8c054870",
+              "0x8c054872",
+              "0x8c054874",
+              "0x8c054876",
+              "0x8c054878",
+              "0x8c05487a",
+              "0x8c05487c",
+              "0x8c05487e",
+              "0x8c054880",
+              "0x8c054882",
+              "0x8c054884",
+              "0x8c054886",
+              "0x8c054888",
+              "0x8c05488a",
+              "0x8c05488c",
+              "0x8c05488e",
+              "0x8c054890",
+              "0x8c054892",
+              "0x8c054894",
+              "0x8c054896",
+              "0x8c054898",
+              "0x8c05489a",
+              "0x8c05489c",
+              "0x8c05489e",
+              "0x8c0548a0",
+              "0x8c0548a2"
+            ],
+            "conditional_edges_covered": 0,
+            "missing_edges": [
+              [
+                "0x8c0546e6",
+                "0x8c0546ea"
+              ],
+              [
+                "0x8c0546e6",
+                "0x8c0546f8"
+              ],
+              [
+                "0x8c054708",
+                "0x8c05470a"
+              ],
+              [
+                "0x8c054708",
+                "0x8c054716"
+              ],
+              [
+                "0x8c05470c",
+                "0x8c05470e"
+              ],
+              [
+                "0x8c05470c",
+                "0x8c054722"
+              ],
+              [
+                "0x8c054714",
+                "0x8c054716"
+              ],
+              [
+                "0x8c054714",
+                "0x8c054722"
+              ],
+              [
+                "0x8c054790",
+                "0x8c054792"
+              ],
+              [
+                "0x8c054790",
+                "0x8c054796"
+              ],
+              [
+                "0x8c0547a4",
+                "0x8c0547a6"
+              ],
+              [
+                "0x8c0547a4",
+                "0x8c0547aa"
+              ],
+              [
+                "0x8c0547b0",
+                "0x8c0547b2"
+              ],
+              [
+                "0x8c0547b0",
+                "0x8c0547ca"
+              ],
+              [
+                "0x8c0547b4",
+                "0x8c0547b6"
+              ],
+              [
+                "0x8c0547b4",
+                "0x8c054866"
+              ],
+              [
+                "0x8c0547b8",
+                "0x8c0547ba"
+              ],
+              [
+                "0x8c0547b8",
+                "0x8c0547d4"
+              ],
+              [
+                "0x8c0547bc",
+                "0x8c0547be"
+              ],
+              [
+                "0x8c0547bc",
+                "0x8c0547d8"
+              ],
+              [
+                "0x8c0547c0",
+                "0x8c0547c2"
+              ],
+              [
+                "0x8c0547c0",
+                "0x8c054860"
+              ],
+              [
+                "0x8c0547c4",
+                "0x8c0547c6"
+              ],
+              [
+                "0x8c0547c4",
+                "0x8c054866"
+              ]
+            ]
+          },
+          {
+            "address": "0x8c604510",
+            "static_rows": 3,
+            "covered_rows": 3,
+            "missing_rows": [],
+            "conditional_edges_covered": 0,
+            "missing_edges": []
+          },
+          {
+            "address": "0x8c10c07e",
+            "static_rows": 35,
+            "covered_rows": 7,
+            "missing_rows": [
+              "0x8c10c08c",
+              "0x8c10c08e",
+              "0x8c10c090",
+              "0x8c10c092",
+              "0x8c10c094",
+              "0x8c10c096",
+              "0x8c10c098",
+              "0x8c10c09a",
+              "0x8c10c09c",
+              "0x8c10c09e",
+              "0x8c10c0a0",
+              "0x8c10c0a2",
+              "0x8c10c0a4",
+              "0x8c10c0a6",
+              "0x8c10c0a8",
+              "0x8c10c0aa",
+              "0x8c10c0ac",
+              "0x8c10c0ae",
+              "0x8c10c0b0",
+              "0x8c10c0b2",
+              "0x8c10c0b4",
+              "0x8c10c0b6",
+              "0x8c10c0b8",
+              "0x8c10c0ba",
+              "0x8c10c0bc",
+              "0x8c10c0be",
+              "0x8c10c0c0",
+              "0x8c10c0c2"
+            ],
+            "conditional_edges_covered": 0,
+            "missing_edges": [
+              [
+                "0x8c10c092",
+                "0x8c10c094"
+              ],
+              [
+                "0x8c10c092",
+                "0x8c10c09c"
+              ],
+              [
+                "0x8c10c0a0",
+                "0x8c10c0a2"
+              ],
+              [
+                "0x8c10c0a0",
+                "0x8c10c0b2"
+              ],
+              [
+                "0x8c10c0a4",
+                "0x8c10c0a6"
+              ],
+              [
+                "0x8c10c0a4",
+                "0x8c10c0b2"
+              ],
+              [
+                "0x8c10c0a8",
+                "0x8c10c0aa"
+              ],
+              [
+                "0x8c10c0a8",
+                "0x8c10c0ba"
+              ],
+              [
+                "0x8c10c0ac",
+                "0x8c10c0ae"
+              ],
+              [
+                "0x8c10c0ac",
+                "0x8c10c0ba"
+              ]
+            ]
+          },
+          {
+            "address": "0x8c10ba1e",
+            "static_rows": 11,
+            "covered_rows": 11,
+            "missing_rows": [],
+            "conditional_edges_covered": 2,
+            "missing_edges": []
+          },
+          {
+            "address": "0x8c051760",
+            "static_rows": 18,
+            "covered_rows": 18,
+            "missing_rows": [],
+            "conditional_edges_covered": 0,
+            "missing_edges": []
+          },
+          {
+            "address": "0x8c10c044",
+            "static_rows": 29,
+            "covered_rows": 4,
+            "missing_rows": [
+              "0x8c10c04c",
+              "0x8c10c04e",
+              "0x8c10c050",
+              "0x8c10c052",
+              "0x8c10c054",
+              "0x8c10c056",
+              "0x8c10c058",
+              "0x8c10c05a",
+              "0x8c10c05c",
+              "0x8c10c05e",
+              "0x8c10c060",
+              "0x8c10c062",
+              "0x8c10c064",
+              "0x8c10c066",
+              "0x8c10c068",
+              "0x8c10c06a",
+              "0x8c10c06c",
+              "0x8c10c06e",
+              "0x8c10c070",
+              "0x8c10c072",
+              "0x8c10c074",
+              "0x8c10c076",
+              "0x8c10c078",
+              "0x8c10c07a",
+              "0x8c10c07c"
+            ],
+            "conditional_edges_covered": 0,
+            "missing_edges": [
+              [
+                "0x8c10c058",
+                "0x8c10c05a"
+              ],
+              [
+                "0x8c10c058",
+                "0x8c10c06a"
+              ],
+              [
+                "0x8c10c05c",
+                "0x8c10c05e"
+              ],
+              [
+                "0x8c10c05c",
+                "0x8c10c06e"
+              ],
+              [
+                "0x8c10c060",
+                "0x8c10c062"
+              ],
+              [
+                "0x8c10c060",
+                "0x8c10c072"
+              ],
+              [
+                "0x8c10c064",
+                "0x8c10c066"
+              ],
+              [
+                "0x8c10c064",
+                "0x8c10c076"
+              ]
+            ]
+          },
+          {
+            "address": "0x8c055c44",
+            "static_rows": 4,
+            "covered_rows": 4,
+            "missing_rows": [],
+            "conditional_edges_covered": 0,
+            "missing_edges": []
+          },
+          {
+            "address": "0x8c603b84",
+            "static_rows": 40,
+            "covered_rows": 6,
+            "missing_rows": [
+              "0x8c603b90",
+              "0x8c603b92",
+              "0x8c603b94",
+              "0x8c603b96",
+              "0x8c603b98",
+              "0x8c603b9a",
+              "0x8c603b9c",
+              "0x8c603b9e",
+              "0x8c603ba0",
+              "0x8c603ba2",
+              "0x8c603ba4",
+              "0x8c603ba6",
+              "0x8c603ba8",
+              "0x8c603baa",
+              "0x8c603bac",
+              "0x8c603bae",
+              "0x8c603bb0",
+              "0x8c603bb2",
+              "0x8c603bb4",
+              "0x8c603bb6",
+              "0x8c603bb8",
+              "0x8c603bba",
+              "0x8c603bbc",
+              "0x8c603bbe",
+              "0x8c603bc0",
+              "0x8c603bc2",
+              "0x8c603bc4",
+              "0x8c603bc6",
+              "0x8c603bc8",
+              "0x8c603bca",
+              "0x8c603bcc",
+              "0x8c603bce",
+              "0x8c603bd0",
+              "0x8c603bd2"
+            ],
+            "conditional_edges_covered": 0,
+            "missing_edges": [
+              [
+                "0x8c603ba2",
+                "0x8c603ba4"
+              ],
+              [
+                "0x8c603ba2",
+                "0x8c603bca"
+              ],
+              [
+                "0x8c603bac",
+                "0x8c603bae"
+              ],
+              [
+                "0x8c603bac",
+                "0x8c603bb6"
+              ],
+              [
+                "0x8c603bb4",
+                "0x8c603bb6"
+              ],
+              [
+                "0x8c603bb4",
+                "0x8c603bca"
+              ]
+            ]
+          },
+          {
+            "address": "0x8c10c0f8",
+            "static_rows": 5,
+            "covered_rows": 5,
+            "missing_rows": [],
+            "conditional_edges_covered": 0,
+            "missing_edges": []
+          },
+          {
+            "address": "0x8c10c0d0",
+            "static_rows": 5,
+            "covered_rows": 5,
+            "missing_rows": [],
+            "conditional_edges_covered": 0,
+            "missing_edges": []
+          },
+          {
+            "address": "0x8c10da50",
+            "static_rows": 5,
+            "covered_rows": 5,
+            "missing_rows": [],
+            "conditional_edges_covered": 0,
+            "missing_edges": []
+          }
+        ],
+        "caller_address": "0x8c0546c0",
+        "caller_rows_executed": 15,
+        "caller_rows_total": 177,
+        "original_initializer_reached_from_caller": false,
+        "missing_service_vectors": [
+          "0x8c0000b0",
+          "0x8c0000b8"
+        ],
+        "cold_start_reexecuted_in_new_dll": false,
+        "dll_sha256": "774b7ab287f63bc468a18a33be680bb4e2a00400089c503b5e099c2995335786",
+        "next_task": "Establish explicit native console-information/flash service input contracts from original syscall wrappers and primary ABI evidence; preserve the unresolved-callback controls and resume this original caller.",
+        "scope": "Reached original caller and new static adapters are partial. Seven canonical helpers retain names/source/proof and receive zero extra credit. Unresolved BIOS callbacks record entry and stop; the verifier never supplies a result or continues. New 172-source build retains the warm/full-clear regression; old cold evidence remains separate. No natural boot, pixels or playable port claim.",
+        "verification": "analysis/movie_initialize_integration.json",
+        "verification_sha256": "b60e1e5156fad26c7e751398d9120598e97b9febfb4d3b17f5d771da6de00102",
+        "guide": "MOVIE_INITIALIZE.txt"
+      }
     },
     {
       "module": "1ST_READ.BIN",

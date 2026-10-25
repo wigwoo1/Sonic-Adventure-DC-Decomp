@@ -1,0 +1,83 @@
+Sonic Adventure Dreamcast Rev A - original initialization caller
+2026-10-25. Whole-project weighted estimate remains approximately 10%.
+
+Original references identify 8c0546c0 as the caller of early initializer
+8c010180 at three call sites. The MOVIE loader 8c10b840 has different original
+callers. The newly exported early entries 8c010000/8c0100d8 and 8c010640 are
+research context only; no fabricated call chain joins them to this initializer.
+Two early entries already have canonical recovered source, which is preserved.
+
+Source sa_movie_initialize.c contains eleven static adapters / 332 byte-checked
+original rows. The new movie_initialize.dll compiles from 172 C sources. All
+68 direct complete-state comparisons / 294 independent checks pass. Thirty-two
+cases return normally, thirty-one retain an unresolved service or unavailable
+bus stop, and five preserve invalid-memory controls. Eighty-three adapter rows
+execute. Caller 8c0546c0 reaches 15/177 rows: it clears its two original globals,
+executes the original global setter, queries the raw cable word and enters the
+original region/console-information path. It has not yet reached 8c010180.
+
+The original caller chooses initializer arguments 1, 3a or 38 and a separate
+mode global according to cable/region results. Those branches remain in C but
+are not claimed executed. Helpers 8c10c07e, 8c10c044 and 8c603b84 retain their
+actual console-information, flash-read and cache dependencies. The system-info
+thunks call the pointer stored at 8c0000b0 (selector zero or three); the flash
+read thunk calls the pointer at 8c0000b8 (selector one). Current fixtures leave
+these callback slots unresolved. No header/region/flash result or successful
+BIOS return is supplied by this update.
+
+The independent decoder formerly tried to fetch instruction bytes at the null
+callback address before it could report the service boundary. A local extension
+to the new verifier records an unresolved vector's entry and stops with -2,
+matching the existing native dispatcher. It never returns a service result or
+continues execution. Known original code and the existing disc service are not
+intercepted. Historical verifier/proof files are unchanged. This models an
+unimplemented host service, not a measured SH-4 exception or physical BIOS.
+
+Seven already-registered canonical helpers retain their names, source, proof and
+status: packet-global setter, signed signature reader, countdown configuration,
+constant clear and three indirect BIOS thunks. Their full adapter rows execute,
+including the thunks' transfers to the unresolved callback boundary. Their
+canonical contracts and the larger callers remain distinct. No new routine
+credit is awarded; registry stays 1365 entries / 1362 unique module-address pairs.
+The four larger new parent proposals remain partial and unregistered.
+
+Independent checks cover signed signature values, matching/mismatching raw
+signatures, exact setter/clear RAM effects, stack/PR on returned helpers and the
+caller's initial stores. FPU modes zero/one/four, all four cable states, signed
+values, invalid stacks and absent buses are tested. Complete CPU/RAM/FPU,
+special/banked state, software devices, disc state and ordered ordinary service
+boundaries match original-instruction execution up to their actual boundaries.
+
+One retained warm earlier-startup regression also passes in this new DLL,
+including every write of the full eight-MiB clear. Total comparisons: 69. The
+original bridge is byte-identical after removing only the eleven new routes,
+declarations and export renames. The retained 170-source cold trace has none of
+the new route targets. Its long cold benchmark was not rerun in this DLL; that
+separate evidence remains preserved. No original source/proof/build is replaced.
+
+The workflow reproduces six generated artifacts, checks registration byte
+idempotence, evidence pins, Python/PowerShell syntax and all 172 unbounded C
+sources with strict warnings. It preserves prior source/proof/build bytes and
+every previous canonical registry field. The accumulated suite is not rerun.
+
+Next: establish explicit native console-information and flash service input
+contracts from these original wrappers and primary ABI evidence, retain the
+unresolved-callback controls, then resume this actual caller. The existing disc
+service does not stand in for unrelated BIOS services. Keep Sol High. Natural
+reset-to-gameplay, physical device behavior, playable ports and all requested
+frame-rate/display/texture settings remain unfinished.
+
+Reproduce with matching original inputs and the retained build/tool setup:
+python -B outputs/sonic-adventure/recover_movie_initialize.py
+python -B outputs/sonic-adventure/connect_movie_initialize.py
+& outputs/sonic-adventure/build_movie_initialize.ps1
+python -B outputs/sonic-adventure/verify_movie_initialize.py
+python -B outputs/sonic-adventure/verify_movie_initialize_regression.py
+python -B outputs/sonic-adventure/qualify_movie_initialize.py
+python -B outputs/sonic-adventure/register_movie_initialize_integration.py
+python -B outputs/sonic-adventure/verify_movie_initialize_workflow.py
+
+Reports: analysis/movie_initialize_{translation,connection,verification,
+regression_verification,integration,workflow_verification}.json. Read-only
+original exports: analysis/movie-initialize-*. See GITHUB_PUBLISHING.txt for
+reviewed source, incomplete research prereleases and excluded retail assets.
