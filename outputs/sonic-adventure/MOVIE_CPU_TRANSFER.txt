@@ -1,0 +1,139 @@
+Sonic Adventure Dreamcast Rev A - synchronous copy and SDK parent closure
+2026-10-25 | Whole-project estimate10% weighted milestones, not code coverage.
+
+Two existing providers are integrated with zero duplicate credit, and two previously partial SDK parents newly qualify:
+8c669088 synchronous copy/provider/callback:54original rows/12outcomes;
+8c666e06 returning error-counter helper:5rows/no branches;
+8c666c2c synchronous SDK submission parent:91rows/10outcomes;
+8c666d10 channel-start SDK parent:121rows/14outcomes.
+Total271rows:269executed and2proved unreachable. Of36conditional outcomes,
+33execute and3are proved impossible after normal constant-zero helper returns.
+The parents' existing source is unchanged; two guarded adapters for already registered child bodies close their
+previous missing dependencies. Registry1391entries/1388unique module-address
+pairs. Whole-game function count and recovered-code percentage remain unknown.
+The game is not a playable native PC port.
+
+Original behavior retained
+The synchronous provider checks source/length alignment, returns7fffffff on
+misalignment through the original error logger, converts the signed byte count
+to a word count using the original shifts, invokes actual existing10d770 with
+width4 and both strides1, stores its result and conditionally invokes the
+actual callback supplied in the fourth argument with the fifth stack argument.
+Null andffffffff callback sentinels skip the call. A callback's guest return
+value is discarded; the provider returns its own original status. Negative,
+zero and overlapping sound-RAM inputs retain their original word-order and
+signed-count behavior. Unsupported pointers/raw FIFO exhaustion preserve the
+actual partial writes and machine state instead of faking successful copies.
+
+Helper666e06 loads global8c67c350, increments it modulo2^32 and returns while
+preserving R0 and SR. It is a returning counter, not a panic loop. Its direct
+and callback cases compare every RAM byte and register independently. The
+channel-start parent can record a busy error through this helper and still
+return zero; this original behavior is intentionally retained.
+
+Valid synchronous SUBMIT and REQUEST mode-zero calls now copy data and complete
+through original callback668f40 and completion helper65a518. Explicit initialized
+ABI fixtures copy all33376MASARU payload bytes (the original33408-byte file
+excluding its32-byte header) to software sound RAM. The callback itself sets
+state1/completion1 and clears the current record. No completion flag, IRQ or
+game-helper result is supplied by the test. This does not establish natural
+reset, actual interrupt delivery, ARM/driver execution or audio playback.
+
+Why the unexecuted parent branches are proved, not forced
+Original65a5cc has only three instructions: write record+4, RTS and delay-slot
+MOV #0,R0. Every normal return is therefore zero. Original10f9f4 has one RTS;
+FA46 sets R3zero, its three remaining intervening instructions leave R3 intact,
+and its RTS delay slot copies R3 to R0. No call/computed jump or branch into
+that tail bypasses the assignment. Caller literals and instructions show these
+exact callees, unmodified return-register copies and subsequent zero tests.
+Thus outcomes666c8e->666cb4,666d94->666d98 and666da8->666dd2 cannot occur on a
+normal return. Rows666d98/666d9a are dead in this qualified domain. Native host
+guards propagate errors before those continuations. Code/literals are immutable
+and initialized storage is disjoint. No callee return or branch is patched to
+create coverage. These proofs close parent bodies; REQUEST139rows remains
+partial at the real mode-one completion wait.
+
+Verification actually performed
+- The new187-source Windows research DLL compiles/links. Additional strict
+  unbounded syntax diagnostics cover every source. Native C decodes no opcodes.
+-240focused original/native comparisons /2123independent checks pass. These
+  cover three FPU modes,16interrupt masks/both banks in parent calls, alignment,
+  zero/negative lengths, counter wrap/R0preservation, actual callback/sentinel
+  paths, source aliases, sequential sound overlap, partial end-boundary and
+  FIFO failures, unknown callbacks and exact original driver-payload copies.
+- Five current-build parent wait/error comparisons and324byte/contract/control
+  checks pass. Three mode-one REQUEST controls retain the actual research wait
+  at65a6ec with state2/completion0. Two parent alignment failures retain error
+ 7fffffff, state2/completion0 and the current record instead of inventing a
+  completion. The larger asynchronous REQUEST remains partial.
+- A fresh original/native full2MiB varying-data copy executes all524288word
+  stores using source8c900000, destinationa0800000, width4, count80000hex and
+  strides1/1. The complete output matches the independently generated complete
+  input, which remains unchanged.17independent full-copy checks pass.
+  Complete copied input/output SHA256:
+  61be7bd6a364f459867f0ad14dc2276decabd192cca7dc4fd4319bdeec965721
+  All524288ordered sound events compare with zero drops. Every recorded
+  ordinary RAM/VRAM/sound/machine/FPU/device boundary and full final memory
+  compares. The watchdog budget grows, never the original guest count. Full
+  completed results are saved before separate endpoint validation; no execution
+  checkpoint, shortened loop or helper return is supplied.
+-2024regressions pass:2015unchanged saved-result comparisons and9explicitly
+  advanced original/native controls. The unchanged set contains945earlier
+  direct controls,198bulk small controls,476queue controls,395transfer controls
+  and the earlier warm startup/full-video-clear comparison. There are
+  75116saved-record checks plus
+  27advanced-endpoint checks,
+  75143total. The regression report's older field
+  label saved_record_checks includes both groups; qualification separates them.
+- Two inherited mode-zero requests now return normally on their original zero
+  lengths. Three inherited invalid queued-child fixtures now copy64bytes then
+  retain their actual later65a582pointer fault; no old input is repaired.
+  Four earlier busy-counter controls now return through the actual helper.
+- The older full89abcdef constant-fill test is retained as historical evidence,
+  not repeated. Its source/provider/proof bytes are unchanged; the new full
+  varying copy executes all524288stores through the same provider and small
+  fixed/increment/decrement stride controls reexecute. The warm full8MiBvideo
+  clear does reexecute and match. The entire accumulated suite is not claimed.
+- A CURRENT native-only earliest caller observation matches12selected results
+  from the PRESERVED186-source full original/native proof:89reads, exact driver
+  bytes,2097152native video-clear writes/8MiBzeros, full2MiBSEGAfill and the
+  complete1043cache-writeback sequence before65a6ec. It is explicitly NOT a
+  fresh full original/native earliest-caller comparison and is not counted as
+  one. The earlier full cold/warm source/proofs remain intact. Mode-one
+  completion is still0; no physical DMA/IRQ or driver execution is invented.
+- Current total2270original/native comparisons, plus the separately labeled
+  native-only observation. Older backend/bus/page-tracker proofs remain
+  historical. Exact-page Windows ownership and full-video-clear decoder/
+  fingerprint limitations retain their previous documented scope.
+- Generated artifacts reproduce; registration is byte-idempotent; Python/PS
+  parsers and strict source diagnostics pass. All old12452selected paths except
+  ten reviewed documentation/status/audit/registry files retain their bytes.
+  All1389old canonical entries,2611old build files and user requirements remain
+  intact against public commitec4f8898a044. New records append without rewriting
+  original source/proof files or their hashes. Both child addresses already had standalone canonical records under engine/frame names; their source/name/proof/status fields are preserved and they receive no duplicate credit.
+
+Next work and limitations
+Prioritize actual native DMA/completion/IRQ code and delivery for the unchanged
+default mode-one path. Explicit synchronous-mode ABI tests do not substitute
+for that unfinished path. Physical cache/dirty lines/arbitration/timing/MMU/
+exceptions, ARM/driver execution, audio, complete startup and gameplay remain
+unfinished. So do60/120/240FPS,8K, Android/3DS stereo ports, N64/PlayStation
+demakes and SUPIR/display/texture settings. Texture-Off must use vertex colors.
+
+Reproduce with matching local retail inputs and toolchain
+python -B outputs/sonic-adventure/recover_movie_cpu_transfer.py
+python -B outputs/sonic-adventure/connect_movie_cpu_transfer.py
+powershell -File outputs/sonic-adventure/build_movie_cpu_transfer.ps1
+python -B outputs/sonic-adventure/verify_movie_cpu_transfer.py
+python -B outputs/sonic-adventure/prove_movie_cpu_transfer_parents.py
+python -B outputs/sonic-adventure/capture_movie_cpu_transfer_full.py
+python -B outputs/sonic-adventure/verify_movie_cpu_transfer_full.py
+python -B outputs/sonic-adventure/verify_movie_cpu_transfer_regression.py
+python -B outputs/sonic-adventure/observe_movie_cpu_transfer_native_caller.py
+python -B outputs/sonic-adventure/qualify_movie_cpu_transfer.py
+python -B outputs/sonic-adventure/register_movie_cpu_transfer.py
+python -B outputs/sonic-adventure/verify_movie_cpu_transfer_workflow.py
+Original read-only child listings:analysis/movie-transfer-frontier;
+parent listings:analysis/movie-queue-family. Full-copy tests take minutes;
+retain live process handles and validate saved completed results separately.
+Keep Sol High; goal active; whole-project estimate10%.

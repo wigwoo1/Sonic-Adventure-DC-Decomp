@@ -1,0 +1,427 @@
+{
+  "cases_passed": 5,
+  "independent_checks": 324,
+  "unreachable_rows": [
+    "0x8c666d98",
+    "0x8c666d9a"
+  ],
+  "unreachable_outcomes": [
+    [
+      "0x8c666c8e",
+      "0x8c666cb4"
+    ],
+    [
+      "0x8c666d94",
+      "0x8c666d98"
+    ],
+    [
+      "0x8c666da8",
+      "0x8c666dd2"
+    ]
+  ],
+  "constant_return_helpers": {
+    "0x8c65a5cc": {
+      "normal_r0": 0,
+      "reason": "Only three instructions; sole RTS delay slot explicitly loads zero into R0."
+    },
+    "0x8c10f9f4": {
+      "normal_r0": 0,
+      "reason": "Sole RTS copies R3 to R0 in its delay slot. FA46 sets R3 to zero; the three intervening instructions leave R3 unchanged. No internal call/computed jump or branch into that tail can bypass the zero assignment."
+    }
+  },
+  "assumptions": [
+    "Original code/literals immutable; callers enter the original function starts. Valid initialized disjoint record/descriptor/root/stack storage and inherited CPU/software-platform domain.",
+    "A fault/unsupported access returns a host stop before the caller continuation. No fabricated game-helper result, patched branch or invented hardware interrupt is used.",
+    "The original setter/config leaf normal-return values are zero for every data input that reaches their RTS, rather than only the tested scalar samples.",
+    "The larger REQUEST parent remains partial at actual completion; three current-build controls preserve its genuine wait and unchanged zero completion. Two valid parent calls retain the actual alignment error with state2/incomplete/current record unchanged."
+  ],
+  "cases": [
+    {
+      "input": {
+        "entry": 2355471836,
+        "mode": 0,
+        "sdk_mode": 1,
+        "fifo_ready_count": 262144,
+        "destination": 2358247424,
+        "length": 64,
+        "current_record": 0,
+        "count": 0,
+        "gbr": 0,
+        "mach": 3626764237,
+        "other": [
+          1654615998,
+          3255389356,
+          3823568514,
+          1806341205,
+          173879092,
+          1112038970,
+          4146640122,
+          2195908194
+        ]
+      },
+      "status": -4,
+      "stop_pc": "0x8c65a6ec",
+      "steps": 566,
+      "boundary_comparisons": 12,
+      "full_state_match": true,
+      "ordered_boundaries_match": true,
+      "sound_state": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "cache_writeback_sequence": [
+        210763776,
+        210763808
+      ],
+      "write_watch": {
+        "page_bytes": 4096,
+        "legacy_hashes_also_compared": false,
+        "regions": {
+          "ram": {
+            "bytes": 16777216,
+            "snapshots": 12,
+            "captured_pages": 25,
+            "compared_pages": 25,
+            "exact_page_bytes_compared": 102400,
+            "initial_full_bytes_compared": 16777216,
+            "final_full_bytes_compared": 16777216
+          },
+          "vram": {
+            "bytes": 8388608,
+            "snapshots": 12,
+            "captured_pages": 0,
+            "compared_pages": 0,
+            "exact_page_bytes_compared": 0,
+            "initial_full_bytes_compared": 8388608,
+            "final_full_bytes_compared": 8388608
+          },
+          "sound_ram": {
+            "bytes": 2097152,
+            "snapshots": 12,
+            "captured_pages": 0,
+            "compared_pages": 0,
+            "exact_page_bytes_compared": 0,
+            "initial_full_bytes_compared": 2097152,
+            "final_full_bytes_compared": 2097152
+          }
+        }
+      }
+    },
+    {
+      "input": {
+        "entry": 2355471836,
+        "mode": 1,
+        "sdk_mode": 1,
+        "fifo_ready_count": 262144,
+        "destination": 2358247424,
+        "length": 64,
+        "current_record": 0,
+        "count": 0,
+        "gbr": 0,
+        "mach": 3626764237,
+        "other": [
+          1654615998,
+          3255389356,
+          3823568514,
+          1806341205,
+          173879092,
+          1112038970,
+          4146640122,
+          2195908194
+        ]
+      },
+      "status": -4,
+      "stop_pc": "0x8c65a6ec",
+      "steps": 566,
+      "boundary_comparisons": 12,
+      "full_state_match": true,
+      "ordered_boundaries_match": true,
+      "sound_state": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "cache_writeback_sequence": [
+        210763776,
+        210763808
+      ],
+      "write_watch": {
+        "page_bytes": 4096,
+        "legacy_hashes_also_compared": false,
+        "regions": {
+          "ram": {
+            "bytes": 16777216,
+            "snapshots": 12,
+            "captured_pages": 25,
+            "compared_pages": 25,
+            "exact_page_bytes_compared": 102400,
+            "initial_full_bytes_compared": 16777216,
+            "final_full_bytes_compared": 16777216
+          },
+          "vram": {
+            "bytes": 8388608,
+            "snapshots": 12,
+            "captured_pages": 0,
+            "compared_pages": 0,
+            "exact_page_bytes_compared": 0,
+            "initial_full_bytes_compared": 8388608,
+            "final_full_bytes_compared": 8388608
+          },
+          "sound_ram": {
+            "bytes": 2097152,
+            "snapshots": 12,
+            "captured_pages": 0,
+            "compared_pages": 0,
+            "exact_page_bytes_compared": 0,
+            "initial_full_bytes_compared": 2097152,
+            "final_full_bytes_compared": 2097152
+          }
+        }
+      }
+    },
+    {
+      "input": {
+        "entry": 2355471836,
+        "mode": 4,
+        "sdk_mode": 1,
+        "fifo_ready_count": 262144,
+        "destination": 2358247424,
+        "length": 64,
+        "current_record": 0,
+        "count": 0,
+        "gbr": 0,
+        "mach": 3626764237,
+        "other": [
+          1654615998,
+          3255389356,
+          3823568514,
+          1806341205,
+          173879092,
+          1112038970,
+          4146640122,
+          2195908194
+        ]
+      },
+      "status": -4,
+      "stop_pc": "0x8c65a6ec",
+      "steps": 566,
+      "boundary_comparisons": 12,
+      "full_state_match": true,
+      "ordered_boundaries_match": true,
+      "sound_state": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "cache_writeback_sequence": [
+        210763776,
+        210763808
+      ],
+      "write_watch": {
+        "page_bytes": 4096,
+        "legacy_hashes_also_compared": false,
+        "regions": {
+          "ram": {
+            "bytes": 16777216,
+            "snapshots": 12,
+            "captured_pages": 25,
+            "compared_pages": 25,
+            "exact_page_bytes_compared": 102400,
+            "initial_full_bytes_compared": 16777216,
+            "final_full_bytes_compared": 16777216
+          },
+          "vram": {
+            "bytes": 8388608,
+            "snapshots": 12,
+            "captured_pages": 0,
+            "compared_pages": 0,
+            "exact_page_bytes_compared": 0,
+            "initial_full_bytes_compared": 8388608,
+            "final_full_bytes_compared": 8388608
+          },
+          "sound_ram": {
+            "bytes": 2097152,
+            "snapshots": 12,
+            "captured_pages": 0,
+            "compared_pages": 0,
+            "exact_page_bytes_compared": 0,
+            "initial_full_bytes_compared": 2097152,
+            "final_full_bytes_compared": 2097152
+          }
+        }
+      }
+    },
+    {
+      "input": {
+        "entry": 2355522604,
+        "mode": 0,
+        "source": 2358247425,
+        "length": 64,
+        "fifo_ready_count": 262144,
+        "destination": 2358247425,
+        "sdk_mode": 0,
+        "current_record": 0,
+        "count": 0,
+        "gbr": 0,
+        "mach": 3626764237,
+        "other": [
+          1654615998,
+          3255389356,
+          3823568514,
+          1806341205,
+          173879092,
+          1112038970,
+          4146640122,
+          2195908194
+        ]
+      },
+      "status": 0,
+      "stop_pc": "0x8cfed000",
+      "steps": 136,
+      "boundary_comparisons": 6,
+      "full_state_match": true,
+      "ordered_boundaries_match": true,
+      "sound_state": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "cache_writeback_sequence": [],
+      "write_watch": {
+        "page_bytes": 4096,
+        "legacy_hashes_also_compared": false,
+        "regions": {
+          "ram": {
+            "bytes": 16777216,
+            "snapshots": 6,
+            "captured_pages": 8,
+            "compared_pages": 8,
+            "exact_page_bytes_compared": 32768,
+            "initial_full_bytes_compared": 16777216,
+            "final_full_bytes_compared": 16777216
+          },
+          "vram": {
+            "bytes": 8388608,
+            "snapshots": 6,
+            "captured_pages": 0,
+            "compared_pages": 0,
+            "exact_page_bytes_compared": 0,
+            "initial_full_bytes_compared": 8388608,
+            "final_full_bytes_compared": 8388608
+          },
+          "sound_ram": {
+            "bytes": 2097152,
+            "snapshots": 6,
+            "captured_pages": 0,
+            "compared_pages": 0,
+            "exact_page_bytes_compared": 0,
+            "initial_full_bytes_compared": 2097152,
+            "final_full_bytes_compared": 2097152
+          }
+        }
+      }
+    },
+    {
+      "input": {
+        "entry": 2355522604,
+        "mode": 0,
+        "source": 2358247424,
+        "length": 65,
+        "fifo_ready_count": 262144,
+        "destination": 2358247424,
+        "sdk_mode": 0,
+        "current_record": 0,
+        "count": 0,
+        "gbr": 0,
+        "mach": 3626764237,
+        "other": [
+          1654615998,
+          3255389356,
+          3823568514,
+          1806341205,
+          173879092,
+          1112038970,
+          4146640122,
+          2195908194
+        ]
+      },
+      "status": 0,
+      "stop_pc": "0x8cfed000",
+      "steps": 139,
+      "boundary_comparisons": 6,
+      "full_state_match": true,
+      "ordered_boundaries_match": true,
+      "sound_state": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "cache_writeback_sequence": [],
+      "write_watch": {
+        "page_bytes": 4096,
+        "legacy_hashes_also_compared": false,
+        "regions": {
+          "ram": {
+            "bytes": 16777216,
+            "snapshots": 6,
+            "captured_pages": 8,
+            "compared_pages": 8,
+            "exact_page_bytes_compared": 32768,
+            "initial_full_bytes_compared": 16777216,
+            "final_full_bytes_compared": 16777216
+          },
+          "vram": {
+            "bytes": 8388608,
+            "snapshots": 6,
+            "captured_pages": 0,
+            "compared_pages": 0,
+            "exact_page_bytes_compared": 0,
+            "initial_full_bytes_compared": 8388608,
+            "final_full_bytes_compared": 8388608
+          },
+          "sound_ram": {
+            "bytes": 2097152,
+            "snapshots": 6,
+            "captured_pages": 0,
+            "compared_pages": 0,
+            "exact_page_bytes_compared": 0,
+            "initial_full_bytes_compared": 2097152,
+            "final_full_bytes_compared": 2097152
+          }
+        }
+      }
+    }
+  ],
+  "dll_sha256": "33269a9c72f7698f5c91661caaea41436358152cd06126dec01b3fefc0f44870",
+  "sha256": {
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\prove_movie_cpu_transfer_parents.py": "070c64fbbe6243f27e98b610483f40e817c263d92d1a0f9cbd750f8a6d0dda8e",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\work\\sonic-adventure\\extracted\\1ST_READ.BIN": "45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\movie_cpu_transfer_reference.py": "d28a48ad0f811e46033b42e7864850339862b68aa8cb9b91c552cb55bd17de1a",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\write_watch_cpu_transfer.py": "957b2ac71bf90bd540deec2f5d09d111499db4d3e1483b268049c7650c78354a",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\analysis\\movie_cpu_transfer_connection.json": "85e10cc1362bc0e2fe8e806fdd3d8976e3a8ee32b1d418e1609af5a01bce7359",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\analysis\\movie-request-fields\\8c65a5cc_instructions.tsv": "0f7311ea394f30abbab0ec9cef548c9a72236dcd0717a75b17105e4a48c4a9aa",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\analysis\\movie-queue-hal\\8c10f9f4_instructions.tsv": "7ffc55769c179194e26717a07034a75e46635fe1a24e4fc59a2f6ae4df83802c",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\analysis\\movie-queue-family\\8c666c2c_instructions.tsv": "614fce8322582f5cae9db104bd3096b042625b9bed197746e707a0f6ca05ede9",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\analysis\\movie-queue-family\\8c666d10_instructions.tsv": "510bdacff10a457d9f16d78f5ed5578aeb1aa565f80d23f2a90f358e12f447f8",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\analysis\\movie_cpu_transfer_verification.json": "cc9a6227542739acf674acaee090ebc57821f078d8cf9123596a050249293f56",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\source\\sa_movie_queue_family.c": "ca2d0a41ae0f7d4a7bf0758eda0d95df154b7ac424414b9a4d966dd06b27906f",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\source\\sa_movie_request_fields.c": "02923f23c9ad59f7412b1d59b59b65a3c0bf1d76cd28436c0043b32091a10168"
+  },
+  "scope": "Original byte/literal and constant-return proofs close three impossible caller outcomes and two dead rows. Actual compiled callbacks/copies execute in separate full-state comparisons; no impossible edge is forced. Five current-build wait/error controls retain genuine outcomes; synchronous and channel-start parent qualification remains a separate coverage decision."
+}
