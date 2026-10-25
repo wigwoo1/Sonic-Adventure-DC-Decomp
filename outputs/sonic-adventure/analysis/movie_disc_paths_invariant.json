@@ -1,0 +1,30 @@
+{
+  "unreachable_edge": [
+    "0x8c645854",
+    "0x8c645858"
+  ],
+  "unreachable_instruction_rows": [],
+  "guard": "0x8c6457f4",
+  "guard_dominates_later_test": true,
+  "taken_guard_path_cannot_reach_test_without_rechecking_guard": true,
+  "write_free_corridor_rows": 33,
+  "checked_original_rows": 207,
+  "checked_critical_rows": 8,
+  "callee_preserves_r11": true,
+  "argument": "Reaching the later test requires the earlier BT to fall through, so R11 differs from one. The intervening corridor and its delay slots do not write R11. Its sole callee is the bounded comparison, whose original body and sole uppercase callee also do not reference R11. The later equal-to-one branch cannot be taken. No counter-wrap or sampled-media coincidence is used.",
+  "assumptions": [
+    "Immutable original instructions.",
+    "Normal original call/return ABI; faults stop rather than resume with invented results.",
+    "No asynchronous modification of CPU registers."
+  ],
+  "graph_scope": "Original direct control flow with delay-slot control effects collapsed; all relevant slot instructions are checked separately for register writes. Callee preservation is checked from original instruction bytes, not assumed from an injected return.",
+  "sha256": {
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\analysis\\movie-disc-paths\\8c64573e_instructions.tsv": "f4ffe8b580036fbbd0ee33656a3b4e75ed68be92304fb98c91318293512d281c",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\analysis\\movie-disc-paths-lower\\8c645374_instructions.tsv": "03b31e02c3636d91dc21ee3e66011c804ce6b6f1cd4a7f221c8ca246b857fd14",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\analysis\\boot-file-ascii\\8c645348_instructions.tsv": "524e65015a35df31a20dde72fb88db59709a4bd8bac7c10d616f1aa1f781b923",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\prove_movie_disc_paths.py": "5692a6534f604614db79d0c0e61d55b837843b3642c2441d61501adf7e677f67",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\work\\sonic-adventure\\extracted\\1ST_READ.BIN": "45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\analysis\\movie_disc_paths_translation.json": "d653b0cc55a189dfa8a331030ed1ea3fdaba07ef2c8cbd483f9a78c3801d98b1",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\source\\sa_movie_disc_paths.c": "b8487f721138d72821e5d1a11512889ac6af373dde749052a5001cba0f7b8523"
+  }
+}
