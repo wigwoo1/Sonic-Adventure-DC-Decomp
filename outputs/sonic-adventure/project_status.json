@@ -142516,6 +142516,34 @@
       "verification": "analysis/movie_driver_control_qualification.json",
       "verification_sha256": "2f88f5075c84b6ffa19882771eb94712ffa529314630429a12cbe7791d47dc97",
       "guide": "MOVIE_DRIVER_CONTROL.txt"
+    },
+    "windows_write_watch_verification": {
+      "verification_tool_only": true,
+      "newly_registered_entries": 0,
+      "compiled_game_sources_unchanged": 179,
+      "game_dll_unchanged": true,
+      "dll_sha256": "cc3cedab13dfecfdc602aaeb2d2dc549cfa944aa423a0538b9ffda83c3befb0d",
+      "unit_checks": 1272,
+      "full_byte_randomized_epochs": 388,
+      "direct_comparisons": 121,
+      "saved_direct_record_checks": 7744,
+      "startup_comparisons": 4,
+      "prefix_saved_record_checks": 340,
+      "fresh_original_native_comparisons": 125,
+      "registered_routines": 1379,
+      "registered_unique_pairs": 1376,
+      "full_goal_complete": false,
+      "guide": "WINDOWS_WRITE_WATCH.txt",
+      "scope": "Opt-in exact boundary RAM/VRAM checker qualifies against simultaneously retained full-memory hashes and all frozen startup result fields. Every original instruction/callee and recorded boundary still executes; initial/final full bytes and all other state checks remain. No decompilation or port milestone credit.",
+      "limitations": [
+        "Windows-only allocation/page-tracking API with single owning verification thread and no concurrent writes. One window per allocation. Raw native pointers may not outlive their owner; exported buffer views retain ownership and prevent explicit close.",
+        "The proof of equality of untouched pages relies on the documented OS write-watch contract; dirty pages are compared byte-for-byte, including conservative extra pages. Four randomized sequences also compare full bytes at every epoch.",
+        "Cold/warm profiles retain explicit finite software-host device inputs and existing complete-clear decoder/fingerprint scope. This does not establish physical interrupt/timing/cache behavior, BIOS decompilation, driver execution or full startup.",
+        "Reported elapsed times are observations from one ordered local run, dual then fast, not a controlled performance benchmark or a measurement of model intelligence, usage costs or whole-project completion.",
+        "Default historical verifiers and all native game source/build/proof bytes remain preserved. All requested playable ports and settings remain unfinished."
+      ],
+      "verification": "analysis/write_watch_qualification.json",
+      "verification_sha256": "835f4ba00cf26466d73fc25365dd148230eb756df0ac7e7c703a64c52f182f38"
     }
   },
   "milestones": [

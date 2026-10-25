@@ -1,0 +1,97 @@
+Sonic Adventure Dreamcast Rev A - opt-in exact boundary memory verification
+2026-10-25 | Overall estimate 10% weighted milestones, not code coverage.
+
+The next original wrapper 8c65a8c8 requests a 2 MiB transfer. Repeatedly hashing
+all guest RAM and VRAM at every service boundary would make that verification
+expensive. A separate opt-in checker now compares changed pages exactly while
+preserving the original decoder, all recorded ordinary service boundaries and
+all CPU/FPU/banked/special/device/input checks. Historical default verifiers,
+all game source, routine registry and native build bytes remain unchanged.
+This tool adds zero recovered routines. Registry remains 1379 entries / 1376
+unique module-address pairs; native pipeline remains 179 sources.
+
+Method and contract
+The tool allocates private Windows memory with write tracking. Reference and
+native regions first compare completely. At every recorded ordinary boundary,
+it captures reference changed-page bytes, applies those deltas to an expected
+image and compares every page reported changed by either execution. Other pages
+retain equality by induction. Final bytes compare completely again. Unaligned
+VRAM embedded inside the native software-device structure maps conservatively
+onto logical pages; extra reported pages are compared too. First-touch demand-
+zero reads were observed to produce extra reported pages on this host.
+No guest checkpoint, cached execution, skipped instruction/callee, sampled
+ordinary boundary or supplied game-helper return replaces original execution.
+The established separately decoded full-VRAM-clear loop and its fingerprints/
+invariants remain unchanged; this is not a stronger claim about that compressed
+trace. The OS page-tracking contract and single-thread ownership are explicit
+assumptions. Exported buffers retain allocation ownership and prevent explicit
+close; borrowed raw native addresses must not outlive their owner.
+
+Primary API references (no SDK or manual bundle is redistributed):
+https://learn.microsoft.com/en-us/windows/win32/api/memoryapi/nf-memoryapi-virtualalloc
+https://learn.microsoft.com/en-us/windows/win32/api/memoryapi/nf-memoryapi-getwritewatch
+https://learn.microsoft.com/en-us/windows/win32/api/memoryapi/nf-memoryapi-resetwritewatch
+
+Verification
+- 1272 focused checks pass. Four randomized 97-epoch sequences also compare
+  complete bytes at EVERY epoch (388 epochs), independently of page tracking.
+  Cases include Python and native writes, same-value/restored writes, page
+  crossings, partial and unaligned windows, buffer ownership, closed/invalid
+  arguments and wrong-thread use. Deliberate corruptions at four page edges,
+  missing/extra boundaries and different initial bytes are rejected.
+- All 121 original/native driver-control cases replay with BOTH old full-memory
+  hashes and exact page comparisons simultaneously. All 7744 saved-result checks
+  pass, including existing independent semantic checks, normal operation,
+  interrupt masks, both register banks and real input/privilege/address stops.
+- Four caller executions run newly: warm/cold with both checkers simultaneously,
+  followed by warm/cold with the exact-page checker alone. Every prior caller
+  result field matches, including ordered boundaries, full native/reference clear
+  statistics, devices, reads, final state and actual stopping point. Total fresh
+  original/native comparisons: 125. This is not the whole historical suite.
+- Each cold execution matches 57760 ordinary boundaries, performs 89 reads,
+  retains all 2097152 native writes clearing eight MiB of VRAM, loads 33408 exact
+  original MASARU.DRV bytes and stops at missing wrapper 8c65a8c8. Warm controls
+  match 1549 boundaries, read no sectors and retain missing-file stop 8c64bddc.
+  Driver bytes are loaded, not executed or decompiled.
+- In this one ordered local run, cold compare calls took 876.00
+  seconds with both methods and 53.81 seconds with exact
+  pages alone. These are observations, not a controlled benchmark: dual ran
+  first, and OS cache/other workload were not controlled. They do not measure
+  model intelligence, usage costs, total effort or project completion.
+- The workflow parses all nine new Python scripts and the read-only export script, verifies current proof
+  hashes, checks every prior selected file except README/handoff/status against
+  commit bd7a7953c8fa, and checks all prior build bytes. Strict compiler checks
+  cover all unchanged 179 C sources without overwriting frozen binaries. No
+  native DLL is rebuilt or claimed newly recovered for this verification work.
+
+Remaining limits
+The checker is Windows-only and opt-in. It rejects unsupported use rather than
+silently degrading. The existing default hash checker remains available.
+Finite software-host console/flash/disc/FIFO/status/timing inputs and the prior
+complete-clear decoder/fingerprint scope still apply. Physical hardware timing,
+interrupt acceptance, BIOS/driver execution and full startup are not proved.
+Natural reset, graphics/gameplay, all requested playable ports and settings,
+SUPIR textures, stereoscopic 3D, 60/120/240 FPS and up-to-8K operation remain
+unfinished. Texture Off must disable textures and use vertex color.
+Research libraries remain incomplete artifacts, not a playable game. Retail
+inputs/assets, toolchain bundles, caches and credentials remain excluded.
+
+Reproduction (Windows, matching Rev A inputs and existing research DLL required)
+python -B outputs/sonic-adventure/verify_windows_write_watch.py
+python -B outputs/sonic-adventure/verify_write_watch_driver_control.py
+python -B outputs/sonic-adventure/capture_write_watch_prefix.py
+python -B outputs/sonic-adventure/verify_write_watch_prefix.py
+python -B outputs/sonic-adventure/qualify_write_watch.py
+python -B outputs/sonic-adventure/verify_write_watch_workflow.py
+The capture runner saves completed comparisons privately before separate result
+validation. It runs both modes and both profiles freshly; retain its live handle.
+analysis/write_watch_qualification.json links reports, source and input hashes.
+
+Next-family read-only evidence covers five bodies / 410 original instruction
+rows, byte-checked against local retail input. These drafts have no execution
+or new recovery credit. Run ghidra/export_movie_bulk_family.ps1, then
+inventory_movie_bulk_family.py to reproduce that inventory.
+
+Next: recover the actual 8c65a8c8 bulk-transfer family and its missing memory
+domain, using the qualified checker. No wrapper/transfer result is to be supplied.
+Keep Sol High; goal active; overall estimate remains 10%.

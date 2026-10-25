@@ -8,6 +8,8 @@ Public repository: [wigwoo1/Sonic-Adventure-DC-Decomp](https://github.com/wigwoo
 
 ## Latest verified milestone
 
+The new **opt-in Windows memory checker** passes **1,272 focused checks**, **121 direct original/native comparisons**, and **four fresh cold/warm startup comparisons**. It compares changed pages exactly at every recorded ordinary service boundary; the old complete-memory hashes also run simultaneously in the adoption checks. All prior native source, proof, registry and build bytes remain unchanged. This verification work adds **zero game routines**. Read `WINDOWS_WRITE_WATCH.txt` and `analysis/write_watch_qualification.json` for the OS contract, evidence and measured local run times. The next original bulk-transfer wrapper remains unfinished. Overall estimate remains **10%**.
+
 The **179-source research DLL** qualifies original control update `8c65a200`: **52 rows / two outcomes**, all executed. It reads a control word, sets bit 0, writes it back, restores the interrupt mask and executes 256 delay iterations. Two existing transfer services receive zero duplicate credit. All **948 game comparisons** pass, including **121 direct comparisons** across interrupt masks/register banks and a fresh cold caller run matching **57,760 boundaries**. The cold path retains **89 reads** and exact original MASARU bytes, then reaches missing wrapper `8c65a8c8`; warm missing-file control still reaches `8c64bddc`. Source, proof, prior build bytes and canonical metadata are preserved. Read `MOVIE_DRIVER_CONTROL.txt` and `analysis/movie_driver_control_qualification.json`. Registry: **1,379 entries / 1,376 unique module-address pairs**. Complete startup, driver execution and playable ports remain unfinished. Overall estimate remains **10%**.
 
 ## Project files
