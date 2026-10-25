@@ -138496,6 +138496,46 @@
       "verification": "analysis/movie_timing_constructors_qualification.json",
       "verification_sha256": "eaaadc83592711a7618ad4666611b2ac997d9110bca43233cff1e78442db73b1",
       "guide": "MOVIE_TIMING_CONSTRUCTORS.txt"
+    },
+    "movie_render_setup_integration": {
+      "reused_connected_bodies": [
+        "0x8c6412c2",
+        "0x8c6411b0"
+      ],
+      "compiled_source_count": 159,
+      "newly_registered_entries": 0,
+      "newly_connected_existing_bodies": 4,
+      "integrated_original_bodies": 6,
+      "integrated_instruction_rows": 154,
+      "executed_conditional_outcomes": 20,
+      "direct_comparisons": 170,
+      "independent_direct_checks": 504,
+      "direct_normal_returns": 138,
+      "direct_privilege_faults": 24,
+      "direct_memory_faults": 8,
+      "startup_profiles": 6,
+      "startup_independent_checks": 120,
+      "initialized_profiles_advanced": 4,
+      "boot_rows_covered": 33,
+      "boot_static_rows": 51,
+      "boot_recovery_credit": 0,
+      "movie_startup_recovery_credit": 0,
+      "next_dependency": "0x8c6021d2",
+      "next_tail_target": "0x8c6021d6",
+      "dll_sha256": "784fa530153bbb09d22e5d27df3dd7220b75123006934b978a4e6593646c5203",
+      "scope": "Four existing original bodies gain complete-state native integration: decrement/store and three callback wrappers. The original installer/default reset stay connected unchanged. Actual original callback pointers are installed during four declared initialized startup profiles, advancing to the allocation thunk. No duplicate recovery credit.",
+      "limitations": [
+        "Direct callback/argument/driver/index/SR/stack fixtures are explicit inputs; setters store callbacks and do not establish callback execution.",
+        "Status -4 in the 24 direct cases means a modeled CPU privilege fault, not input exhaustion. The eight -3 cases are memory/stack faults; no successful return is fabricated.",
+        "Earlier runtime tables, driver/context staging and software disc/device policies remain declared fixtures. This is not natural reset-to-main boot or physical interrupt delivery.",
+        "Original canonical source/proof/name fields and prior DLLs remain unchanged. Two next-boundary functions are exported only, without recovery credit.",
+        "No pixels, playable game, actual FPS/resolutions/settings, full movie startup or completed platform port is established."
+      ],
+      "verification": "analysis/movie_render_setup_qualification.json",
+      "verification_sha256": "b5178f4f345ea46bf7d6d65b890c043400980cf9535116be4cf8327345408c25",
+      "adapter_source": "source/sa_movie_render_setup_connected.c",
+      "adapter_source_sha256": "70f7e379c7efda88a77425567c3c3d09b2b5e681ab11a8ebc688e28f897d71a7",
+      "guide": "MOVIE_RENDER_SETUP.txt"
     }
   },
   "milestones": [

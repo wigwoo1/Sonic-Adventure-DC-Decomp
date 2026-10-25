@@ -1,0 +1,99 @@
+Sonic Adventure Dreamcast Rev A - renderer callback setup integration
+Whole-project estimate: 10% weighted milestones, not recovered-code coverage.
+Incomplete research libraries; no playable game or physical display output.
+
+Result (2026-10-24)
+The new 159-source movie_render_setup.dll connects four already recovered bodies:
+  8c653386: decrement/store helper, five original instruction rows.
+  8c64133e: primary callback setter, fourteen rows.
+  8c64162a: index-five callback setter, fourteen rows.
+  8c64167e: index-eight callback setter, thirteen rows.
+The original shared installer 8c6412c2 (42 rows) and default-reset selector
+8c6411b0 (66 rows) remain connected through sa_boot_event.c, unchanged. All six
+bodies together execute 154 original rows and 20 conditional outcomes in tests.
+No routine receives duplicate recovery credit. Registry remains 1311 entries /
+1308 unique module/address pairs. Canonical source/proof/name fields survive;
+the new complete-state integration evidence is attached as additional metadata.
+
+New DLL SHA256:
+784fa530153bbb09d22e5d27df3dd7220b75123006934b978a4e6593646c5203
+Original C, proof reports and older DLL bytes remain unchanged. The new bridge
+retains the prior context-initialization sequence, thirteen renderer bodies,
+completed timing constructors and software peripheral/disc interfaces.
+
+What the original code does
+The decrement helper stores argument minus one through its original literal.
+The three setters load the existing driver pointer at 8c67c004 and call the
+original installer with indices zero, five or eight. Index eight supplies a
+zero argument. The installer saves the interrupt mask, masks interrupts in
+the modeled SR, and stores callback/argument words in the selected slot. A null
+callback invokes the actual original reset selector. The old interrupt mask is
+restored. These operations establish software CPU/RAM state; no physical IRQ
+delivery or callback execution follows merely from storing an address.
+
+Evidence
+analysis/movie_render_setup_verification.json: 170 full-state comparisons pass,
+with 504 independent assertions: 138 normal returns, 24 expected CPU privilege
+faults (-4), and eight expected memory/stack faults (-3). Direct fixtures vary
+callback/argument words, driver pointer, index including large wraparound
+values, initial SR and integer bank, FPU mode, and invalid stack/driver inputs.
+All 154 rows and all 20 conditional outcomes execute. Actual original default
+callbacks are checked for indices zero through eight; out-of-range defaults
+leave the table unchanged. No callback return or successful result is inserted.
+The -4 cases here are privilege faults, not exhausted timing streams.
+
+analysis/movie_render_setup_prefix_verification.json: six staged startup
+profiles / 120 checks pass. All four initialized profiles, covering both prior
+renderers and FPU modes, execute all three callback setters using the original
+literal callback pointers, continue through the existing geometry setup, and
+reach allocation thunk 8c6021d2. Both cold controls retain the original missing
+context fault at 8c10d4bc. The original 91 sector reads, closed disc ownership,
+raw MOVIE image hash, module stores, cleanup state, CCR events and finite raw
+input streams retain the earlier checks. Initialized register writes remain
+46 or 30 according to renderer; each profile consumes four raw scan samples.
+
+Complete RAM/CPU/FPU, banked/special registers, MACL/MACH, GBR/VBR, ordered call
+boundaries and software peripheral/queue/cache/transport/input state compare
+against independent original instructions. Previous runtime tables and driver
+pointer remain declared fixtures. The native context initializer really runs
+before the requested boot entry with its state retained, but that staging is
+not proof of original reset-to-main call order or natural full startup. Outer
+boot remains partial at 33/51 rows; no parent recovery credit is claimed.
+
+analysis/movie_render_setup_workflow_verification.json reproduces six generated
+artifacts byte-for-byte, checks registration idempotence and 730 current evidence
+pins, parses eight Python/three PowerShell workflows, and strictly checks all
+159 unbounded C sources. It preserves 3958 original source/proof files, all
+1311 prior canonical registry entries, and 2571 older build files against public
+baseline aec4439f16bf547d359fc921bbddcbe16c26287c. The focused build compiles and
+links successfully. The entire accumulated project suite is not claimed to have
+run. The old aggregate recipe is preserved because historical proofs pin it;
+run this focused follow-up separately after prior renderer/timing workflows.
+
+Next original boundary
+analysis/movie_render_setup_frontier.json pins read-only byte-checked exports:
+  8c6021d2: two-row branch thunk to 8c6021d6.
+  8c6021d6: 74-row allocator, not yet registered or connected.
+The allocator rounds a request into 32-byte units, searches a circular free
+list, removes an exact block or splits a larger one, and returns a payload
+pointer or null. The next task must recover its original machine-state effects
+and inspect the actual heap root reached by startup. This update does not
+inject a heap root, choose an allocation pointer or invent allocation success.
+
+Reproduce from the workspace root (matching retail inputs required locally)
+& ./outputs/sonic-adventure/ghidra/export_movie_render_setup.ps1 -Workspace (Get-Location).Path
+& ./outputs/sonic-adventure/ghidra/export_movie_render_setup_frontier.ps1 -Workspace (Get-Location).Path
+python -B outputs/sonic-adventure/recover_movie_render_setup.py
+python -B outputs/sonic-adventure/connect_movie_render_setup.py
+& ./outputs/sonic-adventure/build_movie_render_setup.ps1 -Workspace (Get-Location).Path
+python -B outputs/sonic-adventure/verify_movie_render_setup.py
+python -B outputs/sonic-adventure/verify_movie_render_setup_prefix.py
+python -B outputs/sonic-adventure/inventory_movie_render_setup_frontier.py
+python -B outputs/sonic-adventure/qualify_movie_render_setup.py
+python -B outputs/sonic-adventure/register_movie_render_setup.py
+python -B outputs/sonic-adventure/verify_movie_render_setup_workflow.py
+
+Keep Sol High for allocator/heap-state reverse engineering. Goal active; overall
+estimate stays 10%. User-facing 60/120/240 FPS, 8K, resolution/aspect controls,
+SUPIR HD textures and texture percentages/Off (vertex/material colors only),
+Android/stereoscopic 3DS and later demakes remain pending port features.
