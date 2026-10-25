@@ -1,0 +1,143 @@
+Sonic Adventure Dreamcast Rev A - transfer start, cache and callback
+2026-10-25 | Whole-project estimate10% weighted milestones, not code coverage.
+
+Four complete own original routines qualify:
+8c10faa4 transfer-channel start:71rows/4conditional outcomes;
+8c5fc58a cache writeback:228rows/38outcomes, including116actual P2 PCs;
+8c66abfc pending-count query:23rows/4outcomes;
+8c668f40 completion callback:77rows/6outcomes.
+Every one of399rows/52outcomes executes. The cache's228logical rows map to228
+distinct physical instruction rows, with no duplicate alias credit. Existing
+status getter1101f0 remains in the unchanged sa_movie_context_hardware.c provider
+and receives zero new credit. Registry1389entries/1386unique module-address
+pairs. Whole-game function count and recovered-code percentage remain unknown.
+The game still does not run as a playable PC port.
+
+What changed
+The186-source research DLL connects original cache/tag scanning, descriptor-to-
+register submission, pending query and callback code. The original status
+getter was already connected; canonical source/proof/name/status stay intact.
+Earlier complete IO-specialized cache code and small/large historical tests
+provide a starting point, but new static translation retains actual P1/P2 PCs,
+reached guards and precise partial error states. Old sources/proofs are intact.
+
+The cache helper retains its zero-length return, original32-byte aligned small
+range,65536-byte threshold and large CCR/tag paths. A reproducible combined
+listing follows real control flow between cached and uncached addresses. Only
+code/literal ADDRESS operands move with a PC alias; loaded literal DATA stays
+unchanged. It retains CCR mode bits5/7, range filtering, stack scratch bytes,
+saved registers and interrupt-mask restoration. Software tags and coherent
+writeback use the already existing platform support. Physical dirty cache
+contents, timing and MMU/exception delivery are not modeled.
+
+The start routine queries actual original status, preserves the busy result,
+performs original cache work, copies descriptor words to the selected register
+table, marks the channel/descriptor active and increments its per-channel
+counter with unsigned wrap. Tests include RAM table and real software MMIO
+table fixtures. These writes are a command, not an invented completed DMA.
+The callback retains original record state/completion behavior, pending-queue
+handling and mode-selected child calls. The two apparent counter increments
+target the SAME root+18c field: the literals18c and190-minus4 establish this.
+The counter advances twice, intentionally. No original behavior is corrected.
+
+Actual startup progress and remaining wait
+The fresh cold caller starts filesystem/interface roots at zero, performs89
+original disc reads and loads the exact33408-byte MASARU.DRV at0cd00000.
+SHA256:5ab700a241e5d5e164c104a76555b35002a6a84370aea17bf8c34d713cdc2cb9
+It retains the full8MiBVRAMclear and all524288stores of the full2MiBSEGAfill,
+then performs1043cache writebacks for the original33376-byte range beginning
+0cd00020 and issues the original channel-start command. Cold matches
+319999 ordinary service boundaries and
+14793020 original ordinary instructions. The client is state2,
+completion is0, the channel/descriptor is active and its pending queue is empty.
+It reaches the genuine completion wait at65a6ec. No callback or IRQ is injected.
+MASARU has been loaded and its transfer commanded; it has not been executed,
+decompiled as ARM code or copied by a fabricated DMA operation.
+
+The new request adapter preserves the older body byte-for-byte except its
+export name and an explicit SA_BOUND_RETAIL_STALLS guard. Research builds stop
+after two continued wait tests, with one actual empty-server call and exact
+partial machine/stack state. Without that macro, the original completion loop
+waits indefinitely when completion never arrives. Current guard proofs enter
+one pending synchronous context per execution. The larger request/start/mode-
+zero submission parents remain partial and receive no new registration.
+Warm missing-file control retains64bddc,1549boundaries,
+zero disc reads and zero sound-RAM writes. Original loops are never shortened,
+and no execution checkpoint or game-helper return is supplied.
+
+Verification actually run
+- All186sources compile/link. Additional strict unbounded syntax diagnostics
+  cover every compiled source. Native production C does not decode opcodes.
+-399focused original/native comparisons pass with3478independent checks.
+  Every own row executes. Direct cases cover cache lengths/alignment/aliases,
+  CCR/tag modes, all16interrupt masks and both register banks, three FPU modes,
+  busy status, descriptor/table flags and wrapping counters, pending/error
+  outputs, callback modes/child paths, null/unavailable services, invalid
+  addresses and real partial failures. Independent checks include complete
+  cache and query/error RAM, all cache-address lists, descriptor/table/counter
+  and callback queue state. Initial callback oracle expected two separate
+  counters; original literals proved the alias before final checks passed.
+-28additional comparisons /415checks pass. One original unsigned-wrap range
+  executes the last tag-mode below-start branch, bringing full coverage to
+ 399rows/52outcomes. Three unsupported-address controls verify exact P2/P1
+  failure PCs ac5fc698,ac5fc728 and8c5fc7a8 plus every partial stack byte.
+  Twenty-four initialized request ABI controls cover three FPU modes and four
+  interrupt masks: the real asynchronous API returns with completion still0;
+  the synchronous request retains the actual bounded wait. Neither outcome
+  fabricates completion, callback, data movement or physical IRQ acceptance.
+- Every successful native cache-writeback address is captured through a test
+  observer that forwards to the unchanged real bus callback. Its complete
+  sequence matches the independent original model; it does not rely on the
+  older4096-event general trace cap. Cold's complete1043-address sequence also
+  matches an independent aligned range. This observer changes no guest input,
+  result or production-device policy. Full ordered sound traces still retain
+  all524288events with zero drops.
+- Two fresh uninterrupted caller profiles /57checks pass. RAM, VRAM and sound
+  RAM compare through the qualified Windows exact-page checker at ordinary
+  boundaries and completely at the end. Older full-video-clear decoder and
+  fingerprint limitations are retained. Cold explicitly keeps its finite
+  262144zero-FIFO observations; warm keeps its earlier inputs. Exhaustion
+  remains a real stop. Completed caller results are saved before validation.
+-1624regressions pass:945earlier direct controls,199retained bulk controls,
+ 479queue/descriptor controls and the earlier warm/full-clear startup. They
+  match67669saved-record checks. The full distinct
+ 89abcdef fill reexecutes all524288stores in the new DLL. Warm-result and
+  completed-summary retention preserve expensive evidence before report output.
+- Current total:2053original/native comparisons. Prior bus/page-tracker/backend
+  suites remain historical evidence; the entire accumulated suite is not rerun.
+- Eleven generated artifacts reproduce; registration is byte-idempotent;
+  Python/PowerShell parsers and strict diagnostics pass. All old selected
+  source/proof/build bytes,1385canonical registry entries and requirements are
+  preserved against7d41d6627316, apart from ten reviewed documentation/status/
+  audit/registry paths. New records append; no old source/proof is rewritten.
+
+What remains
+Software DMA execution, interrupt acceptance/dispatch and a naturally delivered
+completion are unfinished. Callback unit inputs do not prove hardware delivery.
+The next mode-zero provider669088 has54exported original rows. The five-row
+666e06 helper increments an error counter and RETURNS; earlier speculative
+panic terminology is disproved by its instructions. Both drafts receive zero
+credit here. Request/start/submission parents and warm64bddc remain separate.
+Complete startup/gameplay,60/120/240FPS,8K, Android/3DS stereoscopic ports,
+N64/PlayStation demakes, SUPIR HD textures and display/texture settings remain
+unfinished requirements. Texture-Off must eventually use vertex colors only.
+
+Reproduce with matching local retail inputs and toolchain
+python -B outputs/sonic-adventure/recover_movie_transfer_start.py
+python -B outputs/sonic-adventure/recover_movie_transfer_wait.py
+python -B outputs/sonic-adventure/connect_movie_transfer_start.py
+powershell -File outputs/sonic-adventure/build_movie_transfer_start.ps1
+python -B outputs/sonic-adventure/verify_movie_transfer_start.py
+python -B outputs/sonic-adventure/verify_movie_transfer_start_boundaries.py
+python -B outputs/sonic-adventure/verify_movie_transfer_start_regression.py
+python -B outputs/sonic-adventure/capture_movie_transfer_start_prefix.py
+python -B outputs/sonic-adventure/verify_movie_transfer_start_prefix.py
+python -B outputs/sonic-adventure/inventory_movie_transfer_start_frontier.py
+python -B outputs/sonic-adventure/qualify_movie_transfer_start.py
+python -B outputs/sonic-adventure/register_movie_transfer_start.py
+python -B outputs/sonic-adventure/verify_movie_transfer_start_workflow.py
+Read-only export scripts:ghidra/export_movie_transfer_start.ps1,
+export_movie_transfer_cache.ps1 and export_movie_transfer_frontier.ps1.
+Full-size comparisons take minutes; preserve their live process handles.
+Read analysis/movie_transfer_start_qualification.json for proof hashes/limits.
+Keep Sol High; goal active; overall estimate10%.

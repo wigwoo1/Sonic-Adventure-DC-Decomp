@@ -17319,6 +17319,93 @@
           "Four counter/stack-overlap cases cover reachable repeated-test branches under explicitly overlapping valid RAM; they do not represent normal initialized driver scheduling.",
           "The four continuous startup cases retain their missing-context fault. Direct initialized-table cases do not establish natural initialization or full MOVIE/boot recovery."
         ]
+      },
+      "movie_transfer_start_integration": {
+        "newly_registered_entries": 4,
+        "qualified_rows": 399,
+        "executed_rows": 399,
+        "qualified_conditional_outcomes": 52,
+        "executed_conditional_outcomes": 52,
+        "coverage": [
+          {
+            "address": "0x8c10faa4",
+            "rows": 71,
+            "outcomes": 4,
+            "all_executed": true
+          },
+          {
+            "address": "0x8c66abfc",
+            "rows": 23,
+            "outcomes": 4,
+            "all_executed": true
+          },
+          {
+            "address": "0x8c668f40",
+            "rows": 77,
+            "outcomes": 6,
+            "all_executed": true
+          },
+          {
+            "address": "0x8c5fc58a",
+            "rows": 228,
+            "outcomes": 38,
+            "all_executed": true
+          }
+        ],
+        "compiled_source_count": 186,
+        "cache_physical_rows": 228,
+        "cache_uncached_pc_rows": 116,
+        "alias_duplicate_credit": 0,
+        "direct_comparisons": 399,
+        "independent_direct_checks": 3478,
+        "boundary_comparisons": 28,
+        "independent_boundary_checks": 415,
+        "prefix_comparisons": 2,
+        "independent_prefix_checks": 57,
+        "regression_comparisons": 1624,
+        "regression_record_checks": 67669,
+        "total_comparisons": 2053,
+        "cold_prefix_boundaries": 319999,
+        "cold_prefix_steps": 14793020,
+        "cold_prefix_disc_reads": 89,
+        "cache_writebacks_in_cold_prefix": 1043,
+        "masaru_bytes": 33408,
+        "masaru_sha256": "5ab700a241e5d5e164c104a76555b35002a6a84370aea17bf8c34d713cdc2cb9",
+        "canonical_reuse": [
+          {
+            "address": "0x8c1101f0",
+            "name": "sa_engine_channel_status_get",
+            "source": "source/sa_engine_channel_status_get.c",
+            "verification": "analysis/engine_channel_control_native_status_verification.json"
+          }
+        ],
+        "native_status_provider": "source/sa_movie_context_hardware.c",
+        "reused_additional_credit": 0,
+        "partial_parents": [
+          "0x8c65a5dc",
+          "0x8c666d10",
+          "0x8c666c2c"
+        ],
+        "next_dependency": "Completion/IRQ path; actual wait0x8c65a6ec",
+        "other_frontiers": [
+          "0x8c669088",
+          "0x8c666e06",
+          "0x8c64bddc"
+        ],
+        "dll_sha256": "cf608912f18d4a178749f5e8bcbc68fe01d3680954c0379bf084ccf307b5cb76",
+        "scope": "Complete own transfer-start, cache-writeback, pending-count query and completion callback bodies qualify with all399rows/52outcomes executed. The actual cached/uncached PC split is retained, without duplicate alias credit. Existing status provider is reused unchanged. Original cold startup submits its channel then retains the genuine completion wait; no game-helper result, completion flag or IRQ is invented.",
+        "limitations": [
+          "Cache tags, coherent writeback and normal device-register storage are explicit software-platform policies. Every successful writeback address is compared independently without relying on the old4096-event general trace cap. Physical dirty-line contents, timing, bus arbitration, MMU/exception delivery and interrupt acceptance remain unverified.",
+          "Every own cache row is byte-checked against its physical retail bytes. The combined listing follows actual P1/P2 control flow and leaves loaded literal data unchanged;116 rows execute at P2 PCs. Explicit unsupported-address controls verify real P2/P1 stop PCs and all partial stack bytes.",
+          "A real unsigned-wrap range supplies the second tag-mode below-start branch. The callback intentionally increments the same SDK counter twice; original literals establish the alias and wrap behavior. No original flag/counter behavior is corrected.",
+          "The new request adapter retains the old body byte-for-byte except export name and a research-only guard at6ec. Under SA_BOUND_RETAIL_STALLS it stops after two continued tests; without that macro the original unbounded completion wait remains. Current wait proofs enter one synchronous pending completion context per execution; request/start/submission parents remain partial.",
+          "Twenty-four explicit request ABI controls distinguish an actual asynchronous API return from a still-incomplete synchronous request. Completion stays zero; no fake callback/IRQ/helper return is supplied. Explicit callback unit inputs are separate from natural interrupt delivery.",
+          "Fresh cold/warm callers execute all original full-sized loops with no guest checkpoint or shortened count. Cold retains89reads, exactMASARU bytes, full8MiBVRAMclear, full2MiBSEGAfill and1043complete cache writebacks before the real wait. The retained distinct full pattern also reexecutes in this new build.",
+          "MASARU is loaded and its transfer command issued, not copied by an invented DMA or executed/decompiled as ARM code. Complete startup/gameplay, all requested ports/demakes/FPS/display/texture settings and SUPIR remain unfinished. Overall10% is a weighted milestone estimate, not recovered-code coverage."
+        ],
+        "verification": "analysis/movie_transfer_start_qualification.json",
+        "verification_sha256": "14ab20d1036ee79dc191a9e15f24b9c4d1f9f940fe806c5bd047a3fa1133373c",
+        "guide": "MOVIE_TRANSFER_START.txt"
       }
     },
     {
@@ -176451,6 +176538,82 @@
         "Cold/warm full caller comparisons start fresh. Cold loads exact MASARU bytes through89reads and executes every original two-MiB SEGA store; the retained full different-pattern control also reexecutes. No guest execution checkpoint, shortened count or game-helper return is supplied.",
         "The exact-page software checker and full ordered sound trace retain their earlier scope and Windows single-thread requirements. Existing full-video-clear decoder/fingerprint limits remain. Software devices and finite observations do not establish physical IRQ acceptance, timing, ARM execution or audio.",
         "MASARU is loaded, not executed/decompiled. Startup/gameplay and all requested playable ports, FPS/display/texture settings and SUPIR processing remain unfinished. Whole-project10% is a weighted milestone estimate, not recovered-code coverage."
+      ]
+    },
+    {
+      "module": "1ST_READ.BIN",
+      "name": "sa_movie_transfer_start_8c10faa4",
+      "address": "0x8c10faa4",
+      "end_exclusive": "0x8c10fb32",
+      "source": "source/sa_movie_transfer_start.c",
+      "retail_span_sha256": "4d949d7acc0f7b7f779878312f175709a3029bc34dfa2503219504e25c63dadc",
+      "verification": "analysis/movie_transfer_start_qualification.json",
+      "status": "Qualified complete own original transfer/cache/query/callback body. Every own row and conditional outcome executes in full-state comparisons with independent cache-address/stack, descriptor/table/counter, query/error and callback checks; full original/native state compares. Explicit input/ABI/platform preconditions apply.",
+      "limitations": [
+        "Cache tags, coherent writeback and normal device-register storage are explicit software-platform policies. Every successful writeback address is compared independently without relying on the old4096-event general trace cap. Physical dirty-line contents, timing, bus arbitration, MMU/exception delivery and interrupt acceptance remain unverified.",
+        "Every own cache row is byte-checked against its physical retail bytes. The combined listing follows actual P1/P2 control flow and leaves loaded literal data unchanged;116 rows execute at P2 PCs. Explicit unsupported-address controls verify real P2/P1 stop PCs and all partial stack bytes.",
+        "A real unsigned-wrap range supplies the second tag-mode below-start branch. The callback intentionally increments the same SDK counter twice; original literals establish the alias and wrap behavior. No original flag/counter behavior is corrected.",
+        "The new request adapter retains the old body byte-for-byte except export name and a research-only guard at6ec. Under SA_BOUND_RETAIL_STALLS it stops after two continued tests; without that macro the original unbounded completion wait remains. Current wait proofs enter one synchronous pending completion context per execution; request/start/submission parents remain partial.",
+        "Twenty-four explicit request ABI controls distinguish an actual asynchronous API return from a still-incomplete synchronous request. Completion stays zero; no fake callback/IRQ/helper return is supplied. Explicit callback unit inputs are separate from natural interrupt delivery.",
+        "Fresh cold/warm callers execute all original full-sized loops with no guest checkpoint or shortened count. Cold retains89reads, exactMASARU bytes, full8MiBVRAMclear, full2MiBSEGAfill and1043complete cache writebacks before the real wait. The retained distinct full pattern also reexecutes in this new build.",
+        "MASARU is loaded and its transfer command issued, not copied by an invented DMA or executed/decompiled as ARM code. Complete startup/gameplay, all requested ports/demakes/FPS/display/texture settings and SUPIR remain unfinished. Overall10% is a weighted milestone estimate, not recovered-code coverage."
+      ]
+    },
+    {
+      "module": "1ST_READ.BIN",
+      "name": "sa_movie_transfer_start_8c66abfc",
+      "address": "0x8c66abfc",
+      "end_exclusive": "0x8c66ac2a",
+      "source": "source/sa_movie_transfer_start.c",
+      "retail_span_sha256": "cb20c10c7e06b0b30b720b0187553574b69fd2ea6a557c1b0dc529447239fc5d",
+      "verification": "analysis/movie_transfer_start_qualification.json",
+      "status": "Qualified complete own original transfer/cache/query/callback body. Every own row and conditional outcome executes in full-state comparisons with independent cache-address/stack, descriptor/table/counter, query/error and callback checks; full original/native state compares. Explicit input/ABI/platform preconditions apply.",
+      "limitations": [
+        "Cache tags, coherent writeback and normal device-register storage are explicit software-platform policies. Every successful writeback address is compared independently without relying on the old4096-event general trace cap. Physical dirty-line contents, timing, bus arbitration, MMU/exception delivery and interrupt acceptance remain unverified.",
+        "Every own cache row is byte-checked against its physical retail bytes. The combined listing follows actual P1/P2 control flow and leaves loaded literal data unchanged;116 rows execute at P2 PCs. Explicit unsupported-address controls verify real P2/P1 stop PCs and all partial stack bytes.",
+        "A real unsigned-wrap range supplies the second tag-mode below-start branch. The callback intentionally increments the same SDK counter twice; original literals establish the alias and wrap behavior. No original flag/counter behavior is corrected.",
+        "The new request adapter retains the old body byte-for-byte except export name and a research-only guard at6ec. Under SA_BOUND_RETAIL_STALLS it stops after two continued tests; without that macro the original unbounded completion wait remains. Current wait proofs enter one synchronous pending completion context per execution; request/start/submission parents remain partial.",
+        "Twenty-four explicit request ABI controls distinguish an actual asynchronous API return from a still-incomplete synchronous request. Completion stays zero; no fake callback/IRQ/helper return is supplied. Explicit callback unit inputs are separate from natural interrupt delivery.",
+        "Fresh cold/warm callers execute all original full-sized loops with no guest checkpoint or shortened count. Cold retains89reads, exactMASARU bytes, full8MiBVRAMclear, full2MiBSEGAfill and1043complete cache writebacks before the real wait. The retained distinct full pattern also reexecutes in this new build.",
+        "MASARU is loaded and its transfer command issued, not copied by an invented DMA or executed/decompiled as ARM code. Complete startup/gameplay, all requested ports/demakes/FPS/display/texture settings and SUPIR remain unfinished. Overall10% is a weighted milestone estimate, not recovered-code coverage."
+      ]
+    },
+    {
+      "module": "1ST_READ.BIN",
+      "name": "sa_movie_transfer_start_8c668f40",
+      "address": "0x8c668f40",
+      "end_exclusive": "0x8c668fda",
+      "source": "source/sa_movie_transfer_start.c",
+      "retail_span_sha256": "b2c85482630cba8179d98fee8493a7c596f4b9102c3bf58667126ffd7ac78083",
+      "verification": "analysis/movie_transfer_start_qualification.json",
+      "status": "Qualified complete own original transfer/cache/query/callback body. Every own row and conditional outcome executes in full-state comparisons with independent cache-address/stack, descriptor/table/counter, query/error and callback checks; full original/native state compares. Explicit input/ABI/platform preconditions apply.",
+      "limitations": [
+        "Cache tags, coherent writeback and normal device-register storage are explicit software-platform policies. Every successful writeback address is compared independently without relying on the old4096-event general trace cap. Physical dirty-line contents, timing, bus arbitration, MMU/exception delivery and interrupt acceptance remain unverified.",
+        "Every own cache row is byte-checked against its physical retail bytes. The combined listing follows actual P1/P2 control flow and leaves loaded literal data unchanged;116 rows execute at P2 PCs. Explicit unsupported-address controls verify real P2/P1 stop PCs and all partial stack bytes.",
+        "A real unsigned-wrap range supplies the second tag-mode below-start branch. The callback intentionally increments the same SDK counter twice; original literals establish the alias and wrap behavior. No original flag/counter behavior is corrected.",
+        "The new request adapter retains the old body byte-for-byte except export name and a research-only guard at6ec. Under SA_BOUND_RETAIL_STALLS it stops after two continued tests; without that macro the original unbounded completion wait remains. Current wait proofs enter one synchronous pending completion context per execution; request/start/submission parents remain partial.",
+        "Twenty-four explicit request ABI controls distinguish an actual asynchronous API return from a still-incomplete synchronous request. Completion stays zero; no fake callback/IRQ/helper return is supplied. Explicit callback unit inputs are separate from natural interrupt delivery.",
+        "Fresh cold/warm callers execute all original full-sized loops with no guest checkpoint or shortened count. Cold retains89reads, exactMASARU bytes, full8MiBVRAMclear, full2MiBSEGAfill and1043complete cache writebacks before the real wait. The retained distinct full pattern also reexecutes in this new build.",
+        "MASARU is loaded and its transfer command issued, not copied by an invented DMA or executed/decompiled as ARM code. Complete startup/gameplay, all requested ports/demakes/FPS/display/texture settings and SUPIR remain unfinished. Overall10% is a weighted milestone estimate, not recovered-code coverage."
+      ]
+    },
+    {
+      "module": "1ST_READ.BIN",
+      "name": "sa_movie_transfer_start_8c5fc58a",
+      "address": "0x8c5fc58a",
+      "end_exclusive": "0x8c5fc7de",
+      "source": "source/sa_movie_transfer_start.c",
+      "retail_span_sha256": "744128bae0d47209f43ea9c322f7b4cc4b564a762362519d4dcbad094fc7bdcb",
+      "verification": "analysis/movie_transfer_start_qualification.json",
+      "status": "Qualified complete own original transfer/cache/query/callback body. Every own row and conditional outcome executes in full-state comparisons with independent cache-address/stack, descriptor/table/counter, query/error and callback checks; full original/native state compares. Explicit input/ABI/platform preconditions apply.",
+      "limitations": [
+        "Cache tags, coherent writeback and normal device-register storage are explicit software-platform policies. Every successful writeback address is compared independently without relying on the old4096-event general trace cap. Physical dirty-line contents, timing, bus arbitration, MMU/exception delivery and interrupt acceptance remain unverified.",
+        "Every own cache row is byte-checked against its physical retail bytes. The combined listing follows actual P1/P2 control flow and leaves loaded literal data unchanged;116 rows execute at P2 PCs. Explicit unsupported-address controls verify real P2/P1 stop PCs and all partial stack bytes.",
+        "A real unsigned-wrap range supplies the second tag-mode below-start branch. The callback intentionally increments the same SDK counter twice; original literals establish the alias and wrap behavior. No original flag/counter behavior is corrected.",
+        "The new request adapter retains the old body byte-for-byte except export name and a research-only guard at6ec. Under SA_BOUND_RETAIL_STALLS it stops after two continued tests; without that macro the original unbounded completion wait remains. Current wait proofs enter one synchronous pending completion context per execution; request/start/submission parents remain partial.",
+        "Twenty-four explicit request ABI controls distinguish an actual asynchronous API return from a still-incomplete synchronous request. Completion stays zero; no fake callback/IRQ/helper return is supplied. Explicit callback unit inputs are separate from natural interrupt delivery.",
+        "Fresh cold/warm callers execute all original full-sized loops with no guest checkpoint or shortened count. Cold retains89reads, exactMASARU bytes, full8MiBVRAMclear, full2MiBSEGAfill and1043complete cache writebacks before the real wait. The retained distinct full pattern also reexecutes in this new build.",
+        "MASARU is loaded and its transfer command issued, not copied by an invented DMA or executed/decompiled as ARM code. Complete startup/gameplay, all requested ports/demakes/FPS/display/texture settings and SUPIR remain unfinished. Overall10% is a weighted milestone estimate, not recovered-code coverage."
       ]
     }
   ],
