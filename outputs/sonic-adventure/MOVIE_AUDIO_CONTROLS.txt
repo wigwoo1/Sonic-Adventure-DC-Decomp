@@ -1,0 +1,83 @@
+Sonic Adventure Dreamcast Rev A: original audio command controls
+
+Whole-project estimate: 10% by weighted milestones, not measured code coverage.
+The goal remains active. This is incomplete research code, not a playable port.
+
+The new 198-source Windows research DLL connects three complete original bodies:
+  8c6436e8: 38 instructions, 6 conditional outcomes; seven-byte command block.
+  8c643754: 57 instructions, 10 outcomes; signed-byte/version command fields.
+  8c6437f0: 52 instructions, 10 outcomes; two sequential command requests.
+All 147 instructions and 26 outcomes execute in original/native comparisons.
+Existing SDK sender65a464/indexed copy10cd44/logger65acac retain their canonical
+source/proofs and receive zero new recovery credit. Resource/download routines
+643904/643970 are exported research dependencies, not qualified implementations.
+
+Observed behavior
+6436e8 writes command88 then copies seven bytes forward into the command buffer.
+Header/source aliases preserve original sequential reads, including mapped Sound
+RAM reads. 643754 checks signed low-byte index0..15, compares the signed revision
+byte against39, arithmetically shifts an argument for older revisions, and writes
+command83 with biased/wrapped byte fields. 6437f0 validates two nonnegative signed
+low bytes and sends84 then82 through the actual SDK. If the second enqueue fails,
+the first queued command remains. These opcode/field observations do not identify
+ARM processing or justify unproven volume/pan/effect labels.
+
+The SDK constructs actual20-byte entries and ready words, advances/wraps the tail,
+increments the count after copying, restores interrupt masks and performs actual
+diagnostic stores. Full queues, invalid arguments, count overflow, source aliases,
+late memory faults, privilege and stack faults preserve reached partial state.
+No helper result, completed queue, ARM acknowledgement or guest checkpoint is used.
+
+Verification
+verify_movie_audio_controls.py:244 original/native cases,5466 independent checks.
+All three bodies cover147/147 rows and26/26 outcomes. Cases include three FPU
+modes, signed low bytes and ignored high bits, revisions38/39/127/128/255,
+old-revision shifts, mapped Sound reads, full/wrapping queues and partial failures.
+verify_movie_audio_controls_retained.py:711 earlier request/runtime/ABI cases.
+verify_movie_audio_controls_packet_regression.py:423 packet/settings/CRC/error cases.
+verify_movie_audio_controls_mode_regression.py:177 earlier mode/SDK cases.
+All1555 direct/retained comparisons execute freshly against this new DLL.
+WholeCPU/RAM/FPU/banked/special/device/Sound/runtime/flash/boundary state compares;
+independent command/ring/error/mask/callee-saved oracles supplement comparison.
+
+Startup evidence is recorded separately by verify_movie_audio_controls_startup.py.
+It requires fresh configured0546c0execution with explicit raw platform/flash data,
+original initialization and no direct-test console priming. The actual next warm
+frontier is643c18, with7pending commands. Both fresh profiles now qualify,96checks:
+warm1610ordered boundaries and cold582908. Cold performs89actual driver reads,
+full8MiBVRAMclear,two2MiBSEGAfills,two33376-byte transfers and2originalIRQ/RTE/
+REQUESTreturns;all1065282SoundRAMevents compare with0drops. Whole machine/memory/
+device/flash state compares.1557total fresh direct/retained/startup comparisons.
+No earlier build result is substituted. Producer state does not establish command
+consumption or audible audio. Actual next643c18 is exported only,162rows/unqualified.
+
+Reproduce using Python and the local Clang/Ghidra tools
+  python -B outputs/sonic-adventure/recover_movie_audio_controls.py
+  python -B outputs/sonic-adventure/connect_movie_audio_controls.py
+  powershell -File outputs/sonic-adventure/build_movie_audio_controls.ps1
+  python -B outputs/sonic-adventure/verify_movie_audio_controls.py
+  python -B outputs/sonic-adventure/verify_movie_audio_controls_retained.py
+  python -B outputs/sonic-adventure/verify_movie_audio_controls_packet_regression.py
+  python -B outputs/sonic-adventure/verify_movie_audio_controls_mode_regression.py
+  python -B outputs/sonic-adventure/qualify_movie_audio_controls.py
+  python -B outputs/sonic-adventure/register_movie_audio_controls.py
+  python -B outputs/sonic-adventure/capture_movie_audio_controls_startup.py warm
+  python -B outputs/sonic-adventure/capture_movie_audio_controls_startup.py cold
+  python -B outputs/sonic-adventure/verify_movie_audio_controls_startup.py
+  python -B outputs/sonic-adventure/register_movie_audio_controls_startup.py
+  python -B outputs/sonic-adventure/verify_movie_audio_controls_workflow.py
+Exact local paths and input hashes are retained in the reports. Matching retail
+inputs are required locally, excluded from GitHub. Historical absolute paths may
+need adaptation on another machine. Do not rebuild a DLL while tests have it loaded.
+The preservation workflow compares the previous archived builds BEFORE publisher
+prepare replaces that archive; after publication, use its recorded preservation
+report and the new archive's manifest rather than pretending it is the old archive.
+
+All user requirements remain:full game-code decompilation,source/documentation/
+GitHub research builds,PC60/120/240FPS up to8K,Android,stereoscopic Nintendo3DS,
+N64/PlayStation adaptations,SUPIR HD texture toggle and texture percentages,
+render resolution/aspect selection. TextureOff must disable textures and use
+vertex colors. These ports/features are unfinished. Partial settings64bddc,
+bootstrapac000010,erased-flash initialization,ARM execution,physical timing,
+visible rendering and gameplay remain unresolved. Keep Sol High for the next
+reverse-engineering dependency; there is no recommended model switch or goal pause.
