@@ -1,0 +1,89 @@
+Sonic Adventure Dreamcast Rev A: original audio-mode command production
+2026-10-26. Research libraries only; no playable port or audible-output claim.
+Whole-project estimate remains10% weighted milestones,not measured code coverage.
+
+Two new original routines qualify120 instructions /16 branch outcomes:
+  64387c: construct MONO/STRO audio-mode command;
+  65a464: enqueue20-byte command in the original SDK ring.
+The197-source DLL retains all earlier APIs/platform support. Registry is1,407
+entries /1,404unique module/address pairs. All1,405previous canonical entries,
+source and proof bytes remain intact. Shared copy tail10cd82 has11existing
+instructions and receives zero additional routine credit; it overlaps the
+previous indexed-copy support. Existing copy dispatcher/logger fields stay intact.
+
+Fresh original/native verification:
+  177 direct cases /3,450 independent checks;
+  711 earlier request/runtime/regression/ABI cases replayed;
+  423 earlier packet/settings/copy/CRC/compaction/failure cases replayed.
+Total1,311 direct/retained comparisons. Two further fresh full startup captures
+also pass:1,313original/native comparisons support this milestone. All120 own
+rows/16 outcomes and the11 shared-tail rows execute. Startup proof is recorded
+separately,not substituted with historical results.
+
+MONO/STRO requests write command0x8a at original890600 and the mode byte at890604
+(ff/00),then call the actual SDK producer. The sender masks interrupts, advances
+the ring tail,sets the entry ready word,copies20actual bytes and increments the
+pending count. It wraps the tail only when the increment equals capacity and
+rejects pending count exactly256. Above-limit/count-overflow behavior is preserved
+as written by the original code. It restores the incoming interrupt mask before
+actual diagnostic stores on completed success/error returns.
+
+Tests independently check payload bytes,ring indices/counts,ready flags,source
+aliases,unchanged neighboring bytes,MONO/STRO/invalid/uninitialized/full paths,
+all16 interrupt masks,T/S bits and three FPU modes. Source/root/queue/stack and
+privilege faults compare complete reached partial machine state. A failed copy
+can leave an advanced tail,ready flag,two high payload words and raisedIMASKf0;
+the pending count remains unchanged. No rollback,callee result or acknowledgement
+is supplied. A queue in mappedSoundRAM performs six genuine writes/24bytes;
+all2MiBSoundbytes and exact events compare against the independent model.
+
+Integration fixes retain original behavior: the20-byte indexed copy dispatches
+to10cd82,which previously lacked a native route. That original shared tail is
+now connected. Sequential fallthrough into it during larger copies is not an
+extra function call,so the reference observer excludes that duplicate event.
+The original instructions still execute. The new SDK/tail adapters also admit
+the existing aligned SoundRAM bus,matching reached hardware-style accesses
+instead of rejecting them with a RAM-only guard. Earlier sources are preserved.
+The older indexed dispatcher retains its earlier input guards;this proof does
+not establish every arbitrary size/source bus for that separate helper.
+
+The full earlier-startup comparison uses original0546c0,explicit synthetic console
+info and a valid raw flash packet/CRC/bitmap from the prior configured profile.
+Original startup performs initialization and parsing;direct-test console priming
+is not used. The completed warm profile reaches new missing6437f0 after1,582
+ordered boundaries. It leaves one stereo command pending:capacity256,tail1,
+pending1,ready1 and all28recordbytes compare. It also executes the full8MiB
+video-memory clear. Fresh cold startup also passes at582,880ordered boundaries
+and89actual driver-file reads. It executes two complete2MiBSEGAfills,two actual
+33,376-byte transfers,two original IRQ/RTE/REQUESTreturns and all1,065,282SoundRAM
+events with zero drops. Independent whole-memory checks verify final driver
+payload/fill bytes. Both profiles leave one actual stereo command pending and
+reach6437f0;88independent startup checks pass. See the separate startup report.
+The104-byte6437f0export is an unqualified next dependency,zero credit.
+
+Reproduce with matching local retail inputs from the workspace root:
+  python -B outputs/sonic-adventure/recover_movie_audio_mode.py
+  python -B outputs/sonic-adventure/connect_movie_audio_mode.py
+  powershell -NoProfile -File outputs/sonic-adventure/build_movie_audio_mode.ps1
+  python -B outputs/sonic-adventure/verify_movie_audio_mode.py
+  python -B outputs/sonic-adventure/verify_movie_audio_mode_retained.py
+  python -B outputs/sonic-adventure/verify_movie_audio_mode_packet_regression.py
+  python -B outputs/sonic-adventure/qualify_movie_audio_mode.py
+  python -B outputs/sonic-adventure/register_movie_audio_mode.py
+  python -B outputs/sonic-adventure/verify_movie_audio_mode_workflow.py
+  python -B outputs/sonic-adventure/capture_movie_audio_mode_startup.py warm cold
+  python -B outputs/sonic-adventure/verify_movie_audio_mode_startup.py
+  python -B outputs/sonic-adventure/register_movie_audio_mode_startup.py
+The workflow preserves the previous published build archive;run it before
+preparing a replacement. Do not rebuild a DLL while a verifier has it loaded.
+Private raw captures/retail assets remain excluded from public publication.
+
+Command readiness is producer state,not command consumption or an ARM response.
+ARM driver execution,host audio output,physical timing,broader asynchronous
+scheduling,reset/boot-ROM,pixels and gameplay remain unfinished. Settings64bddc
+still has three unqualified outcomes;bootstrapac000010 remains unresolved. The
+earlier erased-flash startup diagnostic remains unqualified. Full source/docs
+and publicGitHub,PC60/120/240FPS up to8K,Android/stereoscopic3DS,N64/PSadaptations,
+SUPIRHDtoggle/texturepercent/render/aspect and vertex-colored TextureOff goals
+remain intact and unfinished. Keep Sol High for original startup dependencies;
+the overall goal stays active.
