@@ -1,0 +1,73 @@
+Sonic Adventure Dreamcast Rev A: memory-manager constructor qualified
+2026-10-26. GoalACTIVE;overall10%weighted milestones,not measured code coverage.
+
+Original663140 now qualifies159instructions:124execute and35areprovedinfeasible.
+Seven conditional outcomes execute andfiveareprovedinfeasible. All28fresh
+original/native comparisons and588independent checks pass. Registry1430entries/
+1427unique module-address pairs;one newbody credited,existing callees zero credit.
+The graphics root656940 remains partial withtwo unqualified outcomes:
+656cf4->656d06 and656e90->656f38. This constructor milestone does not close them.
+
+What is verified
+The original constructor cleans up old lists, resets4096small descriptor flags,
+sets total/bank capacities and allocates one8MiB or two4MiBfree records according
+to the original mode word. It performs the real register write atoffsete4.
+Fresh cases cover mode0/1/2/ffffffff,empty or finite occupied cleanup lists,
+initial flags0/1/ffff andthreeFPUprofiles. An independent oracle checks all98304
+smallpool bytes,77824cachepool bytes,40bank-metadata bytes,global capacity fields
+and exact provider/MMIO arguments. CompleteCPU/FPU/RAM/VRAM/Sound/device/ordered
+boundaries compare separately. Existing payload bytes are preserved exactly when
+the original only changes flags or selected record fields.
+
+Checked original invariants
+Both constructor branches loadactual665a80fromtheir literal tables, passing
+HARDWARE@8c672514,EnableTexture16MB@8c672520,default0. Anolder Ghidradraft names
+665a00 foronecall;the checked instructions and literalwords establish665a80.
+No production code correction was necessary. The existing verification-only
+unknown-live-in-rejecting helper evaluator replays111original instructions and
+returns0with a restored private stack. Runtime helper returns are not supplied.
+Two option-enabled branches are therefore infeasible forimmutable retail strings.
+
+The checked663080loop writeszero toall4096flag words. Its later cache cleanup
+only changes flags in a disjoint76-byte record pool. The actual664ac0scanner then
+selects the first descriptor8c8a83e4,or the second8c8a83fc after the first is used.
+Intervening constructor stores change payload/metadata rather than another free
+flag. Three descriptor-null branches are thus infeasible after normal cleanup.
+Explicit delay-slot control flow/dominance and original byte checks establish
+35unreachable rows andfiveinfeasible outcomes. Allruntime branches remain intact.
+
+Proof assumptions:full entry,immutable code/literals/strings,normalSH4callee-saved
+ABI,mapped aligned private stack,finite coherent cleanup lists,disjoint smallpool/
+cachepool/metadata/output storage andnoasynchronousmutation. Faulting helpers stop
+before later branch tests;no guest error result is guessed. Arbitrary corruption,
+cycles,destructive aliases,patched selectors and physical concurrency are outside
+this proof and receive no claim of validation.
+
+Build and preservation
+Native201source/DLL bytes are unchanged. A fresh isolated201sourcecompile/link
+matches the complete published PE image except its four-byteCOFFtimestamp.
+All201sources pass strict unbounded syntax checks. Six generated artifacts
+reproduce byte-for-byte;registration is byte-idempotent. All1429oldcanonicalrows,
+13093immutable earlier selected files,2641build files and original requirements
+are preserved. Ten reviewed derived documentation/status/index paths may change.
+Earlier3612comparisons/fullconfiguredstartup evidence are retained/hashchecked,
+NOT rerun;3640combinedevidence comparisons. No diagnostic cases are double-counted.
+
+Reproduction with matching local retail inputs/toolchain:
+  python -B outputs/sonic-adventure/verify_movie_graphics_constructor.py
+  python -B outputs/sonic-adventure/verify_movie_graphics_constructor_infeasible.py
+  python -B outputs/sonic-adventure/verify_movie_graphics_constructor_rebuild.py
+  python -B outputs/sonic-adventure/qualify_movie_graphics_constructor.py
+  python -B outputs/sonic-adventure/register_movie_graphics_constructor.py
+  python -B outputs/sonic-adventure/verify_movie_graphics_constructor_workflow.py
+Separate analysis/movie_graphics_constructor_* reports pin inputs and scopes.
+Do not rerun historical registration scripts against newer registry counts.
+
+Next:qualify the two remaining root outcomes using actual stack-count and
+allocation/callback invariants or genuine original failure execution. Constructor
+success alone is insufficient to assume all later root allocations succeed.
+Configuredstartupfrontier608d88isunchanged. No new startup advancement,visible
+pixels,audio,physicaltiming,gameplay orplayable port is claimed. Research DLLs
+remain incomplete libraries. Fullgame/60/120/240FPS8K/allports/demakes/SUPIR and
+settings remain unfinished. TextureOffmustdisabletexturesandusevertexcolors.
+KeepSolHigh for remaining reverse engineering;goalACTIVEat10%weighted milestones.

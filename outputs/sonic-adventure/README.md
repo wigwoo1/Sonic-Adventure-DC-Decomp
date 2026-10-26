@@ -6,7 +6,11 @@ This workspace is a continuing reverse-engineering project for the user's Dreamc
 
 Public repository: [wigwoo1/Sonic-Adventure-DC-Decomp](https://github.com/wigwoo1/Sonic-Adventure-DC-Decomp). See `GITHUB_PUBLISHING.txt` for source snapshots, research-build prereleases, exclusions and the daily 18:00 America/Indianapolis update check. Builds are test libraries, not a playable game.
 
-## Latest verification extension
+## Latest verified milestone
+
+**The original memory-manager constructor now qualifies: 159 instructions, with 124 executed and 35 proved infeasible; seven executed and five proved infeasible branch outcomes.** All **28 fresh original/native comparisons / 588 independent checks** pass. Empty and occupied cleanup lists, complete pool contents and one-bank/two-bank metadata are checked against independent expectations. Actual original helpers run; a checked reset/scanner proof accounts for unreachable descriptor failures. A fresh isolated 201-source build matches the published DLL except its timestamp. Registry: **1,430 entries / 1,427 unique pairs**. The graphics root still has two unqualified outcomes and startup remains at `0x8c608d88`. See [MOVIE_GRAPHICS_CONSTRUCTOR.txt](MOVIE_GRAPHICS_CONSTRUCTOR.txt). Prior source, proofs, builds and requirements are preserved; overall stays **10% by weighted milestones**, not measured code coverage, with the goal active.
+
+## Earlier verification extension
 
 **The graphics root remains partially qualified:** 66 fresh full-entry original/native comparisons and 1,334 independent checks pass. They execute 622 of its 629 instructions and 69 of 74 conditional outcomes; a separate checked immutable-option proof accounts for seven instructions and three outcomes. **Two outcomes still require evidence, so no routine recovery credit is added.** Float normalization, unsigned arithmetic, alignment and actual capacity/copy failures are checked. A fresh isolated 201-source build matches the published DLL apart from its timestamp. Registry remains **1,429 entries / 1,426 unique pairs**; earlier source, proofs, builds and requirements are preserved. Read [MOVIE_GRAPHICS_ROOT_PROGRESS.txt](MOVIE_GRAPHICS_ROOT_PROGRESS.txt) for limits and reproduction. Startup remains at `0x8c608d88`; the goal stays active at **10% by weighted milestones**, not measured code coverage.
 
