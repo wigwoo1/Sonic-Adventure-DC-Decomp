@@ -129,7 +129,7 @@
     "prs_trailing_bytes": 0,
     "main_binary_indexed_functions": 3637,
     "main_binary_draft_pseudocode_functions": 3631,
-    "recovered_buildable_routines": 1392,
+    "recovered_buildable_routines": 1394,
     "recovered_routine_tests": "analysis/startup_verification.json",
     "recovered_routine_test_cases": 17,
     "main_binary_draft_export_failures": 6,
@@ -143066,6 +143066,29 @@
       "verification": "analysis/movie_transfer_interrupt_qualification.json",
       "verification_sha256": "5246a1306fda756336975234b17e5e36371c08abec17bd96f2370b90751f8f5b",
       "guide": "MOVIE_TRANSFER_INTERRUPT.txt"
+    },
+    "movie_transfer_dispatch_integration": {
+      "newly_registered_entries": 2,
+      "newly_qualified_rows": 104,
+      "reused_adapter_rows": 37,
+      "qualified_integration_rows": 141,
+      "qualified_conditional_outcomes": 22,
+      "compiled_source_count": 190,
+      "total_comparisons": 561,
+      "authored_host_transfer_cases": 24,
+      "host_support_recovery_credit": 0,
+      "retained_default_frontier": "0x8c65a6ec",
+      "dll_sha256": "6829032d806cb9746e7f39a26c62603709e2bcf61293ab45ac3dee9d9c0d81ad",
+      "limitations": [
+        "Own-body qualification uses immutable code/literals and initialized acyclic callback lists with the existing software CPU/bus domain. All141instructions and22outcomes execute. Generic and primary adapters reuse earlier canonical bodies with zero duplicate credit. Unsupported callbacks, privilege faults and invalid pointers retain reached effects and stops.",
+        "Original ASIC code snapshots masked normal status, shifts it by12, and prioritizes it over external/error status. It scans seven normal bits or four error bits, retains ignored-high-bit and signed-event behavior, sets IMASK4, and invokes actual generic traversal. Primary/secondary wrappers set IMASK6. Physical exception entry/return and interrupt timing are outside these ABI bodies.",
+        "Existing authored g2_transfer_host.c is native support, not recovered game code. Twenty-four cases move actual64-byte varying data or33376-byte original driver payload before supplying an explicit software pending bit. Full source and2MiB destination bytes, every32-byte bus transaction, event code and original register/start/ASIC machine states are checked independently. MMIO results and data are carried explicitly between separate calls, not an uninterrupted early caller or resumed guest checkpoint.",
+        "The original registered handler and SDK callback set completion, with no flag/helper result supplied. No physical IRQ acceptance, automatic runtime pumping, exception frame, ARM execution or audio is claimed. Without explicit delivery default REQUEST still waits at65a6ec. Older full-copy/video-clear/earliest-caller proofs are historical, not rerun.",
+        "Complete startup/gameplay, every port/demake,60/120/240FPS,8K,SUPIR/display/texture settings remain unfinished. TextureOff uses vertex colors. Whole-project10% is a weighted milestone estimate, not recovered-code coverage."
+      ],
+      "verification": "analysis/movie_transfer_dispatch_qualification.json",
+      "verification_sha256": "76ee381857e9adb2c6e8937189e59be8e1480c5bb5195bce2d08725e1851836e",
+      "guide": "MOVIE_TRANSFER_DISPATCH.txt"
     }
   },
   "milestones": [
@@ -143239,8 +143262,8 @@
     "report": "analysis/recovery_coverage_audit.json",
     "candidate_inventory": "analysis/unrecovered_function_candidates.tsv",
     "boundary_inventory": "analysis/unresolved_module_boundaries.json",
-    "registered_routines": 1392,
-    "registered_unique_module_address_pairs": 1389,
+    "registered_routines": 1394,
+    "registered_unique_module_address_pairs": 1391,
     "indexed_candidates_in_export_snapshots": 11411,
     "registered_entries_matching_export_snapshots": 1276,
     "non_texture_binaries_without_function_index": 211,
@@ -150567,5 +150590,5 @@
   },
   "unverified_work": {},
   "unverified_drafts": {},
-  "recovered_buildable_routines": 1392
+  "recovered_buildable_routines": 1394
 }

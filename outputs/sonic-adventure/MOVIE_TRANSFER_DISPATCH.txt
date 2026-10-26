@@ -1,0 +1,98 @@
+Sonic Adventure Dreamcast Rev A: event dispatch and software transfer completion
+2026-10-26 | Overall estimate: 10% by weighted milestones, not code coverage.
+
+The 190-source research build connects four original dispatch bodies:
+  0x8c645afa: generic event-list traversal, 18 instructions, already registered.
+  0x8c645b1e: primary callback-list traversal, 19 instructions, already registered.
+  0x8c645b68: secondary callback-list traversal, 19 instructions, newly qualified.
+  0x8c645b8e: ASIC snapshot dispatcher, 85 instructions, newly qualified.
+All 141 instructions and 22 conditional outcomes execute and match original
+instructions. Two new routines add 104 instructions of recovery credit; the
+other 37 instructions reuse earlier canonical records without duplicate credit.
+Registry: 1,394 entries / 1,391 unique module-address pairs. Whole-game routine
+count and recovered-code percentage remain unknown. Source is static C, with
+no runtime instruction decoder. Ghidra drafts remain marked as unverified.
+
+Original behavior retained
+The generic dispatcher sign-extends the low 16 bits of the event, shifts by
+four, and selects the event-list head. Each callback receives its recorded
+argument; the next link is loaded after the callback returns. Primary and
+secondary dispatchers traverse their original heads with interrupt mask 6.
+The ASIC body accepts event group 0x36, uses interrupt mask 4 and snapshots
+masked normal status, shifted by 12. A nonzero normal snapshot has priority:
+seven normal bits select events 0xa00 through 0xac0. Only when that complete
+normal snapshot is zero does it inspect four error bits, selecting events
+0xb00 through 0xb60. Ignored high normal bits still suppress the error path.
+Original no-op event groups, signed lookup, callback order, stack/register
+effects and reached pointer/privilege/missing-service errors remain intact.
+
+Actual data-to-completion sequence verified
+1. Original event registration installs the real transfer handler and argument,
+   updates the channel mask and writes the ASIC entry into the vector table.
+2. Original channel start configures and triggers the actual software register
+   bank. The descriptor is active/incomplete; the SDK record is state 2/done 0.
+3. Existing authored g2_transfer_host.c captures those register values and moves
+   actual source bytes into mapped software Sound RAM. Its support code is not
+   recovered game code and earns no recovery credit.
+4. After successful movement, an explicit software pending-bit input is supplied.
+   Original ASIC and generic dispatch select the registered transfer handler.
+   That handler acknowledges the channel and invokes the original SDK callback,
+   producing descriptor inactive/complete, record state 1/done 1 and no current
+   record. No test supplies a completion flag or game-helper return value.
+
+Tests actually performed
+- The 190-source Windows DLL builds and links. Workflow verification reproduces
+  six generated artifacts, checks registration idempotence and pinned inputs,
+  parses scripts and runs strict unbounded syntax diagnostics for every source.
+- 137 focused original/native comparisons and 1,079 independent checks cover
+  all 141 instructions and 22 outcomes: empty and multi-node lists, signed event
+  lookup, normal/error priority and ignored bits, both banks, interrupt masks,
+  three FPU modes, actual counter callbacks and reached failure conditions.
+- 24 transfer lifecycles run across four channels, three FPU modes and two
+  sources: 64 varying bytes and the exact 33,376-byte local MASARU payload.
+  Their three guest ABI calls each give 72 original/native comparisons. The
+  authored transfer service has separate independent byte/effect checks,
+  including every ordered 32-byte bus transaction, event code, unchanged source
+  and the complete 2 MiB destination. These are not extra retail comparisons.
+  The lifecycle suite passes 1,008 independent checks.
+- 352 regression/wait comparisons and 5,394 record/effect checks pass: all 110
+  previous handler controls, 240 synchronous/counter controls, and two default
+  REQUEST controls. The latter retain their genuine wait at 0x8c65a6ec with
+  state 2/done 0, untouched Sound RAM and no automatic dispatcher invocation.
+Total: 561 original/native comparisons, plus 24 authored-host transfer cases.
+
+Evidence and scope
+Each guest ABI call compares full CPU/FPU/RAM/VRAM/SoundRAM and ordered call
+boundaries with an independent original-instruction interpreter. Masks,
+register results and completed sound bytes are carried explicitly between
+separate calls. This is not an uninterrupted earliest-startup comparison or a
+resumed guest checkpoint. The software pending bit is an explicit platform
+input after actual transfer success, not physical IRQ acceptance or timing.
+Automatic runtime pumping and CPU exception entry/return remain unfinished.
+Default REQUEST therefore still waits without explicit delivery.
+
+Earlier full 2 MiB copies, full 8 MiB video clear and earliest-caller proofs
+remain immutable historical evidence; they are not claimed rerun here. Prior
+source/proof/build bytes, canonical registry fields and user requirements are
+preserved except ten reviewed derived documentation/registry/audit paths.
+
+Next work
+Connect a persistent software transfer/event service at the original platform
+boundary, with original interrupt-context behavior and verified caller-state
+preservation. Do not fabricate completion flags, physical IRQ acceptance or
+guest-helper results. Complete startup/gameplay, ARM execution/audio, all
+ports/demakes, 60/120/240 FPS, 8K, SUPIR and display/texture settings remain
+unfinished. Texture Off must use vertex colors. Research DLLs are not a playable
+game. Keep Sol High for the remaining interrupt/platform integration. Goal active.
+
+Reproduce with matching local retail inputs and toolchain
+python -B outputs/sonic-adventure/recover_movie_transfer_dispatch.py
+python -B outputs/sonic-adventure/connect_movie_transfer_dispatch.py
+powershell -File outputs/sonic-adventure/build_movie_transfer_dispatch.ps1
+python -B outputs/sonic-adventure/verify_movie_transfer_dispatch.py
+python -B outputs/sonic-adventure/verify_movie_transfer_dispatch_lifecycle.py
+python -B outputs/sonic-adventure/verify_movie_transfer_dispatch_regression.py
+python -B outputs/sonic-adventure/qualify_movie_transfer_dispatch.py
+python -B outputs/sonic-adventure/register_movie_transfer_dispatch.py
+python -B outputs/sonic-adventure/verify_movie_transfer_dispatch_workflow.py
+Read-only original export: ghidra/export_movie_transfer_dispatch.ps1.
