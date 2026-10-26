@@ -1,0 +1,115 @@
+Sonic Adventure Dreamcast Rev A: graphics list, buffer and allocation builders
+2026-10-26 | Overall estimate: 10% weighted milestones, not measured code coverage.
+
+Seven original routines now qualify within the declared caller/memory domains:
+  0x8c657240 header replication: 194 instructions / 50 conditional outcomes.
+  0x8c6574b8 per-buffer list pointers: 279 instructions / 36 outcomes.
+  0x8c665cc0 display sizing: 113 instructions / 17 executed + 1 infeasible outcome.
+  0x8c664352 pool allocation: 169 instructions / 24 outcomes.
+  0x8c663320 cached paired buffers: 87 instructions / 12 outcomes.
+  0x8c6634a0 paired texture allocation: 54 instructions / 6 outcomes.
+  0x8c664ac0 descriptor scanning: 22 instructions / 5 executed + 1 infeasible outcome.
+Total: 918 executed instructions, 150 executed and two proved infeasible outcomes.
+Registry: 1,423 entries / 1,420 unique module-address pairs. Existing native copy,
+linked-list and address-mapping providers receive zero duplicate recovery credit.
+The actual whole-game routine count and measured code completion remain unknown.
+
+These bodies were connected as proposals in the earlier 201-source DLL. This
+milestone adds their missing qualification without changing any native source
+or published build. Seven larger graphics bodies remain partial: 0x8c656940,
+0x8c656860, 0x8c657760, 0x8c641c16, 0x8c65614e, 0x8c656660 and 0x8c665ae0.
+They receive zero credit from this milestone. A configured startup return does
+not qualify their full branch and ABI domains.
+
+Fresh verification
+508 header/list/display comparisons pass 6,881 independent checks. These cover
+all five enable masks, format/force overrides, zero/one/two/four header copies,
+RAM/VRAM destinations and destination aliases, pointer alignment and wrapping
+size arithmetic, six display formats/default format, flag combinations, custom
+height rounding and the final size/register-shadow values. The pointer builder
+uses its actual zero/one/two-buffer domain; larger counts are not qualified.
+
+168 allocation comparisons pass 2,520 independent checks. A separate host oracle
+checks every byte of the descriptor pool, both bank descriptors and output
+records. Real original first-fit, list insertion/removal, record scanning and
+address mapping execute. Exact fits, splits, all list positions, existing busy
+lists, exhausted descriptors, both bank choices, low16 selector aliases, signed
+rounding/wrap, cached reuse and texture address pairs match. Unsupported type
+errors preserve the original preceding list/pool mutations instead of rolling
+them back or reporting fabricated success. No allocator return is supplied.
+
+Thirty descriptor comparisons pass 330 checks across first/second/later/last/
+no free record, ignored argument values and three FPU modes. Only the first
+available descriptor flag changes; all 98,304 pool bytes are checked separately.
+Total: 706 fresh comparisons / 9,731 independent checks. All full CPU/FPU/RAM/
+VRAM/Sound/device states and ordered call boundaries also compare with original
+instruction execution. Input configuration, list/pool storage and separate mapped
+aligned output records are explicit direct-test fixtures, not guest checkpoints.
+Arbitrary corrupt/aliased ownership metadata, asynchronous changes and physical
+alignment exceptions remain outside these qualified contracts.
+
+Checked original-code proofs
+The display branch at 0x8c665d48 cannot jump to 0x8c665d80: all paths reaching its
+TST pass MOV #1,R5, and no intervening instruction changes R5. TST therefore
+clears T and BT falls through. Full-function branch targets and retail bytes are
+checked. All 113 display instructions and 17 other outcomes execute dynamically.
+The descriptor scanner's first empty-range edge cannot execute because the
+checked fixed pool base 0x8c8a83e4 plus 0x18000 does not wrap and exceeds the base.
+Its later real exhaustion still executes and returns zero. No native branch or
+helper result is modified to force either infeasible outcome.
+
+The pointer builder has five size slots, an unused caller stack word at SP+4,
+and its buffer count at SP+8. Checked original prologue, loads and root call show
+three stack words and a 12-byte caller cleanup. The Ghidra six-argument draft is
+not authoritative. The initial test pilot used the wrong count slot; original
+and native code agreed, while the independent output oracle caught the fixture
+mistake. The fixture was corrected from actual instructions, unused-word values
+were tested, and the complete 508-case suite rerun. Native source stayed intact.
+
+Build and retained evidence
+A fresh isolated 201-source bounded research build compiles and links. Every byte
+of the complete rebuilt DLL matches the published DLL after ignoring only the
+four-byte COFF timestamp. Code, data, exports and all other headers/tables match.
+The existing DLL and import libraries are preserved. All 201 sources also pass
+strict unbounded syntax checks. Nine new Python workflows and the PowerShell
+build parse successfully; registration is byte-idempotent and six generated
+source/manifest/build artifacts reproduce exactly.
+
+Earlier 2,473 comparisons and both configured full startup captures are retained
+and hash-checked, not rerun or described as fresh. Combined evidence: 3,179
+comparisons. Those captures still reach 0x8c608d88 after graphics initialization,
+retain the full 8 MiB clear followed by 3,600 tile-descriptor word writes, two
+2 MiB Sound fills, two real transfers/IRQ/RTE/REQUEST returns, all 39 queued audio
+records and all 1,065,282 Sound events without drops. No new startup advancement
+or full caller qualification is claimed here.
+
+Preservation checks cover 13,050 previously selected immutable source/proof files,
+all 1,416 previous canonical rows, all old status requirements and 2,641 archived
+builds before preparing publication. Ten derived documentation/audit/registry
+paths may change. The new private rebuild is a verification artifact, separate
+from the published build directory. Retail inputs/assets, tools, caches and
+credentials remain excluded from GitHub. Research DLLs are not playable games.
+
+Next work
+Qualify the seven actual larger graphics bodies, including mode/context setup,
+synchronization callbacks, framebuffer construction and the root initializer.
+Follow real dependencies and preserve partial/error behavior. Separately inspect
+the current startup frontier 0x8c608d88. Existing bytes/proofs/builds must remain
+preserved; use a new implementation pipeline if code changes become necessary.
+Keep Sol High for that reverse engineering. Goal remains active at about 10%.
+PC 60/120/240 FPS and 8K, Android, stereoscopic 3DS, N64/PS1 adaptations, SUPIR HD
+textures, texture percentages, render resolution and aspect selection remain
+unfinished. Texture Off must disable textures and use vertex colors. Metadata
+and register checks do not establish rendered pixels, audio or a playable port.
+
+Reproduce with matching local retail inputs/toolchain
+python -B outputs/sonic-adventure/verify_movie_graphics_buffers.py
+python -B outputs/sonic-adventure/verify_movie_graphics_allocations.py
+python -B outputs/sonic-adventure/verify_movie_graphics_display_infeasible.py
+python -B outputs/sonic-adventure/verify_movie_graphics_buffer_abi.py
+python -B outputs/sonic-adventure/verify_movie_graphics_descriptor.py
+python -B outputs/sonic-adventure/verify_movie_graphics_buffers_rebuild.py
+python -B outputs/sonic-adventure/qualify_movie_graphics_buffers.py
+python -B outputs/sonic-adventure/register_movie_graphics_buffers.py
+python -B outputs/sonic-adventure/verify_movie_graphics_buffers_workflow.py
+Run the preservation workflow before preparing another publication archive.
