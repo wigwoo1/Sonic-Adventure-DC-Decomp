@@ -1,0 +1,59 @@
+{
+  "proven_infeasible_edges": {
+    "0x8c65614e": [
+      [
+        "0x8c6562fa",
+        "0x8c6562fe"
+      ],
+      [
+        "0x8c656446",
+        "0x8c656456"
+      ]
+    ],
+    "0x8c657760": [
+      [
+        "0x8c6577c2",
+        "0x8c657828"
+      ]
+    ]
+  },
+  "proven_infeasible_rows": {
+    "0x8c65614e": [
+      "0x8c6562fe",
+      "0x8c656300"
+    ],
+    "0x8c657760": []
+  },
+  "own_infeasible_rows": 2,
+  "own_infeasible_outcomes": 3,
+  "retail_instruction_rows_checked": 940,
+  "pointer_builder_normal_return_r0": 0,
+  "callee_saved_count_domains": {
+    "ONE_R12": [
+      1,
+      2
+    ],
+    "MODE_R11": [
+      1,
+      2
+    ]
+  },
+  "deferred_two_returns_incoming_r12": true,
+  "full_delay_slot_cfg_checked": true,
+  "sha256": {
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\verify_movie_graphics_mode_infeasible.py": "f548d01ec373bf60a198a6cec185bc1833b8e685ff1f414cec6961024a0654e0",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\analysis\\movie_graphics_init_translation.json": "7effe7ddd07a4cbe526ae1fa451f3606f28c005dd896dbf4dfd81fcf245f6404",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\work\\sonic-adventure\\extracted\\1ST_READ.BIN": "45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\analysis\\movie-graphics-init-nested\\8c65614e_instructions.tsv": "0809b733ea6db97380d4c0dae04f52186800674c20df175d251baeb761773acd",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\analysis\\movie-graphics-init-nested\\8c656660_instructions.tsv": "e0922f4cc236121fbc349e63b623be63f00c7ae8930a5e84848bde439dbfe46c",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\analysis\\movie-graphics-init-dependencies\\8c657760_instructions.tsv": "19a432062a223b7644fac76ca191b53fa3bdcb3978c68c483218b1a3037821b2",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\analysis\\movie-graphics-init-dependencies\\8c6574b8_instructions.tsv": "71fe487aa71cb7c84c56c99f296fca4bb83285548aac9439a15f94951af90376",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\analysis\\movie_graphics_mode_controls_verification.json": "695dfdfbffc38bbd67796fe295eca767ee8abc45ec7ce211f5dec22b24edc4fe"
+  },
+  "assumptions": [
+    "Full original entry with immutable checked instruction/literal bytes.",
+    "Normal callees preserve SH4callee-saved R8..R15;valid mapped distinct caller stack/data and no asynchronous register/memory mutation.",
+    "Faulting/missing-service calls stop before the caller normal-return continuation;no helper result is supplied at runtime."
+  ],
+  "scope": "Explicit delay-slot CFG/dominators,register-write sets,checked epilogues,literals and raw unsigned compare opcodes establish three infeasible outcomes andtwo deadreturn rows. Two nonempty-loop pretests comparezero againstcount1or2;actual pointer builder normalreturnsR0zero. Removing onlytheseedges yields exactlytwo unreachable instructions. A separate restricted original deferred path contains noR12assignment beforeMOVR12,R0;fourlive-in values execute onbothoriginal/native. Offlineproofonly:original/native code,branches andruntimecallbackresults unchanged."
+}

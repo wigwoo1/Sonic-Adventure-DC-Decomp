@@ -1,0 +1,77 @@
+Sonic Adventure Dreamcast Rev A: graphics modes, framebuffers and reset
+Verified milestone, 2026-10-26. Overall estimate remains 10% by weighted
+milestones, not measured code coverage. Goal ACTIVE; keep Sol High.
+
+Six original bodies now qualify within the declared mapped caller domains:
+  8c656860 reset/callback synchronization: 57 instructions, 6 outcomes
+  8c665ae0 framebuffer setup: 164 instructions, 16 outcomes
+  8c641c16 paired-context setup: 142 instructions, 14 outcomes
+  8c65614e list configuration: 335 instructions, 30 executed + 2 infeasible outcomes
+  8c656660 texture configuration: 162 instructions, 8 outcomes
+  8c657760 mode dispatcher: 164 instructions, 21 executed + 1 infeasible outcomes
+Total: 1024 original instructions, 1022 executed and 2 proved infeasible;
+95 executed and 3 proved infeasible conditional outcomes. No replacement helper
+returns, guest completion flags or checkpoints are used to force these paths.
+
+Fresh verification comprises 367 original/native comparisons and 7571 independent
+checks: framebuffer/context 119/3094, reset 68/1670, mode controls 180/2807.
+The earlier 3179 comparisons, including full configured startup, are retained and
+hash-checked, NOT freshly rerun. Combined evidence: 3546 comparisons. Qualification
+is in analysis/movie_graphics_modes_qualification.json; separate framebuffer,
+reset, controls, infeasibility, rebuild and workflow reports retain their scopes.
+
+All existing 201 native C sources and published build bytes remain unchanged.
+A fresh isolated 201-source compile/link matches the complete published PE image
+except its four-byte COFF timestamp. All 201 sources also pass strict unbounded
+syntax checking. Six generated artifacts reproduce byte-for-byte; registration
+is byte-idempotent. Registry: 1429 entries / 1426 unique module/address pairs.
+All 1423 previous canonical rows are preserved. Before preparing publication,
+13068 immutable selected files and all 2641 old build files were byte-checked;
+the ten explicitly reviewed status/index/documentation files may change.
+
+Preserved original behavior and checked qualifications:
+* Framebuffer clear uses complete 2560-byte chunks, including the last chunk
+  beyond a nonmultiple record size. Full VRAM and ordered device writes compare.
+* Reset executes the actual 651bc0 callback, including counter wrap and the
+  original timeout/cap behavior. This is software callback verification;
+  physical interrupt acceptance and timing remain unfinished. An unknown callback
+  at 8cfef000 retains its actual -2 stop before subsequent reset writes.
+* Deferred texture configuration returns incoming R12 rather than an invented
+  zero; four input values also test its propagation through mode selection 2.
+* A nonzero 16-word list length can produce a null pointer while the enable bit
+  remains set. The real copy faults at 652544 with -3 after earlier allocations.
+  The failure prefix is verified; it is not clamped into success.
+* Texture capacity uses list space computed by actual 6573c4, not stale metadata.
+  Independent pool, allocation, cache, record, register and failure oracles check
+  the real providers, including late context/second-frame allocation failures.
+
+The separate static proof checks all 940 relevant original instructions against
+retail bytes and uses a control-flow graph with explicit branch delay slots.
+Under full-entry, immutable-code/literal, valid distinct stack/data and normal
+SH4 callee-saved register assumptions, the child 6574b8 normally returns zero,
+making 6562fa->6562fe infeasible and leaving 6562fe/656300 unreachable. Count
+invariants prove 656446->656456 and 6577c2->657828 infeasible. Faulting children
+stop before normal return; no guest error value is guessed. Runtime branches
+and source instructions remain intact. Arbitrary metadata corruption, aliasing,
+asynchronous mutation and physical alignment exceptions are outside this proof.
+
+Reproduction from the workspace with matching local retail inputs/toolchain:
+  python -B outputs/sonic-adventure/verify_movie_graphics_framebuffers.py
+  python -B outputs/sonic-adventure/verify_movie_graphics_reset.py
+  python -B outputs/sonic-adventure/verify_movie_graphics_mode_controls.py
+  python -B outputs/sonic-adventure/verify_movie_graphics_mode_infeasible.py
+  python -B outputs/sonic-adventure/verify_movie_graphics_modes_rebuild.py
+  python -B outputs/sonic-adventure/qualify_movie_graphics_modes.py
+  python -B outputs/sonic-adventure/register_movie_graphics_modes.py
+  python -B outputs/sonic-adventure/verify_movie_graphics_modes_workflow.py
+Reports record exact inputs and hashes. Historical evidence paths are preserved.
+
+The 629-instruction root 656940 remains the only unqualified body in this
+22-body graphics manifest. Constructor 663140 is also partial outside it.
+Configured startup's next frontier remains 608d88; this milestone does not
+advance it or establish visible pixels, gameplay, physical IRQ timing or audio.
+Research DLLs are incomplete libraries, not a playable port. Full decompilation,
+60/120/240 FPS, 8K, Android, stereoscopic 3DS, N64/PS1 and SUPIR remain unfinished.
+All requested settings persist; Texture Off must disable textures and use vertex
+colors. Source and evidence are published under the existing GitHub workflow,
+with source-matched archives labeled as incomplete research prereleases.
