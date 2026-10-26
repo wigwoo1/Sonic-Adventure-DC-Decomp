@@ -1,0 +1,87 @@
+Sonic Adventure Dreamcast Rev A: original stack-argument MIDI packet helper
+
+Whole-project estimate:10% weighted milestones,not measured code coverage.
+Goal ACTIVE;Sol High remains appropriate. Research build is not a playable game.
+
+The199-source native research DLL adds original helper8c643c18,162instructions/
+22conditional outcomes. It constructs a four-byte packet from a source byte and
+stack arguments,using actual already-native trace65a2fc/error65acac providers.
+These providers receive zero new recovery credit. Earlier source/proofs remain.
+
+Observed contract,checked against original instruction bytes/literals
+Rootglobal67c1d0 must be nonzero,else originalerrord000001. Null source pointer
+returns07000103. The helper reads source+1,then messagebyte at the original entry
+stack pointer. If message&f0==f0,it writes fourzero bytes. Otherwise it reads the
+first stack data word; classesa0/c0 use zero as the second data value,while other
+classes read another word. Normal aligned-stack words are atentrySP+4/+8.
+It traces the original message and signed low data bytes,then writes:
+  packet[0]=lowbyte(seconddata)
+  packet[1]=lowbyte(firstdata)
+  packet[2]=lowbyte((savedsourcebyte<<4)|(currentmessagebyte&15))
+  packet[3]=(currentmessagebyte>>4)&7
+It then reads/traces the actual four stored bytes. This contract is observed
+game behavior,not an assumption about a MIDI standard. In particular,a0/c0 are
+the actual literal classes. Message/source reads may see changes from earlier
+packet stores when pointers alias the caller stack or saved source byte. Original
+load/store order remains. Trace-disabled execution still makes actual trace calls.
+No packed bytes,helper return,ARMacknowledgement or guest checkpoint is supplied.
+
+Verification scope and alignment
+432fresh direct original/native cases,9363independent assertions pass. All256
+message bytes,representative source bytes,word truncation,high bits,aliases,enabled
+tracing,mappedSoundsource/destination,and realpartialsource/stack/destination
+faults are checked. FullCPU/RAM/FPU/banked/special/device/Sound/runtime/flash/
+ordered-boundary state compares,plus independent packet/ring/error/mask/callee-
+saved/Sound byte oracles. A late fault retains earlier writes without rollback.
+
+For the actual four-aligned caller-stack ABI,147instructions and17outcomes run.
+The checked prologue/pointer-residue proof establishes that15alignment-alternative
+instructions/5outcomes cannot execute under that ABI. Those original alternatives
+remain in the C source.36additional deliberately misaligned research fixtures
+execute them under the existing byte-backed RAM model,covering all162/22 overall.
+These experimental tests do NOT verify physicalSH4unaligned memory access or
+address-error exceptions. That hardware behavior remains unfinished. This split
+is recorded in the direct/alignment/qualification reports;experimental coverage
+is not silently presented as valid hardware-ABI coverage.
+
+All1555earlier mode/SDK/control/runtime/request/packet/CRC/error comparisons run
+freshly in the199-source integration:711runtime,423packet,177mode,244controls.
+Together with432direct,this gives1987original/native comparisons. Separate fresh
+configured0546c0startup captures both completed:100independent checks,1989total
+fresh comparisons. Warm1613boundaries,cold582911;both reach643b9c with7commands
+pending,one MIDI helper call/twoactualtracecalls. Cold retains89driverreads,
+full8MiBVRAMclear,twofull2MiBSEGAfills,two33376-byte transfers and2originalIRQ/
+RTE/REQUESTreturns. All1065282Soundevents compare,0drops. Whole startup machine/
+memory/device/flash state compares;no direct console priming,checkpoint,shortened
+copy,helperresult or historicalcoldsubstitution. Next643b9c is43rows exported only.
+Packet creation and trace calls do not prove ARM consumption,audible output,
+physical timing,reset/bootROM or gameplay.
+
+Reproduce with matching local inputs/toolchain
+  python -B outputs/sonic-adventure/recover_movie_midi_packet.py
+  python -B outputs/sonic-adventure/connect_movie_midi_packet.py
+  powershell -File outputs/sonic-adventure/build_movie_midi_packet.ps1
+  python -B outputs/sonic-adventure/verify_movie_midi_packet.py
+  python -B outputs/sonic-adventure/verify_movie_midi_packet_alignment.py
+  python -B outputs/sonic-adventure/verify_movie_midi_packet_retained.py
+  python -B outputs/sonic-adventure/verify_movie_midi_packet_packet_regression.py
+  python -B outputs/sonic-adventure/verify_movie_midi_packet_mode_regression.py
+  python -B outputs/sonic-adventure/verify_movie_midi_packet_controls_regression.py
+  python -B outputs/sonic-adventure/qualify_movie_midi_packet.py
+  python -B outputs/sonic-adventure/register_movie_midi_packet.py
+  python -B outputs/sonic-adventure/capture_movie_midi_packet_startup.py warm
+  python -B outputs/sonic-adventure/capture_movie_midi_packet_startup.py cold
+  python -B outputs/sonic-adventure/verify_movie_midi_packet_startup.py
+  python -B outputs/sonic-adventure/register_movie_midi_packet_startup.py
+  python -B outputs/sonic-adventure/verify_movie_midi_packet_workflow.py
+Reports retain exact paths/hashes. Matching retail inputs stay local,excluded
+fromGitHub. Historical paths/compiler locations may need adaptation elsewhere.
+Never rebuild a loaded DLL. Preservation workflow checks the PREPARE-PRECEDING
+published archive;after publishing use its recorded proof and current manifest.
+
+Allrequirements persist:full game-code decompilation/source/documentation/GitHub,
+PC60/120/240FPS8K,Android,stereoscopic3DS,N64/PlayStation asset adaptations,
+SUPIRHDtoggle/texturepercent/renderresolution/aspect. TextureOff disables textures
+and uses vertexcolors. Partialsettings64bddc,bootstrapac000010,erasedflash,
+resource/download dependencies,physicaldevices,ARM/audio/rendering/gameplay and
+all ports remain unfinished. No model switch or goal pause is recommended.
