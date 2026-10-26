@@ -6,7 +6,11 @@ This workspace is a continuing reverse-engineering project for the user's Dreamc
 
 Public repository: [wigwoo1/Sonic-Adventure-DC-Decomp](https://github.com/wigwoo1/Sonic-Adventure-DC-Decomp). See `GITHUB_PUBLISHING.txt` for source snapshots, research-build prereleases, exclusions and the daily 18:00 America/Indianapolis update check. Builds are test libraries, not a playable game.
 
-## Latest verified milestone
+## Latest verification extension
+
+**The graphics root remains partially qualified:** 66 fresh full-entry original/native comparisons and 1,334 independent checks pass. They execute 622 of its 629 instructions and 69 of 74 conditional outcomes; a separate checked immutable-option proof accounts for seven instructions and three outcomes. **Two outcomes still require evidence, so no routine recovery credit is added.** Float normalization, unsigned arithmetic, alignment and actual capacity/copy failures are checked. A fresh isolated 201-source build matches the published DLL apart from its timestamp. Registry remains **1,429 entries / 1,426 unique pairs**; earlier source, proofs, builds and requirements are preserved. Read [MOVIE_GRAPHICS_ROOT_PROGRESS.txt](MOVIE_GRAPHICS_ROOT_PROGRESS.txt) for limits and reproduction. Startup remains at `0x8c608d88`; the goal stays active at **10% by weighted milestones**, not measured code coverage.
+
+## Earlier verified milestone
 
 **Six original graphics mode, framebuffer and reset controls now qualify: 1,024 instructions (1,022 executed and two proved infeasible), with 95 executed and three proved infeasible branch outcomes.** All **367 fresh original/native comparisons / 7,571 independent checks** pass. Earlier 3,179 comparisons and full configured startup evidence are retained and hash-checked, giving 3,546 combined evidence comparisons; they were not freshly rerun. The existing 201-source DLL remains unchanged, and a fresh isolated build matches its complete PE image apart from its timestamp. Registry: **1,429 entries / 1,426 unique pairs**. Original callback timeouts, deferred register returns and actual failure prefixes are preserved. The graphics root remains partial and startup still reaches `0x8c608d88`; no pixels or playable port are claimed. See [MOVIE_GRAPHICS_MODES.txt](MOVIE_GRAPHICS_MODES.txt) and its separate qualification, static proof, rebuild and preservation reports. Overall remains **10% by weighted milestones**, not measured code coverage; the goal stays active.
 

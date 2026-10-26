@@ -1,0 +1,75 @@
+Sonic Adventure Dreamcast Rev A: graphics root arithmetic and option evidence
+2026-10-26. Overall10%weighted milestones,not measured code coverage. GoalACTIVE.
+
+Root 8c656940 remains PARTIALLY qualified and receives no new recovery credit.
+Fresh66 full-entry original/native comparisons and1334independent checks pass.
+622of629original instructions and69of74conditional outcomes execute. A separate
+checked option proof accounts for the remaining7instructions and3outcomes.
+Two branch outcomes still lack qualification:
+  8c656cf4 -> 8c656d06: initial buffer-count skip
+  8c656e90 -> 8c656f38: first texture-allocation error return
+The actual memory-manager constructor663140 also remains partial/unregistered.
+Do not mark the root recovered merely because every row is accounted for.
+Registry remains1429entries/1426unique pairs,byte-unchanged.
+
+The fresh cases check root flags, finite nonnegative float weights (including
+sum>100 normalization), binary32 rounding, unsigned conversion, eight-word count
+rounding, minimum-list adjustment, capacity subtraction, header reservation,
+vertex alignment, display dimensions and texture-size rounding/clamping.
+Independent calculations supplement complete CPU/FPU/RAM/VRAM/Sound/device and
+ordered-boundary comparisons. Real callees execute; no helper result or guest
+checkpoint is supplied. Earlier3546comparisons/startup evidence are retained,
+not freshly rerun; combined evidence3612comparisons. Diagnostic and pilot cases
+are not counted again in that total.
+
+New real failure evidence:
+* Reserved texture space near1ed200..1ed400 leaves less than required list space.
+  The original root returns3 at656e7a before texture allocation or mode dispatch.
+* Above that range the original unsigned subtraction can wrap and clamp to2MiB;
+  tests preserve the wrap and actual later behavior rather than forcing an error.
+* Huge unsigned list capacities reach a real unmapped copy destination and stop
+  with-3 at652544. The oracle independently computes that destination, preserves
+  earlier list counts/writes and confirms later texture setup never executes.
+  This differs from the separate 16-word mode-list null-pointer case.
+
+The immutable option proof checks739original instruction rows against retail
+bytes and executes111original helper instructions in a separate verification-only
+evaluator. Unknown initial registers are rejected on read; all writes must stay
+in a private stack disjoint from retail bytes. The root supplies the original
+HARDWARE and EnableTexture16MB pointers with default0. Both real string compares
+match their original selector strings; actual helper execution returns0.
+Explicit delay-slot control flow and dominance then prove656e52->656e54 and both
+656e5c outcomes infeasible. Rows656e54..656e60 remain in production source.
+Assumptions: full entry, immutable original code/literals/strings, valid mapped
+aligned stack/data, no destructive aliases or asynchronous mutation. This is
+not a proof for arbitrarily patched strings, corrupted metadata or physical IRQs.
+
+One initial oracle used the wrong alternate-list mask; checked retail literal
+656a98 establishes10000hex. A complete corrected62-case suite passed before four
+additional cases were added. An initial huge-size expectation reused a null-copy
+pattern from another routine; its actual trace showed a wrapped unmapped address.
+The corrected independent pointer calculation passed all four targeted controls,
+then all66cases were rerun successfully. Native source was unchanged throughout;
+private diagnostic logs are preserved and failed runs receive no passing credit.
+
+Fresh isolated201-source compile/link passes. Complete PE bytes match the existing
+published DLL except its four-byte COFF timestamp. Strict unbounded syntax checks
+cover all201sources. Before publication the workflow preserves13091immutable old
+selected files,all1429canonical rows and2641build files byte-for-byte. Only README,
+SOURCE_HANDOFF and project_status change among earlier selected files; all prior
+status fields, requirements, source, proofs and build bytes remain intact.
+
+Reproduce with matching local retail inputs/toolchain:
+  python -B outputs/sonic-adventure/verify_movie_graphics_root_option.py
+  python -B outputs/sonic-adventure/verify_movie_graphics_root_arithmetic.py
+  python -B outputs/sonic-adventure/verify_movie_graphics_root_rebuild.py
+  python -B outputs/sonic-adventure/verify_movie_graphics_root_workflow.py
+Separate analysis/movie_graphics_root_*_verification.json reports pin the inputs.
+The workflow enforces the remaining two outcomes and prevents recovery credit.
+
+Next: qualify the constructor and prove or exercise the two remaining root
+outcomes using actual original allocation/count invariants. Configured startup
+still reaches608d88; no new startup advancement,pixels,audio,physical timing or
+playability is claimed. Research DLLs remain incomplete libraries. Full game,
+60/120/240FPS8K,all ports/demakes,SUPIR and display/texture settings are unfinished.
+Texture Off must disable textures and use vertex colors. Keep Sol High; goalACTIVE.
