@@ -1,0 +1,41 @@
+address	length	bytes	instruction	flows
+8c603cd2	2	e62f	mov.l r14,@-r15	
+8c603cd4	2	3ce4	mov #0x3c,r4	
+8c603cd6	2	d62f	mov.l r13,@-r15	
+8c603cd8	2	536d	mov r5,r13	
+8c603cda	2	224f	sts.l PR,@-r15	
+8c603cdc	2	5e9e	mov.w 0x8c603d9c,r14	
+8c603cde	2	0275	add #0x2,r5	
+8c603ce0	2	5463	mov.b @r5+,r3	
+8c603ce2	2	3c63	extu.b r3,r3	
+8c603ce4	2	e033	cmp/eq r14,r3	
+8c603ce6	2	0d8b	bf 0x8c603d04	8c603d04 
+8c603ce8	2	ff74	add #-0x1,r4	
+8c603cea	2	1544	cmp/pl r4	
+8c603cec	2	f889	bt 0x8c603ce0	8c603ce0 
+8c603cee	2	2cd3	mov.l 0x8c603da0,r3	
+8c603cf0	2	d365	mov r13,r5	
+8c603cf2	2	0b43	jsr @r3	8c64bda0 
+8c603cf4	2	3ee4	_mov #0x3e,r4	
+8c603cf6	2	0364	mov r0,r4	
+8c603cf8	2	3ee0	mov #0x3e,r0	
+8c603cfa	2	dd02	mov.w @(r0,r13),r2	
+8c603cfc	2	4d64	extu.w r4,r4	
+8c603cfe	2	2d62	extu.w r2,r2	
+8c603d00	2	4032	cmp/eq r4,r2	
+8c603d02	2	0189	bt 0x8c603d08	8c603d08 
+8c603d04	2	09a0	bra 0x8c603d1a	8c603d1a 
+8c603d06	2	00e0	_mov #0x0,r0	
+8c603d08	2	d365	mov r13,r5	
+8c603d0a	2	03a0	bra 0x8c603d14	8c603d14 
+8c603d0c	2	40e4	_mov #0x40,r4	
+8c603d0e	2	e025	mov.b r14,@r5	
+8c603d10	2	ff74	add #-0x1,r4	
+8c603d12	2	0175	add #0x1,r5	
+8c603d14	2	4824	tst r4,r4	
+8c603d16	2	fa8b	bf 0x8c603d0e	8c603d0e 
+8c603d18	2	01e0	mov #0x1,r0	
+8c603d1a	2	264f	lds.l @r15+,PR	
+8c603d1c	2	f66d	mov.l @r15+,r13	
+8c603d1e	2	0b00	rts	
+8c603d20	2	f66e	_mov.l @r15+,r14	

@@ -1,0 +1,116 @@
+Sonic Adventure Dreamcast Rev A: native flash-packet storage integration
+2026-10-26. Incomplete research libraries, not a playable game.
+Whole-project estimate:10% weighted milestones, not measured code coverage.
+
+Eight original routines qualify completely:610 instructions /98 branch outcomes.
+  604044 partition open;604148 partition format;604250 packet status/service;
+  603d22 load packet cache;603fe4 write retry state machine;
+  603c08 signed whole-word copy;603ec4 append packet;603e08 compact partition.
+The source names retain the addresses for auditability. Registry:1,405 entries /
+1,402 unique module/address pairs. All1,397 earlier canonical entries and proofs
+are preserved. Fifteen existing bodies are reused with zero duplicate credit.
+
+The 196-source Windows research DLL adds24 original bodies. Fresh verification:
+  360 direct original/native comparisons /2,368 independent checks;
+  63 further error/control comparisons /393 independent checks;
+  711 earlier request/runtime/regression/ABI comparisons freshly replayed;
+  338 separate authored flash-service comparisons /1,772 independent checks.
+The first three groups total1,134 original/native comparisons. Host support
+receives no original-game recovery credit. All1,011 integrated instruction rows
+execute, including the discontiguous byte-loop bodies before their entry labels.
+
+Settings routine64bddc remains partial:113/113 rows and25/28 outcomes execute.
+Its read-pending, read-poll-failure and write-request-error outcomes remain
+unqualified. It is not registered as complete. See the exact missing-edge list
+in analysis/movie_packet_flash_qualification.json. No inferred unreachability
+or successful helper result replaces those missing tests.
+
+The authored flash_storage service owns no default identity or settings. Its
+caller supplies mutable bytes, up to five disjoint partition extents and a
+write-enable policy. It exposes info/read/program/erase operations at actual
+firmware-call boundaries. Tests compare whole RAM, flash bytes, metadata,
+counters and guest/host error results. Only one-to-zero programming is accepted;
+an incompatible write fails atomically before changing bytes. Erase changes
+only the declared partition. This is untimed host policy, not recovered BIOS,
+physical protection, partial hardware programming or persistent file saving.
+
+The original packet code performs actual CRC validation, bit selection,
+append/bitmap writes and compaction. All32 settings-field masks are exercised.
+Compaction runs through two genuine pending stages and the final completion;
+the research write-poll limit is3 continuing tests, read limit2. Production
+polls remain original and unbounded. A successful bitmap write before a failed
+record program remains visible; tests do not roll back actual earlier effects.
+Signed whole-word copy tests include positive/negative/truncated counts and
+forward overlap. Original sources, instruction bytes and all earlier builds
+are preserved; generated proposals alone receive no recovery credit.
+
+Verification-only details: native observers run at dispatch. Bottom-tested byte
+helpers revisit their entry internally, so the independent instruction model
+suppresses duplicate observer events for those internal revisits. Instructions
+still execute. Optional direct-test console priming calls the authored platform
+initialization service on both sides before either run or memory snapshot.
+Full earlier-startup profiles never use this direct-test option.
+
+Configured earlier-startup evidence is separate from the eight-routine proof:
+analysis/movie_packet_flash_startup_verification.json lists completed profiles
+only. The completed warm profile runs from original0546c0 through actual
+initialization, full8MiB video-memory clear and flash parsing/checksums, then
+reaches new missing routine64387c. All1,576 ordered boundaries and complete
+machine/RAM/VRAM/Sound/runtime/flash state match. It performs no disc or Sound
+transfer and leaves the supplied flash bytes unchanged. The fresh cold profile
+also passes, with582,874ordered boundaries and89actual driver-file reads.
+It executes two full2MiBSEGA-pattern fills, two actual33,376-byte transfers,
+two original IRQ/RTE/REQUEST returns and all1,065,282SoundRAMevents with zero
+dropped events. Independent whole-memory checks verify the actual payload and
+remaining fill bytes. Both configured profiles receive76independent checks;
+combined with the direct/retained suites,1,136fresh original/native comparisons
+support this milestone. The92-byte64387cexport
+is an unqualified next dependency with zero recovery credit.
+
+This profile declares synthetic raw console info (USA region, English, stereo)
+and an explicit valid raw flash partition containing packet5 with its original
+CRC and allocation bitmap. These are platform inputs, not a guest checkpoint
+or a settings-helper result. Original startup initializes SYSINFO and parses the
+bytes itself. Its inputs differ from the older erased-flash profile. A long
+erased-flash startup diagnostic was stopped after repeated reference calls;
+there is no completed original/native capture or exit proof for that profile.
+The configured cold capture and validator have completed. The older194-source
+cold proof remains preserved and is not substituted for this fresh comparison.
+
+Reproduce from the workspace root with matching local retail inputs:
+  python -B outputs/sonic-adventure/recover_movie_packet_startup.py
+  python -B outputs/sonic-adventure/connect_movie_packet_startup.py
+  python -B outputs/sonic-adventure/connect_movie_packet_flash.py
+  powershell -NoProfile -File outputs/sonic-adventure/build_flash_storage.ps1
+  powershell -NoProfile -File outputs/sonic-adventure/build_movie_packet_flash.ps1
+  python -B outputs/sonic-adventure/verify_flash_storage.py
+  python -B outputs/sonic-adventure/verify_movie_packet_flash.py
+  python -B outputs/sonic-adventure/verify_movie_packet_flash_errors.py
+  python -B outputs/sonic-adventure/verify_movie_packet_flash_retained.py
+  python -B outputs/sonic-adventure/qualify_movie_packet_flash.py
+  python -B outputs/sonic-adventure/register_movie_packet_flash.py
+  python -B outputs/sonic-adventure/verify_movie_packet_flash_workflow.py
+  python -B outputs/sonic-adventure/capture_movie_packet_flash_configured_startup.py warm cold
+  python -B outputs/sonic-adventure/verify_movie_packet_flash_startup.py
+  python -B outputs/sonic-adventure/register_movie_packet_flash_startup.py
+The workflow preserves the previous published archive; run it before preparing
+a replacement archive. Full cold comparisons are costly. A Windows DLL loaded
+by a running verifier cannot be overwritten; let that verifier finish before
+rebuilding it. Do not change folder permissions to work around an image lock.
+
+Primary references for the authored firmware API and partition metadata:
+https://kos-docs.dreamcast.wiki/group__system__calls.html
+https://mc.pp.se/dc/syscalls.html
+https://raw.githubusercontent.com/flyinghead/flycast/master/core/hw/flashrom/flashrom.h
+These sources document selector/argument/result conventions, one-to-zero writes,
+whole-partition erase and partition extents. No external implementation was
+copied into the authored backend; original game code comes from byte-checked
+local instructions. Synthetic test profiles are not console flash dumps.
+
+Full reset/boot-ROM, physical timing, broad asynchronous scheduling, ARM/audio,
+pixels and gameplay remain unfinished. The separate ac000010bootstrap and three
+settings outcomes remain unresolved. All user requirements persist: full source
+and documentation/public GitHub; PC60/120/240FPS up to8K; Android/stereoscopic3DS;
+adapted N64/PlayStation targets; SUPIRHDtoggle/texture percentages/render/aspect.
+Texture Off must use vertex colors. Keep Sol High for the next original
+dependency and startup work; the overall goal remains active.

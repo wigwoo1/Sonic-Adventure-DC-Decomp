@@ -1,0 +1,66 @@
+address	length	bytes	instruction	flows
+8c604250	2	e62f	mov.l r14,@-r15	
+8c604252	2	33de	mov.l 0x8c604320,r14	
+8c604254	2	d62f	mov.l r13,@-r15	
+8c604256	2	224f	sts.l PR,@-r15	
+8c604258	2	e264	mov.l @r14,r4	
+8c60425a	2	4824	tst r4,r4	
+8c60425c	2	018b	bf 0x8c604262	8c604262 
+8c60425e	2	34a0	bra 0x8c6042ca	8c6042ca 
+8c604260	2	00e0	_mov #0x0,r0	
+8c604262	2	4750	mov.l @(0x1c,r4),r0	
+8c604264	2	0088	cmp/eq #0x0,r0	
+8c604266	2	2e8d	bt/s 0x8c6042c6	8c6042c6 
+8c604268	2	00ed	_mov #0x0,r13	
+8c60426a	2	0188	cmp/eq #0x1,r0	
+8c60426c	2	0389	bt 0x8c604276	8c604276 
+8c60426e	2	0288	cmp/eq #0x2,r0	
+8c604270	2	1289	bt 0x8c604298	8c604298 
+8c604272	2	25a0	bra 0x8c6042c0	8c6042c0 
+8c604274	2	0900	_nop	
+8c604276	2	89be	bsr 0x8c603f8c	8c603f8c 
+8c604278	2	0900	_nop	
+8c60427a	2	e262	mov.l @r14,r2	
+8c60427c	2	0364	mov r0,r4	
+8c60427e	2	4824	tst r4,r4	
+8c604280	2	058d	bt/s 0x8c60428e	8c60428e 
+8c604282	2	d712	_mov.l r13,@(0x1c,r2)	
+8c604284	2	e262	mov.l @r14,r2	
+8c604286	2	03e3	mov #0x3,r3	
+8c604288	2	3812	mov.l r3,@(0x20,r2)	
+8c60428a	2	16a0	bra 0x8c6042ba	8c6042ba 
+8c60428c	2	0900	_nop	
+8c60428e	2	e261	mov.l @r14,r1	
+8c604290	2	01e3	mov #0x1,r3	
+8c604292	2	3811	mov.l r3,@(0x20,r1)	
+8c604294	2	11a0	bra 0x8c6042ba	8c6042ba 
+8c604296	2	0900	_nop	
+8c604298	2	a4be	bsr 0x8c603fe4	8c603fe4 
+8c60429a	2	0900	_nop	
+8c60429c	2	0188	cmp/eq #0x1,r0	
+8c60429e	2	128d	bt/s 0x8c6042c6	8c6042c6 
+8c6042a0	2	0364	_mov r0,r4	
+8c6042a2	2	e263	mov.l @r14,r3	
+8c6042a4	2	4824	tst r4,r4	
+8c6042a6	2	058d	bt/s 0x8c6042b4	8c6042b4 
+8c6042a8	2	d713	_mov.l r13,@(0x1c,r3)	
+8c6042aa	2	e263	mov.l @r14,r3	
+8c6042ac	2	03e2	mov #0x3,r2	
+8c6042ae	2	2813	mov.l r2,@(0x20,r3)	
+8c6042b0	2	03a0	bra 0x8c6042ba	8c6042ba 
+8c6042b2	2	0900	_nop	
+8c6042b4	2	e261	mov.l @r14,r1	
+8c6042b6	2	01e3	mov #0x1,r3	
+8c6042b8	2	3811	mov.l r3,@(0x20,r1)	
+8c6042ba	2	e262	mov.l @r14,r2	
+8c6042bc	2	03a0	bra 0x8c6042c6	8c6042c6 
+8c6042be	2	4b12	_mov.l r4,@(0x2c,r2)	
+8c6042c0	2	d714	mov.l r13,@(0x1c,r4)	
+8c6042c2	2	e262	mov.l @r14,r2	
+8c6042c4	2	d812	mov.l r13,@(0x20,r2)	
+8c6042c6	2	e260	mov.l @r14,r0	
+8c6042c8	2	0850	mov.l @(0x20,r0),r0	
+8c6042ca	2	264f	lds.l @r15+,PR	
+8c6042cc	2	f66d	mov.l @r15+,r13	
+8c6042ce	2	0b00	rts	
+8c6042d0	2	f66e	_mov.l @r15+,r14	
