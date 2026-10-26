@@ -1,0 +1,109 @@
+Sonic Adventure Dreamcast Rev A: MIDI sender and startup handoff
+
+Whole-project estimate: 10% by weighted milestones, not measured code coverage.
+The goal remains ACTIVE. The research DLL is not a playable game or finished port.
+
+The 200-source research DLL connects original sender 8c643b9c (43 instructions,
+six conditional outcomes) and a complete-state adapter for existing 8c608c14
+(11 instructions, no branches). Only the sender is a newly recovered routine.
+The setter already has canonical source and a 128-case proof; those original
+files and registry fields remain unchanged, with zero duplicate recovery credit.
+Existing SDK sender 65a464, indexed copy 10cd44 and logger 65acac are reused.
+
+Observed behavior
+The sender requires a nonzero library root and nonzero object value. It does
+not dereference the object parameter. It writes command 86 at 8c890628 and copies
+four packet bytes sequentially to offsets 6,7,8,9. It invokes the actual SDK,
+which constructs a real 20-byte queue entry, sets its ready word, advances the
+tail and increments the count after copying. The original instruction order
+matters for source/header aliases, overlapping queue buffers and partial faults.
+Root-disabled error is d000001; null-object error is 07000103. Queue-full error
+is the actual SDK a000001, with original diagnostics and mask restoration.
+
+The existing handoff writes a raw pointer value to 8c88f7c8 and size&fffff800 to
+8c88f7cc, rounding down to a multiple of 2048. It clears SR.T, preserves the
+other status bits and does not allocate memory or validate the stored pointer.
+
+Focused verification
+258 original/native comparisons and 5,262 independent checks pass. All 54 native
+adapter instructions and six outcomes execute. Cases cover sparse packet fields,
+forward aliases, SDK pipelined-copy overlap, count==256 rejection, above-limit/
+overflow counts, wrapping tails, all interrupt masks, T/S bits, three FPU modes,
+mapped Sound reads/writes, raw object values and source/root/queue/stack/privilege
+faults. Earlier writes/tails/ready words/masks survive reached failures. Separate
+handoff cases compare whole RAM plus pointer/size/register/status/FPU behavior.
+Full CPU, RAM, FPU, banked/special registers, devices, Sound, runtime, flash and
+ordered boundaries compare against original instructions. No packet data,
+helper result, ARM acknowledgement, completed queue or checkpoint is injected.
+
+All 1,987 earlier comparisons execute freshly in this DLL: 711 runtime/request/
+ABI cases, 423 packet/flash cases, 177 mode/SDK cases, 244 command-control cases
+and 432 MIDI-packing cases. Together with 258 focused cases this gives 2,245
+direct/retained comparisons. The retained packing proof explicitly distinguishes
+aligned-stack behavior from experimental byte-backed misaligned-stack tests;
+physical SH-4 alignment exceptions remain unfinished.
+
+A regression caught a Python fixture-name collision: the new buffer-helper name
+hid the older packet-buffer constant BUFFER. The helper is now named HANDOFF;
+the old constant remains 8cd42000. The native DLL did not change for this fix.
+All affected tests were rerun with matching hashes. The superseded cold diagnostic
+was explicitly stopped, preserved privately and excluded from qualification;
+the replacement capture uses the corrected harness. The workflow checks inherited
+integer constants as well as native APIs to prevent this kind of regression.
+
+Startup evidence is separate. Fresh configured 0546c0 execution runs original
+initialization and uses declared raw platform info/flash packet5/CRC data, without
+direct console priming or shortened copies. Warm startup now runs 32 MIDI packing/
+sender calls and 39 SDK copies, leaves 39 pending entries, records buffer metadata
+and reaches the larger initializer at 8c656940. Captures include all 1,092 queue
+bytes and both source contexts. The independent oracle checks every entry, ready
+word, channels 0..31 and data bytes [0,121,channel,3]. Both completed profiles
+qualify with 118 independent checks: warm1,870 boundaries, cold583,168. Cold has
+89 driver reads, the full8MiBclear, two2MiBSEGAfills, two33,376-byte transfers and
+two originalIRQ/RTE/REQUESTreturns. All1,065,282 Sound events compare, zero drops.
+There are2,247 total fresh comparisons. Both whole-machine/memory/device/flash
+states compare; no earlier cold result is substituted. Pending packets do not
+prove ARM consumption, audible output, physical timing, reset/boot-ROM behavior
+or gameplay.
+
+The first two retained command83 entries differ between profiles at payload byte5:
+warm122, cold80. Original instruction0x8c643786 takes the legacy arithmetic-shift branch
+in warm startup and skips it in cold startup. The oracle derives these fields
+from the captured original branch and caller arguments, as validated by the earlier
+version-dependent command proof. It does not assume identical warm/cold packets
+or infer an exact revision byte that the capture did not record. No native code
+was changed to make these profile-dependent fields agree.
+
+Reproduce with matching local retail inputs and the existing toolchain
+  python -B outputs/sonic-adventure/recover_movie_midi_commands.py
+  python -B outputs/sonic-adventure/connect_movie_midi_commands.py
+  powershell -File outputs/sonic-adventure/build_movie_midi_commands.ps1
+  python -B outputs/sonic-adventure/verify_movie_midi_commands.py
+  python -B outputs/sonic-adventure/verify_movie_midi_commands_retained.py
+  python -B outputs/sonic-adventure/verify_movie_midi_commands_packet_regression.py
+  python -B outputs/sonic-adventure/verify_movie_midi_commands_mode_regression.py
+  python -B outputs/sonic-adventure/verify_movie_midi_commands_controls_regression.py
+  python -B outputs/sonic-adventure/verify_movie_midi_commands_packing_regression.py
+  python -B outputs/sonic-adventure/qualify_movie_midi_commands.py
+  python -B outputs/sonic-adventure/register_movie_midi_commands.py
+  python -B outputs/sonic-adventure/capture_movie_midi_commands_startup.py warm
+  python -B outputs/sonic-adventure/capture_movie_midi_commands_startup.py cold
+  python -B outputs/sonic-adventure/verify_movie_midi_commands_startup.py
+  python -B outputs/sonic-adventure/register_movie_midi_commands_startup.py
+  python -B outputs/sonic-adventure/verify_movie_midi_commands_workflow.py
+Reports preserve exact paths and hashes. Tool paths may need adaptation elsewhere.
+Retail inputs, assets, toolchains and credentials are excluded from GitHub.
+Never rebuild a loaded DLL. The preservation workflow compares the preceding
+published archive BEFORE publisher prepare replaces it. After publication use
+the recorded preservation proof and the new BUILD_MANIFEST instead of applying
+the old archive-count assertion to a newer archive.
+
+The next initializer 656940 is an unqualified read-only export, 629 instructions
+with floating-point/configuration logic and further real dependencies. It is not
+replaced by a success result. Separate resource/download exports 643904/643970,
+partial settings, bootstrap ac000010, erased-flash initialization, hardware,
+ARM/audio/rendering/gameplay and all ports remain unfinished. Full decompilation,
+source/documentation/GitHub, PC60/120/240FPS8K, Android, stereoscopic3DS, N64/PS1
+adaptations and SUPIR HD/texture percentages/render resolution/aspect remain the
+goal. TextureOff must disable textures and use vertex colors. Keep Sol High for
+the next reverse-engineering dependency; no model switch or goal pause is advised.
