@@ -1,5 +1,7 @@
 # Sonic Adventure Dreamcast Rev A decompilation and ports
 
+Latest render-buffer milestone: 15 additional original routines are qualified in the 203-source research DLL, with 960 fresh comparisons and 16,631 independent checks. Full configured startup reaches `0x8c65393a`. See [MOVIE_RENDER_BUFFER.txt](MOVIE_RENDER_BUFFER.txt) for coverage, the checked constant-bound proof, reproduction and limits. The registry has 1,448 entries (1,445 unique module/address pairs). Overall completion remains approximately 10% by weighted milestones, not measured code coverage; the goal stays active and the build is not playable.
+
 This workspace is a continuing reverse-engineering project for the user's Dreamcast Rev A copy. The end goal includes a fully decompiled game, a native PC port with 60/120/240 FPS and resolutions up to 8K, later Android and Nintendo 3DS ports with stereoscopic 3D, and adapted N64 and PlayStation demakes.
 
 **Current whole-project estimate: 10%.** This is a weighted milestone score, not a measure of recovered code. Disc inventory, extraction, and PRS decoding have verification evidence. Game-code recovery is still partial. The PC, Android, Nintendo 3DS, N64, and PlayStation ports are not complete or validated.

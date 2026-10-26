@@ -1,0 +1,140 @@
+Sonic Adventure Dreamcast Rev A: render-buffer integration
+
+The goal remains active. Overall completion is approximately 10% by weighted
+milestones, not measured recovered-code coverage. This research library is not
+a playable port. The requested PC, Android, stereoscopic 3DS, N64 and PS1 ports,
+60/120/240 FPS, 8K output, SUPIR textures and display settings remain unfinished.
+Texture Off must disable texture sampling and use vertex colors.
+
+What changed
+
+The 203-source DLL connects the actual render-buffer call reached by startup.
+Fifteen new original bodies receive recovery credit: descriptor formatting,
+size calculation, bank maxima, first-fit allocation, alignment-sensitive and
+specified-range allocation, cache descriptor allocation, cache slot allocation,
+size indexing and a list-link helper. Four earlier canonical routines are
+connected as adapters and receive no duplicate credit:
+  6536ec sa_engine_render_buffer_dispatch
+  6524d2 sa_driver_dispatch_8c6524d2
+  6652c0 sa_payload_metadata_8c6652c0
+  665466 sa_linked_list_push_8c665466
+Earlier implementations, proof files and compiled artifacts remain unchanged.
+
+The 19 integrated bodies contain 1,652 original instruction rows and 394
+conditional outcomes. All instruction rows and 393 outcomes execute in verified
+comparisons. The remaining outcome is impossible with the checked original
+literals: the cache allocator initially compares base 8c8c03e4 with the larger
+end 8c8d33e4. The preceding instructions overwrite the incoming registers; no
+input-dependent call or write can change that comparison. The qualification
+report checks the instruction sequence and literal bytes and records the proof.
+The 15 newly credited bodies contain 1,491 rows and 370 outcomes: 369 executed,
+one proved infeasible. Registry totals become 1,448 entries and 1,445 unique
+module/address pairs. This is not a count of the game's complete routine set.
+
+Verification
+
+727 fresh direct original/native comparisons pass 12,364 independent checks:
+  216 descriptor/size cases: 4,104 checks
+  28 additional size-edge cases: 532 checks
+  142 first-fit/bank/dispatch cases: 2,280 checks
+  200 specified-range/alignment cases: 3,200 checks
+  80 cache cases: 1,296 checks
+  57 remaining edge cases: 912 checks
+  4 real invalid-descriptor failure prefixes: 40 checks
+
+Independent oracles check format fields, dimension errors, size/mip arithmetic,
+original table bytes, signed sizes and wraparound, selected banks, first-fit
+search, exact/head/tail/middle splits, descriptor exhaustion and rollback,
+cache classes and slot strides, active/lock flags, and linked-list updates.
+Allocation oracles compare the entire 98,304-byte small pool, 77,824-byte cache
+pool, bank metadata and output descriptors. Complete CPU/FPU/RAM/VRAM/Sound,
+device state and ordered call boundaries also compare against the original.
+Null descriptor calls stop at the original failed write, retaining the real
+28- or 40-byte guest stack frame and PR; the new adapter does not synthesize an
+error result or unwind the guest frame.
+
+The fixed-range test oracle initially assumed the first-fit allocator's bank
+flag values. Original/native state already matched; the independent pool oracle
+failed after 16 cases. The original literal bytes establish distinct values:
+first-fit 0020/0040, alignment 0200/0400, specified-range 0800/1000. Correcting
+that oracle made all 200 cases pass. Game C and DLL bytes never changed for this
+correction. The failed test version and log are retained privately, not counted
+as passing evidence.
+
+231 earlier root/constructor/accounting cases replay in the 203-source DLL with
+4,103 checks. Their old source and proof files are preserved. The retained
+accounting report measures the new integration manifest, so those older cases
+do not claim new render-body coverage. The direct render suites measure that
+coverage separately. Earlier 3,873 comparisons remain retained evidence and are
+not all rerun. Including two full startup profiles, this milestone has 960
+fresh comparisons and 16,631 checks; combined earlier/current evidence is 4,833
+comparisons. Diagnostic runs are not counted again.
+
+Both startup profiles execute uninterrupted from original entry 0546c0. Warm
+4,366 and cold 585,664 boundaries match original/native state. Every prior
+202-source boundary matches exactly through 6536ec. The real formatter and size
+helpers compute a 32,768-byte request for the original 128x128 descriptor; bank
+selection, a real pool split and list insertion execute. The dispatch returns
+to the original parent, which next calls unsupported routine 65393a.
+
+The cold profile retains the full 8 MiB VRAM clear, two 2 MiB Sound fills, two
+33,376-byte transfers, original interrupt/context/RTE/REQUEST returns, all
+1,065,282 Sound events with zero drops, 39 pending SDK records and 32 MIDI
+initialization sends. The 3,600 tile-descriptor writes after the clear remain
+checked. No console priming, guest checkpoint, injected callee result,
+shortened copy/clear or historical cold capture replaces actual execution.
+
+Limits
+
+Direct fixtures declare finite, coherent, mapped, aligned metadata and a
+private guest stack disjoint from descriptors, outputs and original code/data.
+An unsupported cache width is tested with ordinary untouched zero local words
+in the direct-entry RAM fixture; this is not a claim about every arbitrary
+uninitialized stack. Corrupt cycles, destructive aliases, concurrent mutation
+and physical address-exception behavior remain unqualified. Startup uses
+explicit raw platform/configuration/flash inputs; it is not a reset/boot-ROM
+or physical interrupt-timing proof. No visible pixels, audible output, gameplay
+or playable executable is established.
+
+Graphics root 656940 still has two unqualified outcomes:
+  656cf4 -> 656d06
+  656e90 -> 656f38
+New allocation coverage does not silently qualify those separate caller paths.
+
+Reproduction
+
+Matching local retail inputs and the documented local compiler are required.
+Commands run from the workspace/repository root:
+  python -B outputs/sonic-adventure/recover_movie_render_buffer.py
+  python -B outputs/sonic-adventure/connect_movie_render_buffer.py
+  powershell -File outputs/sonic-adventure/build_movie_render_buffer.ps1
+  python -B outputs/sonic-adventure/verify_movie_render_buffer_format.py
+  python -B outputs/sonic-adventure/verify_movie_render_buffer_size_edges.py
+  python -B outputs/sonic-adventure/verify_movie_render_buffer_allocations.py
+  python -B outputs/sonic-adventure/verify_movie_render_buffer_fixed_allocations.py
+  python -B outputs/sonic-adventure/verify_movie_render_buffer_cache.py
+  python -B outputs/sonic-adventure/verify_movie_render_buffer_edge_cases.py
+  python -B outputs/sonic-adventure/verify_movie_render_buffer_failure_prefix.py
+  python -B outputs/sonic-adventure/verify_movie_render_buffer_retained.py
+  python -B outputs/sonic-adventure/capture_movie_render_buffer_startup.py
+  python -B outputs/sonic-adventure/verify_movie_render_buffer_startup.py
+  python -B outputs/sonic-adventure/qualify_movie_render_buffer.py
+  python -B outputs/sonic-adventure/register_movie_render_buffer.py
+  python -B outputs/sonic-adventure/verify_movie_render_buffer_workflow.py
+
+The final workflow checks generated bytes, registration idempotence, inherited
+constants, the bridge/probe and 17/18/19/20-argument layouts, strict unbounded
+compiler syntax, 13,158 immutable prior selected files, all 1,433 earlier
+canonical records and 2,643 earlier build files before preparing publication.
+New DLL/lib files are added separately. Research archives pin the selected
+source manifest and include build checksums; retail inputs/assets and tools
+are excluded. Historical proof paths remain intact. Historical registration
+scripts assume their old registry counts and should not be rerun against newer
+state. The preservation workflow is a prepublication gate against the preceding
+release archive.
+
+Keep Sol High for recovery of the next actual dependency, 65393a.
+
+The startup validator's descriptor-address assertion was corrected against the
+original caller literal at 8c640780 (value 8c890564). Both full captures and
+native code already matched and remain unchanged by that assertion correction.

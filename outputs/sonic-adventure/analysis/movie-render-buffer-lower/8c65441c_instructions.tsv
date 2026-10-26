@@ -1,0 +1,67 @@
+address	length	bytes	instruction	flows
+8c65441c	2	e62f	mov.l r14,@-r15	
+8c65441e	2	d62f	mov.l r13,@-r15	
+8c654420	2	c62f	mov.l r12,@-r15	
+8c654422	2	b62f	mov.l r11,@-r15	
+8c654424	2	224f	sts.l PR,@-r15	
+8c654426	2	f87f	add #-0x8,r15	
+8c654428	2	436b	mov r4,r11	
+8c65442a	2	b35d	mov.l @(0xc,r11),r13	
+8c65442c	2	d11f	mov.l r13,@(0x4,r15)	
+8c65442e	2	014d	shlr r13	
+8c654430	2	b45e	mov.l @(0x10,r11),r14	
+8c654432	2	e22f	mov.l r14,@r15	
+8c654434	2	014e	shlr r14	
+8c654436	2	e70d	mul.l r14,r13	
+8c654438	2	f265	mov.l @r15,r5	
+8c65443a	2	1a0c	sts MACL,r12	
+8c65443c	2	d0be	bsr 0x8c6541e0	8c6541e0 
+8c65443e	2	f154	_mov.l @(0x4,r15),r4	
+8c654440	2	b652	mov.l @(0x18,r11),r2	
+8c654442	2	01e4	mov #0x1,r4	
+8c654444	2	0365	mov r0,r5	
+8c654446	2	0366	mov r0,r6	
+8c654448	2	4822	tst r4,r2	
+8c65444a	2	1e8d	bt/s 0x8c65448a	8c65448a 
+8c65444c	2	0846	_shll2 r6	
+8c65444e	2	014d	shlr r13	
+8c654450	2	014e	shlr r14	
+8c654452	2	e23d	cmp/hs r14,r13	
+8c654454	2	0189	bt 0x8c65445a	8c65445a 
+8c654456	2	01a0	bra 0x8c65445c	8c65445c 
+8c654458	2	d365	_mov r13,r5	
+8c65445a	2	e365	mov r14,r5	
+8c65445c	2	4635	cmp/hi r4,r5	
+8c65445e	2	078b	bf 0x8c654470	8c654470 
+8c654460	2	e70d	mul.l r14,r13	
+8c654462	2	014d	shlr r13	
+8c654464	2	014e	shlr r14	
+8c654466	2	0145	shlr r5	
+8c654468	2	1a03	sts MACL,r3	
+8c65446a	2	4635	cmp/hi r4,r5	
+8c65446c	2	3c3c	add r3,r12	
+8c65446e	2	f789	bt 0x8c654460	8c654460 
+8c654470	2	e03d	cmp/eq r14,r13	
+8c654472	2	018b	bf 0x8c654478	8c654478 
+8c654474	2	03a0	bra 0x8c65447e	8c65447e 
+8c654476	2	027c	_add #0x2,r12	
+8c654478	2	e70d	mul.l r14,r13	
+8c65447a	2	1a0d	sts MACL,r13	
+8c65447c	2	dc3c	add r13,r12	
+8c65447e	2	21d0	mov.l 0x8c654504,r0	
+8c654480	2	0a7c	add #0xa,r12	
+8c654482	2	6e03	mov.l @(r0,r6),r3	
+8c654484	2	3c3c	add r3,r12	
+8c654486	2	03a0	bra 0x8c654490	8c654490 
+8c654488	2	0900	_nop	
+8c65448a	2	1fd0	mov.l 0x8c654508,r0	
+8c65448c	2	6e03	mov.l @(r0,r6),r3	
+8c65448e	2	3c3c	add r3,r12	
+8c654490	2	c360	mov r12,r0	
+8c654492	2	087f	add #0x8,r15	
+8c654494	2	264f	lds.l @r15+,PR	
+8c654496	2	f66b	mov.l @r15+,r11	
+8c654498	2	f66c	mov.l @r15+,r12	
+8c65449a	2	f66d	mov.l @r15+,r13	
+8c65449c	2	0b00	rts	
+8c65449e	2	f66e	_mov.l @r15+,r14	
