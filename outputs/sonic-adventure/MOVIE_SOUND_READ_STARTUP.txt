@@ -1,0 +1,76 @@
+Sonic Adventure Dreamcast Rev A: sound reads and original transfer startup
+2026-10-26. Incomplete research artifact; no playable port.
+Whole-project estimate remains 10% by weighted milestones, not code coverage.
+
+The 194-source Windows research DLL connects three already registered getters:
+667150 (32-bit field), 667188 (byte), and 66910c (word). They execute the real
+10d460 lower read against mapped Sound RAM. All 70 original instructions and
+six conditional outcomes qualify. Existing canonical sources, proofs, names
+and status fields remain intact. Zero additional routine recovery credit;
+registry remains 1,397 entries / 1,394 unique module/address pairs.
+
+Fresh original-instruction/native comparisons:
+  123 direct cases / 1,083 independent checks, including invalid bus/pointers;
+  18 comparisons in six interrupted lifecycles / 120 independent checks;
+  711 freshly replayed earlier request, runtime, ABI and failure cases;
+  two uninterrupted earlier-startup comparisons (warm and cold).
+Total: 854. See analysis/movie_sound_read_qualification.json and the individual
+verification reports. This is fresh execution, rather than retained old results.
+
+Both startup comparisons enter original 0546c0 and compare complete RAM, CPU,
+FPU, banked/special registers, bus/device/runtime state and ordered boundaries.
+Both execute the full 8 MiB video-memory clear: 2,097,152 original word stores.
+The cold profile starts with filesystem/interface pointers zero; original code
+initializes them and loads the exact local MASARU.DRV using 89 disc reads.
+It executes two complete original 2 MiB SEGA-pattern fills, then two actual
+33,376-byte G2 transfers. Two original REQUEST calls complete through actual
+copied vectors, normal context, ASIC dispatch, handler, SDK and RTE return.
+All 1,065,282 Sound RAM events are retained and compared, with zero dropped
+events; independent whole-memory checks verify the final driver payload and
+remaining fill bytes. Execution reaches missing original routine 0x8c64bddc.
+Its 226-byte export is a research draft only and receives no recovery credit.
+
+These comparisons use declared initial RAM and explicit platform observations;
+0546c0 is an earlier caller entry, not reset/boot-ROM execution. Cold startup
+declares a longer finite stream of raw zero FIFO/IRQ observations than the
+older stopped profile. These observations do not supply a pending bit, data,
+helper result or completion flag. The native service derives completion from
+actual data movement. Six paired controls retain genuine exhausted IRQ-input
+failure at 645bc0, pending state, active descriptor and incomplete request.
+No original loop is shortened, instruction skipped or guest checkpoint loaded.
+
+The new verification model resets its research wait counter at each original
+REQUEST entry, matching the existing native function-local counter. The older
+oracle incorrectly shared that count across repeated requests. This correction
+changes verification only; no production game instruction changes for it.
+The direct-case report was refreshed after the model correction; the warm
+startup capture is rerun against that report so all evidence pins are current.
+
+Reproduction from the workspace root (matching local retail inputs required):
+  python -B outputs/sonic-adventure/recover_movie_sound_read.py
+  python -B outputs/sonic-adventure/connect_movie_sound_read.py
+  powershell -NoProfile -File outputs/sonic-adventure/build_movie_sound_read.ps1
+  python -B outputs/sonic-adventure/verify_movie_sound_read.py
+  python -B outputs/sonic-adventure/verify_movie_sound_read_irq_control.py
+  python -B outputs/sonic-adventure/verify_movie_sound_read_retained.py
+  python -B outputs/sonic-adventure/capture_movie_sound_read_startup.py warm cold
+  python -B outputs/sonic-adventure/verify_movie_sound_read_startup.py
+  python -B outputs/sonic-adventure/qualify_movie_sound_read.py
+  python -B outputs/sonic-adventure/register_movie_sound_read.py
+  python -B outputs/sonic-adventure/verify_movie_sound_read_workflow.py
+The last workflow preserves the previous published archive and should run
+before preparing a replacement archive. Full startup comparisons are costly.
+Private raw captures and retail files are excluded from public publication;
+public reports retain their hashes and summarized comparisons for auditing.
+
+The authored transfer platform is untimed and advances CPU-triggered requests
+at a known original wait yield. Physical timing, security/suspend/external
+triggers, broad asynchronous scheduling, ARM execution, audio, pixels, gameplay
+and full reset/boot remain unfinished. Separate bootstrap ac000010 remains
+unresolved. All older source/proof/build bytes and user requirements remain:
+full source/documentation and public GitHub; native PC 60/120/240 FPS up to 8K;
+Android, stereoscopic Nintendo 3DS and adapted N64/PlayStation targets; SUPIR
+HD textures with toggle/percentages, render resolution and aspect selection.
+Texture Off must render using vertex colors. None of these features is implied
+complete by this transfer-path milestone. Keep Sol High for the next 64bddc
+dependency and original startup work; the overall decompilation goal is active.
