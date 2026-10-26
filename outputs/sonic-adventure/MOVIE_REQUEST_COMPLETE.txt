@@ -1,0 +1,67 @@
+Sonic Adventure Dreamcast Rev A: complete original request qualification
+
+Original request 0x8c65a5dc now qualifies all 139 own instructions and all 26
+conditional outcomes in the initialized software CPU/bus domain. Twelve new
+comparisons and 270 independent checks close the four remaining outcomes.
+The unchanged 193-source native research DLL and its 699 retained comparisons
+remain hash-verified: 711 combined comparisons support this integration.
+The older 699-comparison suites and 59 platform cases were not rerun for this
+proof-only extension. Their source/proof/build bytes remain intact.
+
+The four new paths use real game code and legitimate input state:
+- A full queue returns the original enqueue error 0x05000101, preserving its
+  contents and indices. No queue-helper result is supplied by the test.
+- An existing current request causes the new request to remain enqueued;
+  the caller returns without starting a second transfer.
+- A different queued child already in state 2 reaches the original SDK start
+  error 0x06000001. Real enqueue/dequeue/start helpers execute, preserving the
+  reached queue counts and record state.
+- A non-FFFFFFFF callback makes the request asynchronous. The original caller
+  returns while its descriptor is active and completion remains zero. This
+  case does not claim completed DMA or callback execution; SoundRAM is untouched.
+
+All four cases run in three FPU modes. Complete original/native CPU, FPU,
+banked/special, RAM/device state and ordered call boundaries match. Independent
+checks cover queue counts/indices, records, actual error codes, unchanged source
+bytes, untouched SoundRAM, restored callee-saved registers, stack and PR.
+No checkpoint, completed flag, skipped instruction or game-helper result is used.
+
+Source remains source/sa_movie_transfer_wait.c. No production code changed and
+no historical proof was rewritten. The existing research DLL is reused byte for
+byte; strict compilation of the 193 sources without the research guard is checked
+again. The research binary still stops unavailable completion at the genuine
+0x8c65a6ec wait after two continued tests. Production source retains the original
+unbounded wait when completion is unavailable.
+
+The earlier persistent-runtime proof already verified 32 continuous original
+requests moving real data through the actual copied vector, context, ASIC,
+generic event traversal, handler, SDK callback and original RTE before returning.
+That remains retained evidence, with explicit initial vector/registration setup.
+The native platform is untimed and currently schedules at this particular
+blocking-wait yield point. Broader asynchronous scheduling, natural startup,
+physical IRQ/DMA timing/security/suspend/external triggers, ARM execution,
+audio, pixels and gameplay remain unfinished. Separate bootstrap dependency
+0xac000010 remains unresolved. No fresh early-caller/full-copy/video-clear run
+is claimed here.
+
+One original routine becomes complete; reused callees and authored platform
+support receive zero duplicate recovery credit. Registry: 1,397 entries / 1,394
+unique module-address pairs. Whole-project estimate remains approximately 10%
+by weighted milestones, not measured recovered-code coverage. The goal stays
+active; these DLLs are incomplete research libraries, not a playable port.
+
+Run locally with matching private Rev A inputs and the existing native DLL:
+ python -B outputs/sonic-adventure/verify_movie_request_complete.py
+ python -B outputs/sonic-adventure/qualify_movie_request_complete.py
+ python -B outputs/sonic-adventure/register_movie_request_complete.py
+ python -B outputs/sonic-adventure/verify_movie_request_complete_workflow.py
+
+Evidence: analysis/movie_request_complete_qualification.json and linked reports.
+Old partial request reports are historical and preserved; this report supersedes
+their request own-body qualification only. Their other scope limits still apply.
+
+Next work: natural startup with persistent runtime and broader asynchronous
+delivery. Keep Sol High for reverse engineering. All PC 60/120/240 FPS/up to 8K,
+Android, stereoscopic 3DS, demake, SUPIR HD texture, HD toggle, texture percentages,
+render resolution and aspect-ratio goals remain. Texture Off must use vertex
+colors. Full source/documentation and public GitHub updates remain requirements.
