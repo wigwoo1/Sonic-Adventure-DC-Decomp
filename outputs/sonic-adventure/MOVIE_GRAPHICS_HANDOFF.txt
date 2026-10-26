@@ -1,0 +1,113 @@
+Sonic Adventure Dreamcast Rev A: original graphics-memory accounting integration
+GoalACTIVE;overall estimate10%weighted milestones,NOT measuredcodecoverage.
+
+The202-source research DLL connects three original memory-query bodies:
+  608d88 selector:30instructions/4conditional outcomes
+  653dc0 aggregate query:28instructions/no conditional outcomes
+  663a60 descriptor/cache accounting:207instructions/56conditional outcomes
+All265instructions and60conditional outcomes execute in verified comparisons.
+Three newownbodies receivecredit;older providers/adapters receivezero duplicate
+credit. Registry1433entries/1430unique module-address pairs. Graphicsroot656940
+remains partial at two unqualified outcomes(cf4->d06 ande90->f38).
+
+What the original queries do
+The lower provider walks two banks' free lists and includes only non-active
+records from each occupied list(flags bit4 clear). Totals wrap as32-bit words;
+largest-block comparisons are signed and start atzero. It separately counts
+zero slots in eight cache-record classes. Class sizes/counts are original data:
+1000:16x144,2000:16x160,3000:16x192,4000:16x224,5000:8x512,6000:4x864,
+7000:2x2048,8000:1x3424. Low flags are masked;unknown classes contributezero.
+The aggregate adds the three totals and stores the largest block. Selector0
+returns that sum;selector2 returnsoriginal global8c88f7a4 without traversing the
+lists;other selectors return the largest block. This does not establish a new
+meaning for the original global or change any original memory budget.
+
+Fresh verification
+137direct original/native comparisons pass2181independentchecks. These cover
+empty/nonempty/chained lists,inactive filtering,signed maxima,unsigned sumwrap,
+all cache classes/masks/zero/nonzero slots,selector bypass without traversing
+unrelated list-head sentinels,outputalias ordering,threeFPUprofiles,VRAMaliases/start/end bounds andreal
+partial bad-output failures. Independent accounting andstore oracles supplement
+complete CPU/FPU/RAM/VRAM/Sound/device andordered-boundary comparisons.
+Finite mapped aligned list metadata and a privatecallee stack disjoint from
+inputs/outputs are declared. Corrupt cycles,physicalalignmentexceptions and
+generalconcurrency receive no validation claim.
+
+94previous root/constructor cases replayfresh in the202-sourceDLL with1922checks.
+Old source andproofreport bytes are preserved. All3640previous201-source
+comparisons remain retained/hash-checked evidence;94case inputs are freshly
+replayed in202-source form,while the earlier suites are not all rerun. Together with twofreshfullstartup comparisons this milestone has233fresh
+comparisons/4261checks and3873combinedold/newevidence comparisons. Diagnostic and
+pilot runs and superseded harness runs are not counted again.
+
+Full configured startup advancement
+Both profiles execute uninterrupted from original0546c0. Warm4357boundaries and
+cold585655boundaries match original/native state andordered calls. Every earlier
+201-sourceboundary matches exactly through608d88(oldcounts4353/585651). Real
+608d88calls653dc0and663a60,driverinitializationreturns,andthe earliercaller invokes
+6406acbefore stopping honestly at the next unsupported routine6536ec.
+Cold retains the complete8MiBVRAMclear(33554432originalclearinstructions),two
+complete2MiBSoundfills,two33376-byte transfers,the original interrupt/context/RTE/
+REQUEST return path,andall1065282Soundevents withzero drops. All39pendingSDKqueue
+records/1092bytes and32MIDIinitializationcommands retain their independent oracles.
+The3600tile-descriptor words written after the fullclear remain checked;final
+VRAM is correctly nonzero. No console priming,helper-return/checkpoint injection,
+shortenedcopy/clear,historiccoldsubstitution or ARM acknowledgement is supplied.
+Explicit rawplatform/flash/configuration inputs remain declared;this is not a
+reset/boot-ROM or physicalinterrupt-timing proof.
+
+Fixes caught during verification
+The newstage inherited an accessguard that rejected legitimate wordVRAMoutputs
+before the existing bus could handle them. Only this newstage now accepts aligned
+32-bit physical05000000..057ffffc andaliases,matching interrupt_bus.c. Fourteen
+focused VRAMcontrols thenall137cases pass,including unsupported-boundary failures.
+Earlier published source/proofs/builds are unchanged by this correction. These
+tests establish the current research bus window,not every physical VRAM mapping.
+Accounting fixture fields are prefixed to avoid a legacybusy integerfield;an
+early generatorname/preflight mistake was discarded before passing evidence.
+The first startup capture imported the old201testmodule and was excluded;the
+new capture explicitly guards module,DLL filename,storageexport andmanifest.
+A later compatibility guard caught newPAIR shadowing an oldaudio constant.
+The newnames areACCOUNT_QUERY/ACCOUNT_PAIR/ACCOUNT_COLLECT;all52inherited integer
+constants are now preserved. Direct/retained/warm/cold comparisons were rerun
+with the corrected harness before publication. GameC/DLL bytes did not change
+for those Pythonharness fixes. Private superseded source/evidence is retained.
+
+Source/build handoff
+All old201component source/proof/build files and1430canonical entries are
+preserved. The newbridge adds three routes andrenames exports;the probe is an
+exact prefix-renamed copy,retaining17/18/19/20argument layouts. All202sources pass
+strict unbounded syntax checks. Six generated artifacts reproduce byte-for-byte;
+registration is byte-idempotent. The workflow checks13105immutable earlier selected
+files,2641oldbuilds,requirements andcanonical rows before publication. Ten reviewed
+derived documentation/status/index files may change. Two newbuild files(DLL/lib)
+are added;source-matched prerelease archives remain incomplete research artifacts.
+
+Reproduction with matching local retail inputs/toolchain:
+  python -B outputs/sonic-adventure/recover_movie_graphics_handoff.py
+  python -B outputs/sonic-adventure/connect_movie_graphics_handoff.py
+  powershell -File outputs/sonic-adventure/build_movie_graphics_handoff.ps1
+  python -B outputs/sonic-adventure/verify_movie_graphics_handoff.py
+  python -B outputs/sonic-adventure/verify_movie_graphics_handoff_retained.py
+  python -B outputs/sonic-adventure/capture_movie_graphics_handoff_startup.py
+  python -B outputs/sonic-adventure/verify_movie_graphics_handoff_startup.py
+  python -B outputs/sonic-adventure/qualify_movie_graphics_handoff.py
+  python -B outputs/sonic-adventure/register_movie_graphics_handoff.py
+  python -B outputs/sonic-adventure/verify_movie_graphics_handoff_workflow.py
+Separate analysis/movie_graphics_handoff_* reports pin inputs andlimits. Historical
+absolute paths remain intact;oldregistration scripts assume their historical
+registry count andshould not be rerun against a newer project.
+
+Next actual dependency
+6536ec is already canonical sa_engine_render_buffer_dispatch,with an earlier
+callback-contract proof. Its real engine callees653f08(descriptorformat),663712
+(type3allocator) and663540(otherallocator) remain unregistered;6524d2 is also an
+existingcanonical callback dispatcher. Read-only exports in movie-graphics-handoff-
+next prepare that integration;draft exports receivezero credit andolder adapters
+mustnot receive duplicate credit. Preserve actual failures ratherthan substituting
+callback results. The two remaining graphics-root outcomes also stay unqualified.
+
+There are still no visiblepixels,audibleoutput,gameplay,playableEXE or completed
+nativeport. Fullgame60/120/240FPS8K,Android/stereoscopic3DS,N64/PS1,SUPIR HDpacks
+anddisplay/texture settings remain unfinished. TextureOffmust disable textures
+andusevertexcolors. KeepSolHigh for the next real engine integration;goalACTIVE.
