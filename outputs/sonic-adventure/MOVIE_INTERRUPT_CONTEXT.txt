@@ -1,0 +1,90 @@
+Sonic Adventure Dreamcast Rev A: transfer interrupt context and original return
+
+Current qualification: two complete original routines, 345 instructions and all
+8 conditional outcomes. Research DLL movie_interrupt_context.dll compiles 192 C
+sources. All 666 original/native comparisons pass: 107 direct, 64 across 16 lifecycles,
+489 regressions/default-wait controls and 6 legacy ABI checks. Separate authored
+SH-4 architecture support passes 1,092 cases and earns no recovered-game credit.
+This is an incomplete research library, not a playable port. Whole-project
+estimate remains 10% weighted milestones, not measured recovered-code coverage.
+
+Original normal context 0x8c65e80c preserves integer registers, both floating-point
+banks, FPUL/FPSCR and saved processor state, calls the live VBR event handler,
+then executes its original RTE and delay slot. Original nested context 0x8c65e958
+also tracks nesting and switches to the configured interrupt stack on first
+entry. Independent canonical physical-bank assertions check the complete
+interrupted state after return. Native RTE propagates an internal unwind status
+through existing native calls; no guest R0, PR, helper return or completion is
+invented. The separate exception API leaves historical structure layouts and
+entry APIs intact; six representative old-ABI comparisons pass.
+
+Two copied vector templates 0x8c65e7a4 and 0x8c65e7d8 have 20 code rows each, followed by
+literal data and saved-R0/handler fields. They are fragments, not additional
+recovered routines. Relocated VBR+0x100/+0x400/+0x600 aliases receive zero duplicate
+credit. Original 0x8c645de0 really copies the templates and chooses the normal or
+nested handler in the lifecycle tests; no resumed guest checkpoint is used.
+
+Sixteen lifecycles cover all four channels with the exact 33,376-byte local
+driver payload, plus 64-byte varying data on channels 0 and 3 in two additional FPU
+modes. Four explicit guest ABI calls run original vector initialization,
+registration, channel start and interrupt-context delivery. Actual existing
+authored G2 support copies 32-byte chunks into the 2 MiB sound-RAM model before
+the test supplies a pending interrupt bit. A declared, untimed architecture
+entry saves SSR/SPC/SGR, selects the interrupt register bank and enters the
+actual copied VBR+0x600 vector. Original context, ASIC snapshot dispatch, generic
+event traversal, registered 0x8c10ebe8 handler and SDK callback execute, then original
+RTE restores the interrupted CPU/FPU/banked/special state. Whole source and
+sound bytes, transaction order, callback effects and machine boundaries match
+independent checks. The 16 byte-copy and 16 IRQ-admission cases are authored host
+support, not retail-code comparison or recovery credit.
+
+Important retained frontier: the separate nonreturning restore helper 0x8c65eaec
+executes all 89 own rows and 4 outcomes, then tail-jumps to bootstrap 0xac000010.
+That dependency is unresolved. The tests stop at the real address; no RTE or
+other instruction is inserted there. This helper remains unregistered and
+incomplete despite full own-row execution. Complete normal/nested paths do not
+need that helper. All 474 new integration rows and 12 outcomes have executed.
+
+Remaining work includes a persistent transfer/event service and safe automatic
+delivery during the original guest wait. Physical IRQ timing, continuous guest
+scheduling, uninterrupted early startup, ARM execution, audio and gameplay are
+not established. Without explicit completion, original REQUEST still waits at
+0x8c65a6ec with state 2 and done 0. Previous full-copy/video-clear/earliest-caller proofs
+are retained historically; this milestone does not claim to rerun them.
+
+Run locally with the matching private Rev A inputs:
+ powershell -File outputs/sonic-adventure/build_sh4_exception_state.ps1
+ python -B outputs/sonic-adventure/verify_sh4_exception_state.py
+ python -B outputs/sonic-adventure/recover_movie_interrupt_context.py
+ python -B outputs/sonic-adventure/connect_movie_interrupt_context.py
+ powershell -File outputs/sonic-adventure/build_movie_interrupt_context.ps1
+ python -B outputs/sonic-adventure/verify_movie_interrupt_context.py
+ python -B outputs/sonic-adventure/verify_movie_interrupt_context_lifecycle.py
+ python -B outputs/sonic-adventure/verify_movie_interrupt_context_regression.py
+ python -B outputs/sonic-adventure/verify_movie_interrupt_context_compatibility.py
+ python -B outputs/sonic-adventure/qualify_movie_interrupt_context.py
+ python -B outputs/sonic-adventure/register_movie_interrupt_context.py
+ python -B outputs/sonic-adventure/verify_movie_interrupt_context_workflow.py
+
+Evidence: analysis/movie_interrupt_context_qualification.json and linked reports.
+The exporter uses temporary read-only Ghidra disassembly because copied vector
+fragments are not normal functions; it retains the actual instruction bytes.
+The incomplete bootstrap helper is intentionally separate from complete bodies.
+
+Architecture sources (paraphrased; no vendor manuals redistributed):
+https://www.renesas.com/en/document/mas/sh-4-software-manual
+SH-4 software manual rev 6, special-register transfer and RTE descriptions.
+RTE restores saved SR and branches after a delay slot; SSR transfers retain the
+full saved word. Restored bank selection is checked independently of native
+array swapping. Existing original RTE delay slots here are NOP instructions.
+https://www.renesas.com/en/document/mah/sh7750-sh7750s-sh7750r-group-users-manual-hardware
+SH7750 group hardware manual rev 7.02, exception handling. The declared ordinary
+IRQ input respects BL, IMASK and delay-slot exclusion and captures saved state.
+The host does not claim electrical timing or automatic acceptance.
+
+All original user requirements remain: full source access/documentation and
+public GitHub updates; native PC 60/120/240 FPS and up to 8K; Android and 3DS with
+stereoscopic 3D; documented demake goals; SUPIR HD textures, HD toggle, texture
+100%/75%/50%/25%/Off, render resolution and aspect ratios. Texture Off must render
+vertex colors. These features and the full game remain unfinished. Keep Sol
+High for next reverse-engineering work; goal stays active.
