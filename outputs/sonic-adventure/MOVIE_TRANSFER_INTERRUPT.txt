@@ -1,0 +1,90 @@
+Sonic Adventure Dreamcast Rev A: installed transfer interrupt handler
+2026-10-26 | Overall estimate: 10% by weighted milestones, not code coverage.
+
+Recovered handler: 0x8c10ebe8 through 0x8c10ec35 (39 instructions).
+Both conditional outcomes execute and match the original game code.
+The original channel initializer passes this handler to event registration
+0x8c64594c at four call sites. The listing and pointer words are checked
+against the local retail executable. Original exports are retained in
+analysis/movie-transfer-interrupt. The native implementation is static C;
+it does not decode instructions at runtime.
+
+What the original handler does
+- Clears the channel register at +0x14 and descriptor active flag at +0x2c.
+- Sets descriptor completion at +0x30 and increments the channel counter
+  at root + 0xec + 4 * channel, preserving 32-bit wrap.
+- Writes the original SHAD-generated acknowledgement mask through the pointer
+  at 0x8c5fbb0c, initially 0xa05f6900. Large and signed shift controls retain
+  original behavior; these malformed inputs are not real channel numbers.
+- Returns normally for a null callback. Otherwise it tail-jumps to the supplied
+  callback, passing descriptor +0x20 as R4 and restoring R14 in the delay slot.
+  Unlike the synchronous copy routine, this handler does not skip 0xffffffff.
+  Unsupported callbacks retain their reached service stop and prior writes.
+- The original SDK callback at 0x8c668f40 and completion helper at 0x8c65a518
+  set the record's completion fields. Tests do not supply those results.
+
+Verification performed
+The 188-source Windows research DLL builds and links. Strict unbounded syntax
+checks cover every source. Generation reproduces six artifacts; registration
+is byte-idempotent. Scripts, pinned inputs and older evidence are checked by
+verify_movie_transfer_interrupt_workflow.py.
+
+110 focused original/native comparisons and 1,297 independent checks pass.
+These cover four channels, both banks and all 16 interrupt masks, three FPU
+modes, wrapping counters, RAM and MMIO tables, null/real/unknown callbacks,
+large/signed shifts, invalid pointers and a missing bus. All 39 instructions
+and both conditional outcomes execute. Independent checks cover the entire
+no-callback RAM/register result and descriptor, counter, mask and callback
+effects. The separate original instruction interpreter also compares full
+CPU/FPU/RAM/VRAM/SoundRAM and ordered call-boundary states with native code.
+
+Twelve two-call lifecycles pass (24 comparisons and 324 checks). Original
+channel start returns normally with the descriptor active and incomplete,
+and the SDK record in state 2 with completion 0. A subsequent explicit handler
+ABI call executes the original callback: the descriptor becomes inactive and
+complete, the record becomes state 1 with completion 1, and currentRecord
+clears. Sound RAM remains unchanged; this verifies completion code, not DMA.
+
+641 regression/wait comparisons and 11,389 record/effect checks pass:
+240 previous synchronous/counter controls and 399 transfer/cache/callback
+controls match the current published baseline (635 older records and four
+endpoint records already advanced in the previous CPU-transfer milestone).
+Two default mode-one REQUEST controls retain their genuine wait at
+0x8c65a6ec, state 2/completion 0 and untouched Sound RAM.
+Total: 775 original/native comparisons.
+
+Earlier full 2 MiB copies, the 8 MiB video clear and earliest-caller proofs
+remain immutable historical evidence. This milestone does not claim to rerun
+them. Older source, proof and build bytes, canonical registry fields and user
+requirements are preserved, except ten reviewed derived documentation,
+registry and audit paths. One new routine receives credit: 1,392 registry
+entries / 1,389 unique module-address pairs. Whole-game routine count and
+recovered-code percentage remain unknown. Existing helpers receive no credit.
+
+Limits and next work
+The second lifecycle call is an explicit public ABI invocation after a normal
+return. It is not exception entry into a running CPU or a resumed guest
+checkpoint. The existing software acknowledgement policy is unchanged.
+No DMA movement, scheduled event, physical interrupt acceptance, IRQ timing
+or exception delivery is supplied. Default REQUEST still waits without delivery.
+
+Next: connect the original event dispatch/exception route and a declared
+software DMA completion model with actual data movement and original handler
+execution. Do not fabricate completion flags or physical IRQ acceptance.
+ARM execution/audio, complete startup/gameplay, all ports/demakes,
+60/120/240 FPS, 8K, SUPIR and display/texture settings remain unfinished.
+Texture Off must use vertex colors. Builds are incomplete research libraries,
+not a playable port. Keep Sol High for the next interrupt/transfer integration.
+The goal remains active; overall estimate stays 10% by weighted milestones.
+
+Reproduce with matching local retail inputs and toolchain
+python -B outputs/sonic-adventure/recover_movie_transfer_interrupt.py
+python -B outputs/sonic-adventure/connect_movie_transfer_interrupt.py
+powershell -File outputs/sonic-adventure/build_movie_transfer_interrupt.ps1
+python -B outputs/sonic-adventure/verify_movie_transfer_interrupt.py
+python -B outputs/sonic-adventure/verify_movie_transfer_interrupt_lifecycle.py
+python -B outputs/sonic-adventure/verify_movie_transfer_interrupt_regression.py
+python -B outputs/sonic-adventure/qualify_movie_transfer_interrupt.py
+python -B outputs/sonic-adventure/register_movie_transfer_interrupt.py
+python -B outputs/sonic-adventure/verify_movie_transfer_interrupt_workflow.py
+Read-only evidence export: ghidra/export_movie_transfer_interrupt.ps1.

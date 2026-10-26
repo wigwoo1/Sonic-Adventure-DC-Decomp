@@ -129,7 +129,7 @@
     "prs_trailing_bytes": 0,
     "main_binary_indexed_functions": 3637,
     "main_binary_draft_pseudocode_functions": 3631,
-    "recovered_buildable_routines": 1391,
+    "recovered_buildable_routines": 1392,
     "recovered_routine_tests": "analysis/startup_verification.json",
     "recovered_routine_test_cases": 17,
     "main_binary_draft_export_failures": 6,
@@ -143048,6 +143048,24 @@
       "verification": "analysis/movie_cpu_transfer_qualification.json",
       "verification_sha256": "8f2fa008278dc89c6f636397de5eb1eedae643220de4a09533c2d30997bb9e52",
       "guide": "MOVIE_CPU_TRANSFER.txt"
+    },
+    "movie_transfer_interrupt_integration": {
+      "newly_registered_entries": 1,
+      "qualified_rows": 39,
+      "qualified_conditional_outcomes": 2,
+      "compiled_source_count": 188,
+      "total_comparisons": 775,
+      "retained_default_frontier": "0x8c65a6ec",
+      "dll_sha256": "e6290cfb908c8f78a7753f095d6bd964ef1a2e7519c0041d6db891719a541eda",
+      "limitations": [
+        "Qualified own handler assumes immutable code/literals, initialized RAM descriptor/root/table/stack and the existing explicit software bus. All39rows and both conditional outcomes execute; arbitrary uninitialized game state is not claimed. Unsupported callback and invalid-pointer stops retain actual preceding writes and delay-slot effects.",
+        "The existing normal-status acknowledge bus clears written bits. No new physical hardware model, DMA data movement, event scheduling, CPU exception entry, timing, arbitration or interrupt acceptance is supplied. Two-call lifecycles explicitly invoke the handler ABI after channel-start returns normally; no stopped-guest checkpoint is resumed.",
+        "The original handler and original SDK callback set state/completion fields. Existing callback/counter/event registration bodies receive zero duplicate credit. The default mode-one REQUEST still waits at65a6ec without external delivery. Earlier full memory-copy, video-clear and earliest-caller proofs are preserved historically, not rerun in this milestone.",
+        "Complete startup, ARM execution/audio, playable game, all native ports/demakes, 60/120/240FPS,8K,SUPIR/display/texture settings remain unfinished. TextureOff must use vertex colors. Whole-project10% is a weighted milestone estimate, not recovered-code coverage."
+      ],
+      "verification": "analysis/movie_transfer_interrupt_qualification.json",
+      "verification_sha256": "5246a1306fda756336975234b17e5e36371c08abec17bd96f2370b90751f8f5b",
+      "guide": "MOVIE_TRANSFER_INTERRUPT.txt"
     }
   },
   "milestones": [
@@ -143221,8 +143239,8 @@
     "report": "analysis/recovery_coverage_audit.json",
     "candidate_inventory": "analysis/unrecovered_function_candidates.tsv",
     "boundary_inventory": "analysis/unresolved_module_boundaries.json",
-    "registered_routines": 1391,
-    "registered_unique_module_address_pairs": 1388,
+    "registered_routines": 1392,
+    "registered_unique_module_address_pairs": 1389,
     "indexed_candidates_in_export_snapshots": 11411,
     "registered_entries_matching_export_snapshots": 1276,
     "non_texture_binaries_without_function_index": 211,
@@ -150549,5 +150567,5 @@
   },
   "unverified_work": {},
   "unverified_drafts": {},
-  "recovered_buildable_routines": 1391
+  "recovered_buildable_routines": 1392
 }
