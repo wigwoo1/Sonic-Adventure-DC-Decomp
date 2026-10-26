@@ -1,0 +1,102 @@
+Sonic Adventure Dreamcast Rev A: persistent native transfer and interrupt service
+
+Verified integration: 193-source Windows research DLL, 699 original/native
+comparisons and 59 independent platform cases. Thirty-two original REQUEST
+calls now move actual data, receive the original interrupt callback and return
+without the test supplying a completion flag. This is an incomplete research
+library, not a playable game. Overall completion remains approximately 10% by
+weighted milestones; this is not measured recovered-code coverage.
+
+The new transfer_runtime.c/.h is authored native platform support. It captures
+the original writes to four channel register banks, preserves queued jobs and
+progress across ordinary API entries, copies real mapped RAM/Sound bytes and
+derives pending status only after the data has moved. Completion clears the
+start register and, when requested, enable. Pending status respects masking
+and write-one-to-clear acknowledgements. No pointers into temporary native call
+frames are stored in the persistent device state; each entry binds its stable
+RAM and parent bus for that call's duration.
+Progress counts fully committed 32-byte chunks. Partial failing writes remain
+visible in the device trace and destination memory and may be retried.
+
+The recovered C bodies are unchanged. Original REQUEST waits by calling the
+original empty helper at 0x8c666e02. After that helper executes its real RTS and
+delay slot and returns to 0x8c65a6e8, the native platform advances queued data.
+If an interrupt is pending, enabled and allowed by SR.BL/IMASK, the existing
+architecture helper admits IRQ6/INTEVT0x360. Actual copied VBR+0x600 code, original
+normal/nested context, ASIC, generic event traversal, registered handler, SDK
+callback and original RTE run inside the original REQUEST call stack. The native
+adapter catches the actual RTE unwind and resumes the suspended caller. The
+original caller tests its real completion field and returns normally. No game
+helper result, guest checkpoint, completed flag or skipped instruction is used.
+
+The device policy is untimed and currently schedules at this particular original
+yield point. This is a native platform boundary, not a claim that Dreamcast
+electrical timing works this way. Physical DMA/IRQ timing, security windows,
+suspension and externally triggered transfers are not modeled by this service.
+It supports the currently exercised CPU-triggered register sequence and mapped
+16 MiB RAM / 2 MiB SoundRAM windows. Broader platform scheduling remains work.
+
+Verification:
+- 59 authored-device cases cover four channels, both directions, zero/32/96-byte
+  lengths, preserve/reset enable, repeats, cancellation, disabled/HW-trigger and
+  nested guards, masks/acknowledgements, two channels and partial read/write/
+  completion-register failures with retry. Whole memory, state and every bus
+  transaction match an independent device oracle. No recovered-game credit.
+- 16 initialized lifecycles run original vector copying and registration, then
+  two uninterrupted REQUEST entries each. All four channels use the exact
+  33,376-byte private driver payload with normal and nested contexts. Additional
+  64-byte varying cases exercise channels 0/3 and two more FPU modes. The second
+  request changes source data and destination offset. All 32 requests return;
+  complete CPU/FPU/banked/special/RAM/Sound/device state and ordered boundaries
+  match independent original instructions. Setup between ordinary top-level
+  calls and borrowed device-state carry are explicit, not a guest checkpoint.
+- Four disabled/masked/BL/IMASK controls retain the genuine completion wait.
+  Three missing-handler/vector/sound controls retain the real fault and leave
+  completion unset. These lifecycle/control cases total 85 guest comparisons.
+- 596 prior dispatch/handler/CPU/context and default-wait comparisons replay
+  published results unchanged with the optional service absent. Six old-ABI
+  checks and twelve real request-rejection cases also pass: 699 comparisons.
+- The unchanged REQUEST adapter executes all 139 own instructions across these
+  current proofs. Four of 26 conditional outcomes remain unverified. It remains
+  partial and unregistered; full own-row execution alone is not complete proof.
+  The two-test research wait guard remains explicit. Production code retains
+  the original unbounded wait when genuine completion is unavailable.
+
+Registry remains 1,396 entries / 1,393 unique pairs. Existing bodies and authored
+support receive zero duplicate recovery credit. The separate partial bootstrap
+restore helper still reaches unresolved 0xac000010. Earlier full-copy/video-clear/
+earliest-caller evidence is preserved historically and was not rerun here.
+Uninterrupted early startup, ARM execution, audio, pixels and gameplay remain
+unfinished. Next investigate remaining request outcomes and connect the runtime
+to natural startup and broader persistent scheduling.
+
+Run locally with the matching private Rev A inputs:
+ python -B outputs/sonic-adventure/connect_movie_transfer_runtime.py
+ powershell -File outputs/sonic-adventure/build_movie_transfer_runtime.ps1
+ python -B outputs/sonic-adventure/verify_transfer_runtime.py
+ python -B outputs/sonic-adventure/verify_movie_transfer_runtime.py
+ python -B outputs/sonic-adventure/verify_movie_transfer_runtime_regression.py
+ python -B outputs/sonic-adventure/verify_movie_transfer_runtime_compatibility.py
+ python -B outputs/sonic-adventure/verify_movie_transfer_request_closure.py
+ python -B outputs/sonic-adventure/qualify_movie_transfer_runtime.py
+ python -B outputs/sonic-adventure/register_movie_transfer_runtime.py
+ python -B outputs/sonic-adventure/verify_movie_transfer_runtime_workflow.py
+
+Reports: analysis/movie_transfer_runtime_qualification.json and linked proofs.
+Source/evidence hashes, original routine fields and historical builds are kept.
+
+Primary implementation references, paraphrased; no source copied:
+https://raw.githubusercontent.com/KallistiOS/KallistiOS/master/kernel/arch/dreamcast/hardware/g2dma.c
+KallistiOS defines four eight-word channel banks, transfer directions, aligned
+lengths and the high length bit's reset-enable behavior.
+https://raw.githubusercontent.com/mamedev/mame/master/src/mame/sega/dc_g2if.cpp
+MAME's G2 device clears start at completion and distinguishes CPU/hardware
+triggers. Its implementation also documents unresolved hardware details; this
+project does not claim complete hardware emulation.
+Existing SH-4 exception semantics and sources remain in MOVIE_INTERRUPT_CONTEXT.txt.
+
+All requested source access/GitHub/documentation, native PC 60/120/240 FPS/up to
+8K, Android, stereoscopic 3DS and demake goals remain. SUPIR HD textures, HD toggle,
+texture 100%/75%/50%/25%/Off, render resolution and aspect ratios remain planned.
+Texture Off must use vertex colors. Keep Sol High for reverse engineering; the
+full goal remains active.
