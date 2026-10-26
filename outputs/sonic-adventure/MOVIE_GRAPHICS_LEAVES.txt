@@ -1,0 +1,98 @@
+Sonic Adventure Dreamcast Rev A: graphics configuration leaves and startup integration
+2026-10-26 | Overall estimate: 10% weighted milestones, not measured code coverage.
+
+This milestone follows the already published transfer interrupt/runtime work.
+It adds a 201-source Windows research DLL and four qualified original helpers:
+  0x8c656f50: list enable mask, 105 instructions / 24 conditional outcomes.
+  0x8c657096: packed list control, 147 instructions / 42 outcomes.
+  0x8c6573c4: list space sizing, 83 instructions / 4 outcomes.
+  0x8c66563e: video-memory address mapping, 17 instructions / 4 outcomes.
+All 352 instructions and all 74 outcomes execute and match original instructions.
+Five existing global/list helpers execute another 55 rows, with zero new credit.
+Registry after qualification: 1,416 entries / 1,413 unique module-address pairs.
+Whole-game function count and measured recovered-code percentage remain unknown.
+
+The new source contains 22 connected bodies / 2,956 instruction rows. Thirteen
+additional new, larger bodies remain proposals with incomplete branch/ABI proof.
+They receive zero recovery credit, including graphics initializer 0x8c656940.
+Do not interpret its normal return under a configured startup profile as full
+routine qualification. Static C bodies call actual native providers; production
+execution does not decode original opcodes or substitute child results.
+
+Verification
+226 focused original/native comparisons / 2,433 independent checks cover list
+masks, all five format overrides, compactness/order selection, opaque controls,
+wrapping size arithmetic, address boundaries and reused linked-list/global effects.
+Independent mathematical/graph oracles supplement whole CPU/FPU/RAM/VRAM/Sound,
+device and ordered-call-boundary comparisons. Direct cases use declared input
+configuration data and valid mapped aligned caller storage. Physical misaligned
+address exceptions, arbitrary callbacks/concurrency and actual pixels are outside
+this qualification. No guest checkpoint or helper result is supplied.
+
+All 2,245 earlier direct and retained comparisons execute freshly against the new
+DLL: transfer dispatch/handler/context/CPU, runtime/request, legacy ABI, packet/
+flash, audio mode/controls, MIDI packing and command sender. Historical evidence
+files remain unchanged. A preliminary replay wrapper selected the older DLL for
+some tests; the compatibility-export check caught it. The import was corrected,
+an explicit new-DLL hash check added, and the discarded replay rerun. It supplies
+no qualification credit. The separate original model and native DLL are unchanged.
+
+Two completed fresh configured startup comparisons begin at original 0x8c0546c0.
+Original platform initialization, flash parsing/CRC, MIDI producer, allocation and
+graphics setup execute, and startup now reaches missing routine 0x8c608d88 after
+0x8c656940 returns. All previous 200-source boundary fields match through entry
+to 0x8c656940; the new read-only descriptor observation adds no state. Explicit raw
+flash/platform data remain declared inputs; these runs are not reset boot proof.
+Cold startup retains the full 8 MiB video clear, two complete 2 MiB Sound fills,
+two 33,376-byte transfers and original IRQ/RTE/REQUEST returns. All 1,065,282 Sound
+events compare without drops. All 39 pending audio queue records and 32 MIDI
+commands retain their independent byte checks. Pending commands do not establish
+ARM consumption, audible output, hardware timing, visible rendering or gameplay.
+Total qualified/replayed comparisons: 2,473, including both startup profiles.
+Graphics setup writes 3,600 tile-descriptor words after the complete clear. The
+earlier verifier's final-all-zero VRAM expectation therefore became obsolete.
+It now retains full-clear instruction/count/error checks and replays all later
+ordinary writes over the checked zero clear to reproduce the final 8 MiB hash.
+This is a consistency check alongside full original/native memory comparison;
+it does not qualify the entire layout builder or establish rendered pixels.
+
+Generation reproduces six artifacts byte-for-byte. Strict unbounded syntax checks
+cover all 201 compiled sources; the bounded research DLL builds and links. Native
+17/18/19/20-argument APIs remain available. Registration is byte-idempotent. The
+preservation workflow checks all 12,959 previously selected immutable files,
+1,412 old canonical rows, all old status requirements and 2,639 historical builds
+before the publisher prepares a new archive. Ten derived documentation/audit/
+registry paths may change. Retail inputs/assets, tools, caches and credentials
+are excluded from publication. Prerelease builds are incomplete research libraries;
+there is no playable PC executable.
+
+Next work
+Finish direct branch/ABI qualification of the larger graphics dependencies:
+allocator/list handling, per-buffer setup, mode changes, callback synchronization
+and the root initializer. Retain genuine errors for oversized/invalid descriptors.
+The constant-return option selector suggests the root's 16 MiB option path is
+infeasible, but that still needs a separately checked proof. Do not fabricate an
+option result to force it. Inspect next startup dependency 0x8c608d88 without using
+startup progress as a substitute for qualifying the partial graphics family.
+Preserve this source/proof/DLL; use a new pipeline for later changes.
+
+Full game decompilation, physical-device/asynchronous coverage, ARM/audio,
+PC 60/120/240 FPS and 8K, Android, stereoscopic 3DS, N64/PlayStation adaptations,
+SUPIR HD textures, texture percentages, render resolution and aspect ratio remain
+unfinished. Texture Off must disable textures and use vertex colors. Keep Sol High
+for the next reverse-engineering task. The goal remains active at about 10%.
+
+Reproduce with matching local retail inputs and the documented external tools
+python -B outputs/sonic-adventure/recover_movie_graphics_init.py
+python -B outputs/sonic-adventure/connect_movie_graphics_init.py
+powershell -File outputs/sonic-adventure/build_movie_graphics_init.ps1
+python -B outputs/sonic-adventure/verify_movie_graphics_leaf_configuration.py
+python -B outputs/sonic-adventure/verify_movie_graphics_init_retained.py
+python -B outputs/sonic-adventure/capture_movie_graphics_init_startup.py warm cold
+python -B outputs/sonic-adventure/verify_movie_graphics_init_startup.py
+python -B outputs/sonic-adventure/qualify_movie_graphics_leaves.py
+python -B outputs/sonic-adventure/register_movie_graphics_leaves.py
+python -B outputs/sonic-adventure/verify_movie_graphics_leaves_workflow.py
+Run the last preservation check before preparing a new publication archive.
+Original Ghidra exports: analysis/movie-command-handoff-next and the three
+analysis/movie-graphics-init-* folders; read-only exporter scripts are in ghidra/.
