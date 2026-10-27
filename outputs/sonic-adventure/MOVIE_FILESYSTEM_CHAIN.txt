@@ -1,0 +1,95 @@
+Sonic Adventure DC Rev A - original file-chain validation
+
+Status: PARTIALLY VERIFIED. Overall estimate: about 10% by weighted milestones,
+not measured code coverage. The goal remains active. Research DLLs are not a
+playable native game.
+
+The 230-source build adds the complete original chain validator, 64b300:
+72 original instructions and 20 conditional outcomes. The existing entry-address
+helper, 64b274 (12 instructions), is reused with zero duplicate routine credit.
+Its original source and proof remain unchanged.
+
+The validator uses the original filename search, raw directory decoder and
+selected BE/LE FAT reader. A missing file returns -251; an invalid chain returns
+-191. The final link must be 0xFFFA. Intermediate links reject self-links,
+0xFFFA, 0xFFFC, 0xFFFF and values at or above the declared limit. A zero-block
+file still checks its head bound but performs no FAT lookup. There is no added
+cycle detector or iteration cap: the original declared block count bounds the
+loop, and the cycle test follows that count before rejecting a wrong final link.
+
+All 1,147 fresh original/native comparisons and 7,951 independent checks pass:
+- Direct vectors: 432 comparisons / 4,112 checks.
+- Eight original task sessions: 472 phases / 2,156 checks.
+- Retained IRQ/context/task controls: 243 / 1,683 checks.
+
+The direct suite independently checks exact link order, result mapping, all
+nonstack RAM, the original 104-byte maximum nested stack region, exact own frame
+saves, integer state and FPU preservation. The registered address helper's
+128 vectors check entire RAM, all GPRs, carry, unsigned shift/add wrap and special
+registers. The 304 validator vectors exercise all 72 instructions and 20 outcomes
+across two channels, both byte orders and four CPU/FPU profiles. They include
+missing files, zero/one/two/three/max counts, invalid heads, self-links, early ends,
+reserved markers, out-of-range links, wrong final markers and a multi-node cycle.
+Extended mapped high-limit vectors deliberately test helper behavior, including
+an unlisted 0xFFFB value; they do not establish a valid physical card format.
+
+The task sessions acquire raw header, root, FAT and linked directory bytes using
+the original request submission, response pump and context resumption. Four valid
+chains traverse 20 -> 21 -> 0xFFFA and reach the actual next missing routine,
+6476e8, with arguments [channel, 0, 8cdb0000] and original PR 64bd5c. Four raw
+malformed chains complete the original -191 callback, idle path and owner teardown.
+The 24 previous missing/type/range command-20 exits also pass in these sessions.
+No new block requests or acquired-buffer changes occur during metadata/chain checks.
+Raw FAT differences are device inputs. No parsed record, decoded metadata, task
+frame, completed request ID, PR, callee result or callback return is supplied.
+Caller filename bytes remain input to the original idle command filename buffer.
+
+Wrapper 64bcd6 remains PARTIAL and UNREGISTERED. A valid request deliberately
+stops at missing retry-transfer helper 6476e8. Its backend, including the known
+660bae frontier, must be freshly traced and qualified next. No successful file
+transfer or teardown of that pending path is claimed. The wrapper receives no
+routine-completion credit.
+
+Build/static checks: all 230 sources compile with -O2/-Wall/-Wextra/-Werror and
+pass strict unbounded syntax checking. All 84 adapter rows are byte-checked against
+the local retail executable. The previous bridge is preserved except two adapters,
+three explicit continuations, three actual call-return sites and the export prefix.
+Return membership changes from 2002 to 2005. CPU/flat-model/ABI/runtime/exception/
+SRFD/guard policies are unchanged. No source wait bound is added. Of 113 nonfunction
+continuation exports, 17 are qualified and 96 remain unqualified for nonlocal entry.
+All three new exports remain unqualified for nonlocal resumption; synchronous
+execution is not evidence for arbitrary callback yields.
+
+Registry: 1,527 entries / 1,524 unique module-address pairs. Previous 1,526 rows
+are unchanged. Earlier 26,452 comparisons remain historical, not all rerun;
+combined evidence of 27,599 is not unique cases or code coverage. There is no
+fresh full-startup profile for this build. Historical 216 warm and 211 cold reports
+retain their original scope. Prior source/proofs and all 2,691 prior build files
+are preserved except ten reviewed catalog/status/documentation paths.
+
+Reproduce with the matching local retail inputs and documented toolchain:
+python -B outputs/sonic-adventure/recover_movie_filesystem_chain.py
+python -B outputs/sonic-adventure/connect_movie_filesystem_chain.py
+powershell -File outputs/sonic-adventure/build_movie_filesystem_chain.ps1 -Workspace WORKSPACE
+python -B outputs/sonic-adventure/check_movie_filesystem_chain_unbounded.py
+python -B outputs/sonic-adventure/audit_movie_filesystem_chain.py
+python -B outputs/sonic-adventure/verify_movie_filesystem_chain_direct.py
+python -B outputs/sonic-adventure/verify_movie_filesystem_chain_tasks.py
+python -B outputs/sonic-adventure/verify_movie_filesystem_chain_retained.py
+python -B outputs/sonic-adventure/qualify_movie_filesystem_chain.py
+python -B outputs/sonic-adventure/register_movie_filesystem_chain.py
+python -B outputs/sonic-adventure/verify_movie_filesystem_chain_workflow.py
+
+Proof: analysis/movie_filesystem_chain_qualification.json and its pinned reports.
+Source: source/sa_movie_filesystem_chain.c and the connected bridge.
+Publication: follow GITHUB_PUBLISHING.txt. Source-matched research prereleases
+include build manifests and SHA256SUMS; retail inputs/assets, toolchains, caches
+and credentials are excluded. Preserve remote history with ordinary fast-forward
+pushes; never force-push or delete remote content to resolve conflicts.
+
+Next: recover actual retry-transfer helper 6476e8 and its backend using the
+preserved original command-20 path. Sol High remains appropriate for reverse
+engineering; Luna Low is suitable for routine documentation/publication.
+Physical Maple acquisition/traversal/timing/automatic IRQ, full filesystem,
+gameplay and all native ports remain unfinished. FPS/8K/SUPIR/settings requirements
+remain unchanged; textures Off disables texture sampling and uses vertex colors.
