@@ -1,0 +1,147 @@
+Sonic Adventure Dreamcast Rev A: original input interface and task responses
+
+Status: PARTIALLY VERIFIED. The goal remains active.
+Whole-project estimate: about 10% by weighted milestones, not code coverage.
+The build is an incomplete Windows research library, not a playable game.
+
+What changed
+
+The original game now initializes its own input interface and selects its own
+16-bit read/write callbacks in the research build. An original task can create a
+request, submit it, receive declared raw device bytes, and resume its saved
+context. No completed request ID, saved task frame, decoded metadata, or parser
+or callback result is inserted to make that sequence succeed.
+
+Five additional routines qualify in their tested domains:
+  66080c: big-endian 16-bit read, 5 original instructions.
+  660816: little-endian 16-bit read, 4 instructions.
+  66081e: big-endian 16-bit write, 4 instructions.
+  660826: little-endian 16-bit write, 3 instructions.
+  6607fc: forward word copy, 8 instructions and 2 conditional outcomes.
+Every one of these 24 instruction rows and both outcomes executed in tests.
+The registry now has 1,513 entries / 1,510 unique module-address pairs. Its first
+1,508 entries are preserved. Existing setup functions receive no duplicate credit.
+
+The original initializer at 647e16 writes pointer cell 8c89c54c with the retail
+object at 8c89c538. The selector at 647de8 installs callbacks from retail literals.
+Ghidra's indexed write at 647e38 and aligned literal evidence establish this
+provenance; they do not establish an exhaustive inventory of all game writers.
+
+What passed
+
+The 225-source DLL builds. All 225 sources also pass strict unbounded syntax
+checks with -Wall -Wextra -Werror. There are 1,354 fresh original/native execution
+comparisons and 12,367 independent checks:
+  528 direct 16-bit callback comparisons / 6,816 checks.
+  84 word-copy comparisons / 1,176 checks.
+  659 task-phase comparisons across 38 lifecycles / 3,616 checks.
+  83 retained software interrupt and context comparisons / 759 checks.
+
+The 38 lifecycles cover channels 0 and 7, commands 1 and 18, two transport byte
+orders, two interface endiannesses, invalid and valid geometry, null and unknown
+callbacks, removal, retry, and bad headers. Entire original/native machine state
+and ordered boundaries match. The original side runs retail instructions in the
+project's SH4 instruction model; this is not a hardware or whole-game test.
+
+Valid command 18 completes two 256-byte reads, copies the actual received bytes,
+resumes the original worker, returns mode 0x21 (33), invokes its completion
+callback, becomes idle, and permits original owner teardown. The original wait
+continuation is 660b2e; the caller return continuation is 648426. Address 648422
+is the call instruction, not the return. Valid command 1 accepts metadata and
+reaches the real missing filesystem dependency 64ae32. It stays pending there;
+no successful result or callback is fabricated.
+
+Invalid geometry returns -125. A removed device yields at 660932 and the low-level
+reader returns -208; its original caller converts a negative header result to
+-255 before completion. A bad header also completes with -255. Retry status 252
+creates another original request. The test selects retry budget zero through
+the original 647534 API; it does not silently patch the initializer's default ten.
+Automatic SDK requests can also advance the serial counter, so expectations use
+the actual counter before each call. Metadata is independently checked against
+raw post-transport bytes.
+
+The copy retains the original forward order, overlap effects, count shifted right
+by two, and do-while behavior. Zero and short counts retain the original unsigned
+underflow. Boundary tests execute one valid word before a mapped-memory fault;
+they do not execute all 2^32 iterations. No bulk-copy shortcut or new source wait
+limit was added. Fault behavior is the existing host memory policy, not physical
+exception delivery.
+
+Direct tests independently check memory, integer registers, SR, PR, floating-point
+state and special registers. Context tests independently check restoration. The
+original single-precision context code saves the selected FPU bank, so the tests
+do not invent an all-bank preservation contract. A call stopped inside a missing
+callee also has no outer-return FPSCR contract. Those extra test expectations
+were corrected; strict original/native FPU-bank, FPSCR and FPUL comparisons remain.
+No native behavior was changed to satisfy an unsupported assertion.
+
+What remains unfinished
+
+The full header reader at 6608a4 and block reader at 660a7e remain partial and
+unregistered. The task report records their exact missing instructions/outcomes.
+Three existing nonfunction resume routes now qualify for these graphs: 660b2e,
+648426 and 660932. That makes 11 qualified and 71 unqualified out of 82 existing
+routes; arbitrary task/parser graphs remain unqualified. No new exports were
+added. The previous bridge is preserved apart from five routes and the export
+prefix. Its 1,971 allowed call returns, runtime, ABI, exception and context code
+are unchanged, as are the original CPU and flat reference execution code.
+
+Device observations are explicit inputs: clearing the busy register and supplying
+raw response bytes. Physical Maple DMA traversal, controller acquisition, device
+timing and automatic completion interrupts remain unfinished. The current bus
+stores modeled MMIO values. This milestone establishes the declared storage path,
+not automatic hardware input or a complete game.
+
+Earlier 18,474 comparisons remain historical, not all rerun. Combined evidence is
+19,828 comparisons, not unique cases or code coverage. Older warm/cold startup
+results remain historical; this stage does not claim a fresh full startup test.
+All PC/Android/3DS/N64/PS1 ports, frame-rate and 8K options, SUPIR textures and game
+settings remain unfinished. Texture Off means disabling texture sampling and
+using vertex colors.
+
+How to inspect and reproduce
+
+For a quick check, open analysis/movie_input_interface_qualification.json and
+analysis/movie_input_interface_workflow_verification.json. The former describes
+qualification and limits; the latter checks reproduction and preservation. The
+other movie_input_interface_*_verification.json files contain test evidence.
+
+From the workspace root, with matching locally supplied retail input and the
+tools expected by the build scripts, run these commands in order. Use Python -B.
+Compiler paths may need adapting on another computer.
+
+python -B outputs/sonic-adventure/trace_movie_input_interface.py
+powershell -File outputs/sonic-adventure/ghidra/export_movie_input_interface_references.ps1
+powershell -File outputs/sonic-adventure/ghidra/export_movie_input_interface.ps1
+python -B outputs/sonic-adventure/recover_movie_input_interface.py
+python -B outputs/sonic-adventure/connect_movie_input_interface.py
+powershell -File outputs/sonic-adventure/build_movie_input_interface.ps1
+python -B outputs/sonic-adventure/check_movie_input_interface_unbounded.py
+python -B outputs/sonic-adventure/verify_movie_input_interface.py
+python -B outputs/sonic-adventure/verify_movie_input_interface_copy.py
+python -B outputs/sonic-adventure/verify_movie_input_interface_tasks.py
+python -B outputs/sonic-adventure/verify_movie_input_interface_retained.py
+python -B outputs/sonic-adventure/audit_movie_input_interface.py
+python -B outputs/sonic-adventure/qualify_movie_input_interface.py
+python -B outputs/sonic-adventure/register_movie_input_interface.py
+python -B outputs/sonic-adventure/map_main_dispatch_cases.py
+python -B outputs/sonic-adventure/verify_main_dispatch_case_map.py
+python -B outputs/sonic-adventure/audit_recovery_coverage.py
+python -B outputs/sonic-adventure/audit_project_completion.py
+python -B outputs/sonic-adventure/verify_movie_input_interface_workflow.py
+
+Both Ghidra exports use readOnly/noanalysis. Source generators freeze the prior
+1,508-entry baseline so registration does not reclassify recovered functions.
+The workflow checks exact reproduction of eight artifacts, byte-idempotent
+registration, pinned inputs, and parsing of 17 Python and 3 PowerShell scripts.
+
+Build: work/sonic-adventure/build/movie_input_interface.dll and .lib.
+DLL SHA256: d9e1e5ceeb00197f002155a05571c055198f1da1590391ef63480a0732b3fc6b
+All 2,681 previously archived build files are preserved. Of the prior published
+source/proof files, 14,312 keep their hashes; ten catalog/status/document paths
+have reviewed updates. Retail inputs/assets, toolchains, caches and credentials
+are excluded from publication. See GITHUB_PUBLISHING.txt for the publishing flow.
+
+Next dependency: 64ae32, reached by valid command 1. Continue with Sol High for
+reverse engineering. Luna Low is suitable for routine documentation/publication
+checks after verification. Keep original constructors, requests and saved frames.
