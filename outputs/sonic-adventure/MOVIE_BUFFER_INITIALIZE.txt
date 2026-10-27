@@ -1,0 +1,137 @@
+Sonic Adventure Dreamcast Rev A: buffer upload and transfer interrupt path
+
+Overall completion remains approximately 10% by weighted milestones, not measured
+code coverage. The goal remains active. This is an incomplete Windows research
+library, not a playable PC port. All requested ports, frame rates, 8K output,
+SUPIR textures and settings remain unfinished. Texture Off must disable sampling
+and use vertex colors.
+
+Five new original routines qualify in the 206-source integration:
+  65393a buffer initialization and format dispatch: 49 instruction rows
+  654520 vector-quantized texture upload: 48 rows
+  6544a0 mip texture upload: 21 rows
+  651000 queued transfer wait: 11 rows
+  650e40 completion and next queued transfer: 123 rows
+All 252 rows and 26 conditional outcomes execute in original/native comparisons.
+Registry: 1,453 entries / 1,450 unique module/address pairs. This is not the
+game's complete routine inventory or a measured decompilation percentage.
+
+Four earlier canonical routines are reused without duplicate recovery credit:
+6534e0 DMA/CPU upload, 65344e cache range, 65253e word copy, 65254e cache writeback.
+The complete static translation also includes graphics dispatcher 652210, but
+only its transfer path is verified: 92 of 259 rows and 16 of 50 outcomes. It
+remains explicitly partial and unregistered. Its other graphics, error and
+software callback paths require further recovery. Graphics root 656940 remains
+partial at 656cf4->656d06 and 656e90->656f38; no extra credit is assigned to it.
+
+What the transfer test actually does
+
+Original 645de0 initializes the exception vector and original 651520/653640
+installs the graphics callback at VBR+224. Original submission code programs the
+real channel-2 DMA registers. An authored, untimed platform service copies the
+actual source bytes to video memory before recording hardware completion.
+At the original SDK polling return, the platform accepts IRL9, event320,
+priority6, when the actual graphics mask permits it. The original vector/context
+code calls 652210, which acknowledges status bit19 and calls original 650e40.
+That game code retires the active queue record. Original exception restoration
+and RTE return to 65100a; original 651000 observes completion and returns.
+No host code changes game queue completion flags or supplies helper results.
+
+Three authored platform additions receive zero original-code recovery credit:
+  A400 64-bit VRAM aperture, mapped to the existing bank-linear A500 storage;
+  channel-2 texture DMA for ports11/13 and linear modes0/1;
+  ISTERR write-one-to-clear status, with its raw accesses separately traced.
+The existing G2 scheduler, old source/proof files and compiled artifacts are
+preserved. The error status was previously generic storage: storing all ones
+there falsely created errors. The new policy acknowledges bits instead. New
+comparisons use this explicit correction; old evidence is not rewritten.
+
+Verification
+
+78 upload/initialization cases pass 1,793 independent checks. They exercise
+ordinary, mip and VQ formats; original size tables; options rejecting a request;
+aligned DMA and CPU fallbacks; tails, masks, queues, cache writebacks and waits.
+Independent expectations check the complete 8 MiB video memory image, original
+source and descriptor preservation, all queue records and hardware counts.
+
+23 interrupt/queue cases pass 334 checks. They cover both queues, wrapped slots,
+all relevant queue control bits, empty queues, 32/64/68-byte synchronous uploads,
+two-part synchronous VQ uploads, and disabled-mask/runtime controls. Those last
+controls genuinely remain waiting with status-4; completion is never invented.
+Every comparison also checks complete CPU/FPU/RAM/VRAM/Sound, peripheral, banked,
+exception and runtime state, with ordered call boundaries against original
+instruction execution.
+
+229 fresh regression comparisons pass 4,077 checks: 66 root, 28 constructor and
+135 accounting cases. Two historical negative cases described A400 output as
+physically invalid. The new platform supports that aperture, but the preserved
+old accounting adapters still reject it. Those two cases are explicitly excluded
+from the new regression count; A400 output from those particular old adapters
+remains unsupported. Their old implementation, bounds and proof bytes are kept.
+Other earlier comparisons remain retained evidence and were not all rerun.
+
+Platform-only tests check a bijection of all 2,097,152 aligned aperture words,
+1,612 native aperture calls, 41 DMA cases and three error-status alias cases with
+4,884 independent checks. Width/alignment/range rejection, partial device failure,
+unchanged source RAM, complete data/register ordering, IRQ acknowledgement,
+retained traces and overflow counters are covered. These are not game routines.
+
+Two fresh uninterrupted startup profiles execute from declared original entry
+0546c0: warm4,373 / cold585,671 boundaries. The exact published203-source boundary
+prefix matches through 65393a. The real32768-byte upload now completes through
+the A400 aperture; original startup continues to unsupported routine60edb0.
+The full 8 MiB clear, both 2 MiB Sound fills, both33376-byte sound transfers,
+original G2 interrupt/RTE/REQUEST returns, all1,065,282 Sound events with no drops,
+all39 pending SDK records and all32 MIDI sends remain checked. Startup uses
+explicit platform/flash inputs; no checkpoint, priming, shortened copy/clear or
+older cold capture replaces actual execution.
+
+Limits and reproduction
+
+DMA is untimed and limited to the declared texture protocol and first8MiB VRAM
+range. Polygon/YUV DMA, wrapping outside the declared range, physical interrupt
+timing and concurrent mutation are unfinished. Immediate completions may
+coalesce while another job is backlogged; the tests claim the declared one-job
+and separately submitted synchronous two-job lifecycle only. Direct fixtures
+have coherent mapped/aligned queues and a disjoint private guest stack. Arbitrary
+corrupt cycles, destructive aliases and invalid zero-length CPU copy behavior
+are not qualified. Busy-wait research guards stop without faking completion;
+strict unbounded sources are compiled separately. No reset boot, visible pixels,
+audible output, gameplay or playable executable is established.
+
+Run from the workspace/repository root with matching local Rev A retail inputs
+and the compiler path in the build script:
+  python -B outputs/sonic-adventure/recover_movie_buffer_initialize.py
+  python -B outputs/sonic-adventure/connect_movie_buffer_initialize.py
+  powershell -File outputs/sonic-adventure/build_movie_buffer_initialize.ps1
+  python -B outputs/sonic-adventure/verify_movie_buffer_initialize.py
+  python -B outputs/sonic-adventure/verify_movie_buffer_interrupt.py
+  python -B outputs/sonic-adventure/verify_movie_buffer_initialize_retained.py
+  python -B outputs/sonic-adventure/verify_vram_aperture_bus.py
+  python -B outputs/sonic-adventure/verify_pvr_dma_bus.py
+  python -B outputs/sonic-adventure/verify_pvr_error_status.py
+  python -B outputs/sonic-adventure/capture_movie_buffer_initialize_startup.py
+  python -B outputs/sonic-adventure/verify_movie_buffer_initialize_startup.py
+  python -B outputs/sonic-adventure/qualify_movie_buffer_initialize.py
+  python -B outputs/sonic-adventure/register_movie_buffer_initialize.py
+  python -B outputs/sonic-adventure/verify_movie_buffer_initialize_workflow.py
+
+Read analysis/movie_buffer_initialize_qualification.json and the separate direct,
+interrupt, startup, regression, platform and workflow reports for exact coverage,
+counts, pinned inputs and limitations. The workflow preserves13246 immutable
+selected files, all1448 old canonical rows and2645 older compiled artifacts;
+the new combined DLL/import library are additional files. Build archives exclude
+retail assets and are published only as source-matched research prereleases.
+
+Primary hardware references
+
+Hardware facts were checked against these pinned upstream sources. The new
+platform code is independently authored; no emulator implementation is copied
+or called. Literal bytes and game instruction listings come from the user's
+local Rev A executable and are checked by the existing translation workflow.
+https://github.com/flyinghead/flycast/blob/e88b0ced2243de137bcccac0072f0c1dd00d41bd/core/hw/pvr/pvr_mem.cpp
+https://github.com/flyinghead/flycast/blob/e88b0ced2243de137bcccac0072f0c1dd00d41bd/core/hw/sh4/modules/dmac.cpp
+https://github.com/flyinghead/flycast/blob/e88b0ced2243de137bcccac0072f0c1dd00d41bd/core/hw/pvr/pvr_sb_regs.cpp
+https://github.com/flyinghead/flycast/blob/e88b0ced2243de137bcccac0072f0c1dd00d41bd/core/hw/holly/holly_intc.cpp
+https://github.com/flyinghead/flycast/blob/e88b0ced2243de137bcccac0072f0c1dd00d41bd/core/hw/sh4/sh4_interrupts.cpp
+https://github.com/flyinghead/flycast/blob/e88b0ced2243de137bcccac0072f0c1dd00d41bd/core/hw/sh4/sh4_if.h

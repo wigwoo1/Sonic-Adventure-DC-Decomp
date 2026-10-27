@@ -1,3 +1,36 @@
+Latest update: buffer upload and transfer interrupt verified
+The 206-source research DLL qualifies five new original routines. All 252
+instruction rows and 26 branch outcomes execute. There are 332 fresh comparison
+cases and 6,354 independent checks: 101 direct, 229 regression and two full
+configured startup cases. Warm startup matches 4,373 boundaries; cold matches
+585,671. The actual 32,768-byte upload completes and reaches the next unrecovered
+routine, 60edb0. Registry: 1,453 entries / 1,450 unique module/address pairs.
+
+The original graphics interrupt handler acknowledges DMA completion, retires the
+game's queued transfer and returns through RTE to release the original wait.
+The broader dispatcher 652210 remains partial (92/259 rows, 16/50 outcomes) and
+unregistered. Four canonical adapters receive no duplicate credit. Root 656940
+still has two unqualified outcomes: 656cf4->656d06 and 656e90->656f38.
+
+New aperture, untimed DMA and error-status platform code receives no original
+routine credit. Platform tests check 2,097,152 word mappings, 1,612 native calls,
+41 DMA cases and three error cases with 4,884 checks. Two obsolete negative
+accounting cases are excluded: the platform now supports A400, but the preserved
+old accounting adapters still reject it. Their old bounds and proofs remain.
+
+Cold startup retains the full clear, both Sound fills and transfers, original
+interrupt returns, 1,065,282 Sound events with no drops, all 39 SDK records and
+32 MIDI sends. No checkpoint, priming, fake helper result, shortened loop or old
+cold capture replaces execution. Earlier 4,833 comparison cases are retained,
+not all rerun; combined evidence totals 5,165 cases.
+
+See MOVIE_BUFFER_INITIALIZE.txt and its separate qualification, direct,
+interrupt, platform, regression, startup and workflow reports. The whole game,
+all ports, frame rates, 8K output, SUPIR textures and settings remain unfinished.
+Texture Off must disable sampling and use vertex colors. There is no playable
+executable. The goal stays ACTIVE at 10% by weighted milestones, not measured
+code coverage. Keep Sol High for the next reverse-engineering dependency.
+
 Latest update (2026-10-26): original memory accounting and driver return verified
 202-source researchDLL. New608d88/653dc0/663a60 qualify265instructions60outcomes,
 all executed.137direct comparisons2181checks withindependent list/cache/signedmax/

@@ -1,6 +1,6 @@
 # Sonic Adventure Dreamcast Rev A decompilation and ports
 
-Latest render-buffer milestone: 15 additional original routines are qualified in the 203-source research DLL, with 960 fresh comparisons and 16,631 independent checks. Full configured startup reaches `0x8c65393a`. See [MOVIE_RENDER_BUFFER.txt](MOVIE_RENDER_BUFFER.txt) for coverage, the checked constant-bound proof, reproduction and limits. The registry has 1,448 entries (1,445 unique module/address pairs). Overall completion remains approximately 10% by weighted milestones, not measured code coverage; the goal stays active and the build is not playable.
+Latest buffer-upload and transfer-interrupt milestone: five additional original routines are qualified in the 206-source research DLL. All 252 instruction rows and 26 conditional outcomes execute; 332 fresh original/native comparisons and 6,354 independent checks pass. Original DMA completion runs through the graphics handler, queue retirement, RTE and wait return. Full configured startup reaches `0x8c60edb0`. The broader graphics dispatcher remains partial and unregistered. See [MOVIE_BUFFER_INITIALIZE.txt](MOVIE_BUFFER_INITIALIZE.txt) for reproduction and limits. Registry: 1,453 entries / 1,450 unique pairs. Overall remains approximately 10% by weighted milestones, not measured code coverage; the goal stays active and the build is not playable.
 
 This workspace is a continuing reverse-engineering project for the user's Dreamcast Rev A copy. The end goal includes a fully decompiled game, a native PC port with 60/120/240 FPS and resolutions up to 8K, later Android and Nintendo 3DS ports with stereoscopic 3D, and adapted N64 and PlayStation demakes.
 
@@ -8,7 +8,7 @@ This workspace is a continuing reverse-engineering project for the user's Dreamc
 
 Public repository: [wigwoo1/Sonic-Adventure-DC-Decomp](https://github.com/wigwoo1/Sonic-Adventure-DC-Decomp). See `GITHUB_PUBLISHING.txt` for source snapshots, research-build prereleases, exclusions and the daily 18:00 America/Indianapolis update check. Builds are test libraries, not a playable game.
 
-## Latest verified milestone
+## Earlier verified milestone
 
 **The 202-source research DLL connects three original graphics-memory query routines: all 265 instructions and 60 conditional outcomes execute and qualify.** **233 fresh original/native comparisons / 4,261 independent checks** pass: 137 direct accounting cases, 94 retained root/constructor cases replayed in the new DLL, and two uninterrupted configured startup comparisons. Warm startup reaches 4,357 boundaries; cold reaches 585,655 and retains the full 8 MiB clear, two 2 MiB Sound fills, two real transfers/interrupt returns and all 1,065,282 Sound events with zero drops. Every earlier 201-source boundary matches exactly through `0x8c608d88`; original driver initialization now returns and the caller reaches `0x8c6536ec`. Registry: **1,433 entries / 1,430 unique pairs**. The graphics root still has two unqualified outcomes. Earlier source, proofs, builds and requirements remain intact. See [MOVIE_GRAPHICS_HANDOFF.txt](MOVIE_GRAPHICS_HANDOFF.txt). Builds remain incomplete research libraries; overall stays **10% by weighted milestones**, not measured code coverage, with the goal active.
 
