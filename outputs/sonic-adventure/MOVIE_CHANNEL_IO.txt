@@ -1,0 +1,117 @@
+Sonic Adventure Dreamcast Rev A - I/O readiness and nested task resumption
+
+Status: PARTIALLY VERIFIED I/O family. Original readiness helper 660dec qualifies:
+all 38 instructions and six branch outcomes execute. The I/O reader and request
+backend remain incomplete. Goal active; overall estimate about 10% by weighted
+milestones, not measured code coverage. The 221-source research DLL is an
+incomplete Windows library, not a playable port.
+
+The new source translates 391 byte-checked original instructions in 12 bodies:
+295 proposed new rows and 96 rows from eight previously registered helpers.
+Canonical helpers receive zero duplicate credit. Only readiness 660dec receives
+new routine credit. Reader 6608a4 and request wrappers 646982/6469c8 remain partial.
+Registry now contains 1,489 entries / 1,486 unique module/address pairs.
+
+The main behavior advance is an actual nested coroutine path. Original task
+constructors and submission APIs create commands one/eighteen in the real worker.
+An inactive header makes the original I/O reader yield through 66086a/668e5c.
+Later scheduler/context restoration resumes the reader at 660a68, then the parser
+at 64756e, the decoder at 64831c or 648400, and the worker at 647a08 or 6479fa.
+The original failure value -255 then reaches real cleanup, status storage,
+completion callback, idle resumption and owner teardown. No parser or callback
+result is supplied by the test harness. No normal saved task state is patched.
+
+Native continuation support preserves guest register state instead of rerunning
+function initialization. Adapted forks of the previous decoder/worker sources
+retain all 941 original rows and add no original recovery credit. There are 82
+explicit native after-call continuation exports; these are not new retail
+functions. Six new nonlocal routes listed above are behavior-qualified. The other
+76 routes and arbitrary callback/resumption graphs remain unqualified.
+
+Resumed RTS captures its guest target before the delay slot and checks the exact
+1,920-address call-return set used by the flat original model, plus the outer
+entry PR captured as internal host metadata. Ordinary entry-PR checks are
+preserved. The four connected wrappers keep their external argument layouts.
+Guard membership does not prove that all 1,920 targets have native continuation
+implementations or that arbitrary direct root-return landings work. A separate
+bad-saved-return fixture verifies -3 at 660a7a before the delay slot executes.
+
+1,139 fresh original/native comparisons / 10,295 independent checks pass:
+  Readiness and canonical status/metadata: 208 comparisons / 2,224 checks.
+  Nested task/retry/wait/fault lifecycles: 528 comparisons / 3,416 checks.
+  Active-header/request dependency prefixes: 32 comparisons / 400 checks.
+  Retained ordinary decoder/callback controls: 240 comparisons / 2,424 checks.
+  Retained zero/four/eight-task worker controls: 48 comparisons / 1,072 checks.
+  Eight retained software IRQ lifecycles: 48 comparisons / 424 checks.
+  Retained context/SR/FD controls: 35 comparisons / 335 checks.
+Sixteen authored IRQ admissions receive no original-code comparison credit.
+Previous 11,716 comparisons remain historical, not all freshly rerun; combined
+evidence totals 12,855. No fresh 221-source warm/cold startup is claimed. Earlier
+216-source warm and 211-source full cold evidence remains historical.
+The original side executes retail instructions in the project's SH-4 reference
+model. These comparisons are not Dreamcast hardware or complete-game tests.
+
+Readiness tests cover inactive/active/signed-byte headers, busy bytes, flag bit
+two, retail mapping indices zero/seven and user/FD/FR/PR/SZ profiles. Independent
+expectations check entire RAM, nested stack words, GPR/SR/PR, MACL, floating state
+and preserved special registers. Canonical metadata tests decode absent, sparse
+and dense masks with independent output/stack footprints. These are declared
+coherent RAM/object fixtures and do not prove physical controller acquisition.
+
+Eight admission bases cover channels zero/seven, both floating-point banks and
+commands one/eighteen. Forty-eight finite lifecycles use retry budgets zero/two,
+causing one/three actual I/O yields before the original failure completes.
+Original 647c50/647c6c register callbacks, 647cc4 submits arguments and 647cb4
+posts commands. Nested stack PR/SP words, deadlines, command/status state and
+callback arguments are independently checked. Saved stacks recover to the
+original idle depth after completion; repeated yields do not leak guest frames.
+Unknown completion callbacks stop at their actual target after original writes.
+
+Eight retry-budget-minus-one cases remain pending across three observed scheduler
+returns, then use original owner cancellation. No completed command is invented
+and no new source wait limit is installed. Eight separate fault cases corrupt
+one saved return word solely as a negative test; native and original execution
+both stop before the RTS delay-slot pop. This is not a repair or a successful
+task-context substitute. Normal tasks always use constructor-created contexts.
+
+Active header/flag inputs execute the original request marker and reach the
+actual missing backend 660494; wrapper 6469c8 reaches 6604e6. Independent entire
+RAM/stack/GPR/PR/MACL/stop expectations preserve these partial effects. No request
+ID, successful parse, completion status or packet data is manufactured.
+Field names are local descriptions; the parameter/cursor words and broader
+resource semantics are not fully established by these tests.
+
+Next: recover request backends 660494/6604e6, their TAS.b mutex behavior and
+callees 6604c0/660518. The latter encode commands 0a/0b and call 65f810. Optional
+pump 646654 is another real dependency. Read-only exports are under
+analysis/movie-channel-io-request and movie-channel-io-request-lower. They
+currently receive zero native credit. Successful active header/packet parsing,
+additional yields and arbitrary callback graphs remain unfinished.
+
+The strict 221-source DLL build and unbounded -fsyntax-only check of all 221
+sources pass -Wall -Wextra -Werror. Original model instruction-execution code,
+SR/FD policies, runtime blocks and external 17/18/19/20-argument ABI layouts are
+preserved. Original decoder/worker source files and historical proofs remain
+unchanged; current compiled forks add continuation handling and are not described
+as byte-identical old native code. All 1,332 new/adapted instruction rows are
+checked against retail bytes. Registry audit reports zero errors and stale
+proofs. The original owner+20c behavior remains unchanged and its meaning remains
+undetermined. Prior 2,673 research builds are retained unchanged.
+
+Reproduce with recover_movie_channel_io.py, connect_movie_channel_io.py,
+build_movie_channel_io.ps1, verify_movie_channel_io_units.py,
+verify_movie_channel_io_nested.py, verify_movie_channel_io_prefixes.py,
+verify_movie_channel_io_ordinary.py, verify_movie_channel_io_worker.py,
+verify_movie_channel_io_irq.py, verify_movie_channel_io_retained.py,
+audit_movie_channel_io.py, qualify_movie_channel_io.py,
+register_movie_channel_io.py and verify_movie_channel_io_workflow.py.
+Generation uses the retained 220-source reference/build dependencies to derive
+the exact existing return set. Reports are analysis/movie_channel_io_*.json.
+Matching local Rev A input and the external toolchain are needed for tests;
+retail inputs/assets, toolchains, caches and credentials are not published.
+
+Keep Sol High for request-backend and suspended-state recovery. Luna Low is
+suitable for routine documentation/publication. Full game code, boot, gameplay,
+PC/Android/3DS/N64/PlayStation ports, high FPS/8K, stereoscopic 3D and SUPIR/settings
+remain unfinished. Texture Off disables sampling and uses vertex colors. Goal
+active; no physical IRQ timing, automatic frame-wait or playable-port claim.
