@@ -1,0 +1,138 @@
+Sonic Adventure Dreamcast Rev A: root validation and table reads
+
+Status: PARTIALLY VERIFIED. The goal remains active.
+Whole-project estimate: about 10% by weighted milestones, not code coverage.
+The build is an incomplete Windows research library, not a playable game.
+
+What changed
+
+An original command-1 task now reads its root block, runs the original device
+and root checks, reads zero, one or two table blocks, and resumes its caller.
+Valid input reaches the real missing directory reader at 64a9a8. It stays pending
+there. No successful directory parser result or completion callback is fabricated.
+
+Three routines qualify, with every instruction row and conditional outcome tested:
+  64a4b2: root availability/signature check, 68 instructions / 14 outcomes.
+  660dac: device status, 32 instructions / 4 outcomes.
+  64ae62: table-read loop, 44 instructions / 6 outcomes.
+Total: 144 instructions / 24 outcomes. Only the 68-instruction root checker is
+new C code. The other two bodies were already compiled but unregistered; their
+source and routes remain unchanged. They now have complete scoped behavior
+evidence. The existing 21-instruction cleanup routine receives no duplicate credit.
+Registry: 1,518 entries / 1,515 unique module-address pairs; all previous 1,515
+registry rows are preserved.
+
+The root check requires an initialized object, device availability, readiness and
+an enabled root buffer. It compares exactly sixteen leading bytes with 0x55.
+A mismatching byte clears the table/directory cache flags and returns -253.
+A matching prefix returns zero if the channel error latch is clear, otherwise
+-253. An unavailable object returns -255; an absent device also invokes the real
+cleanup routine. The decoded 24-byte availability record is distinct from the
+44-byte transfer-status record. Both are kept coherent in direct fixtures.
+
+What passed
+
+The 227-source DLL builds. All 227 sources pass strict unbounded syntax checks
+with -Wall -Wextra -Werror. There are 1,811 fresh original/native comparisons and
+15,627 independent checks:
+  576 direct root/status comparisons / 8,600 checks.
+  968 task-phase comparisons across 34 lifecycles / 5,032 checks.
+  24 signed nonpositive table-count comparisons / 312 checks.
+  243 retained comparisons / 1,683 checks, covering software interrupts, context
+  restoration and eight selected earlier task contracts.
+
+Direct cases cover all sixteen bad-byte positions, four mismatching values,
+availability exits, busy/disabled state, clear and nonzero latches, two channels
+and four CPU/FPU profiles. They independently check nonstack memory/cache effects,
+return values, preserved registers, FPU state, SR bits and callee selection.
+ABI stack scratch is bounded to 64 bytes; strict original/native comparisons
+still check the entire stack and machine state. An initial absent-device fixture
+targeted the wrong record; it was corrected using the original address getter.
+No native or reference behavior was changed to satisfy that test.
+
+Task cases use the original constructors and command APIs. Raw header words
+describe table counts zero, one or two within the original allocated capacity.
+Raw roots contain sixteen leading 0x55 bytes; table payloads are deterministic
+device bytes. Original submission, response handling and saved contexts own all
+request IDs and resumption frames. Requested block indices, buffer addresses,
+assembled bytes, untouched buffer tails, statistics and callbacks have independent
+checks. Transport preserves the saved stack and all 32 task contexts.
+
+Bad root signatures cause original completion result zero with invalidated cache
+flags; that is not evidence of a usable formatted filesystem. A table error -255
+propagates to completion. Generic table error -65536 sets the original error latch
+and the caller completes with zero. A subsequent real root check then returns
+-253 from that latched state. These results are produced by original code.
+No completed ID, task frame, decoded metadata, parser return or callback result
+is inserted to make a path succeed.
+
+The table loop now has positive and negative-return coverage in addition to its
+prior nonpositive-count path. Existing continuation exports 64ae9a and 64b236
+are qualified through actual yields and resumes. There are no new continuation
+exports: 15 of the existing 85 routes qualify, and 70 remain unqualified.
+
+Preservation and limits
+
+The bridge adds one root body, an export prefix, and exactly three original
+JSR return sites. Allowed membership grows from 1,974 to 1,977; arbitrary returns
+are not enabled. Existing status/table/cleanup implementations, runtime, ABI,
+exception/context code and guard policies are preserved. Root callees are
+synchronous; no scheduling substitute or source timeout is added. The original
+CPU and flat execution code are unchanged. Static audits check 165 instruction
+rows, including the existing cleanup body, against the retail bytes.
+
+The original side runs retail instructions in the project's SH4 model, not on
+physical hardware. Physical Maple DMA acquisition, traversal, timing and automatic
+completion interrupts remain unfinished. Busy-clear and raw responses are declared
+device inputs; direct SDK/cache/latch fixtures do not establish natural acquisition.
+Table data is read as bytes; directory interpretation and a complete filesystem
+remain unfinished. The separately identified write backend is still missing.
+
+Earlier 20,871 comparisons remain historical, not all rerun. Combined evidence is
+22,682 comparisons, not unique cases or code coverage. Older warm/cold startup
+evidence remains historical; this is not a fresh full-startup test. The full game,
+PC/Android/3DS/N64/PS1 ports, FPS/8K options, SUPIR textures and settings remain
+unfinished. Texture Off means disabling texture sampling and using vertex colors.
+
+How to inspect and reproduce
+
+Open analysis/movie_filesystem_root_qualification.json for qualification and
+limits, and analysis/movie_filesystem_root_workflow_verification.json for
+reproduction and preservation checks. The direct, task, table and retained
+verification JSON files contain individual evidence.
+
+Run from the workspace root with matching locally supplied retail input and the
+tools expected by the scripts. Compiler paths may need adapting on another
+computer. Use Python -B. Ghidra uses readOnly/noanalysis.
+
+powershell -File outputs/sonic-adventure/ghidra/export_movie_filesystem_root.ps1
+python -B outputs/sonic-adventure/recover_movie_filesystem_root.py
+python -B outputs/sonic-adventure/connect_movie_filesystem_root.py
+powershell -File outputs/sonic-adventure/build_movie_filesystem_root.ps1
+python -B outputs/sonic-adventure/check_movie_filesystem_root_unbounded.py
+python -B outputs/sonic-adventure/verify_movie_filesystem_root_direct.py
+python -B outputs/sonic-adventure/verify_movie_filesystem_root_tasks.py
+python -B outputs/sonic-adventure/verify_movie_filesystem_root_table.py
+python -B outputs/sonic-adventure/verify_movie_filesystem_root_retained.py
+python -B outputs/sonic-adventure/audit_movie_filesystem_root.py
+python -B outputs/sonic-adventure/qualify_movie_filesystem_root.py
+python -B outputs/sonic-adventure/register_movie_filesystem_root.py
+python -B outputs/sonic-adventure/map_main_dispatch_cases.py
+python -B outputs/sonic-adventure/verify_main_dispatch_case_map.py
+python -B outputs/sonic-adventure/audit_recovery_coverage.py
+python -B outputs/sonic-adventure/audit_project_completion.py
+python -B outputs/sonic-adventure/verify_movie_filesystem_root_workflow.py
+
+Generation freezes the prior 1,515-entry classification. The workflow reproduces
+eight artifacts, checks byte-idempotent registration and pins, and parses 15 Python
+and two PowerShell scripts. The prior 14,413 source/proof files retain their hashes;
+ten catalog/status/document paths have reviewed updates. All 2,685 prior build
+files are preserved. Publication excludes retail inputs/assets, tool bundles,
+caches and credentials. See GITHUB_PUBLISHING.txt.
+
+Build: work/sonic-adventure/build/movie_filesystem_root.dll and .lib.
+DLL SHA256: e20f32e6bcc7213b101d380c3f35f8f2c981988fc1dd3b01179433201442a2d2
+
+Next: recover directory reader 64a9a8 through the original root/table task path,
+then test positive directory reads and downstream parsing. Keep Sol High for
+reverse engineering. Luna Low is suitable for routine documentation/publication.

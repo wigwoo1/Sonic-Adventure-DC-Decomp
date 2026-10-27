@@ -1,0 +1,69 @@
+address	length	bytes	instruction	flows
+8c64a4b2	2	e62f	mov.l r14,@-r15	
+8c64a4b4	2	d62f	mov.l r13,@-r15	
+8c64a4b6	2	224f	sts.l PR,@-r15	
+8c64a4b8	2	fc7f	add #-0x4,r15	
+8c64a4ba	2	409e	mov.w 0x8c64a53e,r14	
+8c64a4bc	2	436d	mov r4,r13	
+8c64a4be	2	22d3	mov.l 0x8c64a548,r3	
+8c64a4c0	2	e70d	mul.l r14,r13	
+8c64a4c2	2	1a0e	sts MACL,r14	
+8c64a4c4	2	e22f	mov.l r14,@r15	
+8c64a4c6	2	3c3e	add r3,r14	
+8c64a4c8	2	e284	mov.b @(0x2,r14),r0	
+8c64a4ca	2	0820	tst r0,r0	
+8c64a4cc	2	1489	bt 0x8c64a4f8	8c64a4f8 
+8c64a4ce	2	1fd3	mov.l 0x8c64a54c,r3	
+8c64a4d0	2	0b43	jsr @r3	8c660dac 
+8c64a4d2	2	d364	_mov r13,r4	
+8c64a4d4	2	0820	tst r0,r0	
+8c64a4d6	2	048b	bf 0x8c64a4e2	8c64a4e2 
+8c64a4d8	2	1dd3	mov.l 0x8c64a550,r3	
+8c64a4da	2	0b43	jsr @r3	8c64850a 
+8c64a4dc	2	d364	_mov r13,r4	
+8c64a4de	2	0ba0	bra 0x8c64a4f8	8c64a4f8 
+8c64a4e0	2	0900	_nop	
+8c64a4e2	2	1cd2	mov.l 0x8c64a554,r2	
+8c64a4e4	2	0b42	jsr @r2	8c660dec 
+8c64a4e6	2	d364	_mov r13,r4	
+8c64a4e8	2	0820	tst r0,r0	
+8c64a4ea	2	0589	bt 0x8c64a4f8	8c64a4f8 
+8c64a4ec	2	f262	mov.l @r15,r2	
+8c64a4ee	2	16d3	mov.l 0x8c64a548,r3	
+8c64a4f0	2	3c32	add r3,r2	
+8c64a4f2	2	2884	mov.b @(0x8,r2),r0	
+8c64a4f4	2	0820	tst r0,r0	
+8c64a4f6	2	028b	bf 0x8c64a4fe	8c64a4fe 
+8c64a4f8	2	2290	mov.w 0x8c64a540,r0	
+8c64a4fa	2	19a0	bra 0x8c64a530	8c64a530 
+8c64a4fc	2	0900	_nop	
+8c64a4fe	2	e855	mov.l @(0x20,r14),r5	
+8c64a500	2	00e4	mov #0x0,r4	
+8c64a502	2	10e7	mov #0x10,r7	
+8c64a504	2	4366	mov r4,r6	
+8c64a506	2	5060	mov.b @r5,r0	
+8c64a508	2	0c60	extu.b r0,r0	
+8c64a50a	2	5588	cmp/eq #0x55,r0	
+8c64a50c	2	0389	bt 0x8c64a516	8c64a516 
+8c64a50e	2	4360	mov r4,r0	
+8c64a510	2	eb80	mov.b r0,@(0xb,r14)	
+8c64a512	2	09a0	bra 0x8c64a528	8c64a528 
+8c64a514	2	ec80	_mov.b r0,@(0xc,r14)	
+8c64a516	2	0176	add #0x1,r6	
+8c64a518	2	7336	cmp/ge r7,r6	
+8c64a51a	2	f48f	bf/s 0x8c64a506	8c64a506 
+8c64a51c	2	0175	_add #0x1,r5	
+8c64a51e	2	0ed0	mov.l 0x8c64a558,r0	
+8c64a520	2	084d	shll2 r13	
+8c64a522	2	de03	mov.l @(r0,r13),r3	
+8c64a524	2	3823	tst r3,r3	
+8c64a526	2	0289	bt 0x8c64a52e	8c64a52e 
+8c64a528	2	0790	mov.w 0x8c64a53a,r0	
+8c64a52a	2	01a0	bra 0x8c64a530	8c64a530 
+8c64a52c	2	0900	_nop	
+8c64a52e	2	00e0	mov #0x0,r0	
+8c64a530	2	047f	add #0x4,r15	
+8c64a532	2	264f	lds.l @r15+,PR	
+8c64a534	2	f66d	mov.l @r15+,r13	
+8c64a536	2	0b00	rts	
+8c64a538	2	f66e	_mov.l @r15+,r14	
