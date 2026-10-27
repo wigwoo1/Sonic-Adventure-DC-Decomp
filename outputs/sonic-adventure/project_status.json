@@ -129,7 +129,7 @@
     "prs_trailing_bytes": 0,
     "main_binary_indexed_functions": 3637,
     "main_binary_draft_pseudocode_functions": 3631,
-    "recovered_buildable_routines": 1477,
+    "recovered_buildable_routines": 1480,
     "recovered_routine_tests": "analysis/startup_verification.json",
     "recovered_routine_test_cases": 17,
     "main_binary_draft_export_failures": 6,
@@ -145507,6 +145507,86 @@
       "verification": "analysis/movie_countdown_qualification.json",
       "verification_sha256": "ec22ca5cd7a38b5129a50b1d9305468a4120a4bcecc9a6cc6a8c87095727d4a3",
       "guide": "MOVIE_COUNTDOWN.txt"
+    },
+    "movie_active_input_integration": {
+      "newly_registered_entries": 3,
+      "newly_qualified_rows": 158,
+      "executed_new_rows": 158,
+      "qualified_conditional_outcomes": 16,
+      "compiled_source_count": 216,
+      "canonical_context_save": {
+        "address": "0x8c110954",
+        "name": "sa_movie_record_register_8c110954",
+        "additional_credit": 0,
+        "retail_span_checked": true
+      },
+      "canonical_reuse": [],
+      "canonical_integration_rows": 0,
+      "reused_additional_credit": 0,
+      "partial_entries": [],
+      "partial_parent_entries": [
+        "0x8c602cb8",
+        "0x8c051790",
+        "0x8c053ac0",
+        "0x8c652210",
+        "0x8c656940"
+      ],
+      "new_direct_original_native_comparisons": 386,
+      "new_direct_independent_checks": 3566,
+      "fresh_caller_original_native_comparisons": 48,
+      "fresh_caller_independent_checks": 696,
+      "fresh_irq_original_native_comparisons": 48,
+      "fresh_irq_independent_checks": 424,
+      "authored_irq_admission_cases": 16,
+      "fresh_retained_original_native_comparisons": 35,
+      "fresh_retained_independent_checks": 335,
+      "fresh_warm_startup_comparisons": 1,
+      "fresh_warm_startup_checks": 79,
+      "fresh_original_native_comparisons": 518,
+      "fresh_independent_checks": 5100,
+      "retained_previous_evidence_original_native_comparisons": 9598,
+      "total_evidence_original_native_comparisons": 10116,
+      "prior_registry_entries": 1477,
+      "result_registry_entries": 1480,
+      "result_unique_module_address_pairs": 1477,
+      "actual_wait_pc": "0x8c051798",
+      "frame_counter_unchanged": 2,
+      "warm_boundaries": 4709,
+      "fresh_cold_profile": false,
+      "historical_cold_profile": {
+        "source_stage": "211-source movie_record_register",
+        "boundaries": 585993,
+        "stop_pc": "0x8c601874",
+        "dll_sha256": "f5ab618ca44448d3a4afdffa892b3506fd07912e1581571378d26cc471ca0952",
+        "freshly_rerun": false,
+        "relabelled_as216_source": false
+      },
+      "next_task": "Recover original task return/yield target668d56 and valid task startup contexts;preserve explicit coroutine and input-event domain limits. Do not add automatic frame timing without evidence.",
+      "remaining_unqualified_graphics_root_outcomes": [
+        [
+          "0x8c656cf4",
+          "0x8c656d06"
+        ],
+        [
+          "0x8c656e90",
+          "0x8c656f38"
+        ]
+      ],
+      "partial_unregistered_dispatcher": "0x8c652210",
+      "dll_sha256": "abd41a20fbe0619dafbd5b21064de5a373bed4a237973ea85f398d42d53a3ea2",
+      "limitations": [
+        "Three newly qualified original bodies158rows/16outcomes:668e60scheduler85/12,668ccacleanup17/2,1108e0contextrestore56/2. Complete instruction/outcome execution in finite declared coherent RAM/stack/task/context fixtures;not exhaustive hardware/game ABI or arbitrary coroutine proof. Actual canonical110954contextsave executes and receives zero extra routine credit.",
+        "Scheduler snapshots and restores FPSCR,uses signed record-count loop,unsigned deadline comparison,handles0/1/2/3/other states,updatesactive-record/live-count/counter/current-context words. Independent entireRAM/stack/contextsave and cleanup oracles;counterwrap and tail callbacks checked. Names are local interpretations,not recovered symbols.",
+        "Contextrestore independently decoded across all8initial FPUmodes,4raw patterns,3return values and2restoredFPSCR configurations. Bothphysicalbanks,wide-loadcursoroffset,allrestoredGPRs/FPUL/MACH/MACL/GBR/FPSCR and entireRAMchecked. Valuezero mapsR0to1 exactly as original. ReachedFDfaultprefixes preserve prior sideeffects;host-4policy is not physical faultvector delivery.",
+        "Original1108e0RTS uses restoredPR. Only that newRTS bypasses historical ordinaryCreturn guard;unknown restoredtargets dispatch to real missing-2 boundary. Actual668e92continuation propagates internalstatus3 to live668e60frame without changing guestCPUstate. Declared completed-iteration contextvectors exercise that nonlocal path;other interior continuations and arbitrary taskcode/recursion remain outside qualified integration domain. No instruction rewriting,callback-result substitutes or guest-state fixing.",
+        "48fresh actual602cb8input/051810tick caller comparisons enable input with empty taskpool,run real647908->66085a->668e60->110954,then8real channel/status reads. No pressed/released events or acquired controllers are manufactured. Input602cb8 remains partial/unregistered;these vectors do not qualify allinput event callbacks.",
+        "Eight untimed softwareIRQlifecycles with enabledinput execute actual copiedvector/ASICinstall/hardwareslotregistration/countdownregistration/ack/FPUwrapper/eventtraversal/tick/scheduler andRTE. Countdown2->1->0 andschedulercounter0->1->2;full interruptedCPU/FPU/hiddenbank/specialstate restored. Coherent driverobject derivedfrom originalstatic slotliterals;slotsfilled onlyby original64135a.16authoredadmissions are not original/nativecomparisoncredit. No physicalIRQfrequency or automatic frame-wait pump.",
+        "518fresh original/nativecomparisons5100independentchecks:386direct3566,48callers696,48IRQ424,35retained335,1warm79. Previous9598evidencehistorical/notallrerun;10116combined. Freshwarm4709orderedboundaries exactprevious215recordedfields;stops-4at051798counter/reload2. Historical211cold notrerun. Largerhandlers652210/656940,earlier053ac0/frame051790,SDKpump/status/queue/dispatcherfamilies remainpartial.",
+        "Wholegame/PC/Android/3DS/N64/PS1/FPS8K/SUPIR/settings unfinished. TextureOff disables sampling/usesvertexcolors. Goalactive about10%weightedmilestones,not measuredcodecoverage;no pause requested."
+      ],
+      "verification": "analysis/movie_active_input_qualification.json",
+      "verification_sha256": "43d1b08f5297fb67efcb7fa22164ff2ecc272bfc1b811d93bcef9dfe2b86ae50",
+      "guide": "MOVIE_ACTIVE_INPUT.txt"
     }
   },
   "milestones": [
@@ -145680,10 +145760,10 @@
     "report": "analysis/recovery_coverage_audit.json",
     "candidate_inventory": "analysis/unrecovered_function_candidates.tsv",
     "boundary_inventory": "analysis/unresolved_module_boundaries.json",
-    "registered_routines": 1477,
-    "registered_unique_module_address_pairs": 1474,
+    "registered_routines": 1480,
+    "registered_unique_module_address_pairs": 1477,
     "indexed_candidates_in_export_snapshots": 11411,
-    "registered_entries_matching_export_snapshots": 1354,
+    "registered_entries_matching_export_snapshots": 1357,
     "non_texture_binaries_without_function_index": 211,
     "registry_evidence_errors": 0,
     "stale_whole_source_hash_reports": 0,
@@ -153008,5 +153088,5 @@
   },
   "unverified_work": {},
   "unverified_drafts": {},
-  "recovered_buildable_routines": 1477
+  "recovered_buildable_routines": 1480
 }

@@ -1,0 +1,89 @@
+Sonic Adventure Dreamcast Rev A - active-input dependency668e60
+
+Status: VERIFIED within the explicit research domains below.
+Whole-project estimate: approximately10% weighted milestones,not code coverage.
+Goal active;no pause requested. Builds remain incomplete research libraries.
+
+Three original bodies are newly qualified in the216-source Windows researchDLL:
+  668e60 task-processing/scheduler body:85instructions/12conditional outcomes.
+  668cca record cleanup and optional tail callback:17instructions/2outcomes.
+  1108e0 saved CPU/FPU context restore:56instructions/2outcomes.
+All158new rows/16outcomes execute. Names are local interpretations,not symbols
+recovered from the retail build. Canonical110954contextsave executes with zero
+additional routine credit. Registry:1480entries/1477unique module/address pairs.
+
+518fresh original/native comparisons /5100independent checks pass:
+  386direct comparisons/3566checks.
+  48active-input/tick caller comparisons/696checks.
+  48comparisons across8active-input IRQlifecycles/424checks.
+  35retained context/SR/FD comparisons/335checks.
+  1configured warm startup/79checks/4709ordered boundaries.
+Prior9598evidence comparisons are historical/not allrerun;10116combined.
+The16authored architecturalIRQadmission cases get no original-code credit.
+
+668e60 saves the current-context pointer and FPSCR,selects the original default
+FPSCR40001,calls actual110954 to save CPU/FPU state,and walks taskrecords using
+a signed count. State0/other is skipped;state2 becomes3 and installs the original
+668d56 task-return pointer;state3 runs actual668cca cleanup and optional callback;
+state1 with an unsigned elapsed deadline restores the task's saved context.
+The active-record/current-context/live-count/counter and exact stack/contextsave
+footprints are independently checked,including wrap and signed/unsigned edges.
+
+The earlier description of110954 as a timer was incorrect:it is a context-save
+helper.1108e0 restores registers,FPU banks/FPUL/FPSCR,MACH/MACL/GBR,stack andPR.
+It leavesSR unchanged except for the original return-value comparison's Tbit.
+Zero requested return value becomes1. All8initial PR/SZ/FRmodes,4raw patterns,
+3returnvalues and2restoredFPSCRconfigurations exercise exact wide-load cursor
+offsets and both physical banks. CompleteCPU/FPU/RAM/platform comparison is paired
+with independent restored-register and entireRAM expectations.
+
+The original contextrestore RTS branches through the restoredPR,which may differ
+from the host C return address. Only that newRTS bypasses the inherited ordinary
+return-contract guard. Actual unknown restored targets are dispatched and remain
+missing-2. The encoded668e92 continuation returns internalstatus3 to the live
+668e60 host frame and resumes that label without changing guest state. Declared
+completed-iteration saved contexts test the nonlocal branch. Arbitrary interior
+continuations,natural coroutine creation and arbitrary task-code graphs remain
+outside this integration's qualified domain. No helper return,callback result,
+guest counter or register is fabricated to make execution continue.
+
+Reached FPU-disabled fault prefixes return the existing hoststatus-4 before the
+faulting instruction's effects,retaining earlier writes. This is not physical
+fault-vector delivery. SH4primary instruction evidence is pinned in
+analysis/active_input_context_primary_evidence.json.
+
+48caller cases use actual602cb8input and051810tick with input enabled and an
+explicit empty taskpool. Real647908->66085a->668e60->110954 completes,followed by
+eight real channel/status reads. There are no manufactured pressed/released
+events or acquired controller packets. Input602cb8 remains partial/unregistered.
+
+Eight IRQlifecycles initialize original copied vectors,install theASIC handler,
+register the hardware-slot callback and countdown event,and admit2untimed software
+IRQs. Actual vector/context/652210handler/651bc0acknowledgement/652554FPUwrapper/
+645b1e traversal/051810tick/input scheduler/RTE execute. Countdown2->1->0 and
+schedulercounter0->1->2 are checked;full interruptedCPU/FPU/hidden-bank/special
+state returns. Coherent driverobject comes from original static slot literals;
+slots are populated by original64135a,never hand-filled.
+
+Fresh configured warm startup retains exact previous215recorded boundary fields:
+4709boundaries,stops-4at051798,counter/reload2 unchanged. Automatic VBlank progress
+at that frame wait,physical IRQfrequency,reset/full boot/gameplay are unfinished.
+Historical full211-source cold evidence is retained unchanged,not freshly rerun.
+Larger652210/656940,053ac0/051790,input event branches,SDKpump/status and earlier
+queue/dispatcher families remain partial. Existing G2/CH2 runtime,ABIs,requirements,
+source,proof files and old research builds are preserved.
+
+How to inspect without programming:open README.md and the qualification,
+callers,IRQ and workflow JSONreports named movie_active_input_* under analysis/.
+Direct cases are recorded in analysis/movie_active_input_verification.json.
+Source:source/sa_movie_active_input.c. recover_movie_active_input.py and
+connect_movie_active_input.py reproduce six generated files byte identically.
+build_movie_active_input.ps1 builds theDLL. Verification requires a local matching
+RevA retail input and external toolchain;neither is included in public snapshots.
+The researchDLL is not a playable game executable or finished PCport.
+
+Next:recover/qualify task return/yield target668d56 and valid task startup contexts,
+then expand actual input-event and scheduler domains. KeepSolHigh for this work;
+LunaLow is suitable for routine documentation/publication checks.
+Fullgame,PC60/120/240FPS,8K,Android,stereoscopic3DS,N64/PS1,SUPIRtextures and
+settings remain unfinished. TextureOff must disable sampling/use vertex colors.

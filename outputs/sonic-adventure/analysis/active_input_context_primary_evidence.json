@@ -1,0 +1,10 @@
+{
+  "primary_source": "https://www.st.com/resource/en/user_manual/cd00147165.pdf",
+  "title": "STMicroelectronics and Hitachi SH-4 CPU Core Architecture, ADCS 7182230F",
+  "pdf_zero_based_pages": {"LDS_FPSCR":352,"LDS_FPUL":354,"LDS_MACH":356,"LDS_MACL":358,"LDS_PR":360},
+  "facts": [
+    "LDS copies a general-register value into its selected system register. FPUL and FPSCR forms check FPU-disabled state before the update.",
+    "A restored PR can name a continuation different from the host C caller. New context-restore code must preserve that guest control transfer."
+  ],
+  "implementation_scope": "Original instructions are byte checked. Existing host fault status -4 is retained for reached FPU-disabled instructions. Only the new restore RTS bypasses the historical ordinary-return contract guard; actual restored targets are dispatched, unknown targets remain missing -2, and status3 propagates the actual668e92 continuation to the live scheduler frame. No guest register, stack, counter or callback result is invented. Other historical code/models/guards are unchanged."
+}
