@@ -1,0 +1,76 @@
+Sonic Adventure Dreamcast Rev A - countdown and interrupt callback integration
+
+Status: verified within the explicit research domains below; game/ports unfinished.
+Whole-project estimate: approximately 10% weighted milestones, not code coverage.
+This milestone continues the authorized goal; no pause is requested.
+
+Five complete newly qualified original bodies / 155 instruction rows / 14
+conditional outcomes are connected into a 215-source Windows research DLL:
+  8c643f98: conditional audio work, 44 rows / 10 outcomes.
+  8c602df8 and 8c602e34: request variants 1 and 0x12, 30 rows / 2 outcomes each.
+  8c05180c: original RTS/NOP callback, 2 rows.
+  8c652554: floating-point save/callback/restore wrapper, 49 rows.
+Names for audio/request behavior are local interpretations, not recovered symbols.
+Nine canonical adapters / 134 integration rows get zero additional routine credit.
+Registry now has 1,477 entries / 1,474 unique module/address pairs.
+
+474 fresh original/native comparisons and 5,405 independent checks pass:
+  390 direct comparisons / 4,583 checks.
+  48 comparisons across eight IRQ lifecycles / 408 checks.
+  35 retained context and SR/FD fault comparisons / 335 checks.
+  One configured warm startup / 79 checks / 4,709 ordered boundaries.
+Prior 9,124 evidence comparisons are preserved, not all rerun. Combined historical
+and new evidence totals 9,598; this is not exhaustive code or hardware coverage.
+
+Interrupt lifecycle: original copied-vector initialization 645de0, ASIC handler
+installation 651520, hardware-slot registration 64135a, countdown registration
+051760, then two explicit software IRQ admissions at INTEVT 320 / priority 6.
+Original vector/context code, 652210 handler, 651bc0 acknowledgement, 652554 FPU
+wrapper, 645b1e traversal and registered 051810 tick run and return through RTE.
+Counter changes 2 -> 1 -> 0, one tick per IRQ. Full interrupted CPU/FPU, hidden
+register bank and special state are checked. Six original/native comparisons per
+lifecycle; the 16 authored admission checks receive no original-code credit.
+
+The coherent driver object comes from original static slot literals; its slot
+array must coincide with the addresses read by the handler. Callback slots are
+populated only by original registration code. Test fixtures explicitly select
+inactive input, null interface, game mode zero and a private declared driver.
+These are untimed software IRQ fixtures, not hardware frequency measurements.
+
+Direct coverage includes all 55 canonical tick instructions / eight outcomes,
+the real SHAD instruction at 051836, 93 signed-halfword packing vectors, counter
+wrap, table overlap and unchanged original callback table. Real SDK error
+0x0b000003 is produced and ignored by the audio caller where original code does
+so. Expected RAM/stack/error records, argument writes and call order are checked.
+
+The FPU wrapper is checked across 32 raw patterns/bank/width configurations,
+two reached FD-disabled entry prefixes and three real missing callback prefixes.
+It preserves FR/FPSCR around the original callback. The reached-FPU guard uses
+the existing host incomplete/fault status -4 policy; physical fault-vector
+delivery is not claimed. SH4 primary instruction evidence is pinned in
+analysis/countdown_fpu_primary_evidence.json.
+
+Partial/unregistered new bodies: input 602cb8, SDK pump 65a378, channel mask
+648234, status query 660dac. Active input reaches the actual missing dependency
+668e60 through 647908 -> 66085a. Larger 652210/656940 handlers, 053ac0 earlier
+caller, 051790 frame wait and prior queue/dispatcher families remain partial.
+Fresh warm startup still stops -4 at the actual 051798 wait, counter/reload 2.
+No automatic VBlank pump is added to that wait. Existing G2/CH2 runtime, ABI,
+historical source/proofs/builds and project requirements remain unchanged.
+The older full cold capture is historical 211-source evidence, not a fresh run.
+
+To inspect without programming: open README.md, then the analysis reports
+movie_countdown_qualification.json, movie_countdown_irq_verification.json and
+movie_countdown_workflow_verification.json. Individual case inputs and results
+are recorded in movie_countdown_verification.json. Source is
+source/sa_movie_countdown.c; recover/connect scripts reproduce generated files.
+build_movie_countdown.ps1 builds the research DLL; local matching retail input
+is required to rerun differential verification scripts. Retail code/assets and
+toolchains are excluded from public snapshots. Builds are incomplete research
+libraries, not a playable game or PC port.
+
+Next reverse-engineering task: recover actual active-input dependency 668e60;
+retain Sol High for this native state and interrupt work. Luna Low is appropriate
+for routine documentation or publication checks once source work is complete.
+Full decompilation, PC 60/120/240 FPS, 8K, Android, 3DS stereoscopic 3D, SUPIR and
+settings remain unfinished. Texture Off must disable sampling/use vertex colors.

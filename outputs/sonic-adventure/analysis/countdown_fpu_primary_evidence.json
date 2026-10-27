@@ -1,0 +1,10 @@
+{
+  "primary_source": "https://www.st.com/resource/en/user_manual/cd00147165.pdf",
+  "title": "STMicroelectronics and Hitachi SH-4 CPU Core Architecture, ADCS 7182230F",
+  "pdf_zero_based_pages": {"FPU_disabled":132,"LDS_FPSCR":352,"STS_FPSCR":458},
+  "facts": [
+    "LDS Rm,FPSCR is an FPU instruction; the manual specifies FPU-disabled exceptions before the register update.",
+    "STS FPSCR and FMOV are also subject to FPU disable state; prior context evidence covers those forms."
+  ],
+  "implementation_policy": "Reached native/original-model guard returns existing authored host status -4 before the faulting instruction's side effect. This does not implement physical trap delivery. Successful VBlank lifecycle tests use enabled FPU and test actual copied vectors, context and RTE separately."
+}
