@@ -1,0 +1,81 @@
+Sonic Adventure Dreamcast Rev A - command preparation and input submission
+
+Status: PARTIALLY VERIFIED integration. Six original routines are qualified in
+the documented research domain. The 224-source Windows DLL is an incomplete
+research library, not a playable port. Overall estimate remains approximately
+10% by weighted milestones, not measured code coverage. The goal stays active.
+
+Newly qualified bodies (351 original instructions / 46 branch outcomes):
+  65efda: submission, readiness/lock checks, buffer handoff and token latching.
+  65eeda: leading padding and automatic per-device command preparation.
+  66034e: command 9 with feature-word payload.
+  6603f4: command 4 wrapper.
+  660438: command 3 wrapper.
+  66047c: command 2 wrapper.
+Canonical preflight 65f1aa adds 33 adapter instructions / 6 outcomes and gets
+zero duplicate routine credit. Its function body is identical to the previous
+adapter after renaming. The shared address guard admits the four observed,
+aligned 32-bit transport addresses: 005f6c04, 005f6c14, 005f6c18 and 005f6c80.
+The other six functions call actual previously recovered packet, diagnostic,
+division, termination and address helpers. No callee result is substituted.
+
+All 384 adapter instructions and 52 branch outcomes execute. The registry now
+contains 1,508 entries / 1,505 unique module/address pairs. The original 1,502
+rows, earlier source/proofs/builds, external ABIs and project requirements are
+preserved. Exact inverse checks confirm the bridge changes only six new routes,
+one canonical preflight replacement, export names and call-return membership.
+There are no new source wait limits or nonlocal continuation routes.
+
+1,247 fresh original/native comparisons / 18,295 independent checks pass:
+  Direct wrappers, preparation, submission and preflight: 684 / 13,464.
+  64 three-phase queued -> inflight -> completed lifecycles: 192 / 1,792.
+  Reached bus failure prefixes and signed timing-product edges: 48 / 432.
+  Retained queued-task, pending/cancel, software IRQ and CPU context: 323 / 2,607.
+Earlier 17,227 comparisons are historical, not all rerun; 18,474 combined
+comparisons are not unique cases or game-code coverage. Original execution uses
+the project's SH-4 instruction reference, not Dreamcast hardware. No fresh
+224-source warm/cold startup is claimed; older 216 warm / 211 cold evidence stays
+historical. Strict DLL compilation and all 224 sources without wait bounds pass.
+
+Independent expectations check packet bytes and byte order, context/buffer
+projections, dispatch for states 1/2/3/4/9 and skipped states, leading/interpacket
+padding, all 256 mutex byte values, byte neighbors, purge order, register/FPU
+preservation, readiness/busy/lock priority, all 24 command/token records, both
+buffer banks, signed clock-product/division/shift and ordered transport writes.
+Leading padding reads context +10e4; interpacket padding reads +10c8. The two
+fields are distinct. Null, misaligned and rejected bus accesses preserve reached
+stack/register/memory effects and pending IDs rather than inventing success.
+
+Each three-phase lifecycle uses a primary unit (0, 6, 12 or 18), a real command
+10 or 11 request API, both buffer banks, both word orders and two FPU modes.
+The original API creates the queued serial; submission moves that same serial
+into flight, clears the queued slot and writes the physical command-buffer
+address/start register. The original response pump moves it into the completed
+slot and rearms. No completed ID or saved task frame is installed by the test.
+
+Device busy-clear and raw received bytes are explicit external observations.
+The unchanged startup-platform bus stores register values; it does not execute
+Maple DMA descriptors, acquire a physical controller response, advance physical
+device time or automatically deliver completion interrupts. RAM shadow backing
+for the transport addresses remains unused. These tests therefore establish the
+original software handoff and response path under declared inputs, not physical
+device operation or successful active game/movie parsing.
+
+Next: connect an original task-created queued request through this submission
+and response path, then resume its original saved context. Recover the remaining
+callback-reader/global setup below 6608a4 as execution reaches it, without fixing
+saved frames or supplying parser/callback returns. Physical Maple transport and
+automatic timing remain separate unfinished work. Larger input/IRQ handlers and
+arbitrary coroutine graphs retain their documented partial domains.
+
+How to inspect: open analysis/movie_input_submission_qualification.json for
+scope and counts, *_verification.json for cases, and source/sa_movie_input_submission.c
+for recovered C. recover_movie_input_submission.py and connect_movie_input_submission.py
+reproduce the generated artifacts. build_movie_input_submission.ps1 builds the
+research DLL. Rerunning game-dependent verification requires the local matching
+Rev A inputs and external toolchain; these are excluded from public publication.
+
+Keep Sol High for the next reverse-engineering task. Luna Low is suitable for
+routine documentation/publication work. Full game and PC/Android/3DS/N64/PS1,
+60/120/240 FPS, 8K, SUPIR textures and settings remain unfinished. Texture Off
+must disable texture sampling and use vertex colors.
