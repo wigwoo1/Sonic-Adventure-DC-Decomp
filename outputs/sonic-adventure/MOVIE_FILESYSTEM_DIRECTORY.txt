@@ -1,0 +1,78 @@
+Sonic Adventure DC Rev A - linked directory reader / original initialization
+
+Status: PARTIALLY VERIFIED. Overall: about 10% weighted milestones, not code coverage.
+Goal remains active. Research libraries are incomplete and are not a playable port.
+
+The 228-source DLL adds two original bodies: directory reader 64a9a8 (55 instruction
+rows/eight conditional outcomes) and table-link lookup 64b1c0 (16 rows/no conditional
+outcomes). All 71 original instructions and eight outcomes execute in passing proof.
+The original command 1 now completes through header/root/table/directory reads,
+completion callback, idle and owner teardown in the declared device-input domain.
+
+The reader follows table links rather than assuming consecutive block numbers.
+It stops at 0xFFFA or the declared signed count; count 0 / negative reads no block.
+A cyclic chain is bounded by the original count. Destination advances 512 bytes
+on the loop delay slot. Lookup uses the actual selected BE/LE callback and the
+original unsigned index shift/add behavior. There is no invented parser result,
+callback result, request ID, saved frame, return address or source wait bound.
+
+Fresh verification: 2,515 original/native comparisons and 17,983 independent
+checks. Lookup: 512 / 6,656 checks; nonpositive count: 24 / 312 checks; 36 real task lifecycles;
+retained: 243 / 1,683 checks. Tasks cover channels 0/7, transport/interface byte orders,
+CPU/FPU profiles, counts 0/1/2, early end, count limits, bounded cycles, first/late
+read errors and generic error latching. Exact buffers/untouched tails, indices,
+counters and callbacks are independently checked. Generic -65536 latches error
+and the original caller completes 0; this is not proof that the filesystem is usable.
+
+The original/native comparator includes full machine/device state and ordered
+callee boundaries.512 direct lookup vectors independently check entire RAM, exact
+stack writes, all GPRs, SR, PR, FPU banks and special registers. The initial BE
+register oracle was corrected to retain sign extension from the pre-swap load;
+native code and reference execution were unchanged. Only passing final vectors
+count. Original SH4 instruction execution here is a software model, not hardware.
+
+Build: Windows research DLL/import library, 228 sources, -O2 / -Wall / -Wextra / -Werror.
+Strict unbounded fsyntax-only compilation of all 228 sources also passes.
+Byte audit checks 71 instruction rows against the local retail executable.
+Exact previous bridge is preserved except two bodies, two explicit continuation
+routes, two actual JSRreturn sites and export prefix. Return membership 1977 -> 1979.
+87 nonfunction exports: 17 qualified / 70 unqualified. Newly qualified nonlocal routes
+64a9e0 and existing 64b246; 64a9f0 executes synchronously and is NOT qualified for
+nonlocal resumption. Continuation wrappers receive zero function credit.
+
+Registry: 1520 entries / 1517 unique module-address pairs; previous 1518 rows preserved.
+Combined historical evidence: 25,197 comparisons. This is not unique tests or
+coverage; earlier 22,682 comparisons were not all rerun. No fresh 228 full startup;
+historical 216 warm / 211 cold reports retain their original scope. Prior 2687 build
+files and all previous selected source/proofs except 10 reviewed catalog/docs/status
+paths remain unchanged. Requirements remain unchanged, including textures Off
+disabling texture sampling and using vertex colors. SUPIR/FPS/8K/platform settings
+remain future work.
+
+Reproduce (supply matching local retail inputs and adapt compiler paths if needed):
+python -B outputs/sonic-adventure/recover_movie_filesystem_directory.py
+python -B outputs/sonic-adventure/connect_movie_filesystem_directory.py
+powershell -File outputs/sonic-adventure/build_movie_filesystem_directory.ps1 -Workspace WORKSPACE
+python -B outputs/sonic-adventure/check_movie_filesystem_directory_unbounded.py
+python -B outputs/sonic-adventure/audit_movie_filesystem_directory.py
+python -B outputs/sonic-adventure/verify_movie_filesystem_directory_lookup.py
+python -B outputs/sonic-adventure/verify_movie_filesystem_directory_counts.py
+python -B outputs/sonic-adventure/verify_movie_filesystem_directory_tasks.py
+python -B outputs/sonic-adventure/verify_movie_filesystem_directory_retained.py
+python -B outputs/sonic-adventure/verify_movie_filesystem_directory_frontier.py
+python -B outputs/sonic-adventure/qualify_movie_filesystem_directory.py
+python -B outputs/sonic-adventure/register_movie_filesystem_directory.py
+python -B outputs/sonic-adventure/verify_movie_filesystem_directory_workflow.py
+
+Proof:analysis/movie_filesystem_directory_qualification.json andits pinned reports.
+Generated source:source/sa_movie_filesystem_directory.c andthe connected bridge.
+Public builds exclude retail inputs/assets, toolchains, caches and credentials.
+Source/build manifests and SHA256SUMS identify the exact prerelease bytes.
+
+Unfinished: physical Maple DMA acquisition/traversal/timing/automatic IRQ; complete
+filesystem and higher file operations; game startup/gameplay and all native ports.
+Next dependency:actual command 20 callee 64bcd6, reached through original APIs and
+the active scheduler on channels 0/7, withmatching original/native machine state.
+Its behavior is unqualified and receives no routine credit. Command 19 is the original
+waitpath. Known independent frontier:write backend 660bae. Do not supply results. Sol High is recommended for reverse engineering; Luna Low
+is suitable for routine documentation/publication after proofs pass.
