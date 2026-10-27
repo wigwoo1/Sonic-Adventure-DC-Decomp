@@ -1,0 +1,71 @@
+Earlier initialization memory setup and record status - VERIFIED helpers
+
+Two new original routines qualify in the 213-source Windows research DLL:
+8c5fbb60 memory-management setup (23 instructions) and 8c6033e4 record-status
+normalization (13 instructions). Names describe inferred roles. All 36 rows
+and all four conditional outcomes execute. Actual original callees run.
+Three existing canonical helpers are connected without duplicate credit:
+8c644d84 service tail, 8c5fbcb6 conditional pointer setter, and 8c647ca4
+indexed record-word getter. All 22 canonical integration rows execute.
+Registry: 1,471 entries / 1,468 unique module/address pairs.
+
+All 444 fresh comparisons / 6,530 independent checks pass:
+- 408 direct original/native cases / 6,120 checks. Null/non-null pointers,
+  zero/normal/overflow sizes, wrapped-zero computed pointers, high index bits,
+  zero/positive/high-bit/negative record words, four CPU/FPU configurations,
+  complete expected registers/SR/PR/PC/FPU/MACH/MACL/GBR and every RAM byte.
+  The independent oracle includes unchanged regions and exact stack/global
+  stores. Code/literals are immutable, mapped records and private stack are
+  disjoint from fixed globals. This is finite qualification, not all-game ABI
+  or general-purpose memory-safety proof.
+- 35 retained comparisons / 335 checks: unchanged nonzero CPU/FPU context
+  vectors and reached privilege/FPU-disabled fault-prefix oracles in the new
+  DLL. No new-family fault coverage is claimed.
+- One fresh uninterrupted configured warm startup / 75 checks. The larger
+  caller at 8c053ac0 now executes memory setup, the prior 8c0546c0 initializer,
+  and record-status polling before reaching real missing routine 8c051790.
+  Original/native complete machine and ordered boundaries match at 4,709
+  boundaries. Independent flash, SDK queue, MIDI, VRAM and Sound expectations
+  pass. The actual polled index and record word are both zero in this fixture.
+
+The earlier 8,424 evidence cases remain, not all rerun; combined evidence is
+8,868. Previous 211-source full cold evidence remains unchanged/historical,
+not rerun or relabeled as 213-source evidence. The nested 212-source warm
+sequence of 4,702 call targets is preserved. The different enclosing caller
+changes stack/register/PR fields, so no full historical boundary-field
+identity is claimed. Full machine identity applies to the fresh original/native
+comparison in the new run.
+
+IMPORTANT: 8c053ac0 remains partial and is not registered. Only 17 of its 43
+rows and one of two conditional outcomes execute; 26 rows and the taken
+retry outcome remain unqualified. Its real retry loop remains in unbounded
+code. Under SA_BOUND_RETAIL_STALLS only, two taken retry tests stop incomplete
+with host status -4; this research guard was not exercised by the zero-status
+warm fixture and is not a successful completion. No helper result substitutes
+for original execution. The later display wait and other callees remain work.
+
+The DLL build and strict -Wall -Wextra -Werror compilation without the research
+stall macro pass for all 213 C sources. The bridge adds exactly six routes
+and export renames to the prior integration. G2/channel-2 runtime, inherited
+SR/FD guards and legacy API layouts remain unchanged. The complete-memory
+observer only reads final MACL into result metadata. Prior source, proofs,
+registry rows, builds and requirements are preserved.
+
+Reproduce using existing local tools and matching retail inputs:
+ghidra/export_movie_earlier_initialize.ps1 and export_movie_earlier_dependencies.ps1;
+recover_movie_earlier_initialize.py; connect_movie_earlier_initialize.py;
+build_movie_earlier_initialize.ps1; verify_movie_earlier_initialize.py;
+verify_movie_earlier_initialize_retained.py;
+capture_movie_earlier_initialize_startup.py warm;
+verify_movie_earlier_initialize_startup.py; qualify_movie_earlier_initialize.py;
+register_movie_earlier_initialize.py; verify_movie_earlier_initialize_workflow.py.
+Read analysis/movie_earlier_initialize_*.json for exact hashes and scopes.
+Research drafts are not behavior-verified C. Some original evidence paths and
+tool paths remain specific to the original workstation.
+
+Next recover 8c051790 and its real display/frame dependencies. Keep Sol High.
+Broader 652210/656940 remain partial. Whole game/ports/FPS/8K/SUPIR/settings
+remain unfinished; no playable-game or physical boot proof. Texture Off must
+disable sampling and use vertex colors. Goal ACTIVE, about 10% by weighted
+milestones, not measured code coverage. Luna Medium is suitable for bounded
+documentation and routine publication checks after recovery work.
