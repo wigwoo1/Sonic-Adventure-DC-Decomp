@@ -1,0 +1,96 @@
+Sonic Adventure Dreamcast Rev A - channel worker and coroutine resumption
+
+Status: PARTIALLY VERIFIED. The idle scheduler/worker path and every command
+dispatch prefix pass within the domains below. The full worker is not qualified.
+Goal active; overall estimate about 10% by weighted milestones, not code coverage.
+The 219-source Windows research DLL is an incomplete library, not a playable port.
+
+Implemented static C covers 272 byte-checked original instructions:
+  Seven two-instruction selectors at 64790e, 647912, 647916, 64791a, 64791e,
+  647922 and 647926 select channels zero through six and branch to 647982.
+  Entry 647980 selects channel seven and shares the 254-row body at 647982.
+  The existing registered yield thunk 66086a has three adapted instructions.
+The thunk receives zero additional recovery credit. Shared initialization and
+the idle continuation at 647b74 receive no separate function/row credit.
+
+The worker retains all 21 command slots, their 19 unique branch targets, the
+unsigned range check, the RAM signed-halfword table load and actual BRAF target.
+Commands zero, two and nineteen take the idle path; out-of-range unsigned values
+also idle. The real 66086a -> 668e5c -> 668e1e save/yield path executes. Later
+context restore resumes 668e48, returns to 647b74 and continues the command loop.
+Native resume skips initialization and keeps the saved worker registers. Shared
+body/resume routes occur before function-entry observation. No worker loop limit
+or guessed decoder/callback result is added. Unknown callees remain explicit.
+
+427 fresh original/native comparisons and 5,903 independent checks pass:
+  Worker/admission/command suite: 296 comparisons / 4,072 checks.
+  Interleaved pool suite: 48 comparisons / 1,072 checks.
+  Retained context/SR/FD controls: 35 comparisons / 335 checks.
+  Eight retained IRQ lifecycles: 48 comparisons / 424 checks.
+Sixteen software IRQ admissions are authored platform steps and receive no
+original-code comparison credit. Previous 10,518 comparisons remain historical,
+not all freshly rerun; combined evidence totals 10,945.
+
+Thirty-two single-channel lifecycles use actual 6477cc admission and original
+660842/668bee constructors for all eight channel selectors, both floating-bank
+profiles and two SR-bank profiles. Each runs four scheduler/yield/resume cycles,
+then actual owner teardown. Eight additional interleaved lifecycles use zero,
+four or eight tasks with alternating/full masks. All task stacks and saved
+contexts come from the original constructors; none are patched after admission.
+Independent expectations check deadlines, task/channel identity, continuation
+words, saved register/stack fields, call counts and complete owner clearing.
+Original owner+20c behavior is preserved; its wider meaning remains undetermined.
+
+The command suite covers all 21 table choices and four out-of-range unsigned
+values at channels zero/seven and both floating-bank profiles. Command and payload
+words are explicit test inputs. Their decoder resource validity and full meaning
+are not established. All 18 non-idle commands stop at their real missing decoder
+addresses after original prefix stores, argument setup and stack pushes. These
+tests compare full RAM, CPU/FPU, modeled devices and ordered call boundaries,
+with independent argument/stack/store checks. No callee result is supplied.
+
+Coverage is explicit: 203 of 272 translated instructions execute, including all
+14 selector-wrapper rows and all three canonical thunk rows. The shared worker
+executes 186 of its 255 rows. Its remaining 69 rows and four conditional outcomes
+include post-decoder processing, sentinel cleanup and callback paths. They remain
+unqualified. Registry credit is deliberately zero for this partial batch; the
+registry stays at 1,485 entries / 1,482 unique module/address pairs. Translation,
+compilation or a passing idle loop alone does not prove the complete worker.
+
+The strict 219-source build passes -Wall -Wextra -Werror. All 219 sources also
+pass unbounded -fsyntax-only checks without the research wait macro. Generation
+and connection reproduce byte-identically. The previous model execution code,
+SR/FD guards, coroutine continuations, exception/device/runtime policies and
+17/18/19/20-argument ABI layouts remain unchanged. All prior selected source/proof
+files and 2,669 prior archived builds are preserved; README/handoff additions
+describe the new stage. No fresh 219-source warm/cold startup run is claimed.
+Earlier 216-source warm and 211-source cold proofs remain historical.
+
+Next dependencies are exported read-only under analysis/movie-channel-decoders:
+  6482a0: command-one decoder/state path, 103 original instructions.
+  64839a: command-eighteen decoder/state path, 107 original instructions.
+  64850a: sentinel cleanup, 21 original instructions.
+The first two derive state from the R4 index in their prefixes. Do not assume
+all commands take a single pointer type. Recover and test actual decoder inputs,
+returns and callback processing next. Other command callees also remain missing.
+Further nonlocal decoder continuations may be required beyond the idle path.
+These exported dependencies currently receive zero native recovery credit.
+
+Reproduction tools:
+  ghidra/export_movie_channel_worker.ps1 and export_movie_channel_decoders.ps1
+  recover_movie_channel_worker.py / connect_movie_channel_worker.py
+  build_movie_channel_worker.ps1
+  verify_movie_channel_worker.py / verify_movie_channel_worker_pool.py
+  verify_movie_channel_worker_irq.py / verify_movie_channel_worker_retained.py
+  audit_movie_channel_worker.py / qualify_movie_channel_worker.py
+  verify_movie_channel_worker_workflow.py
+Evidence reports are analysis/movie_channel_worker_*.json. Matching local Rev A
+input and the external toolchain are needed to rerun game-dependent checks.
+Retail inputs/assets and toolchain bundles are excluded from public snapshots.
+
+Keep Sol High for decoder recovery and coroutine/callback qualification. Luna Low
+is suitable for routine documentation and publication checks. Physical controller
+acquisition, hardware IRQ timing, automatic frame-wait progress, complete boot,
+gameplay, full decompilation, PC/Android/3DS/N64/PlayStation ports, high FPS/8K,
+stereoscopic 3D and SUPIR/settings remain unfinished. Texture Off must disable
+texture sampling and use vertex colors. The goal remains active.
