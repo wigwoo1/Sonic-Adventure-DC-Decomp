@@ -1,0 +1,95 @@
+Sonic Adventure Dreamcast Rev A: shared drawing-state initialization
+
+Status: VERIFIED within the declared original-instruction comparison model.
+Overall completion remains approximately 10% by weighted acceptance milestones,
+not measured code coverage. The goal stays active. This is an incomplete research
+library, not a playable game or a complete decompilation.
+
+The 207-source DLL connects the next reached original routine, 60edb0. Its 24
+instructions store the caller's buffer pointer and size, reset shared state,
+initialize a four-float region to the raw bits for255 followed by zeros, and
+return. All24 instruction rows execute; there are no original branches or calls.
+The name describes observed state changes; no specific SDK API name is asserted.
+
+The following three-instruction global setter, 60d1f2, was already canonical as
+sa_global_setter_8c60d1f2 in source/global_setter_wrappers.c. The integration adds
+an adapter for that call without duplicate recovery credit. Its original source,
+proof and registry row remain intact. Its actual store runs in the RTS delay slot.
+Only one new routine is registered: totals are1,454 entries /1,451 unique
+module/address pairs. These counts are not a complete inventory of game routines.
+
+Independent verification
+
+128 direct cases pass2,240 checks:96 complete initializer cases,16 unsupported
+precision-mode prefixes and16 setter cases. Expectations compare the entire RAM,
+both physical floating-point banks, FPSCR/FPUL, all integer registers, SR, PR,
+stack and return address. Complete original/native machine, video memory,
+Sound memory, peripheral state and ordered call boundaries also match.
+
+In ordinary transfer mode, the initializer writes the expected four words. In
+paired transfer mode, an odd floating-point load selects the opposite physical
+bank. Successive paired stores overlap; the final neighbor word receives the
+original FR5 bits. Tests include zero, negative-zero, NaN payload and all-one
+bit patterns and check unchanged neighboring bytes. No floating-point arithmetic
+or numerical conversion substitutes for the original raw transfers.
+
+When FPSCR.PR is set, the existing research model stops with status-1 at FLDI0.
+Both implementations retain the earlier pointer/size writes and reached register
+state. They do not unwind the guest or supply success. Physical illegal-instruction
+and address-alignment exception delivery remains unfinished. Paired-mode byte
+effects are model verification, not a claim of complete physical exception behavior.
+
+The setter cases use null, aligned and unaligned pointer-shaped words, boundary
+integers and NaN-shaped bits. These are raw stored words; the function does not
+dereference the argument. Tests check its return delay slot and adjacent memory.
+
+101 earlier upload and interrupt cases replay in the207-source DLL, passing2,127
+checks. They retain actual channel-2 data transfer, graphics interrupt acceptance,
+original acknowledgement, game queue retirement, RTE and wait return. Their old
+source and proof files are unchanged. Other earlier tests were not all rerun.
+
+One fresh uninterrupted warm startup comparison runs from declared original entry
+0546c0, with47 independent checks and4,376 matched call boundaries. Its entire
+published206-source boundary prefix matches through entry60edb0. The initializer,
+canonical setter adapter and existing5ff2cc then execute; the original parent
+reaches the next unrecovered routine,5ff39c. Actual pointer, size, reset words,
+float bits and setter destination are independently checked. The complete clear,
+VRAM image, flash state,39 SDK records and32 MIDI sends remain checked.
+
+The previous206-source full cold-start proof is preserved and hash-checked. It
+is not rerun or relabeled as a207-source cold-start result. Its full8MiB clear,
+both Sound fills and33376-byte transfers, original interrupt/RTE/REQUEST returns
+and1,065,282 Sound events with no drops remain evidence for that exact old build.
+This milestone has230 fresh cases and4,414 checks. Earlier5,165 comparison cases
+remain retained evidence, not all freshly rerun; combined evidence totals5,395.
+
+Reproduction and limits
+
+Use matching local retail inputs and the compiler path in the build script.
+Run from the workspace/repository root:
+  python -B outputs/sonic-adventure/recover_movie_float_initialize.py
+  python -B outputs/sonic-adventure/connect_movie_float_initialize.py
+  powershell -File outputs/sonic-adventure/build_movie_float_initialize.ps1
+  python -B outputs/sonic-adventure/verify_movie_float_initialize.py
+  python -B outputs/sonic-adventure/verify_movie_float_initialize_retained.py
+  python -B outputs/sonic-adventure/capture_movie_float_initialize_startup.py warm
+  python -B outputs/sonic-adventure/verify_movie_float_initialize_startup.py
+  python -B outputs/sonic-adventure/qualify_movie_float_initialize.py
+  python -B outputs/sonic-adventure/register_movie_float_initialize.py
+  python -B outputs/sonic-adventure/verify_movie_float_initialize_workflow.py
+
+See the separate analysis/movie_float_initialize_* reports for exact inputs,
+hashes, native build identity and qualification limits. The source is static C
+translated from checked instructions; it does not decode game opcodes at runtime.
+The workflow checks generated-file reproduction, unchanged old integration and
+APIs, strict compilation with research wait limits disabled, all13,328 immutable
+published files,1,453 old registry rows and2,647 older compiled artifacts. The new
+DLL and import library are additional research artifacts. Original game assets,
+executable inputs, toolchains, caches and credentials are excluded from releases.
+
+The graphics dispatcher652210 remains partial and unregistered; graphics root
+656940 still has two unqualified outcomes. Physical timing, exceptions, reset
+boot, pixels, audible output and gameplay are not established. The full game,
+nativePC60/120/240FPS and8K, Android, stereoscopic3DS, N64/PS1 adaptations, SUPIR
+textures and display settings remain unfinished. Texture Off must disable texture
+sampling and use vertex colors. Sol High remains appropriate for further recovery.
