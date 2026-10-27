@@ -1,0 +1,131 @@
+Sonic Adventure Dreamcast Rev A: original filesystem root reads and retries
+
+Status: PARTIALLY VERIFIED. The goal remains active.
+Whole-project estimate: about 10% by weighted milestones, not code coverage.
+The build is an incomplete Windows research library, not a playable game.
+
+What changed
+
+An original command-1 task can now pass through the gateway at 64ae32 and the
+retrying reader at 647610. It requests and receives two 256-byte responses,
+assembles the actual 512 bytes at the original destination, updates the original
+statistics, calls the real progress callback, and resumes its caller. Execution
+then reaches the real missing root-block validator at 64a4b2. It remains pending
+there; no successful parser result or completion callback is fabricated.
+
+Two routines qualify: gateway 64ae32 has 12 original instructions and no branches;
+retry reader 647610 has 90 instructions and 14 conditional outcomes. Every one of
+these 102 rows and 14 outcomes executed in tests. Registry: 1,515 entries / 1,512
+unique module-address pairs. The previous 1,513 registry rows are preserved.
+
+The new source also translates the 44-instruction table reader at 64ae62. Its
+nonpositive-count path has independent tests, but its positive loop and error
+returns remain unqualified. It is NOT registered and receives no routine credit.
+The full filesystem and the separately identified write backend remain unfinished.
+
+What passed
+
+The 226-source DLL builds. All 226 sources also pass strict unbounded syntax
+checks with -Wall -Wextra -Werror. The fresh test total is 1,043 original/native
+comparisons and 5,995 independent checks:
+  776 task-phase comparisons across 36 lifecycles / 4000 checks.
+  24 nonpositive table-count comparisons / 312 checks.
+  243 retained comparisons / 1,683 checks: 83 software interrupt/context controls
+  and 160 phases across eight selected prior task lifecycles.
+
+The task matrix covers channels 0 and 7, two transport byte orders, two interface
+endiannesses, two FPU modes, retry success and exhaustion, protocol retry, removal,
+abort policy, a live unlimited-retry API change, and null/unknown progress
+callbacks. Statistics and callback arguments are independently projected from
+the actual pre-operation values; counters are not assumed to start at zero.
+Successful output bytes are checked independently against the raw responses.
+Errors complete through original callback, idle and owner teardown paths.
+
+The initial abort-policy word at 66d3a0 is an explicit coherent software-policy
+input selected before the command. Its natural game writer is not established.
+Retry policy and progress-callback changes use the original 647534/647c6c APIs.
+Changing the retry policy to -1 while a request is pending checks the original
+unbounded retry rule with finite supplied responses; no source timeout was added.
+Retail response status 251 selects the -65536 error; status 252 requests retry.
+
+Original task constructors and APIs own every saved context and request serial.
+Original submission moves queued requests to inflight, declared raw device bytes
+and busy-clear observations feed the actual response pump, and original contexts
+resume. Tests check that transport does not change the saved stack or any of the
+32 task contexts. No completed ID, frame, decoded metadata, parser return or
+callback result is inserted to make the read finish.
+
+Original/native comparisons cover complete machine/device state and ordered
+boundaries. The original side runs retail instructions in the project's SH4
+model, not on physical hardware. Retained numeric expectations are unchanged,
+checked by AST. A DLL-identity guard rejected an initial old-adapter replay;
+only the corrected run against the exact new DLL contributes fresh evidence.
+
+The previous 19,828 comparisons remain historical, not all rerun. Combined
+evidence is 20,871 comparisons, not unique cases or code coverage. Older warm
+and cold startup evidence remains historical; there is no fresh full-startup or
+hardware claim for this stage.
+
+Continuation and preservation limits
+
+The source adds three nonfunction continuation exports: 647646, 647694 and
+64ae9a. Of these, 647646 is qualified through actual task resumption. The existing
+caller continuation 64b21e is also newly qualified. That makes 13 qualified and
+72 unqualified routes out of 85 total. Exports 647694 and 64ae9a remain unqualified
+for nonlocal resumption; none receives function credit.
+
+The old runtime, ABI, exception/context code and guard policies are preserved.
+The bridge adds three bodies, three routes, the export prefix and exactly three
+original call-return sites: its allowed membership grows from 1,971 to 1,974.
+This does not allow arbitrary returns. The original CPU and flat execution code
+are unchanged. Static audits check all 146 proposed instruction rows against
+the retail bytes. Generation alone gives no recovery credit.
+
+Physical Maple DMA traversal, acquisition, timing and automatic completion
+interrupts remain unfinished. Busy-clear and raw RX bytes are declared device
+inputs. Root validation, positive table reads and the complete game/ports remain
+unfinished, as do FPS/8K/SUPIR/settings. Texture Off means disabling texture
+sampling and using vertex colors.
+
+How to inspect and reproduce
+
+Open analysis/movie_filesystem_state_qualification.json for qualification and
+limits, and analysis/movie_filesystem_state_workflow_verification.json for
+reproduction and preservation checks. The task, table and retained verification
+JSON files contain the individual test records.
+
+Run from the workspace root with matching locally supplied retail inputs and
+the tools expected by the scripts. Compiler paths may need adapting on another
+computer. Use Python -B. The Ghidra export uses readOnly/noanalysis.
+
+powershell -File outputs/sonic-adventure/ghidra/export_movie_filesystem_state.ps1
+python -B outputs/sonic-adventure/recover_movie_filesystem_state.py
+python -B outputs/sonic-adventure/connect_movie_filesystem_state.py
+powershell -File outputs/sonic-adventure/build_movie_filesystem_state.ps1
+python -B outputs/sonic-adventure/check_movie_filesystem_state_unbounded.py
+python -B outputs/sonic-adventure/verify_movie_filesystem_state_tasks.py
+python -B outputs/sonic-adventure/verify_movie_filesystem_state_table.py
+python -B outputs/sonic-adventure/verify_movie_filesystem_state_retained.py
+python -B outputs/sonic-adventure/audit_movie_filesystem_state.py
+python -B outputs/sonic-adventure/qualify_movie_filesystem_state.py
+python -B outputs/sonic-adventure/register_movie_filesystem_state.py
+python -B outputs/sonic-adventure/map_main_dispatch_cases.py
+python -B outputs/sonic-adventure/verify_main_dispatch_case_map.py
+python -B outputs/sonic-adventure/audit_recovery_coverage.py
+python -B outputs/sonic-adventure/audit_project_completion.py
+python -B outputs/sonic-adventure/verify_movie_filesystem_state_workflow.py
+
+Generation freezes the prior 1,513-entry classification so registration does not
+reclassify recovered routines. The workflow reproduces eight generated artifacts,
+checks byte-idempotent registration and pinned inputs, and parses 14 Python and
+two PowerShell scripts. The previous 14,366 source/proof files retain their
+hashes; ten catalog/status/document paths have reviewed updates. All 2,683 prior
+build files are preserved. Publication excludes retail inputs/assets, tools,
+caches and credentials. See GITHUB_PUBLISHING.txt.
+
+Build: work/sonic-adventure/build/movie_filesystem_state.dll and .lib.
+DLL SHA256: b71c8a0600d6d21fd882645e39dc2be640960d6e80362b26dc9d90fc38981036
+
+Next: recover validator 64a4b2 through the original root-read task path, then
+qualify positive table reads. Keep Sol High for reverse engineering. Luna Low
+is suitable for routine documentation and publication checks after verification.
