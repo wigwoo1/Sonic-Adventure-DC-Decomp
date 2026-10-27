@@ -1,0 +1,51 @@
+address	length	bytes	instruction	flows
+8c64ad56	2	e62f	mov.l r14,@-r15	
+8c64ad58	2	d62f	mov.l r13,@-r15	
+8c64ad5a	2	c62f	mov.l r12,@-r15	
+8c64ad5c	2	224f	sts.l PR,@-r15	
+8c64ad5e	2	f87f	add #-0x8,r15	
+8c64ad60	2	1e9c	mov.w 0x8c64ada0,r12	
+8c64ad62	2	11d3	mov.l 0x8c64ada8,r3	
+8c64ad64	2	c704	mul.l r12,r4	
+8c64ad66	2	511f	mov.l r5,@(0x4,r15)	
+8c64ad68	2	622f	mov.l r6,@r15	
+8c64ad6a	2	1a0c	sts MACL,r12	
+8c64ad6c	2	3c3c	add r3,r12	
+8c64ad6e	2	ca5e	mov.l @(0x28,r12),r14	
+8c64ad70	2	1ea0	bra 0x8c64adb0	8c64adb0 
+8c64ad72	2	00ed	_mov #0x0,r13	
+8c64ad74	2	e064	mov.b @r14,r4	
+8c64ad76	2	4c60	extu.b r4,r0	
+8c64ad78	2	3388	cmp/eq #0x33,r0	
+8c64ad7a	2	0689	bt 0x8c64ad8a	8c64ad8a 
+8c64ad7c	2	1191	mov.w 0x8c64ada2,r1	
+8c64ad7e	2	1030	cmp/eq r1,r0	
+8c64ad80	2	0389	bt 0x8c64ad8a	8c64ad8a 
+8c64ad82	2	0088	cmp/eq #0x0,r0	
+8c64ad84	2	1289	bt 0x8c64adac	8c64adac 
+8c64ad86	2	11a0	bra 0x8c64adac	8c64adac 
+8c64ad88	2	0900	_nop	
+8c64ad8a	2	e365	mov r14,r5	
+8c64ad8c	2	0475	add #0x4,r5	
+8c64ad8e	2	7fbf	bsr 0x8c64ac90	8c64ac90 
+8c64ad90	2	f154	_mov.l @(0x4,r15),r4	
+8c64ad92	2	0820	tst r0,r0	
+8c64ad94	2	0a89	bt 0x8c64adac	8c64adac 
+8c64ad96	2	f265	mov.l @r15,r5	
+8c64ad98	2	9fbf	bsr 0x8c64acda	8c64acda 
+8c64ad9a	2	e364	_mov r14,r4	
+8c64ad9c	2	0da0	bra 0x8c64adba	8c64adba 
+8c64ad9e	2	d360	_mov r13,r0	
+8c64adac	2	207e	add #0x20,r14	
+8c64adae	2	017d	add #0x1,r13	
+8c64adb0	2	c753	mov.l @(0x1c,r12),r3	
+8c64adb2	2	3c52	mov.l @(0x30,r3),r2	
+8c64adb4	2	233d	cmp/ge r2,r13	
+8c64adb6	2	dd8b	bf 0x8c64ad74	8c64ad74 
+8c64adb8	2	ffe0	mov #-0x1,r0	
+8c64adba	2	087f	add #0x8,r15	
+8c64adbc	2	264f	lds.l @r15+,PR	
+8c64adbe	2	f66c	mov.l @r15+,r12	
+8c64adc0	2	f66d	mov.l @r15+,r13	
+8c64adc2	2	0b00	rts	
+8c64adc4	2	f66e	_mov.l @r15+,r14	

@@ -1,0 +1,103 @@
+Sonic Adventure DC Rev A - file metadata and original command 20 prefix
+
+Status: PARTIALLY VERIFIED. Overall estimate: about 10% by weighted milestones,
+not measured code coverage. The goal remains active. These research libraries
+are not a playable native port.
+
+Six new routines qualify: file information (648534), directory search (64ad56),
+12-byte name comparison/length (64ac90/64ac62), raw directory-entry decoding
+(64acda), and timestamp conversion (64b472). All 306 original instructions and
+38 conditional outcomes execute in passing original/native comparisons.
+
+The 229-source DLL also contains the proposed command 20 wrapper, 64bcd6.
+That wrapper remains PARTIAL and UNREGISTERED: successful metadata lookup now
+reaches the actual missing file-chain validator, 64b300. Its 88 instructions
+receive no routine-completion credit. Lower transfer helper 6476e8 and backend
+660bae remain unfinished. The two existing primitives 602e9c and 64b3b4 are
+reused with zero duplicate credit; their original sources and proofs remain intact.
+
+Fresh verification: 1,255 original/native comparisons and 8,363 independent checks.
+- Names/raw entries/timestamps: 196 comparisons / 1,208 checks.
+- Directory lookup: 176 / 1,584.
+- File information: 176 / 1,760.
+- Eight original task sessions: 464 phases / 2,128 checks.
+- Retained IRQ/context/task controls: 243 / 1,683.
+
+Independent oracles check full RAM or all nonstack RAM, exact own stack frames,
+output padding, name results, raw entry fields, date bytes, error mappings and
+selected callees. Every comparison checks complete machine/device state and
+ordered call boundaries against the original SH4 instruction model. This is
+software-model evidence, not a physical Dreamcast hardware match.
+
+Tests cover channels 0/7, both interface byte orders, four CPU/FPU profiles,
+empty/high-byte/12-byte names, differing lengths and early/late mismatches.
+One name occupies exactly the last 12 accessible RAM bytes, proving that the
+original length helper does not load a thirteenth byte. Raw date inputs include
+invalid BCD bytes; no new validation is invented. File information tests include
+availability/busy/cache failures, invalid roots, error latches, missing names,
+both accepted file types, output padding and 32-bit size multiplication wrap.
+
+Direct helper tests explicitly declare coherent SDK/cache/raw-entry inputs.
+The task tests separately acquire the header, root, FAT and directory through
+the original request submission, response pump and task resumption. Raw header
+word 16 is decoded to metadata+1c; original instruction 648340 copies that value
+to metadata+30. Thus the task's lookup limit is produced by original code.
+Only caller filename bytes are supplied to the idle command's filename buffer;
+original parameter/opcode APIs and scheduler own all task frames and commands.
+No parsed directory record, decoded metadata, request ID, saved frame, PR or
+callback result is injected.
+
+The eight sessions complete initialization and 24 command 20 error cases through
+the original callback: missing file (-251), unsupported file type (-245), and
+invalid block range (-256). Eight valid requests produce independently checked
+18-byte file information in the original live caller frame and stop at 64b300.
+They are deliberately pending; no successful file transfer or teardown of that
+pending path is claimed. Metadata queries add no transport requests or changes
+to the acquired root/FAT/directory buffers.
+
+Build/static checks: 229 sources compile with -O2, -Wall, -Wextra and -Werror.
+All 229 also pass strict unbounded syntax checking. The byte audit checks all
+409 adapter instruction rows: 306 qualified new + 88 partial + 15 canonical.
+The previous bridge is preserved except nine adapters, 23 explicit continuations,
+23 actual call-return sites and the export prefix. Return membership: 1979 -> 2002.
+No CPU, flat-model, ABI, runtime, exception, SRFD or guard policy is relaxed.
+There is no new source wait bound. Of 110 nonfunction continuation exports,
+17 are qualified and 93 remain unqualified for nonlocal resumption. All 23 new
+exports remain unqualified for nonlocal entry; synchronous execution is not
+evidence that an arbitrary callback may yield.
+
+Registry: 1,526 entries / 1,523 unique module-address pairs. Previous 1,520 rows
+are unchanged. Earlier 25,197 comparisons remain historical and were not all
+rerun; combined evidence of 26,452 is not unique cases or code coverage.
+There is no fresh full startup profile for this build. Historical 216 warm and
+211 cold reports retain their original scope. Previous source/proof files and
+all 2,689 prior builds are preserved except ten reviewed catalog/status/docs paths.
+
+Reproduce with matching local retail inputs and the documented toolchain:
+python -B outputs/sonic-adventure/recover_movie_filesystem_command.py
+python -B outputs/sonic-adventure/connect_movie_filesystem_command.py
+powershell -File outputs/sonic-adventure/build_movie_filesystem_command.ps1 -Workspace WORKSPACE
+python -B outputs/sonic-adventure/check_movie_filesystem_command_unbounded.py
+python -B outputs/sonic-adventure/audit_movie_filesystem_command.py
+python -B outputs/sonic-adventure/verify_movie_filesystem_command_primitives.py
+python -B outputs/sonic-adventure/verify_movie_filesystem_command_lookup.py
+python -B outputs/sonic-adventure/verify_movie_filesystem_command_info.py
+python -B outputs/sonic-adventure/verify_movie_filesystem_command_tasks.py
+python -B outputs/sonic-adventure/verify_movie_filesystem_command_retained.py
+python -B outputs/sonic-adventure/qualify_movie_filesystem_command.py
+python -B outputs/sonic-adventure/register_movie_filesystem_command.py
+python -B outputs/sonic-adventure/verify_movie_filesystem_command_workflow.py
+
+Proof: analysis/movie_filesystem_command_qualification.json and its pinned reports.
+Code: source/sa_movie_filesystem_command.c and its connected bridge.
+Publication: follow GITHUB_PUBLISHING.txt; research prereleases include source-matched
+build manifests and SHA256SUMS, excluding retail inputs/assets, toolchains, caches
+and credentials. Never force-push or delete remote history.
+
+Next: recover actual file-chain validator 64b300 and its dependencies using the
+preserved command 20 task path and raw FAT/directory data. Continue with Sol High
+for reverse engineering. Luna Low is suitable for routine docs/publication.
+Physical Maple acquisition/traversal/timing/automatic IRQ, complete filesystem,
+game startup/gameplay and all native ports remain unfinished. FPS/8K/SUPIR and
+settings requirements remain unchanged; textures Off disables texture sampling
+and uses vertex colors.
