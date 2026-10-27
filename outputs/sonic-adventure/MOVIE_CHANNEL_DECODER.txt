@@ -1,0 +1,114 @@
+Sonic Adventure Dreamcast Rev A - decoder descriptors and original caller paths
+
+Status: PARTIALLY VERIFIED family. Three local bodies qualify within the explicit
+domains below; active decoding and the full command worker remain incomplete.
+Goal active. Overall estimate about 10% by weighted milestones, not code coverage.
+The 220-source Windows research DLL is an incomplete library, not a playable port.
+
+Three original bodies qualify, covering 158 instructions / 40 branch outcomes:
+  64850a: 21 instructions / 2 outcomes. Cleans descriptor fields when its active
+          byte is nonzero; otherwise returns the original signed sentinel -255.
+  64b4e4: 80 instructions / 36 outcomes. Validates descriptor counts, signed
+          positions/capacities and kind values, then assigns the matching subtype
+          or returns the original failure value. All guards are exercised.
+  648470: 57 instructions / 2 outcomes. Returns the inactive sentinel or prepares
+          the descriptor, calls the canonical callback and tail-transfers into
+          original 64b1f0. Its active tail reaches the actual missing 64ae32.
+The gateway qualification covers its own instruction/ABI effects and reached
+tail boundary. It does not establish complete active decoder operation.
+
+Nine bodies / 669 original instructions are byte-checked and statically translated.
+This includes the previously registered 17-instruction callback helper 647bde,
+which receives zero duplicate recovery credit. Across fresh cases, 368 translated
+instructions execute, including those 17 canonical rows. Five new bodies remain
+partial: 6482a0, 64839a, 64753c, 660a7e and 64b1f0. Their remaining instructions
+are retained in source but receive no registration credit. Registry now contains
+1,488 entries / 1,485 unique module/address pairs; all prior rows are preserved.
+
+771 fresh original/native comparisons / 7,207 independent checks pass:
+  Direct cleanup/validator/canonical callback: 240 comparisons / 2,424 checks.
+  Direct inactive-return and active-prefix paths: 128 comparisons / 1,456 checks.
+  Original admission/submission/callback lifecycles: 272 comparisons / 1,496 checks.
+  Retained zero/four/eight-task worker lifecycles: 48 comparisons / 1,072 checks.
+  Eight retained software IRQ lifecycles: 48 comparisons / 424 checks.
+  Retained context/SR/FD controls: 35 comparisons / 335 checks.
+Sixteen authored software IRQ admissions receive no original-code comparison
+credit. Previous 10,945 comparisons remain historical, not all freshly rerun;
+combined evidence totals 11,716. No fresh 220-source warm/cold startup is claimed.
+Earlier 216-source warm and 211-source full cold evidence remains historical.
+
+Independent leaf expectations check entire RAM, cleanup register/SR/MACL effects,
+stack retention, return values and preserved floating/special state. Validator
+tests cover accepted kinds 255/511/1023/2047, signed lower/upper bounds, matching
+counts, capacity checks and the original global-mode bypass. Cleanup tests include
+zero/nonzero/signed-byte flags and modulo-32 index arithmetic in coherent RAM;
+wrap fixtures do not establish valid acquired resources. Callback tests use null,
+the real 05180c RTS/NOP body and an actual unknown target. No result is supplied.
+
+The original caller chain now reaches decoder completion for inactive resources:
+  6477cc / 660842 / 668bee create the task and its real context/stack.
+  One scheduler call enters the worker and yields normally.
+  647c50 registers completion callbacks through the original setter.
+  647cc4 submits payload/index arguments through the original API.
+  647cb4 posts command one through the original API.
+  Resumed worker calls 6482a0, optionally through mode-one gateway 648470.
+  Original sentinel -255 triggers actual 64850a cleanup, command-record clearing,
+  status storage and the completion callback; normal cases yield/resume again
+  and finish with actual owner teardown.
+Eight admission/idle bases cover channels zero/seven, both floating-bank profiles
+and global modes zero/one. Forty-eight subsequent command lifecycles cover
+resource indices zero/seven and null/NOP/unknown completion callbacks. The initial
+inactive descriptor/global-object fixture is declared before task constructors.
+Tests never patch task slots, saved contexts or counters. Caller stack arguments
+are explicit ABI inputs. Task snapshots remain unchanged by submission APIs.
+Unknown completion callbacks stop at the real target after record/status writes;
+no completed result is substituted. Full machine, modeled device and ordered
+boundary state matches original execution throughout.
+
+The active prefixes retain real parameter tables and callbacks. Command one and
+the mode-one gateway use parameter table 673ba8; command eighteen uses 673bec.
+Descriptor stride is 148 hex; base is 8c89c550. Native and original executions
+agree through real missing dependencies 6608a4, 660dec, 64ae32 and 64a4b2. These
+stops are unresolved work. Descriptor initialization, active header parsing,
+resource acquisition and nested coroutine completion are not established.
+
+The previous worker source is byte-identical. Combining its historical 219-source
+coverage with current caller evidence raises coverage from 186 to 222 of its
+255 instructions. Thirty-three instructions and one conditional outcome remain
+unqualified. This is combined source-identical evidence, not a fresh complete
+220-source worker replay. Other commands and non-sentinel decoder returns remain
+partial, and the worker/selectors receive no new registration credit.
+
+Next dependencies are exported read-only under analysis/movie-channel-decoder-io:
+  6608a4: 216 original instructions, header/record I/O path.
+  660dec: 38 original instructions, state/readiness path.
+Both reach backend helpers such as 646856, 646868 and 646b36. Further parsing,
+buffer operations and real yield paths follow. These exports receive zero native
+credit. Recover the backend and valid resource inputs next. Actual nested yield
+paths will need additional decoder/worker continuations; only the prior idle
+647b74 continuation is qualified here. Do not inject parser/callback results.
+
+Strict compilation of the 220-source DLL and unbounded -fsyntax-only compilation
+of all 220 sources pass -Wall -Wextra -Werror. Generation, connection and audit
+artifacts reproduce byte-identically; registration is idempotent. Existing model
+execution code, guards, worker/continuation sources, runtime, exception policies
+and 17/18/19/20-argument ABI layouts remain intact. Prior source/proof bytes and
+2,671 archived builds are preserved. Registry audits report zero evidence errors
+and zero stale source proofs. Original owner+20c behavior remains unchanged and
+its wider meaning is undetermined.
+
+Reproduce with recover_movie_channel_decoder.py, connect_movie_channel_decoder.py,
+build_movie_channel_decoder.ps1, verify_movie_channel_decoder_leaves.py,
+verify_movie_channel_decoder_paths.py, verify_movie_channel_decoder_callers.py,
+verify_movie_channel_decoder_worker.py, verify_movie_channel_decoder_irq.py,
+verify_movie_channel_decoder_retained.py, audit_movie_channel_decoder.py,
+qualify_movie_channel_decoder.py, register_movie_channel_decoder.py and
+verify_movie_channel_decoder_workflow.py. Evidence is in
+analysis/movie_channel_decoder_*.json. Matching local Rev A input and the external
+toolchain are required for game-dependent checks and are excluded from publication.
+
+Keep Sol High for active I/O recovery and nested coroutine qualification. Luna Low
+is suitable for routine documentation/publication checks. Full game code, boot,
+gameplay, PC/Android/3DS/N64/PlayStation ports, high FPS/8K, stereoscopic 3D and
+SUPIR/settings remain unfinished. Texture Off disables sampling and uses vertex
+colors. Goal active; no physical controller/timing/full-port claim is made.
