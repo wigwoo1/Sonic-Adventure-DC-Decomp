@@ -1,0 +1,74 @@
+System settings and firmware information queries - verified research milestone
+
+Three new original routines qualify in the 209-source Windows research DLL:
+5ff39c (47 instructions), 5ff3fa (21), and 5ff494 (13). All 81 instructions
+and 16 conditional outcomes execute. Two existing canonical helpers, 5ff396
+and 04fe40, are connected through adapters with zero additional recovery credit.
+All 89 integrated instruction rows execute. Registry: 1,457 entries / 1,454
+unique module/address pairs. This library is not a playable game or PC port.
+
+The settings query clears its output, reads the settings packet, and applies
+the original signed-byte fallback and character conversion. Global 8c67340c
+contains a buffer pointer, not a boolean: the original caller passes that value
+implicitly in R5 to the existing flash/settings reader. Tests use real original
+helpers, including real flash format, erase, read and error paths.
+
+Firmware correction is additive. The earlier console_service source, API,
+state layout and historical proofs remain unchanged. New authored platform
+adapter console_sysinfo_status makes successful SYSINFO_INIT return zero.
+This corrects the previous void-return model at the firmware boundary; it
+does not inject a game helper's result. Primary references:
+https://mc.pp.se/dc/syscalls.html
+https://github.com/inolen/redream/blob/ffb7302245ff40515cb9f0f0b0e233a4b39342d3/src/guest/bios/syscalls.c
+analysis/console_sysinfo_status_primary_evidence.json records the evidence.
+No emulator implementation is copied into the adapter. Earlier proofs describe
+their earlier declared host policy; they are not relabeled as corrected runs.
+
+Fresh verification:
+- 121 direct comparisons / 2,009 independent checks: output bytes, signed
+  conversion, fallback/default, null buffer/output, missing/erased packets,
+  real read-only format failure, floating-point modes, call/return state,
+  neighbors and complete machine-state comparisons.
+- 289 retained-case comparisons / 4,839 checks: 128 float, 78 upload, 23 IRQ,
+  and 60 flash/settings cases, all executed in the new DLL. The 432-case old
+  word-copy grid is retained evidence and is not claimed freshly rerun.
+- Two fresh full configured startups / 146 checks: warm 4,598 boundaries;
+  cold 585,896. Both independently compare original and native execution and
+  stop at the actual next dependency 8c109cfe. Retained boundary fields match
+  the earlier warm/cold prefixes; complete old/new machine-state identity is
+  not claimed across the corrected firmware return policy.
+Total: 412 fresh original/native cases / 6,994 independent checks.
+Separate platform-only adapter tests: 30 cases / 272 checks, zero game-code
+recovery credit. Combined evidence is 5,807 cases including 5,395 earlier
+cases, which were not all rerun.
+
+Cold startup retains the full 8 MiB video-memory clear (33,554,432 original
+instructions), two 2 MiB Sound fills, two 33,376-byte transfers, G2 interrupts
+and exception returns, all 1,065,282 Sound events with zero drops, 39 SDK
+records / 1,092 bytes, 32 MIDI sends and the 32,768-byte VRAM upload. Final
+VRAM SHA256 is fca8722521f7d6b1b6b4d83e0eb58b8a5b9a4b72989c927d022532a4b50af741.
+Actual startup settings buffer is 8c900000. Flash snapshot calls [2,9,0,0],
+514 bytes, no writes/errors. Startup is a configured research model, not a
+physical Dreamcast boot or evidence of a working game or rendered frame.
+
+Defensive pointer/error cases run unchanged original game predicate 04fe40
+through an explicitly modified initial guest SYSINFO vector. This executes
+real guest code on both sides. These fixtures are not claims of physical
+BIOS failure and are not used for normal flash-reading startup.
+
+Reproduction from the workspace (Python -B; matching retail inputs/toolchain
+must already be installed locally): build_movie_system_state.ps1, then
+verify_movie_system_state.py, verify_console_sysinfo_status.py,
+verify_movie_system_state_retained.py, capture_movie_system_state_startup.py
+(see its profile options), verify_movie_system_state_startup.py,
+qualify_movie_system_state.py, register_movie_system_state.py and
+verify_movie_system_state_workflow.py. Separate JSON reports in analysis/
+record exact source hashes, coverage, ABI, checks and preservation scope.
+Historical absolute evidence paths and local compiler requirements remain.
+
+The broad dispatcher 652210 and graphics root 656940 remain partial. Next
+dependency: 8c109cfe. Full decompilation, native ports, frame rates, 8K, SUPIR
+and settings UI remain unfinished. Texture Off must disable texture sampling
+and use vertex colors. Goal stays ACTIVE. Overall estimate remains 10% by
+weighted milestones, not measured code coverage. Keep Sol High for the next
+reverse-engineering dependency.
