@@ -1,0 +1,11 @@
+{
+  "primary_source": "https://www.st.com/resource/en/user_manual/cd00147165.pdf",
+  "title": "STMicroelectronics and Hitachi SH-4 CPU Core Architecture, ADCS 7182230F",
+  "pdf_zero_based_pages": {"FPU_disabled": 132, "STS_FPSCR": 458, "STS_FPUL": 460, "STS_MACH": 462, "STS_MACL": 464},
+  "facts": [
+    "STS MACH and STS MACL copy the corresponding 32-bit register into a general register.",
+    "STS FPSCR and STS FPUL read their corresponding FPU control registers without changing the saved register's bits.",
+    "SR.FD applies to these FPU control-register instructions as well as FMOV. The instruction faults before its own result when FPU execution is disabled."
+  ],
+  "implementation_policy": "New static native context adapter and independent original-model guards return the existing authored host fault status -4 at the reached instruction. Earlier guest side effects remain. This is not a claim that hardware exception-vector delivery or physical timing is implemented. Historical source/model/proofs remain unchanged."
+}

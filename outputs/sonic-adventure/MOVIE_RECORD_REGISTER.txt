@@ -1,0 +1,85 @@
+Record registration, callbacks and CPU context save - VERIFIED research milestone
+
+Seven new original entries qualify in the 211-source Windows research DLL:
+602b68 registration/mask wrapper; 6477cc tagged-buffer and work registration;
+010f22 callback initializer; 602bf0 callback removal/mask restoration;
+66082c pool reset/object allocation wrapper; 660842 work enqueue wrapper;
+110954 CPU/FPU context save. Descriptive names remain inferred.
+
+These bodies contain 310 instructions: 308 execute and two are checked
+infeasible. Twenty conditional outcomes execute and two are proved infeasible.
+Fourteen existing canonical helpers, including startup wrapper 010b00, are
+connected with zero additional recovery credit. Registry: 1,469 entries /
+1,466 unique module/address pairs. The earlier SZ0-only context prototype
+remains unchanged; it had no registry entry and receives no separate credit.
+
+All 1,214 fresh original/native comparisons / 17,483 independent checks pass:
+- 167 direct cases / 2,990 checks: shifts, selected mask bits, actual work
+  allocation/enqueue, valid/unsupported modes, buffers, null/real callbacks,
+  genuine queue rejection, free slots 0/1/7/31, SR masks/banks and faults.
+- 32 context vectors / 320 checks: nonzero FPUL/MACH/MACL/GBR, sticky FPSCR
+  bits, both physical FPU banks and all eight PR/SZ/FR mode combinations.
+  An independent 512-byte region oracle includes overlapping wide stores.
+- 1,013 retained cases / 14,027 checks: unchanged previous slot, system,
+  float, upload, interrupt and 60 flash-settings fixtures/oracles in the new
+  DLL. The old 432-case copy grid and platform-only proof are not rerun.
+- Two fresh full configured startup profiles / 146 checks.
+Earlier 6,822 evidence cases remain, not all rerun; combined evidence 8,036.
+
+There are 21 integrated bodies / 865 static instruction rows. The reports
+give measured coverage for each body. The two infeasible own instructions
+and outcomes have a separate byte-checked reset/callee-return proof: reset
+makes the first work-pool slot free, so completed allocation returns its
+nonzero fixed base; completed setup returns guest zero. Real host faults
+propagate before the caller comparison. No helper return is substituted.
+The declared domain uses immutable code/literals, coherent mapped buffers
+and disjoint private frames; destructive aliases are outside qualification.
+
+Actual original work-pool, metadata, copy/fill and callback helpers execute.
+Eight 4 KiB tagged buffers use original byte patterns 0x30..0x37. Independent
+checks cover their data and work records. The initially cleared 1 KiB record
+region is subsequently populated with callbacks; the oracle checks this
+final layout. The callback's shared indirect tail remains original code.
+
+Context save transports raw register bits. FPU-disabled and user-mode cases
+stop at the reached instruction with earlier side effects retained. The
+authored API uses host fault status -4; this is not physical exception-vector
+delivery or timing evidence. The primary CPU reference corroborates control
+register and FD behavior: STMicroelectronics/Hitachi, SH-4 CPU Core Architecture,
+ADCS 7182230F, PDF pages 132, 458, 460, 462 and 464 (zero based):
+https://www.st.com/resource/en/user_manual/cd00147165.pdf
+See analysis/record_context_register_primary_evidence.json.
+
+Fresh warm startup reaches 4,695 boundaries; cold reaches 585,993. Both stop
+at actual next missing dependency 8c601874. Complete original/native CPU,
+FPU, RAM, VRAM, Sound, runtime, flash and device state/ordered boundaries
+match. Exact earlier 210-source boundary-field prefixes remain unchanged.
+Full 8 MiB clear / 33,554,432 original instructions, two 2 MiB Sound fills,
+two 33,376-byte transfers/G2 IRQ/RTE/REQUEST paths, all 1,065,282 Sound events
+with zero drops, 39 SDK records / 1,092 bytes, 32 MIDI sends and the 32,768-byte
+VRAM upload remain independently checked. This is configured research
+execution, not physical reset/boot or a playable game.
+
+Some earlier canonical reports have a different contiguous endpoint than the
+new Ghidra body envelope. Qualification verifies each old interval/hash
+against the same original binary and separately byte-checks the new instruction
+ranges. Literal gaps can separate instruction bytes. Old reports/hashes are
+not rewritten or relabeled; these are the same entries with zero extra credit.
+
+Reproduction with existing local tools and matching retail inputs:
+ghidra/export_movie_record_register.ps1; recover_movie_record_register.py;
+connect_movie_record_register.py; build_movie_record_register.ps1;
+verify_movie_record_register.py; verify_record_context_vectors.py;
+prove_movie_record_register_returns.py; verify_movie_record_register_retained.py;
+capture_movie_record_register_startup.py (warm/cold); startup verification;
+qualification, registration and workflow verification. JSON reports in analysis/
+pin the exact inputs and separate coverage, fault, proof and preservation scope.
+Historical absolute paths and local toolchain requirements remain visible.
+
+Both the research DLL build and strict compilation without the research stall
+macro pass for all 211 C sources. Prior source, proofs, builds and requirements
+remain preserved. Broader 652210 dispatcher and 656940 root remain partial.
+Full game/ports/FPS/8K/SUPIR/settings remain unfinished. Texture Off must disable
+sampling and use vertex colors. Goal ACTIVE, approximately 10% by weighted
+milestones, not measured code coverage. Keep Sol High for the next dependency;
+check canonical registration before assigning new routine credit.

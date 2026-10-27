@@ -129,7 +129,7 @@
     "prs_trailing_bytes": 0,
     "main_binary_indexed_functions": 3637,
     "main_binary_draft_pseudocode_functions": 3631,
-    "recovered_buildable_routines": 1462,
+    "recovered_buildable_routines": 1469,
     "recovered_routine_tests": "analysis/startup_verification.json",
     "recovered_routine_test_cases": 17,
     "main_binary_draft_export_failures": 6,
@@ -143920,6 +143920,201 @@
       "verification": "analysis/movie_slot_initialize_qualification.json",
       "verification_sha256": "1e33c57168fda730bb9cd80e060d63f6a8d734841b46d7fe1d3ac08ff76986cb",
       "guide": "MOVIE_SLOT_INITIALIZE.txt"
+    },
+    "movie_record_register_integration": {
+      "newly_registered_entries": 7,
+      "newly_qualified_rows": 310,
+      "executed_rows": 308,
+      "proved_infeasible_rows": 2,
+      "qualified_conditional_outcomes": 22,
+      "executed_conditional_outcomes": 20,
+      "proved_infeasible_conditional_outcomes": 2,
+      "compiled_source_count": 211,
+      "integrated_entries": 21,
+      "static_integration_rows": 865,
+      "measured_executed_integration_rows": 849,
+      "canonical_reuse": [
+        {
+          "address": "0x8c010b00",
+          "canonical_name": "sa_startup_state_initialize_8c010b00",
+          "additional_recovery_credit": 0,
+          "historical_end_exclusive": "0x8c010b38",
+          "current_end_exclusive": "0x8c010b38",
+          "historical_span_sha256": "2b0baee95e95c96e5ee6ca230585932d7e3182fbc7812f9a256244ed1fe146a5",
+          "current_span_sha256": "2b0baee95e95c96e5ee6ca230585932d7e3182fbc7812f9a256244ed1fe146a5",
+          "historical_span_bytes_verified_against_same_original_binary": true
+        },
+        {
+          "address": "0x8c647e16",
+          "canonical_name": "sa_record_setup_initialize_8c647e16",
+          "additional_recovery_credit": 0,
+          "historical_end_exclusive": "0x8c647ed8",
+          "current_end_exclusive": "0x8c647f10",
+          "historical_span_sha256": "e3d50e225e40fff4a1fb1aefe68f9373b5a39f2fdf94e5d915a77f079b8e6741",
+          "current_span_sha256": "3a42d5341b3c2ab24a8c7f171c854c616dd47ff86eda25fa512d2cf06bba6564",
+          "historical_span_bytes_verified_against_same_original_binary": true,
+          "span_note": "The earlier registered span and the new Ghidra body envelope have different endpoints. The old byte interval/hash is independently checked unchanged against the same original binary; the new instruction ranges are separately byte-checked. Literal gaps can make instruction-byte counts differ from a contiguous envelope. This remains the same physical entry and receives zero additional credit; the historical report is not rewritten or relabeled."
+        },
+        {
+          "address": "0x8c646eee",
+          "canonical_name": "sa_input_status_table_store_8c646eee",
+          "additional_recovery_credit": 0,
+          "historical_end_exclusive": "0x8c646efe",
+          "current_end_exclusive": "0x8c646efe",
+          "historical_span_sha256": "17e8b77873e5d8e2a1607be74d0b42ce48f81df1274360a47096a7b212982a72",
+          "current_span_sha256": "17e8b77873e5d8e2a1607be74d0b42ce48f81df1274360a47096a7b212982a72",
+          "historical_span_bytes_verified_against_same_original_binary": true
+        },
+        {
+          "address": "0x8c602dda",
+          "canonical_name": "sa_callback_tail_8c602dda",
+          "additional_recovery_credit": 0,
+          "historical_end_exclusive": "0x8c602de0",
+          "current_end_exclusive": "0x8c602de0",
+          "historical_span_sha256": "23834c7ef94de7dbeb77fa2f900f5d7ef2cc21319d78a67f04e2c4975ecc6590",
+          "current_span_sha256": "23834c7ef94de7dbeb77fa2f900f5d7ef2cc21319d78a67f04e2c4975ecc6590",
+          "historical_span_bytes_verified_against_same_original_binary": true
+        },
+        {
+          "address": "0x8c647c6c",
+          "canonical_name": "sa_record_callback_initialize_8c647c6c",
+          "additional_recovery_credit": 0,
+          "historical_end_exclusive": "0x8c647c88",
+          "current_end_exclusive": "0x8c647c88",
+          "historical_span_sha256": "1a3623c3196903e6ba3cb9aae7172610f72ba71186c7d84fd0dd29953e83f8e3",
+          "current_span_sha256": "1a3623c3196903e6ba3cb9aae7172610f72ba71186c7d84fd0dd29953e83f8e3",
+          "historical_span_bytes_verified_against_same_original_binary": true
+        },
+        {
+          "address": "0x8c647de8",
+          "canonical_name": "sa_record_callback_mode_select_8c647de8",
+          "additional_recovery_credit": 0,
+          "historical_end_exclusive": "0x8c647e16",
+          "current_end_exclusive": "0x8c647e16",
+          "historical_span_sha256": "4a3e0af1f7798709af92be5158e9d83f991aa51f768898d68794ef9329f402fc",
+          "current_span_sha256": "4a3e0af1f7798709af92be5158e9d83f991aa51f768898d68794ef9329f402fc",
+          "historical_span_bytes_verified_against_same_original_binary": true
+        },
+        {
+          "address": "0x8c647f10",
+          "canonical_name": "sa_record_mode_value_store_8c647f10",
+          "additional_recovery_credit": 0,
+          "historical_end_exclusive": "0x8c647f4c",
+          "current_end_exclusive": "0x8c647f4c",
+          "historical_span_sha256": "b0c83ee1b80679ee5b5f1f3c900f91cd5f02c8a240fc9674fd74bd3a47a0f601",
+          "current_span_sha256": "b0c83ee1b80679ee5b5f1f3c900f91cd5f02c8a240fc9674fd74bd3a47a0f601",
+          "historical_span_bytes_verified_against_same_original_binary": true
+        },
+        {
+          "address": "0x8c647f4c",
+          "canonical_name": "sa_record_buffer_descriptors_build_8c647f4c",
+          "additional_recovery_credit": 0,
+          "historical_end_exclusive": "0x8c64807c",
+          "current_end_exclusive": "0x8c6480a2",
+          "historical_span_sha256": "926ad902d493868860bce9b9fa35e9ddaa0b8488fdbb36da6d179d31e63e8d42",
+          "current_span_sha256": "ae1b2147b13cee6b72380488df5cc5945fd31695c872ec8fd0a0bd7649188a8d",
+          "historical_span_bytes_verified_against_same_original_binary": true,
+          "span_note": "The earlier registered span and the new Ghidra body envelope have different endpoints. The old byte interval/hash is independently checked unchanged against the same original binary; the new instruction ranges are separately byte-checked. Literal gaps can make instruction-byte counts differ from a contiguous envelope. This remains the same physical entry and receives zero additional credit; the historical report is not rewritten or relabeled."
+        },
+        {
+          "address": "0x8c647534",
+          "canonical_name": "sa_global_setter_8c647534",
+          "additional_recovery_credit": 0,
+          "historical_end_exclusive": "0x8c64753c",
+          "current_end_exclusive": "0x8c64753c",
+          "historical_span_sha256": "ab1011b1c1ee866c3edcbb7ce4b9fef92609ecd968dcf1ed62382392bbb75bb6",
+          "current_span_sha256": "ab1011b1c1ee866c3edcbb7ce4b9fef92609ecd968dcf1ed62382392bbb75bb6",
+          "historical_span_bytes_verified_against_same_original_binary": true
+        },
+        {
+          "address": "0x8c660898",
+          "canonical_name": "sa_retail_constant_setter_8c660898",
+          "additional_recovery_credit": 0,
+          "historical_end_exclusive": "0x8c6608a0",
+          "current_end_exclusive": "0x8c6608a0",
+          "historical_span_sha256": "e2f045efc3515350d4dccd40885931779fa5dafd42cb6c2b25f91df84309368c",
+          "current_span_sha256": "e2f045efc3515350d4dccd40885931779fa5dafd42cb6c2b25f91df84309368c",
+          "historical_span_bytes_verified_against_same_original_binary": true
+        },
+        {
+          "address": "0x8c647c50",
+          "canonical_name": "sa_record_callback_arg_initialize_8c647c50",
+          "additional_recovery_credit": 0,
+          "historical_end_exclusive": "0x8c647c6c",
+          "current_end_exclusive": "0x8c647c6c",
+          "historical_span_sha256": "ddc7598693e1d3f2b1970a476a59c27301c0038879bcedeaafd778a63df2f1cc",
+          "current_span_sha256": "ddc7598693e1d3f2b1970a476a59c27301c0038879bcedeaafd778a63df2f1cc",
+          "historical_span_bytes_verified_against_same_original_binary": true
+        },
+        {
+          "address": "0x8c668b38",
+          "canonical_name": "sa_input_work_pool_initialize",
+          "additional_recovery_credit": 0,
+          "historical_end_exclusive": "0x8c668b58",
+          "current_end_exclusive": "0x8c668b58",
+          "historical_span_sha256": "a4c23a211130ef508fb8724063e0880cbea8975cc64da09ef4ceb018e3f200ce",
+          "current_span_sha256": "a4c23a211130ef508fb8724063e0880cbea8975cc64da09ef4ceb018e3f200ce",
+          "historical_span_bytes_verified_against_same_original_binary": true
+        },
+        {
+          "address": "0x8c668b58",
+          "canonical_name": "sa_input_work_object_create",
+          "additional_recovery_credit": 0,
+          "historical_end_exclusive": "0x8c668bee",
+          "current_end_exclusive": "0x8c668bee",
+          "historical_span_sha256": "0254fb1d59bde0ff6a981791c6b384e4f5903090d7292e4e032c2db25a1514b3",
+          "current_span_sha256": "0254fb1d59bde0ff6a981791c6b384e4f5903090d7292e4e032c2db25a1514b3",
+          "historical_span_bytes_verified_against_same_original_binary": true
+        },
+        {
+          "address": "0x8c668bee",
+          "canonical_name": "sa_input_work_create",
+          "additional_recovery_credit": 0,
+          "historical_end_exclusive": "0x8c668cca",
+          "current_end_exclusive": "0x8c668cca",
+          "historical_span_sha256": "0e17432cb35e3f24a2a2c905bc552f59416477ce7b37d619bf2c1259d495b388",
+          "current_span_sha256": "0e17432cb35e3f24a2a2c905bc552f59416477ce7b37d619bf2c1259d495b388",
+          "historical_span_bytes_verified_against_same_original_binary": true
+        }
+      ],
+      "reused_additional_credit": 0,
+      "new_direct_original_native_comparisons": 167,
+      "new_direct_independent_checks": 2990,
+      "additional_context_vector_comparisons": 32,
+      "additional_context_vector_checks": 320,
+      "fresh_retained_original_native_comparisons": 1013,
+      "fresh_retained_independent_checks": 14027,
+      "fresh_full_startup_comparisons": 2,
+      "fresh_startup_independent_checks": 146,
+      "fresh_original_native_comparisons": 1214,
+      "fresh_independent_checks": 17483,
+      "retained_previous_evidence_original_native_comparisons": 6822,
+      "total_evidence_original_native_comparisons": 8036,
+      "actual_next_frontier": "0x8c601874",
+      "partial_unregistered_dispatcher": "0x8c652210",
+      "remaining_unqualified_graphics_root_outcomes": [
+        [
+          "0x8c656cf4",
+          "0x8c656d06"
+        ],
+        [
+          "0x8c656e90",
+          "0x8c656f38"
+        ]
+      ],
+      "preexisting_unregistered_context_prototype": "source/sa_input_context_save.c",
+      "dll_sha256": "f5ab618ca44448d3a4afdffa892b3506fd07912e1581571378d26cc471ca0952",
+      "limitations": [
+        "Seven newly qualified original entries310 instruction rows:308 executed andtwo checked infeasible rows,20 executed/two proved infeasible conditional outcomes. Fourteen earlier canonical adapters, including startup wrapper010b00, receive zero duplicate credit. All coverage is reported per body; not all865 integration rows are claimed executed. The15-row callback preserves its shared indirect tail with a guarded actual target, not a synthetic callee result.",
+        "167 direct cases exercise shifts, mask bits, actual queue registration, null/real callbacks, input modes, buffers, rejection/full/free slots, SR masks/banks and fault prefixes. Independent tagged-buffer/job/header/callback/SR/context expectations and complete original/native states/boundaries compare. Later callback writes correctly populate the initially cleared record region; no original behavior is changed to satisfy the oracle.",
+        "Thirty-two extra context vectors use nonzero FPUL/MACH/MACL/GBR and sticky FPSCR flags across all eight PR/SZ/FR modes, including exact overlapping wide stores. Prior SZ0 context prototype source remains unchanged and had no registry entry; this is its first complete original entry qualification. STS FPU-control reads respect FD; authored host fault-4 occurs at the reached instruction and preserves earlier effects. Primary CPU manual corroborates semantics. Physical exception-vector delivery/timing remain outside this software proof.",
+        "1013 retained cases14027 checks rerun previous slot/system/float/upload/IRQ/flash oracles in211-source DLL. Earlier6822 evidence cases are retained, not all rerun. No fresh432-case word-copy grid or old platform-only proof is claimed.",
+        "Two fresh full configured0546c0 startups:4695 warm/585993 cold boundaries,146 checks, reach missing601874. Exact prior210 recorded boundary prefixes and complete original/native CPU/FPU/RAM/VRAM/Sound/platform/flash/runtime comparisons pass. Full8MiB clear/two2MiB Sound fills/two33376-byte transfers/G2IRQ/RTE/REQUEST/all1065282 Sound events zero drops/39 SDK records1092B/32 MIDI sends/32768B VRAM upload remain independently checked. Not physical boot/gameplay proof.",
+        "Immutable code/literals, coherent mapped buffers and disjoint private frames apply. Callee return/reset proofs account for impossible failure rows/outcomes. No host helper return substitution or guest checkpoint. Broader652210 dispatcher/656940 root remain partial; full game/ports/FPS/8K/SUPIR/settings unfinished. Texture Off must disable sampling and use vertex colors. Goal ACTIVE about10% weighted milestones, not measured code coverage."
+      ],
+      "verification": "analysis/movie_record_register_qualification.json",
+      "verification_sha256": "3f63604a11c649733e60e16a86d79c661f6594cea6635f2ecaba626cc7e57cf3",
+      "guide": "MOVIE_RECORD_REGISTER.txt"
     }
   },
   "milestones": [
@@ -144093,10 +144288,10 @@
     "report": "analysis/recovery_coverage_audit.json",
     "candidate_inventory": "analysis/unrecovered_function_candidates.tsv",
     "boundary_inventory": "analysis/unresolved_module_boundaries.json",
-    "registered_routines": 1462,
-    "registered_unique_module_address_pairs": 1459,
+    "registered_routines": 1469,
+    "registered_unique_module_address_pairs": 1466,
     "indexed_candidates_in_export_snapshots": 11411,
-    "registered_entries_matching_export_snapshots": 1342,
+    "registered_entries_matching_export_snapshots": 1348,
     "non_texture_binaries_without_function_index": 211,
     "registry_evidence_errors": 0,
     "stale_whole_source_hash_reports": 0,
@@ -151421,5 +151616,5 @@
   },
   "unverified_work": {},
   "unverified_drafts": {},
-  "recovered_buildable_routines": 1462
+  "recovered_buildable_routines": 1469
 }
