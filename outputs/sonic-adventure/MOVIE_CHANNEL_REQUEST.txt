@@ -1,0 +1,112 @@
+Sonic Adventure Dreamcast Rev A - actual request locking and packet backend
+
+Status: PARTIALLY VERIFIED integration. Four backend bodies qualify in the
+declared coherent-RAM/single-guest-executor domain: 660494 (22 instructions),
+6604e6 (25), 6604c0 (19), and 660518 (23), totaling 89 instructions and four
+conditional outcomes. Registry: 1,493 entries / 1,490 unique module/address pairs.
+The 222-source Windows research library is incomplete and is not a playable port.
+Overall remains about 10% by weighted milestones, not measured code coverage.
+The goal remains active. PC/Android/3DS/N64/PS1, FPS/resolution, SUPIR and texture
+settings requirements remain unfinished; Texture Off disables texture sampling
+and uses vertex colors.
+
+Original request APIs 646982/6469c8 now enter real locking/encoding backends,
+which call the already recovered original packet builder 65f810. Commands 0a/0b
+encode their original two-word payload, including the extra caller-stack value
+for command 0b. No request ID, command result, diagnostic text, callback result,
+completion serial or parser result is supplied by a test service.
+
+TAS.B tests the old byte, stores old|0x80, and sets SR.T only if the old byte was
+zero. Its mandatory cache purge is explicit. The operation runs uninterrupted
+within the single guest executor. A busy lock executes the original report
+callback 65f348 and returns the original -2; it preserves the set lock byte.
+An acquired lock is cleared after the original packet routine returns, including
+its busy-device -1 result. Reached errors retain original partial state.
+
+Architecture reference: STMicroelectronics/Hitachi SH-4 CPU Core Architecture,
+TAS.B, PDF page 474:
+https://www.st.com/resource/ja/user_manual/cd00147165-sh-4-32-bit-cpu-core-architecture-stmicroelectronics.pdf
+Only the coherent-RAM/MMU-off software cache policy is qualified. Physical cache,
+TLB/access exceptions, multi-threaded host RAM atomicity and controller hardware
+are not proved. The original CPU reference gains only the two new TAS purge
+events; its other instruction execution and flat call/return logic are retained.
+
+125 original instruction rows are byte-checked: 89 newly proposed request rows
+plus 36 from the previously registered report callback. That canonical adapter
+gets zero duplicate credit. All previous source, proof and build files remain
+preserved, apart from reviewed documentation/status/catalog updates.
+
+1,771 fresh original/native comparisons / 23,451 independent checks pass:
+  576 lock/packet comparisons / 12,772 checks.
+  88 outer-API/pump-frontier/actual-diagnostic comparisons / 1,360 checks.
+  240 active-task comparisons / 1,848 checks across 24 admitted lifecycles.
+  867 retained comparisons / 7,471 checks (readiness, nested failure, interleaved
+  worker, software IRQ, context and SR/FD guards).
+Previous 12,855 comparisons remain historical, not all rerun; combined evidence
+contains 14,626 comparisons, not unique test cases or measured code coverage.
+Original execution uses the project's SH-4 reference model, not a Dreamcast or
+the complete game. No fresh 222-source warm/cold startup test is claimed.
+
+Independent expectations cover all 256 old lock-byte values for each entry,
+adjacent-byte preservation, T and other SR bits, purge sequence, stack balance,
+callee-preserved registers/FPU/special state, unit mapping, packet words/byte
+order/bank/padding, device busy, serial increments and signed-positive rollover.
+Enabled automatic pumping stops at actual missing 646654 after creating the
+packet, unlocking and saving its result. Disabled-pump APIs complete. The outer
+APIs remain partial because the pump body is not yet connected.
+
+Busy diagnostics execute the actual formatter and text copy for the 37-byte
+retail message. Null, original NOP and unknown notification targets are checked;
+unknown targets stop at their actual boundary. The report's unaligned-stack
+branch is not newly qualified, and the report gets no new routine credit.
+
+Original task admission, constructors, submission APIs and scheduler execute
+commands one/eighteen on channels zero/seven in both floating-register banks.
+Active headers cause real packet construction followed by the original pending
+completion wait. Three scheduler returns resume 66091a without constructing a
+second packet. Device-busy and mutex-busy paths resume 660906 and retry the actual
+backend. Independent nested SP/PR, owner deadline, command/status and packet/lock
+checks pass. Original owner cancellation ends each observed pending prefix.
+Completion serials and response data are never installed to finish a parser.
+Coherent input/global/descriptor/packet resources are explicit initial fixtures;
+natural resource acquisition, physical responses and full startup remain open.
+
+No native continuation functions are added. The old decoder/worker source forks,
+runtime, exception guards and external argument layouts are unchanged. Two more
+of their existing after-call routes now have observed nonlocal qualification:
+660906 and 66091a. Eight of 82 routes have scoped nonlocal qualification across
+the old/new task graphs; the other 74 and arbitrary graphs remain unqualified.
+The guard's 1,928 allowed return sites do not prove implementations for every
+destination. Original owner+20c zero/decrement-wrap behavior remains unchanged
+and its broader meaning is undetermined.
+
+Reproduce from the workspace root, using Python -B and the local matching retail
+inputs. Configure compiler/tool locations for your machine where necessary:
+  python -B outputs/sonic-adventure/recover_movie_channel_request.py
+  python -B outputs/sonic-adventure/connect_movie_channel_request.py
+  powershell -File outputs/sonic-adventure/build_movie_channel_request.ps1
+  python -B outputs/sonic-adventure/check_movie_channel_request_unbounded.py
+  python -B outputs/sonic-adventure/verify_movie_channel_request.py
+  python -B outputs/sonic-adventure/verify_movie_channel_request_api.py
+  python -B outputs/sonic-adventure/verify_movie_channel_request_tasks.py
+  python -B outputs/sonic-adventure/verify_movie_channel_request_retained.py
+  python -B outputs/sonic-adventure/audit_movie_channel_request.py
+  python -B outputs/sonic-adventure/qualify_movie_channel_request.py
+  python -B outputs/sonic-adventure/register_movie_channel_request.py
+  python -B outputs/sonic-adventure/audit_recovery_coverage.py
+  python -B outputs/sonic-adventure/verify_movie_channel_request_workflow.py
+Some preserved evidence contains historical absolute workspace paths and requires
+adaptation on another computer. Download earlier research archives if checking
+their preserved build hashes. Retail game inputs/assets and toolchains are not
+published. Normal full retained replay requires no recovery flag; the explicit
+--remaining-after-worker option records the reviewed proof-filename correction
+used during this run and validates existing completed proof hashes.
+
+Next: integrate the already registered pump 646654 and preflight 65f1aa, using
+their original source/proofs with zero duplicate credit. Inspect the canonical
+source/input_service_cleanup_native.c connection and qualify its response paths
+in the current guarded ABI, replacing reached isolated-test stub boundaries
+with actual code. Then qualify real completion/header/metadata parsing without
+fabricating responses. Existing read-only exports are in
+analysis/movie-channel-io-request. Keep Sol High for that reverse engineering;
+Luna Low is suitable for routine documentation/publication work.
