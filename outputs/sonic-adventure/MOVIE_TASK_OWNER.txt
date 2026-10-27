@@ -1,0 +1,82 @@
+Sonic Adventure Dreamcast Rev A - task-owner teardown and counter audit
+
+Status: teardown code VERIFIED within the domains below; the counter's wider
+meaning remains unqualified. Goal active. Overall estimate stays about 10% by
+weighted milestones, not measured code coverage. Research DLL, not a playable port.
+
+Two original routines qualify in the 218-source Windows research DLL:
+  668cec: scans eight owners, invoking teardown for each nonzero owner flag;
+           22 instructions / 4 conditional outcomes.
+  668d18: scans an owner's signed record capacity, cleans nonzero records and
+           tail-calls the original byte-clear helper over the owner block;
+           31 instructions / 4 conditional outcomes.
+All 53 instructions and eight outcomes execute. Existing 668cca cleanup and
+10d31c byte clearing run unchanged and receive zero extra credit. Registry now
+contains 1,485 entries / 1,482 unique module/address pairs.
+
+209 fresh original/native comparisons and 2,305 independent checks pass:
+  94 direct teardown comparisons / 1,030 checks.
+  32 comparisons across 16 actual channel-admission/teardown or partial-worker
+     sequences / 516 checks.
+  48 retained active-input IRQ comparisons / 424 checks.
+  35 retained context/SR/FD comparisons / 335 checks.
+Prior 10,309 comparisons remain historical/not all freshly rerun; combined
+evidence totals 10,518. Authored IRQ admissions receive no original-code credit.
+No fresh warm or cold startup run is claimed. Earlier 216-source warm and
+211-source full cold evidence remains unchanged and historical.
+
+The counter observation is now bounded by code and actual callers. All 87 enqueue
+instructions at 668bee are checked against the retail bytes. Its owner pointer
+stays in R13 until restoration; direct stores use the record pointer or stack.
+Its four helper destinations are record/context or private stack storage. The
+examined enqueue path reads owner+208 and owner+20c but does not directly update
+owner+20c. A limited SDK-range MOV.W-literal scan is also recorded. This scan is
+not an exhaustive global-writer analysis.
+
+Actual 6477cc channel admission creates zero to eight records using the retail
+task/payload tables and original 660842/668bee helpers. The tested owner+20c word
+stays zero, including after eight admissions. No task slots, contexts or counters
+are hand-filled after those helpers. Cleanup decrements that word with normal
+32-bit wrap, and successful teardown clears the entire owner block. The external
+pool-counter word is unchanged by these teardown routines in the tested cases.
+
+These observations do not establish that owner+20c is a maintained active-task
+count, nor prove that an upstream increment routine exists. Its wider purpose
+remains undetermined. The recovered code preserves the original reads, decrements,
+wrap and clearing. No bookkeeping bug fix or invented count update is applied.
+
+Independent direct expectations cover all RAM and stack bytes, retained inactive
+owners, complete successful GPR/SR state, cleanup/clear call counts and external
+counter retention. Tests include signed capacities, multiple owner masks, null
+callbacks, a real original RTS/NOP callback and actual unknown callback stops.
+User/privileged, bank and FPU-disabled configurations preserve their expected
+state. Unknown callbacks leave partial cleanup writes and prevent clearing the
+failed owner. Arbitrary callbacks/resources/nonlocal destructors remain outside
+the qualified domain. No physical exception delivery or hardware timing is proved.
+
+Two original scheduler prefixes after actual admission reach the real unresolved
+task entries 64790e and 647980. Their disassembly is preserved as unqualified
+research, with zero native recovery credit. The first entry selects channel zero;
+the other selects channel seven before shared worker 647982. This worker contains
+a 21-command dispatch table and a yield loop. The local label "input channel"
+does not establish physical controller semantics or controller acquisition.
+
+Next recovery target: the eight selector entries, shared worker 647982 and yield
+thunk 66086a, with correct resumption at 647b74. Preserve the real dispatch table
+and explicit missing callees. Existing broader input, interrupt, frame-wait,
+SDK and graphics families remain partial. Automatic frame timing, full boot,
+gameplay and PC/Android/3DS/N64/PlayStation ports remain unfinished.
+
+Reproduction: recover_movie_task_owner.py and connect_movie_task_owner.py generate
+the source, bridge, probe, build script and manifests. The bounded static audit
+is audit_movie_task_owner_contract.py. Verification cases, actual caller sequences
+and preservation checks are in analysis/movie_task_owner_* reports. Build with
+build_movie_task_owner.ps1 using the local external toolchain. Matching Rev A
+retail input is required for game-dependent checks; it and game assets are excluded
+from public snapshots. Previous source/proof/build bytes, requirements, model
+execution code, guards, runtime and ABI layouts are preserved.
+
+Keep Sol High for the command-worker reverse engineering. Luna Low is suitable
+for routine documentation/publication checks. Full decompilation, 60/120/240 FPS,
+8K, stereoscopic 3D, SUPIR textures and settings remain unfinished. Texture Off
+must disable sampling and use vertex colors.
