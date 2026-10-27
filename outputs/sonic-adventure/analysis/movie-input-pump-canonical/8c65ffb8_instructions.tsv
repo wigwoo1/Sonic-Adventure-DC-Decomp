@@ -1,0 +1,75 @@
+address	length	bytes	instruction	flows
+8c65ffb8	2	e62f	mov.l r14,@-r15	
+8c65ffba	2	636e	mov r6,r14	
+8c65ffbc	2	d62f	mov.l r13,@-r15	
+8c65ffbe	2	736d	mov r7,r13	
+8c65ffc0	2	c62f	mov.l r12,@-r15	
+8c65ffc2	2	536c	mov r5,r12	
+8c65ffc4	2	224f	sts.l PR,@-r15	
+8c65ffc6	2	7365	mov r7,r5	
+8c65ffc8	2	c7bf	bsr 0x8c65ff5a	8c65ff5a 
+8c65ffca	2	6364	_mov r6,r4	
+8c65ffcc	2	d365	mov r13,r5	
+8c65ffce	2	a0bf	bsr 0x8c65ff12	8c65ff12 
+8c65ffd0	2	e364	_mov r14,r4	
+8c65ffd2	2	e184	mov.b @(0x1,r14),r0	
+8c65ffd4	2	e064	mov.b @r14,r4	
+8c65ffd6	2	3991	mov.w 0x8c66004c,r1	
+8c65ffd8	2	4a20	xor r4,r0	
+8c65ffda	2	4920	and r4,r0	
+8c65ffdc	2	e280	mov.b r0,@(0x2,r14)	
+8c65ffde	2	e064	mov.b @r14,r4	
+8c65ffe0	2	4760	not r4,r0	
+8c65ffe2	2	0363	mov r0,r3	
+8c65ffe4	2	e184	mov.b @(0x1,r14),r0	
+8c65ffe6	2	4a20	xor r4,r0	
+8c65ffe8	2	3920	and r3,r0	
+8c65ffea	2	1ad3	mov.l 0x8c660054,r3	
+8c65ffec	2	e380	mov.b r0,@(0x3,r14)	
+8c65ffee	2	3260	mov.l @r3,r0	
+8c65fff0	2	1e00	mov.l @(r0,r1),r0	
+8c65fff2	2	0188	cmp/eq #0x1,r0	
+8c65fff4	2	0c8b	bf 0x8c660010	8c660010 
+8c65fff6	2	e884	mov.b @(0x8,r14),r0	
+8c65fff8	2	2992	mov.w 0x8c66004e,r2	
+8c65fffa	2	0c64	extu.b r0,r4	
+8c65fffc	2	2034	cmp/eq r2,r4	
+8c65fffe	2	0789	bt 0x8c660010	8c660010 
+8c660000	2	4824	tst r4,r4	
+8c660002	2	0589	bt 0x8c660010	8c660010 
+8c660004	2	d265	mov.l @r13,r5	
+8c660006	2	14d3	mov.l 0x8c660058,r3	
+8c660008	2	5c65	extu.b r5,r5	
+8c66000a	2	0175	add #0x1,r5	
+8c66000c	2	0b43	jsr @r3	8c668b24 
+8c66000e	2	d364	_mov r13,r4	
+8c660010	2	e062	mov.b @r14,r2	
+8c660012	2	2822	tst r2,r2	
+8c660014	2	028d	bt/s 0x8c66001c	8c66001c 
+8c660016	2	01e4	_mov #0x1,r4	
+8c660018	2	01a0	bra 0x8c66001e	8c66001e 
+8c66001a	2	09e0	_mov #0x9,r0	
+8c66001c	2	4360	mov r4,r0	
+8c66001e	2	e480	mov.b r0,@(0x4,r14)	
+8c660020	2	e384	mov.b @(0x3,r14),r0	
+8c660022	2	0820	tst r0,r0	
+8c660024	2	e284	mov.b @(0x2,r14),r0	
+8c660026	2	0820	tst r0,r0	
+8c660028	2	0589	bt 0x8c660036	8c660036 
+8c66002a	2	10e0	mov #0x10,r0	
+8c66002c	2	e365	mov r14,r5	
+8c66002e	2	d366	mov r13,r6	
+8c660030	2	440c	mov.b r4,@(r0,r12)	
+8c660032	2	acb0	bsr 0x8c66018e	8c66018e 
+8c660034	2	c364	_mov r12,r4	
+8c660036	2	e384	mov.b @(0x3,r14),r0	
+8c660038	2	0820	tst r0,r0	
+8c66003a	2	0189	bt 0x8c660040	8c660040 
+8c66003c	2	49b1	bsr 0x8c6602d2	8c6602d2 
+8c66003e	2	c364	_mov r12,r4	
+8c660040	2	264f	lds.l @r15+,PR	
+8c660042	2	00e0	mov #0x0,r0	
+8c660044	2	f66c	mov.l @r15+,r12	
+8c660046	2	f66d	mov.l @r15+,r13	
+8c660048	2	0b00	rts	
+8c66004a	2	f66e	_mov.l @r15+,r14	

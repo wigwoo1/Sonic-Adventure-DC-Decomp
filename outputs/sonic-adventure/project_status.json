@@ -129,7 +129,7 @@
     "prs_trailing_bytes": 0,
     "main_binary_indexed_functions": 3637,
     "main_binary_draft_pseudocode_functions": 3631,
-    "recovered_buildable_routines": 1493,
+    "recovered_buildable_routines": 1502,
     "recovered_routine_tests": "analysis/startup_verification.json",
     "recovered_routine_test_cases": 17,
     "main_binary_draft_export_failures": 6,
@@ -146104,6 +146104,82 @@
       "verification": "analysis/movie_channel_request_qualification.json",
       "verification_sha256": "3d086c2eab1acb088f90ac8bb7bd201fc4c997dfd1a8b3e567c947d3b1809186",
       "guide": "MOVIE_CHANNEL_REQUEST.txt"
+    },
+    "movie_input_pump_integration": {
+      "status": "partially_verified_input_pump_and_response_integration",
+      "compiled_source_count": 223,
+      "newly_registered_entries": 9,
+      "newly_qualified_rows": 706,
+      "qualified_conditional_outcomes": 95,
+      "canonical_duplicate_credit": 0,
+      "new_guarded_adapter_rows": 1035,
+      "canonical_adapter_rows": 370,
+      "proposed_response_rows": 665,
+      "old_outer_api_rows": 41,
+      "executed_integration_rows": 1076,
+      "executed_integration_conditional_outcomes": 147,
+      "structurally_unreachable_edges": [
+        {
+          "edge": [
+            "0x8c660114",
+            "0x8c66012a"
+          ],
+          "dominating_test": "0x8c6600be",
+          "immutable_field": "r14+7",
+          "no_calls_or_pointer_reassignment": true,
+          "field_stores_disjoint": true,
+          "domain": "Single guest executor;no concurrent external modification of caller-owned record.",
+          "listing_sha256": "1aaec70a2ec4c8a2cb8249e5e078b73fa6e4636975c1406c9d29df5be970125a",
+          "source_routine": "0x8c66005c",
+          "scope": "Trueedge114->12a impossible:reaching114requiresrecord[7]!=0atdominatingbe;nointerveningcall/write7/pointerchange. Other114falseedge executable;no instruction row is omitted."
+        }
+      ],
+      "fresh_original_native_comparisons": 2601,
+      "fresh_independent_checks": 36399,
+      "retained_previous_evidence_original_native_comparisons": 14626,
+      "total_evidence_original_native_comparisons": 17227,
+      "prior_registry_entries": 1493,
+      "result_registry_entries": 1502,
+      "result_unique_module_address_pairs": 1499,
+      "flat_return_guard_sites": 1956,
+      "new_resume_exports": 0,
+      "qualified_nonlocal_resume_routes_total": 8,
+      "remaining_unqualified_resume_routes": 74,
+      "fresh_warm_startup_comparisons": 0,
+      "fresh_cold_profile": false,
+      "historical_warm_profile": {
+        "source_stage": 216,
+        "boundaries": 4709,
+        "stop_pc": "0x8c051798",
+        "freshly_rerun": false,
+        "dll_sha256": "abd41a20fbe0619dafbd5b21064de5a373bed4a237973ea85f398d42d53a3ea2"
+      },
+      "historical_cold_profile": {
+        "source_stage": "211-source movie_record_register",
+        "boundaries": 585993,
+        "stop_pc": "0x8c601874",
+        "dll_sha256": "f5ab618ca44448d3a4afdffa892b3506fd07912e1581571378d26cc471ca0952",
+        "freshly_rerun": false,
+        "relabelled_as221_source": false
+      },
+      "next_original_dependencies": [
+        "0x8c65efda",
+        "0x8c65eeda"
+      ],
+      "next_task": "Integrate the preserved65efda submit/65eeda commands-prepare family and hardware handoff into current guarded ABI, withzero duplicatecreditwherealreadyregistered;qualifyrealqueued->inflighttoken transition thenactualresponse->taskresume withoutcompleted-token/parser-result injection.",
+      "dll_sha256": "dd40c3e43a3ccf0fc2e5052cb21120258e3f41de038250aa4e926b61c5c2062c",
+      "limitations": [
+        "223-source integration:13new guarded adapters1035originalrows=370rows fromsixregisteredcanonicalhelpers plus665rows insevenpreviouslyunregisteredresponsedrafts. Existing6461ae/65f50c/6602d2/6607a8 routesretained. Nine newlyqualifiedentries706rows/95executableoutcomes includethesevenresponses plusold646982/6469c8 outerAPIs41rows. Canonicalhelpers zero extra credit.",
+        "All1076integration/outerAPIinstructionrows execute. Of148staticconditionaloutcomes,147execute;one660114->66012aedge isproveninfeasible bybytecheckedCFGdominance/no-call/disjoint-store proof. Sourcebranch remainspresent. Proofdomain isserialguestexecutionwithcaller-ownedrecordunmodifiedconcurrently. Thisisnotphysicalcache/TLB/host-threadatomicity/controllerhardware qualification.",
+        "Actualresponsewalker/portmask/presence/header/primary/sub/metadata/byte-swap/statuspublication/rearm codeexecutes. IndependententireRAM/fields/stack/state/packet/projection oracles plusoriginalinstruction-model/fullmachine/device/boundary comparisons. RawRXbuffers,pastinflighttokens,presence/context,display-samples andcallbackpointersaredeclaredinputs. Completedtoken/publication/metadata/callbackresultsarenotstubbed. All48callbackslotsmatch/miss andrealNOP/unknowncallbacks;actualgame-modepredicateexercisesfalse callbackpath. NOPpreservesR0,notanassumedfalse result.",
+        "Automaticpump APIs nowexecuteactualpump andpreservequeuedserial includingbusy/negativepreflightpaths. Queueingaloneleavesinflight/completedtokenszero. The real65efda submitbody,currentlyunconnected,containsoriginalcopyrecord+18->+1c andcommand+6->+7 beforehardwarehandoff. Itmustbeintegratedwithactualcalleesbeforeclaimingqueuedtask->naturalresponsecompletion orsuccessfulactiveheaderparser/codecbehavior. Testsneverfillcompletedtokens/savedtaskcontexts toforceprogress.",
+        "Nativecodecompiledfirsttimeandunchangedthroughverification. ReferenceCPUonlyaddsTASpurge65f1d2;flat originalexecutioncode unchanged. Boundary-observationdataonlysuppresseslocal668b32->668b24loopasnewcall;everyoriginalinstruction/memory/state check remains. Independent1/2/31wordtestsproveonelogicalcall/allloopiterations. Originalzero-count2^32iterationbyte-swap behaviorisnotcompletedorboundedbynewsource. No newsourcewaitlimits.",
+        "2601freshoriginal/nativecomparisons36399independentchecks;14626previouscomparisonsretainedhistorical/notallrerun;17227combinedevidencecomparisons,notuniquecases orcodecoverage. Retainedqueuedtask/softwareIRQ/contextSRFD controls fresh223;authoredIRQadmissionsarenotoriginalcomparisoncredit. No fresh223warm/coldstartup;earlierwarm/cold remainhistorical. Overallabout10%weightedmilestones,fullgame/portsunfinished;goalactive.",
+        "A descriptive1035rowcountscope typo was correctedwithbeforefiles/hashes preserved andexplicitmetadata-only receipt;allnative/source/build/returnbytesandbehavioralcase recordsunchanged. Proofinputidentitypinsupdatedonlyafter checkinggeneratedmetadataequivalence. Verifierfixes(delayedbranchcoverage,wordloopcalllogging,twoheaderprojectionbytes,actualselectorliteral/getteralias/NOP-preservesR0) retaincompletecomparisons;noneare nativecodepatchesorrelaxedboundaries."
+      ],
+      "verification": "analysis/movie_input_pump_qualification.json",
+      "verification_sha256": "37853384b399f3507aef20ea5f238f4c66b52cb1b3ea727ef1c856897493882a",
+      "guide": "MOVIE_INPUT_PUMP.txt"
     }
   },
   "milestones": [
@@ -146277,10 +146353,10 @@
     "report": "analysis/recovery_coverage_audit.json",
     "candidate_inventory": "analysis/unrecovered_function_candidates.tsv",
     "boundary_inventory": "analysis/unresolved_module_boundaries.json",
-    "registered_routines": 1493,
-    "registered_unique_module_address_pairs": 1490,
+    "registered_routines": 1502,
+    "registered_unique_module_address_pairs": 1499,
     "indexed_candidates_in_export_snapshots": 11411,
-    "registered_entries_matching_export_snapshots": 1366,
+    "registered_entries_matching_export_snapshots": 1375,
     "non_texture_binaries_without_function_index": 211,
     "registry_evidence_errors": 0,
     "stale_whole_source_hash_reports": 0,
@@ -153605,5 +153681,5 @@
   },
   "unverified_work": {},
   "unverified_drafts": {},
-  "recovered_buildable_routines": 1493
+  "recovered_buildable_routines": 1502
 }

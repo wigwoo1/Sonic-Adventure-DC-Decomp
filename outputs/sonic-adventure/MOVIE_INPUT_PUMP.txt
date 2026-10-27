@@ -1,0 +1,130 @@
+Sonic Adventure Dreamcast Rev A - input pump and actual response processing
+
+Status: PARTIALLY VERIFIED integration. The 223-source Windows research DLL is
+incomplete and is not a playable port. Nine entries qualify: seven response
+bodies plus outer request APIs 646982/6469c8, covering 706 original instructions
+and 95 executable branch outcomes. Registry: 1,502 entries / 1,499 unique pairs.
+Overall remains about 10% by weighted milestones, not measured code coverage.
+The goal remains active. Full game/PC/Android/3DS/N64/PS1, FPS/8K, SUPIR and
+settings work remains unfinished. Texture Off disables sampling/uses vertex colors.
+
+The current build connects 13 guarded adapters containing 1,035 original rows:
+370 rows from six registered helpers and 665 rows from seven older response
+drafts that were not registered. Canonical helpers get zero duplicate credit.
+The previously compiled status publisher 6461ae, getter 65f50c, info initializer
+6602d2 and fill 6607a8 remain connected through their actual original bodies.
+All old source/proofs/builds remain preserved, apart from reviewed catalog,
+documentation and status updates.
+
+Qualified response bodies:
+  65fd4e: per-port presence/retry mask (88 instructions).
+  65fe14: response completion/state publication (127).
+  65ff12: presence classification (28).
+  65ff5a: response header/word order/value decode (47).
+  65ffb8: primary-device response handling (74).
+  66005c: subdevice response handling (149).
+  66018e: device metadata/strings/fields decode (152).
+Outer APIs 646982 (19) and 6469c8 (22) now execute the real enabled automatic
+pump and preserve their original request serial, including negative preflight
+and busy-device paths. Queueing alone leaves inflight/completed tokens zero.
+
+Actual preflight, response walker, presence/header/metadata processing, byte
+swap, 24-record publication, rearm, active selection and callback table execute.
+No diagnostic, parser, callback or completion result is supplied by a test stub.
+Raw received bytes, existing inflight tokens, coherent SDK/global/record objects,
+device flags, display samples and callback pointers are explicit test inputs.
+These standalone fixtures do not establish natural resource acquisition, device
+submission/DMA, physical controller operation, or a successful game/movie parser.
+The retail unit map and code instructions remain unchanged. Writable object and
+mutex-pointer cells select declared fixture resources.
+
+All 1,076 adapter/outer-API instruction rows execute. Of 148 static conditional
+outcomes, 147 execute; 660114->66012a is infeasible in the tested serial domain.
+A byte-checked control-flow dominance proof shows that reaching 660114 requires
+record byte +7 to be nonzero; no intervening call, pointer reassignment or store
+to that byte can change it. The branch stays in the source. This proof does not
+assume concurrent external modification of the caller-owned record.
+
+2,601 fresh original/native comparisons / 36,399 independent checks pass:
+  Presence/header/metadata leaves: 192 / 2,304.
+  Direct and multi-port responses: 832 / 13,536.
+  Preflight, errors, retries and busy flags: 400 / 4,676.
+  Callback table and active selection: 448 / 6,240.
+  Subdevice transitions: 192 / 3,360.
+  Remaining subdevice edges and infeasible-edge proof: 24 / 240.
+  Automatic-pump APIs and selection gate: 160 / 2,968.
+  Word-swap/loop observation: 12 / 192.
+  Display publication and reached sample depletion: 18 / 276.
+  Retained queued-task/software-IRQ/context/SR/FD controls: 323 / 2,607.
+Previous 14,626 comparisons remain historical, not all rerun. Combined evidence
+contains 17,227 comparisons, not unique cases or measured game-code coverage.
+Original execution uses the project's SH-4 reference model, not Dreamcast
+hardware or the complete game. No fresh 223-source warm/cold startup is claimed.
+
+Independent expectations cover entire RAM for leaves/port masks, token movement,
+header bytes/word order, metadata fields/string padding, retries/overflow,
+adjacent bytes, preserved registers/FPU/special state, stack balance, the 24-record
+publication projection, display-latch/dirty/counter effects, and API serials.
+All 48 callback slots are tested for match/miss, pre-call clearing and arguments.
+The real NOP callback preserves R0; it is not assumed to return false. A real
+game-mode predicate with declared mode zero exercises the false callback path.
+Unknown callbacks stop at their actual target after the original prior effects.
+
+The mandatory TAS purge at preflight 65f1d2 is explicit. Original flat instruction
+execution remains unchanged. One observation-only table entry distinguishes the
+local 668b32->668b24 word-swap loop from a function call. All original instructions
+and memory/state checks remain. Independent 1/2/31-word cases verify exactly one
+logical call and every loop iteration. The original zero-count 2^32-iteration
+behavior is not completed or bounded by new code. No new source wait limits.
+Host-thread atomicity, physical cache/TLB and hardware timing remain unqualified.
+
+Native source compiled on its first build and was unchanged during verification.
+Verifier corrections retained full comparisons: delayed-branch edge collection,
+local-loop call observation, two missing header bytes in the independent
+publication projection, and actual selector/getter literals and NOP behavior.
+A descriptive row-count typo and canonical-baseline regeneration bookkeeping
+were corrected through explicit metadata-only receipts. Earlier files/hashes
+are preserved under analysis/history. Generated C/bridge/probe/build/returns and
+all behavioral test records remained identical; only metadata identity pins
+changed. See movie_input_pump_metadata_correction.json and
+movie_input_pump_catalog_baseline_correction.json for the audit trail.
+
+The existing decoder/worker continuation source, runtime, SR/FD guards and
+external argument layouts remain unchanged. No new continuation exports are
+added. Eight of the 82 existing routes retain scoped nonlocal qualification;
+74 and arbitrary callback/yield graphs remain unqualified. The 1,956 allowed
+return addresses establish guard membership, not a complete native graph.
+
+Next: connect preserved submit 65efda and commands-prepare 65eeda and their
+actual callees/hardware handoff. The original submit body explicitly copies
+record +18 queued token to +1c inflight token and command +6 to +7. Only after
+that path is qualified can queued requests be linked to real response processing
+and resumed game parsing. Do not fill completed tokens, task frames, callback
+results or parsed headers to bypass that dependency. Inspect existing registry,
+source and proofs before claiming new credit for those helpers.
+
+Reproduce from the workspace root using Python -B and matching local retail inputs:
+  python -B outputs/sonic-adventure/recover_movie_input_pump.py
+  python -B outputs/sonic-adventure/connect_movie_input_pump.py
+  powershell -File outputs/sonic-adventure/build_movie_input_pump.ps1
+  python -B outputs/sonic-adventure/check_movie_input_pump_unbounded.py
+  python -B outputs/sonic-adventure/verify_movie_input_pump_leaves.py
+  python -B outputs/sonic-adventure/verify_movie_input_pump_responses.py
+  python -B outputs/sonic-adventure/verify_movie_input_pump_controls.py
+  python -B outputs/sonic-adventure/verify_movie_input_pump_notifications.py
+  python -B outputs/sonic-adventure/verify_movie_input_pump_subdevices.py
+  python -B outputs/sonic-adventure/verify_movie_input_pump_subdevice_edges.py
+  python -B outputs/sonic-adventure/verify_movie_input_pump_api.py
+  python -B outputs/sonic-adventure/verify_movie_input_pump_swaps.py
+  python -B outputs/sonic-adventure/verify_movie_input_pump_publication.py
+  python -B outputs/sonic-adventure/verify_movie_input_pump_retained.py
+  python -B outputs/sonic-adventure/audit_movie_input_pump.py
+  python -B outputs/sonic-adventure/qualify_movie_input_pump.py
+  python -B outputs/sonic-adventure/register_movie_input_pump.py
+  python -B outputs/sonic-adventure/audit_recovery_coverage.py
+  python -B outputs/sonic-adventure/verify_movie_input_pump_workflow.py
+Compiler/tool and historical absolute evidence paths may need adaptation on
+another computer. Earlier build archives supply preserved-build inputs. Retail
+game inputs/assets, toolchain bundles, caches and credentials are not published.
+These research libraries have no playable EXE. Keep Sol High for the submission
+integration; Luna Low is suitable for routine documentation/publication.
