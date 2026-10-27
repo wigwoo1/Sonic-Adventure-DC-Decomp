@@ -129,7 +129,7 @@
     "prs_trailing_bytes": 0,
     "main_binary_indexed_functions": 3637,
     "main_binary_draft_pseudocode_functions": 3631,
-    "recovered_buildable_routines": 1480,
+    "recovered_buildable_routines": 1483,
     "recovered_routine_tests": "analysis/startup_verification.json",
     "recovered_routine_test_cases": 17,
     "main_binary_draft_export_failures": 6,
@@ -145587,6 +145587,149 @@
       "verification": "analysis/movie_active_input_qualification.json",
       "verification_sha256": "43d1b08f5297fb67efcb7fa22164ff2ecc272bfc1b811d93bcef9dfe2b86ae50",
       "guide": "MOVIE_ACTIVE_INPUT.txt"
+    },
+    "movie_task_yield_integration": {
+      "newly_registered_entries": 3,
+      "newly_qualified_rows": 41,
+      "executed_new_rows": 41,
+      "qualified_conditional_outcomes": 4,
+      "compiled_source_count": 217,
+      "canonical_reuse": [
+        {
+          "address": "0x8c66082c",
+          "name": "sa_movie_record_register_8c66082c",
+          "additional_credit": 0,
+          "span_checked": true
+        },
+        {
+          "address": "0x8c660842",
+          "name": "sa_movie_record_register_8c660842",
+          "additional_credit": 0,
+          "span_checked": true
+        },
+        {
+          "address": "0x8c668b38",
+          "name": "sa_input_work_pool_initialize",
+          "additional_credit": 0,
+          "span_checked": true
+        },
+        {
+          "address": "0x8c668b58",
+          "name": "sa_input_work_object_create",
+          "additional_credit": 0,
+          "span_checked": true
+        },
+        {
+          "address": "0x8c668bee",
+          "name": "sa_input_work_create",
+          "additional_credit": 0,
+          "span_checked": true
+        },
+        {
+          "address": "0x8c110954",
+          "name": "sa_movie_record_register_8c110954",
+          "additional_credit": 0,
+          "span_checked": true
+        },
+        {
+          "address": "0x8c1108e0",
+          "name": "sa_movie_active_input_8c1108e0",
+          "additional_credit": 0,
+          "span_checked": true
+        },
+        {
+          "address": "0x8c668e60",
+          "name": "sa_movie_active_input_8c668e60",
+          "additional_credit": 0,
+          "span_checked": true
+        },
+        {
+          "address": "0x8c668cca",
+          "name": "sa_movie_active_input_8c668cca",
+          "additional_credit": 0,
+          "span_checked": true
+        },
+        {
+          "address": "0x8c10d31c",
+          "name": "sa_memory_fill",
+          "additional_credit": 0,
+          "span_checked": true
+        },
+        {
+          "address": "0x8c10d25c",
+          "name": "sa_byte_move",
+          "additional_credit": 0,
+          "span_checked": true
+        }
+      ],
+      "reused_additional_credit": 0,
+      "canonical_integration_rows": 0,
+      "partial_entries": [],
+      "partial_parent_entries": [
+        "0x8c602cb8",
+        "0x8c051790",
+        "0x8c053ac0",
+        "0x8c652210",
+        "0x8c656940"
+      ],
+      "new_direct_original_native_comparisons": 62,
+      "new_direct_independent_checks": 608,
+      "fresh_task_lifecycle_original_native_comparisons": 48,
+      "fresh_task_lifecycle_independent_checks": 880,
+      "fresh_irq_original_native_comparisons": 48,
+      "fresh_irq_independent_checks": 424,
+      "authored_irq_admission_cases": 16,
+      "fresh_retained_original_native_comparisons": 35,
+      "fresh_retained_independent_checks": 335,
+      "fresh_original_native_comparisons": 193,
+      "fresh_independent_checks": 2247,
+      "retained_previous_evidence_original_native_comparisons": 10116,
+      "total_evidence_original_native_comparisons": 10309,
+      "prior_registry_entries": 1480,
+      "result_registry_entries": 1483,
+      "result_unique_module_address_pairs": 1480,
+      "fresh_warm_startup_comparisons": 0,
+      "fresh_cold_profile": false,
+      "historical_warm_profile": {
+        "source_stage": 216,
+        "boundaries": 4709,
+        "stop_pc": "0x8c051798",
+        "freshly_rerun": false,
+        "dll_sha256": "abd41a20fbe0619dafbd5b21064de5a373bed4a237973ea85f398d42d53a3ea2"
+      },
+      "historical_cold_profile": {
+        "source_stage": "211-source movie_record_register",
+        "boundaries": 585993,
+        "stop_pc": "0x8c601874",
+        "dll_sha256": "f5ab618ca44448d3a4afdffa892b3506fd07912e1581571378d26cc471ca0952",
+        "freshly_rerun": false,
+        "relabelled_as217_source": false
+      },
+      "owner_count_underflow_preserved": true,
+      "next_task": "Trace original task admission/activation callers around660842/668bee and ownership ofowner+20c;qualify accounting before widening natural-task-startup claims.",
+      "remaining_unqualified_graphics_root_outcomes": [
+        [
+          "0x8c656cf4",
+          "0x8c656d06"
+        ],
+        [
+          "0x8c656e90",
+          "0x8c656f38"
+        ]
+      ],
+      "dll_sha256": "40ed2954a144858c1c2fe33d46c23b33a09061c546dbda8c045dafeee9c6f761",
+      "limitations": [
+        "Three new original entries41uniqueinstructions/fourconditionaloutcomes:668d56terminationprefix8,668e1esharedyield31,668e5cyield-onewrapper2. Merged39rowexport preserved and bytecheckedpartition8+31at actualBRA/delay slot. Sharedbody creditedonce. Midcontinuation668e48 reuses same nativeimplementation and receives no routine credit.",
+        "Direct62comparisons608checks use explicit coherent owner/task/root frames;independent entireRAM/stack/context-save/restore/GPR/FPU/specialstate oracles,deadline signedness/wrap,realunknownrestore/return targets,reachedFDprefixes. InitialSZ0/FR0orFR1directframes;allFPUwidths retained controls separate. No callback or saved-context results mocked.",
+        "Eight real66082cpool/660842enqueue sequences create original taskrecords/stacks/contexts. Four scheduler calls then execute yield/resume/yield or finish/cleanup with completeoriginal/native comparison and independentmetadata/contextSP/PR/stack/deadline/callcount/restoredstate checks. RealROM taskentries668e5c/668d56,defaultFPSCR40001,external declaredstack sizes;not natural gameboot oracquiredtaskgraphs. No taskrecord/context/slot hand-filled after originalhelpers.",
+        "Ownercount limitation is explicit:low-levelpool/enqueue fixture leaves owner+20c zero;originalfinishcleanup decrements it toffffffff. That wrap is independently checked and preserved,not fixed or hidden. Correct upstreamadmission/activation accounting and widercallercontract remainunqualified. Completegame taskstartup is not claimed.",
+        "Newresume dispatch at668e48 runs before entryobserver because it is an interior continuation,not a new function call. Only newsharedRTS668e58 additionally bypasses ordinaryreturncontract guard and dispatches actual restoredtargets. Original scheduler and priorrestore source/RTS handling unchanged. Repeated original task contexts resumeactual668e48 and return via668e92 without gueststate fixing. Arbitrary otherinterior continuations/taskgraphs andtop-level/nonlive-frame resume cases remainoutside domain.",
+        "193fresh original/native comparisons2247checks:62direct608,48tasklifecycle880,48activeIRQ424,35retained335. Prior10116historical/notallrerun;10309combined.16authoredIRQadmissions not original/nativecomparisoncredit. Prior216warm4709boundaries/framewait051798counter2 and211fullcold remainhistorical/notrerun;no fresh217startupclaim. ExistingactiveIRQ/G2/CH2/console/storage/ABI/requirements retained.",
+        "Input602cb8,largerhandlers652210/656940,053ac0/051790framewait,SDKpump/status/queue/dispatcher families remainpartial. No physicalIRQfrequency,automaticframewaitpump,fullboot/gameplay orfinishedPC/Android/3DS/N64/PS1ports. FPS8K/SUPIR/settings unfinished;TextureOff disables sampling/usesvertexcolors. Goalactive about10%weightedmilestones,not codecoverage."
+      ],
+      "verification": "analysis/movie_task_yield_qualification.json",
+      "verification_sha256": "3025982fec6e9801dbf7e6526c1be2953b4b271705de8a0c6da625b6e0e457d2",
+      "guide": "MOVIE_TASK_YIELD.txt"
     }
   },
   "milestones": [
@@ -145760,10 +145903,10 @@
     "report": "analysis/recovery_coverage_audit.json",
     "candidate_inventory": "analysis/unrecovered_function_candidates.tsv",
     "boundary_inventory": "analysis/unresolved_module_boundaries.json",
-    "registered_routines": 1480,
-    "registered_unique_module_address_pairs": 1477,
+    "registered_routines": 1483,
+    "registered_unique_module_address_pairs": 1480,
     "indexed_candidates_in_export_snapshots": 11411,
-    "registered_entries_matching_export_snapshots": 1357,
+    "registered_entries_matching_export_snapshots": 1358,
     "non_texture_binaries_without_function_index": 211,
     "registry_evidence_errors": 0,
     "stale_whole_source_hash_reports": 0,
@@ -153088,5 +153231,5 @@
   },
   "unverified_work": {},
   "unverified_drafts": {},
-  "recovered_buildable_routines": 1480
+  "recovered_buildable_routines": 1483
 }

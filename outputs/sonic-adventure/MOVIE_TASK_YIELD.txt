@@ -1,0 +1,87 @@
+Sonic Adventure Dreamcast Rev A - task finish, yield and resume
+
+Status: VERIFIED within the research domains below. Goal remains active.
+Overall estimate: about 10% by weighted milestones, not measured code coverage.
+
+Three entries are newly qualified in the 217-source Windows research DLL:
+  668d56: task-finish prefix, 8 instructions.
+  668e1e: shared task-yield body, 31 instructions / 4 conditional outcomes.
+  668e5c: yield-one wrapper, 2 instructions.
+All 41 unique instructions and four outcomes execute. The full merged 39-row
+668d56 export is preserved. Its 8-row prefix ends at the original BRA/delay slot,
+then calls the shared 31-row body. Shared instructions receive credit once.
+668e48 is an interior continuation using the same implementation, not another
+recovered routine. Registry: 1,483 entries / 1,480 unique module/address pairs.
+
+193 fresh original/native comparisons / 2,247 independent checks pass:
+  62 direct yield/finish/resume comparisons / 608 checks.
+  48 comparisons across eight constructor/task lifecycles / 880 checks.
+  48 retained active-input IRQ comparisons / 424 checks.
+  35 retained context and SR/FD comparisons / 335 checks.
+Previous 10,116 comparisons remain historical evidence, not all freshly rerun;
+combined evidence totals 10,309. Authored IRQ admissions are not original-code
+comparison credit. No fresh warm or cold startup run is claimed for this stage.
+The previous 216-source warm startup and 211-source full cold proofs are preserved.
+
+668d56 marks the active record as finished, then yields with delay zero. The
+shared yield routine uses the owner/current-task pointers, calculates a deadline,
+saves the task context with original 110954 and restores the scheduler with
+original 1108e0. Nonnegative delays add to the current counter with 32-bit wrap;
+negative delays select the original 7fffffff sentinel. 668e5c supplies delay one.
+On later resumption, the saved nonzero return value takes the actual 668e48
+continuation through the epilogue and back into the task's real return target.
+
+Native dispatch recognizes 668e48 before the function-entry observer, because
+resuming inside a function is not another function call. Only the new shared
+RTS additionally bypasses the ordinary C-return contract; actual guest targets
+are dispatched. Unknown targets remain missing -2. No instruction, task record,
+counter, CPU register or callback result is changed to make execution continue.
+Existing scheduler/restore source and its 668e92 internal return mechanism remain
+unchanged. Other interior continuations and arbitrary task graphs remain outside
+this qualified integration domain.
+
+Direct tests independently construct the entire expected RAM/stack, task-context
+save and owner-context restore footprint, restored CPU/FPU and special registers.
+They cover signed delays, unsigned wrap, both FPU banks in initial SZ0 modes,
+unknown restored/return targets and reached FPU-disabled prefixes. Existing
+all-width context vectors are rerun as retained controls. Fault status -4 is the
+existing host policy, not physical SH4 fault-vector delivery.
+
+The lifecycle tests call actual 66082c pool initialization and 660842 enqueue
+helpers. Those original helpers create task records, stacks and saved contexts.
+Four scheduler calls then run a real ROM yield-one task repeatedly, or run the
+finish helper and cleanup. Saved task PR becomes 668e48, the real task stack is
+used, deadlines advance, and scheduler state returns correctly. Task records,
+contexts and callback slots are not hand-filled after helper calls. The fixtures
+declare the task entry, external stack and default FPSCR40001; these are not a
+natural game boot or acquired application task graph.
+
+An unresolved caller contract is visible: the low-level pool/enqueue sequence
+leaves owner+20c at zero, while finishing invokes cleanup that decrements it to
+ffffffff. Tests independently check and preserve this wrap. It is not repaired
+by changing the game code or supplying a counter value. Upstream task admission,
+activation and owner-count accounting must be traced before wider task-startup
+behavior can be qualified. This limits the lifecycle claim; it does not establish
+that normal game startup has correct task ownership yet.
+
+Preservation checks reproduce nine generated files, verify registration is byte
+idempotent and retain old source/proof/build bytes, ABI layouts, G2/CH2 runtime,
+console/storage policies, SR/FD guards and project requirements. The only model
+change is the ordinary-return guard exception at new RTS668e58. Existing broader
+input, interrupt, frame-wait, SDK and graphics callers remain partial. Physical
+timing, automatic VBlank progress at frame wait051798, full boot and gameplay are
+unfinished. No playable PC, Android, 3DS, N64 or PlayStation port is provided.
+
+To inspect without programming, open the project README and
+analysis/movie_task_yield_qualification.json. Direct cases, lifecycle phases and
+preservation checks are in the corresponding verification JSON files. Source is
+source/sa_movie_task_yield.c. recover_movie_task_yield.py and
+connect_movie_task_yield.py reproduce it; build_movie_task_yield.ps1 builds the
+research DLL. Matching retail input and external tools are required locally to
+rerun game-dependent verification; neither is included in the public snapshot.
+
+Next: trace task admission/activation callers around 660842/668bee and ownership
+of owner+20c. Keep Sol High for that reverse engineering. Luna Low is suitable
+for routine documentation/publication checks. Full decompilation, native ports,
+60/120/240 FPS, 8K, stereoscopic 3D, SUPIR textures and settings remain unfinished.
+Texture Off must disable sampling and use vertex colors.
