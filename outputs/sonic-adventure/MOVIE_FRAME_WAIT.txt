@@ -1,0 +1,89 @@
+Frame/display synchronization - VERIFIED display helper; wait/queues partial
+
+The 214-source Windows research DLL qualifies one new original entry:
+8c6433e0 display synchronization. All 66 instruction rows and both conditional
+outcomes execute. Ninety-six direct display cases cover both register banks,
+mode flags and three buffer selections. Independent expectations include the
+exact eight MMIO write arguments/one read when synchronization is enabled,
+complete RAM/stack effects, selected/copied buffer records and nonvolatile
+register preservation. Actual existing MMIO and buffer-copy helpers execute.
+This does not establish rendered pixels, physical synchronization or gameplay.
+
+Five existing canonical routines are connected with zero additional recovery
+credit: descriptor release6088bc, record fields608914, triplet608922, error
+reset608e24 and resource release64ddc0. Their integration coverage is reported
+per body; not all canonical paths are reverified here. Registry: 1,472 entries
+/ 1,469 unique module/address pairs. Prior source/proofs/hashes are preserved.
+
+All 256 fresh comparisons / 3,050 independent checks pass:
+- 220 direct comparisons / 2,636 checks. Display modes/register banks, positive
+  waits, raw integer record constructors, empty/negative/nonempty batches,
+  optional real descriptor release, error reset, submission and both real
+  indirect dispatcher tails. Complete original/native CPU/FPU/RAM/device and
+  ordered boundaries compare. Independent full-RAM or region/register/call
+  oracles are specified per case in the verifier. Missing resource operations
+  propagate status -2 with preceding effects; no helper result is mocked.
+- 35 retained comparisons / 335 checks: unchanged context vectors and reached
+  SR/FPU-disabled fault-prefix oracles in the new DLL. No new-family fault
+  coverage is claimed.
+- One fresh uninterrupted configured warm startup / 79 checks, from 053ac0.
+  All 4,709 previous 213-source recorded boundary fields match exactly. The
+  frame routine now executes its actual counter wait at 051798: current and
+  reload counters both remain 2. Complete fresh original/native final state
+  matches. Independent flash, SDK, MIDI, VRAM and Sound expectations pass.
+  Earlier final-machine identity is not claimed after newly executed wait
+  instructions. No fresh cold execution: old 211-source cold proof remains
+  historical, unchanged and not relabeled. Earlier 8,868 cases are retained,
+  not all rerun; combined evidence 9,124.
+
+The frame routine051790, batch055c4c, submission608c82 and dispatcher64c34c
+remain PARTIAL and unregistered. Earlier enclosing caller053ac0 also remains
+partial. The real positive-counter loop remains in unbounded code. Only under
+SA_BOUND_RETAIL_STALLS, two taken tests stop incomplete with host status -4;
+this does not decrement the counter, run a callback, invent an IRQ or complete
+the wait. Zero/negative completion paths and real VBlank progress need work.
+
+Nonempty batches execute actual record-field/triplet initialization and optional
+release. They preserve original stack-backed descriptor data and reach missing
+resource-tail routines64c374 or64d1a6. Active-resource release reaches missing
+classifier64f206. The reports separate these actual failure prefixes from
+complete helper behavior. No completion credit is assigned to them.
+
+Ghidra merged 2,558 rows into its64c34c function export. The full export remains
+intact. A separately hashed 20-row view covers only the entry before its real
+indirect jump and delay slot; downstream targets remain explicit dependencies.
+It is not a fabricated function boundary or proof the large body is recovered.
+
+A verification audit caught shared setup overwriting requested queue counts.
+The final fixture restores requested parameters after legacy preparation and
+the verifier checks every request. Final nonempty/negative cases actually
+execute and their coverage is checked at qualification. The earlier incorrect
+report is superseded, not additional evidence. No retail/native code was changed
+to make these cases pass.
+
+The research DLL build and strict -Wall -Wextra -Werror compilation without the
+research stall macro pass for all 214 C sources. Generated artifacts reproduce;
+registration is byte-idempotent; prior source, proofs, rows, builds, runtime,
+API layouts and requirements remain preserved. The bridge adds ten routes;
+the full-memory observer only reads final MACL into metadata.
+
+Reproduction with existing local tools and matching original game inputs:
+ghidra/export_movie_frame_wait.ps1; export_movie_frame_lower.ps1;
+export_movie_frame_resource.ps1; recover_movie_frame_wait.py;
+connect_movie_frame_wait.py; build_movie_frame_wait.ps1;
+verify_movie_frame_wait.py; verify_movie_frame_wait_retained.py;
+capture_movie_frame_wait_startup.py warm; verify_movie_frame_wait_startup.py;
+qualify_movie_frame_wait.py; register_movie_frame_wait.py;
+verify_movie_frame_wait_workflow.py. See analysis/movie_frame_wait_*.json and
+movie-frame-dispatch/partition.json for exact hashes, domains and coverage.
+Standalone fixtures are not guest startup checkpoints. Historical workstation
+paths and local tool prerequisites remain visible.
+
+Next connect the actual original countdown callback051810 through its real
+VBlank dispatch/interrupt path. Existing source/frame_countdown.c records the
+decrement behavior; its canonical registration is not new recovery credit.
+Do not clear the counter or substitute callback execution for interrupt proof.
+Keep Sol High for this work; Luna Medium suits bounded documentation/publishing.
+Broader652210/656940 remain partial. Full game/ports/FPS/8K/SUPIR/settings are
+unfinished. Texture Off disables sampling and uses vertex colors. Goal ACTIVE,
+about 10% by weighted milestones, not measured code coverage.
