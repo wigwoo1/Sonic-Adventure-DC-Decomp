@@ -1,0 +1,78 @@
+Four-record initialization and input status queries - research milestone
+
+VERIFIED: five new original routines qualify in the 210-source research DLL.
+Registry: 1,462 entries / 1,459 unique module/address pairs. All 1015 fresh
+original/native comparisons and 14,173 independent checks pass: 603 direct,
+410 retained and two fresh full startup profiles. Earlier 5,807 evidence cases
+are retained, not all rerun; combined evidence is 6,822 cases.
+
+Fresh uninterrupted configured startup reaches the next actual missing routine
+8c010b00 after 4,648 warm / 585,946 cold boundaries. Both match the original
+instructions in complete CPU/FPU/RAM/VRAM/Sound/platform/flash/runtime state
+and ordered boundaries. Earlier 209-source boundary-field prefixes match
+exactly through the old stop 109cfe. Separate 146 independent startup checks
+retain the full 8 MiB video-memory clear (33,554,432 original instructions),
+two 2 MiB Sound fills, two 33,376-byte transfers/G2 IRQ/RTE/REQUEST paths, all
+1,065,282 Sound events with zero drops, 39 SDK records / 1,092 bytes, 32 MIDI sends
+and 32,768-byte VRAM upload. Explicit configured model, not physical boot or
+complete game execution. No guest checkpoint or helper return substitution.
+
+The new 210-source research DLL adds five original bodies:
+- 109cfe: initialize four fixed-size records, clear their working areas,
+  assign handles 1/7/13/19 and indices 0/1/2/3, then refresh status bytes.
+- 108808: refresh each of the four records.
+- 1087d2: refresh one record through original driver/metadata getters.
+- 602ab4: check decoded metadata against the original conditions.
+- 602998: combine two input status bytes through the original lookup table.
+Names describe observed behavior and remain inferred. These five bodies have
+199 instruction rows and 30 conditional outcomes. Existing canonical clear
+107ec0 and decoder 646c8a are connected with zero duplicate recovery credit.
+There are seven integrated bodies / 266 rows in total.
+
+All 603 direct original/native comparison cases pass, with 7,179 independent
+checks. All 266 integrated instruction rows execute. Thirty-four integration
+conditional outcomes execute; two initial loop skips are separately proved
+infeasible using byte-checked original instructions and immutable literals.
+Of the five new bodies' outcomes, 28 execute and two are proved infeasible.
+Both record loops begin at 8c7a64ec and end at 8c7a7ddc, advancing 1596 bytes
+each time. There are four iterations and no unsigned wrap. The checked proof
+assumes unchanged code/literal bytes and a valid disjoint private stack.
+
+Direct tests independently check complete RAM effects outside the declared
+private stack, original record contents, signed/unsigned metadata fields,
+every predicate short-circuit path, special status indices 2/8/14/20,
+table inputs, actual wraparound no-write clear behavior and callee register
+preservation. The complete original/native comparison includes all stack
+bytes and CPU/FPU/platform state. Three FPU modes are exercised directly.
+Actual original driver getters, bit locator and metadata decoder run;
+no host callback substitutes a game helper's result. Destructive aliases,
+modified instruction/literal words and arbitrary invalid records remain
+outside the qualified caller domain.
+
+All 410 retained comparisons / 6,848 independent checks pass in the new DLL:
+121 system-query cases, 128 float/drawing-state cases, 78 upload cases,
+23 interrupt cases and 60 flash-settings cases. Original fixtures/oracles
+and historical proofs remain unchanged. The earlier 432-case word-copy grid
+is not freshly rerun. The separate earlier platform-only ABI proof remains
+historical evidence; no new platform-only test count is claimed here.
+
+Both bounded research DLL compilation and strict compilation without the
+research stall macro pass for all 210 C files. Builds remain incomplete
+research libraries, not a playable game, rendered frame or physical boot.
+
+Reproduce from the workspace with the existing local tools and matching retail
+inputs: ghidra/export_movie_slot_initialize.ps1, recover_movie_slot_initialize.py,
+connect_movie_slot_initialize.py, build_movie_slot_initialize.ps1,
+verify_movie_slot_initialize.py, prove_movie_slot_initialize_bounds.py,
+verify_movie_slot_initialize_retained.py, capture_movie_slot_initialize_startup.py
+(warm/cold profiles), verify_movie_slot_initialize_startup.py, then qualification,
+registration and workflow verification. The latter gates require completed
+fresh startup captures and exact source/build hashes. JSON reports in analysis/
+record the precise scope, counts and hashes. Historical absolute paths and
+local toolchain/input dependencies remain visible.
+
+The next missing startup routine is 8c010b00. Broader dispatcher 652210 and
+graphics root 656940 remain partial. Full decompilation, playable native ports,
+FPS options, 8K, SUPIR and settings UI remain unfinished. Texture Off must
+disable sampling and use vertex colors. Keep Sol High for reverse engineering.
+Goal stays ACTIVE at approximately 10% weighted milestones, not code coverage.
