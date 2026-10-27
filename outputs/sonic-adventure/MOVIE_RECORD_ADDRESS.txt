@@ -1,0 +1,55 @@
+Indexed record-address helpers - VERIFIED integration milestone
+
+The 212-source Windows research DLL connects two existing canonical entries:
+8c601874, a three-instruction tail thunk, and 8c601f5a, a six-instruction
+unsigned record-address calculation. All nine instruction rows execute.
+These routines were recovered earlier: no new routine or code recovery credit
+is assigned. The registry stays byte-identical at 1,469 entries / 1,466 unique
+module/address pairs. Original source and verification files remain unchanged.
+
+All 388 fresh original/native comparisons / 6,739 independent checks pass:
+- 352 direct cases / 6,336 checks: both entries, 44 indices and four CPU/FPU
+  configurations, including user/supervisor, register-bank and FPU-disabled
+  states. Indices include normal slots and integer/product/pointer overflows.
+  Independent checks cover modulo-32-bit R0/MACL, the base register, preserved
+  registers, complete unchanged RAM including stack, and ordered boundaries.
+- 35 retained cases / 335 checks: 32 nonzero CPU/FPU context vectors and three
+  reached privilege/FPU-disabled fault prefixes, using the actual new DLL and
+  unchanged earlier fixtures/oracles. The new integer helpers have no new
+  fault-path coverage claim.
+- One fresh uninterrupted configured warm startup / 68 checks. Entry 8c0546c0
+  now returns successfully to the declared sentinel 8cfed000 after 4,702
+  boundaries. The exact earlier 211-source prefix of 4,695 boundaries remains;
+  four real thunk/helper pairs calculate indices 0, 6, 12 and 18. Existing
+  independent flash, SDK, MIDI, VRAM and Sound-state expectations still pass.
+
+The earlier 8,036 evidence cases are retained, not all rerun; combined evidence
+is 8,424. The previous 211-source full cold execution (585,993 boundaries,
+stopping at 8c601874) is preserved and hash-checked. It was not rerun and is
+not relabeled as a 212-source result. Warm completion of this configured
+initialization function does not establish physical boot or a playable game.
+
+The bridge extends the previous version with exactly two dispatch routes;
+the existing G2/channel-2 runtime and legacy argument layouts are preserved.
+The observer only adds a read of final MACL to result metadata. The reference
+retains earlier integer constants and all inherited SR/FD instruction guards.
+Both the research DLL build and strict -Wall -Wextra -Werror compilation
+without the research stall macro pass for all 212 C sources.
+
+Reproduce with matching local retail inputs and existing tools:
+ghidra/export_movie_record_address.ps1; recover_movie_record_address.py;
+connect_movie_record_address.py; build_movie_record_address.ps1;
+verify_movie_record_address.py; verify_movie_record_address_retained.py;
+capture_movie_record_address_startup.py warm;
+verify_movie_record_address_startup.py; qualify_movie_record_address.py;
+apply_movie_record_address_progress.py; verify_movie_record_address_workflow.py.
+Consult each script's arguments and analysis/movie_record_address_*.json for
+exact input hashes, source scope, qualification and preservation evidence.
+Some evidence paths are historical absolute local paths.
+
+Next expand to earlier caller 8c053ac0, whose call at 8c053acc reaches 8c0546c0.
+It is not yet registered or connected. Broader 652210 and 656940 remain partial.
+Whole game/ports/FPS/8K/SUPIR/settings remain unfinished. Texture Off disables
+texture sampling and uses vertex colors. Goal ACTIVE, about 10% by weighted
+milestones, not measured code coverage. Use Sol High for the broader caller;
+Luna Medium can handle bounded documentation or routine publishing checks.
