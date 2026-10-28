@@ -129,7 +129,7 @@
     "prs_trailing_bytes": 0,
     "main_binary_indexed_functions": 3637,
     "main_binary_draft_pseudocode_functions": 3631,
-    "recovered_buildable_routines": 1582,
+    "recovered_buildable_routines": 1584,
     "recovered_routine_tests": "analysis/startup_verification.json",
     "recovered_routine_test_cases": 17,
     "main_binary_draft_export_failures": 6,
@@ -148636,6 +148636,111 @@
       "verification": "analysis/movie_filesystem_command17_qualification.json",
       "verification_sha256": "6a8592273f69e6274b0306b412560386a07ddd67a164814f9638bd1e7a22a31b",
       "guide": "MOVIE_FILESYSTEM_COMMAND17.txt"
+    },
+    "collision_math_integration": {
+      "status": "partially_verified_original_collision_math_software_abi_domains",
+      "compiled_source_count": 244,
+      "newly_registered_entries": 2,
+      "newly_qualified_rows": 41,
+      "qualified_conditional_outcomes": 0,
+      "executed_rows": 41,
+      "executed_conditional_outcomes": 0,
+      "canonical_adapter_rows": 0,
+      "canonical_duplicate_credit": 0,
+      "newly_translated_rows": 41,
+      "domain_exclusion_arguments": [],
+      "coverage_by_routine": [
+        {
+          "address": "0x8c027360",
+          "static_rows": 33,
+          "executed_rows": 33,
+          "executed_outcomes": 0,
+          "domain_excluded_rows": [],
+          "domain_excluded_outcomes": []
+        },
+        {
+          "address": "0x8c63a75c",
+          "static_rows": 8,
+          "executed_rows": 8,
+          "executed_outcomes": 0,
+          "domain_excluded_rows": [],
+          "domain_excluded_outcomes": []
+        }
+      ],
+      "fresh_original_native_comparisons": 1135,
+      "fresh_independent_checks": 10155,
+      "retained_previous_evidence_original_native_comparisons": 65707,
+      "total_evidence_original_native_comparisons": 66842,
+      "prior_registry_entries": 1582,
+      "result_registry_entries": 1584,
+      "result_unique_module_address_pairs": 1581,
+      "prior_flat_return_guard_sites": 2268,
+      "flat_return_guard_sites": 2268,
+      "new_resume_exports": 0,
+      "newly_qualified_nonlocal_routes": [],
+      "qualified_nonlocal_resume_routes_total": 71,
+      "remaining_unqualified_resume_routes": 305,
+      "explicit_nonfunction_resume_routes_total": 376,
+      "direct_status_counts": {
+        "0": 648,
+        "-1": 136,
+        "1": 76,
+        "-3": 32
+      },
+      "independent_cross_oracle_cases": 332,
+      "independent_length_oracle_cases": 76,
+      "upstream_game_implementation_imported": false,
+      "original_calls_in_new_functions": 0,
+      "physical_fpu_all_inputs_qualified": false,
+      "physical_exception_delivery_qualified": false,
+      "sr_fd_clear_call_abi": true,
+      "physical_maple_dma_complete": false,
+      "full_filesystem_qualified": false,
+      "full_gameplay_qualified": false,
+      "fresh_warm_startup_comparisons": 0,
+      "fresh_cold_profile": false,
+      "historical_warm_profile": {
+        "source_stage": 216,
+        "boundaries": 4709,
+        "stop_pc": "0x8c051798",
+        "freshly_rerun": false,
+        "dll_sha256": "abd41a20fbe0619dafbd5b21064de5a373bed4a237973ea85f398d42d53a3ea2"
+      },
+      "historical_cold_profile": {
+        "source_stage": "211-source movie_record_register",
+        "boundaries": 585993,
+        "stop_pc": "0x8c601874",
+        "dll_sha256": "f5ab618ca44448d3a4afdffa892b3506fd07912e1581571378d26cc471ca0952",
+        "freshly_rerun": false,
+        "relabelled_as221_source": false
+      },
+      "partial_unregistered_proposals": [
+        "0x8c660bae"
+      ],
+      "next_task": "Recover original callers of027360/63a75c fromverifiedstatic/runtime references,thenextendthecollisionfamily usingexistingexactnumericalworkflow. Preserveoptional660baeunqualified;no upstreamimplementationcopywithoutresolvedterms.",
+      "dll_sha256": "2cb890fabb7f6fc122bbd62fe5b3ae9c6f87175f7ee1dd7759a2871ba2a4a227",
+      "limitations": [
+        "Two independently recovered original functions:cross027360(33rows)andlength63a75c(8rows). All41instructions execute,no original conditionaledges/exclusions/canonicalduplicatecredit. Exactoriginalbytefingerprints matchtheSARecompidentityreferences,but NOupstreamimplementationcode iscopied/merged. Existingnormalize63a94c andnumerichelpers receiveNOnewcredit.",
+        "892fullCPU/FPU/RAM/ordered-boundary comparisons:648complete,76expectednumerictrapstops,136existingunsupportednumericstops,32reachedRAMguardstops. Everycasecompared;nonzero statuses areNOTfabricatedcompletions. Independent408finiteoracles comprise332dyadiccross geometry/alias casesand76exact-rational-sqrtlength cases. Theseareincludedinthe892,notadditionalcomparisoncredit.",
+        "Original fmov/fsub/fmul/FIPR/FSQRT/integer/RTSdelay ordering retained. Cross loadsallinputs beforestores,mutatesR4/5/6 by8 andR0=8 inordinaryPR0/SZ0mode;lengthR4+=12 andreturnsFR7throughFR0 intheRTSdelay. Tests coveroutput/inputaliases,bothFPbanks/SZ/PR/DN,RM0/1plus2/3guards,selectedenable/flagcombinations,NaN/infinity/denormal/zero/overflow inputs,mappedMMU-offP0/P1/P2 viewsandRAMguardprefixes. GeometriccontractsareordinaryPR0/SZ0;othermodespreserveopcodeeffects orstopbyexistingpolicy.",
+        "Existing numeric-probe mode classifiesstop/trapstate;ordinary completedscalararithmetic retainsindependentPythoninteger/dyadicexecution. Initialbroadtestneededprobe=True forenabledexceptions/denormals;targeted4casesandfullmatrixthenpasswithoutnativechanges. SharedpinnedFIPRvendorprimitive verifiesinstructionplumbing,NOTindependentarbitraryhardwarebits. Separatefinitegeometry/rationalrootoracles donotproveallhardwareFIPRprecision. PhysicalFPexception/SRFD/address-error/MMUdelivery/timing unqualified. SR.FD clear isdeclaredcallABI.",
+        "Inheritedgenerationtemplate lackedFSQRT;newfamilyreusesexistingemitter/backendwithoutchangingoldsource.244-sourceDLL/lib andstrictunboundedWallWextraWerrorpass. Exactprevious243bridgeplus2entryroutes/prefix,0newJSRreturns/continuationexports. Returnmembership2268,exports376,qualifiedpostyieldroutes71/remaining305 unchanged. CPU/flatcode/guards/productionobserver/rawsession/ABIunchanged,nonewwaitlimits.2719oldbuildspreserved.",
+        "243freshretainedIRQ/context/taskcomparisons retainoldnumericassertions;historical65707notallrerun. Combinedevidenceisnotunique/codecoverage.216warm/211coldstartupandprior242full512writeproofhistoric,no fresh244fullstartup/gameplay/full-deviceclaim. SDKnaturalbusy/latchacquisition,optional660baewritehook,physicalstorage/fullfilesystem/game/portsunfinished.",
+        "Nextrecover original callers ofthese collisionmathroutines fromverifiedreferences andextendthenativecollisionfamily. SARecompPAL/USA/privateSDK-AOT/reuse-termslimitsremainforanydirectcodeintegration;noauthorcontact. FullPC60/120/240FPS8K/Android/3DSstereo/N64/PS1/SUPIR/settingsunfinished. TextureOff disables sampling/usesvertexcolors.10%weightedmilestones,notmeasuredcoverage;researchDLLnotplayableport."
+      ],
+      "overall_completion_percent": 10,
+      "estimate_method": "weighted milestones, not measured code coverage",
+      "linked_routine_inventory": {
+        "registry_entries": 1584,
+        "registry_unique_module_address_pairs": 1581,
+        "confirmed_linked_registry_entries_by_name": 624,
+        "confirmed_linked_unique_routines_by_name": 624,
+        "all_named_DLL_exports_including_support_and_continuations": 1606,
+        "method": "Exact registered-name intersection with actual PE named exports;support/continuation-only exports excluded. Other internal/renamed implementations are not counted by this method. Registry recovery count is distinct from current combined-DLL integration count."
+      },
+      "verification": "analysis/collision_math_qualification.json",
+      "verification_sha256": "656d97305fb5512c3740e7b6461f812dc7457cc40a160af3b38e4973ffeb7c87",
+      "guide": "COLLISION_MATH.txt"
     }
   },
   "milestones": [
@@ -148809,10 +148914,10 @@
     "report": "analysis/recovery_coverage_audit.json",
     "candidate_inventory": "analysis/unrecovered_function_candidates.tsv",
     "boundary_inventory": "analysis/unresolved_module_boundaries.json",
-    "registered_routines": 1582,
-    "registered_unique_module_address_pairs": 1579,
+    "registered_routines": 1584,
+    "registered_unique_module_address_pairs": 1581,
     "indexed_candidates_in_export_snapshots": 11411,
-    "registered_entries_matching_export_snapshots": 1451,
+    "registered_entries_matching_export_snapshots": 1453,
     "non_texture_binaries_without_function_index": 211,
     "registry_evidence_errors": 0,
     "stale_whole_source_hash_reports": 0,
@@ -156137,5 +156242,5 @@
   },
   "unverified_work": {},
   "unverified_drafts": {},
-  "recovered_buildable_routines": 1582
+  "recovered_buildable_routines": 1584
 }

@@ -1,0 +1,124 @@
+ORIGINAL COLLISION MATH - 244 SOURCES
+
+The 244-source research DLL qualifies two original collision-math helpers: cross product027360 and vector length63a75c. All41 instructions execute. All 1,135 fresh original/native comparisons and 10,155 independent checks pass, including408 finite mathematical-oracle cases. Registry:1,584 entries /1,581 unique pairs; 624 confirmed linked by registered name. Overall remains about10% by weighted milestones, not code coverage. These are incomplete, non-playable research builds.
+
+Recovered source
+Original027360..0273a2 contains33 instructions. In ordinary single-precision
+PR=0/SZ=0 mode it calculates (B-A) cross (C-A), with point pointers R4/R5/R6 and
+output pointer R7. It loads all nine input words before the first output store,
+so overlapping output/input buffers retain the original ordering. R4/R5/R6 each
+advance8 bytes and R0 ends at8. The third output store occurs in the RTS delay
+slot and must not be omitted. Original scratch-register and FPSCR effects remain.
+
+Original63a75c..63a76c contains8 instructions: FLDI0 FR7, three post-increment
+loads into FR4/5/6, FIPR FV4,FV4, FSQRT FR7 and RTS with FMOV FR7,FR0 in its delay
+slot. In ordinary PR=0/SZ=0 mode it returns the vector length through FR0 while
+retaining it in scratch FR7; R4 advances12 bytes. Other precision/size modes
+retain opcode effects or stop under the existing unsupported-state policy;
+they are not asserted to satisfy the ordinary geometric contract.
+
+Both functions have no original external calls or conditional branches. All41
+original rows match binary bytes and execute. No instruction rows/outcomes are
+excluded and no canonical helper receives duplicate credit. Source is recovered
+independently from our original executable. SARecomp supplied useful identity
+fingerprints, not implementation code: PAL027360 matches USA027360 for66 bytes,
+and PAL63a69c matches USA63a75c for16 bytes. No upstream game implementation is
+copied or merged. The already recovered normalizer63a94c receives no new credit.
+Ghidra's floating-point C drafts have misleading signatures and expressions;
+the original instruction listings and verified native adapters are authoritative.
+
+Fresh verification
+The892-case direct matrix passes8,472 checks. It includes648 completed calls,
+76 expected numeric trap stops,136 existing unsupported numeric stops and32
+reached mapped-memory guard stops. Every status and full CPU/FPU/RAM/ordered
+boundary state is compared against original-instruction execution. Nonzero
+statuses are tested stops, not manufactured successful completions.
+
+Independent finite oracles cover332 cross-product geometry/alias cases and76
+vector-length cases. Cross cases use small exactly representable dyadic values
+and check the geometric result, integer register effects, untouched FP banks and
+memory outside the output footprint. Length cases independently form an exactly
+representable squared norm and use rational squared-bracket/midpoint comparisons
+to obtain the correctly rounded root. These408 cases are included in892, not
+additional comparison credit. The geometric value oracle does not separately
+prove every signed-zero bit; the instruction comparison checks those bits.
+
+The matrix covers output/input aliases, both physical FP banks, SZ/PR/DN modes,
+RM0/1 and reserved-RM2/3 guards, selected exception-enable and preset-flag
+combinations, NaN/infinity/denormal/zero/overflow inputs, mapped MMU-off P0/P1/P2
+views and memory-guard prefixes. The call ABI declares SR.FD clear. Physical
+FPU-disabled, CPU exception, address-error and MMU delivery are not qualified.
+
+The existing numeric-probe mode classifies unsupported/trap states. Completed
+ordinary scalar arithmetic still uses the independent Python integer/dyadic
+reference. An initial broader run lacked probe=True and stopped at reference
+limits for enabled exceptions/denormals. Four targeted checks and the corrected
+full matrix pass without changing native behavior. FIPR plumbing uses the pinned
+shared vendored primitive; it is not an independent arbitrary-bit hardware proof.
+Separate finite geometry/root oracles strengthen selected normal cases. No local
+physical Dreamcast captures or gameplay equivalence are claimed.
+
+Integration and preservation
+The244-source DLL/library and strict unbounded Wall/Wextra/Werror checks pass.
+The new family reuses the existing FSQRT emitter/backend, adding its missing
+emitter only to this new generator. Prior source files remain unchanged.
+The bridge exactly extends the previous243 bridge by two entry routes and prefix.
+There are no new original call returns or continuation exports: return membership
+stays2268, explicit exports376, qualified post-yield routes71 and unqualified
+routes305. CPU, flat execution, guards, production observer, raw session and ABI
+stay unchanged; no new source wait limit is introduced. Existing numeric and
+normalization helpers receive no new original-routine credit.
+
+Actual PE inspection confirms 624 registered routines linked by exact export
+name. The1,584-entry registry contains1,581 unique module/address pairs, including
+separately recovered/buildable code. It is not the current DLL integration count.
+Support/continuation-only exports do not receive routine credit, and internal or
+renamed implementations are not counted by this measurement.
+
+243 fresh retained interrupt/context/task comparisons and1,683 checks preserve
+older numerical assertions. Total fresh evidence is 1,135 comparisons and
+10,155 checks; historical combined evidence is 66,842. Historical totals
+are not unique-case counts or code coverage. Earlier216 warm/211 cold startup
+comparisons and242-build full512-block write evidence remain historical. No
+fresh244 complete startup, gameplay or full-device write is claimed.
+
+All1,582 previous registry entries remain identical. Workflow checks preserve
+15,366 previous selected source/proof files except ten reviewed catalog/status/
+document paths and2,719 older builds. The244 DLL/library are additional. Eight
+generated artifacts reproduce and registration is byte-idempotent. Original
+project requirements remain intact. SARecomp assessments remain frozen historical
+evidence; unresolved reuse terms and private SDK/AOT bootstrap requirements still
+limit direct upstream integration. No author has been contacted.
+
+Next work and full scope
+Recover verified original callers of these math helpers, then extend the native
+collision family. The optional660bae write hook and naturally acquired SDK busy/
+latch paths remain unqualified. Physical storage, full filesystem, complete game
+and playable ports remain unfinished. PC60/120/240FPS through8K, Android,
+stereoscopic3DS, N64/PlayStation adaptations, SUPIR textures and display settings
+remain planned/unfinished. TextureOff must disable sampling and use vertex colors.
+Overall10% is a weighted milestone estimate, not measured coverage. Keep SolHigh
+for reverse engineering; LunaLow fits routine docs/admin. Public snapshots exclude
+retail inputs/assets, toolchains, caches and credentials.
+
+Reproduce with matching local inputs/toolchains from workspace root
+  powershell -NoProfile -File outputs/sonic-adventure/ghidra/export_collision_math.ps1 -Workspace WORKSPACE
+  python -B outputs/sonic-adventure/recover_collision_math.py
+  python -B outputs/sonic-adventure/connect_collision_math.py
+  powershell -NoProfile -File outputs/sonic-adventure/build_collision_math.ps1 -Workspace WORKSPACE
+  python -B outputs/sonic-adventure/check_collision_math_unbounded.py
+  python -B outputs/sonic-adventure/audit_collision_math.py
+  python -B outputs/sonic-adventure/verify_collision_math_direct.py --shard 0
+  python -B outputs/sonic-adventure/verify_collision_math_direct.py --shard 1
+  python -B outputs/sonic-adventure/verify_collision_math_direct.py --shard 2
+  python -B outputs/sonic-adventure/merge_collision_math_direct.py
+  python -B outputs/sonic-adventure/verify_collision_math_retained.py
+  python -B outputs/sonic-adventure/qualify_collision_math.py
+  python -B outputs/sonic-adventure/register_collision_math.py
+  python -B outputs/sonic-adventure/map_main_dispatch_cases.py
+  python -B outputs/sonic-adventure/verify_main_dispatch_case_map.py
+  python -B outputs/sonic-adventure/audit_recovery_coverage.py
+  python -B outputs/sonic-adventure/audit_project_completion.py
+  python -B outputs/sonic-adventure/verify_collision_math_workflow.py
+  python -B outputs/sonic-adventure/publish_github_snapshot.py --workspace WORKSPACE
+Follow GITHUB_PUBLISHING.txt for reviewed publication and prerelease upload.
