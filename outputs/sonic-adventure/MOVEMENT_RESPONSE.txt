@@ -1,0 +1,127 @@
+ORIGINAL CONTACT RESPONSE - FOUR NEW ROUTINES QUALIFIED
+
+Overall project: approximately 10% by weighted milestones, not measured code
+coverage. The goal remains active. These are incomplete research DLLs, not a
+playable game or PC port. Keep Sol High for the next reverse-engineering task.
+
+What changed
+The original response routine 075416 and three math helpers are now recovered,
+connected and software-qualified. All 373 new instructions and 32 conditional
+branch outcomes execute. A five-instruction canonical cosine adapter is reused
+without duplicate routine credit. Across the family all 378 instructions execute.
+
+Current totals: 1,600 registry entries, 1,597 unique module/address routines,
+642 registered routines confirmed linked by exact export names in the new
+253-source research DLL. Support and continuation exports do not count as game
+routines. All 1,596 earlier registry entries and 2,739 archived builds remain.
+
+Original behavior recovered
+- 075416: 280 instructions, 28 branch outcomes. It reads the query's contact
+  count at +28 and the original 88-byte contact records at 8c6bacf0. It calls
+  the actual distance and signed-angle helpers, filters normals, limits velocity
+  in the R5 record and movement in the R7 query, and returns a response flag.
+  R6 supplies state including the speed limit at +c4; the original caller's
+  fifth argument is a flag word at the initial stack pointer. Successful
+  geometric owner tests use ordinary PR0/SZ0 modes.
+- 055dac: 44 instructions, four outcomes. It forms a dot product, calls the
+  actual acos wrapper, converts the result to the game's angle units, and forms
+  a cross product. An optional R6 sign vector can select 65536 minus the angle.
+- 638eac: 13 instructions. It adds the R5 vector into the R4 vector, retaining
+  original load/store ordering, register effects and paired-transfer behavior.
+- 639b50: 36 instructions. It writes R4 cross R5 through R6 and returns its
+  length in FR0, using the original FMAC, FIPR and FSQRT order. This differs
+  from the already recovered 027360 helper, which crosses two point differences.
+- Canonical 63a970: five instructions. It uses the low 16 bits of the phase
+  with FSCA, then transfers the cosine result. Its earlier registry entry is
+  retained and receives no new original-routine credit.
+
+An allegedly unreachable path is actually reachable
+Ghidra's C draft omitted the zero-length branch at 075626. The original
+instruction listing retains it, and an actual call sequence now executes it.
+
+An original vector-add call first produces -1 or 0 in old stack RAM. The
+response routine subsequently allocates its own frame. With a contact distance
+of 1001, its initial minimum of 1000 is never replaced and the selected index
+stays -1. The later indexed read consequently uses the old word at frame+64,
+immediately before the distance array. If the velocity pointer overlaps the
+query's movement vector, the original head-on velocity clear also clears that
+movement. Zero is greater than the negative old word, so the later zero-length
+branch executes. Disjoint buffers and a zero old word provide matching controls.
+
+The producer and response both run from their ordinary original entry points.
+No callee result, return address or execution frame is installed. Only initial
+RAM inputs and ordinary call arguments are supplied. This demonstrates the
+original raw alias/history behavior; it does not establish that the game's
+natural object layout uses this case. No original branch is removed or excluded.
+
+Verification completed
+- 436 direct comparisons and 2,352 checks: 376 completed calls, 44 existing
+  unsupported numeric stops, ten mapped-memory guards and six numeric traps.
+  Full CPU/FPU/RAM/device/queue state and ordered call boundaries match.
+- 242 included finite oracles independently check small-dyadic cross/add
+  arithmetic, rational squared-bracket root rounding, cardinal angles and signs,
+  quarter-turn cosine/16-bit wrap, and selected axis response/velocity limits.
+  Other acos/normalization/geometry cases compare original instruction behavior;
+  they are not a complete independent physics or physical-FPU proof.
+- 50 alias comparisons and 198 checks cover vector overlaps, signed-angle
+  source/computed-cross aliases, and 16 real producer/response sequences with
+  negative/zero stack history, overlapping/disjoint velocity, both FP banks
+  and RM0/1. These execute the seven instructions missing from direct coverage.
+- 48 comparisons and 240 checks cover 16 actual world-selection -> collision ->
+  response sequences: lower/upper lists, hit/miss, stationary/downward motion
+  and both FP banks. The original collision caller produces the query contact
+  count and 88-byte records consumed by 075416. No contact result is supplied.
+  Selected horizontal-plane cases also check the exact movement result.
+- 243 retained interrupt/context/task comparisons and 1,683 checks preserve
+  the older numerical assertions, checked through parsed Python syntax.
+- Total: 777 fresh comparisons and 4,473 checks. Cumulative evidence is 73,717
+  comparisons, including historical tests; it is not a unique-case count or a
+  code-coverage percentage. Prior startup and full-device-write proofs remain
+  historical and were not rerun in this stage.
+- The 253-source DLL/import library build and strict unbounded
+  Wall/Wextra/Werror checks pass. All 378 original rows match the binary bytes;
+  every row, all 32 outcomes and all 19 original call sites execute.
+
+Scope and preserved work
+The previous bridge is extended by five entry routes, 19 actual return sites
+and 19 continuation exports. The old CPU/reference interpreter, guards,
+production observer, comparison logic, raw session and ABI remain. No new source
+wait bounds are introduced. Of 490 explicit continuation exports, 71 nonlocal
+routes are qualified and 419 remain unqualified. The new exports do not
+independently qualify nonlocal resumes. The new DLL/library are additional files.
+
+Physical FPU/exception/MMU/boot-ROM/GPU delivery, natural world initialization,
+complete 0730d8 movement, frame timing and gameplay remain unqualified. The
+older 028bfe null-read outcomes and 029b00 A48c skip remain open, and those owners
+remain unregistered. Three earlier math-wrapper precision paths remain open.
+No upstream SARecomp implementation was copied.
+
+How to inspect or reproduce
+Open analysis/movement_response_qualification.json for current evidence and
+limits. The direct, aliases and sequence verification reports list individual
+inputs and call boundaries. source/sa_movement_response.c contains the recovered
+bodies; the analysis/movement-response-* folders preserve original listings.
+
+From the workspace root, with the matching original input available locally:
+  python -B outputs/sonic-adventure/recover_movement_response.py
+  python -B outputs/sonic-adventure/connect_movement_response.py
+  powershell -NoProfile -File outputs/sonic-adventure/build_movement_response.ps1
+  python -B outputs/sonic-adventure/verify_movement_response_direct.py
+  python -B outputs/sonic-adventure/verify_movement_response_aliases.py
+  python -B outputs/sonic-adventure/verify_movement_response_sequence.py
+  python -B outputs/sonic-adventure/verify_movement_response_retained.py
+  python -B outputs/sonic-adventure/check_movement_response_unbounded.py
+  python -B outputs/sonic-adventure/audit_movement_response.py
+  python -B outputs/sonic-adventure/qualify_movement_response.py
+  python -B outputs/sonic-adventure/register_movement_response.py
+  python -B outputs/sonic-adventure/verify_movement_response_workflow.py
+
+Read-only Ghidra drivers are ghidra/export_movement_response_{owner,math,cross}.ps1.
+They require the retained local project/tools. Some compiler paths still reflect
+this workstation. Retail inputs stay local and excluded from publication.
+
+Next actual movement dependency: 075860, called by 0730d8 at 0733e8. Retain all
+older evidence obligations while recovering its original state/query contracts.
+The full game, PC 60/120/240 FPS through 8K, Android, stereoscopic 3DS, N64/PS1,
+SUPIR textures and settings remain unfinished. Texture Off must disable texture
+sampling and use vertex colours. The complete goal remains active.
