@@ -1,3 +1,5 @@
+Latest collision work: complete029b00body integrated,249sources,all1121instructions/32call sites and72of74branch outcomes exercised.444fresh comparisons/2651checks. Two outcomes remain open; caller is unregistered and receives0newroutinecredit. Registry unchanged1586unique/631confirmedlinked. See COLLISION_CONTACT.txt. Overall10% weighted milestones; incomplete, nonplayable research build.
+
 Latest collision dependencies: original glyph6407b0 and text640922 recovered, using the actual existing string-length callee. 248 sources, all315instructions/4branch outcomes,486fresh comparisons/4392checks. 1586unique registered routines;631confirmed linked. See COLLISION_TEXT.txt. Overall10% by weighted milestones; incomplete, nonplayable research build.
 
 Latest collision dependency:original triangle renderer63d66c recovered with all15actual gamecallees;247sources,332rows/31executed+1provedinfeasibleoutcome,625freshcomparisons/6035checks.1584unique registered/629confirmedlinked. SeeCOLLISION_RENDER.txt. Overall10%weightedmilestones;incomplete/nonplayable.

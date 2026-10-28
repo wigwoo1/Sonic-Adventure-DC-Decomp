@@ -1,0 +1,104 @@
+COMPLETE COLLISION CALLER BODY - PARTIAL VERIFICATION, 249 SOURCE BUILD
+
+The complete original029b00body is now translated and integrated:1121instructions,
+74syntactic conditional outcomes and32calls. It walks an authored linked world,
+tests triangles, builds contact responses, selects/averages results, and can
+execute its actual debug renderer and text helpers. Every original instruction
+and all32call sites execute in comparison tests. No callee outputs or execution
+frames are supplied. The three existing math wrappers10d008/10d058/10d0f8 remain
+unregistered, and the full collision caller is also UNREGISTERED.
+
+Two outcomes remain open
+72of74conditional outcomes execute. The unqualified outcomes are:
+  02a48c -> 02a4a8: skip the result-copy loop.
+  02a592 -> 02a5f4: skip the additional-response accumulation loop.
+They have not been proved infeasible. No valid input domain, original instruction
+or branch is removed to make the tests pass. New recovered-routine credit is ZERO.
+The next task is to establish original normal-entry dataflow and callee/register/
+memory invariants, or construct real original inputs that reach those outcomes.
+R10/SP preservation, contact counter stability, query/global/scratch aliasing and
+the special copy helper's register contract need evidence. Do not assume a branch
+is unreachable from finite tests or from a calling convention alone.
+
+Verification
+199broad caller comparisons plus2derived extended-edge comparisons pass968checks:
+168completed calls,29existing unsupported numeric stops and4mapped-memory guards.
+All cases match complete CPU/FPU/RAM/device/softwarequeue state and ordered call
+boundaries. The actual vector, angle, matrix, inverse/determinant, copy, rendering
+and text callees execute. Actual FR4/FR5/FPSCR inputs at the three math wrappers
+are captured read-only for further analysis; observations are not interval or
+unreachable-path proofs.
+
+64independent semantic cases check nonpositive-radius state preservation, empty
+or unmatched worlds, stationary horizontal-triangle contact decisions, repeated
+face counts and the16contact cap, plus the extended-edge rejection. These64are
+included in201, not additional comparison credit. Other geometry, movement,
+response sorting/averaging and debug drawing use original-instruction comparison
+rather than a separate complete physics oracle. World, query, triangle, matrix,
+render and font data are authored valid inputs, not natural startup evidence.
+
+The extended-edge tests are derived from the signed-area expressions. For the
+triangle(0,0,0),(0,0,2),(2,0,0), points with x+z=2 and opposite-sign x,z make the
+middle area4-2x-2z zero. The first two products are zero, and the third rejects.
+Points(3,.25,-1) and(-1,.25,3) execute the formerly missing029f5e->029fa0outcome.
+The real material flag is0x800000. Additional face/motion/plane inputs exercise
+its sign paths; no game result or frame is injected.
+
+243fresh retainedIRQ/context/task comparisons pass1683checks with old numeric
+expectations preserved and checked byAST. Combined444fresh comparisons/2651checks.
+Historical71010+444=71454evidence comparisons, not unique tests or code coverage.
+Prior216warm/211coldstartup and242full512byte write evidence remains historical.
+No fresh complete249startup, full device, pixels, frame or gameplay claim.
+
+The249-source DLL/import library and strict unbounded Wall/Wextra/Werror checks
+pass. The inherited generator lacked FABS; this family reuses the existing raw
+FABS emitter and reached PR-mode stop policy without changing earlier templates
+or numerical backends. The prior248bridge gains one body,32actual call returns
+and32continuation exports. CPU, flat original interpreter, guards, old callees,
+production observer, raw session and ABI implementations remain unchanged. The
+test observer adds only read-only actual math arguments to existing observations.
+No new source wait bounds. Return membership2326;434explicit continuationexports.
+71nonlocal resumes remain qualified and363remain unqualified. New exports are
+not independently qualified nonlocal returns.
+
+All2731older build artifacts, original source/proof bytes, registry bytes,
+requirements and historical progress are preserved. Only three reviewed docs/
+status files change. Eight generated artifacts reproduce. Registry remains
+1589entries/1586unique module-address pairs, with631registered routines confirmed
+linked by actual PE names. Support, continuation and this unregistered caller's
+exports do not count as recovered routines.
+
+Initial test setup discarded a required shared ABI input field and was corrected
+to retain established defaults. A near-end query could legitimately read zero
+and return early; the guard fixture now uses an actually unmapped input. Native
+code was unchanged by those fixture corrections. Unsupported numeric statuses
+are tested stops, not successful calls. Physical FPU precision for all inputs,
+exception/MMU/address-error delivery, GPU pixels and full gameplay remain open.
+The declared software ABI is fixed code, SR.FDclear, supported numerical policies,
+valid mapped memory and software queues.
+
+The full game and PC60/120/240FPS8K, Android,3DSstereo,N64/PS1 adaptations, SUPIR
+and display/texture settings remain unfinished. TextureOff disables sampling and
+uses vertex colours. Overall10% is a weighted milestone estimate, not measured
+code coverage. This is an INCOMPLETE, NONPLAYABLE research build. Keep the goal
+active and SolHigh for the remaining reverse engineering.
+
+Reproduce with matching original inputs and toolchain:
+  python -B outputs/sonic-adventure/recover_collision_contact.py
+  python -B outputs/sonic-adventure/connect_collision_contact.py
+  powershell -NoProfile -File outputs/sonic-adventure/build_collision_contact.ps1 -Workspace WORKSPACE
+  python -B outputs/sonic-adventure/check_collision_contact_unbounded.py
+  python -B outputs/sonic-adventure/audit_collision_contact.py
+  python -B outputs/sonic-adventure/verify_collision_contact_direct.py --shard 0
+  python -B outputs/sonic-adventure/verify_collision_contact_direct.py --shard 1
+  python -B outputs/sonic-adventure/verify_collision_contact_direct.py --shard 2
+  python -B outputs/sonic-adventure/merge_collision_contact_direct.py
+  python -B outputs/sonic-adventure/verify_collision_contact_frontier.py
+  python -B outputs/sonic-adventure/verify_collision_contact_retained.py
+  python -B outputs/sonic-adventure/qualify_collision_contact.py
+  python -B outputs/sonic-adventure/record_collision_contact.py
+  python -B outputs/sonic-adventure/verify_collision_contact_workflow.py
+Ghidra exports can be reproduced with ghidra/export_collision_contact.ps1. The
+original instruction listing, including all discontiguous tails and the final
+RTS delay slot, is authoritative. Follow GITHUB_PUBLISHING.txt for publication;
+retail inputs/assets, toolchains, caches and credentials are excluded.
