@@ -129,7 +129,7 @@
     "prs_trailing_bytes": 0,
     "main_binary_indexed_functions": 3637,
     "main_binary_draft_pseudocode_functions": 3631,
-    "recovered_buildable_routines": 1586,
+    "recovered_buildable_routines": 1587,
     "recovered_routine_tests": "analysis/startup_verification.json",
     "recovered_routine_test_cases": 17,
     "main_binary_draft_export_failures": 6,
@@ -149089,6 +149089,119 @@
       "verification": "analysis/collision_inverse_qualification.json",
       "verification_sha256": "b1761fb588a6fadb1f7a3cb71484e986f76b857b82ecad89ab44a8657cc9374b",
       "guide": "COLLISION_INVERSE.txt"
+    },
+    "collision_render_integration": {
+      "status": "partially_verified_original_triangle_renderer_software_abi_domains",
+      "compiled_source_count": 247,
+      "newly_registered_entries": 1,
+      "new_original_routine_credit": 1,
+      "newly_qualified_rows": 332,
+      "executed_rows": 332,
+      "static_conditional_outcomes": 32,
+      "executed_conditional_outcomes": 31,
+      "proven_infeasible_conditional_outcomes": 1,
+      "unaccounted_outcomes": [],
+      "domain_exclusion_arguments": [],
+      "coverage_by_routine": [
+        {
+          "address": "0x8c63d66c",
+          "static_rows": 332,
+          "executed_rows": 332,
+          "executed_outcomes": 31,
+          "missing_rows": [],
+          "missing_outcomes": [
+            [
+              "0x8c63d6e0",
+              "0x8c63d6f2"
+            ]
+          ],
+          "proven_infeasible_outcomes": [
+            [
+              "0x8c63d6e0",
+              "0x8c63d6f2"
+            ]
+          ],
+          "unaccounted_outcomes": [],
+          "domain_excluded_rows": [],
+          "domain_excluded_outcomes": []
+        }
+      ],
+      "canonical_duplicate_credit": 0,
+      "new_direct_entry_routes_qualified": 1,
+      "new_nonlocal_resume_exports": 20,
+      "new_nonlocal_resume_routes_qualified": 0,
+      "flat_return_guard_sites": 2292,
+      "explicit_nonfunction_resume_routes_total": 400,
+      "qualified_nonlocal_resume_routes_total": 71,
+      "remaining_unqualified_resume_routes": 329,
+      "prior_registry_entries": 1586,
+      "result_registry_entries": 1587,
+      "result_unique_module_address_pairs": 1584,
+      "fresh_original_native_comparisons": 625,
+      "fresh_independent_checks": 6035,
+      "direct_status_counts": {
+        "0": 354,
+        "-1": 22,
+        "-3": 6
+      },
+      "independent_geometry_oracle_cases": 332,
+      "reached_actual_game_callees": [
+        "0x8c605dac",
+        "0x8c605e0a",
+        "0x8c605e68",
+        "0x8c605f3c",
+        "0x8c605fca",
+        "0x8c60607a",
+        "0x8c6069a4",
+        "0x8c606a08",
+        "0x8c638ecc",
+        "0x8c64f5bc",
+        "0x8c64f840",
+        "0x8c64fae8",
+        "0x8c64fc68",
+        "0x8c64fe0c",
+        "0x8c650144"
+      ],
+      "supplied_game_callee_outputs": 0,
+      "supplied_execution_frames": 0,
+      "retained_previous_evidence_original_native_comparisons": 69899,
+      "total_evidence_original_native_comparisons": 70524,
+      "physical_fpu_all_inputs_qualified": false,
+      "physical_exception_delivery_qualified": false,
+      "full_gameplay_qualified": false,
+      "fresh_warm_startup_comparisons": 0,
+      "fresh_cold_profile": false,
+      "wrappers_still_unregistered": [
+        "0x8c10d058",
+        "0x8c10d0f8"
+      ],
+      "optional_660bae_still_unqualified": true,
+      "upstream_game_implementation_imported": false,
+      "overall_completion_percent": 10,
+      "estimate_method": "weighted milestones;not measured code coverage",
+      "next_task": "Recover original text/glyph dependencies640922/6407b0,thencontinue full029b00callerclosure. Existingstrlen10d3f0 isreused;no injectedcalleeoutputs/frames andno duplicateknowncode.",
+      "dll_sha256": "42caa1ffab015541bf38c3846f0c49f9b4e926688a39d01423ca77b371654511",
+      "limitations": [
+        "Newcompleteoriginalroutine63d66c has332instructions/20calls/15uniquecallees. It assembles indexed triangle fan/strip/list inputs,transforms threepoints,culls against farvisibility,clipsnearplane,andselectscolour/UV orprojectededgeemitters. All15actualgamecallees alreadyexistandexecute;no implementationimportedfromSARecomp,providedcalleeresults,orexecutionframes.",
+        "All332instructionsand31conditionaloutcomesexecutein382fullCPU/FPU/RAM/device/queue/orderedboundarycomparisons. Oneof32syntacticoutcomes isprovedinfeasiblefromnormalentry:atd6e0theunchangedR11wasalreadyknownnonzerofromd6c4/d6c6. ThecheckedCFG/predicateproofdoesnotexcludeanyvalidinput,removeoriginalcode,orclaimarbitrarymidfunctionentryqualification.",
+        "354completedcalls,22existingunsupportednumericstopsand6reachedRAMguardsmatchoriginalexecution. BothFPbanks,PR/SZ,RM0/1,finite/NaN/infinity/subnormal/maxfiniteinputz,mappedMMUoffP0/P1/P2views,cursoroffsets,rendererflag/swapstateandfan/strip/listtrianglescovered. Existingnumericprobe/backends retained;physicalFPU/exception/MMU/address-error delivery unqualified;SRFDclearcallABI. Nonzero statuses arenotcompletions.",
+        "332independentfinitegeometrycaseschecktriangleindices/transformcounts,farrejection,nearclippedcounts,emitterchoice,header/vertex/edgepacketcountsandcursor. Finiteunclippedcolour/UVstripcasesalsocheckprojectedposition/depth/termination/colours/signedUVwords. These332areincludedinthe382,notextracomparisoncredit. Clippedarbitraryattributeandwideedgecoordinates relyonoriginalinstructioncomparison,notaseparatecompletehardwarepixeloracle.",
+        "Initialfixturemade shaderdestination slot88fcd0 contain a sentinel ratherthan a validpointer. Original stoppedat606a52 while oldnativecallee hadnomappedpointerguard. Correctedtheauthoredvalidinputpointer;no nativeimplementationchanged. Invalidlegacycallee pointersareoutsidequalification;the six guardcasesexercise newwrapper/guardedpointtransform accesses,not an arbitrarymalformedrendererclaim.",
+        "247-sourceDLL/libandstrictunboundedWallWextraWerrorpass. Exactprevious246bridgeplus1wrapper/20actualreturns/20continuationexports. Oldcallees,CPU/flatinterpreter/guards/productionobserver/rawsession/ABIunchanged,no newwaitlimits.400exportsareexplicitcontinuations,71qualifiednonlocalroutes/329remaining;exportaloneisnotnonlocalbehaviorqualification.2727oldbuilds preserved.",
+        "243freshretainedIRQ/context/taskcomparisons/1683checkskeepoldnumericassertions. Total625freshcomparisons/6035checks;cumulative70524ishistorical-plus-fresh,notunique/codecoverage.216warm/211coldstartupandprior242full512write remainhistorical;nofreshcomplete247startup/gameplay/full-deviceclaim. Full029b00caller/textdependenciesandanglewrapperpaired-FMOVerrorpathsremainunfinished.",
+        "Allgame/PC60/120/240FPS8K/Android/3DSstereo/N64/PS1/SUPIR/settingsunfinished;TextureOffdisablessampling/usesvertexcolors.10%weightedmilestones,notcoverage;researchDLLnonplayable. KeepgoalactiveandSolHighforreverseengineering."
+      ],
+      "linked_routine_inventory": {
+        "registry_entries": 1587,
+        "registry_unique_module_address_pairs": 1584,
+        "confirmed_linked_registry_entries_by_name": 629,
+        "confirmed_linked_unique_routines_by_name": 629,
+        "all_named_DLL_exports_including_support_and_continuations": 1638,
+        "method": "Exact registered-name intersection with actual PE named exports;support/continuation-only exports excluded. Other internal/renamed implementations are not counted by this method. Registry recovery count is distinct from current combined-DLL integration count."
+      },
+      "verification": "analysis/collision_render_qualification.json",
+      "verification_sha256": "dc6527bc959abf5979331b31ee5c468f9e89fc7bf1e0580b43cc45664dcfb8a6",
+      "guide": "COLLISION_RENDER.txt"
     }
   },
   "milestones": [
@@ -149262,10 +149375,10 @@
     "report": "analysis/recovery_coverage_audit.json",
     "candidate_inventory": "analysis/unrecovered_function_candidates.tsv",
     "boundary_inventory": "analysis/unresolved_module_boundaries.json",
-    "registered_routines": 1586,
-    "registered_unique_module_address_pairs": 1583,
+    "registered_routines": 1587,
+    "registered_unique_module_address_pairs": 1584,
     "indexed_candidates_in_export_snapshots": 11411,
-    "registered_entries_matching_export_snapshots": 1455,
+    "registered_entries_matching_export_snapshots": 1456,
     "non_texture_binaries_without_function_index": 211,
     "registry_evidence_errors": 0,
     "stale_whole_source_hash_reports": 0,
@@ -156590,5 +156703,5 @@
   },
   "unverified_work": {},
   "unverified_drafts": {},
-  "recovered_buildable_routines": 1586
+  "recovered_buildable_routines": 1587
 }

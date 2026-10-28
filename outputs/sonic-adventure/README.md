@@ -1,3 +1,5 @@
+Latest collision dependency:original triangle renderer63d66c recovered with all15actual gamecallees;247sources,332rows/31executed+1provedinfeasibleoutcome,625freshcomparisons/6035checks.1584unique registered/629confirmedlinked. SeeCOLLISION_RENDER.txt. Overall10%weightedmilestones;incomplete/nonplayable.
+
 Latest collision integration:canonicalinverse6390b0/determinant64f3ec now use fullruntimeABI;246sources,1191originalrows/8outcomes,867fresh comparisons/7545checks.1583unique registered/628confirmedlinked;0duplicate routinecredit. SeeCOLLISION_INVERSE.txt. Overall10%weightedmilestones;incomplete/nonplayable.
 
 Latest collision dependency:canonical63a94c normalization now directly routed through proper existing lowercontext.245-source build,757fresh original/native comparisons/6321checks,52finite-vector oracles.0newroutinecredit;1583unique registered/626confirmedlinked. SeeCOLLISION_NORMALIZE.txt. Overall10%weightedmilestones;incomplete/nonplayable.
