@@ -1,0 +1,153 @@
+ORIGINAL COMMAND13 TYPE-CC WRITE - 239 SOURCES
+
+The new 239-source research DLL software-qualifies command-13 writer 64b91c and its three type-CC write helpers: 483 original instructions and 74 branch outcomes. All 483 instructions and 72 outcomes execute; two outcomes have explicit, scoped exclusion arguments. All 3,374 fresh original/native comparisons and 22,232 independent checks pass. Type-CC creation, sequential writes, readback verification, metadata errors and cleanup match the original in the documented input domains. Registry: 1,577 entries / 1,574 unique pairs. Overall remains about 10% by weighted milestones, not code coverage. These research DLLs are not playable ports.
+
+Recovered behavior
+Command13 calls 64b91c through the original argument/opcode APIs and worker.
+It checks the contiguous leading FFFC free-block prefix. It creates a new CC
+record only when the requested name is absent, no CC record already exists,
+block0 is free and there is directory/handle capacity. Duplicate name returns
+-250, an existing CC entry returns-247, directory/CC-space rejection returns
+-248 and handle exhaustion returns-249. Existing unrelated records and chains
+remain intact, including on pool exhaustion. This path does not replace them.
+
+The next-block writer uses completed-block count as block index:0,1,etc.
+It requires that FAT entry to be FFFC and the count below the CC extent.
+After success it marks the new end FFFA and links the preceding block. First
+head0 is valid. A failed write propagates immediately, leaving the failed block
+FFFC and retaining any successful prefix. Commit response251 becomes the
+original backend's special error-192, preserved by the wrapper. There is no additional block retry or
+bad-block mark in this helper. Data response8 returns-255 in the tested mode.
+These results follow the original instructions, including error conversion.
+
+Close uses the already qualified original64919e. The new handle has mode1,
+attribute1, low8 flag bits, name, encoded timestamp, head and completed count;
+close serializes typeCC and those fields through the selected SDK byte order.
+It clears all72 handle bytes. Master ignores close return; close ignores final
+FAT return. A success callback may therefore follow an unacknowledged metadata
+write. No rollback, atomic-save or stronger persistence guarantee is invented.
+
+Flag80000000 selects64ba30:write,close,reopen,read and compare every512 bytes.
+Mismatch returns-240; tested read error propagates-255. Empty write serializes
+headFFFF/count0 and subsequent original read-open rejects it with-191 in the
+standard raw-format domain. Other low flag bits are retained as a byte.
+
+Qualified bodies (address / instructions / branch outcomes)
+  64b91c /100 /14 : capacity check, normal versus verified write master
+  648e36 /157 /26 : type-CC write-handle admission and initialization
+  6494e2 /106 /16 : sequential block write and FAT linking
+  64ba30 /120 /18 : write,close,reopen,read and512-byte comparison
+All four are newly recovered original bodies; no previously registered helper
+is counted again. All483 instruction rows match fresh original binary bytes.
+
+Verification and its limits
+26 initialized command13 scenarios and three additional high-flag failure
+scenarios use actual constructors, command APIs, scheduler, transport submission,
+raw responses and response pump. Original code creates all task frames, request
+IDs, contexts and return addresses. No parser output, callee result, saved frame,
+request ID or PR is substituted. Independent literal write plans check units,
+commands, blocks, phases, original source pointers and exact128-byte payloads;
+whole root/FAT/directory/dirty bytes; flags/timestamp/head/count/attribute;
+progress/error counters, result callback, handles, idle and owner teardown.
+
+The matrix covers both byte orders; first/second directory sectors; one/two/
+zero-block files; capacity/name/CC/directory/handle rejection; immediate and
+partial-prefix data failure; ordinary and verified writes; mismatch/read error/
+empty verification; directory/FAT/root failures and relocation. The original
+extra FAT pass following directory relocation and ignored errors are retained.
+The ACK image ledger verifies acknowledged software packet images; it does not
+prove physical Maple DMA, flash durability, power-loss behavior or atomic saves.
+
+216 mapped-ABI admission/root guard comparisons and40 sequential-block/extent/
+zero-capacity comparisons execute actual original callees. Independent exact
+nonstack RAM, output/cache/error, all FPU-bank and callee-register checks supplement
+whole original/native state, stack and ordered effects. The256-byte upper ABI
+scratch bound is declared. These helper inputs are not all claimed naturally
+acquired through raw hardware observations.
+
+One initial raw test incorrectly treated header field18=0 as zero parsed CC
+extent. The interface fixes the extent at128. The final raw matrix explicitly
+checks128; a separate helper test declares parsed zero-capacity and verifies its
+-248 result. The commit251 error expectation was resolved by tracing the original backend's
+special error-192 branch and the wrapper's exact pass-through. Both original
+execution and the binary literals confirm-192; the generic wrapper fallback
+is not used for this response. The
+no-space fixture consumes its sole leading free block before the directory
+failure. The final complete task matrix reran against these corrected sources;
+no native implementation, original return, execution budget or wait limit changed.
+
+Two conditional outcomes are excluded, with all source retained:
+- 648eba->648f2c:64b2dc returns0 in its original RTS delay slot; the negative
+  branch is impossible under the unchanged exact binding.
+- 64bad4->64bb00:zero blocks leave headFFFF. Close serializes16-bit FFFF and
+  original64b300 read-open rejects that head for the standard raw16-bit extent.
+  The zero-loop skip after SUCCESSFUL reopen is excluded only in this stable
+  worker-filename/cache/disjoint-ABI-stack/raw-format domain. This is not a global
+  dead-code claim for arbitrary mapped limits, aliases or concurrent mutation.
+All483 instructions execute;72 of74 outcomes execute. No fabricated negative
+callee return or completed task fills a coverage gap.
+
+Raw tasks retain retail policy66d3a4=0, explicitly set abort policy0 and use the
+constructor-cleared NULL write hook. The optional660bae callback remains
+unqualified. Arbitrary malformed metadata and concurrent device histories,
+physical storage and the complete filesystem/game remain unfinished.
+
+Build, preservation and next dependency
+239-source DLL/lib and strict unbounded Wall/Wextra/Werror compilation pass.
+The bridge is exactly the previous238 bridge plus four bodies,32 actual call
+returns/continuation exports and prefix. Return membership2220->2252. Eight
+recorded post-yield parent routes qualify:647b22,649572,64b9e8,64ba00,64ba9c,
+64bab2,64bae2,64bb0a. The route inventory records61 qualified of360 explicit continuation
+exports;299 remain outside route-specific qualification. Exports receive no
+routine credit. CPU, flat execution, guards, observer, raw session and ABI remain
+unchanged. No new source wait limits are added.
+
+243 fresh retained IRQ/context/task comparisons preserve earlier numerical
+assertions. Two initialized command14 frontier sessions reach actual missing
+64bbb2, PR647b3c, with the original command pending. No callback or teardown is
+invented there. Recover that handler and its actual dependencies next.
+Fresh evidence totals3,374 comparisons/22,232 independent checks.
+Historical combined evidence totals49,797; that is not a unique-case count or
+code coverage. No fresh complete startup ran;216 warm/211 cold comparisons
+remain historical. Old proof files are preserved, not silently requalified.
+
+All1,573 prior registry entries remain identical. The workflow checks15,115
+previous selected source/proof files, with only ten catalog/status/documentation
+paths reviewed for change, and2,709 previous build files against frozen hashes.
+The new239 DLL/lib are additional. Eight generated artifacts reproduce;
+registration is byte-idempotent. Original full-project requirements remain intact.
+
+Public source/documentation/proofs and incomplete research builds exclude retail
+inputs/assets, toolchain bundles, caches and credentials. The goal remains
+unfinished at10% weighted acceptance milestones. PC60/120/240FPS through8K,
+Android, stereoscopic3DS, N64/PlayStation adaptations and SUPIR/settings remain
+planned or unfinished. TextureOff must disable sampling and use vertex colors.
+Use SolHigh for the next reverse-engineering task; LunaLow is suitable for
+routine documentation/publication checks once the difficult recovery is verified.
+
+Reproduce from workspace root, with matching local retail inputs/toolchains
+  powershell -NoProfile -File outputs/sonic-adventure/ghidra/export_movie_filesystem_command13.ps1 -Workspace WORKSPACE
+  powershell -NoProfile -File outputs/sonic-adventure/ghidra/export_movie_filesystem_command13_dependencies.ps1 -Workspace WORKSPACE
+  python -B outputs/sonic-adventure/recover_movie_filesystem_command13.py
+  python -B outputs/sonic-adventure/connect_movie_filesystem_command13.py
+  powershell -NoProfile -File outputs/sonic-adventure/build_movie_filesystem_command13.ps1 -Workspace WORKSPACE
+  python -B outputs/sonic-adventure/check_movie_filesystem_command13_unbounded.py
+  python -B outputs/sonic-adventure/audit_movie_filesystem_command13.py
+  python -B outputs/sonic-adventure/verify_movie_filesystem_command13_guards.py
+  python -B outputs/sonic-adventure/verify_movie_filesystem_command13_edge_guards.py
+  python -B outputs/sonic-adventure/verify_movie_filesystem_command13_tasks.py --shard 0
+  python -B outputs/sonic-adventure/verify_movie_filesystem_command13_tasks.py --shard 1
+  python -B outputs/sonic-adventure/verify_movie_filesystem_command13_tasks.py --shard 2
+  python -B outputs/sonic-adventure/merge_movie_filesystem_command13_tasks.py
+  python -B outputs/sonic-adventure/verify_movie_filesystem_command13_extra_tasks.py
+  python -B outputs/sonic-adventure/verify_movie_filesystem_command13_retained.py
+  python -B outputs/sonic-adventure/verify_movie_filesystem_command13_frontier.py
+  python -B outputs/sonic-adventure/qualify_movie_filesystem_command13.py
+  python -B outputs/sonic-adventure/register_movie_filesystem_command13.py
+  python -B outputs/sonic-adventure/map_main_dispatch_cases.py
+  python -B outputs/sonic-adventure/verify_main_dispatch_case_map.py
+  python -B outputs/sonic-adventure/audit_recovery_coverage.py
+  python -B outputs/sonic-adventure/audit_project_completion.py
+  python -B outputs/sonic-adventure/verify_movie_filesystem_command13_workflow.py
+  python -B outputs/sonic-adventure/publish_github_snapshot.py --workspace WORKSPACE
+Follow GITHUB_PUBLISHING.txt for reviewed publication and prerelease upload.
