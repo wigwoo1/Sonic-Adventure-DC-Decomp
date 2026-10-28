@@ -1,0 +1,82 @@
+COLLISION WRAPPER RETURN RESEARCH - PARTIAL, NO NEW ROUTINE CREDIT
+
+The missing infinity-result error arms in10d058 and10d0f8 remain unqualified.
+Each wrapper still has3unexecuted instructions and1unqualified branch outcome.
+Neither wrapper is added to the registry by this milestone. Current counts stay
+1,586registry entries /1,583unique module-address pairs /626confirmed linked by
+registered export name. Whole-project estimate remains10%weighted milestones,
+not measured code coverage. The full game and all requested ports remain unfinished.
+
+What the scalar derivation establishes
+With original code/literals/coefficients unchanged, a mapped nonwrapping stack
+disjoint from original code/tables, and ordinary PR0/SZ0 supported completion,
+the original numerical return paths produce finite values or NaNs, not infinity.
+The checker bytechecks606original instruction rows, binds critical operands and
+branches, reads the original coefficients/constants, and checks rational bounds.
+It does not assume ideal host asin/atan accuracy. The reduced polynomial has
+five original FMAC iterations with six coefficients of magnitude at most1; the
+loose bounds stay far below binary32 overflow. Atan's transformed input lies in
+[0,1]; each later approximation denominator is at least1. The original exponent
+scaler and asin/quadrant finishing operations preserve finite bounded results.
+Original NaN return constants remain NaNs. Supported rounding/DN/stop assumptions
+are explicit in analysis/collision_wrapper_scalar_return_class.json.
+
+This is a written original-code derivation with machine-checked numeric bounds
+and operand/control bindings. It is not an automatic whole-program SMT proof,
+a proof of every backend implementation bit pattern, or physical Dreamcast proof.
+It does not establish arbitrary paired-FMOV behavior or qualify the whole wrappers.
+
+Why paired-FMOV cannot be declared closed
+SZ1 makes paired stores8bytes rather than4. Local symbolic transfers show saved
+PR overlaps in asin/atan/quadrant frames. More significantly, scaling10e7b8 saves
+integerR14 at entrySP-4, reserves4morebytes, then stores pairedFR4/FR5 at entrySP-8.
+The second stored word replaces savedR14 with the caller's active FR5 bits.
+The routine restores this altered word intoR14. Its atan caller later executes
+JSR@R14 at10f0f2, so the scalar call graph cannot simply be assumed for SZ1.
+This observation proves neither a complete reachable infinity return nor a global
+unreachable error arm. Actual dynamic-target/frame effects or a proved caller ABI
+are still required. No missing rows/outcomes are excluded from qualification.
+
+Direct verification
+48fresh original/native scaling-callee comparisons pass336independent assertions:
+both physical FPbanks, RM0/1, SZ0/1, original powers-2/-1/+1, and two initialFR5
+bitpatterns. SZ0 preservesR14; SZ1 replaces it with initialFR5. EntireCPU/FPU/RAM/
+device state, ordered boundaries, restoredSP/PR and exact stack footprint match.
+All48calls complete. Only initial caller input registers are set. No callee
+results, saved frames or original constants are injected or modified.
+Seven derivation regression checks also pass. Negative controls in memory copies
+reject changed transform/store instructions, infinite constants/coefficients,
+and an attempt to claim all FPSCR modes from the scalar certificate. Separate
+positive checks keep scalar and paired conclusions distinct. Retail/native files
+are untouched by those negative controls.
+
+Build and evidence preservation
+No native source changed and no new DLL was compiled. The existing245-source
+collision_angle DLL remains byteidentical to the previous published artifact and
+is freshly exercised by these48calls. Earlier1385comparison angle evidence and
+other old proof files remain unchanged, not rerun or relabeled as fresh evidence.
+Cumulative68,227historical +48fresh =68,275comparisons; not unique/code coverage.
+Registry/source/build requirements remain unchanged. All2,723older archived build
+files are preserved. These are incomplete, NONPLAYABLE research artifacts.
+
+Next work
+Continue original029b00 dependency and caller-ABI recovery. Before promoting
+10d058/10d0f8, close dynamic-target/frame behavior or establish the real caller ABI.
+Do not repeat blind parameter sweeps or manufacture coverage by supplying callee
+outputs/frames or patching constants. Canonical math helpers receive no duplicate
+credit. Original normalization/inverse-matrix/rendering dependencies still need
+connection/recovery before the full1,121instruction collision caller qualifies.
+PC60/120/240FPS8K,Android,3DSstereo,N64/PS1,SUPIR/settings remain unfinished.
+TextureOff must disable sampling and use vertex colors. Keep SolHigh for this
+reverse engineering; LunaLow fits routine docs/admin. Keep the goal active.
+
+Reproduce from workspace root with matching local retail input/toolchain:
+  python -B outputs/sonic-adventure/prove_collision_wrapper_scalar_returns.py
+  python -B outputs/sonic-adventure/check_collision_wrapper_paired_aliases.py
+  python -B outputs/sonic-adventure/verify_collision_wrapper_derivations.py
+  python -B outputs/sonic-adventure/verify_collision_wrapper_scale_aliases.py
+  python -B outputs/sonic-adventure/record_collision_wrapper_return_research.py
+  python -B outputs/sonic-adventure/verify_collision_wrapper_return_workflow.py
+Follow GITHUB_PUBLISHING.txt for reviewed source/proof publication and matching
+incomplete research archives. Retail inputs/assets/toolchains/caches/credentials
+remain excluded. This work imports no upstream implementation.

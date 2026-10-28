@@ -1,0 +1,74 @@
+{
+  "status": "checked_scalar_return_class_derivation_only",
+  "derivation": {
+    "domain": "PR0_SZ0",
+    "checked_operand_and_control_bindings": 67,
+    "result_classes": [
+      "finite",
+      "NaN"
+    ],
+    "infinity_result_possible": false,
+    "polynomial_argument_abs_bound": "4",
+    "polynomial_squared_abs_bound": "32",
+    "horner_abs_bounds": [
+      "66",
+      "4226",
+      "270466",
+      "17309826",
+      "1107828866"
+    ],
+    "polynomial_abs_bound": "8862630928",
+    "atan_abs_bound": "17725261864",
+    "asin_abs_bound": "137438953472",
+    "quadrant_abs_bound": "288230376164888539/2097152",
+    "maximum_checked_bound": "288230376164888539/2097152",
+    "coefficient_words": [
+      "0xbdba2de9",
+      "0x3de38e38",
+      "0xbe124925",
+      "0x3e4ccccd",
+      "0xbeaaaaab",
+      "0x3f800000"
+    ],
+    "rounding_assumptions": [
+      "Monotone binary32 RM0 nearest-even andRM1 towardzero;finite exact bounds below2^126 stay finite;outward2x bounds used for ordinary arithmetic",
+      "DN flushing can decrease magnitude;underflow/trap/unsupported states follow existing software policy",
+      "Only completed ordinary PR0/SZ0 calls;NaNs may propagate as NaNs,not infinity"
+    ],
+    "paired_fmov_domain_closed": false,
+    "whole_wrappers_qualified": false
+  },
+  "original_instruction_rows_byte_checked": 606,
+  "native_source_changed": false,
+  "new_routine_credit": 0,
+  "wrappers_still_unregistered": [
+    "0x8c10d058",
+    "0x8c10d0f8"
+  ],
+  "scope": "Machine-checked numeric bounds and original operand/control bindings support the written scalar derivation;not a general SMT proof,hardware proof,or arbitrary paired-FMOV-state reachability proof. No ideal transcendental accuracy assumed. Existing original/native tests remain separate historical evidence.",
+  "preconditions": [
+    "Original code,literals,coefficient tables unchanged during call",
+    "Mapped nonwrapping stack disjoint from original code/tables;no asynchronous memory mutation",
+    "SR.FD clear;this certificate explicitly PR0/SZ0 with supported numerical completion policy"
+  ],
+  "remaining_work": "Close paired-FMOV call/return and dynamic-target effects or prove the actual caller ABI before full wrapper qualification. Keep six missing wrapper instructions/two outcomes unqualified.",
+  "overall_completion_percent": 10,
+  "estimate_method": "weighted milestones;not measured code coverage",
+  "sha256": {
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\analysis\\collision-angle\\8c10d058_instructions.tsv": "4348f2cad21463341496ec2f8991db1d201d538b7dd5d4899faf48cd7b6613f6",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\analysis\\collision-angle\\8c10d0f8_instructions.tsv": "81f787ed85a9a8f464f1c4c6c06c2e99a87331716392dc7d907694b1f5f88e08",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\analysis\\collision-angle\\8c10e6a0_instructions.tsv": "cbc8adbd8deb0401127f5a8098b808622da03e8f486e387def5e3b4e8cc567f5",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\analysis\\collision-angle-numeric\\8c10fb94_instructions.tsv": "55052743edaf3458d32664800c280f7f9de35571f1240841f2f3950010ce30bf",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\analysis\\collision-angle-numeric\\8c10fbb8_instructions.tsv": "96f1d01e04fb13974d083b7bb4e9c9af815336fc57174d3d209212ab488d0f4d",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\analysis\\draw-frame-acos\\8c10e5ac_instructions.tsv": "6cc0d52cee1977bbcea68766a181a6a09b8d4555833240ae643039b6e684ade4",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\analysis\\draw-frame-trig\\8c10ef84_instructions.tsv": "ccef3a9f6b0a081023eca0bf3342e7f453d94b64189b88be93bf4aa35a573b4c",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\analysis\\draw-frame-trig\\8c10e7b8_instructions.tsv": "9018b6e3744c768fc230de31e3268752c86b15d41cd9487a2bd143b83f4cf204",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\prove_collision_wrapper_scalar_returns.py": "1ecb92aa64a1c0c2d5744ad49d49ad524a67898e2c4d15885d4489bc71ada9b0",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\source\\sa_collision_angle.c": "979e5d5b97f5bfe3e8ed8416156591e2082536c76b49e177dda0f05be79b0beb",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\source\\sa_draw_frame_dependencies.c": "d6e47523a6992b2054c347dc324f2d4605c55971b78dd14ae4b49e6245579411",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\source\\sh4_compare_bits.h": "1b1eb137912777eaeb62bfe23398a43121f82bb9085bcc416bf2bb7166a36cdc",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\analysis\\collision_angle_qualification.json": "5eeb67aea9a97d49af805872662516012c455fa6bfb823071fcb587e7956e4b7",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\work\\sonic-adventure\\build\\collision_angle.dll": "c32869d42e0f8a572db4c542c237d3accdc427d0fe06334079ea87c29efdd00b"
+  },
+  "original_binary_sha256": "45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a"
+}
