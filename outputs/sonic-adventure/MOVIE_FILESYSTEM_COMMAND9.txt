@@ -1,0 +1,129 @@
+ORIGINAL COMMAND9 STORAGE-BLOCK RELOCATION - 235 SOURCES
+
+The new 235-source research DLL qualifies command-9 storage-block relocation handler 64a828 and seven helpers. All 489 original instructions and 86 branch outcomes execute in verification. All 2,059 fresh original/native comparisons and 14,353 independent checks pass, including ten completed relocation/error tasks and two pending command-10 frontiers. Original data movement, FAT/directory updates, type-CC admission gate, all 256 dirty flags, counters, callbacks and cleanup are preserved. Registry: 1,555 entries / 1,552 unique pairs. Overall remains about 10% by weighted milestones, not code coverage. Goal active; research DLLs are not playable ports.
+
+Qualified bodies (address / instructions / conditional outcomes):
+  0x8c64a828 / 162 / 30
+  0x8c64a3fa / 75 / 14
+  0x8c64a7ba / 55 / 14
+  0x8c64a6ae / 39 / 6
+  0x8c64a6fc / 41 / 6
+  0x8c64b080 / 41 / 6
+  0x8c64a74e / 45 / 6
+  0x8c64adc6 / 31 / 4
+
+The original operation
+Handler64a828 checks admission, device readiness, cached root and capability.
+It calls a name query for the first directory entry of type0xCC. Success from
+that query returns zero, which makes the parent reject the operation with-245;
+a missing-entry error is nonzero and allows the remaining checks. This original
+gate is preserved exactly. The legacy export filename containing volume was a
+provisional label; the verified predicate is specifically directory type0xCC.
+
+The original FAT validator accepts FFFC/FFFF/FFFA markers and checks other links
+against the user-area split and root limit. Relocation finds the lowest allocated
+user block and the highest free FFFC block above it. It reads512 bytes into the
+caller-provided workspace and completes the destination write before changing
+metadata. A positive predecessor index updates its FAT link; otherwise the SDK
+updates a directory-head field. The destination receives the source's old FAT
+link, the source becomes FFFC, and the search repeats. The independent task plan
+checks moves20->31 and21->30, exact data, directory head31 and FAT chain31->30.
+No extra chain repair, validation or alternative allocation rule is invented.
+
+When movement finishes, the original code sets all256 directory-dirty bytes to1,
+then persists directory sectors and FAT. With the two-sector fixture the first
+two dirty bytes clear after their successful writes; the other254 remain1.
+Initial progress/error counters are preserved and incremented by actual block
+attempts. The routine does not reset them to the delete/rename starting values.
+
+Fresh verification
+736 direct helper comparisons / 5,888 independent checks cover empty/first/last,
+ascending/descending, free/bad/reserved markers, split bounds, signed-low16
+predecessor matching, any-nonzero-type directory-head search, typeCC lookup,
+decoded metadata and thirteen-byte name output. Original endian readers, FAT
+getter and metadata decoder execute. Independent outputs and entire nonstack
+RAM/FPU/callee registers supplement full original/native machine-state checks.
+These are declared coherent mapped ABI inputs; natural acquisition of every
+boundary case is not claimed. ABI scratch is independently bounded to64/192bytes.
+
+136 guard comparisons / 1,088 checks cover admission, presence, capability, busy,
+cache, root signature/latch, zero metadata capability, foundCC name and invalid
+FAT. Original callees run. Entire nonstack RAM/counters/cache and call ordering
+are checked with a320-byte nested ABI scratch bound. No guard return is supplied.
+
+Ten actual initialized tasks / 852 comparisons / 5,274 checks acquire original
+header/root/FAT/linked-directory data, then invoke command9 through the original
+argument/opcode APIs and scheduler. A valid caller-owned512-byte workspace is
+passed through the original API. Only raw256-byte read responses and write ACKs
+are supplied. Literal plans check read blocks/destination, exact workspace/data,
+write unit/command/block/phase/source/128-byte payloads, FAT links, directory
+heads, all256 dirty bytes, progress, result callback, idle and owner teardown.
+Both byte orders, no data, no free block above data, read/write/DIR/FAT abort,
+foundCC rejection and invalid-link rejection pass. The ACK ledger records
+software-acknowledged images, not physical flash durability or DMA completion.
+No parsed metadata, task frame, request ID, PR, callee output or callback result
+is supplied. Explicit initial abort-policy0 and constructor-cleared NULL write
+hook remain the declared domain. Full physical filesystem behavior is unfinished.
+
+243 fresh retained IRQ/context/task comparisons / 1,683 checks preserve earlier
+numeric expectations. Two raw-initialized command10 frontiers / 92 comparisons /
+420 checks reach missing64a244, PR647a9c, with original channel/name/zero inputs.
+Those commands remain pending without invented callback or teardown. The actual
+command10 trace establishes this next dependency; an earlier command9 ordinal
+hypothesis was not used. No fresh full startup is claimed. Historical evidence
+plus this milestone totals38,695 comparisons, not unique cases or code coverage.
+
+Build, preservation and reproduction
+235-source DLL/lib and strict unbounded Wall/Wextra/Werror compilation pass.
+All489 exported original rows are bytechecked. The dispatcher is exactly the
+previous234-source bridge plus eight bodies, thirty actual return entries/
+continuation exports and the export prefix. Return membership2084->2114.
+CPU, flat execution, guard policy, observer, raw session and ABI are unchanged;
+no new source wait bounds are added. Five actual nonlocal parent returns qualify:
+64a8ee,64a8fe,64a988,64a992,647aac. Overall40 of222 exports qualify;182 remain
+unqualified. Continuation exports receive no routine credit.
+All1,547 earlier registry rows, source/proofs and2,701 builds retain their hashes;
+new235 DLL/lib are additional. Original full-project requirements are preserved.
+
+Run from workspace root with matching local retail inputs:
+  powershell -NoProfile -File outputs/sonic-adventure/ghidra/export_movie_filesystem_command9.ps1 -Workspace WORKSPACE
+  powershell -NoProfile -File outputs/sonic-adventure/ghidra/export_movie_filesystem_command9_volume.ps1 -Workspace WORKSPACE
+  python -B outputs/sonic-adventure/recover_movie_filesystem_command9.py
+  python -B outputs/sonic-adventure/connect_movie_filesystem_command9.py
+  powershell -NoProfile -File outputs/sonic-adventure/build_movie_filesystem_command9.ps1 -Workspace WORKSPACE
+  python -B outputs/sonic-adventure/check_movie_filesystem_command9_unbounded.py
+  python -B outputs/sonic-adventure/audit_movie_filesystem_command9.py
+  python -B outputs/sonic-adventure/verify_movie_filesystem_command9_direct.py
+  python -B outputs/sonic-adventure/verify_movie_filesystem_command9_guards.py
+  python -B outputs/sonic-adventure/verify_movie_filesystem_command9_tasks.py --shard 0
+  python -B outputs/sonic-adventure/verify_movie_filesystem_command9_tasks.py --shard 1
+  python -B outputs/sonic-adventure/verify_movie_filesystem_command9_tasks.py --shard 2
+  python -B outputs/sonic-adventure/merge_movie_filesystem_command9_tasks.py
+  python -B outputs/sonic-adventure/verify_movie_filesystem_command9_retained.py
+  python -B outputs/sonic-adventure/verify_movie_filesystem_command9_frontier.py
+  python -B outputs/sonic-adventure/qualify_movie_filesystem_command9.py
+  python -B outputs/sonic-adventure/register_movie_filesystem_command9.py
+  python -B outputs/sonic-adventure/verify_movie_filesystem_command9_workflow.py
+The three task shards can run independently. Paths retain workstation compiler
+configuration. No retail inputs/assets, toolchains or credentials are published.
+
+Next: recover actual command10 handler64a244 and its real callees. Keep backend
+660bae's optional hook explicitly unqualified. Sol High suits reverse engineering;
+Luna Low suits documentation-only or routine publication. Keep the goal active.
+Full game, PC60/120/240FPS/8K, Android, stereoscopic3DS, N64/PS1 adaptations, SUPIR
+HD textures and display settings remain unfinished. Texture Off disables sampling
+and uses vertex colors. There is no playable game executable. Overall10% is a
+weighted milestone estimate, not measured recovered-code coverage.
+
+Detailed qualification limits
+Eight original relocation-family bodies qualify all489rows/86conditionaloutcomes byexecution. No static-impossible-branch substitutions,canonicaladapters orduplicatecredit. OriginaltypedCCdirectorylookup64adc6 andnamequery64a3fa executeactualdecoder64acda. Successfulnamequeryreturns0 andthereforemaster64a828 REJECTS with-245;missingCCnegativeallowsrelocation. Thisoriginalgate ispreserved,not repaired orinverted. Legacy exportfolder/script name volume is provisional;actual predicate isdirectorytype0xCC.
+
+Originalmaster selects lowest allocated userblock excludingFFFC/FFFF,thenhighestfreeFFFCaboveit. Rawread512bytes into legitimatecallerworkspace thenwriteto destination beforechanginglinks. Positivepredecessor indexupdatesFAT;otherwiseoriginaldirectory-head pointer isupdatedviaSDK endianwriter. CopyoldFATlinktodestination andmarksourceFFFC;repeat. No inventedchainrepair. OriginalFATvalidator acceptsFFFC/FFFF/FFFA andcheckslinksagainstusersplit/rootlimits.
+
+736directcomparisons independentlycheck ascending/descending bounds,empty/free/bad/reserved,splitvalidation,signedlow16 predecessor,typeCCsearch/decodedrecord/namecopy andanynonzero directoryheadlookup. Whole nonstackRAM/exactoutputs/FPU/calleeGPR andbounded64/192byte ABI scratch plusstrict entireoriginal/native state.136guardcomparisons coveradmission/presence/function/busy/cache/root/latch/capability/typeCC/invalidFAT withbounded320byte nested scratch. Thesearedeclaredcoherentmappedinputs,notnaturalacquisitionofeveryguard.
+
+Tenrawinitializedcommand9tasks afteroriginalheader/root/FAT/linkedDIRacquisition completeactualAPIs/scheduler/readsubmit/pump/raw256bytedata/writeACKs. Literalindependentplans verify20->31/21->30,exactworkspace/datawrites,links/head/all256dirtybytes,counters,callback/idle/ownerteardown. Originalinitialcounters arepreserved,notresetto1. Onfinalization all256dirtybytesbecome1;twoactualdirectorysectors clearfirsttwo,remaining254stay1. Read/write/DIR/FATabort andno-data/no-high-free/typeCC/invalidlink casespass. No taskframe/ID/PR/parsedmetadata/calleeoutput/callbackresult supplied. ACKledger notphysicalDMA/flashdurability/powerloss proof.
+
+235-sourceDLL andstrictunbounded Wall/Wextra/Werror compilationpass.489freshretailrowsbytechecked;exactprevious234bridge except8bodies/30actualreturnexports/prefix;returns2084->2114. CPU/flatcode/guards/observer/rawsession/ABI unchanged;nonewwaitlimits. Fiveactualnonlocalparentroutesqualify;40of222exportsqualified,182unqualified;no routinecreditfromexports.243freshretainedIRQ/context/taskcontrols preservepriornumericassertions. Earlier36636comparisons historical,notallrerun;combinedtotalsnotunique/codecoverage. No freshfullstartup;historical216warm/211cold.
+
+Prior1547registryrows/source/proofs/2701builds preserved. Twofreshcommand10 tasksreachactualmissing64a244,PR647a9c,originalchannel/name/zeroargs;remainpendingwithoutinventedcompletion/teardown. Thisaddress isnow reachedundercommand10;earliercommand9addressguesswasnotused. Recoveractual64a244 next. NULLwritehook/explicitabortpolicy0 inputdomain retained;660bae optionalhook/fullfilesystem/game/PC60/120/240FPS8K/Android/3DSstereo/N64/PS1/SUPIR/settingsunfinished. TextureOff disables sampling andusesvertexcolors. GoalACTIVE10%weightedmilestones,notmeasuredcodecoverage;researchDLLsnotplayableports.
