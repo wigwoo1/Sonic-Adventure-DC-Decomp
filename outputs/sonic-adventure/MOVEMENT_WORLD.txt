@@ -1,0 +1,130 @@
+MOVEMENT WORLD DEPENDENCIES - TWO ROUTINES QUALIFIED; LARGER OWNER PARTIAL
+
+Overall project: approximately 10% by weighted milestones, not measured code
+coverage. These are incomplete research DLLs, not a playable game or PC port.
+The goal remains active. Keep Sol High for the next reverse-engineering task.
+
+What this adds
+The original nearby-object selector 0522c0 and identity-matrix loader 63a8e0
+are now recovered, connected and software-qualified. Their 295 instructions and
+30 branch outcomes execute in comparisons against the original instructions.
+The 252-source research library also includes the complete translated 028bfe
+polygon-selection owner. That owner remains UNREGISTERED: two instructions and
+two branch outcomes still need evidence; a third outcome has an explicit proof.
+No upstream SARecomp implementation code was copied.
+
+Current totals: 1,596 registry entries, 1,593 unique module/address routines,
+638 registered routines confirmed linked by exact names in the compiled DLL.
+Support exports and continuations are excluded from the linked-routine count.
+All 1,594 earlier registry entries and 2,737 earlier build files are preserved.
+
+Recovered behavior
+0522c0 takes XYZ through FR4/FR5/FR6 and query radius through FR7. It clears and
+produces the 16-bit nearby count at 8c754ef0 and 12-byte entries at 8c754ef4.
+It scans static object entries in reverse order. The 10000000 flag selects the
+actual identity/rotation/point-transform callees. Other objects use their model
+centre directly. Distance is compared with the squared sum of query radius,
+model radius and the original 30-unit margin. Optional dynamic records use the
+original enable/presence/count gates and sphere test. Both paths stop at 1,024
+selected objects. Actual matrix push/pop and other callees run in these tests.
+
+63a8e0 loads the original identity table at 8c67c640. With R4 zero and ordinary
+PR0/SZ0 mode it loads the inactive matrix-register bank. With an explicit R4
+output it copies through active FP scratch registers to RAM. The raw transfer
+order matters when input/output overlap. Paired-transfer modes retain their
+original, different memory effects; they are not claimed to be an ordinary
+identity-copy API. Null R4 with PR1 stops at the existing FSCHG numeric guard.
+
+028bfe takes the query through R4. It clears its polygon counter, calls the
+actual vector-length helper and 0522c0, then matches world nodes by object
+POINTER against produced nearby entries. It walks both polygon-list directions,
+filters bounds/distances, writes the global candidate array and each node's
+selection pointer/count, and stops at 96 candidates. Enabled diagnostic text
+uses the actual recovered text caller. This description does not qualify every
+path of the owner or establish natural scene initialization.
+
+Verification performed
+- 218 direct original/native comparisons and 1,162 checks: 196 complete calls,
+  16 reached existing numeric stops and six mapped-memory guards. Ninety-two
+  included finite oracles check identity loading, separated static/dynamic
+  sphere selection, gate behavior, empty/mixed ordering and both selection caps.
+- 40 overlapping identity-loader comparisons and 160 checks, covering all eight
+  PR/SZ/FR profiles. An independent full-memory, two-half-block ordering oracle
+  checks actual overlapping transfers; no callee result is provided.
+- Eight actual 028bfe -> 029b00 sequences, totaling 16 comparisons and 68 checks:
+  lower/upper lists, hit/miss and both FP banks. The first original caller
+  produces the node list/count and selected mesh records consumed by the
+  existing original collision caller. Only initial scene/mesh/query inputs
+  are authored. The host starts ordinary calls, without execution-frame or
+  intermediate-result injection. Both larger callers remain unregistered.
+- 243 retained interrupt/context/task comparisons and 1,683 checks. Earlier
+  numerical assertions remain unchanged, checked through their parsed syntax.
+- Total: 517 fresh comparisons and 3,073 checks. The cumulative 72,940 evidence
+  comparisons include historical tests; this is not a unique-case count or a
+  game-code coverage percentage. Previous startup/full-device-write results
+  remain historical and were not rerun in this stage.
+- The 252-source DLL/library build and strict unbounded Wall/Wextra/Werror
+  compiler checks pass. All 542 translated rows match the original binary;
+  540 execute and 83 of 86 syntactic branch outcomes execute across the family.
+  All 13 original call sites execute with their actual callees.
+
+Remaining owner evidence
+At 028ca6, the taken outcome is impossible under original normal entry and
+stable mapped RAM: an earlier comparison requires lower-bound > key, then the
+later branch requires that same key > lower-bound. Reloaded operands, address
+bases and numerical controls are unchanged. NaNs cannot make the first ordered
+comparison true. The byte-backed proof also checks graph predecessors and the
+pinned software-comparison helper. No original instruction is removed.
+
+028cba -> 028cbc and 028e0c -> 028e0e remain OPEN, together with instructions
+028cbc/028cbe. These paths need null-pointer states after earlier null+10 reads.
+The present mapped-RAM/bus interface stops at those reads. That does not prove
+physical Dreamcast unreachability: low addresses can involve boot ROM, which
+is not qualified here. Do not supply guessed BIOS bytes or assume that authored
+sentinels establish real game invariants. Trace actual list construction or
+recover verified low-address read behavior before crediting this owner.
+
+Scope and preservation
+Successful geometric owner paths are qualified in PR0/SZ0 software profiles.
+Raw identity transfers have broader mode comparisons. Physical FPU behavior,
+exception delivery, MMU/boot-ROM reads, GPU output, natural world construction,
+complete 0730d8 movement, frame timing and full gameplay remain unqualified.
+The existing 029b00 outcome 02a48c -> 02a4a8 remains open as before.
+
+The new bridge is exactly the old 251-source bridge plus three entry routes,
+13 actual return sites and 13 continuation exports. CPU/reference interpreter,
+guards, production observer, comparison logic, raw session and ABI are retained.
+There are no new source wait bounds. Of 471 explicit continuation exports,
+71 nonlocal routes are qualified and 400 remain unqualified. The 13 new exports
+do not independently qualify nonlocal resumes. The old source/proof/build bytes
+remain available; the new DLL and import library are additional artifacts.
+
+How to inspect or reproduce
+Open analysis/movement_world_qualification.json for current evidence and limits,
+analysis/movement_world_direct_verification.json for individual cases and
+analysis/movement_world_predicate_proof.json for the proof and open outcomes.
+source/sa_movement_world.c contains the three original translated bodies.
+
+From the workspace root with the matching original input present locally:
+  python -B outputs/sonic-adventure/recover_movement_world.py
+  python -B outputs/sonic-adventure/connect_movement_world.py
+  powershell -NoProfile -File outputs/sonic-adventure/build_movement_world.ps1
+  python -B outputs/sonic-adventure/verify_movement_world_direct.py
+  python -B outputs/sonic-adventure/verify_movement_world_aliases.py
+  python -B outputs/sonic-adventure/verify_movement_world_sequence.py
+  python -B outputs/sonic-adventure/verify_movement_world_retained.py
+  python -B outputs/sonic-adventure/check_movement_world_unbounded.py
+  python -B outputs/sonic-adventure/audit_movement_world.py
+  python -B outputs/sonic-adventure/prove_movement_world_predicates.py
+  python -B outputs/sonic-adventure/qualify_movement_world.py
+  python -B outputs/sonic-adventure/register_movement_world.py
+  python -B outputs/sonic-adventure/verify_movement_world_workflow.py
+
+Ghidra export drivers under ghidra/export_movement_world_{owner,grid,math}.ps1
+reproduce read-only exports; they require the retained project and local tools.
+Compiler paths still reflect this workstation. Retail inputs remain local and
+excluded from publication. No new playable executable is produced.
+
+The complete game, PC 60/120/240 FPS through 8K, Android, stereoscopic 3DS,
+N64/PS1 adaptations, SUPIR textures and settings remain unfinished. Texture Off
+must disable texture sampling and use vertex colours. The full goal is active.

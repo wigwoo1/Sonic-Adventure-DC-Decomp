@@ -1,0 +1,39 @@
+{
+  "status": "one_proved_outcome_two_explicit_null_read_frontiers",
+  "address": "0x8c028bfe",
+  "infeasible_outcomes": [
+    [
+      "0x8c028ca6",
+      "0x8c028cb8"
+    ]
+  ],
+  "unaccounted_outcomes": [
+    [
+      "0x8c028cba",
+      "0x8c028cbc"
+    ],
+    [
+      "0x8c028e0c",
+      "0x8c028e0e"
+    ]
+  ],
+  "unexecuted_rows": [
+    "0x8c028cbc",
+    "0x8c028cbe"
+  ],
+  "original_code_removed": false,
+  "new_original_routine_credit": 0,
+  "owner_eligible_for_registration": false,
+  "arguments": [
+    "To reachCA6, C98 must fall through, requiring C96 true:FR4>FR2. The second gateCA0 must also fall through. C8a andCA2 load the same key bits from the sameR4+R0. There are no intervening calls/RAMstores, base/offset changes,FR4writes orFPUmode changes. ThusCA4 compares that samekey>FR4 and cannot be true afterFR4>key. Ordered infinities andsignedzero preserve this antisymmetry;NaNs cannotmakeC96true. Unsupported/trapping states stop. The pinned softwarecomparison reads unchangedPR/DN/enable controls; cause/stickyflag changes do not change this ordering. Fixedcode/stablemappedRAM/normalentry only.",
+    "Cba fallthrough requiresR4zero afterearlierR4+10 keyreads;E0c fallthrough similarly followsE04 keyread. The currentmappedRAM/bus ABI stops atnull+10 beforethose outcomes. This is not proof of physicalDreamcast unreachability:lowaddresses can involvebootROM,which isnot modeled/qualifiedhere. Do not inventBIOSbytes or treat a sentinel/disjointness assumption asproof. Keepbothoutcomes andCbc/Cbe unqualified; 028bfe remainsunregisteredpendingactualsceneconstruction/inputinvariants orverifiedlowaddressreadsupport."
+  ],
+  "sha256": {
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\prove_movement_world_predicates.py": "8cef6011a3e62585a40dac88a92c8ee11dd0edd92b696717b5fb7ede0215fc7c",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\analysis\\movement-world-owner\\8c028bfe_instructions.tsv": "310cebdec3db165a171ce4d96287b421c2e415b3a98b57c8d5e38c7b4798b349",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\work\\sonic-adventure\\extracted\\1ST_READ.BIN": "45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\source\\sh4_compare_bits.h": "1b1eb137912777eaeb62bfe23398a43121f82bb9085bcc416bf2bb7166a36cdc",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\source\\sh4_compare.c": "18427c023bcca647020a31ab9fe3d1b4920a79c12d261c688eabc9ac0ad3b43f",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\source\\sa_movement_world.c": "708438e0b14b5b4f0dba6a1b2b6b61359b5d8ffb4d666900507b2300e449ffc5"
+  }
+}
