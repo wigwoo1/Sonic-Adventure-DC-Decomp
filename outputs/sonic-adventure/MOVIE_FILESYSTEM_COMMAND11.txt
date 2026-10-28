@@ -1,0 +1,131 @@
+ORIGINAL COMMAND11 FILE READ AND HANDLE POOL - 237 SOURCES
+
+The new 237-source research DLL qualifies five original file-read/handle routines (382 instructions / 68 branch outcomes: 377 instructions and 66 outcomes execute; five instructions and two outcomes have local zero-return proofs). All 1,535 fresh original/native comparisons and 8,380 independent checks pass. Sixteen initialized command-11 read/error tasks cover exact data, EOF, missing names, invalid chains and handle-pool exhaustion; two initialized helper sessions verify alias-triggered open failure. Close helper 64919e is translated but its write branches remain partial and unregistered. Registry: 1,561 entries / 1,558 unique pairs. Overall remains about 10% by weighted milestones, not code coverage. Goal active; research DLLs are not playable ports.
+
+Newly qualified original bodies (address / instructions / branch outcomes)
+  64b67a /70 /12 : complete block-file read master in the declared read domain
+  64a360 /77 /14 : original decoded block-count query
+  648d24 /114 /18: read-handle open and original chain validation
+  64965c /98 /20 : next512-byte block read and original FAT/EOF rules
+  64b2a6 /23 /4  : first-free72-byte handle allocation
+Canonical clear wrapper64b2d4 is reused:four instructions,zero new routine credit.
+Close helper64919e:161 translated rows,partial and unregistered. Its dirty-record
+write/persistence branches still require qualification through the original
+write path. Translation totals547 rows; only382 new rows qualify at this stage.
+
+Original file-read behavior
+Command11 receives channel, filename, caller output and requested block count
+through the original argument/opcode APIs and scheduler. A zero requested count
+queries the file's decoded block count; nonzero count bypasses that query. Open
+checks original admission/readiness/root/name/FAT rules and allocates the first
+free entry in the original eight-slot handle pool. The handle stores remaining
+blocks and the current FAT coordinate. Successful reads copy512 bytes and follow
+the original FAT link. EOF returns zero without touching the remaining caller
+buffer, even when the requested count is larger than the file. The master still
+finishes successfully in that case. It closes after successful open, preserves
+a negative read result and ignores the close return. These original rules are
+preserved without adding range repair, invented I/O or stronger save guarantees.
+
+A read response with raw status7 returns-255. The original retry wrapper preserves
+that result after ordinary progress/error increments under both explicit policy0
+and1. Its early-abort comparison is-208; these rawstatus7 cases do not exercise
+that early-abort path. Initial policy is declared coherent software input, not
+a proven game-side setter or natural policy activation. Failed first reads leave
+the caller buffer unchanged, then release the handle and complete the error
+callback, idle resumption and actual owner teardown.
+
+The post-allocation open failure is real, not globally unreachable. Two helper
+sessions initialize metadata through original raw responses, then call open with
+a declared caller filename at free handle record+12. First validation sees SONIC;
+actual allocation writes index0 over the first four filename bytes. The second
+lookup genuinely returns raw-1, stored in the original global error word; open
+maps that error to-251 and clears all72 handle bytes. The output pointer is zero
+and surrounding bytes/metadata/counters are preserved. This mapped helper alias
+is not natural ordinary-worker filename acquisition: the worker uses its own
+separate record+2c. No callee output, frame, request ID or PR is supplied.
+
+Evidence and limits
+12 ordinary initialized read tasks /646 comparisons /3,109 independent checks:
+both byte orders; auto/explicit counts; one/two-block reads; empty files; counts
+past EOF; missing names; bad FAT chains; eight handles filled and released by
+actual original allocator/clear calls. Literal read plans check blocks20->21,
+512-byte output strides, complete caller data and untouched sentinel tails,
+root/FAT/DIR preservation, progress, handle cleanup and callbacks/idle/teardown.
+Four initialized raw-read error tasks and two initialized open-alias helper
+sessions have their own pinned reports. Only raw device bytes/errors are supplied
+for I/O; no decoded metadata, saved frame, request ID, PR, callee output or result
+callback is substituted. This is software execution evidence, not physical DMA,
+flash durability, power-loss behavior or gameplay proof.
+
+56 direct handle-pool/clear comparisons /336 checks cover signed negative/zero
+counts, full pools, first/interior/last free entries, exact index/flag/global
+error updates and72-byte clear guards across four CPU/FPU profiles.204 direct
+guard/marker/NULL-close comparisons /1,424 checks cover device/admission/cache/
+root/latch rejection, remaining-count/FFFA/FFFC/FFFF EOF rules andNULL close-256.
+Full machine state and independent nonstack RAM/cache/output/counter/FPU/callee
+register checks pass;132/84/32-byte upper nested ABI scratch bounds are used.
+Natural acquisition of every mapped guard or invalid-marker input is not claimed.
+
+Five size-query error instructions and two negative canonical-call outcomes have
+local bytechecked proofs: original64b2dc returns zero in its RTS delay slot.
+Size call64a3c4 and open call648d8e therefore cannot take their negative branches
+in the immutable mapped target domain. Source and branches remain. This is not a
+global reachability/self-modification proof and gives no duplicate helper credit.
+No fake negative helper result is used. The separate allocation/name-alias failure
+executes rather than being removed by an overbroad unreachability claim.
+
+243 fresh retained IRQ/context/task comparisons /1,683 checks retain the previous
+numeric assertions. Two fresh original-initialized command12 frontiers /92
+comparisons /420 checks reach actual missing64b71c, PR647b02, with the original
+channel, worker record+2c filename and zero remaining inputs. They stay pending
+without invented completion. No fresh full startup was run;216warm/211cold
+comparisons remain historical. Combined evidence totals41,788 comparisons;
+this is not a unique-case count or measured code coverage.
+
+Build and preservation
+237-source research DLL/lib and strict unbounded Wall/Wextra/Werror compilation
+pass.547 fresh original instruction rows are bytechecked. The bridge is exactly
+the previous236-source bridge plus seven bodies,37 actual call-return entries/
+continuation exports and the export prefix. Return membership2124->2161.
+CPU, flat execution, guards, observer, raw session and ABI are unchanged. No new
+source wait limits. Continuation exports receive no routine credit. This stage
+assigns no new route-specific qualification:42 prior routes qualify out of269
+exports;227 remain outside that inventory. Partial close161 stays unregistered.
+All1,556 earlier registry rows,source/proofs and2,705 builds preserve their hashes.
+The original full-project requirements remain unchanged. The237 DLL/lib are
+additional. Reproducibility and registration-idempotence checks accompany the
+qualification report. Research artifacts do not form a playable PC port.
+
+Reproduce from the workspace root with matching local retail inputs
+  powershell -NoProfile -File outputs/sonic-adventure/ghidra/export_movie_filesystem_command11.ps1 -Workspace WORKSPACE
+  powershell -NoProfile -File outputs/sonic-adventure/ghidra/export_movie_filesystem_command11_dependencies.ps1 -Workspace WORKSPACE
+  powershell -NoProfile -File outputs/sonic-adventure/ghidra/export_movie_filesystem_command11_handles.ps1 -Workspace WORKSPACE
+  python -B outputs/sonic-adventure/recover_movie_filesystem_command11.py
+  python -B outputs/sonic-adventure/connect_movie_filesystem_command11.py
+  powershell -NoProfile -File outputs/sonic-adventure/build_movie_filesystem_command11.ps1 -Workspace WORKSPACE
+  python -B outputs/sonic-adventure/check_movie_filesystem_command11_unbounded.py
+  python -B outputs/sonic-adventure/audit_movie_filesystem_command11.py
+  python -B outputs/sonic-adventure/verify_movie_filesystem_command11_handles.py
+  python -B outputs/sonic-adventure/verify_movie_filesystem_command11_guards.py
+  python -B outputs/sonic-adventure/verify_movie_filesystem_command11_tasks.py --shard 0
+  python -B outputs/sonic-adventure/verify_movie_filesystem_command11_tasks.py --shard 1
+  python -B outputs/sonic-adventure/verify_movie_filesystem_command11_tasks.py --shard 2
+  python -B outputs/sonic-adventure/merge_movie_filesystem_command11_tasks.py
+  python -B outputs/sonic-adventure/verify_movie_filesystem_command11_read_errors.py
+  python -B outputs/sonic-adventure/verify_movie_filesystem_command11_open_alias.py
+  python -B outputs/sonic-adventure/verify_movie_filesystem_command11_retained.py
+  python -B outputs/sonic-adventure/verify_movie_filesystem_command11_frontier.py
+  python -B outputs/sonic-adventure/qualify_movie_filesystem_command11.py
+  python -B outputs/sonic-adventure/register_movie_filesystem_command11.py
+  python -B outputs/sonic-adventure/map_main_dispatch_cases.py
+  python -B outputs/sonic-adventure/verify_main_dispatch_case_map.py
+  python -B outputs/sonic-adventure/audit_recovery_coverage.py
+  python -B outputs/sonic-adventure/audit_project_completion.py
+  python -B outputs/sonic-adventure/verify_movie_filesystem_command11_workflow.py
+
+Next: recover actual command12 handler64b71c and its write/open dependencies,
+then qualify close64919e's remaining write branches through that original path.
+Backend660bae optional hook remains unqualified. Full filesystem/game/PC60/120/
+240FPS8K/Android/3DSstereo/N64/PS1/SUPIR/settings remain unfinished. Texture Off
+must disable texture sampling and use vertex colors. Goal active;about10% is
+weighted milestone progress,not measured code coverage.
