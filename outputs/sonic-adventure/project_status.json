@@ -129,7 +129,7 @@
     "prs_trailing_bytes": 0,
     "main_binary_indexed_functions": 3637,
     "main_binary_draft_pseudocode_functions": 3631,
-    "recovered_buildable_routines": 1577,
+    "recovered_buildable_routines": 1579,
     "recovered_routine_tests": "analysis/startup_verification.json",
     "recovered_routine_test_cases": 17,
     "main_binary_draft_export_failures": 6,
@@ -148170,6 +148170,119 @@
       "verification": "analysis/movie_filesystem_command13_qualification.json",
       "verification_sha256": "e39cea0bb327b163feb879edf0593c1afb108992778ddf95e0e93aa64d14f849",
       "guide": "MOVIE_FILESYSTEM_COMMAND13.txt"
+    },
+    "movie_filesystem_command14_integration": {
+      "status": "partially_verified_original_command14_range_read_and_seek_software_domains",
+      "compiled_source_count": 240,
+      "newly_registered_entries": 2,
+      "newly_qualified_rows": 128,
+      "qualified_conditional_outcomes": 22,
+      "executed_rows": 128,
+      "executed_conditional_outcomes": 22,
+      "canonical_adapter_rows": 0,
+      "canonical_duplicate_credit": 0,
+      "newly_translated_rows": 128,
+      "domain_exclusion_arguments": [],
+      "coverage_by_routine": [
+        {
+          "address": "0x8c64bbb2",
+          "static_rows": 77,
+          "executed_rows": 77,
+          "executed_outcomes": 12,
+          "domain_excluded_rows": [],
+          "domain_excluded_outcomes": []
+        },
+        {
+          "address": "0x8c64bb4c",
+          "static_rows": 51,
+          "executed_rows": 51,
+          "executed_outcomes": 10,
+          "domain_excluded_rows": [],
+          "domain_excluded_outcomes": []
+        }
+      ],
+      "fresh_original_native_comparisons": 1321,
+      "fresh_independent_checks": 7185,
+      "retained_previous_evidence_original_native_comparisons": 49797,
+      "total_evidence_original_native_comparisons": 51118,
+      "prior_registry_entries": 1577,
+      "result_registry_entries": 1579,
+      "result_unique_module_address_pairs": 1576,
+      "prior_flat_return_guard_sites": 2252,
+      "flat_return_guard_sites": 2258,
+      "new_resume_exports": 6,
+      "newly_qualified_nonlocal_routes": [
+        "0x8c647b3c",
+        "0x8c64bc22",
+        "0x8c64bc3a"
+      ],
+      "qualified_nonlocal_resume_routes_total": 64,
+      "remaining_unqualified_resume_routes": 302,
+      "explicit_nonfunction_resume_routes_total": 366,
+      "completed_command14_cases": 16,
+      "pending_command15_frontiers": [
+        {
+          "pc": "0x8c64b584",
+          "pr": "0x8c647abc",
+          "arguments": [
+            "0x0",
+            "0x0",
+            "0x0",
+            "0x0"
+          ],
+          "pending": true
+        },
+        {
+          "pc": "0x8c64b584",
+          "pr": "0x8c647abc",
+          "arguments": [
+            "0x7",
+            "0x0",
+            "0x0",
+            "0x0"
+          ],
+          "pending": true
+        }
+      ],
+      "physical_maple_dma_complete": false,
+      "full_filesystem_qualified": false,
+      "full_command14_qualified": false,
+      "auto_count_underflow_completed_task_qualified": false,
+      "fresh_warm_startup_comparisons": 0,
+      "fresh_cold_profile": false,
+      "historical_warm_profile": {
+        "source_stage": 216,
+        "boundaries": 4709,
+        "stop_pc": "0x8c051798",
+        "freshly_rerun": false,
+        "dll_sha256": "abd41a20fbe0619dafbd5b21064de5a373bed4a237973ea85f398d42d53a3ea2"
+      },
+      "historical_cold_profile": {
+        "source_stage": "211-source movie_record_register",
+        "boundaries": 585993,
+        "stop_pc": "0x8c601874",
+        "dll_sha256": "f5ab618ca44448d3a4afdffa892b3506fd07912e1581571378d26cc471ca0952",
+        "freshly_rerun": false,
+        "relabelled_as221_source": false
+      },
+      "partial_unregistered_proposals": [
+        "0x8c660bae"
+      ],
+      "next_task": "Recoveractualcommand15handler64b584,PR647abc anditsoriginaldependencies. Preserveactualcallerinputs/frames;retain660baeoptionalhookunqualified.",
+      "dll_sha256": "363835280845d03bd210928442e28991bdddda453ef05b481019ac8e8602365d",
+      "limitations": [
+        "Two new original bodies128instructions/22conditionaloutcomes all execute in declared software domains. No scoped exclusion or duplicate/canonical routine credit. Original metadata/filename/file-size/open/read/close helpers reused without new credit. Physical filesystem/game/ports unfinished.",
+        "16actual raw-initialized command14 tasks use original argument/opcode APIs/scheduler/transport/pump. Offset atcallerAPIstack0,requestedcount atstack1;worker passesrecord+20 asoffset andrecord+24 ascount. Count0 becomes file-size minusoffset;onlynonunderflowauto-count cases completed. Explicitoffset may exceedEOF. ExactFATfollowedphysicalreadplan/rangepayload/EOF-error untouchedtail/rootFATDIR/handles/counters/callback/idle/teardown independentlychecked. Originalseekreturnignored;emptyfileexplicitoffset1 proves this behavior. Readerrors preserveprefix andpropagate-255. No suppliedcalleeoutput/parsedmetadata/savedframe/ID/PR;softwareinputsnotphysicalDMAproof.",
+        "80declaredmappedABI seek comparisons coverbothSDKbyteorders/2channels/4CPUFPUprofiles:0/1/2/end/pastend/unsignedmax finitechains,FFFA/remaining0 versusinconsistentcount/head cases. Current resets tohead;remainingNOTreset. FFFA+zero returns0;FFFA+nonzero orremaining0 beforeend returns-65536. ActualSDKreader executes;entireRAM/return/FPU/calleeGPR checks supplementoriginal/nativeCPU/stack/ordered effects. Inconsistenthelperinputsarenotclaimednaturalrawacquisition.56master admission/root comparisons extendnegative size-query/errorpropagation.",
+        "Auto-countoffset>file-size wraps modulo32bits and can produce an enormous original read loop. This arithmetic/controlflow is preserved,not patched or hiddenbehindnewbounds. Completedraw-task matrixdoesNOTclaimthisunderflow/concurrentmalformed-inputdomain verified. Seek canresetcurrentwithoutrestoringremainingonrepeatedcalls;originalbehaviorretained,notmodernized.",
+        "240-sourceDLL/lib andstrictunboundedWallWextraWerror pass.128freshretailrowsbytechecked;exactprevious239bridgeplus2bodies/6actualreturns/prefix.2252->2258returnmembership,366explicitnonfunctionexports.3recordedpostyieldparentroutesqualify;64totalqualified/302remaining. CPU/flatcode/guards/productionobserver/rawsession/ABIunchanged;nonewwaitlimits.1577priorregistryrows/source/proofs/2711buildspreserved. Initial scaffold self-importfixedbeforecompilation/proofs;no guestbehaviorchange.",
+        "243freshretainedIRQ/context/taskcomparisons retainpreviousnumericassertions;historical49797notallrerun. Combinedevidenceisnotunique/codecoverage;216warm/211coldhistorical,no freshfullstartup.2actualinitializedcommand15frontiersreach64b584,PR647abc,pendingwithoutinventedcallback/teardown.660baeoptionalhook/fullphysicalfilesystem/game/PC60/120/240FPS8K/Android/3DSstereo/N64/PS1/SUPIR/settingsunfinished;TextureOff disables sampling/usesvertexcolors. Overall10%weightedmilestones,notmeasuredcoverage;researchDLLsnotplayableports."
+      ],
+      "overall_completion_percent": 10,
+      "estimate_method": "weighted milestones, not measured code coverage",
+      "verification": "analysis/movie_filesystem_command14_qualification.json",
+      "verification_sha256": "291440bc7830de6b2289b94ddfc7d5d76a06809ecdd24b66a9d852b19e9eaf9e",
+      "guide": "MOVIE_FILESYSTEM_COMMAND14.txt"
     }
   },
   "milestones": [
@@ -148343,10 +148456,10 @@
     "report": "analysis/recovery_coverage_audit.json",
     "candidate_inventory": "analysis/unrecovered_function_candidates.tsv",
     "boundary_inventory": "analysis/unresolved_module_boundaries.json",
-    "registered_routines": 1577,
-    "registered_unique_module_address_pairs": 1574,
+    "registered_routines": 1579,
+    "registered_unique_module_address_pairs": 1576,
     "indexed_candidates_in_export_snapshots": 11411,
-    "registered_entries_matching_export_snapshots": 1446,
+    "registered_entries_matching_export_snapshots": 1448,
     "non_texture_binaries_without_function_index": 211,
     "registry_evidence_errors": 0,
     "stale_whole_source_hash_reports": 0,
@@ -155671,5 +155784,5 @@
   },
   "unverified_work": {},
   "unverified_drafts": {},
-  "recovered_buildable_routines": 1577
+  "recovered_buildable_routines": 1579
 }

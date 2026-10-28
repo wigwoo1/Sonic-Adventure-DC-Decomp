@@ -1,0 +1,131 @@
+ORIGINAL COMMAND 14 RANGE READ AND SEEK - 240 SOURCES
+
+The new 240-source research DLL software-qualifies command-14 range reader 64bbb2 and its seek helper 64bb4c: all 128 original instructions and 22 branch outcomes execute. All 1,321 fresh original/native comparisons and 7,185 independent checks pass. Original offset reads, EOF handling, ignored seek errors, read-error propagation and cleanup match in the documented input domains. Registry: 1,579 entries / 1,576 unique pairs. Overall remains about 10% by weighted milestones, not code coverage. These research DLLs are not playable ports.
+
+Recovered behavior
+Command 14 reads file blocks starting at an offset. Original worker APIs pass
+caller stack argument 0 as offset and stack argument 1 as requested block count.
+A zero requested count queries the original file size and subtracts the offset.
+The handler opens a read handle, sets progress counters, seeks through the FAT,
+reads the requested number of blocks, and closes the handle. Each block is 512
+bytes. Read errors propagate; the original close return is ignored.
+
+The seek helper resets its current block to the handle head, then follows FAT
+links once per skipped block, decreasing the handle's remaining-block count.
+It does not restore that remaining count before seeking. Repeated-call semantics
+are retained; this is not replaced with a modern seek implementation. Reaching
+end marker FFFA with zero remaining blocks returns zero. An end marker with
+nonzero remaining count, or zero remaining count before an end marker, returns
+-65536. The master ignores seek's result. Thus an empty file with explicit
+positive offset/count can complete successfully with the caller buffer untouched.
+
+The read helper returns zero at EOF. The master still performs its requested
+number of helper calls, even when later calls copy no bytes. The tests distinguish
+those calls from real device read attempts. Explicit counts beyond the remaining
+file therefore leave the buffer tail untouched rather than submit extra reads.
+First and later raw read errors return -255 and preserve the already copied prefix.
+
+Automatic-count arithmetic has an important input limit: offset greater than file
+size wraps the subtraction modulo 32 bits and can produce an enormous read loop.
+The original subtraction and unsigned loop remain intact. Completed-task tests
+cover automatic offsets up to file size and bounded explicit counts, including
+explicit offsets beyond EOF. They do not prove completion or performance for the
+automatic-count underflow case, arbitrary malformed metadata or concurrent device
+histories. No new wait limit or fabricated return hides that unfinished domain.
+
+New qualified bodies (address / instructions / conditional outcomes)
+  64bbb2 / 77 / 12 : range-read master and error propagation
+  64bb4c / 51 / 10 : FAT seek and remaining-count behavior
+Both are newly recovered. All 128 original instruction rows match fresh binary
+bytes; all 128 instructions and all 22 outcomes execute. No excluded outcome,
+canonical adapter or previously registered helper receives new routine credit.
+Existing file-size/open/read/close routines remain unchanged.
+
+Verification
+Sixteen initialized command-14 sessions cover both SDK byte orders, automatic
+whole-file/remainder reads, explicit one/two/overlong ranges, end/past-end/empty
+reads, missing names, invalid chains, an originally acquired full handle pool,
+and first/later read errors. Constructors, argument/opcode APIs, scheduler,
+transport submission, raw response pump, task frames, request IDs and context
+restoration all execute original code. Tests supply caller inputs and raw device
+bytes/statuses. They do not supply parser outputs, callee returns, saved frames,
+completed request IDs, PR values or a completed task.
+
+Independent oracles check the exact physical block/destination plan, range bytes,
+untouched EOF/error tail, complete root/FAT/directory preservation, operation and
+error counters, original result callback, handle cleanup, idle and owner teardown.
+They also count helper calls that return zero after EOF, separately from device
+reads. These read-only tasks submit no writes. Software packet observations do
+not prove physical Maple DMA, flash durability or full-game behavior.
+
+Eighty declared mapped-ABI seek comparisons cover two channels, two SDK byte
+orders and four CPU/FPU profiles: offsets 0/1/2/end/past-end/unsigned maximum on
+finite chains, end sentinels, zero remaining count and inconsistent chain/count
+inputs. Actual original SDK readers run. Independent complete nonstack RAM,
+current/remaining fields and return checks supplement whole original/native CPU,
+FPU, stack and ordered effects. A 128-byte upper ABI scratch bound is declared.
+Inconsistent helper inputs are not claimed naturally acquired through raw input.
+Fifty-six admission/root guard comparisons check original negative size-query
+propagation with complete nonstack RAM/cache/output preservation.
+
+The new build also passes 243 retained interrupt/context/task comparisons with
+unchanged numerical assertions. Two original initialized command-15 frontiers
+reach missing handler 64b584, PR 647abc, and remain pending without an invented
+callback or teardown. Recover that actual handler and its dependencies next.
+Fresh evidence totals 1,321 comparisons and 7,185 independent checks.
+Combined historical evidence totals 51,118; it is not a unique-case count or
+code coverage. Earlier full-startup evidence remains historical: 216 warm and
+211 cold comparisons. No new complete startup is claimed for this build.
+
+Build and preservation
+The 240-source DLL/library and strict unbounded Wall/Wextra/Werror compilation
+pass. The bridge exactly extends the previous 239 bridge by two bodies, six
+actual call returns/continuation exports and prefix. Return membership grows
+2252 to 2258. Recorded post-yield parent routes 647b3c,64bc22,64bc3a qualify;
+64 of 366 explicit continuation exports are in the route-specific qualified
+inventory, with 302 remaining. Exports receive no routine credit. CPU, flat
+execution, guards, production observer, raw session and ABI remain unchanged.
+
+All 1,577 prior registry entries remain identical. The workflow preserves 15,173
+previous selected source/proof files, except ten reviewed catalog/status/document
+paths, and 2,711 prior build files. The new 240 DLL/library are additional. Eight
+generated artifacts reproduce; registration is byte-idempotent. Original project
+requirements remain intact. A scaffold self-import was corrected before compilation
+and behavioral proofs; no original game behavior or execution budget changed.
+
+Physical storage, the complete filesystem/game and all playable ports remain
+unfinished. The optional 660bae callback remains unqualified. PC 60/120/240 FPS
+through 8K, Android, stereoscopic 3DS, N64/PlayStation adaptations, SUPIR and
+settings remain planned or unfinished. Texture Off must disable sampling and use
+vertex colors. Overall is 10% weighted acceptance milestones, not recovered-code
+coverage. Continue with Sol High for reverse engineering; Luna Low is suitable
+for routine documentation and publication checks.
+
+Public snapshots include source, documentation, proofs and incomplete research
+builds. Retail inputs/assets, toolchain bundles, caches and credentials are excluded.
+
+Reproduce from workspace root with matching local retail inputs/toolchains
+  powershell -NoProfile -File outputs/sonic-adventure/ghidra/export_movie_filesystem_command14.ps1 -Workspace WORKSPACE
+  powershell -NoProfile -File outputs/sonic-adventure/ghidra/export_movie_filesystem_command14_dependencies.ps1 -Workspace WORKSPACE
+  python -B outputs/sonic-adventure/recover_movie_filesystem_command14.py
+  python -B outputs/sonic-adventure/connect_movie_filesystem_command14.py
+  powershell -NoProfile -File outputs/sonic-adventure/build_movie_filesystem_command14.ps1 -Workspace WORKSPACE
+  python -B outputs/sonic-adventure/check_movie_filesystem_command14_unbounded.py
+  python -B outputs/sonic-adventure/audit_movie_filesystem_command14.py
+  python -B outputs/sonic-adventure/verify_movie_filesystem_command14_seek.py
+  python -B outputs/sonic-adventure/verify_movie_filesystem_command14_guards.py
+  python -B outputs/sonic-adventure/verify_movie_filesystem_command14_tasks.py --shard 0
+  python -B outputs/sonic-adventure/verify_movie_filesystem_command14_tasks.py --shard 1
+  python -B outputs/sonic-adventure/verify_movie_filesystem_command14_tasks.py --shard 2
+  python -B outputs/sonic-adventure/merge_movie_filesystem_command14_tasks.py
+  python -B outputs/sonic-adventure/verify_movie_filesystem_command14_retained.py
+  python -B outputs/sonic-adventure/verify_movie_filesystem_command14_frontier.py
+  python -B outputs/sonic-adventure/qualify_movie_filesystem_command14.py
+  python -B outputs/sonic-adventure/register_movie_filesystem_command14.py
+  python -B outputs/sonic-adventure/map_main_dispatch_cases.py
+  python -B outputs/sonic-adventure/verify_main_dispatch_case_map.py
+  python -B outputs/sonic-adventure/audit_recovery_coverage.py
+  python -B outputs/sonic-adventure/audit_project_completion.py
+  python -B outputs/sonic-adventure/verify_movie_filesystem_command14_workflow.py
+  python -B outputs/sonic-adventure/publish_github_snapshot.py --workspace WORKSPACE
+Follow GITHUB_PUBLISHING.txt for reviewed publication and prerelease upload.
