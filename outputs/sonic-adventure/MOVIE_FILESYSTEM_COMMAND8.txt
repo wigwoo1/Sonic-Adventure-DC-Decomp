@@ -1,0 +1,116 @@
+ORIGINAL COMMAND8 DIRECTORY RENAME - 234 SOURCES
+
+The new 234-source research DLL qualifies original command-8 rename handler 649f1e (116 instructions / 18 branch outcomes: 113 instructions and 17 outcomes execute; three instructions and one outcome have a bytechecked constant-return proof). All 1,528 fresh original/native comparisons and 9,319 independent checks pass, including 16 completed rename tasks and two pending command-9 frontier sessions. Exact 12-byte name changes, missing/duplicate rejection, directory writes, relocation, errors, callbacks and cleanup match the original. Registry: 1,547 entries / 1,544 unique pairs. Overall remains about 10% by weighted milestones, not code coverage. Goal active; research DLLs are not playable ports.
+
+What the original routine does
+Handler649f1e looks up the old filename, checks that the destination name does
+not already exist, copies exactly twelve bytes into directory record+4..+15,
+marks its directory sector dirty, and calls the recovered persistence writer.
+It returns -251 for a missing old name and -250 for an existing destination,
+including the old name itself. It preserves write failures from the writer.
+A normal successful rename writes only its directory sector. It does not add a
+trailing FAT write pass or free the file's data chain. All other record fields
+remain unchanged. Original bad-sector relocation can update FAT/root metadata.
+
+The twelve-byte copy is preserved literally. The verifier checks padded names,
+full-width names, embedded NUL followed by nonzero bytes, empty names, spaces,
+case-sensitive names, directory entries0/15/16/31, and a full-width old name.
+No new validation, automatic padding, case folding or alternate filename rules
+were added. These are mapped research inputs, not recommended card filenames.
+
+The same canonical helper64b2dc always returns zero in its RTS delay slot.
+The rename call literal64a00c, helper bytes, cmp/pz and bt are bytechecked and
+the native binding is verified. Therefore the three negative-helper-result
+instructions649fa0/fa2/fa4 and one branch outcome cannot execute under this
+unchanged call target. Their original code remains present; no negative helper
+return is invented. The other113 instructions and17 outcomes execute in tests.
+This is a local immutable-code proof, not global reachability analysis.
+
+Build and fresh verification
+New234-source DLL/lib plus unbounded Wall/Wextra/Werror compilation pass.
+The bridge is exactly the prior233-source bridge plus this body, ten original
+call-return entries/continuation exports and the export prefix. Return guard
+membership2074->2084. CPU, flat execution, guard policy, observer, raw-input
+session and ABI remain unchanged; no new wait limits are added. Two actual
+nonlocal routes64a02a and647a86 qualify;35 of192 exports qualify overall,157
+remain unqualified. Continuation exports receive no routine credit.
+
+56 direct guard comparisons / 504 independent checks cover inactive, absent,
+function-off, busy, cache-off, invalid root and latch exits. Original status,
+readiness, cache invalidation and root-check callees run. Independent whole
+nonstack RAM, selected calls, counters, FPU/callee registers and132-byte nested
+ABI-frame bounds supplement the full original/native machine-state comparison.
+Direct guard states are declared coherent inputs; natural acquisition of all
+of these states is not claimed. The rename counter table starts at673bc4,
+distinct from delete's673bc0. Test oracles use the actual rename649ff8 literal.
+
+16 actual raw-initialized rename task sessions / 1,137 comparisons / 6,712 checks
+acquire header/root/FAT/linked-directory bytes through original constructors,
+SDK submit/pump and scheduler before command8. Literal request plans check the
+unit, command, block, phase, source pointer and exact128-byte payload for every
+data0C request and empty commit0D. Independent root/FAT/directory/dirty buffers,
+counters, callback results, idle state and original owner teardown are checked.
+All name rejection/success cases and directory abort/no-space, first/second
+sector relocation, FAT abort and root abort pass. No caller frame, request ID,
+PR, parsed metadata, callee output or callback result is supplied. NULL write
+hook and explicit coherent abort-policy0 remain the declared input domain.
+The ACK ledger records acknowledged512-byte images; physical flash durability,
+DMA, power-loss safety and full generic filesystem behavior remain unverified.
+
+243 fresh retained IRQ/context/task comparisons / 1,683 checks preserve the
+prior numeric expectations. No fresh whole-startup run is claimed. Earlier
+startup evidence remains historical. Combined historical/current evidence is
+36,636 comparisons, not unique tests or measured code coverage.
+
+Two actual raw-initialized command9 frontiers / 92 comparisons / 420 checks
+reach missing64a828, PR647aac, with original channel and zero caller arguments.
+The actual worker dispatch and literal647c20 are checked against this trace.
+Both commands remain pending; no completion callback or owner teardown is
+invented. Recover this reached handler next; its full meaning is not assigned.
+
+All1,546 prior registry rows, earlier source/proofs and2,699 build files retain
+their hashes. Only reviewed catalog/status/docs change; new234 DLL/lib are
+additional research artifacts. No retail game inputs/assets or toolchains are
+published. There is no playable game executable.
+
+Reproduce from workspace root (matching local retail inputs required):
+  python -B outputs/sonic-adventure/recover_movie_filesystem_command8.py
+  python -B outputs/sonic-adventure/connect_movie_filesystem_command8.py
+  powershell -NoProfile -File outputs/sonic-adventure/build_movie_filesystem_command8.ps1 -Workspace WORKSPACE
+  python -B outputs/sonic-adventure/check_movie_filesystem_command8_unbounded.py
+  python -B outputs/sonic-adventure/audit_movie_filesystem_command8.py
+  python -B outputs/sonic-adventure/verify_movie_filesystem_command8_direct.py
+  python -B outputs/sonic-adventure/verify_movie_filesystem_command8_tasks.py --shard 0
+  python -B outputs/sonic-adventure/verify_movie_filesystem_command8_tasks.py --shard 1
+  python -B outputs/sonic-adventure/verify_movie_filesystem_command8_tasks.py --shard 2
+  python -B outputs/sonic-adventure/verify_movie_filesystem_command8_tasks.py --merge
+  python -B outputs/sonic-adventure/verify_movie_filesystem_command8_retained.py
+  python -B outputs/sonic-adventure/verify_movie_filesystem_command8_frontier.py
+  python -B outputs/sonic-adventure/qualify_movie_filesystem_command8.py
+  python -B outputs/sonic-adventure/register_movie_filesystem_command8.py
+  python -B outputs/sonic-adventure/verify_movie_filesystem_command8_workflow.py
+Compiler/Python paths retain workstation configuration. The three task shards
+can run independently. Qualification checks exact cases and source/DLL pins.
+
+Next: recover actualcommand9 handler64a828 and its original callees, reached at
+PR647aac. Keep backend660bae's optional hook explicitly unqualified. Sol High
+is recommended for reverse engineering; Luna Low suits documentation-only or
+routine publishing work. Keep the goal active.
+
+Whole-game decompilation, PC60/120/240FPS/8K, Android, stereoscopic3DS, N64/PS1
+adaptations, SUPIR HD textures and display settings remain unfinished. Texture
+Off disables texture sampling and uses vertex colors. Overall10% is a weighted
+milestone estimate, not measured recovered-code coverage.
+
+Detailed qualification limits
+Original command8 rename649f1e qualifies116rows/18conditionaloutcomes:113executed/17outcomes plus3localconstant-proof rows/1impossible outcome. Immutableoriginalcall64a00c->64b2dc,rtsdelaymov0R0,cmp/pz/bt prove negativebranch649fa0/fa2/fa4 impossible;branch/source retained,no fabricatedreturn orduplicatehelpercredit. Notglobalreachability/selfmodification proof.
+
+Originaloldname lookup rejects missing with-251;destinationlookup rejects anyexistingname(includingolditself) with-250. Acceptedrename copiesexactly12bytes into directoryrecord+4..+15,marksitssector dirty andcallsoriginal64ab36. No inventedNULpadding,filenamevalidation,casefolding orfilechainfree. Empty/embeddedNUL/fullwidth/space/case inputs retainoriginalbehavior;otherrecordfields anddataFATchains unchanged exceptoriginalmetadata-block relocation.
+
+Sixteen originalconstructor/rawheader/root/FAT/linkedDIR acquisitions thenactualcommand8 APIs/scheduler. Literalindependenttransactionplans check data0C/commit0D unit/block/phase/source/128bytepayloads,whole RAM root/FAT/DIR/dirtybuffers,counters,callback/idle/ownerteardown andACKledger. First/secondsector badblockrelocation,FAT/root abort/no-space anddirectoryabort execute actualcallees. Successfulnonrelocatedrename writesDIR only;no inventedtrailingFATpass. ACKledger notphysicalDMA/flashdurability/powerloss proof. No parsedmetadata/frame/ID/PR/calleeoutput/callbackreturn supplied. NULLwritehook/explicitabortpolicy0 coherentinputdomain only.
+
+56directguardcomparisons preserve independentRAM/counter/callorder/FPU/calleeGPR and132byte nestedABIframebound acrosschannels0/7/fourCPUFPUprofiles. Naturalacquisitionofeveryadmission/presence/busy/cache/root/latchstate isnotclaimed. Renameinitialcounter uses673bc4 plusoriginalslot*80;deleteusesdistinct673bc0. Newtestoracles correctedfrombytecheckedrename649ff8 literal;nativeC unchanged.
+
+234-source DLL andstrictunbounded Wall/Wextra/Werror pass.116freshretailrows bytechecked;exactprevious233bridge exceptonebody/tenactualreturns/exports/exportprefix. Returns2074->2084,192nonfunctionexports;35qualified/157unqualified afteractualrename64a02a andworker647a86 nonlocalresumptions. CPU/flatcode/guards/observer/session/ABI unchanged;no newwaitlimits. No routinecreditfromexports.
+
+243freshretainedIRQ/context/taskcomparisons preservepriornumericassertions. Earlier35108comparisons historical,notallrerun;combinedtotalsnotunique/codecoverage. No freshfullstartup;216warm/211cold historical. Earlier1546registryrows/source/proofs/2699builds preserved. Twofreshinitializedcommand9 tasksreachactualmissing64a828,PR647aac withoriginalchannel/zero arguments;remainpending withoutinventedcallback/teardown. Recoverthisactualdependency next. Backend660bae optionalhook/fullfilesystem/game/PC60/120/240FPS8K/Android/3DSstereo/N64/PS1/SUPIR/settings unfinished. TextureOff disables sampling andusesvertexcolors. ResearchDLLsnotplayableports;goalACTIVE10%weightedmilestones,notmeasuredcodecoverage.
