@@ -1,0 +1,52 @@
+SARecomp reuse assessment - inspected 2026-10-28
+
+Upstream: https://github.com/sonicfreak1337/SARecomp
+Pinned source commit: 73e9e854cde6fe8b158779c0c0a70c6cec4828ff
+Local target: Sonic Adventure USA Rev A. Overall project remains 10% weighted
+milestones; this assessment adds zero recovered routines and imports no runtime code.
+
+Useful candidate areas
+The public source contains native matrix/math, movement, collision, rendering,
+input, settings and timing components. Larger, unrecovered gameplay groups and
+PC infrastructure may save engineering work if their version/ABI dependencies
+and reuse terms can be resolved. Playability claims in upstream documentation
+were not independently tested here. A playable static recompilation does not
+by itself establish our complete game-code decompilation acceptance criterion.
+
+Concrete local fingerprint comparison
+Four matrix leaves from src/sonic_matrix_vectors.cpp/.hpp were compared with
+our original executable. Three complete fingerprints match exactly:
+- PAL638E0C -> USA638ECC: point transform, already recovered here.
+- PAL638ED4 -> USA638F94: matrix-bank store, already recovered here.
+- PAL638F00 -> USA638FC0: translation extraction, already recovered here.
+Direction transform PAL638E68 corresponds to USA638F28: the instruction prefix
+matches, while the trailing data pointer changes from 8C88FFB0 to8C890070.
+It is also already recovered. These findings are code-identity evidence, not
+verification of transplanted native implementations. Net new routine credit:0.
+
+Integration limits found in the pinned public checkout
+- Supported disc is PAL v1.003 (1999), not the project's USA Rev A target.
+- docs/DEVELOPMENT.md and CMakeLists.txt require retained SDK/AOT inputs outside
+  the public source checkout; a complete clean-machine bootstrap is not provided.
+- No project-wide reuse license for the port-owned code was found. The visible
+  SDL/volk/Vulkan licenses cover their own dependencies, not all port-owned code.
+  Clarify applicable reuse terms before copying implementations into this public
+  project. No upstream author has been contacted or messaged by this assessment.
+
+Plan
+Map PAL source/literal identities to USA using bytes and control flow, not bare
+addresses. Select nonduplicate gameplay or native-PC groups. Resolve their reuse
+terms and Katana runtime dependencies. Adapt permitted components behind the
+existing interfaces and verify against the local original behavior. Preserve
+all existing source/proof/build identities and credit only locally verified work.
+Missing SDK/bootstrap inputs do not block independent recovery of our original.
+
+Primary references at the pinned commit
+https://github.com/sonicfreak1337/SARecomp/blob/73e9e854cde6fe8b158779c0c0a70c6cec4828ff/README.md
+https://github.com/sonicfreak1337/SARecomp/blob/73e9e854cde6fe8b158779c0c0a70c6cec4828ff/docs/DEVELOPMENT.md
+https://github.com/sonicfreak1337/SARecomp/blob/73e9e854cde6fe8b158779c0c0a70c6cec4828ff/CMakeLists.txt
+https://github.com/sonicfreak1337/SARecomp/blob/73e9e854cde6fe8b158779c0c0a70c6cec4828ff/src/setup/supported_disc.hpp
+https://github.com/sonicfreak1337/SARecomp/blob/73e9e854cde6fe8b158779c0c0a70c6cec4828ff/src/sonic_matrix_vectors.cpp
+https://github.com/sonicfreak1337/SARecomp/blob/73e9e854cde6fe8b158779c0c0a70c6cec4828ff/src/sonic_matrix_vectors.hpp
+https://github.com/sonicfreak1337/SARecomp/blob/73e9e854cde6fe8b158779c0c0a70c6cec4828ff/src/sonic_movement_resolver.cpp
+https://github.com/sonicfreak1337/SARecomp/blob/73e9e854cde6fe8b158779c0c0a70c6cec4828ff/src/sonic_collision_world.cpp

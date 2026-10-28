@@ -1,0 +1,123 @@
+ORIGINAL COMMAND 15 WHOLE-DEVICE READ - 241 SOURCES
+
+The new 241-source research DLL software-qualifies original command-15 whole-device reader 64b584: all 54 instructions and four branch outcomes execute. All 3,866 fresh original/native comparisons and 24,032 independent checks pass, including a complete 512-block / 262,144-byte normal-device read and first/later/partial errors. Registry: 1,580 entries / 1,577 unique pairs. Overall remains about 10% by weighted milestones, not code coverage. These research DLLs are not playable ports.
+
+Recovered behavior
+The original worker passes the buffer stored at record+18 to 64b584. The caller
+uses 647cc4 arguments [channel,channel,buffer,0], stack [0,0,0], then selects
+opcode 15 through 647cb4. The actual worker return address is 647abc.
+
+The handler sets operation counter 30 to 1 and counter 34 to the original
+slot-table base. It reads blocks from 0 through metadata[0] inclusive, advancing
+the caller destination by 512 bytes each time. It uses the already qualified
+647610 wrapper and the actual original read backend, scheduler and callbacks.
+It stops on the first negative wrapper result and otherwise returns zero after
+the final block. This routine reads a device image; it does not write or format it.
+
+Normal device verification
+The full case acquires last-block index 511 from an original raw metadata query
+through opcode 18. Its original classification read of block 511 and the later
+bulk read use the same stable, independently generated block contents. Original
+code then reads every block 0..511 into a guarded 262,144-byte caller buffer.
+
+Every real block request is checked against its exact channel, increasing block
+number and destination. Both 256-byte response halves are checked against the
+entire expected caller image and untouched tail, with guard bytes before and
+after the buffer. Progress is checked after every completed block. Metadata,
+handle pool, final operation/error counters, completion callback, idle and owner
+teardown are checked independently. Original code creates all request IDs, task
+frames and contexts; transport is required to leave saved task state intact.
+There is no reduced-geometry substitute for this full normal-device case.
+
+Nine smaller/error scenarios cover both SDK byte orders, submission orders and
+channels, raw geometries 0/1/2/33, and first/later/second-half read failures.
+For the smaller devices, opcode 18 takes its real unsupported-geometry -125
+path while retaining metadata decoded by the original header reader. These
+are declared raw device inputs; parsed metadata is not forced. The bulk reader
+has no additional geometry validation. Caller buffers and simulated block ranges
+remain coherent for those explicitly nonstandard cases.
+
+Response 7 propagates wrapper error -255; response 251 maps to -65536. The master
+preserves a successful or partially copied prefix and stops immediately. Retry
+budget zero is selected through its original API and abort policy zero is an
+explicit software input. No caller result, callee return, parsed metadata,
+saved frame, completed ID, PR value or completed task is supplied by a test.
+
+Verification scope
+All 54 freshly exported original instruction rows match binary bytes. All 54
+instructions and all four conditional outcomes execute, with no excluded outcome
+or duplicate/canonical routine credit. Existing wrapper/backend functions remain
+unchanged and receive no new routine credit. Caller data is synthetic, not retail
+assets. Complete original/native CPU, FPU, RAM, stack and ordered effect comparisons
+remain enabled. The tests do not prove physical Maple DMA, a physical VMU,
+concurrent media changes, arbitrary malformed aliases or the complete filesystem.
+
+The 241-source DLL/library and strict unbounded Wall/Wextra/Werror compilation
+pass. The bridge exactly extends the previous 240 bridge by one body, one actual
+call return/continuation export and prefix. Return membership grows 2258 to 2259.
+Actual post-yield routes 647abc and64b5e4 qualify. The route-specific inventory
+contains 66 of 367 explicit continuation exports, with 301 remaining. Exports
+receive no routine credit. CPU, flat execution, guards, production observer,
+raw session and ABI remain unchanged. No new source wait limit is introduced.
+
+Actual PE export inspection confirms 620 distinct registered routines linked
+by name into this combined DLL. The recovery registry also contains separately
+verified/buildable routines; its full count is not the current DLL integration
+count. Support helpers and continuation-only exports do not receive routine
+credit. Internal or renamed implementations are not counted by this method.
+
+243 fresh retained interrupt/context/task comparisons preserve previous numerical
+assertions. Two initialized command-16 sessions reach actual missing handler
+0x8c64b60e, return 0x8c647acc, and remain pending without fabricated
+completion or teardown. Recover that actual dependency next.
+Fresh evidence totals 3,866 comparisons and 24,032 independent checks.
+Historical combined evidence totals 54,984; it is not a unique-case count or
+code coverage. Earlier 216 warm/211 cold startup comparisons remain historical;
+no fresh complete startup is claimed for this build.
+
+Preservation and remaining work
+All 1,579 prior registry entries remain identical. The workflow preserves 15,225
+previous selected source/proof files, except ten reviewed catalog/status/document
+paths, and 2,713 previous builds. The new 241 DLL/library are additional. Eight
+generated artifacts reproduce and registration is byte-idempotent. Original
+project requirements remain intact.
+
+SARecomp is being evaluated separately for permitted reuse of nonduplicate
+native systems. Its PAL v1.003 target differs from USA Rev A. Its public checkout
+requires SDK/AOT inputs that are not supplied; its own project-wide reuse terms
+have not been confirmed. Four matrix counterparts were identified, all already
+recovered here. No upstream runtime implementation is merged or counted.
+See SA_RECOMP_REUSE_ASSESSMENT.txt for the pinned evidence and reuse plan.
+
+The full game, physical storage behavior and playable ports remain unfinished.
+PC 60/120/240 FPS through 8K, Android, stereoscopic 3DS, N64/PlayStation adaptations,
+SUPIR textures and display settings remain planned or unfinished. Texture Off
+must disable sampling and use vertex colors. Overall completion is 10% weighted
+acceptance milestones, not measured code coverage. Sol High remains appropriate
+for reverse engineering and compatibility work; Luna Low fits routine docs/admin.
+Public snapshots exclude retail inputs/assets, toolchain bundles, caches and
+credentials and label builds as incomplete research artifacts.
+
+Reproduce from workspace root with matching local retail inputs/toolchains
+  powershell -NoProfile -File outputs/sonic-adventure/ghidra/export_movie_filesystem_command15.ps1 -Workspace WORKSPACE
+  python -B outputs/sonic-adventure/recover_movie_filesystem_command15.py
+  python -B outputs/sonic-adventure/connect_movie_filesystem_command15.py
+  powershell -NoProfile -File outputs/sonic-adventure/build_movie_filesystem_command15.ps1 -Workspace WORKSPACE
+  python -B outputs/sonic-adventure/check_movie_filesystem_command15_unbounded.py
+  python -B outputs/sonic-adventure/audit_movie_filesystem_command15.py
+  python -B outputs/sonic-adventure/verify_movie_filesystem_command15_tasks.py --shard 0
+  python -B outputs/sonic-adventure/verify_movie_filesystem_command15_tasks.py --shard 1
+  python -B outputs/sonic-adventure/verify_movie_filesystem_command15_tasks.py --shard 2
+  python -B outputs/sonic-adventure/verify_movie_filesystem_command15_tasks.py --full
+  python -B outputs/sonic-adventure/merge_movie_filesystem_command15_tasks.py
+  python -B outputs/sonic-adventure/verify_movie_filesystem_command15_retained.py
+  python -B outputs/sonic-adventure/verify_movie_filesystem_command15_frontier.py
+  python -B outputs/sonic-adventure/qualify_movie_filesystem_command15.py
+  python -B outputs/sonic-adventure/register_movie_filesystem_command15.py
+  python -B outputs/sonic-adventure/map_main_dispatch_cases.py
+  python -B outputs/sonic-adventure/verify_main_dispatch_case_map.py
+  python -B outputs/sonic-adventure/audit_recovery_coverage.py
+  python -B outputs/sonic-adventure/audit_project_completion.py
+  python -B outputs/sonic-adventure/verify_movie_filesystem_command15_workflow.py
+  python -B outputs/sonic-adventure/publish_github_snapshot.py --workspace WORKSPACE
+Follow GITHUB_PUBLISHING.txt for reviewed publication and prerelease upload.
