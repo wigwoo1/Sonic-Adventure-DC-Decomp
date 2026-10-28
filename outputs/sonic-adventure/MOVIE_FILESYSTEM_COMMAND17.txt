@@ -1,0 +1,125 @@
+ORIGINAL COMMAND 17 BATCH DELETION - 243 SOURCES
+
+The 243-source research DLL qualifies original batch-deletion handler 649e00. All 123 original instructions and 27 branch outcomes execute; one additional outcome is proved impossible because original preflight returns zero unconditionally. All 1,847 fresh original/native comparisons and 11,167 independent checks pass. Registry: 1,582 entries / 1,579 unique pairs; 622 confirmed linked by registered name. Overall remains about 10% by weighted milestones, not code coverage. This is a non-playable research build.
+
+Recovered behavior
+Caller API647cc4 receives [channel,channel,name_array,count], stack [0,0,0],
+then647cb4 selects opcode17. The actual worker passes R5 from record+18 and R6
+from record+1c; its return address is647b4e. The handler initializes descriptor
+counters30 and34, checks channel/readiness/metadata/root admission, then makes
+one preflight pass over every name followed by a separate deletion pass.
+
+A missing or duplicate filename does not stop the second pass. Later names are
+still attempted. Successful removals change original RAM directory/FAT/dirty
+state. The handler then flushes directory changes through64ab36 and the FAT
+through64afe0. It returns a negative persistence result immediately. Only after
+both persistence stages succeed does it return aggregate deletion error-246
+if any name failed. This can persist successful earlier/later deletions even
+when the final batch result is an error. Zero and negative counts skip both
+name loops but still invoke persistence; FAT writes still occur.
+
+The preflight target64b2dc contains RTS with MOV#0,R0 in its delay slot. It has
+no loads or callbacks and always returns zero. The caller's CMP/PZ therefore
+cannot take BF649e94->649eda for pristine original code. The separate
+movie_filesystem_command17_zero_preflight_proof.json checks original bytes,
+call/literal/branch and current dispatch; eight earlier direct zero-return cases
+remain historical evidence. No helper result is substituted to manufacture
+negative coverage. All123 instruction rows execute anyway because the aggregate
+error path reaches the shared error block. Exactly27 outcomes execute and one
+is proved structurally impossible; do not describe all28 as executed.
+
+Fresh verification
+18 fully initialized original batch tasks cover single/two/reversed names,
+missing/duplicate/mixed/missing-first names, zero/negative counts, an original
+bad-chain case, first/later directory/FAT data failures, commit failures without
+relocation space, and deletion-error versus persistence-error precedence.
+The main matrix passes1,452 comparisons and8,898 independent checks.
+
+Original metadata/root/FAT/linked-directory acquisition uses raw synthetic
+responses, not supplied parsed fields. Every payload, block, phase, pointer,
+128-byte data packet and empty commit is checked independently. Complete RAM
+root/FAT/directory/dirty bytes, caller names/array/guards, pool and metadata,
+preflight/deletion order, progress, counters, callback, idle and owner teardown
+are checked. Original code owns request IDs, saved frames and contexts; raw
+transport must preserve that state. The ACK ledger proves software payload and
+acknowledgement behavior, not physical flash atomicity or durability.
+
+Ten guard tasks add152 comparisons and586 checks. Original interface mask0
+produces disabled channels; constructor-only state has no acquired metadata;
+raw primary scans report removal. Original command1 reads deliberately bad raw
+root bytes while acquiring the admission flag. Its root-format failure is
+ignored by64b1f0; the later batch admission returns-253. Metadata query18 alone
+does not acquire that flag; an early fixture using it was corrected without a
+native-code change. Worker cache invalidation occurs only for-255, not-253.
+Two busy cases use an explicitly declared mapped SDK busy byte; natural busy
+acquisition and physical contention are not proved. No callee return, parsed
+metadata, task frame, request ID or PR is supplied. The original busy getter and
+all original guard instructions still execute.
+
+DATA response8 propagates-255. Directory commit251 with no allocation space
+returns-252; FAT commit251 with no allocation space returns-192. Persistence
+errors take precedence over aggregate-246. Failed physical block contents are
+not proved unchanged. The original constructor's optional write hook remains
+NULL;660bae is unqualified. Retry budget0 uses its original API and abort
+policy0 is explicit. Physical Maple DMA, a physical VMU, power-loss recovery,
+concurrent media, malformed aliases, complete filesystem and game are unproved.
+
+The243-source DLL/library and strict unbounded Wall/Wextra/Werror checks pass.
+All123 fresh original rows match binary bytes. The bridge extends the previous
+242 bridge by one body, eight real return routes and prefix. Return membership
+grows2260 to2268; explicit continuation exports grow368 to376. Actual post-yield
+routes647b4e,649ec0 and649ecc qualify:71 total,305 remain unqualified. Exports
+and already recovered helpers receive no new routine credit. CPU, flat execution,
+guards, production observer, raw session and ABI remain unchanged; no new source
+wait limits are added. 622 registered routines are confirmed linked by exact
+PE export name; the full registry is not the current DLL integration count.
+
+243 retained interrupt/context/task comparisons and1,683 checks preserve earlier
+numerical assertions. Total fresh evidence is 1,847 comparisons / 11,167
+checks. Historical combined evidence is 65,707, not a unique-case count or
+code coverage. Earlier216 warm/211 cold startup comparisons and the242-build
+full512-block write proof remain historical; no fresh complete243 startup or
+full-device write is claimed. All1,581 previous registry entries,15,320 previous
+selected source/proofs except ten reviewed catalog/status/document paths, and
+2,717 older builds remain unchanged. Nine generated artifacts reproduce and
+registration is byte-idempotent. Original project requirements remain intact.
+
+Next work and full scope
+Original opcode19 selects idle branch647b6e; it is not a missing command19
+handler. Next independent recovery targets are original collision cross-product
+027360 and vector length63a75c, identified by exact original-byte fingerprints
+in SA_RECOMP_GAMEPLAY_REUSE_FOLLOWUP.txt. They remain unregistered and have no
+new native-behavior credit. No upstream implementation is copied or merged.
+PAL/USA mapping, required private SDK/AOT inputs and unresolved reuse terms still
+limit direct SARecomp integration. See the preserved assessments for details.
+
+The full game and playable ports remain unfinished. PC60/120/240FPS through8K,
+Android, stereoscopic3DS, N64/PlayStation adaptations, SUPIR textures and display
+settings remain planned/unfinished. TextureOff must disable sampling and use
+vertex colors. Whole-project estimate10% by weighted milestones, not measured
+coverage. Keep SolHigh for reverse engineering; LunaLow fits routine docs/admin.
+Public snapshots exclude retail inputs/assets, toolchains, caches and credentials.
+
+Reproduce with matching local inputs/toolchains, from workspace root
+  powershell -NoProfile -File outputs/sonic-adventure/ghidra/export_movie_filesystem_command17.ps1 -Workspace WORKSPACE
+  python -B outputs/sonic-adventure/recover_movie_filesystem_command17.py
+  python -B outputs/sonic-adventure/connect_movie_filesystem_command17.py
+  powershell -NoProfile -File outputs/sonic-adventure/build_movie_filesystem_command17.ps1 -Workspace WORKSPACE
+  python -B outputs/sonic-adventure/check_movie_filesystem_command17_unbounded.py
+  python -B outputs/sonic-adventure/audit_movie_filesystem_command17.py
+  python -B outputs/sonic-adventure/verify_movie_filesystem_command17_tasks.py --shard 0
+  python -B outputs/sonic-adventure/verify_movie_filesystem_command17_tasks.py --shard 1
+  python -B outputs/sonic-adventure/verify_movie_filesystem_command17_tasks.py --shard 2
+  python -B outputs/sonic-adventure/merge_movie_filesystem_command17_tasks.py
+  python -B outputs/sonic-adventure/verify_movie_filesystem_command17_guards.py
+  python -B outputs/sonic-adventure/verify_movie_filesystem_command17_retained.py
+  python -B outputs/sonic-adventure/prove_movie_filesystem_command17_zero_preflight.py
+  python -B outputs/sonic-adventure/qualify_movie_filesystem_command17.py
+  python -B outputs/sonic-adventure/register_movie_filesystem_command17.py
+  python -B outputs/sonic-adventure/map_main_dispatch_cases.py
+  python -B outputs/sonic-adventure/verify_main_dispatch_case_map.py
+  python -B outputs/sonic-adventure/audit_recovery_coverage.py
+  python -B outputs/sonic-adventure/audit_project_completion.py
+  python -B outputs/sonic-adventure/verify_movie_filesystem_command17_workflow.py
+  python -B outputs/sonic-adventure/publish_github_snapshot.py --workspace WORKSPACE
+Follow GITHUB_PUBLISHING.txt for reviewed publication and prerelease upload.

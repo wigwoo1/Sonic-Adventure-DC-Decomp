@@ -129,7 +129,7 @@
     "prs_trailing_bytes": 0,
     "main_binary_indexed_functions": 3637,
     "main_binary_draft_pseudocode_functions": 3631,
-    "recovered_buildable_routines": 1581,
+    "recovered_buildable_routines": 1582,
     "recovered_routine_tests": "analysis/startup_verification.json",
     "recovered_routine_test_cases": 17,
     "main_binary_draft_export_failures": 6,
@@ -148516,6 +148516,126 @@
       "verification": "analysis/movie_filesystem_command16_qualification.json",
       "verification_sha256": "36fe1646e5a4ca86741b6f8313543bdc9c75aefeef8a4e1a63938908373a4c8b",
       "guide": "MOVIE_FILESYSTEM_COMMAND16.txt"
+    },
+    "movie_filesystem_command17_integration": {
+      "status": "partially_verified_original_opcode17_batch_delete_software_domains",
+      "compiled_source_count": 243,
+      "newly_registered_entries": 1,
+      "newly_qualified_rows": 123,
+      "qualified_conditional_outcomes": 28,
+      "executed_rows": 123,
+      "executed_conditional_outcomes": 27,
+      "structurally_unreachable_conditional_outcomes": 1,
+      "canonical_adapter_rows": 0,
+      "canonical_duplicate_credit": 0,
+      "newly_translated_rows": 123,
+      "domain_exclusion_arguments": [
+        {
+          "edge": [
+            "0x8c649e94",
+            "0x8c649eda"
+          ],
+          "proof": "analysis/movie_filesystem_command17_zero_preflight_proof.json",
+          "reason": "Original helper is RTS with MOV#0,R0 in its delay slot. It always returns R0=0,without any callbacks or loads. Caller CMP/PZ R0 therefore setsT=1;immediate BF cannot branch to649eda. Current bridge calls the preserved original-instruction adapter;historical direct cases independently checked exactR0/CPU/RAM in8profiles. No suppliedcalleeoutput orchangedhelper is used to manufacture negativecoverage. Aggregate-delete-error path still reaches649eda,so no instruction row is excluded."
+        }
+      ],
+      "coverage_by_routine": [
+        {
+          "address": "0x8c649e00",
+          "static_rows": 123,
+          "executed_rows": 123,
+          "executed_outcomes": 27,
+          "qualified_outcomes": 28,
+          "structurally_unreachable_outcomes": [
+            [
+              "0x8c649e94",
+              "0x8c649eda"
+            ]
+          ],
+          "domain_excluded_rows": [],
+          "domain_excluded_outcomes": [
+            {
+              "edge": [
+                "0x8c649e94",
+                "0x8c649eda"
+              ],
+              "proof": "analysis/movie_filesystem_command17_zero_preflight_proof.json",
+              "reason": "Original helper is RTS with MOV#0,R0 in its delay slot. It always returns R0=0,without any callbacks or loads. Caller CMP/PZ R0 therefore setsT=1;immediate BF cannot branch to649eda. Current bridge calls the preserved original-instruction adapter;historical direct cases independently checked exactR0/CPU/RAM in8profiles. No suppliedcalleeoutput orchangedhelper is used to manufacture negativecoverage. Aggregate-delete-error path still reaches649eda,so no instruction row is excluded."
+            }
+          ]
+        }
+      ],
+      "fresh_original_native_comparisons": 1847,
+      "fresh_independent_checks": 11167,
+      "retained_previous_evidence_original_native_comparisons": 63860,
+      "total_evidence_original_native_comparisons": 65707,
+      "prior_registry_entries": 1581,
+      "result_registry_entries": 1582,
+      "result_unique_module_address_pairs": 1579,
+      "prior_flat_return_guard_sites": 2260,
+      "flat_return_guard_sites": 2268,
+      "new_resume_exports": 8,
+      "newly_qualified_nonlocal_routes": [
+        "0x8c647b4e",
+        "0x8c649ec0",
+        "0x8c649ecc"
+      ],
+      "qualified_nonlocal_resume_routes_total": 71,
+      "remaining_unqualified_resume_routes": 305,
+      "explicit_nonfunction_resume_routes_total": 376,
+      "completed_command17_batch_cases": 18,
+      "completed_command17_guard_cases": 10,
+      "next_opcode19_is_idle": true,
+      "physical_maple_dma_complete": false,
+      "physical_write_durability_proven": false,
+      "failed_block_storage_state_proven": false,
+      "natural_busy_acquisition_proven": false,
+      "full_filesystem_qualified": false,
+      "full_command17_all_inputs_qualified": false,
+      "fresh_warm_startup_comparisons": 0,
+      "fresh_cold_profile": false,
+      "historical_warm_profile": {
+        "source_stage": 216,
+        "boundaries": 4709,
+        "stop_pc": "0x8c051798",
+        "freshly_rerun": false,
+        "dll_sha256": "abd41a20fbe0619dafbd5b21064de5a373bed4a237973ea85f398d42d53a3ea2"
+      },
+      "historical_cold_profile": {
+        "source_stage": "211-source movie_record_register",
+        "boundaries": 585993,
+        "stop_pc": "0x8c601874",
+        "dll_sha256": "f5ab618ca44448d3a4afdffa892b3506fd07912e1581571378d26cc471ca0952",
+        "freshly_rerun": false,
+        "relabelled_as221_source": false
+      },
+      "partial_unregistered_proposals": [
+        "0x8c660bae"
+      ],
+      "next_task": "Recover original collision cross-product027360 andvector-length63a75c identifiedbylocalbytefingerprints,usingexistingexactSH4FPUworkflow. No upstreamimplementationcopy ornewcreditwithoutlocalbehaviorproof. Keep660baeoptionalhookunqualified;opcode19isidle.",
+      "dll_sha256": "c9200ab53d2a2d48d22aa069ce50e69aeac5fc921eb6746d9781f4ce73e5df18",
+      "limitations": [
+        "One new original batch-delete body123rows ALLexecute;27of28conditionaloutcomes execute. Remaining649e94->649eda is structurally impossible: original64b2dc RTS/MOV#0,R0 alwayszero;separatebyte/literal/currentbridge/historicaldirectproof. No excluded instructionrow,forcedcalleeoutput,canonicalduplicatecredit or helper recredit.",
+        "18actual initialized originaltasks:one/two/reverse/missing/mixed/duplicate/missingfirst,zero/negativecounts,badchain,first/laterDIR/FATdataerrors,DIR/FATcommit251 no-space anddelete-error versuspersistence-errorprecedence. Independent complete RAMroot/FAT/DIR/dirty bytes,callernamearray/strings/guards/pool/metadata,payload/pointer/block/phase,ACKledger,preflightthenallnames,deletioncontinuesaftermissing,DIRthenFATflush,progress/counters/callback/idle/teardown. No suppliedparsedmetadata/frame/ID/PR/returnresult.",
+        "Master returns-246 onlyafterboth persistence stages if any removalfailed;successfulprior/laterremovals stillpersist. Persistence negative returntakesprecedence. Zero/negativecounts skipbothnameloops butstill invokeDIR/FATflush,andFATwritesstilloccur. Originalbadchain behavior retained. DATA8=-255,DIRcommit251/noallocation=-252,FATcommit251/noallocation=-192.",
+        "10guardtasks useoriginalinterface mask0,constructor-only missingmetadata,rawprimaryscan removal,originalcommand1 acquisition ofdeliberatelybadrawroot,plus2declared mappedSDKbusybyte1 cases. Originalquery18 alone doesNOTacquireadmissionflag;rejectedfixturecorrected usingoriginalcommand1(no nativechange). Busybytecase isexplicitABIstate,NOTnaturallyacquired contention. Worker invalidates only-255;badroot master-253 doesnot. No parsedmetadata/calleeoutputs supplied.",
+        "243-sourceDLL/lib andstrictunboundedWallWextraWerrorpass.123freshretailrowsbytechecked;exactprevious242bridgeplus1body/8actualreturns/prefix.2260->2268returnmembership;376explicitnonfunctionexports. Actualpostyieldroutes647b4e/649ec0/649ecc qualify:71total/305remaining. Othernewcontinuations are not credited merely for being exported. CPU/flatcode/guards/productionobserver/rawsession/ABIunchanged,nonewwaitlimits.1581priorregistryrows/source/proofs/2717buildspreserved.",
+        "243freshretainedIRQ/context/taskcomparisons retainoldnumericassertions;historical63860notallrerun. Combinedevidenceisnotunique/codecoverage.216warm/211coldstartup historical,no freshcomplete startup. Priorfull512write proof belongs to242build,not anew243full-device test. Optional660baewritehook,naturalbusy/latchacquisition,physicalMapleDMA/VMU/atomicity/powerloss/durability/concurrentmedia/arbitrarymalformedaliases/fullfilesystem/game remainunqualified.",
+        "Opcode19 maps to original idlebranch647b6e;do notinventa next missingcommand19. Next independent recovery targets are byte-matched nonduplicate collisionmath027360 and63a75c fromSARecompfollow-up;their nativebehavior isnotyetqualified. No upstreamruntimecode imported;PAL-USA/SDK/reuse-terms limits remain. FullPC60/120/240FPS8K/Android/3DSstereo/N64/PS1/SUPIR/settings unfinished. TextureOff disables sampling/usesvertexcolors.10%weightedmilestones,notmeasuredcoverage;researchDLLnotplayableport."
+      ],
+      "overall_completion_percent": 10,
+      "estimate_method": "weighted milestones, not measured code coverage",
+      "linked_routine_inventory": {
+        "registry_entries": 1582,
+        "registry_unique_module_address_pairs": 1579,
+        "confirmed_linked_registry_entries_by_name": 622,
+        "confirmed_linked_unique_routines_by_name": 622,
+        "all_named_DLL_exports_including_support_and_continuations": 1604,
+        "method": "Exact registered-name intersection with actual PE named exports;support/continuation-only exports excluded. Other internal/renamed implementations are not counted by this method. Registry recovery count is distinct from current combined-DLL integration count."
+      },
+      "verification": "analysis/movie_filesystem_command17_qualification.json",
+      "verification_sha256": "6a8592273f69e6274b0306b412560386a07ddd67a164814f9638bd1e7a22a31b",
+      "guide": "MOVIE_FILESYSTEM_COMMAND17.txt"
     }
   },
   "milestones": [
@@ -148689,10 +148809,10 @@
     "report": "analysis/recovery_coverage_audit.json",
     "candidate_inventory": "analysis/unrecovered_function_candidates.tsv",
     "boundary_inventory": "analysis/unresolved_module_boundaries.json",
-    "registered_routines": 1581,
-    "registered_unique_module_address_pairs": 1578,
+    "registered_routines": 1582,
+    "registered_unique_module_address_pairs": 1579,
     "indexed_candidates_in_export_snapshots": 11411,
-    "registered_entries_matching_export_snapshots": 1450,
+    "registered_entries_matching_export_snapshots": 1451,
     "non_texture_binaries_without_function_index": 211,
     "registry_evidence_errors": 0,
     "stale_whole_source_hash_reports": 0,
@@ -156017,5 +156137,5 @@
   },
   "unverified_work": {},
   "unverified_drafts": {},
-  "recovered_buildable_routines": 1581
+  "recovered_buildable_routines": 1582
 }

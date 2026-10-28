@@ -1,0 +1,31 @@
+{
+  "status": "structurally_unreachable_negative_preflight_with_pristine_original_code",
+  "excluded_outcome": [
+    "0x8c649e94",
+    "0x8c649eda"
+  ],
+  "excluded_rows": [],
+  "original_helper": "0x8c64b2dc",
+  "original_helper_bytes": "0b0000e0",
+  "literal": "0x8c649f00",
+  "call": "0x8c649e8e",
+  "return_pc": "0x8c649e92",
+  "canonical_duplicate_credit": 0,
+  "new_routine_credit": 0,
+  "historical_canonical_zero_cases": 8,
+  "historical_cases_not_new_comparisons": true,
+  "reason": "Original helper is RTS with MOV#0,R0 in its delay slot. It always returns R0=0,without any callbacks or loads. Caller CMP/PZ R0 therefore setsT=1;immediate BF cannot branch to649eda. Current bridge calls the preserved original-instruction adapter;historical direct cases independently checked exactR0/CPU/RAM in8profiles. No suppliedcalleeoutput orchangedhelper is used to manufacture negativecoverage. Aggregate-delete-error path still reaches649eda,so no instruction row is excluded.",
+  "limitations": [
+    "Pristine original instructions and normal completed-call ABI only;self-modifying code or corrupt return state is not asserted.",
+    "This proves one branch outcome impossible,not physical storage/full filesystem/game correctness."
+  ],
+  "sha256": {
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\prove_movie_filesystem_command17_zero_preflight.py": "3fff7ebc318df066443e02c10e8c57811175e14d6f8a339d0576f322d546e641",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\work\\sonic-adventure\\extracted\\1ST_READ.BIN": "45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\source\\sa_movie_filesystem_command17_connected.c": "ccb0ab1475c96ad660a58f509356399364d31500b06547cf5e0e808bac579476",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\analysis\\movie_filesystem_delete_direct_verification.json": "584536384855666eaf4859612c860c6160fbfebf39536f69c9549530b078deb3",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\verify_movie_filesystem_delete_direct.py": "edb9b163e1fd5aaa6c33de03bfe1152838fb7a8463143b062dd465fabaeec9ec",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\analysis\\movie-filesystem-delete\\8c64b2dc_instructions.tsv": "bbd322f9b6a8540197e9605054b0732c529184e94d8e7d8a44b76cffc536cef1",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\source\\sa_movie_filesystem_delete.c": "ad07932541a90f6ed2b8de95417d982631e0d8cbed90f96f023642b4bc0ac852"
+  }
+}
