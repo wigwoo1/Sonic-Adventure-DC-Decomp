@@ -1,0 +1,86 @@
+Sonic Adventure USA Rev A: orientation angle-fold qualification, 2026-10-28
+
+Result
+Original routine 8C074EE4 is now registered for the explicitly stated scalar
+software profile. It was already compiled in the 259-source research library.
+No game C code, branch, numeric implementation, observer or ABI was changed.
+There are now 1,613 registry entries, 1,610 distinct module/address pairs and
+657 registered routines confirmed by name in the combined research DLL.
+These counts describe different things; none is a whole-game completion rate.
+Overall completion remains about 10% by weighted milestones.
+
+What closed the ordinary scalar acceptance gate
+The routine has 157 original instruction rows and 24 conditional outcomes.
+Fresh execution covers 154 rows and 23 outcomes. The remaining three rows at
+074FD6/074FD8/074FDA follow the 074FD4 upper-half-turn branch. The new analysis
+accounts for those rows and that outcome within the profile below. Every
+original row and branch remains in source, including this branch.
+
+The original caller forms a nonnegative horizontal magnitude, then calls its
+actual atan2 closure. The analysis binds the original bytes, scalar operations,
+constant pointers, polynomial coefficients, callee register preservation and
+selected formulas. It leaves the classifier's integer result unconstrained and
+bounds every possible selected formula and its fallback.
+
+Two cases call the original power-of-two scaling helper 10E7B8 with -2/-1;
+they do not call the polynomial helper. Its 256 symbolic exponent cases cover
+all fraction bits for nonnegative inputs in [0,1]. The other helper is the real
+five-FMAC polynomial at 10FB94. Exact rational bounds include its coefficient
+error and rounded operations; no ideal atan implementation is substituted.
+
+The final finite angle-times-scale interval is
+[-6143857/268435456, 8388617/256], approximately
+[-0.02288765087723732, 32768.03515625]. It is strictly above -1 and below 32769.
+Original truncation toward zero therefore yields an integer from 0 to 32768.
+The original FFFF mask leaves that range unchanged, so the signed comparison
+cannot exceed 8000. Original NaN handling either stops or converts to a value
+whose masked phase is zero. Infinite ratios take finite angle exits.
+
+Scope and limits
+This is a reproducible source-bound arithmetic analysis for normal entry,
+fixed original code/math literals/coefficient table, an ordinary RAM stack
+that does not alias those fixed inputs, PR=0/SZ=0 and completed RM0/RM1 scalar
+arithmetic, without asynchronous foreign writes or mode changes. It is not a
+universal physical SH-4 proof or qualification of altered math data/precision.
+The broader 074FD4->074FD6 obligation remains explicitly open. Existing
+074626/6402C0 precision obligations, world/collision branches, 0730D8 parent,
+physical exception/MMU/device behavior and complete gameplay remain unfinished.
+
+Verification actually performed
+- 361 direct original/native comparisons, 3,389 independent checks.
+- 104 range/frontier original/native comparisons, 910 independent checks.
+- Total: 465 fresh comparisons, 4,299 checks, 424 included oracle cases.
+- Complete software state and ordered boundaries match. No supplied game
+  callee results or repaired execution frames were used.
+- Test ASTs match the published suites except report destination strings.
+- Strict unbounded -Wall -Wextra -Werror compiler checks pass for all 259 C
+  files. Their hashes and the tested DLL match the previous publication.
+- The DLL was reused, not rebuilt: no native source changed.
+- The preceding 243 retained comparisons are historical, not freshly rerun.
+- Cumulative comparison evidence is 78,946; repeated tests are not unique
+  routines or measured recovered-code coverage.
+- All 16,217 prior selected files outside four established mutable status
+  files, all 1,612 previous registry rows and all 2,753 old builds are preserved.
+
+Files and reproduction
+Use the existing workspace layout and matching privately supplied retail input.
+Run Python with -B:
+1. prove_movement_orientation_fold.py
+2. verify_movement_orientation_fold.py
+3. audit_movement_orientation_fold.py
+4. qualify_movement_orientation_fold.py
+5. register_movement_orientation_fold.py
+6. verify_movement_orientation_fold_workflow.py
+
+New evidence is under analysis/movement_orientation_fold_*.json. The old
+MOVEMENT_ORIENTATION_RESPONSE.txt and old qualification remain historical
+records of the earlier pending gate. This addendum records its later scalar
+qualification without rewriting those proofs.
+
+Full goal
+Research DLLs are incomplete artifacts, not a playable port. Full decompilation,
+PC 60/120/240 FPS and 8K, Android, stereoscopic 3DS, eventual N64/PS1 adaptations,
+SUPIR textures and settings remain unfinished. Texture Off must disable texture
+sampling and use vertex/material colours. No SARecomp implementation was copied.
+The goal remains active. Sol High is appropriate for the next reverse-engineering
+dependency; this milestone does not recommend a model switch or pause.
