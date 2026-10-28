@@ -1,0 +1,76 @@
+Sonic Adventure USA Rev A: orientation response recovery and helper verification
+
+Status: PARTIALLY VERIFIED. The main orientation routine is still unqualified.
+Overall project estimate: approximately10% by weighted milestones, not code coverage.
+
+Complete recovered C now contains the original074ee4orientation response(157
+instructions),078e40local-vector transform(56),055d20circular angle approach(23).
+All236original instruction rows and all36conditional outcomes remain in source.
+Only the two helpers are newly registered:79rows,12helper branch outcomes fully
+exercised. Main074ee4has154of157rows and23of24outcomes exercised and receivesZERO
+routine credit. Its missing074fd4->074fd6angle-fold outcome and3rows remain OPEN.
+
+The helper transforms a vector into actor-local orientation using the existing
+matrix stack and rotations. Tests check cardinal rotation lengths, normalization,
+identity orientation, input preservation and restoration of the original matrix
+bank/stack. The angle helper approaches a target around a16bitcircle, with a
+signed maximum step; signed-limit boundaries, wrapping and the half-turn tie are
+checked independently. Existing signedsqrt63a9c4andmatrix/math code are reused.
+
+The actor routine has original copy/approach gates and speed-dependent angular
+limits. All observed original/native behavior agrees, but this alone does not
+qualify the unobserved fold branch. Its three instructions subtract a phase above
+8000from10000. A proof for the real atan2 approximation or a normal-input witness
+is still required. Ideal real arithmetic and absence from samples are insufficient.
+The next task remains this owner acceptance gate; it is not replaced by moving
+on to another easier dependency.
+
+Fresh evidence:361direct comparisons/3389checks,104additional numerical-frontier
+comparisons/910checks,243retainedIRQ/context/task comparisons/1683checks. Total708
+fresh comparisons and5982independent checks;424included independent oracle cases.
+The direct suite has342complete returns,12existing unsupported-numeric stops,
+7mapped-memory guards. The frontier suite has82complete returns,14existing numeric
+stops and8reached numeric traps. Stops/traps are matching architectural states,
+not successful game returns. No supplied math/game results or fabricated frames.
+
+Frontier inputs include negative vertical orientation, signed zeros, subnormal,
+normal and extreme finite values, nonfinite values, both banks andRM0/1. They do
+not exercise the fold. A separate native arithmetic audit identifies the first
+positive angle word producing an integer phase above8000:40491169forRM0 and
+4049116aforRM1. These are398/399binary32words above retailPI40490fdb. This narrows
+the required range certificate but is NOT an atan2 bound or infeasibility proof.
+The arithmetic-bound queries are not included in original/native comparison totals.
+
+259-source Windows research DLL/import library and strict-Wall/-Wextra/-Werror
+checks pass, also without the inherited research wait-bound definition. Previous
+CPU/interpreter/observer/guards/ABI are unchanged. The new connection adds3entries,
+13actual call returns and13continuation exports. New nonlocal resume routes are
+not independently qualified. All2751previous binaries and1610registry rows remain.
+Inventory after this milestone:1612entries,1609unique module/address pairs,
+656confirmed registered native links. Main074ee4and0730d8remain unregistered.
+
+Source: source/sa_movement_orientation_response.c and *_connected.c.
+Original evidence: analysis/movement-orientation-response/.
+Detailed scope: analysis/movement_orientation_response_qualification.json.
+Open obligation: analysis/movement_orientation_response_angle_fold_obligation.json.
+No SARecomp implementation code has been copied into this project.
+
+To reproduce from the project workspace with the original local game input:
+  powershell -NoProfile -File outputs/sonic-adventure/build_movement_orientation_response.ps1
+  python -B outputs/sonic-adventure/check_movement_orientation_response_unbounded.py
+  python -B outputs/sonic-adventure/verify_movement_orientation_response_direct.py
+  python -B outputs/sonic-adventure/verify_movement_orientation_response_range.py
+  python -B outputs/sonic-adventure/verify_movement_orientation_response_retained.py
+  python -B outputs/sonic-adventure/audit_movement_orientation_response.py
+  python -B outputs/sonic-adventure/audit_movement_orientation_angle_fold.py
+  python -B outputs/sonic-adventure/qualify_movement_orientation_response.py
+  python -B outputs/sonic-adventure/register_movement_orientation_response.py
+  python -B outputs/sonic-adventure/verify_movement_orientation_response_workflow.py
+Compiler/Python paths may need adaptation elsewhere. Retail inputs, assets and
+toolchains stay local and are excluded from the public source/research archive.
+
+This remains an incomplete research build, not a playable game. The owner fold,
+broader074626/6402c0precision, earlier world/collision/math frontiers, full gameplay,
+physical devices/FPU exceptions, PC60/120/240FPS8K, Android, stereo3DS, N64/PS1,
+SUPIR texture pack and settings work remain unfinished. TextureOff still means
+disabled texture sampling with vertex/material colours. The full goal stays active.
