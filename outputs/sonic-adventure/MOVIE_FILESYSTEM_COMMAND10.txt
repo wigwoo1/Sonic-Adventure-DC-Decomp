@@ -1,0 +1,104 @@
+ORIGINAL COMMAND10 DIRECTORY-RECORD UPDATE - 236 SOURCES
+
+The new 236-source research DLL qualifies original command-10 record updater 64a244: 115 instructions and 16 branch outcomes (112 instructions/15 outcomes executed; three instructions/one outcome proved impossible under the unchanged zero-return helper). All 1,558 fresh original/native comparisons and 9,587 independent checks pass, including 16 completed update/error tasks and two pending command-11 frontiers. Exact byte/optional 16-bit field updates, directory writes, relocation, errors, callbacks and cleanup match the original in the declared software-input domain. Non-default policy activation remains unproved. Registry: 1,556 entries / 1,553 unique pairs. Overall remains about 10% by weighted milestones, not code coverage. Goal active; research DLLs are not playable ports.
+
+Original behavior
+The command-10 worker invokes 64a244 with channel, filename, a word input and a
+byte input acquired through the original argument/opcode APIs and scheduler.
+After the admission, device readiness, cached-root and filename checks, it gets
+the original 32-byte directory record. A missing filename returns -251 without
+changing the directory or submitting a write.
+
+The low eight bits of the byte input always replace record byte+1. When software
+word 8c66d3a8 is nonzero, the SDK-selected endian writer also stores the low 16
+bits of the word input at record+26. No unsupported meaning is assigned to these
+fields. All other record bytes, the filename and file-data FAT chain remain
+unchanged except metadata relocation performed by the existing writer. Even a
+no-op field change marks the sector dirty and calls persistence writer64ab36.
+The handler propagates that writer's result without an extra trailing FAT pass.
+The original initial counter is 673bcc plus slot*80, distinct from rename/delete.
+
+Policy input limitation
+The retail image initializes 66d3a8 to zero; original construction/raw metadata
+acquisition preserve that value, which the tests assert. Nonzero1 and FFFFFFFF
+are explicitly declared coherent initial software-state inputs, not acquired
+through a proven game setter. The writer/activation path for non-default policy
+remains unproved. The bounded exact literal/load scan of the main image is not
+an exhaustive writer inventory or proof of dead code/global unreachability.
+Both policy branches qualify only within this declared software-input domain.
+
+Verification
+56 guard comparisons / 504 independent checks cover admission, readiness, cache,
+root and latch paths, two channels and four CPU/FPU profiles. Original callees
+execute. Entire nonstack RAM, counters, call order, FPU/callee registers and a
+140-byte nested ABI stack bound supplement the complete machine-state comparison.
+Natural acquisition of every guard input is not claimed.
+
+Sixteen initialized tasks / 1,167 comparisons / 6,980 independent checks acquire
+original raw header, root, FAT and linked-directory data, then use real argument
+and opcode APIs and scheduler. Only raw device bytes and ACK/error inputs are
+supplied. Literal independent plans check exact unit/command/block/phase/source,
+128-byte payloads, full RAM root/FAT/DIR/dirty buffers, counters, original result
+callback, idle resumption and owner teardown. Both endian orders, low8/low16
+truncation, negative/high-bit inputs, no-op fields, missing names, sector edge
+indices, first/second-sector bad-block relocation, abort, no-space, FAT and root
+errors pass. No parsed metadata, caller frame, request ID, PR, callee output or
+callback result is supplied. Constructor-cleared NULL writehook and explicit
+abort-policy0 are the tested domain. The ACK ledger is a software acknowledgment
+record, not physical DMA, flash durability, power-loss or playable-game proof.
+
+112 of115 instructions and15 of16 conditional outcomes execute. The remaining
+three instructions at64a2ce/d0/d2 and negative outcome64a2cc->64a2ce are excluded
+by a local bytechecked proof: original literal64a34c calls canonical64b2dc whose
+RTS delay slot returns zero; CMP/PZ and BT take the nonnegative path. Source and
+branch remain intact; no negative helper output is invented. This is not a
+whole-game reachability/self-modification claim or duplicate routine credit.
+
+243 fresh retained IRQ/context/task comparisons / 1,683 independent checks keep
+earlier numeric expectations. Two original initialized command11 frontier
+sessions /92 comparisons /420 checks reach missing64b67a, PR647ae2, using the
+actual channel, worker record+2c filename and zero word/byte inputs. They remain
+pending without invented completion. That actual trace establishes the next
+dependency; no ordinal-based address guess is used. No fresh full startup was
+run;216 warm/211 cold comparisons remain historical evidence. Combined historical
+evidence totals40,253 comparisons, not unique tests or measured code coverage.
+
+Build and preservation
+236-source DLL/lib and strict unbounded Wall/Wextra/Werror compilation pass.
+All115 fresh exported original rows are bytechecked. The new bridge is exactly
+the previous235-source bridge plus one body, ten actual returns/continuation
+exports and prefix. Return membership2114->2124. CPU, flat execution, guards,
+observer, raw session and ABI are unchanged; no source wait limits added.
+Actual nonlocal parent routes64a31e and647a9c qualify. Overall42 of232 continuation
+exports qualify;190 remain unqualified. Continuations receive no routine credit.
+Earlier1,555 registry rows, source/proofs and2,703 builds preserve their hashes;
+new236 DLL/lib are additional. Original full-project requirements are preserved.
+Eight generated artifacts reproduce and registration is byte-idempotent.
+
+Reproduce from workspace root with matching local retail inputs:
+  powershell -NoProfile -File outputs/sonic-adventure/ghidra/export_movie_filesystem_command10.ps1 -Workspace WORKSPACE
+  python -B outputs/sonic-adventure/recover_movie_filesystem_command10.py
+  python -B outputs/sonic-adventure/connect_movie_filesystem_command10.py
+  powershell -NoProfile -File outputs/sonic-adventure/build_movie_filesystem_command10.ps1 -Workspace WORKSPACE
+  python -B outputs/sonic-adventure/check_movie_filesystem_command10_unbounded.py
+  python -B outputs/sonic-adventure/audit_movie_filesystem_command10.py
+  python -B outputs/sonic-adventure/verify_movie_filesystem_command10_direct.py
+  python -B outputs/sonic-adventure/verify_movie_filesystem_command10_tasks.py --shard 0
+  python -B outputs/sonic-adventure/verify_movie_filesystem_command10_tasks.py --shard 1
+  python -B outputs/sonic-adventure/verify_movie_filesystem_command10_tasks.py --shard 2
+  python -B outputs/sonic-adventure/verify_movie_filesystem_command10_tasks.py --merge
+  python -B outputs/sonic-adventure/verify_movie_filesystem_command10_retained.py
+  python -B outputs/sonic-adventure/verify_movie_filesystem_command10_frontier.py
+  python -B outputs/sonic-adventure/qualify_movie_filesystem_command10.py
+  python -B outputs/sonic-adventure/register_movie_filesystem_command10.py
+  python -B outputs/sonic-adventure/map_main_dispatch_cases.py
+  python -B outputs/sonic-adventure/verify_main_dispatch_case_map.py
+  python -B outputs/sonic-adventure/audit_recovery_coverage.py
+  python -B outputs/sonic-adventure/audit_project_completion.py
+  python -B outputs/sonic-adventure/verify_movie_filesystem_command10_workflow.py
+
+Next: recover actual command11 handler64b67a reached at original workerPR647ae2.
+Backend660bae optional hook stays unqualified. Full filesystem/game/PC60/120/240
+FPS/8K/Android/3DS stereoscopic/N64/PS1/SUPIR and settings remain unfinished.
+Texture Off must disable texture sampling and use vertex colors. About10% overall
+is weighted milestone progress; this research DLL is not a playable port.
