@@ -149403,6 +149403,66 @@
       "verification": "analysis/collision_contact_qualification.json",
       "verification_sha256": "a20c528f74dc7ff97cfd79be785b33008f1a34d7baf784df1e6e72e9e4146bd9",
       "guide": "COLLISION_CONTACT.txt"
+    },
+    "collision_contact_counter_alias": {
+      "status": "partially_verified_collision_caller_one_remaining_outcome",
+      "prior_qualification": "analysis/collision_contact_qualification.json",
+      "additive_verification": "analysis/collision_contact_counter_alias_verification.json",
+      "compiled_source_count": 249,
+      "executed_rows": 1121,
+      "static_conditional_outcomes": 74,
+      "executed_conditional_outcomes": 73,
+      "unaccounted_outcomes": [
+        [
+          "0x8c02a48c",
+          "0x8c02a4a8"
+        ]
+      ],
+      "proven_infeasible_conditional_outcomes": [],
+      "domain_exclusions": [],
+      "new_original_routine_credit": 0,
+      "newly_registered_entries": 0,
+      "registry_entries": 1589,
+      "registry_unique_module_address_pairs": 1586,
+      "confirmed_linked_unique_routines_by_name": 631,
+      "fresh_original_native_comparisons": 12,
+      "fresh_independent_checks": 186,
+      "retained_previous_evidence_original_native_comparisons": 71454,
+      "total_evidence_original_native_comparisons": 71466,
+      "combined_caller_stage_comparisons_including_retained": 456,
+      "combined_caller_stage_checks_including_retained": 2837,
+      "combined_direct_caller_comparisons": 213,
+      "combined_direct_caller_status_counts": {
+        "0": 180,
+        "-1": 29,
+        "-3": 4
+      },
+      "supplied_game_callee_outputs": 0,
+      "supplied_execution_frames": 0,
+      "dll_sha256": "4a75c3c41c2baea392f612682aa16e76cd5634b8e0002205e085fe29e89760d8",
+      "linked_routine_inventory": {
+        "registry_entries": 1589,
+        "registry_unique_module_address_pairs": 1586,
+        "confirmed_linked_registry_entries_by_name": 631,
+        "confirmed_linked_unique_routines_by_name": 631,
+        "all_named_DLL_exports_including_support_and_continuations": 1675,
+        "method": "Exact registered-name intersection with actual PE named exports;support/continuation-only exports excluded. Other internal/renamed implementations are not counted by this method. Registry recovery count is distinct from current combined-DLL integration count."
+      },
+      "native_implementation_changed": false,
+      "old_proofs_rewritten": false,
+      "overall_completion_percent": 10,
+      "estimate_method": "weighted milestones;not measured code coverage",
+      "next_task": "Resolve normal-entry A48c->A4a8: establish actual R10 preservation across all callees and stack/input/global aliasing requirements. A41a requires COUNT>=R10; A48c skips if COUNT<=0. Do not assume callee-saved registers or disjoint memory without byte-backed evidence. Keep029b00 and three math wrappers unregistered until qualified.",
+      "limitations": [
+        "A592 skip now executes from original normal entry. A query INPUT at COUNT-54 overlaps the original output store with the counter. Two contacts are generated; A56c overwrites COUNT with zero; A58c reloads zero; decrement yields ffffffff and A592 takes its skip. Subsequent division/output stores produce canonical NaN bits in the aliased counter. This is original behavior, not a valid final contact count or a native-code fix.",
+        "12fresh complete original/native comparisons and186checks cover aliased/disjoint controls, P0/P1/P2 mapped MMU-off views and both physical FP banks at PR0/SZ0. Full state, RAM, devices, queues and ordered boundaries match. Existing CPU trace is composed read-only with its prior path observer; CPU instructions and comparison assertions are unchanged.",
+        "Historical caller proof remains byte-preserved at1121rows/72outcomes and444comparisons/2651checks. The union is1121rows/73outcomes,456comparisons/2837checks including243retained comparisons. No retained suite or complete game startup was rerun; the C/DLL is unchanged. Cumulative71466 is historical-plus-fresh evidence, not unique cases or code coverage.",
+        "The remaining A48c skip is open, not proved unreachable or excluded. No new recovered routine credit. The mapped input alias is not natural gameplay initialization evidence. Physical FPU/exception/MMU/address-error delivery, GPU pixels and complete gameplay remain unqualified.",
+        "All game/PC60/120/240FPS8K/Android/3DSstereo/N64/PS1/SUPIR/settings work remains unfinished. TextureOff disables texture sampling and uses vertex colours.10%milestones,notcoverage; incomplete nonplayable research builds;keepgoalactive and SolHigh for remaining RE."
+      ],
+      "verification": "analysis/collision_contact_counter_alias_qualification.json",
+      "verification_sha256": "542766885134bffc24dde8d3afe3d19b905a4332ba75a4a9df23857f03686cda",
+      "guide": "COLLISION_CONTACT_COUNTER_ALIAS.txt"
     }
   },
   "milestones": [

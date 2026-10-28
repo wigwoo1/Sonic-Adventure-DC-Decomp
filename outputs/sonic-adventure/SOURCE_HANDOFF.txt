@@ -1,3 +1,5 @@
+Latest collision alias evidence: all1121instructions and73of74branch outcomes executed;12freshcomparisons/186checks. One outcome remains open;caller unregistered.1586unique/631confirmedlinked unchanged. See COLLISION_CONTACT_COUNTER_ALIAS.txt. Overall10% weighted milestones; incomplete, nonplayable research build.
+
 Latest collision work: complete029b00body integrated,249sources,all1121instructions/32call sites and72of74branch outcomes exercised.444fresh comparisons/2651checks. Two outcomes remain open; caller is unregistered and receives0newroutinecredit. Registry unchanged1586unique/631confirmedlinked. See COLLISION_CONTACT.txt. Overall10% weighted milestones; incomplete, nonplayable research build.
 
 Latest collision dependencies: original glyph6407b0 and text640922 recovered, using the actual existing string-length callee. 248 sources, all315instructions/4branch outcomes,486fresh comparisons/4392checks. 1586unique registered routines;631confirmed linked. See COLLISION_TEXT.txt. Overall10% by weighted milestones; incomplete, nonplayable research build.
