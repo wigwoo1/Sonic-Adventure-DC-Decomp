@@ -1,0 +1,127 @@
+ORIGINAL ALTERNATE CONTACT RESPONSE - 075860 QUALIFIED
+
+Overall project: approximately 10% by weighted milestones, not measured code
+coverage. The goal remains active. These are incomplete research libraries,
+not a playable PC port. Keep Sol High for the next reverse-engineering task.
+
+What changed
+The complete original 075860 response routine is recovered and connected to the
+254-source library. All 202 instructions and 20 conditional branch outcomes
+execute against original instruction behavior. No original rows or outcomes
+are excluded, and no branch is removed because of a decompiler assumption.
+
+Current totals: 1,601 registry entries, 1,598 unique module/address routines,
+643 registered routines confirmed linked by exact names in the DLL. Support
+and continuation exports do not count as game routines. All 1,600 earlier
+registry entries and 2,741 archived builds remain available.
+
+Recovered behavior
+The owner takes the query through R7, reads its contact count at +28 and the
+original 88-byte contact records at 8c6bacf0, and calls actual distance, angle,
+dot-product, vector-length and normalization routines. It filters contacts by
+angle and the reference vector, tracks the minimum selected distance, and can
+limit the query's movement vector at +10. Other branches classify projected
+movement without selecting a final response. Separate velocity/state input
+records remain unchanged; this owner differs from the earlier 075416 routine.
+
+Original code at 075940 and 075996 includes zero-length checks that Ghidra's
+floating-point C draft omitted. Both checks remain and both outcomes execute.
+Use the original instruction listing and tested translation as evidence;
+the Ghidra draft is a research aid with misleading floating-point types.
+
+Actual stack-history path
+The second zero-length outcome is reachable even with separate input buffers.
+An original vector-add call first produces -1 or 0 in old stack RAM. The
+response then enters normally and allocates its own frame. A contact distance
+of 1001 does not replace the initial minimum of 1000, leaving selected index -1.
+The subsequent indexed distance read therefore uses the old word at frame+54,
+immediately before the distance array at +58. Zero movement has length zero,
+which is greater than the negative old word, allowing the second zero-length
+branch. A zero old word and nonzero movement provide controls.
+
+No execution frame, return address or callee result is installed. The producer
+and response execute their original instructions from normal entries. Initial
+RAM inputs and ordinary call arguments are supplied. This demonstrates raw
+RAM-history behavior; it does not prove the game's normal object/stack layout
+uses this case or justify changing the original behavior.
+
+Verification completed
+- 227 direct comparisons and 1,407 checks: 210 completed calls, 12 existing
+  unsupported numeric stops and five mapped-memory guards. Full CPU/FPU/RAM,
+  device/queue state and ordered boundaries match the original execution.
+- 38 included finite oracles independently check axis clamp decisions/results
+  and nearest repeated contacts. Other geometry/numerics use original execution
+  comparison; this is not a complete independent physics or physical-FPU proof.
+- 32 comparisons and 144 checks cover 16 actual vector-add -> response history
+  sequences: negative/zero old RAM word, zero/nonzero motion, both FP banks and
+  RM0/1. These execute the seven rows and one outcome missing from direct cases.
+- 96 comparisons and 480 checks cover 32 actual world-selection -> collision ->
+  alternate-response sequences: lower/upper lists, hit/miss, stationary/downward
+  motion, up/down query normals and both FP banks. The original collision caller
+  produces the query count and 88-byte records consumed by 075860. Selected
+  horizontal-plane cases independently check exact movement and unchanged
+  velocity. Only initial scene/query/mesh/state/normal/sentinel inputs are
+  authored; no intermediate contact results or execution frames are supplied.
+- 243 retained interrupt/context/task comparisons and 1,683 checks preserve
+  earlier numerical assertions, checked through parsed Python syntax.
+- Total: 598 fresh comparisons and 3,714 checks. Cumulative evidence is 74,315
+  comparisons, including historical tests; it is not a unique-case count or a
+  game-code coverage percentage. Earlier startup/full-device-write proofs remain
+  historical and were not rerun in this stage.
+- The 254-source DLL/import library and strict unbounded Wall/Wextra/Werror
+  checks pass. All 202 rows match original binary bytes, every row and all
+  20 branch outcomes execute, and all ten original call sites execute.
+
+Test startup fix
+The retained Python test runner reached the default import recursion limit
+before running tests because preserved stages form a long, finite module chain.
+The new reference startup raises the host Python floor to 4096. Guest CPU,
+reference execution, bus guards, execution limits and recovered C are unchanged.
+The final direct/history/retained checks were rerun successfully. Initial runs
+are preserved privately and receive no additional comparison credit.
+
+Preservation and limits
+The bridge is exactly the old 253-source bridge plus one entry route, ten real
+return sites and ten continuation exports. Original CPU/reference interpreter,
+guards, production observer, comparison logic, raw session and ABI remain.
+No new source wait bounds are introduced. Of 500 explicit continuation exports,
+71 nonlocal routes are qualified and 429 remain unqualified. The new exports
+do not independently qualify nonlocal resumes. The new DLL/library are
+additional files; all earlier archived builds and proof/source bytes remain.
+
+Successful geometric owner profiles are PR0/SZ0. Selected raw modes, special
+values and guards are compared, without asserting physical FPU, exception,
+MMU, boot-ROM or GPU delivery. Natural world initialization, complete 0730d8
+movement, gameplay and frame timing remain unqualified. The older 028bfe
+null-read outcomes, 029b00 A48c skip and three math-wrapper precision paths
+remain open. Those larger owners remain unregistered. No upstream implementation
+code is copied.
+
+How to inspect or reproduce
+Read analysis/movement_alternate_qualification.json for the current evidence,
+counts and limits. The direct/history/sequence verification reports list case
+inputs and call boundaries. source/sa_movement_alternate.c holds the translation;
+analysis/movement-alternate-owner preserves the original listing and draft.
+
+From the workspace root with the matching original game input present locally:
+  python -B outputs/sonic-adventure/recover_movement_alternate.py
+  python -B outputs/sonic-adventure/connect_movement_alternate.py
+  powershell -NoProfile -File outputs/sonic-adventure/build_movement_alternate.ps1
+  python -B outputs/sonic-adventure/verify_movement_alternate_direct.py
+  python -B outputs/sonic-adventure/verify_movement_alternate_history.py
+  python -B outputs/sonic-adventure/verify_movement_alternate_sequence.py
+  python -B outputs/sonic-adventure/verify_movement_alternate_retained.py
+  python -B outputs/sonic-adventure/check_movement_alternate_unbounded.py
+  python -B outputs/sonic-adventure/audit_movement_alternate.py
+  python -B outputs/sonic-adventure/qualify_movement_alternate.py
+  python -B outputs/sonic-adventure/register_movement_alternate.py
+  python -B outputs/sonic-adventure/verify_movement_alternate_workflow.py
+
+ghidra/export_movement_alternate_owner.ps1 reproduces the read-only export with
+the retained local Ghidra project/tools. Some compiler paths remain specific
+to this workstation. Retail inputs stay local and excluded from publication.
+
+Next actual movement dependency: 075214 at the parent call 07347e. Retain all
+older evidence obligations. Full game decompilation, PC 60/120/240 FPS through
+8K, Android, stereoscopic 3DS, N64/PS1, SUPIR textures and settings remain
+unfinished. Texture Off must disable texture sampling and use vertex colours.
