@@ -1,3 +1,5 @@
+Latest collision-angle dependency milestone:245-source build;2complete new helpers(51rows/6outcomes),canonical114-row range reducer reconnected without duplicate credit;2publicwrappers remain partial/unregistered. 1,385fresh comparisons/11,471checks pass.1,583unique registered routines/626confirmedlinked. SeeCOLLISION_ANGLE.txt. Overall10%weighted milestones;incomplete/nonplayable.
+
 # Sonic Adventure Dreamcast Rev A decompilation and ports
 
 Latest collision-math stage: The 244-source research DLL qualifies two original collision-math helpers: cross product027360 and vector length63a75c. All41 instructions execute. All 1,135 fresh original/native comparisons and 10,155 independent checks pass, including408 finite mathematical-oracle cases. Registry:1,584 entries /1,581 unique pairs; 624 confirmed linked by registered name. Overall remains about10% by weighted milestones, not code coverage. These are incomplete, non-playable research builds. See [COLLISION_MATH.txt](COLLISION_MATH.txt).
