@@ -1,0 +1,81 @@
+CANONICAL COLLISION NORMALIZATION ROUTE - 245 SOURCES
+
+The root execution bridge can now call original normalization helper63a94c through
+the already compiled sa_motion_mesh_lower_entry. This creates the correct lower
+context and preserves its observer, published stop and bus interface. The only
+runtime routing change is one whitelist address; the existing normalizer body and
+all CPU, guard, numerical and memory-observer implementations remain unchanged.
+The function was previously recovered, registered and exported, so this milestone
+adds ZERO recovered routines and no duplicate credit. It exposes one direct entry.
+
+Original routine63a94c..63a96c has16instructions/32bytes, all executed in fresh
+comparisons. FIPR forms the squared norm, FSRRA supplies the original approximate
+reciprocal square root, and multiplies update the three input components in place.
+R4 advances through the vector and returns to its initial address on completion.
+The RTS delay-slot multiply leaves the original approximate length in FR0.
+Floating scratch-register, bank, FPSCR and partial-stop effects remain visible.
+
+Fresh verification
+514direct fullCPU/FPU/RAM/device/ordered-boundary comparisons pass4,638checks:
+266completed calls,224existing unsupported numeric stops,24numeric trap stops.
+Nonzero statuses are tested stops, not successful calls. Both physical FPbanks,
+RM0/1,PR/SZ/DN,selected exception enables,finite/zero/NaN/infinity/subnormal/overflow
+inputs and mapped MMUoff P0/P1/P2 views are exercised. There are no substituted
+game services or injected callee outputs/frames. Valid bounded mapped vector
+buffers are a precondition; no new invalid-pointer/MMU/fault-delivery claim.
+52independent finite cases check unit-vector components/norm and returned length
+with2e-5 tolerance. FIPR/FSRRA still share the pinned numerical backend with the
+original-instruction model; this is not arbitrary-bit physical hardware proof.
+243retained IRQ/context/task comparisons pass1,683checks, preserving all prior
+numeric expectations. Total757fresh comparisons/6,321checks. Historical68,275+
+757=69,032cumulative evidence; not unique or measured code coverage.
+
+Build and preservation
+The new collision_normalize DLL/library compile from245sources. Strict unbounded
+Wall/Wextra/Werror checks pass. Source count stays245 because only the bridge and
+probe filenames replace their previous versions. All2,723older archived builds
+stay byteidentical; this DLL/library are additional. No new original body, JSR
+return, nonlocal continuation export or wait bound is introduced. Return guards
+remain2271, explicit continuation exports379, qualified nonlocal routes71 and
+remaining308. One direct leaf entry is not a new nonlocal resume qualification.
+Registry stays1,586entries/1,583unique module-address pairs and626confirmed linked
+by registered export name. All named DLL exports are not a routine count.
+Onlyone directrootentry is added:63a94c routes through existing sa_motion_mesh_lower_entry and its own lowercontext/observer/stop/bus. Canonicalbody/source and numericalbackends unchanged. Previouslycompiled/exported normalizer was not directly routed by root;no duplicate routine recovery/registration credit.
+
+514fresh fullCPU/FPU/RAM/device/ordered-boundary comparisons:266completed/224existingunsupportednumeric stops/24numerictrap stops;nonzero statuses not fabricated completions. All16originalcanonical rows execute. 52independent finite-vector component/unit-length/returned-length oracles use2e-5 tolerance;FIPR/FSRRA stillshare pinned numericalbackend,not arbitraryhardwarebitproof.
+
+BothphysicalFPbanks/RM0/1/PR/SZ/DN,selectedenables,finite/zero/NaN/infinity/subnormal/overflowinputs andmappedMMUoffP0/P1/P2views tested. Validboundedmappedvectorbuffers only;no new invalid-pointer/MMU/address-error/physicalexceptiondelivery claim. Original pointer advance/restoration,FPscratch/FPSCR/RTSdelayeffects retained.
+
+245-sourceDLL/lib andstrictunboundedWallWextraWerrorpass. Exactprevious245bridge plusone lowerwhitelistaddress/exportprefix;CPU/flatmodel/rows/guards/productionobserver/ABI unchanged. No new sourcewaitbound/JSRreturn/nonlocalresumeexport.2271returnmembers/379exports/71qualifiednonlocal/308remaining unchanged;2723oldbuildfiles preserved.
+
+243freshretainedIRQ/context/taskcomparisons/1683checks keep oldnumericassertions. Combined69032is historical-plus-fresh,notunique/codecoverage;216warm/211coldstartup/prior242full512write remain historical. No freshcomplete245startup/gameplay/full-devicewrite claim.
+
+Both29rowpublicanglewrappers remainunregistered with6unexecutedrows/2unqualifiedoutcomes. Scalarreturn derivation doesnotclosearbitrarypairedFMOV/dynamic-targeteffects. Full029b00collisioncaller andinverse/renderingdependencies remainunfinished. PC60/120/240FPS8K/Android/3DSstereo/N64/PS1/SUPIR/settingsunfinished;TextureOffdisables sampling/usevertexcolors.10%weightedmilestones,notcoverage;researchbuildnotplayable.
+
+Next continue original029b00 dependency closure, beginning with the already
+registered inverse6390b0 implementation and its correct runtime ABI. The full
+1,121instruction caller and remaining rendering dependencies are unfinished.
+Both public angle wrappers10d058/10d0f8 still remain unregistered with six missing
+error-path instructions/two outcomes. Earlier scalar-return bounds do not close
+arbitrary paired-FMOV call-target/frame effects. Keep those limitations intact.
+No fresh complete245startup/gameplay/full-device write is claimed;216warm/211cold
+startup and prior242full512block write proofs remain historical. This research
+build is INCOMPLETE and NONPLAYABLE. PC60/120/240FPS8K,Android,3DSstereo,N64/PS1,
+SUPIR and settings remain unfinished. TextureOff disables sampling/usesvertexcolors.
+Overall10%weighted milestones, not measured code coverage. Keep SolHigh for reverse
+engineering; LunaLow is suitable for routine docs/admin. Keep the goal active.
+
+Reproduce from workspace root with matching local inputs/toolchains:
+  python -B outputs/sonic-adventure/connect_collision_normalize.py
+  powershell -NoProfile -File outputs/sonic-adventure/build_collision_normalize.ps1 -Workspace WORKSPACE
+  python -B outputs/sonic-adventure/check_collision_normalize_unbounded.py
+  python -B outputs/sonic-adventure/audit_collision_normalize.py
+  python -B outputs/sonic-adventure/verify_collision_normalize_direct.py --shard 0
+  python -B outputs/sonic-adventure/verify_collision_normalize_direct.py --shard 1
+  python -B outputs/sonic-adventure/merge_collision_normalize_direct.py
+  python -B outputs/sonic-adventure/verify_collision_normalize_retained.py
+  python -B outputs/sonic-adventure/qualify_collision_normalize.py
+  python -B outputs/sonic-adventure/record_collision_normalize.py
+  python -B outputs/sonic-adventure/verify_collision_normalize_workflow.py
+Follow GITHUB_PUBLISHING.txt for reviewed source/proof publication and matching
+research prereleases. Retail assets/inputs,toolchains,caches/credentials excluded.

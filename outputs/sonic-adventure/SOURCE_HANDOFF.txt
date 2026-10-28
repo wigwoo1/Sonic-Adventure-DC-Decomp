@@ -1,3 +1,5 @@
+Latest collision dependency:canonical63a94c normalization now directly routed through proper existing lowercontext.245-source build,757fresh original/native comparisons/6321checks,52finite-vector oracles.0newroutinecredit;1583unique registered/626confirmedlinked. SeeCOLLISION_NORMALIZE.txt. Overall10%weightedmilestones;incomplete/nonplayable.
+
 Latest wrapper return research:scalar bounds checked;SZ1saved-R14 alias directlyverified in48original/native calls/336checks plus7derivationchecks. Both wrappers still unregistered;no routine-count increase. Existing245DLLunchanged. SeeCOLLISION_WRAPPER_RETURN_RESEARCH.txt. Overall10%weightedmilestones;incomplete/nonplayable.
 
 Latest collision-angle dependency milestone:245-source build;2complete new helpers(51rows/6outcomes),canonical114-row range reducer reconnected without duplicate credit;2publicwrappers remain partial/unregistered. 1,385fresh comparisons/11,471checks pass.1,583unique registered routines/626confirmedlinked. SeeCOLLISION_ANGLE.txt. Overall10%weighted milestones;incomplete/nonplayable.
