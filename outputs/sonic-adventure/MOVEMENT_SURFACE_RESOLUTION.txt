@@ -1,0 +1,91 @@
+Sonic Adventure USA Rev A: movement surface resolution, 2026-10-28
+
+Result
+Three complete original bodies are recovered and software-qualified:
+0747D2:339 instruction rows,40 conditional outcomes.
+0763A0:289 rows,20 outcomes.
+07256A:19 rows,4 outcomes.
+All647 rows and64 outcomes execute. No original branch or comparison is dropped.
+Overall completion remains about10% by weighted milestones,not code coverage.
+
+Behavior recovered
+0747D2 selects grounded/airborne surface response from the actor flags,actual
+movement direction,normal angle,speed/cap values,character policy and caller
+flags. It calls the real normalization,angle,dot,rotation and response helpers.
+Successful finalization copies the query anchor into the query position,sets
+actor position to anchor minus the caller offset,and forwards the response
+velocity. Early exits preserve the caller's supplied status argument.
+The four extra caller arguments are ordinary stack inputs,not callee frames.
+
+0763A0 redirects movement using the actual cross product and plane intersection
+closure. It handles low-speed/parallel exits,small-cross fallback normals,
+normalization,opposing direction,retained speed,optional character velocity
+updates,and the original heading/wrap adjustments. Every old math dependency
+executes unchanged,including the original numerical edge behavior.
+
+07256A conditionally zeros a state velocity at+38/+3C/+40 and a query velocity
+at+4/+8/+C. Its final null-query test sets the integer T flag. This detail was
+corrected in the new independent test expectation;native and original behavior
+always matched. No native code was changed to fit that initial assumption.
+
+Verification actually performed
+409 direct original/native comparisons,2624 checks,178 included semantic-oracle
+cases:376 completed returns,18 reached unsupported-numeric stops,15 mapped guards.
+28 additional targeted comparisons and92 checks execute the two initially
+missing outcomes:grounded cap rejection and a zero direction-length check.
+20 finite-input cases reach the latter after a nonzero cross product. A small
+normal-valued direction and a large finite plane normal keep the cross product
+nonzero while the original direction norm rounds/flushes to zero. All actual
+original helpers execute;no math result or execution frame is supplied. These
+are authored function inputs,not a claim of a discovered retail gameplay event.
+
+243 retained IRQ/context/task comparisons and1683 checks preserve the previous
+numeric assertions,verified by AST. Total680 fresh comparisons/4399 checks;
+182 included semantic-oracle cases. Complete CPU/FPU/RAM/device/queue state and
+ordered call boundaries match. Cumulative80110 comparison evidence includes
+repeated checks and is not unique routines or measured recovered-code coverage.
+
+The261-source research DLL builds. Strict unbounded-Wall-Wextra-Werror checks
+pass. The previous260bridge plus3entries/29actualreturns/29continuationexports is
+verified;old CPU/guards/observer/ABI/comparison logic are unchanged. There are
+2532 flat returns,640 explicit resumes,71 qualified nonlocal routes/569 remaining.
+The29 new continuation exports are not independently qualified nonlocal resumes.
+No new guest execution limits,callee outputs or repaired frames were introduced.
+All16278 prior selected files outside four established mutable status files,
+all1615 prior registry rows and2755 old binaries are preserved.
+
+Current inventory
+1618 registry entries;1615 distinct module/address pairs;662 registered routines
+confirmed by name in the combined native DLL. Three new routines,647 new rows.
+These counts describe different things and do not establish whole-game coverage.
+
+Limits and next work
+Physical FPU/MMU/exceptions/devices and complete gameplay remain unqualified.
+Older0730D8/028BFE/029B00 owners,callback assignments/missing callbacks,and the
+074EE4 original-math scalar/broader precision obligations remain unfinished.
+The existing074626/6402C0/broader074FD4 obligations are preserved. Next recover
+ordinary parent dependency06CD22,then its remaining special-tail0777E0 path.
+
+Full decompilation,PC60/120/240FPS and8K,Android,stereoscopic3DS,eventualN64/PS1
+adaptations,SUPIR and settings remain unfinished. Texture Off must disable
+sampling and use vertex/material colours. No SARecomp implementation was copied.
+Research DLLs are incomplete artifacts,not a playable port. Goal remains active.
+Sol High remains appropriate for the next reverse-engineering task.
+
+Inspection and reproduction
+Source:source/sa_movement_surface_resolution.c.
+Read analysis/movement_surface_resolution_qualification.json and its separate
+verification reports. Supply matching original retail inputs locally.
+Run Python with-B from the workspace,using PowerShell for the build:
+recover_movement_surface_resolution.py
+connect_movement_surface_resolution.py
+build_movement_surface_resolution.ps1
+check_movement_surface_resolution_unbounded.py
+verify_movement_surface_resolution_direct.py
+verify_movement_surface_resolution_edges.py
+verify_movement_surface_resolution_retained.py
+audit_movement_surface_resolution.py
+verify_movement_surface_resolution_preservation.py
+qualify_movement_surface_resolution.py
+register_movement_surface_resolution.py
+verify_movement_surface_resolution_workflow.py
