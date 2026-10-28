@@ -1,0 +1,99 @@
+CANONICAL GLOBAL MODE QUERY - 049a4e CONNECTED
+
+Overall project: approximately 10% by weighted milestones, not measured code
+coverage. The goal remains active. These are incomplete research libraries,
+not a playable PC port. Keep Sol High for the next reverse-engineering task.
+
+What changed
+The already-recovered global-mode query at 049a4e is connected to the current
+full-state library. It was previously present only in a standalone research DLL.
+The adapter preserves all six original instructions, including the RTS delay
+slot. There are no conditional branches or calls in this function.
+
+This adds zero original routines to the registry. Totals remain 1,602 entries
+and 1,599 unique module/address routines. The current DLL now has 645 registered
+routines confirmed linked by exact names, up from 644. All previous registry
+bytes, source, proof files and 2,745 archived build binaries remain unchanged.
+
+Recovered behavior and ABI
+The original instruction at 049a4e reads a pointer from literal slot 049ae8
+into R3. The original literal points to global 8c7492ac. It reads that word,
+sets T when the word is zero, copies T to R0, and XORs R0 with 1 in the return
+delay slot. Result: R0 is 1 for any nonzero raw word, otherwise 0. R3 retains
+the literal pointer. Other registers, stack, RAM and FPU state are unchanged.
+This is an integer bitwise query; floating negative-zero bits count as nonzero.
+Memory addresses and offsets in this guide use hexadecimal.
+
+The original two-argument standalone implementation, library and 128-case proof
+remain preserved. The new combined DLL exposes the canonical symbol through
+the current stage ABI and dispatches it through its connected entrypoints.
+The old standalone ABI remains in the old standalone DLL. Do not call the new
+stage export with the old two-argument prototype.
+
+The current adapter uses the established original-instruction translator and
+memory/device access layer. It preserves device reads and reached invalid-read
+stops, including the pointer already loaded into R3 before a failed target read.
+No SDK or SARecomp implementation code was imported.
+
+Build and verification
+- Native DLL and import library built from 256 source files.
+- All 256 sources pass unbounded -Wall -Wextra -Werror syntax/semantic checks.
+- 212 direct original/native comparisons pass 2,084 checks: 204 ordinary returns
+  and 8 mapped-memory stops at 049a50. All six original instructions execute.
+- Direct tests cover zero/nonzero raw words, all eight FPU bank/precision/size
+  combinations, T and FPU-disable states, P0/P1/P2 RAM pointers, literal/self/code
+  reads, the last RAM word, unaligned software RAM, and root return addresses.
+- Ten device-read cases cover 5f8000, 5f6920, ff000038, ffa00020 and ffd8000c
+  through the actual software device interfaces. Devices and ordered snapshots
+  match the original instruction reference. This is not physical hardware proof.
+- 194 of the direct RAM cases also compare complete CPU/RAM results against the
+  preserved standalone implementation. These are included in the 212 cases,
+  not added again to the original/native comparison count.
+- 30 actual 075214 -> 049a4e sequences add 60 comparisons and 210 checks. The
+  original parameter routine writes the queried global; the query consumes it.
+  Five raw words, both FPU banks and three RAM pointer views are covered. No
+  intermediate game result or execution frame is supplied. These are authored
+  initial RAM layouts, not evidence of the game's natural object initialization.
+- 243 retained IRQ/context/task comparisons pass 1,683 checks, with previous
+  numeric assertions preserved by AST checks. Earlier proof files remain intact.
+- Total fresh evidence: 515 comparisons and 3,977 checks. Cumulative evidence:
+  75,497 comparisons; this is neither unique coverage nor game completion.
+- Static audit verifies original bytes, canonical identity, exact old bridge
+  plus one entry, unchanged execution/observer/guard ABI and old build hashes.
+  No new call-return membership or continuation exports are introduced. There
+  remain 2,392 return members and 500 explicit nonfunction resumes, with 71
+  qualified nonlocal routes and 429 remaining unqualified.
+
+The complete-state comparison includes CPU/FPU/RAM/device/queue state and
+ordered boundaries. Physical alignment exceptions, MMU/interrupt delivery,
+Dreamcast hardware, complete startup, gameplay and frame timing remain unqualified.
+
+How to check
+Read analysis/movement_mode_query_qualification.json for qualification, exact DLL
+hash, limits and evidence hashes. Current adapter: source/sa_movement_mode_query.c.
+Preserved standalone source: source/sa_global_mode_nonzero_8c049a4e.c.
+Original listing: analysis/movement-mode-query/8c049a4e_instructions.tsv.
+
+Reproduce with matching local game input and toolchain:
+python -B outputs/sonic-adventure/recover_movement_mode_query.py
+python -B outputs/sonic-adventure/connect_movement_mode_query.py
+powershell -NoProfile -File outputs/sonic-adventure/build_movement_mode_query.ps1
+python -B outputs/sonic-adventure/verify_movement_mode_query_direct.py
+python -B outputs/sonic-adventure/verify_movement_mode_query_sequence.py
+python -B outputs/sonic-adventure/verify_movement_mode_query_retained.py
+python -B outputs/sonic-adventure/check_movement_mode_query_unbounded.py
+python -B outputs/sonic-adventure/audit_movement_mode_query.py
+python -B outputs/sonic-adventure/qualify_movement_mode_query.py
+python -B outputs/sonic-adventure/record_movement_mode_query.py
+python -B outputs/sonic-adventure/verify_movement_mode_query_workflow.py
+
+What remains
+The next actual missing movement dependency is 0742d4, called at 07389c and
+07394a. The later 055d5a routine is another already-registered reuse candidate.
+The 0730d8 movement parent, 028bfe world owner and 029b00 collision parent remain
+unregistered with their existing open outcomes, precision and alias obligations.
+No new credit is assigned to those owners by this canonical leaf integration.
+
+Full decompilation, playable PC port, 60/120/240 FPS, 8K, Android, stereoscopic
+3DS, eventual N64/PS1 adaptation, SUPIR upscaling and settings remain unfinished.
+Texture Off must disable texture sampling and use vertex colours.
