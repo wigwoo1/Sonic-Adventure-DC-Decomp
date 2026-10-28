@@ -1,0 +1,53 @@
+SARecomp gameplay reuse follow-up - original-byte evidence, 2026-10-28
+
+This supplements SA_RECOMP_REUSE_ASSESSMENT.txt without rewriting that earlier
+published assessment. Upstream pinned commit remains
+73e9e854cde6fe8b158779c0c0a70c6cec4828ff. No upstream runtime implementation is
+copied, compiled, merged or credited. Overall project remains10% by weighted
+milestones; these findings add zero recovered routines.
+
+New nonduplicate candidates
+PAL cross-product leaf027360 matches USA027360 exactly for66bytes. Its operation
+is (R5-R4) x (R6-R4), output throughR7, according to the upstream contract.
+PAL vector-length leaf63a69c matches USA63a75c exactly for16bytes. Its upstream
+contract is vector atR4 toFR0. Neither exact USA module/address pair is registered
+at this assessment's1580-entry recovery baseline. These are actionable future
+recovery/integration targets, not already behavior-qualified native functions.
+Native behavior must be checked against our original code, including aliasing,
+FPU modes and state. An identical hash is not a proof of a C++ transplant.
+
+PAL normalization63a88c matches USA63a94c exactly for32bytes; that USA function
+is already registered as sa_face_vector_normalize_8c63a94c and adds no new credit.
+The earlier four matrix matches also remain already recovered.
+
+Larger movement owner
+The public movement-resolver source includes generated movement-body.inc and
+movement-identities.inc, produced from a pinned PAL16MiB RAM image by
+prepare-movement-resolver.py. The public glue therefore is not the complete
+standalone generated body. Its retained Katana runtime/callback/memory/FPU
+contracts still need adaptation; its documented test coverage is an upstream
+claim, not independently reproduced evidence in our project.
+The declared PAL body0730a0..074214 SHA256 was not found in the bounded USA
+address window PAL+/-0x2000. This narrow negative result is not evidence that
+the corresponding USA routine is absent or incompatible. Further mapping must
+use instructions, literals and control flow, not assumed constant offsets.
+
+How to reproduce
+With local matching1ST_READ.BIN present under work/sonic-adventure/extracted:
+  python -B outputs/sonic-adventure/assess_sarecomp_gameplay_fingerprints.py
+The report analysis/sarecomp_gameplay_compatibility_probe.json records declared
+upstream identities, exact matches, current registry lookups and pinned inputs.
+It scans only even addresses within+/-0x2000 of the PAL entries. Original retail
+input remains local and excluded from publication.
+
+Reuse terms and public SDK/AOT bootstrap limits in the original assessment
+remain unresolved. Do not merge upstream implementation code until applicable
+reuse terms are established. We can recover our original counterparts with our
+existing workflow and use these identities to avoid redundant investigation.
+No upstream author has been contacted.
+
+Primary references
+https://github.com/sonicfreak1337/SARecomp/blob/73e9e854cde6fe8b158779c0c0a70c6cec4828ff/src/sonic_collision_math.hpp
+https://github.com/sonicfreak1337/SARecomp/blob/73e9e854cde6fe8b158779c0c0a70c6cec4828ff/src/sonic_movement_resolver.cpp
+https://github.com/sonicfreak1337/SARecomp/blob/73e9e854cde6fe8b158779c0c0a70c6cec4828ff/tools/prepare-movement-resolver.py
+https://github.com/sonicfreak1337/SARecomp/blob/73e9e854cde6fe8b158779c0c0a70c6cec4828ff/docs/native-movement-resolver-20260917.md
