@@ -1,0 +1,89 @@
+Sonic Adventure USA Rev A: movement record adjustment, 2026-10-28
+
+What was recovered
+07506E applies a selected movement record to the actor and query position.
+It follows the state+6C pointer, then that object's +28 record pointer. A null
+record returns immediately. A nonzero actor byte at +8 selects the second
+28-byte record. Zero movement length first forms actor position + displacement.
+
+When the selected record has a callback, the routine saves actor position,
+temporarily installs the query position, and calls through the live pointer.
+The callback receives the character pointer selected by the actor byte, the
+actor pointer, and the selected record. After returning, the routine restores
+actor position, reloads the record's live translation, adds it to the query,
+and applies three angle deltas modulo 65536. Callback effects outside the saved
+position remain. A missing callback body stays a reached unresolved target.
+
+0751C0 adds three times an input impulse to an actor position, then adds twice
+the X/Z impulse to the query's X/Z coordinates. Query Y is unchanged. The factor
+three is read from the original constant at 0753A0; the original instructions
+form the factor two. Both bodies preserve original instruction/operation order.
+
+Verification
+- All 164 original rows and all 8 conditional outcomes execute: 122 rows in
+  07506E and 42 in 0751C0. No unreachable-code assumption was needed. The 0750A0
+  comparison omitted by the Ghidra draft remains in source and executes.
+- 225 direct original/native comparisons and 1,979 independent checks cover
+  null/selected records, indices 0/1/255, zero/nonzero movement, real callback
+  effects, position restoration, angle wrapping, aliases, FPU banks/rounding,
+  raw numeric inputs, reached numeric stops and mapped guards.
+- 16 additional comparisons and 128 checks use a pointer alias that makes the
+  actual callback change the record's translation. The caller must reload the
+  changed values after callback completion. This is a live mutation, not a
+  supplied callback result or an expected-output injection.
+- The original 0751C0 is an argument-compatible callback for authored initial
+  test records. This does not claim discovery of its assignment in a retail
+  gameplay record. All of its original instructions execute in these tests.
+- 243 retained interrupt/context/task comparisons and 1,683 checks pass with
+  their previous numeric assertions unchanged, verified by Python AST.
+- Total: 484 fresh comparisons, 3,790 checks, 152 included semantic-oracle cases.
+  Complete CPU/FPU/RAM/device/queue state and ordered boundaries match.
+- The 260-source research DLL builds. Strict unbounded -Wall -Wextra -Werror
+  compiler checks pass. No new guest wait limits or frame repairs were added.
+- The bridge is the preserved 259-source bridge plus two entries, two real call
+  returns and two continuation exports. Existing CPU, guards, ABI and complete
+  state comparison logic stay unchanged; new observation only reads callback
+  inputs. The two exports are not newly qualified nonlocal resumptions.
+- All 16,233 previous selected files outside the four established mutable
+  status files, all 1,613 old registry rows and all 2,753 old builds are preserved.
+
+Counts and limitations
+There are 1,615 registry entries, 1,612 distinct module/address pairs, and 659
+registered routines confirmed by name in the combined research DLL. These are
+different counts; none establishes whole-game coverage. Cumulative comparison
+evidence is 79,430, including repeated checks, not unique routines.
+
+An unknown callback test address deliberately remains unresolved with the real
+caller frame and return intact. Arbitrary missing callbacks, retail callback
+assignments, physical FPU/MMU/exceptions/devices and complete gameplay remain
+unfinished. Older 0730D8/028BFE/029B00 owners remain unregistered. The previous
+074EE4 scalar-profile qualification and its broader precision/math-data limits
+are preserved, together with the older 074626/6402C0 obligations.
+
+How to inspect or reproduce
+Read analysis/movement_record_adjustment_qualification.json and the separate
+direct/callback_alias/retained verification reports. Recovered C is in
+source/sa_movement_record_adjustment.c. Matching original retail inputs must be
+supplied locally; they are not published.
+
+Run Python with -B in this order:
+1. recover_movement_record_adjustment.py
+2. connect_movement_record_adjustment.py
+3. build_movement_record_adjustment.ps1 using PowerShell
+4. check_movement_record_adjustment_unbounded.py
+5. verify_movement_record_adjustment_direct.py
+6. verify_movement_record_adjustment_callback_alias.py
+7. verify_movement_record_adjustment_retained.py
+8. audit_movement_record_adjustment.py
+9. verify_movement_record_adjustment_preservation.py
+10. qualify_movement_record_adjustment.py
+11. register_movement_record_adjustment.py
+12. verify_movement_record_adjustment_workflow.py
+
+Overall completion remains about 10% by weighted milestones, not measured code
+coverage. Research builds are incomplete and not playable. Full decompilation,
+PC 60/120/240 FPS and 8K, Android, stereoscopic 3DS, eventual N64/PS1 adaptations,
+SUPIR textures and settings remain unfinished. Texture Off must disable sampling
+and use vertex/material colours. No SARecomp implementation was imported.
+The goal remains active. Sol High is appropriate for the next dependency0747D2
+and its callees; this milestone does not recommend a model switch or pause.
