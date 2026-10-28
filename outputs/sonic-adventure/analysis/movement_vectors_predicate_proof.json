@@ -1,0 +1,50 @@
+{
+  "status": "verified_normal_entry_repeated_comparison_predicates",
+  "address": "0x8c074cf0",
+  "static_conditional_outcomes": 40,
+  "infeasible_outcomes": [
+    [
+      "0x8c074d46",
+      "0x8c074d5a"
+    ],
+    [
+      "0x8c074e3e",
+      "0x8c074e8c"
+    ]
+  ],
+  "domain_excluded_rows": [],
+  "domain_excluded_outcomes": [],
+  "original_code_removed": false,
+  "graph_predecessors": {
+    "0x8c074d36": [
+      "0x8c074d20",
+      "0x8c074d2a"
+    ],
+    "0x8c074d3e": [
+      "0x8c074d3c"
+    ],
+    "0x8c074d46": [
+      "0x8c074d44"
+    ],
+    "0x8c074e3c": [
+      "0x8c074e3a"
+    ],
+    "0x8c074e3e": [
+      "0x8c074e3c"
+    ]
+  },
+  "arguments": [
+    "D36 has only D20 and D2a predecessors. D20 taken means the4000bit is clear; the same mask and stable RAM reload atD38 then forceD3c toD5a, bypassingD46. To reachD46, D20 must fall through andD2a must be taken, so the first greater comparisonD28 was true. D40/D42 reload the same operands with the same address bases/offset8 and FP bank/size. There are no intervening calls or RAM stores. Thus the repeated greater comparisonD44 is also true if it completes;BF D46 cannot takeD5a.",
+    "E3c is reached only by E3a fallthrough, which requires E38 greater comparison true. E3c is the identical compare instruction on unchangedFR4/FR5. It changes only comparison status/cause flags;the helper decision reads unchangedPR,DN,enable controls. Its T result remains true if it completes, so BF E3e cannot takeE8c.",
+    "NaNs cannot make a true first greater comparison; unsupported/trapping numerical states stop instead of establishing a false completed second result. The argument requires original normal entry/fixed code, stable mapped RAM without asynchronous modification, and the existing software comparison semantics. Arbitrary mid-function entries, physical exception/MMU/interrupt delivery and self-modifying code are not qualified. Input-record disjointness is not assumed."
+  ],
+  "new_original_routine_credit": 0,
+  "sha256": {
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\prove_movement_vectors_predicates.py": "085dbb66b297a2cf6d195939ece0caf8d47513ccd503e4a984064c721859ea93",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\analysis\\movement-vector-dependencies\\8c074cf0_instructions.tsv": "af57caad2e13bfc226851a3aa7972345f2638678902745ba9a1f151f5b4381c6",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\work\\sonic-adventure\\extracted\\1ST_READ.BIN": "45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\source\\sh4_compare_bits.h": "1b1eb137912777eaeb62bfe23398a43121f82bb9085bcc416bf2bb7166a36cdc",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\source\\sh4_compare.c": "18427c023bcca647020a31ab9fe3d1b4920a79c12d261c688eabc9ac0ad3b43f",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\source\\sa_movement_vectors.c": "b7016bf4a601c80c26b9c3af490d237c7bcf8f6dab1874df1ce3e22964322e66"
+  }
+}

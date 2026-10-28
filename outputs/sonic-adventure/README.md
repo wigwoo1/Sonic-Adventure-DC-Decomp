@@ -1,3 +1,5 @@
+Latest movement dependencies: three original routines079000/074cf0/639090 recovered;251sources;449instructions/56executed+2provedoutcomes including three canonical adapters;596freshcomparisons/3566checks.1591unique routines/636confirmedlinked.0730d8 and029b00 remain unregistered. See MOVEMENT_VECTORS.txt. Overall10%weightedmilestones; incomplete, nonplayable research builds.
+
 Latest collision initialization: two complete original owners028e60/04e3de recovered;250sources;165instructions/18outcomes including five reused helpers;361fresh comparisons/2439checks.1588unique routines/633confirmedlinked.029b00 remains partial at73of74outcomes. See COLLISION_SETUP.txt. Overall10%weightedmilestones; incomplete, nonplayable research builds.
 
 Latest collision alias evidence: all1121instructions and73of74branch outcomes executed;12freshcomparisons/186checks. One outcome remains open;caller unregistered.1586unique/631confirmedlinked unchanged. See COLLISION_CONTACT_COUNTER_ALIAS.txt. Overall10% weighted milestones; incomplete, nonplayable research build.

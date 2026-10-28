@@ -1,0 +1,122 @@
+MOVEMENT VECTOR CONVERSION, RESPONSE AND DOT PRODUCT - 251 SOURCE BUILD
+
+Three complete original routines are recovered and linked:079000 vector rotation
+(75instructions/6conditionaloutcomes),074cf0 movement response(206instructions/
+40syntacticoutcomes),639090 dot product(13instructions/no branches). Three
+canonical adapters078eb0/057b40/638f28 add155instructions with zero duplicate
+credit. All449instructions and56of58outcomes execute;two response outcomes have
+explicit normal-entry infeasibility proofs. No original code is removed and no
+valid input is excluded to close a coverage gap. Registry1594entries/1591unique
+module-address pairs;636registered routines linked by actual PE export names.
+Overall10% is a weighted milestone estimate, not recovered-code coverage.
+
+Original behavior retained
+079000 converts a vector in place using the orientation atR4 and signed integer
+angleR6. It executes actual atan/asin wrappers, original angle conversion, matrix
+initialization, optional axis rotations, direction transform and matrix pop.
+The atan wrapper takesFR4=X/FR5=Y:identity orientation is(0,1,0). Inputs are
+authored vectors/orientations, not injected angle or game-callee results.
+078eb0 is the existing integer-angle object conversion helper, adapted to the
+current ABI. It also executes actual matrix/rotation/vector/pop dependencies.
+
+074cf0 clears horizontal outputs and selects a vertical response from state
+flags, input velocity, height, reference-vector dot product, speed/cap fields
+and optional vector normalization. Original coefficients are preserved as
+binary32 words, including values just below familiar decimal numbers such as
+0.6,0.2,0.3and0.05. Scalar operations retain the original rounding order.
+The external reference vector at8c754bdc and normalization flag8c890070 are
+declared RAM inputs in these tests; natural initialization remains future work.
+639090 loads two3component vectors, performs original FIPR and returns the dot
+product inFR0. Canonical matrix/direction sources retain their older proofs;
+their new adapters receive no additional original-routine credit.
+
+Two impossible normal-entry outcomes
+074d46->074d5a:the second4000flag test can reach this comparison only when the
+first identical velocity comparison was true. The flag/input reloads use stable
+mapped RAM and unchanged address/mask registers, with no intervening calls or
+RAM stores. Repeating the comparison therefore keeps T=true if it completes.
+074e3e->074e8c:074e3c is reached only after074e38 was true;it immediately repeats
+the same comparison with unchanged operands. Cause/sticky flag changes do not
+change the comparison's T decision under the existing software control fields.
+The checked original CFG has no alternate entries into these conditions.
+NaNs cannot make the first greater comparison true;unsupported/trapping states
+stop rather than producing an opposite completed second comparison.
+These proofs require normal entry,fixed code,stable mapped RAM and the existing
+software numerical semantics. They do not qualify arbitrary mid-function entry,
+asynchronous memory modification or physical exception/MMU/interrupt delivery.
+Input-record disjointness is not assumed. All original rows/branches remain.
+
+Fresh verification
+333direct comparisons pass1811checks:304complete,14existingPR1numeric stops and
+15mapped-memory guards. Full CPU/FPU/RAM/device/softwarequeue state and ordered
+call boundaries match;all17original call sites execute with real dependencies.
+138included independent finite examples check small exact dyadic dot products,
+separately rounded response coefficients/subtractions,identity/diagonal direction
+transforms,in-place output,zero-angle vectors and matrix-limit/identity effects.
+Other rotations and normalization use original execution comparison,not an
+independent complete physics oracle. A derived cap<=speed/statusbitsclear case
+executes074e32->074e34;it is not confused with the two proved outcomes.
+
+8alias comparisons/32checks cover output overlapping point/state/querynormal
+inputs,plus disjoint controls,in both physical FP banks. Real original stores
+and subsequent loads determine the result.12comparisons/40checks cover four
+actual converter->response->converter sequences on the same RAM/FP state.
+The host starts ordinary calls with arguments/return addresses;no game-callee
+outputs or execution frames are installed. These sequences check helper
+integration,not complete0730d8 execution,natural player/query preparation or
+full movement/gameplay/frame timing.
+
+Successful vector-owner qualification uses ordinaryPR0/SZ0. SelectedPR1numeric
+stops andPR0/SZ1memory-guard prefixes retain original reached state. Complete
+paired-FMOV owner paths remain unqualified;raw instructions are preserved.
+The three older math wrappers10d008/10d058/10d0f8 remain unregistered. This stage
+does not claim their outstanding precision paths or physical FPU behavior closed.
+The software ABI uses fixed code,SR.FDclear,mapped memory and existing numerical
+policies/software queues. Nonzero stop statuses are not successful calls.
+
+243fresh retained IRQ/context/task comparisons pass1683checks with previous
+numeric expectations unchanged and checked by AST. Total596freshcomparisons/
+3566checks. Historical71827+596=72423 is evidence volume,not unique tests or code
+coverage. Earlier216warm/211coldstartup and242full-devicewrite evidence remains
+historical and was not rerun. No complete game startup or playable-port claim.
+
+The251-source DLL/import library build and strict unboundedWall/Wextra/Werror
+checks pass. The bridge exactly extends250 with6entry routes,17actual call
+returns and17continuation exports. Return membership2350;458explicit resumes;
+71qualified nonlocal returns/387remaining. New continuation exports are not
+independently qualified nonlocal resumes. Old C/CPU/flat interpreter/guards/
+production observer/comparison logic/raw session/ABI and2735builds are preserved.
+The new DLL/library are additional incomplete,nonplayable research artifacts.
+No source wait limit is added and no upstream implementation is imported.
+
+Next work
+Recover the full2041instruction0730d8 movement owner and next missing dependency
+028bfe with its actual original inputs/callees. Its normal entry obtains the
+query pointer throughR6+64. The existing0730d8 draft is research,not verified C.
+0730d8 and029b00 remain unregistered.029b00 still has one open outcome,
+02a48c->02a4a8;its renderer/text R10 preservation/alias contracts remain open.
+Do not infer this remaining branch unreachable from ordinary input tests alone.
+
+Reproduce with matching original inputs and toolchain:
+  powershell -NoProfile -File outputs/sonic-adventure/ghidra/export_movement_vector_dependencies.ps1
+  powershell -NoProfile -File outputs/sonic-adventure/ghidra/export_movement_vector_math.ps1
+  python -B outputs/sonic-adventure/recover_movement_vectors.py
+  python -B outputs/sonic-adventure/connect_movement_vectors.py
+  powershell -NoProfile -File outputs/sonic-adventure/build_movement_vectors.ps1 -Workspace WORKSPACE
+  python -B outputs/sonic-adventure/check_movement_vectors_unbounded.py
+  python -B outputs/sonic-adventure/audit_movement_vectors.py
+  python -B outputs/sonic-adventure/prove_movement_vectors_predicates.py
+  python -B outputs/sonic-adventure/verify_movement_vectors_direct.py
+  python -B outputs/sonic-adventure/verify_movement_vectors_aliases.py
+  python -B outputs/sonic-adventure/verify_movement_vectors_sequence.py
+  python -B outputs/sonic-adventure/verify_movement_vectors_retained.py
+  python -B outputs/sonic-adventure/qualify_movement_vectors.py
+  python -B outputs/sonic-adventure/register_movement_vectors.py
+  python -B outputs/sonic-adventure/verify_movement_vectors_workflow.py
+
+Fullgame/PC60/120/240FPS8K/Android/3DSstereo/N64/PS1/SUPIR/settings remain
+unfinished. TextureOff disables texture sampling and uses vertex colours.
+Physical FPU/exception/MMU/address-error delivery,GPU pixels and full gameplay
+remain unqualified. Keep the goal active and SolHigh for remaining RE. Follow
+GITHUB_PUBLISHING.txt;preserve older source/proof/build bytes and exclude retail
+inputs/assets,toolchains,caches and credentials from publication.
