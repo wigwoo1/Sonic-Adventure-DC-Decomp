@@ -1,0 +1,80 @@
+Sonic Adventure USA Rev A: movement projection and complete plane-math closure
+
+Status: verified under the documented software profile; full game unfinished.
+Whole-project estimate: approximately10% by weighted milestones, not code coverage.
+
+New original routines:075a40 movement/contact response(612instructions),
+64016c plane relation/intersection(251),650614 parallel-normal predicate(40),
+640080 point-to-plane distance/projection(81),63a9dc signed reciprocal square root(10).
+The already-recovered055d5a circular short-distance helper(11) is adapted to the
+current full-state ABI. Its original standalone source, proof and library remain
+unchanged. It receives zero duplicate recovery credit.
+
+The group retains1005original instruction rows. All1005execute across the suites;
+63of64conditional outcomes execute. The last outcome6402c0->640308 is proved
+impossible only for stable ordinary mapped RAM with scalar PR0/SZ0 arithmetic:
+it repeats an earlier completed zero comparison without an intervening store,
+call, operand-pointer change or FPU-mode change. The original edge stays emitted.
+This does not prove all physical precision, MMIO or asynchronous hardware cases.
+Earlier074626broader-precision and other owner/math obligations remain open.
+
+Verification:796direct original/native comparisons,100targeted movement/math
+comparisons,12nearly-parallel rounding/bank/RAM-view comparisons,243retained
+IRQ/context/task comparisons. Total1151fresh comparisons and8765independent checks.
+The direct suite has692complete returns,90existing unsupported-numeric stops,
+14mapped-memory guards. Stops are documented stops, not successful game returns.
+192included canonical cases also agree with the preserved standalone helper.
+Independent scalar geometry/predicate/heading/write-footprint oracles cover720
+included cases. Counts are evidence totals, not distinct-routine/code coverage.
+
+Original behavior retained:
+- The movement routine can leave an angle difference/heading in R0 after its long
+  heading-update path; its early paths leave0/1/2. The circular6000threshold and
+  8000half-turn adjustment, including overflow beyondffff, are checked.
+- Nearly parallel finite input geometry reaches075eb8's negative-dot reversal.
+  The actual original floating calculations execute; no supplied callee results,
+  fabricated execution frames or ideal-real-arithmetic infeasibility shortcut.
+- An original mixed-normal zero-determinant solver path writes negative infinities.
+  Its exact output is preserved and tested instead of replacing it with an ideal
+  geometric intersection.
+- All8bank/PR/SZcombinations are compared as raw architectural states. Scalar
+  geometry oracles are scoped to PR0/SZ0; raw double-register transfers are not
+  treated as the same scalar geometry interface.
+
+Build:258-source native Windows research DLL/import library, with strict
+-Wall -Wextra -Werror checks also passing without the inherited research wait
+bound definition. Previous257bridge/CPU/observer/guards/ABI are preserved; only
+6entries,30actual call returns and30continuation exports are added. New nonlocal
+resumption exports are not independently qualified interrupt/resume routes.
+All2749previous archived binaries and1605previous registry rows are preserved.
+Registry after this milestone:1610entries,1607unique module/address pairs,
+654confirmed native links by exact export name. Five new routines,994new rows.
+
+Files: source/sa_movement_projection_response.c contains the original bodies;
+source/sa_movement_projection_response_connected.c contains their connection.
+analysis/movement-projection-response contains original listings and drafts.
+analysis/movement_projection_response_qualification.json records the detailed
+scope, hashes, coverage and remaining obligations. *_reference.py and
+write_watch_movement_projection_response.py use the preserved interpreter and
+complete-state observer. No SARecomp implementation source has been imported.
+
+To reproduce from the project workspace with the original local game input:
+  powershell -NoProfile -File outputs/sonic-adventure/build_movement_projection_response.ps1
+  python -B outputs/sonic-adventure/check_movement_projection_response_unbounded.py
+  python -B outputs/sonic-adventure/verify_movement_projection_response_direct.py
+  python -B outputs/sonic-adventure/verify_movement_projection_response_edges.py
+  python -B outputs/sonic-adventure/verify_movement_projection_response_rounding.py
+  python -B outputs/sonic-adventure/verify_movement_projection_response_retained.py
+  python -B outputs/sonic-adventure/audit_movement_projection_response.py
+  python -B outputs/sonic-adventure/prove_movement_projection_response_predicate.py
+  python -B outputs/sonic-adventure/qualify_movement_projection_response.py
+  python -B outputs/sonic-adventure/register_movement_projection_response.py
+  python -B outputs/sonic-adventure/verify_movement_projection_response_workflow.py
+Compiler/Python paths may need adaptation on another machine; tools and retail
+game files are kept local and excluded from the public source/build archive.
+
+The research DLL is not a playable port. Full0730d8movement-parent qualification,
+older world/collision/math frontiers, full startup/gameplay, physical FPU/device
+behavior, PC60/120/240FPS8K, Android, stereoscopic3DS, N64/PS1 adaptations, SUPIR
+textures and display/settings work remain unfinished. TextureOff continues to
+mean disabled texture sampling with vertex/material colours. The goal remains active.
