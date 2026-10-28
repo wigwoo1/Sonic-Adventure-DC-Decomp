@@ -1,3 +1,5 @@
+Latest collision dependencies: original glyph6407b0 and text640922 recovered, using the actual existing string-length callee. 248 sources, all315instructions/4branch outcomes,486fresh comparisons/4392checks. 1586unique registered routines;631confirmed linked. See COLLISION_TEXT.txt. Overall10% by weighted milestones; incomplete, nonplayable research build.
+
 Latest collision dependency:original triangle renderer63d66c recovered with all15actual gamecallees;247sources,332rows/31executed+1provedinfeasibleoutcome,625freshcomparisons/6035checks.1584unique registered/629confirmedlinked. SeeCOLLISION_RENDER.txt. Overall10%weightedmilestones;incomplete/nonplayable.
 
 Latest collision integration:canonicalinverse6390b0/determinant64f3ec now use fullruntimeABI;246sources,1191originalrows/8outcomes,867fresh comparisons/7545checks.1583unique registered/628confirmedlinked;0duplicate routinecredit. SeeCOLLISION_INVERSE.txt. Overall10%weightedmilestones;incomplete/nonplayable.

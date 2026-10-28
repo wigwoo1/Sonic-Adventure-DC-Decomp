@@ -1,0 +1,101 @@
+ORIGINAL GLYPH AND STRING DRAWING HELPERS - 248 SOURCE RESEARCH BUILD
+
+Two original functions are newly recovered and integrated:
+  6407b0: glyph quad emitter, 185 instructions, no calls or conditional branches.
+  640922: string drawing caller, 130 instructions, two calls and two branches.
+The string helper executes the existing original string-length routine10d3f0,
+then calls the glyph helper for each character it draws. No game-callee outputs,
+execution frames, or upstream game implementation code are supplied.
+
+All315original instructions and all4conditional outcomes execute. The Ghidra
+draft incorrectly removed FLOAT instructions6409bc and6409ca as unreachable;
+both original instructions are retained and execute in the verified source.
+The raw original instruction bytes are authoritative, not the draft pseudocode.
+
+Verification
+243direct original/native comparisons pass2709checks:207completed calls,
+24existing unsupported numeric stops and12reached mapped-memory guards. Every
+case compares complete CPU/FPU/RAM/device/softwarequeue state and ordered call
+boundaries. Tests cover both floating-point banks, PR/SZ modes, RM0/1, selected
+special font sizes, signed coordinate extremes, RAM and device output, mapped
+MMU-offP0/P1/P2 aliases, colours, cursor offsets, character high/low bytes, empty
+strings, embedded NUL, high character bytes and long signed-length cases.
+String lengths32768/65536/65537 draw0/0/1glyphs under the original signed16count.
+
+175independent finite cases verify every meaningful quad word: control,
+signed16position, depth1, atlasUV, and colour. The original atlas uses16x16cells,
+1/1024texel-coordinate bias and63/1024span. Four vertices form each quad in the
+original order. Independent checks also cover the text header's word order,
+drawing state marker, unchanged string bytes, final cursor and its commit back
+to the original renderer state. These175cases are included in243, not additional
+comparison credit. All other state, padding and device effects are compared
+against original instruction execution.
+
+The glyph leaf expects store queues configured by its caller. An initial smoke
+test left QACRzero; both original and native execution stopped at the unconfigured
+queue flush. The test setup now supplies explicit external-device INPUTQACR12
+on both sides before direct device-leaf execution. No game result or frame is
+installed. The string caller starts fromQACRzero and executes its own original
+QACR writes. Comparison logic and production observer remain unchanged; the only
+test setup extension is the declared external input seed.
+
+243fresh retainedIRQ/context/task comparisons pass1683checks, preserving prior
+numeric expectations verified byAST. Combined486fresh comparisons/4392checks.
+Historical70524+486=71010evidence comparisons, not unique tests or code coverage.
+Earlier216warm/211coldstartup and prior242full512byte write evidence remains
+historical; no fresh complete248startup, physical-device or gameplay claim.
+
+The248-source DLL/import library and strict unbounded Wall/Wextra/Werror checks
+pass. The prior247bridge gains two bodies, two actual call returns and two
+continuation exports. Existing CPU, flat interpreter, guards, game callees,
+production observer, raw session and ABI implementations are unchanged. No new
+source wait bounds. Return membership2294;402explicit continuationexports.
+71nonlocal resumes remain qualified and331remain unqualified. Exporting a return
+continuation and testing an ordinary return do not prove nonlocal resumption.
+All2729older build files and1587prior registry rows are preserved. Only reviewed
+mutable catalogs, status and docs change. Eight generated artifacts reproduce.
+Registry now1589entries/1586unique module-address pairs; actual PE names confirm
+631registered routines linked. Support/continuation exports are not routines.
+
+Qualification remains limited to the declared fixed-code software ABI with
+SR.FDclear, MMU-off valid mapped memory, existing numerical backends and software
+queues. Physical FPU bits for all inputs, enabled exception delivery, address
+errors, MMU translation, GPU pixels, whole frames and gameplay remain unverified.
+Nonzero numeric/guard statuses are tested stops, not successful completions.
+
+Next recover the full029b00collision caller using these closed renderer/text and
+canonical math dependencies. Derive its actual angle-wrapper input constraints;
+10d058/10d0f8 remain unregistered with6missing rows/2unqualified outcomes. Scalar
+return bounds do not close arbitrary paired-FMOV call/frame behavior. Do not
+invent callee outputs/frames or repeat blind input sweeps. Optional660bae stays
+unqualified. Existing SARecomp PAL/USA/reuse terms/bootstrap limits remain.
+
+The full game and all PC60/120/240FPS8K, Android,3DSstereo,N64/PS1 adaptations,
+SUPIR and display/texture settings remain unfinished. TextureOff disables texture
+sampling and uses vertex colours. Overall10% is a weighted milestone estimate,
+not measured code coverage. This is an INCOMPLETE, NONPLAYABLE research build.
+Keep the goal active and SolHigh for reverse engineering; LunaLow fits routine
+documentation/admin work.
+
+Reproduce from the workspace with matching original inputs and toolchain:
+  powershell -NoProfile -File outputs/sonic-adventure/ghidra/export_collision_text.ps1 -Workspace WORKSPACE
+  python -B outputs/sonic-adventure/recover_collision_text.py
+  python -B outputs/sonic-adventure/connect_collision_text.py
+  powershell -NoProfile -File outputs/sonic-adventure/build_collision_text.ps1 -Workspace WORKSPACE
+  python -B outputs/sonic-adventure/check_collision_text_unbounded.py
+  python -B outputs/sonic-adventure/audit_collision_text.py
+  python -B outputs/sonic-adventure/verify_collision_text_direct.py --shard 0
+  python -B outputs/sonic-adventure/verify_collision_text_direct.py --shard 1
+  python -B outputs/sonic-adventure/verify_collision_text_direct.py --shard 2
+  python -B outputs/sonic-adventure/merge_collision_text_direct.py
+  python -B outputs/sonic-adventure/verify_collision_text_retained.py
+  python -B outputs/sonic-adventure/qualify_collision_text.py
+  python -B outputs/sonic-adventure/register_collision_text.py
+  python -B outputs/sonic-adventure/map_main_dispatch_cases.py
+  python -B outputs/sonic-adventure/verify_main_dispatch_case_map.py
+  python -B outputs/sonic-adventure/audit_recovery_coverage.py
+  python -B outputs/sonic-adventure/audit_project_completion.py
+  python -B outputs/sonic-adventure/verify_collision_text_workflow.py
+Follow GITHUB_PUBLISHING.txt for reviewed source, evidence and source-matched
+research prereleases. Retail inputs/assets, toolchains, caches and credentials
+are excluded. Original source and historical proof/build identities are preserved.
