@@ -1,0 +1,192 @@
+ORIGINAL COMMAND12 FILE WRITE AND CLOSE - 238 SOURCES
+
+The new 238-source research DLL software-qualifies command-12 writer 64b71c, its ten dependencies and the previously partial close helper 64919e: 969 original instructions / 148 branch outcomes. All 161 close instructions and 24 close outcomes execute. All 4,635 fresh original/native comparisons and 30,143 independent checks pass. Normal writes, write/readback verification, allocation, timestamps, metadata persistence, errors and cleanup match the original within the documented input domains. Two write-open instructions and three outcomes have scoped domain-exclusion arguments; their source remains intact. Registry: 1,573 entries / 1,570 unique pairs. Overall remains about 10% by weighted milestones, not code coverage. Goal active; these research DLLs are not playable ports.
+
+The recovered path
+Command12 uses the original argument/opcode APIs and worker scheduler. It checks
+free capacity, allowing the old file's block count, then opens a replacement
+write handle. Normal writes create type33 directory records. Bit80000000 selects
+an alternate path that writes, closes, reopens, reads each512-byte block and
+compares all512 bytes. A mismatch returns-240; an original read error propagates.
+Writing zero blocks creates an empty record; verification of that empty record
+fails original read-open with-191 because its head isFFFF. These original rules
+are retained, including their surprising results.
+
+Write-open removes an existing record in RAM before allocating a handle. A full
+handle pool can therefore return-249 after removing the cached old entry and
+freeing its chain, with no persistence yet submitted. The recovery adds no
+rollback. Next-block allocation searches downward for a freeFFFC block. A block
+that is already a live directory head is reservedFFFA and the search repeats.
+A failed data block is markedFFFF and the original writer retries other free
+blocks; the first immediate-255 error is treated differently from errors inside
+the retry loop. All corresponding tested control flow remains unchanged.
+
+Close serializes the handle's type(CC when mode equals1,otherwise33), byte flag,
+head, exact12 name bytes, eight encoded timestamp bytes, block count and signed
+low16 attribute through the SDK-selected endian writer. Even bytes after a name
+NUL are copied because close copies the full12-byte field. It marks the directory
+sector dirty, writes directory metadata, then writes FAT metadata after directory
+success. A nonzero reset argument initializes progress using the original
+673bb4 slot table; zero retains the existing counters. All72 handle bytes clear.
+The original opcode4 directly invokes this close path in a real worker task.
+
+Original error guarantees
+Close propagates a negative directory-write result and ignores the final FAT
+persistence result. The command12 master ignores close's return. Consequently,
+command12 can report success after a directory failure; standalone opcode4 can
+report a directory failure; both can ignore a final FAT error. Metadata relocation
+inside the directory writer can also cause a second FAT pass from close.
+Tests preserve these exact distinctions. A success callback or ACK ledger is
+not a guarantee of physical flash durability, atomic saves or power-loss safety.
+
+Qualified original bodies (address / instructions / branch outcomes)
+  64b71c /106 /16 : normal versus readback-verified write master
+  648b40 /122 /28 : free-space modes and optional head exclusion
+  648f9a /134 /22 : replacement write-handle open
+  6493c6 /117 /20 : allocate/write/link next block and retry
+  64b82c /120 /18 : write, close, reopen, read and compare
+  64b12a /50 /8   : low16 live-directory-head collision query
+  64ae04 /23 /4   : first empty directory slot
+  64b3ec /67 /0   : original timestamp encoding
+  64b0e4 /35 /4   : descending free selection with collision reservation
+  660d8c /16 /4   : fixed512-byte equality scan
+  64b390 /18 /0   : original BCD arithmetic
+  64919e /161 /24 : previously partial close, now software-qualified
+808 instructions are newly translated. Close's161 instructions remain byte-for-
+byte identical in the previous source file. No duplicate routine credit is added.
+All969 are bytechecked against fresh original listings, including fresh close.
+
+Verification
+25 initialized command12 tasks /2,668 comparisons /18,101 independent checks
+cover both byte orders, new/replacement/empty files, capacity/full-directory/
+pool exhaustion, ordinary and verified writes, mismatch/readback errors, data
+abort/retry/retry-abort/no-space, directory relocation in first/second sectors,
+and directory/FAT/root failures and relocation. Three additional high-flag
+failure tasks /283 comparisons /1,798 checks exercise alternate open/data errors.
+
+Ten original opcode4 close tasks /871 comparisons /4,977 checks cover CC/33,
+reset0/1, both byte orders, exact name/timestamp/word fields, directory error
+propagation and ignored FAT errors. The original allocator supplies a record;
+its handle payload is declared caller-owned ABI input. This is not a claim that
+every mode was naturally acquired through write-open. Frames, context, request
+IDs and resumption are created by original code. The first diagnostic attempt
+to call yielding close outside a task correctly stopped with a missing current
+task; the final tests use the actual opcode4 worker API rather than frame patches.
+
+Task oracles use literal independentDATA/DIR/FAT/ROOT plans. They check unit,
+data/commit command, block, phase, caller/metadata source pointer, exact128-byte
+payloads and acknowledged512-byte images; complete root/FAT/DIR/dirty bytes;
+allocation31->30 and FAT links; caller data, timestamp, progress/error counters;
+original result callback,72-byte handle clear, idle and owner teardown. Only
+caller inputs and raw device response bytes/errors/ACKs are supplied for these
+I/O tasks. No parser output, saved frame, request ID, PR or callee return is
+substituted. The ACK ledger records software acknowledgments,not physical DMA.
+
+124 primitive comparisons /728 checks cover BCD/timestamp boundary samples,
+original day mapping, fixed512-byte comparison and empty directory search.
+50 allocation comparisons /300 checks cover free-count modes, explicit policy
+variants, endian low16 head matching, first/last/free/exhausted/colliding blocks
+and exactFFFA reservation.232 helper guard comparisons /1,616 checks and64 outer/
+first-allocation edge comparisons /448 checks cover admission, device/cache/root/
+latch rejection and no-space. These use declared coherent mapped ABI state,
+not claimed raw acquisition of every unusual input. Independent complete
+nonstack RAM/output/cache/counter/FPU/callee-register checks supplement complete
+original/native CPU and stack comparisons. Upper ABI scratch bounds are recorded.
+Initial allocation fixtures omitted the total-block bound, so the original setter
+refused updates. The corrected fixture supplies511 and expectsFFFA reservation;
+no game-code or execution-budget change was made.
+
+Eight additional close comparisons /72 checks supply an explicit mapped device-
+presence transition: SDK presence bytes change1->0 at the original status-call
+boundary after readiness. Both original callees compute their own results.
+The test-local observer supplies identical external input before journaling in
+both engines. All RAM/CPU/FPU and ordered boundary comparisons remain enabled.
+This executes the otherwise unexercised close invalidation/clear branch. It is
+not raw-packet/pump, hardware-IRQ or natural hot-unplug acquisition proof.
+Production observer, CPU, bridge, guards and source remain unchanged.
+
+Input-domain exclusions
+967 instructions and145 outcomes execute. Two retained write-open error
+instructions and three outcomes are excluded only under stated conditions:
+- Original64b2dc returns zero in its RTS delay slot, excluding its negative path.
+- Immediately repeated name lookup uses the same stable worker filename and
+  cached directory, disjoint from local ABI scratch; remove returns zero after
+  that successful lookup. Its negative exit remains for unproved aliasing or
+  concurrent-mutation domains. This is not a global dead-code claim.
+- With zero requested blocks, write-open leaves headFFFF/count0. Close serializes
+  that head, and read-open rejects it for the raw format's16-bit user extent.
+  Thus the zero-read-loop skip after SUCCESSFUL reopen is excluded in the tested
+  standard-worker/raw-format domain. Arbitrary out-of-format mapped metadata,
+  pathname aliases and interleavings are not proved unreachable.
+All instructions and branches remain in the native source. No negative helper
+return or completed task is invented to fill coverage gaps.
+
+Nonzero66d3a4 policy is an explicit mapped software input in helper tests; its
+natural game-side setter remains unproved. Raw initialized tasks retain retail
+policy0, explicit abort-policy0 and the constructor-cleared NULL write hook.
+The optional660bae hook remains unqualified. Full physical filesystem/gameplay
+behavior, arbitrary malformed input and all concurrent device histories remain
+unfinished.
+
+Build, preservation and next dependency
+238-source DLL/lib and strict unbounded Wall/Wextra/Werror compilation pass.
+The bridge is exactly the previous237-source bridge plus11 bodies,59 actual
+call-return entries/continuation exports and prefix. Return membership2161->2220.
+Eleven actual post-yield parent routes qualify:647a36,647b02,6492e0,6492ec,649434,
+6494a0,64b7ea,64b802,64b898,64b8ae,64b8de. Overall53 of328 continuation exports
+qualify;275 remain outside the route-specific inventory. Exports receive no
+routine credit. No new source wait limits are added.
+
+243 fresh retained IRQ/context/task comparisons /1,683 checks retain previous
+numeric assertions. Two initialized command13 frontiers /92 comparisons /420
+checks reach actual missing64b91c, PR647b22, with original channel/name/zero
+inputs and remain pending without fabricated completion. Next recover that
+handler and its type-specific write/open dependencies. Combined evidence totals
+46,423 comparisons; it is not a unique-case count or measured code coverage.
+No fresh full startup ran;216 warm/211 cold comparisons remain historical.
+
+All1,561 earlier registry rows,source/proofs and2,707 builds retain their hashes.
+The new238 DLL/lib are additional. Original full-project requirements are
+preserved. Eight generated artifacts reproduce and registration is byte-idempotent.
+The public repository contains source, documentation, proof and incomplete
+research artifacts; retail assets, toolchain bundles, caches and credentials are
+excluded. The research DLLs do not form a playable PC port.
+
+Reproduce from workspace root with matching local retail inputs
+  powershell -NoProfile -File outputs/sonic-adventure/ghidra/export_movie_filesystem_command12.ps1 -Workspace WORKSPACE
+  powershell -NoProfile -File outputs/sonic-adventure/ghidra/export_movie_filesystem_command12_dependencies.ps1 -Workspace WORKSPACE
+  powershell -NoProfile -File outputs/sonic-adventure/ghidra/export_movie_filesystem_command12_support.ps1 -Workspace WORKSPACE
+  powershell -NoProfile -File outputs/sonic-adventure/ghidra/export_movie_filesystem_command12_timestamp_close.ps1 -Workspace WORKSPACE
+  python -B outputs/sonic-adventure/recover_movie_filesystem_command12.py
+  python -B outputs/sonic-adventure/connect_movie_filesystem_command12.py
+  powershell -NoProfile -File outputs/sonic-adventure/build_movie_filesystem_command12.ps1 -Workspace WORKSPACE
+  python -B outputs/sonic-adventure/check_movie_filesystem_command12_unbounded.py
+  python -B outputs/sonic-adventure/audit_movie_filesystem_command12.py
+  python -B outputs/sonic-adventure/verify_movie_filesystem_command12_primitives.py
+  python -B outputs/sonic-adventure/verify_movie_filesystem_command12_allocation.py
+  python -B outputs/sonic-adventure/verify_movie_filesystem_command12_guards.py
+  python -B outputs/sonic-adventure/verify_movie_filesystem_command12_edge_guards.py
+  python -B outputs/sonic-adventure/verify_movie_filesystem_command12_tasks.py --shard 0
+  python -B outputs/sonic-adventure/verify_movie_filesystem_command12_tasks.py --shard 1
+  python -B outputs/sonic-adventure/verify_movie_filesystem_command12_tasks.py --shard 2
+  python -B outputs/sonic-adventure/merge_movie_filesystem_command12_tasks.py
+  python -B outputs/sonic-adventure/verify_movie_filesystem_command12_extra_tasks.py
+  python -B outputs/sonic-adventure/verify_movie_filesystem_command12_close_worker.py --shard 0
+  python -B outputs/sonic-adventure/verify_movie_filesystem_command12_close_worker.py --shard 1
+  python -B outputs/sonic-adventure/verify_movie_filesystem_command12_close_worker.py --shard 2
+  python -B outputs/sonic-adventure/merge_movie_filesystem_command12_close_worker.py
+  python -B outputs/sonic-adventure/verify_movie_filesystem_command12_presence_transition.py
+  python -B outputs/sonic-adventure/verify_movie_filesystem_command12_retained.py
+  python -B outputs/sonic-adventure/verify_movie_filesystem_command12_frontier.py
+  python -B outputs/sonic-adventure/qualify_movie_filesystem_command12.py
+  python -B outputs/sonic-adventure/register_movie_filesystem_command12.py
+  python -B outputs/sonic-adventure/map_main_dispatch_cases.py
+  python -B outputs/sonic-adventure/verify_main_dispatch_case_map.py
+  python -B outputs/sonic-adventure/audit_recovery_coverage.py
+  python -B outputs/sonic-adventure/audit_project_completion.py
+  python -B outputs/sonic-adventure/verify_movie_filesystem_command12_workflow.py
+
+Full goal remains unfinished: game/PC60/120/240FPS/8K/Android/3DS stereoscopic/
+N64/PS1/SUPIR/settings. Texture Off must disable texture sampling and use vertex
+colors. About10% is weighted milestone progress,not measured code coverage.
+Goal active. No pause or completion is requested by this milestone.
