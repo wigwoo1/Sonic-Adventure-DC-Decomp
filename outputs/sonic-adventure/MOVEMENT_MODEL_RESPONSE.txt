@@ -1,0 +1,121 @@
+ORIGINAL MOVEMENT RESPONSE AND MODEL TRAVERSAL - SOFTWARE QUALIFIED
+
+Overall project: approximately 10% by weighted milestones, not measured code
+coverage. The goal remains active. These are incomplete research libraries,
+not a playable PC port. Keep Sol High for the next reverse-engineering task.
+
+What changed
+Three original routines are recovered and connected to the 257-source library:
+0742d4 movement response (519 instructions), 036bc0 recursive model traversal
+(377 instructions), and 036f12 render-state wrapper (10 instructions).
+All 906 instruction rows remain in source. Tests execute 904 rows; two rows
+have an exhaustive selector proof. No original branch or instruction was removed.
+
+Current totals: 1,605 registry entries, 1,602 unique module/address routines,
+648 registered routines confirmed linked by exact names in the DLL. Support
+and continuation exports do not count as game routines. All 1,602 older registry
+rows and 2,747 older archived build binaries are preserved.
+
+Recovered behavior
+The movement routine takes an actor through R4, a 132-byte query through R5,
+and an external flag/object-ID record through R6. The actor byte at +8 selects
+the original velocity/state pointer tables. It saves the query through the real
+copy routine, calculates offsets with existing movement/rotation helpers, updates
+the query, and applies angle, length, speed and radius conditions. It invokes the
+actual collision owner and either commits selected changes or restores the saved
+query. The debug branch runs the real renderer and hardcoded original model.
+
+The traversal reads type from the low three node flag bits. Types 0..7 select
+the original translation, rotation and scale combinations. Bit 8 suppresses
+drawing; bit 10 suppresses children; bit 20 selects rotation order. The child
+pointer is at +2c, sibling at +30. The real 037098 mesh callback runs in order.
+The wrapper executes render-state save, traversal and a tail call to restore.
+Addresses, offsets and bit masks in this guide are hexadecimal.
+
+Reachability and precision limits
+The type selector is ANDed with 7 and tested against 7,0,1,2,3,4,5,6. Therefore
+BF 036c12 cannot reach 036c18. That branch and its delay-slot NOP at 036c1a
+are unreachable from normal entry with fixed original code. This covers every
+32-bit node flag word and assumes no separate-buffer requirement.
+
+The second proof has a narrower, explicit numerical scope: PR0/SZ0, the current
+ordinary scalar software contract. To reach the repeated comparison at 074624,
+an earlier test must have established cap > speed. The admitted path makes no
+RAM stores or calls and rereads the same words. The later speed > cap cannot
+then be true. Thus 074626 -> 074644 is infeasible within that profile.
+
+This is NOT a universal proof for arbitrary physical SZ1 execution or foreign
+callbacks that change precision. That broader precision outcome remains an open
+project obligation. Existing native backends reject unsupported PR/SZ profiles;
+selected raw modes are tested as reached stops. No new precision guard, input
+exclusion or source deletion was introduced. Physical FPU/MMU/exception behavior
+and arbitrary mid-function entry remain unqualified.
+
+Build and verification
+- The 257-source native DLL and import library build successfully.
+- All 257 sources pass unbounded -Wall -Wextra -Werror compiler checks.
+- 666 direct original/native comparisons pass 6,822 checks: 640 complete,
+  18 existing unsupported numeric stops and 8 mapped-memory guards.
+- 176 angle/commit/reversed-triangle comparisons pass 2,052 checks. These cover
+  real normalization/length/angle paths and both movement return values. All
+  519 movement instructions execute across the two suites.
+- Model tests cover every type, draw/child/order mask, real recursive children
+  and siblings, nonzero rotations, both FP banks, culled meshes and pointer views.
+  Independent checks cover mesh order, immutable nodes, matrix-stack balance,
+  preserved input records and exact 132-byte query restoration on false returns.
+- 20 actual renderer-initializer -> traversal/wrapper -> accepted-mesh sequences
+  add 40 comparisons and 260 checks. Four authored raw vertices pass through
+  original culling, projection, lighting, material dispatch and nonempty solid,
+  textured and alpha primitives. Both FP banks and selected RM1 are covered.
+  Independent exact dyadic projection checks verify the vertex cache. Packet
+  writes, context installation and stack balance are checked. The wrapper's
+  original renderer record selects its packet buffer; bare traversal uses the
+  live cursor. Full CPU/FPU/RAM/device/queue state and ordered boundaries match.
+- 243 retained IRQ/context/task comparisons pass 1,683 checks with previous
+  numeric assertions preserved by AST checks. Old evidence files stay intact.
+- Total fresh evidence: 1,125 comparisons and 10,817 checks. Cumulative evidence:
+  76,622 comparisons; this is neither unique coverage nor game completion.
+- Combined coverage: 904 executed rows, 2 proved unreachable rows, 112 executed
+  branch outcomes, 1 integer-infeasible outcome and 1 scalar-profile-infeasible
+  outcome. Every original call return is observed in actual execution.
+
+The integration audit checks all 906 original instruction bytes and the exact
+old bridge plus three entries and 66 actual return sites/continuation exports.
+There are now 2,458 return members and 566 explicit nonfunction resumes. Only
+71 have qualified nonlocal routing; 495 remain unqualified. Executing normal
+calls does not independently qualify those continuation exports for nonlocal use.
+The original CPU, reference interpreter, guards, observer and old builds are
+unchanged. No new guest wait bounds were added.
+
+How to check
+Read analysis/movement_model_response_qualification.json for per-routine coverage,
+the numerical profile, exact DLL hash, limits and evidence hashes. Recovered C:
+source/sa_movement_model_response.c. Original instruction listings and unverified
+Ghidra drafts: analysis/movement-model-response/.
+
+With matching local game inputs and toolchain, reproduce in this order:
+python -B outputs/sonic-adventure/recover_movement_model_response.py
+python -B outputs/sonic-adventure/connect_movement_model_response.py
+powershell -NoProfile -File outputs/sonic-adventure/build_movement_model_response.ps1
+python -B outputs/sonic-adventure/verify_movement_model_response_direct.py
+python -B outputs/sonic-adventure/verify_movement_model_response_edges.py
+python -B outputs/sonic-adventure/verify_movement_model_response_pipeline.py
+python -B outputs/sonic-adventure/verify_movement_model_response_retained.py
+python -B outputs/sonic-adventure/check_movement_model_response_unbounded.py
+python -B outputs/sonic-adventure/prove_movement_model_response_predicates.py
+python -B outputs/sonic-adventure/audit_movement_model_response.py
+python -B outputs/sonic-adventure/qualify_movement_model_response.py
+python -B outputs/sonic-adventure/register_movement_model_response.py
+python -B outputs/sonic-adventure/verify_movement_model_response_workflow.py
+
+What remains
+The next actual movement dependency is 075a40, called at 073a50. The 0730d8
+movement parent, 028bfe world owner and 029b00 collision parent remain unregistered.
+Their previous open outcomes and precision/alias obligations remain, together
+with broader 074626 precision and the old math-wrapper precision paths.
+
+Actual mesh submission is verified at the software packet/device level, not GPU
+pixels or complete gameplay. Complete startup/frame timing are not newly tested.
+Full decompilation, playable PC port, 60/120/240 FPS, 8K, Android, stereoscopic
+3DS, eventual N64/PS1 adaptation, SUPIR upscaling and settings remain unfinished.
+Texture Off must disable texture sampling and use vertex colours.

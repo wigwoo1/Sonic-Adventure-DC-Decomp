@@ -129,7 +129,7 @@
     "prs_trailing_bytes": 0,
     "main_binary_indexed_functions": 3637,
     "main_binary_draft_pseudocode_functions": 3631,
-    "recovered_buildable_routines": 1602,
+    "recovered_buildable_routines": 1605,
     "recovered_routine_tests": "analysis/startup_verification.json",
     "recovered_routine_test_cases": 17,
     "main_binary_draft_export_failures": 6,
@@ -150373,6 +150373,147 @@
       "verification": "analysis/movement_mode_query_qualification.json",
       "verification_sha256": "330a564790350c8523ae002fa93d30ca4547693142ff734183e3bfc65084969b",
       "guide": "MOVEMENT_MODE_QUERY.txt"
+    },
+    "movement_model_response_integration": {
+      "status": "software_qualified_original_movement_model_response_group",
+      "compiled_source_count": 257,
+      "newly_registered_entries": 3,
+      "new_original_routine_credit": 3,
+      "newly_qualified_original_rows": 906,
+      "canonical_duplicate_credit": 0,
+      "executed_original_rows": 904,
+      "proved_unreachable_original_rows": 2,
+      "executed_conditional_outcomes": 112,
+      "integer_proved_infeasible_outcomes": 1,
+      "scalar_profile_proved_infeasible_outcomes": 1,
+      "scalar_predicate_profile": "PR0/SZ0,stable mapped RAM,fixed code,normal entry and unchanged software compare policy",
+      "unqualified_broader_precision_outcomes": [
+        [
+          "0x8c074626",
+          "0x8c074644"
+        ]
+      ],
+      "unaccounted_software_profile_outcomes": [],
+      "domain_exclusion_arguments": [],
+      "coverage_by_routine": [
+        {
+          "address": "0x8c0742d4",
+          "static_rows": 519,
+          "executed_rows": 519,
+          "static_outcomes": 56,
+          "executed_outcomes": 55,
+          "proved_unreachable_rows": [],
+          "integer_infeasible_outcomes": [],
+          "scalar_profile_infeasible_outcomes": [
+            [
+              "0x8c074626",
+              "0x8c074644"
+            ]
+          ],
+          "unaccounted_software_profile_outcomes": []
+        },
+        {
+          "address": "0x8c036f12",
+          "static_rows": 10,
+          "executed_rows": 10,
+          "static_outcomes": 0,
+          "executed_outcomes": 0,
+          "proved_unreachable_rows": [],
+          "integer_infeasible_outcomes": [],
+          "scalar_profile_infeasible_outcomes": [],
+          "unaccounted_software_profile_outcomes": []
+        },
+        {
+          "address": "0x8c036bc0",
+          "static_rows": 377,
+          "executed_rows": 375,
+          "static_outcomes": 58,
+          "executed_outcomes": 57,
+          "proved_unreachable_rows": [
+            "0x8c036c18",
+            "0x8c036c1a"
+          ],
+          "integer_infeasible_outcomes": [
+            [
+              "0x8c036c12",
+              "0x8c036c18"
+            ]
+          ],
+          "scalar_profile_infeasible_outcomes": [],
+          "unaccounted_software_profile_outcomes": []
+        }
+      ],
+      "prior_registry_entries": 1602,
+      "result_registry_entries": 1605,
+      "result_unique_module_address_pairs": 1602,
+      "linked_routine_inventory": {
+        "registry_entries": 1605,
+        "registry_unique_module_address_pairs": 1602,
+        "confirmed_linked_registry_entries_by_name": 648,
+        "confirmed_linked_unique_routines_by_name": 648,
+        "all_named_DLL_exports_including_support_and_continuations": 1834,
+        "method": "Exact registered-name intersection with actual PE named exports;support/continuation-only exports excluded. Other internal/renamed implementations are not counted by this method. Registry recovery count is distinct from current combined-DLL integration count."
+      },
+      "fresh_original_native_comparisons": 1125,
+      "fresh_independent_checks": 10817,
+      "direct_status_counts": {
+        "0": 640,
+        "-1": 18,
+        "-3": 8
+      },
+      "independent_oracle_cases": 756,
+      "actual_nonempty_mesh_sequences": 20,
+      "actual_original_call_returns_executed": 66,
+      "supplied_game_callee_outputs": 0,
+      "supplied_execution_frames": 0,
+      "flat_return_guard_sites": 2458,
+      "explicit_nonfunction_resume_routes_total": 566,
+      "qualified_nonlocal_resume_routes_total": 71,
+      "remaining_unqualified_resume_routes": 495,
+      "new_nonlocal_resume_exports": 66,
+      "new_nonlocal_resume_routes_qualified": 0,
+      "host_import_recursion_floor": 4096,
+      "guest_execution_limits_unchanged": true,
+      "retained_previous_evidence_original_native_comparisons": 75497,
+      "total_evidence_original_native_comparisons": 76622,
+      "world_owner_still_unregistered": "0x8c028bfe",
+      "world_owner_unaccounted_outcomes": [
+        [
+          "0x8c028cba",
+          "0x8c028cbc"
+        ],
+        [
+          "0x8c028e0c",
+          "0x8c028e0e"
+        ]
+      ],
+      "parent_movement_caller_still_unregistered": "0x8c0730d8",
+      "collision_caller_still_unregistered": "0x8c029b00",
+      "collision_caller_unaccounted_outcomes": [
+        [
+          "0x8c02a48c",
+          "0x8c02a4a8"
+        ]
+      ],
+      "fresh_full_game_startup_comparisons": 0,
+      "full_gameplay_qualified": false,
+      "physical_exception_delivery_qualified": false,
+      "overall_completion_percent": 10,
+      "estimate_method": "weighted milestones;not measured code coverage",
+      "dll_sha256": "21d28a454d74f5cecc7b2fd72644081a470367c1312a6e83668f1219293997fd",
+      "next_task": "Recover actual0730d8 dependency075a40 at call73a50;verify original arguments and real helpers. Preserve broader626precision and older world/collision/math obligations. Later canonical055d5a is a reuse candidate.",
+      "limitations": [
+        "Original0742d4 movement response(519rows),036bc0recursive modelwalk(377rows),036f12render-state wrapper(10rows). 906originalrowsretained,904execute. IntegerAND7selectorproof accounts036c12taken andits2unreachablerows;all8types/draw/child/sibling/orderflags tested. 074626taken is proved impossible only in the explicit current PR0/SZ0 scalar softwareprofile:prior cap>speed andlater opposite speed>cap readstableRAMwithoutcalls/stores. BroaderphysicalSZ1/foreignFPmode changesareNOTprovedunreachable;thebranchremainsinsource andbroaderprecisionworkremainsopen. No originalcode orbranchremoved.",
+        "666directcomparisons/6822checks:640complete,18existingunsupportednumericstops,8mappedguards. 176additionalangle/commit/reversed-trianglecomparisons/2052checks allcomplete. All519movementrows execute across the two suites. Independentmodelmeshorder/nodeimmutability/matrixbalance/queryrestore/inputrecord/returnoracles cover756includedcases. Originalmatrix/rotation/math/angle/collision/rendercallbacks run;no suppliedcalleeoutputs/frames. SuccessfularithmeticprofilesPR0/SZ0;selectedrawmodesaredocumentedstops.",
+        "40comparisons/260checkscover20realrendererinitializer->walk/wrapper->acceptedmeshsequences:solid/textured/alpha paths,bothFPbanks andselectedRM1. Originalcull/project/shade/material/primitive/flagcallbacks executewith4authoredrawvertices. Independentexactdyadicprojection/cache/packet/context/stackchecks;fullsoftwaredevice/queuecompare. Wrapperinstallsitsoriginalrenderer-recordpacketbuffer;barewalkuseslivecursor. These differ andthetestderiveseachfrominputrecords. NotGPU pixels/fullgame/completeold037098callbackqualification.",
+        "243freshretainedIRQ/context/taskcomparisons/1683checks preserveoldnumericassertionsbyAST.1125freshcomparisons/10817checks;76622cumulativeevidence isnotunique/codecoverage. Priorstartup/full-devicewrite remainhistorical,notrerun. Physicalalignment/FPU/exception/MMU/bootROM/GPU/gameplay/frametimingunqualified.",
+        "257-sourceDLL/library andstrictunboundedWall/Wextra/Werror pass. Exact256bridge+3entries/66actualreturns/66continuationexports. All1602priorregistryrows and2747oldbuilds preserved;newDLL/libadditional.566explicitresumes,71qualifiednonlocal/495remaining;new66exportsnotindependentlyqualifiednonlocalroutes. No newguestwaitbounds/CPU/guard/observerchanges. Hostimportfloor4096retained.",
+        "A scaffoldnumericreplacement accidentallyrenamedSHA256intworeportwriters. Correctedmetadata-onlyscripts;finalstrictandretainedchecks rerun successfully. Pipelineassertionswerecorrectedfromassumedprimitiveaddressrange/fixedbuffertoexistingprimitiveconstantsandoriginalwrapperbufferdataflow. NativeCneedednochanges. Onlyfinalsuccessfulreportsarecounted;no duplicatecreditfromdiagnostic/initialruns.",
+        "Broader626precision,028bfe null-readoutcomes,029b00 A48cskip andthreeoldmathwrapperprecisionpaths remainopen;0730d8 staysunregistered. No upstreamimplementationcodecopied. Fullgame/PC60/120/240FPS8K/Android/3DSstereo/N64/PS1/SUPIR/settingsunfinished. TextureOffdisablessampling/usesvertexcolours.10%weightedmilestones;researchDLLnonplayable;goalactive,keepSolHigh."
+      ],
+      "verification": "analysis/movement_model_response_qualification.json",
+      "verification_sha256": "b2b0e4325e0fe14bdb0fc40efbcee771085abee0e8d647c71ad81f4410d569c3",
+      "guide": "MOVEMENT_MODEL_RESPONSE.txt"
     }
   },
   "milestones": [
@@ -157874,5 +158015,5 @@
   },
   "unverified_work": {},
   "unverified_drafts": {},
-  "recovered_buildable_routines": 1602
+  "recovered_buildable_routines": 1605
 }

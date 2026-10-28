@@ -1,0 +1,41 @@
+{
+  "status": "byte_backed_original_selector_and_existing_scalar_profile_predicates",
+  "original_rows_byte_checked": 896,
+  "integer_infeasible_outcomes": [
+    [
+      "0x8c036c12",
+      "0x8c036c18"
+    ]
+  ],
+  "proved_unreachable_original_rows": [
+    "0x8c036c18",
+    "0x8c036c1a"
+  ],
+  "scalar_profile_infeasible_outcomes": [
+    [
+      "0x8c074626",
+      "0x8c074644"
+    ]
+  ],
+  "scalar_profile": "PR0/SZ0,stable mapped RAM,fixed code,normal entry and unchanged software compare policy",
+  "domain_excluded_rows": [],
+  "domain_excluded_outcomes": [],
+  "original_code_removed": false,
+  "arguments": [
+    "036be2 masks the single loaded selector with7. The only admitted predecessor chain to036c12 successively rulesout7,0,1,2,3,4,5. The final compare must therefore see6. BF036c12 cannot take036c18. The latter branch and itsNOPdelay slot have no other predecessor. This covers all32bit inputflags by the originalAND invariant;no input-value exclusion/disjointness assumption or discarded instruction.",
+    "In the current ordinary scalar PR0/SZ0 profile,0745e6 compares cap(state+d0)>speed(state+38). Reaching07460c requires this comparison true (only5fe/604 enter60c). The admitted read path has no calls,RAM stores,R13changes orFPUmode changes.074612 reloads identical speed and 074622 reloads identical cap.074624 tests the opposite speed>cap. It cannot be true after a completed true cap>speed. NaNs cannot make the first greater comparison true;exception stops are stops,not a completed opposite result. Sticky/cause updates do not change operands/controls.",
+    "The scalar predicate is explicitly a current PR0/SZ0 software-contract proof. Existing matrix-pop backend rejectsPR/SZprofiles;selected rawmodes are separately tested as reached unsupported stops. This is not a claim that arbitrary physicalSZ1 execution or foreign mode-changing callbacks make the original626edge universally impossible. Broader precision/physicalFPU behavior remains unfinished;the original edge stays in source.",
+    "All proofs require fixed original code and normal-entry execution with stable mappedRAM. Arbitrary mid-body entry,selfmodification, asynchronous hardware/MMU/exception behavior are unqualified. No original row or branch is removed;two integer-chain rows are accounted as unreachable,not deleted."
+  ],
+  "new_original_routine_credit": 0,
+  "sha256": {
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\prove_movement_model_response_predicates.py": "3316625e4ea35bd569d3bb9c731813ce5942320070f5654f6e7c62b4bfa72572",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\work\\sonic-adventure\\extracted\\1ST_READ.BIN": "45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\analysis\\movement-model-response\\8c036bc0_instructions.tsv": "933f56f95032ce9fd726bdd859d7d1096d4633c9e68404771004b75e84572a7b",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\analysis\\movement-model-response\\8c0742d4_instructions.tsv": "235816795f0b6ccf2cd29badfaf34c83293fa487770c704a0ebc567f344a76e9",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\source\\model_matrix_stack_pop.c": "c7ba2b4070754f6759633e0945bf65411e5ff180d498b62cfd035d45110a2051",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\source\\sh4_compare_bits.h": "1b1eb137912777eaeb62bfe23398a43121f82bb9085bcc416bf2bb7166a36cdc",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\source\\sh4_compare.c": "18427c023bcca647020a31ab9fe3d1b4920a79c12d261c688eabc9ac0ad3b43f",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\source\\sa_movement_model_response.c": "8ed461c58af6ed0c9e5b4e3d2086eff4a748bdd3db685b334ef30ce2f9931253"
+  }
+}

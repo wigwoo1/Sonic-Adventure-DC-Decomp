@@ -1,0 +1,85 @@
+"""Translate original movement-model-response dependencies without awarding recovery credit."""
+import csv,hashlib,json,re
+from pathlib import Path
+PROJECT=Path(__file__).resolve().parent;EVENT_PARENT=PROJECT/'recover_boot_event.py'
+exec(compile(EVENT_PARENT.read_text().split('notes=[];diagnostics=[]')[0],str(EVENT_PARENT),'exec'),globals())
+remainder=PROJECT/'source/sa_unsigned_remainder.c';remainder_proof=PROJECT/'analysis/unsigned_remainder_verification.json'
+assert hashlib.sha256(remainder.read_bytes()).hexdigest()==json.loads(remainder_proof.read_text())['source_sha256']
+division=remainder.read_text();division=division[division.index('static void div1_step'):division.index('SA_STAGE_EXPORT int')]
+notes=[];diagnostics=[];excluded={}
+groups={'movement-model-response':{0x8c0742d4,0x8c036f12,0x8c036bc0}}
+for folder,included in groups.items():
+ path=PROJECT/'analysis'/folder/'diagnostics.tsv';diagnostics.append(path)
+ for note in csv.DictReader(path.open(),delimiter='\t'):
+  assert note['completed']=='true' and not note['error']
+  if int(note['address'],16) in included:notes.append(dict(note,folder=folder))
+assert len(notes)==3
+from channel_io_continuations import expand_function
+functions=[];routines=[];resume_routes=[]
+for note in notes:
+ start=int(note['address'],16);listing=PROJECT/'analysis'/note['folder']/f'{start:08x}_instructions.tsv';rows=list(csv.DictReader(listing.open(),delimiter='\t'));end=max(int(r['address'],16)+2 for r in rows)
+ body_min=min(int(r['address'],16) for r in rows)
+ chosen=BASE_CHOSEN.replace('main-dispatch-model-traversal/',note['folder']+'/')
+ marker='assert len(raw)==int(row[\'length\'])==2 and start<=a<end';assert chosen.count(marker)==1
+ chosen=chosen.replace(marker,'assert len(raw)==int(row[\'length\'])==2 and body_min<=a<end')
+ marker_control="        assert not text.startswith('f'),text";assert chosen.count(marker_control)==1
+ # Reuse the existing FABS emitter from recover_draw_distance_helpers.py.
+ # Its reached PR=1 stop policy matches the preserved original reference.
+ if "text.startswith('fabs ')" not in chosen:
+  chosen=chosen.replace(marker_control,"        if text.startswith('fabs '):return f'if(f->fpscr&0x80000u)return -1;f->bank[(f->fpscr>>21)&1u][{n}]&=0x7fffffffu;'\n"+marker_control)
+ controls="        if w&0xf0ff==0x400a:return f'integer->mach=r[{n}];'\n        if w&0xf0ff==0x401a:return f'*macl=r[{n}];'\n"
+ chosen=chosen.replace(marker_control,controls+marker_control)
+ tas="        if w&0xf0ff==0x401b:return f'if(!valid_ram(r[{n}],1u))return -3;if(!bus||!bus->cache)return -2;status=bus->cache(bus->context,r[{n}],3u);if(status)return status;{{uint32_t value=rd(m,r[{n}],1);wr(m,r[{n}],value|0x80u,1);*sr=(*sr&~1u)|(value==0);}}'\n"
+ chosen=chosen.replace(marker_control,tas+marker_control)
+ # Reuse the existing raw FLDS register-transfer emitter without changing old templates.
+ if "text.startswith('flds ')" not in chosen:
+  chosen=chosen.replace(marker_control,"        if text.startswith('flds '):return f'*fpul=f->bank[(f->fpscr>>21)&1u][{n}];'\n"+marker_control)
+ # Reuse the existing FSQRT emitter/backend; this inherited template predates
+ # its addition in recover_draw_polygon_lower.py. Prior templates stay frozen.
+ if "text.startswith('fsqrt ')" not in chosen:
+  chosen=chosen.replace(marker_control,"        if text.startswith('fsqrt '):return f'{{uint32_t *fr=f->bank[(f->fpscr>>21)&1u];status=sa_sh4_sqrt(fr[{n}],&f->fpscr,&fr[{n}]);if(status)return status;}}'\n"+marker_control)
+ exec(compile(chosen,str(TEMPLATE),'exec'),globals())
+ function,record=recover(start,end,f'sa_movement_model_response_{start:08x}',len(rows))
+ marker='sa_shared_service call,uint32_t *stop){';assert function.count(marker)==1
+ function=function.replace(marker,marker[:-2]+',uint32_t *gbr,const struct sa_vertex_bus *bus,struct sa_sh4_integer_extra *integer,const uint32_t *vbr){\n int io_status=0;(void)io_status;(void)bus;(void)integer;(void)vbr;')
+ function=function.replace('(void)entry_pr;','(void)entry_pr;(void)sr;(void)sx;(void)m;(void)wr;(void)fload;(void)fstore;(void)gbr;')
+ for name in ('rd','sx','wr','fload','fstore'):function=function.replace(name+'(m,',name+'(m,bus,&io_status,')
+ function=re.sub(r'((?:rd|sx|wr|fload|fstore)\(m,[^;]*\);)',r'\1if(io_status)return io_status;',function)
+ function=re.sub(r'(r\[\d+\])=rd\(([^;]+)\);if\(io_status\)return io_status;',r'{uint32_t loaded=rd(\2);if(io_status)return io_status;\1=loaded;}',function)
+ guards={}
+ if guards:
+  function=function.replace(' int status;uint32_t target;',' unsigned delay_visits=0;(void)delay_visits;\n int status;uint32_t target;',1)
+  for pc,active in guards.items():
+   marker=f'L{pc:x}: ';assert function.count(marker)==1
+   function=function.replace(marker,f'L{pc:x}:\n#ifdef SA_BOUND_RETAIL_STALLS\n *stop=0x{pc:x}u;if((*sr&1u) && ++delay_visits>=2u)return -4;\n#endif\n ',1)
+  record['bounded_research_waits']=[dict(pc=hex(pc),continue_when_t=active,max_continue_tests=2,status=-4) for pc,active in guards.items()]
+ record['registration_requires_complete_behavior']=True
+ record['discontiguous_before_entry_rows']=[r['address'] for r in rows if int(r['address'],16)<start]
+ addresses=sorted(int(r['address'],16) for r in rows);ranges=[]
+ for address in addresses:
+  if ranges and ranges[-1][1]==address:ranges[-1][1]+=2
+  else:ranges.append([address,address+2])
+ record['retail_instruction_ranges']=[dict(start=hex(a),end_exclusive=hex(b),sha256=hashlib.sha256(binary[a-0x8c010000:b-0x8c010000]).hexdigest()) for a,b in ranges]
+ # No new nonlocal continuation is claimed below these synchronous backends.
+ function,routes=expand_function(function,record,'sa_movement_model_response');resume_routes.extend(routes)
+ functions.append(function);routines.append(record)
+header=header.replace(header[header.index('/*'):header.index(' */')+3],'/* Original movement response with recursive model traversal and rendering-state wrapper.\n * Exact original instruction order and existing numerical/bus ABI.\n * No upstream implementation code imported.\n */')
+if 'int sa_sh4_sqrt(' not in header:header+='int sa_sh4_sqrt(uint32_t,uint32_t*,uint32_t*);\n'
+functions=[f.replace('(void)gbr;','(void)gbr;(void)valid_access;(void)r;') for f in functions]
+header+='int sa_movie_channel_io_return_allowed(void *,uint32_t);\n'
+source=PROJECT/'source/sa_movement_model_response.c';source.write_text(header+'\n'.join(functions))
+import movement_mode_query_reference as previous
+prior_returns=previous.namespace['RETURNS'];call_returns={int(row['address'],16)+4 for r in routines for row in csv.DictReader(Path(r['listing']).open(),delimiter='\t') if row['instruction'].lstrip('_').startswith(('jsr ','bsr '))}
+new_returns=call_returns-prior_returns
+return_manifest=PROJECT/'analysis/movement_model_response_returns.json'
+return_manifest.write_text(json.dumps(dict(prior_return_sites=len(prior_returns),original_call_returns=sorted(map(hex,call_returns)),new_call_returns=sorted(map(hex,new_returns)),allowed_call_returns=sorted(map(hex,prior_returns|new_returns))),indent=2)+'\n')
+files=[Path(__file__),EVENT_PARENT,SUBMIT_PARENT,WAIT_PARENT,PARENT,GBR_PARENT,SAMPLING,PREVIOUS,PARENT_TEMPLATE,PROJECT/'recover_draw_polygon_lower.py',PROJECT/'recover_draw_clipping_state.py',PROJECT/'recover_overlay_model_blend.py',PROJECT/'recover_main_dispatch_particle_callback.py',TRANSLATOR,TEMPLATE,BINARY,source,PROJECT/'source/vertex_bus.h',PROJECT/'source/sh4_integer_state.h',PROJECT/'source/sh4_integer_state.c',PROJECT/'source/sh4_vector_base.c',PROJECT/'source/sh4_vector_base.h',remainder,remainder_proof]+diagnostics+[Path(r['listing']) for r in routines]+[return_manifest,Path(previous.__file__),PROJECT/'channel_io_continuations.py',PROJECT/'ghidra/export_movement_model_response.ps1']
+registry=json.loads((PROJECT/'analysis/recovered_routines.json').read_text())['routines'][:1602];assert len(registry)==1602
+files.extend([PROJECT/'recover_draw_distance_helpers.py'])
+canonical=set()
+for routine in routines:
+ matches=[row for row in registry if row.get('module','1ST_READ.BIN')=='1ST_READ.BIN' and row['address']==routine['address']]
+ assert bool(matches)==(routine['address'] in canonical)
+ routine['canonical_registered_reuse']=bool(matches)
+report=dict(source=source.relative_to(PROJECT).as_posix(),routines=routines,resume_routes=resume_routes,return_manifest=return_manifest.relative_to(PROJECT).as_posix(),instruction_rows=sum(r['instruction_rows'] for r in routines),proposed_rows=sum(r['instruction_rows'] for r in routines),newly_registered_entries=0,canonical_duplicate_credit=0,classification_registry_baseline_entries=1602,unregistered_proposals=[r['address'] for r in routines if not r['canonical_registered_reuse']],canonical_reused_entries=sorted(canonical),scope='Original movement movement-model-response recovery proposal. Generation givesnocredit;fullbehaviorqualificationrequired. Original instruction ordering and existing numeric/bus ABI preserved;no suppliedresults/frames ornewwaitbounds.',sha256={str(p):hashlib.sha256(p.read_bytes()).hexdigest() for p in files})
+(PROJECT/'analysis/movement_model_response_translation.json').write_text(json.dumps(report,indent=2)+'\n');print('Generated',len(routines),'movement-model-response adapters /',report['instruction_rows'],'original rows')
