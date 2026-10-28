@@ -1,0 +1,108 @@
+ORIGINAL MOVEMENT PARAMETER UPDATE - 075214 QUALIFIED
+
+Overall project: approximately 10% by weighted milestones, not measured code
+coverage. The goal remains active. These are incomplete research libraries,
+not a playable PC port. Keep Sol High for the next reverse-engineering task.
+
+What changed
+The original 075214 parameter-update routine is recovered and connected to the
+255-source library. All 216 original instructions execute. Fifteen conditional
+outcomes execute; the sixteenth has a separate original-byte/control-flow proof.
+No original instruction or branch was removed or excluded from the translation.
+
+Current totals: 1,602 registry entries, 1,599 unique module/address routines,
+644 registered routines confirmed linked by exact names in the DLL. Support
+and continuation exports do not count as game routines. All 1,601 prior registry
+entries and 2,743 archived builds are preserved.
+
+Recovered behavior
+R4 supplies an object whose unsigned byte at +9 selects a character table row.
+R5 receives an output scalar at +3c. R6 supplies the state record; R7 is a flag
+mask, not a pointer. There is no fifth stack argument. The Ghidra C draft's
+parameter names/types are not authoritative; the original instructions are.
+
+The routine first ORs R7 into state +5c. It then reads state mode +1e4 and the
+original table at 8c1bdfe4, using stride 84 and fields +78, +58 and +3c. It writes
+state fields +114, +f4 and +d8 respectively. Mode bit 2 takes priority over bit
+400000. These modes apply original binary32 scaling constants, including the
+special half scale for selector 5. Otherwise it copies the table words.
+
+Scalar priority uses R7 bits 8, 4, 10 and 80, producing the original approximate
+0.15, approximate 0.10, 0.5 and 1.5 constants respectively; default is 1.0.
+Memory offsets, addresses and bit masks in this guide use hexadecimal.
+The selector is reread after each field store. Table data is also read in order;
+copying all inputs first would change behavior when pointers overlap.
+
+Remaining branch proof
+To reach the repeated bit-2 test at 07532a, the earlier test at 075234 must find
+that bit clear. The only intervening admitted path makes no RAM stores or calls
+and rereads the same state word at R6+1e4. The repeated test therefore also finds
+the bit clear, so BF 07532c cannot take 075382 under normal entry, fixed original
+code and stable mapped RAM. The proof checks original bytes and predecessors.
+It does not assume separate input/output/table buffers. Asynchronous physical
+memory changes, arbitrary mid-function entry and self-modifying code are outside
+this proof's scope. The branch remains present in the recovered code.
+
+Build and verification
+- Native DLL and import library built with all 255 source files.
+- All 255 sources pass unbounded -Wall -Wextra -Werror syntax/semantic checks.
+- 388 direct original/native comparisons pass 3,348 checks. They include 246
+  finite cases with independent field/scalar/flag/rounding/footprint expectations,
+  18 untouched retail-table inputs, raw FPU modes, special values and RAM guards.
+  Statuses: 352 complete, 20 existing unsupported numeric stops, 12 reached
+  numeric-trap stops and 4 mapped-memory guards. Stops are not successful returns.
+- 28 overlap comparisons verify selector changes caused by earlier stores and
+  the initial OR, scalar overwrite, stores changing later table reads, and shared
+  records. Four two-call sequences (8 comparisons) consume the first call's real
+  output as the next call's state mode. These 36 comparisons pass 180 checks.
+- 243 retained IRQ/context/task comparisons pass 1,683 checks with previous
+  numeric assertions unchanged. Old verification files are preserved.
+- Total fresh evidence: 667 comparisons and 5,211 checks. Cumulative evidence:
+  74,982 comparisons; this is neither unique test coverage nor game completion.
+- The integration audit checks all 216 instruction bytes, exact previous bridge
+  plus one entry, unchanged execution/observer/guard ABI and old build hashes.
+  This leaf adds no call-return membership or continuation exports. There remain
+  2,392 return members and 500 explicit nonfunction resumes, of which 71 have
+  qualified nonlocal routing and 429 remain unqualified.
+
+The tests compare complete CPU/FPU/RAM/device/queue state and ordered boundaries.
+Fixtures supply initial RAM and ordinary arguments, never intermediate game
+results or execution frames. Authored overlap layouts are not proof of natural
+game initialization. Physical FPU/exception/MMU/interrupt delivery, complete
+startup, complete movement/gameplay and frame timing remain unqualified.
+
+How to check
+Open analysis/movement_parameters_qualification.json for the qualification,
+coverage, exact DLL hash, limits and evidence file hashes. The readable generated
+source is source/sa_movement_parameters.c. The original instruction listing is
+analysis/movement-parameters-owner/8c075214_instructions.tsv.
+
+Reproduce with matching local game input and toolchain:
+python -B outputs/sonic-adventure/recover_movement_parameters.py
+python -B outputs/sonic-adventure/connect_movement_parameters.py
+powershell -NoProfile -File outputs/sonic-adventure/build_movement_parameters.ps1
+python -B outputs/sonic-adventure/verify_movement_parameters_direct.py
+python -B outputs/sonic-adventure/verify_movement_parameters_aliases.py
+python -B outputs/sonic-adventure/prove_movement_parameters_predicates.py
+python -B outputs/sonic-adventure/verify_movement_parameters_retained.py
+python -B outputs/sonic-adventure/check_movement_parameters_unbounded.py
+python -B outputs/sonic-adventure/audit_movement_parameters.py
+python -B outputs/sonic-adventure/qualify_movement_parameters.py
+python -B outputs/sonic-adventure/register_movement_parameters.py
+python -B outputs/sonic-adventure/verify_movement_parameters_workflow.py
+
+What remains
+The next actual movement dependency is 049a4e, called at 073490 after 075214.
+Its six-instruction nonzero query of global 8c7492ac already has registered
+standalone source, but is absent from this bridge. The next task is to reuse
+and connect that canonical routine through the current full-state ABI, with
+zero duplicate routine credit; it does not need independent recovery again.
+The 0730d8 movement parent, 028bfe world owner and 029b00 collision parent remain
+unregistered with their existing open outcomes, precision and alias obligations.
+No new credit is assigned to those owners from this leaf.
+
+Full decompilation, playable PC port, 60/120/240 FPS, 8K, Android, stereoscopic
+3DS, eventual N64/PS1 adaptation, SUPIR upscaling and settings remain unfinished.
+Texture Off must disable texture sampling and use vertex colours. SARecomp has
+not supplied implementation code; this milestone uses the user's USA Rev A
+instructions and the existing verified translation/runtime architecture.

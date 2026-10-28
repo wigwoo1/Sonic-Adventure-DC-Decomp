@@ -1,0 +1,49 @@
+{
+  "status": "verified_normal_entry_repeated_stable_RAM_flag_predicate",
+  "address": "0x8c075214",
+  "original_rows_byte_checked": 216,
+  "static_conditional_outcomes": 16,
+  "infeasible_outcomes": [
+    [
+      "0x8c07532c",
+      "0x8c075382"
+    ]
+  ],
+  "domain_excluded_rows": [],
+  "domain_excluded_outcomes": [],
+  "original_code_removed": false,
+  "graph_predecessors": {
+    "0x8c0752b8": [
+      "0x8c075236"
+    ],
+    "0x8c075328": [
+      "0x8c0752c2"
+    ],
+    "0x8c07532c": [
+      "0x8c07532a"
+    ]
+  },
+  "admitted_read_to_test_path": [
+    "0x8c075232",
+    "0x8c075234",
+    "0x8c075236",
+    "0x8c075238",
+    "0x8c0752b8",
+    "0x8c0752ba",
+    "0x8c0752bc",
+    "0x8c0752be",
+    "0x8c0752c0",
+    "0x8c0752c2",
+    "0x8c075328",
+    "0x8c07532a",
+    "0x8c07532c"
+  ],
+  "argument": "Normal entry setsR0=0x79<<2=0x1e4 before5232 reads state[R6+1e4]. Only5236taken enters52b8, so bit2 was clear. 52b8 reestablishesR0=1e4;52c2taken is the sole predecessor of5328 and preserves that offset andR6. 5328 rereads the identical state word. The admitted path has no RAM stores, calls, address-base changes or asynchronous writes. Thus bit2 remains clear;TST2 at532a setsT=1 and BF532c cannot take5382. Input/table/stack/output disjointness is not assumed. The earlier flag OR and saved-register stores occur before the first read and do not invalidate the argument. Fixed original code, normal entry and stable mapped RAM are required. Arbitrary mid-body entry, self-modifying code, physical asynchronous/MMIO/exception/MMU delivery remain unqualified. No original instruction or conditional edge is removed.",
+  "new_original_routine_credit": 0,
+  "sha256": {
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\prove_movement_parameters_predicates.py": "995a2c55c4fd48e7b57983ea89afbb39d90439a3a58864372ff830e984e3826e",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\analysis\\movement-parameters-owner\\8c075214_instructions.tsv": "b78e3fe0734352174bae347906a90be9e23ade5d4e2ec7bf5a1743c176b3117f",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\work\\sonic-adventure\\extracted\\1ST_READ.BIN": "45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\source\\sa_movement_parameters.c": "b07f5ec81ade74f96d769a1b1d9ad552c27e5e75b177317462e73305106bba47"
+  }
+}
