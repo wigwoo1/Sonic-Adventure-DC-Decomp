@@ -1,0 +1,104 @@
+COLLISION WORLD AND DEBUG INITIALIZERS - 250 SOURCE RESEARCH BUILD
+
+Two complete original routines are now recovered and linked:028e60 world/pool
+reset(45instructions/4conditionaloutcomes) and04e3de debug/gameflag initialization
+(57instructions/6outcomes). Five existing canonical helpers are adapted to the
+current ABI without duplicate credit. All165instructions/18outcomes execute.
+Registry1591entries/1588unique module-address pairs;633registered routines linked
+by actual PE export names. Overall10% is a weighted milestone estimate, not
+measured code coverage. The goal remains active; keep SolHigh for further RE.
+
+What the original code does
+028e60 clears four globals, including contact counter8c73e400 and world head
+8c02d548. It clears field+8 in192records at8c6bb27c and floating field+14 in8192
+records at8c6be27c, both with64byte records. Actual original pool helpers build
+terminating free lists and set their heads. The original returns1. PR1 reaches
+an unsupported FLDI0 after integer resets, preserving that partial state; this
+is a stop, not a successful initialization. SZ1 writes the original paired FP
+word too; the independent expected RAM includes the current physical FR5 word.
+
+04e3de initializes debug byte8c752bdc toFF, disabling the optional collision
+renderer/text under the original signed-byte tests. It also clears/sets game
+flags, stores original callback pointers, sets input flags through0509b8, calls
+0869e0 and clears the original pointer set through08a05c. The existing10d39c
+global-setter route remains. Inputs are initial mode/variant RAM, not callee
+outputs. This complete function executes its real original helpers.
+
+The canonical02ce80/02ceca pool helpers use a DT loop whose valid count is>=2;
+the new code preserves it rather than inventing zero/singleton behavior or a
+source loop limit. Their direct tests use2/3/16records.028e60 uses its original
+constants8192and192. Canonical helpers retain their earlier source/proofs;
+new current-ABI adapters add zero recovered-routine credit.
+
+Fresh verification
+94direct comparisons pass518checks:86complete,4existing PR1numeric stops and
+4mapped-memory guards. Allfull CPU/FPU/RAM/device/softwarequeue state and ordered
+call boundaries match original execution.74included semantic cases independently
+check whole-RAM pool/reset/inputflag footprints or debug control fields. Direct
+pool cases cover mapped P0/P1/P2 views and both physical FP banks. The declared
+software ABI has fixed code, SR.FDclear, valid mapped memory, existing numeric
+policies and software queues; physical hardware delivery is not qualified.
+
+Four worldinit->debuginit->029b00 same-RAM sequences add12comparisons/52checks.
+Actual originals/nativeinitializers generate the empty world, zero counter and
+debugFF flags. The final existing caller returns no collision and preserves its
+query inputs. Host starts each ordinary call with arguments/return address; no
+execution frame or game-callee result is supplied. This is initialization-to-query
+integration evidence, not a complete cold startup or populated-world simulation.
+
+12previous alias/control collision cases pass186unchangedchecks through250DLL.
+243fresh retained IRQ/context/task comparisons pass1683checks with old numeric
+assertions retained and verified by AST. Total361freshcomparisons/2439checks;
+historical71466+361=71827 is evidence volume, not unique tests or code coverage.
+Historical216warm/211coldstartup and242full-device-write evidence is not rerun.
+
+The250-source DLL/importlibrary build and strict unboundedWall/Wextra/Werror
+checks pass. The bridge exactly extends249 with7entry routes,7actual call-return
+sites and7continuation exports. Return membership2333;441explicit resume exports;
+71qualified nonlocal returns/370remaining. New continuation exports are not
+independently qualified nonlocal returns. Old C,CPU,flat interpreter,guards,
+comparison logic,production observer,raw session and ABI remain unchanged.
+No new source wait limit is introduced. All2733older build files are preserved;
+the new DLL/library are additional incomplete, nonplayable research artifacts.
+
+Remaining collision branch and original caller evidence
+029b00 remains unregistered at1121instructions/73of74outcomes. Its skip at
+02a48c->02a4a8 is still open. The annotated graph audit byte-checks5981instructions
+across41bodies. Both caller copy sites request88bytes and bypass the copy-table
+jump; that long copy path cannot changeR10. Selection retainsR5, so positiveR10
+atA41a implies the A48c skip cannot execute. The missing proof is R10/save-word/SP
+preservation through seven rendering/text helpers under actual memory aliases.
+Save/pop instruction pairs and finite ordinary inputs do not establish it.
+The audit does not exclude a branch or add routine credit. The existing three
+math wrappers10d008/10d058/10d0f8 also remain unregistered.
+
+Read-only Ghidra references locate callers including0730d8,0742d4and0777e0.
+The primary0730d8 listing preserves all2041instructions, including rows Ghidra's
+draft incorrectly labels unreachable. That draft is research, not qualified C.
+References and initialization source are next inputs for recovering the actual
+movement/query owner and establishing natural renderer/world/input contracts.
+The references do not prove a full dynamic call graph or complete startup.
+
+Reproduce with matching original local inputs and the toolchain:
+  powershell -NoProfile -File outputs/sonic-adventure/ghidra/export_collision_contact_entry_contracts.ps1
+  powershell -NoProfile -File outputs/sonic-adventure/ghidra/export_collision_contact_input_owners.ps1
+  powershell -NoProfile -File outputs/sonic-adventure/ghidra/export_collision_setup_dependencies.ps1
+  python -B outputs/sonic-adventure/recover_collision_setup.py
+  python -B outputs/sonic-adventure/connect_collision_setup.py
+  powershell -NoProfile -File outputs/sonic-adventure/build_collision_setup.ps1 -Workspace WORKSPACE
+  python -B outputs/sonic-adventure/check_collision_setup_unbounded.py
+  python -B outputs/sonic-adventure/audit_collision_setup.py
+  python -B outputs/sonic-adventure/verify_collision_setup_direct.py
+  python -B outputs/sonic-adventure/verify_collision_setup_sequence.py
+  python -B outputs/sonic-adventure/verify_collision_setup_contact_alias.py
+  python -B outputs/sonic-adventure/verify_collision_setup_retained.py
+  python -B outputs/sonic-adventure/qualify_collision_setup.py
+  python -B outputs/sonic-adventure/register_collision_setup.py
+  python -B outputs/sonic-adventure/audit_collision_contact_register_paths.py
+  python -B outputs/sonic-adventure/verify_collision_setup_workflow.py
+
+Fullgame/PC60/120/240FPS8K/Android/3DSstereo/N64/PS1/SUPIR/settings remain
+unfinished. TextureOff disables sampling and uses vertex colours. Physical FPU,
+exception/MMU/address-error delivery,GPU pixels and complete gameplay remain
+unqualified. No upstream implementation is copied. Follow GITHUB_PUBLISHING.txt;
+preserve historical source/proofs/builds;exclude retail assets,tools and credentials.

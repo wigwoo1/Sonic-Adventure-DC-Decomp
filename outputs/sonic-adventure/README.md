@@ -1,3 +1,5 @@
+Latest collision initialization: two complete original owners028e60/04e3de recovered;250sources;165instructions/18outcomes including five reused helpers;361fresh comparisons/2439checks.1588unique routines/633confirmedlinked.029b00 remains partial at73of74outcomes. See COLLISION_SETUP.txt. Overall10%weightedmilestones; incomplete, nonplayable research builds.
+
 Latest collision alias evidence: all1121instructions and73of74branch outcomes executed;12freshcomparisons/186checks. One outcome remains open;caller unregistered.1586unique/631confirmedlinked unchanged. See COLLISION_CONTACT_COUNTER_ALIAS.txt. Overall10% weighted milestones; incomplete, nonplayable research build.
 
 Latest collision work: complete029b00body integrated,249sources,all1121instructions/32call sites and72of74branch outcomes exercised.444fresh comparisons/2651checks. Two outcomes remain open; caller is unregistered and receives0newroutinecredit. Registry unchanged1586unique/631confirmedlinked. See COLLISION_CONTACT.txt. Overall10% weighted milestones; incomplete, nonplayable research build.
