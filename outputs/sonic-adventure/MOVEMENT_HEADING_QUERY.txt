@@ -1,0 +1,71 @@
+Sonic Adventure USA Rev A: heading/value query 06CD22, 2026-10-28
+
+The complete original routine is recovered and software-qualified: all 106
+instruction rows and all 26 conditional outcomes execute. Original operation
+order, optional pointers and output aliases are preserved. No branch is removed.
+
+Behavior
+Actor flag 4000 selects a separate object-byte override. It returns a boolean,
+leaves both optional outputs untouched and executes no floating-point instruction.
+Otherwise, the routine reads the actor's indexed table value. A nonzero value
+is accepted when flag 2000 is set or the character-state word is zero. If accepted,
+it writes the raw heading and value to the non-null output pointers, in that order.
+A zero value takes a fallback: actor mode must be zero, flag 100 must be set,
+and the actual stage query must return 0902 or 0903. This copies actor heading
+and zero to the optional outputs. Other cases return zero without output writes.
+
+The second value load is live. A first output that changes the table value or
+actor index affects the later read. Tests cover these aliases, shared outputs,
+and writes back to actor heading. Signed stage words are passed through the
+original 04F7E0 code; no stage result or execution frame is supplied.
+
+Verification
+343 direct original/native comparisons and 3,772 checks passed, including 305
+semantic-oracle cases. Coverage includes flags, character words, optional outputs,
+indices 0/1/255, signed zero, raw numeric words, stage short circuit, bank/rounding,
+raw precision/FD states, RAM views, aliases and mapped-memory guards. Reports
+separate normal returns from reached numeric stops and mapped guards.
+243 retained interrupt/context/task comparisons and 1,683 checks also pass, with
+the previous numeric expectations unchanged by AST. Total: 586 fresh comparisons
+and 5,455 checks. Full CPU/FPU/RAM/device/queue state and ordered boundaries match.
+
+The 262-source research DLL builds. Strict unbounded -Wall -Wextra -Werror
+compiler checks pass. The connection is exactly the old 261-source bridge plus
+one entry, two original call returns and two continuation exports. CPU, guards,
+observer, ABI, complete-state comparison and guest limits remain unchanged.
+The two exports are not newly qualified nonlocal resumptions. There are 2,534
+flat returns, 642 explicit resumes, 71 qualified nonlocal routes and 571 remaining.
+All 16,325 prior selected files outside four established mutable status files,
+all 1,618 old registry rows and all 2,757 previous binaries are preserved.
+
+Inventory and limits
+1,619 registry entries; 1,616 distinct module/address pairs; 663 registered
+routines confirmed by name in the combined research DLL. One new routine.
+Cumulative 80,696 comparison evidence includes repeated checks and is not unique
+routines or measured recovered-code coverage. Overall completion stays about
+10% by weighted milestones. The game is not yet a playable native port.
+
+Older parent/world/collision owners, special tail 0777E0, callback assignments,
+precision and physical FPU/MMU/device/exception behavior remain unfinished.
+Full decompilation, PC 60/120/240 FPS and 8K, Android, stereoscopic 3DS, eventual
+N64/PS1 adaptations, SUPIR and settings remain unfinished. Texture Off must
+disable sampling and use vertex/material colours. No SARecomp code was imported.
+The goal remains active; Sol High remains appropriate for the special-tail work.
+
+Source and reproduction
+Source: source/sa_movement_heading_query.c.
+Evidence: analysis/movement_heading_query_qualification.json and separate reports.
+Original tables: 754DCC; character pointer table: 78C668. Stage globals:
+7493BA/7493BC, accessed by the real original 04F7E0 helper. Retail inputs stay local.
+Run Python with -B, using PowerShell for the build script:
+recover_movement_heading_query.py
+connect_movement_heading_query.py
+build_movement_heading_query.ps1
+check_movement_heading_query_unbounded.py
+verify_movement_heading_query_direct.py
+verify_movement_heading_query_retained.py
+audit_movement_heading_query.py
+verify_movement_heading_query_preservation.py
+qualify_movement_heading_query.py
+register_movement_heading_query.py
+verify_movement_heading_query_workflow.py
