@@ -1,3 +1,15 @@
+Contact commit/heading-speed pair074afc/076640,2026-10-28
+Two complete originals:384rows/32outcomes execute;566fresh original/native
+comparisons/4394checks,including286semanticcases.263-sourcebuild/strict
+unboundedcompiler checks pass. Exactoldbridge/CPU/guards/observer/ABI retained.
+1621registryentries/1618unique module-addresspairs/665confirmed native links.
+Prior16366immutable publishedfiles/1619registryrows/2759binaries preserved.
+Guide:MOVEMENT_CONTACT_COMMIT.txt. ResearchDLL remains nonplayable.
+Next075686/075f8c specialtail dependencies;olderparent/collision/precision/
+callback/physical/fullgame obligations remain. NoSARecompimplementationcopied.
+Overall10%weightedmilestones;goalactive,continueSolHigh. TextureOffdisables
+sampling/usesvertex-materialcolours;allfutureports/settingsremainunfinished.
+
 Latest heading query: original06cd22 software-qualified in the262-source library. All106instruction rows and26conditional outcomes execute;586fresh original/native comparisons/5455checks pass. Actualstage0902/0903 fallback,optional outputs,flag overrides,andlive table/actor-index output aliases verified.1619entries/1616unique/663confirmedregisterednative links. Parent/specialtail/world/collision/callback/precision/physical obligations remain open. See MOVEMENT_HEADING_QUERY.txt. Overall10%weightedmilestones;incomplete,nonplayable research builds.
 
 Latest movement surface resolution: original0747d2/0763a0/07256a software-qualified in the261-source library. All647instruction rows and64conditional outcomes execute;680fresh original/native comparisons/4399checks pass. Twentyfinite-input underflow witnesses close the zero-direction branch without injected results or infeasibility assumptions.1618entries/1615unique/662confirmedregisterednative links. Earlier owner/callback/precision/physical obligations remain open. See MOVEMENT_SURFACE_RESOLUTION.txt. Overall10%weightedmilestones;incomplete,nonplayable research builds.
