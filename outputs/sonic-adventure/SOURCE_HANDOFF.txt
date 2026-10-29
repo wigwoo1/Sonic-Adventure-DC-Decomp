@@ -1,3 +1,17 @@
+Contact candidate scan/clamp/response075686 and075f8c,2026-10-28
+Two complete originals:645 rows/54 branch outcomes exercised.619 fresh
+original/native comparisons and4888 checks pass, including344 semantic cases.
+264-source build and strict unbounded compiler checks pass; CPU,guards,
+observer,ABI andguest limits are unchanged. Original unset-minimum read,
+partial writes, return12 and rounding/underflow direction behavior retained.
+1623 registry entries/1620 distinct module-address pairs/667 native links.
+16411 old immutable published files/1621 registry rows/2761 builds preserved.
+Guide:MOVEMENT_CONTACT_CANDIDATES.txt. Incomplete research DLL;not playable.
+Next0777e0 special tail,then0730d8;older collision/callback/precision/physical
+and all full-game/port/settings obligations remain. TextureOff disables
+sampling/usesvertex-materialcolours. NoSARecompimplementation imported.
+Overall10%estimatedweightedmilestones;goalactive;continueSolHigh.
+
 Contact commit/heading-speed pair074afc/076640,2026-10-28
 Two complete originals:384rows/32outcomes execute;566fresh original/native
 comparisons/4394checks,including286semanticcases.263-sourcebuild/strict

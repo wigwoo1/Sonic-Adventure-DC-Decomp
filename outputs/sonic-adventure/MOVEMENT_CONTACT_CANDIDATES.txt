@@ -1,0 +1,84 @@
+Sonic Adventure USA Rev A: contact candidates 075686 and075f8c
+2026-10-28. Software verification milestone; the full game remains unfinished.
+
+What these routines do
+Both routines scan the contact list using the count in query+28 and58-byte
+records at6bacf0. They compare actual distances, angles and dot products.
+075686 selects an eligible minimum distance and clamps query motion to it.
+075f8c selects a contact, applies the original state/speed/direction gates,
+adds response delta, copies the selected normal and computes an intersection
+of planes. It chooses the direction, preserves auxiliary speed, writes velocity
+and copies that velocity into response delta. The completed redirect returns12.
+Earlier returns are zero, and some occur after writes; these writes are retained.
+
+Original quirks preserved
+The initial minimum is1000 and its index is-1. A finite eligible distance1024
+can leave that index unchanged. Eight tests use ordinary finite tiny motion
+and declared pre-entry memory to exercise the original distance[-1] read and
+zero-motion commit. No callee result or running execution frame is supplied.
+A tiny nonzero cross product can have squared length rounded/flushed tozero.
+The original then falls back to query normal and may reverse direction when
+its dot with the incoming delta is negative. Eight finite underflow witnesses
+exercise that reversal with delta(2,0,-2^-70/-80), without changing game math.
+Normal copies preserve32-bit words. The original reciprocal square root also
+rounds before multiplying: under toward-zero rounding, normalizing length3
+can produce0x3f7fffff instead of ideal1. The independent clamp oracle uses an
+exact rational derivation of1/3. All decimal and rounding cases are retained.
+
+Verification
+All645 original instructions and54 conditional outcomes execute; no branch is
+removed or declared infeasible.304 direct comparisons/2401 checks cover normal
+and motion geometry, candidate counts0/1/2/16, nearest/tied contacts, empty lists,
+state4000, zero/added/cancelling delta, zero auxiliary speed, raw numeric modes,
+FPU-disabled states and mapped guards.48 cardinal-plane comparisons/576 checks
+independently verify both intersection axes, both signs and speeds0.5/1/2,
+exact velocity copies and preserved query position/motion/anchor.
+8 minimum-slot witnesses/72 checks and16 rejection/flip witnesses/156 checks
+complete the branch coverage.243 retained interrupt/context/task comparisons
+and1683 checks pass with previous numeric expectations unchanged byAST.
+Total619 fresh comparisons/4888 checks, including344 semantic-oracle cases.
+FullCPU/FPU/RAM/device/queue state and ordered boundaries match. Reports separate
+normal returns from reached numeric/mapped stops. Physical hardware is unqualified.
+
+The264-source DLL builds. Strict unbounded-Wall-Wextra-Werror checks pass.
+The bridge is exactly the previous263-source bridge plus2 entries,28 actual
+call returns and28 continuation exports. All28 original return sites are observed.
+There are2585 flat return sites,693 explicit resumes,71 qualified nonlocal routes
+and622 remaining. New continuation exports are not newly qualified nonlocal paths.
+Existing CPU, guards, observer, ABI, comparison logic and guest limits are unchanged.
+All16411 old immutable published files,1621 old registry rows and2761 previous
+binaries retain their hashes. The original input remains local and unchanged.
+
+Inventory and remaining work
+1623 registry entries;1620 distinct module/address pairs;667 registered routines
+confirmed by name in the combined research DLL. Two new original routines.
+81881 cumulative comparison evidence includes repeats and is not unique coverage.
+Overall completion stays approximately10% by weighted milestones. These are
+incomplete research artifacts, not a playable PC port. The goal stays active.
+Next recover and verify the full0777e0 special tail, then parent0730d8. Connectivity
+alone is not verification. Older world/collision owners028bfe/029b00, callbacks,
+precision and physicalFPU/MMU/device/exception behavior remain unfinished.
+Full decompilation, PC60/120/240FPS and8K, Android, stereoscopic3DS, N64/PS1
+adaptations, SUPIR textures and settings remain unfinished. Texture Off disables
+sampling and uses vertex/material colours. No SARecomp implementation was copied.
+Keep Sol High for the connected special-tail reverse engineering.
+
+Files and reproduction
+Source:source/sa_movement_contact_candidates.c
+Evidence:analysis/movement_contact_candidates_qualification.json
+Original listings/drafts:analysis/movement-contact-candidates/
+Use Python-B and PowerShell for the build:
+recover_movement_contact_candidates.py
+connect_movement_contact_candidates.py
+build_movement_contact_candidates.ps1
+check_movement_contact_candidates_unbounded.py
+verify_movement_contact_candidates_direct.py
+verify_movement_contact_candidates_minimum.py
+verify_movement_contact_candidates_cardinal.py
+verify_movement_contact_candidates_edges.py
+verify_movement_contact_candidates_retained.py
+audit_movement_contact_candidates.py
+verify_movement_contact_candidates_preservation.py
+qualify_movement_contact_candidates.py
+register_movement_contact_candidates.py
+verify_movement_contact_candidates_workflow.py
