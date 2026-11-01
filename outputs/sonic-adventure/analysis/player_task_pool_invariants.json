@@ -1,0 +1,64 @@
+{
+  "status": "source_bound_fixed_pointer_interval_and_register_counter_invariants_passed",
+  "original_entry": "0x8c09844a",
+  "original_rows_byte_checked": 114,
+  "source_bound_infeasible_rows": [
+    "0x8c098496",
+    "0x8c0984ba",
+    "0x8c0984de"
+  ],
+  "source_bound_infeasible_outcomes": [
+    [
+      "0x8c09846e",
+      "0x8c09847e"
+    ],
+    [
+      "0x8c098492",
+      "0x8c098496"
+    ],
+    [
+      "0x8c0984b6",
+      "0x8c0984ba"
+    ],
+    [
+      "0x8c0984da",
+      "0x8c0984de"
+    ]
+  ],
+  "pointer_interval": {
+    "start": "0x8c79f04c",
+    "end_exclusive": "0x8c79f06c",
+    "word_count": 8,
+    "zeroing_loop_iterations": 4
+  },
+  "loop_iterations": 1024,
+  "task_count": 4096,
+  "counter_phase_values": {
+    "098492": "4j",
+    "0984b6": "4j+1",
+    "0984da": "4j+2",
+    "0984fe": "4j+3",
+    "098522": "4j+4"
+  },
+  "induction": "R4=0,R7=0,R12=4095,R11=4096 before loop. Four phases add exactly1 toR7 each;no otherR7writes,noR4/R11/R12writes,no memory loads or calls inside. At outer iterationj=0..1023,firstthree compares see4j,4j+1,4j+2<4095. Fourthcompare reaches4095 only inlastiteration,setsfinalnextlinknull. Loop exitsat4096 without signed wrap. Fixedunsigned scheduler-head interval startsbelow itsnonwrappingend,soinitialskip cannotoccur.",
+  "premises": [
+    "Normal original function entry,not an arbitrary nonlocal resume.",
+    "Original instructions and literal words remain unchanged throughout execution.",
+    "Synchronous supported coherent-RAM software semantics;no asynchronous modification of registers or T.",
+    "Faults,callee stops,corrupted returns and nonlocal control transfers are not normal completed executions."
+  ],
+  "private_memory_counter_alias_premise_required": false,
+  "all_loop_counters_are_registers": true,
+  "physical_hardware_or_full_game_proven": false,
+  "runtime_code_changed": false,
+  "guards_removed": 0,
+  "new_original_routine_credit": 0,
+  "overall_completion_percent": 10,
+  "sha256": {
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\analyze_player_task_pool_invariants.py": "f43a125a8b6a56f0604773311f270fd3ad78c93c1be86d50688a4d6d627877b2",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\work\\sonic-adventure\\extracted\\1ST_READ.BIN": "45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\analysis\\player-work-allocation\\8c09844a_instructions.tsv": "4d4631ad864a9cf74e75959c51edb86b44d1cbecec409c25275cb017bc17e04b",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\source\\sa_player_work_allocation.c": "99518e44a40e1ddc008a48695687c013a6e338fa35e6dd1a543d11848b0f029c",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\analysis\\player_work_allocation_translation.json": "1e782ed96d44c1a34bed4b8b9dac870c8164b07e2015d8a5e0c2cf76e408ad18"
+  }
+}

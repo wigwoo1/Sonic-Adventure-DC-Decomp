@@ -1,3 +1,15 @@
+Task pool initializer09844a qualification,2026-11-01
+Complete114-row body:111rows/12outcomes execute;3rows/4outcomes are proven
+unreachable for normal immutable synchronous original-entry execution. All
+guards retained.33fresh comparisons/263checks pass,includingeight real
+allocator-exhaustion paths.268-source strict compiler checks pass;native
+code/DLL unchanged.1627registry entries/1624unique addresses/671confirmedlinks.
+Guide:PLAYER_TASK_POOL.txt. Caller072b44 is exported for next recovery;the
+constructor call sites0b6316/e01d4 have no indexed owner.0777e0caller/stack
+aliases,stored callbacks,fullgame and all port/settings goals remain open.
+Overall10%weighted milestone estimate,not measured code coverage. Goalactive;
+keepSolHigh. Research libraries remain incomplete and nonplayable.
+
 Player-work constructor/helper lifecycle,2026-11-01
 Three complete originals06c350/04b440/07d67c:319 rows/42 outcomes execute.
 Original fixed heap initialization,4096-task pool,parent creation and full
