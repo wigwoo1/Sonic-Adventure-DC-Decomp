@@ -1,0 +1,68 @@
+Sonic Adventure Dreamcast Rev A: elapsed-cycle timer foundation
+
+Status: timer core and original leaf helpers verified; scene integration unfinished.
+Overall estimate: approximately 10% by weighted whole-project milestones.
+This is not measured code coverage. The goal remains active.
+
+What changed
+  source/tmu0_clock.c is authored native platform support, not recovered game code.
+  It holds persistent channel-zero timer state and advances from explicit elapsed
+  peripheral-clock (PCLK) cycles. Reading a register does not advance time.
+  It supports divided internal clocks, counter reload/underflow, request level,
+  register widths and delegation of unrelated bus accesses.
+
+  Reference: Renesas R01UH0456EJ0702, sections 12.2-12.5, printed pages 341-356:
+  https://www.renesas.com/en/document/mah/sh7750-sh7750s-sh7750r-group-users-manual-hardware
+
+Original game integration checked
+  Existing 6025e8 selects divide-by-64, loads TCOR0/TCNT0 and starts channel zero.
+  Existing 60260e reads the counter and produces the game's elapsed-tick value.
+  The tests execute their original instructions, including delay slots, and
+  compare against the existing exported native C bodies on this new timer core.
+  No game-helper return, context pointer or captured execution frame is supplied.
+
+  The existing renderer_input_tick_mmio.dll and all its game C remain unchanged.
+  The new tmu0_clock.dll is a separate peripheral research component.
+  No original routine receives recovery credit: registry 1,658 entries,
+  1,655 unique module/address pairs, 702 confirmed exact-name native links.
+
+What passed
+  Build: optimized native C with Wall/Wextra/Werror and no runtime dependency.
+  27,000 randomized operations against a separate edge-by-edge Python model.
+  80 reload/boundary profiles and 1,000 large-interval partition checks.
+  90,677 platform assertions, including maximum 64-bit elapsed intervals,
+  fractional prescaler phase, overflow rejection and parent-bus error preservation.
+
+  68 original/native helper comparisons pass 780 checks. All 24 original rows
+  were byte-checked. Tests cover both FPU banks and initial T values, every GPR,
+  SR/PR, unchanged FPU/special/hidden state, all 16 MiB RAM and exact peripheral
+  access order. Repeated reads at the same time remain stable. No clock sample
+  list is used in these helper tests.
+
+Limits and next work
+  The full texture/frame verifier still uses its previous declared peripheral
+  profiles. This component has not replaced that scene's sample lists yet.
+  The next step is to bind this persistent state into the complete verifier,
+  supply elapsed PCLK through a documented scheduler clock domain, add scan and
+  VBlank progression from original display configuration, then check consecutive
+  original frame/draw calls. Do not advance time merely because a clock is read.
+
+  Only channel zero and divided internal clocks are covered. External/RTC clocks,
+  other timer channels, active configuration changes and the SH7750 underflow
+  write-one erratum remain explicit unsupported domains. A research status -2
+  for such an operation is not a claim that physical hardware raises that fault.
+  Clock-domain reset phase is an explicit profile. Real board frequency, analog
+  phase, per-instruction cycle costs, automatic interrupts and VBlank are unproven.
+
+  The previous declared-profile frame proof remains intact. Sustained game frames,
+  physical pixels, playable ports and all requested FPS/resolution features remain
+  unfinished. Prior source/proof/build history and private retail inputs remain.
+
+How to check
+  Open analysis/tmu0_clock_qualification.json for the collected evidence.
+  Build: PowerShell -File outputs/sonic-adventure/build_tmu0_clock.ps1
+  Tests: python -B outputs/sonic-adventure/verify_tmu0_clock.py
+         python -B outputs/sonic-adventure/verify_tmu0_original_helpers.py
+  Reports are write-once; original-helper verification needs the matching retail
+  executable locally. Research DLLs are not a playable EXE.
+  Continue Sol High for the scheduler and complete scene integration.

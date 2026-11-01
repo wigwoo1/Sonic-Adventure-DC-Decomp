@@ -1,3 +1,12 @@
+Latest verified step: native elapsed-cycle TMU0 timer foundation
+The new platform core passes 90,677 checks; the original timer initializer
+and reader pass 68 comparisons without clock sample lists. Register reads
+do not advance time. Full scene clock/scheduler/VBlank integration remains
+unfinished; the prior declared-profile frame proof is preserved.
+No new original routine credit: 1,658 entries / 1,655 unique pairs / 702 links.
+See TMU0_CLOCK.txt. Approximately 10% weighted whole-project milestones,
+not code coverage. Goal active; continue Sol High for integration.
+
 Latest verified step: original input context and tick/submission callbacks
 The real textured particle sequence now completes original frame wrapper
 6050b0 under declared external timer/VBlank inputs. Two new original entries;
