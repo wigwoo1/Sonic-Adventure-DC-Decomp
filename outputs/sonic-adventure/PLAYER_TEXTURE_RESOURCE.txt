@@ -1,0 +1,80 @@
+Sonic Adventure Dreamcast Rev A - original texture-resource research
+
+Status: three complete initializer routines software-qualified in documented
+domains. Actual local EFF_REGULAR.PRS file read and decode verified. Texture-ID
+linking remains unfinished; this is not a playable port or visible render proof.
+Whole-project estimate: approximately 10% weighted milestones, not code coverage.
+
+New accepted originals:
+  8c607264 - descriptor-name array initialization (13 instruction rows)
+  8c64e5e0 - texture table initialization (31 rows)
+  8c660e58 - SDK allocator workspace initialization (20 rows)
+All 64 rows and 6 conditional outcomes execute. Across both FPU banks and
+nearest/zero rounding, independent guarded byte/field expectations, complete
+retail/native CPU/FPU/RAM state and ordered boundaries match. The suite performs
+66 comparisons, 357 checks and 155 independent exact oracles.
+Registry after acceptance: 1645 entries, 1642 unique module/address pairs,
+689 confirmed unique exact-name links in the current research DLL. These counts
+do not imply full-game execution or a measured fraction of all game routines.
+
+The ordinary-entry chain uses original game heap initialization and calloc,
+filesystem wrapper601618, actual disc mount, SONICADV directory selection,
+file open/size/close, descriptor/table/SDK initialization, driver defaults641160,
+then resource loader099750 and file/decode0997bc with recovered dependencies.
+Mount/directory/resource operations perform 21/51/61 reads respectively through
+the existing disc adapter. No allocator/callee output or private frame is supplied.
+The loader returns normally. Both complete buffers match independent hashes:
+  Compressed:124234bytes
+  2c62f8a4035181cb5366a8ea5332a793ae304b0a9546c43faa186e35c6d04096
+  Decoded:358304bytes
+  686237260763d1b8a826f0949e1d3d9a2565216ab15b6418b6168e8e3e96aa0b
+Retail inputs and decoded textures remain local and are not published.
+
+The loader stages 138 numeric texture IDs in list8c1c3068; these are not usable
+descriptor pointers. The following original API608c82 calls64c34c and reaches
+missing original dependency8c64c374. Both executions stop with status-2 and match;
+the partial state is discarded. Recover this dependency next, then execute the
+actual linker before resuming visible child-particle drawing. Do not hand-fill
+a descriptor, force branches or enter a captured private execution frame.
+
+Memory preconditions discovered during composition:
+  Ordinary entry stack:8cfff000.
+  Compressed resource starts0cee1800; fixed buffer end0cf00000.
+  Decoded output starts0cd00000.
+  Filesystem workspaces and texture table come from original calloc in the
+  game heap8c7ee8e0..8c87e8e0. SDK workspace8c900000..8ca00000.
+The earlier fixture stack8cf00000 overlapped the compressed buffer; earlier
+filesystem buffers at8cd00000/8cd40000 overlapped decoded output. Those failures
+were fixture aliasing, not evidence of a retail/native mismatch.
+The large resource takes 2837035 original instructions. Its audit uses the
+existing host instruction_budget option25000000, above the wrapper's earlier
+2000000 default. This changes no CPU code, native wait guard or bus/number ABI.
+
+Four additive builds preserve previous source/build/proof bytes:
+  player_texture_load.dll/.lib:279sources
+  player_texture_table_initialize.dll/.lib:280sources
+  player_texture_heap_initialize.dll/.lib:281sources
+  player_texture_driver_defaults.dll/.lib:282sources
+These are incomplete Windows research libraries, not a playable game.
+All 282 final-stage sources pass strict Wall/Wextra/Werror syntax checks.
+Fifty original bodies/2813 instruction rows are byte-checked. Seven already
+accepted routines/127 rows are canonical reuses with zero duplicate credit.
+Only the three initializers above receive new qualification credit. Other
+loading/decoding/default callbacks remain unregistered proposals. Actual retail
+RTS/NOP default callbacks were recovered; their behavior was not fabricated.
+
+To inspect without programming: open analysis/player_texture_resource_qualification.json
+and analysis/player_texture_resource_verification.json. The first states the
+accepted scope; the second records every comparison and the missing next call.
+Developer rerun (requires matching local retail inputs and documented toolchain):
+  python -B verify_player_texture_resource.py
+The verifier deliberately refuses to overwrite existing proof files. Preserve
+old evidence and use a new report name for subsequent investigations.
+
+Remaining work includes texture linking/formats, visible rendering, scene-state
+producers, effect updates, full startup/scheduler and all complete ports/settings.
+Continue Sol High for this reverse engineering. The goal stays active.
+Future settings include SUPIR HD textures, texture scale100/75/50/25/Off,
+render resolution and aspect ratio. Off disables texture sampling and uses
+vertex/material colours. PC60/120/240FPS/8K,Android,stereoscopic3DS,N64/PS1
+remain planned and unverified.

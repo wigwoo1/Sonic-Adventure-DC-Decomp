@@ -1,3 +1,7 @@
+# Texture resource read and decode: verified research update
+
+Three complete original initializers (64 rows / 6 conditional outcomes) are now software-qualified. 66 fresh original/native comparisons and 357 checks pass, including actual local EFF_REGULAR.PRS read and decompression with exact complete input/output hashes. Four additive builds lead to 282 sources; all final sources pass strict compilation checks. Registry: 1,645 entries / 1,642 unique module/address pairs; 689 confirmed exact-name unique DLL links. The decoder stages numeric texture IDs; original linking reaches missing 0x8c64c374. Visible rendering and full game remain unfinished. Approximately 10% weighted milestones, not measured code coverage. See [the guide](PLAYER_TEXTURE_RESOURCE.txt).
+
 # Particle spawning and draw wrapper: verified research update
 
 Two more complete originals (347 rows / 14 conditional outcomes) are software-qualified in documented domains. 192 fresh original/native comparisons and 1,118 checks pass, with eight real allocated-child lifecycles and genuine exhaustion/reuse. The combined research DLL now has 686 confirmed exact-name unique routine links; registry: 1,642 entries / 1,639 unique module/address pairs. The existing 278-source build is preserved. Visible drawing reaches the original missing EFF_REGULAR texture descriptor; the real loader is identified and remains to be integrated. Approximately 10% weighted milestones, not measured code coverage; full game and ports unfinished. See [the guide](PLAYER_CHILD_PARTICLES.txt).
