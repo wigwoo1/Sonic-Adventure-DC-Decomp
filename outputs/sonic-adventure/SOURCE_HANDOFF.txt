@@ -1,3 +1,9 @@
+Original filesystem callback and live interrupt observation
+
+Original 5ffcf0 is now software-qualified and runs the actual shared 6005c2 worker. A fresh 287-source research DLL matches 89 original/native comparisons: 80 normal returns and nine expected typed stops. The real 138-texture/player/particle chain completes both IRQ/RTE paths and reaches uninitialized input read 601eb8. A reference-only firmware observer correction records the live IRQ return address; all guest execution and comparisons remain intact.
+
+See RENDERER_FILESYSTEM_CALLBACK.txt and analysis/renderer_filesystem_callback_qualification.json. Inventory: 1,656 entries / 1,653 unique module-address pairs / 700 confirmed native links. Shared worker code earns no duplicate credit. Approximately 10% weighted whole-project milestones, not measured code coverage. These are incomplete research builds, not a playable port. Goal active; continue Sol High for the original input-context producer.
+
 Original TA list callbacks and frame interrupt integration
 
 Three original callbacks are now software-qualified; canonical604546 is reused without duplicate credit. A fresh286-source research DLL passes100 original/native comparisons, including90 normal returns and10 matching typed stops, plus53 TA-event contract cases/357checks. Original empty submission returns aftertwoIRQs without watchdog recovery. The real138-texture/player/particle chain reaches missing filesystem callback5ffcf0; full empty6050b0 reaches uninitialized input601eb8. TA parameter generation, automatic timing anddisplayed pixels remain unfinished.

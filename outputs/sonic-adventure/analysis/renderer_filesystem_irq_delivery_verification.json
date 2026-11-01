@@ -1,0 +1,1091 @@
+{
+  "status": "original_filesystem_IRQ_and_following_ordinary_firmware_observation_verified",
+  "original_native_comparisons": 11,
+  "setup": [
+    {
+      "label": "original vector initialization",
+      "entry": "0x8c645de0",
+      "steps": 1086,
+      "disc_read_attempts": 0,
+      "return_value": "0x40000001"
+    },
+    {
+      "label": "original system heap initialization",
+      "entry": "0x8c602128",
+      "steps": 85,
+      "disc_read_attempts": 0,
+      "return_value": "0x40000000"
+    },
+    {
+      "label": "original display and library initialization",
+      "entry": "0x8c604702",
+      "steps": 35482,
+      "disc_read_attempts": 0,
+      "return_value": "0xbc"
+    },
+    {
+      "label": "original allocated context initialization",
+      "entry": "0x8c604dce",
+      "steps": 267936,
+      "disc_read_attempts": 0,
+      "return_value": "0x400000"
+    },
+    {
+      "label": "original game heap initialization",
+      "entry": "0x8c098a10",
+      "steps": 1769501,
+      "disc_read_attempts": 0,
+      "return_value": "0x90000"
+    },
+    {
+      "label": "actual filesystem-context allocation",
+      "entry": "0x8c098b0c",
+      "steps": 16487,
+      "disc_read_attempts": 0,
+      "return_value": "0x8c7ee8f0"
+    },
+    {
+      "label": "actual directory allocation",
+      "entry": "0x8c098b0c",
+      "steps": 196711,
+      "disc_read_attempts": 0,
+      "return_value": "0x8c7f2920"
+    },
+    {
+      "label": "original real-disc filesystem mount",
+      "entry": "0x8c601618",
+      "steps": 363239,
+      "disc_read_attempts": 21,
+      "return_value": "0x0"
+    }
+  ],
+  "cases": [
+    {
+      "label": "original empty frame finalization",
+      "entry": "0x8c642440",
+      "steps": 537,
+      "firmware_boundaries": [],
+      "runtime_state": [
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "exception_state": [
+        1073741827,
+        2365509632,
+        2364538880,
+        384,
+        864,
+        0,
+        0
+      ],
+      "frame_events_state": [
+        1,
+        0,
+        0,
+        1,
+        1,
+        0,
+        0,
+        0,
+        1
+      ],
+      "boundaries": [
+        {
+          "target": "0x8c642440",
+          "pr": "0x8cfed000",
+          "stack": "0x8cfff000",
+          "arguments": [
+            0,
+            2357177648,
+            0,
+            2357128091
+          ],
+          "sr": 1073741824
+        },
+        {
+          "target": "0x8c65253e",
+          "pr": "0x8c642746",
+          "stack": "0x8cffef88",
+          "arguments": [
+            2897739040,
+            2355547544,
+            4,
+            2365583324
+          ],
+          "sr": 1073741824
+        },
+        {
+          "target": "0x8c65253e",
+          "pr": "0x8c64286a",
+          "stack": "0x8cffef88",
+          "arguments": [
+            3758096384,
+            2365583256,
+            32,
+            2365583324
+          ],
+          "sr": 1073741825
+        },
+        {
+          "target": "0x8c6564e0",
+          "pr": "0x8c6429ea",
+          "stack": "0x8cffef88",
+          "arguments": [
+            1,
+            2365583288,
+            0,
+            2365583324
+          ],
+          "sr": 1073741825
+        }
+      ],
+      "full_state_match": true,
+      "ordered_boundaries_match": true
+    },
+    {
+      "label": "original submission withfilesystem callbacks insideIRQ",
+      "entry": "0x8c641f00",
+      "steps": 2689,
+      "firmware_boundaries": [
+        {
+          "target": "0x8c00f100",
+          "pr": "0x8c6452de",
+          "stack": "0x8cffee7c",
+          "arguments": [
+            2357127424,
+            0,
+            0,
+            2
+          ],
+          "sr": 1610612832
+        },
+        {
+          "target": "0x8c00f100",
+          "pr": "0x8c6452de",
+          "stack": "0x8cffee7c",
+          "arguments": [
+            2357127424,
+            0,
+            0,
+            2
+          ],
+          "sr": 1610612832
+        }
+      ],
+      "runtime_state": [
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        0,
+        2,
+        0,
+        0,
+        2,
+        0,
+        0,
+        1
+      ],
+      "exception_state": [
+        1073741824,
+        2355372128,
+        2365583320,
+        384,
+        800,
+        0,
+        1
+      ],
+      "frame_events_state": [
+        4,
+        0,
+        2,
+        0,
+        2,
+        0,
+        2,
+        0,
+        1
+      ],
+      "boundaries": [
+        {
+          "target": "0x8c641f00",
+          "pr": "0x8cfed000",
+          "stack": "0x8cfff000",
+          "arguments": [
+            20,
+            2357867400,
+            2357867508,
+            20
+          ],
+          "sr": 1073741825
+        },
+        {
+          "target": "0x8c65253e",
+          "pr": "0x8c641f86",
+          "stack": "0x8cffefd8",
+          "arguments": [
+            3758096384,
+            2355547544,
+            4,
+            20
+          ],
+          "sr": 1073741824
+        },
+        {
+          "target": "0x8c641e00",
+          "pr": "0x8c641f90",
+          "stack": "0x8cffefd8",
+          "arguments": [
+            0,
+            2355547548,
+            0,
+            20
+          ],
+          "sr": 1073741825
+        },
+        {
+          "target": "0x8c650bc8",
+          "pr": "0x8c641e8c",
+          "stack": "0x8cffefac",
+          "arguments": [
+            268435456,
+            2897739008,
+            64,
+            16
+          ],
+          "sr": 1073741824
+        },
+        {
+          "target": "0x8c6416ec",
+          "pr": "0x8c642060",
+          "stack": "0x8cffefd8",
+          "arguments": [
+            0,
+            0,
+            2,
+            2357865272
+          ],
+          "sr": 1073741824
+        },
+        {
+          "target": "0x8ce50600",
+          "pr": "0x8c642060",
+          "stack": "0x8cffefd8",
+          "arguments": [
+            173879092,
+            1112038970,
+            4146640122,
+            2195908194
+          ],
+          "sr": 1879048192
+        },
+        {
+          "target": "0x8c65e80c",
+          "pr": "0x8c642060",
+          "stack": "0x8cffefd4",
+          "arguments": [
+            173879092,
+            1112038970,
+            4146640122,
+            2195908194
+          ],
+          "sr": 1879048192
+        },
+        {
+          "target": "0x8c652210",
+          "pr": "0x8c65e8be",
+          "stack": "0x8cffeef4",
+          "arguments": [
+            800,
+            1112038970,
+            4146640122,
+            2195908194
+          ],
+          "sr": 1610612976
+        },
+        {
+          "target": "0x8c651bc0",
+          "pr": "0x8c652232",
+          "stack": "0x8cffeed4",
+          "arguments": [
+            800,
+            1112038970,
+            4146640122,
+            2195908194
+          ],
+          "sr": 1610612976
+        },
+        {
+          "target": "0x8c650e40",
+          "pr": "0x8c652352",
+          "stack": "0x8cffeed4",
+          "arguments": [
+            4800,
+            524288,
+            4288675884,
+            2195908194
+          ],
+          "sr": 1610612976
+        },
+        {
+          "target": "0x8c651f1e",
+          "pr": "0x8c6523ca",
+          "stack": "0x8cffeed4",
+          "arguments": [
+            512,
+            2357865272,
+            0,
+            0
+          ],
+          "sr": 1610612977
+        },
+        {
+          "target": "0x8c652554",
+          "pr": "0x8c6524b8",
+          "stack": "0x8cffeed4",
+          "arguments": [
+            2355387166,
+            0,
+            2357866168,
+            2357867068
+          ],
+          "sr": 1610612976
+        },
+        {
+          "target": "0x8c645b1e",
+          "pr": "0x8c65258c",
+          "stack": "0x8cffee8c",
+          "arguments": [
+            0,
+            0,
+            2357866168,
+            2357867068
+          ],
+          "sr": 1610612976
+        },
+        {
+          "target": "0x8c5ffcf0",
+          "pr": "0x8c645b38",
+          "stack": "0x8cffee84",
+          "arguments": [
+            2357127424,
+            0,
+            2357866168,
+            2357867068
+          ],
+          "sr": 1610612832
+        },
+        {
+          "target": "0x8c6005c2",
+          "pr": "0x8c645b38",
+          "stack": "0x8cffee84",
+          "arguments": [
+            2357127424,
+            0,
+            2357866168,
+            2357867068
+          ],
+          "sr": 1610612832
+        },
+        {
+          "target": "0x8c6452d6",
+          "pr": "0x8c6005d2",
+          "stack": "0x8cffee80",
+          "arguments": [
+            2357127424,
+            0,
+            2357866168,
+            2357867068
+          ],
+          "sr": 1610612832
+        },
+        {
+          "target": "0x8c10d960",
+          "pr": "0x8c6452de",
+          "stack": "0x8cffee7c",
+          "arguments": [
+            2357127424,
+            0,
+            2357866168,
+            2357867068
+          ],
+          "sr": 1610612832
+        },
+        {
+          "target": "0x8c00f100",
+          "pr": "0x8c6452de",
+          "stack": "0x8cffee7c",
+          "arguments": [
+            2357127424,
+            0,
+            0,
+            2
+          ],
+          "sr": 1610612832
+        },
+        {
+          "target": "0x8c652554",
+          "pr": "0x8c6524b8",
+          "stack": "0x8cffeed4",
+          "arguments": [
+            2355119464,
+            0,
+            0,
+            2
+          ],
+          "sr": 1610612832
+        },
+        {
+          "target": "0x8c604568",
+          "pr": "0x8c65258c",
+          "stack": "0x8cffee8c",
+          "arguments": [
+            0,
+            0,
+            0,
+            2
+          ],
+          "sr": 1610612832
+        },
+        {
+          "target": "0x8c6416ec",
+          "pr": "0x8c642060",
+          "stack": "0x8cffefd8",
+          "arguments": [
+            0,
+            0,
+            2,
+            2357865272
+          ],
+          "sr": 1073741824
+        },
+        {
+          "target": "0x8ce50600",
+          "pr": "0x8c642060",
+          "stack": "0x8cffefd8",
+          "arguments": [
+            173879092,
+            1112038970,
+            4146640122,
+            2195908194
+          ],
+          "sr": 1879048192
+        },
+        {
+          "target": "0x8c65e80c",
+          "pr": "0x8c642060",
+          "stack": "0x8cffefd4",
+          "arguments": [
+            173879092,
+            1112038970,
+            4146640122,
+            2195908194
+          ],
+          "sr": 1879048192
+        },
+        {
+          "target": "0x8c652210",
+          "pr": "0x8c65e8be",
+          "stack": "0x8cffeef4",
+          "arguments": [
+            800,
+            1112038970,
+            4146640122,
+            2195908194
+          ],
+          "sr": 1610612976
+        },
+        {
+          "target": "0x8c651bc0",
+          "pr": "0x8c652232",
+          "stack": "0x8cffeed4",
+          "arguments": [
+            800,
+            1112038970,
+            4146640122,
+            2195908194
+          ],
+          "sr": 1610612976
+        },
+        {
+          "target": "0x8c651570",
+          "pr": "0x8c651ef4",
+          "stack": "0x8cffeea0",
+          "arguments": [
+            0,
+            0,
+            4146640122,
+            2195908194
+          ],
+          "sr": 1610612977
+        },
+        {
+          "target": "0x8c6516a0",
+          "pr": "0x8c651ef8",
+          "stack": "0x8cffeea0",
+          "arguments": [
+            1,
+            4,
+            2690613328,
+            2690613332
+          ],
+          "sr": 1610612977
+        },
+        {
+          "target": "0x8c65194a",
+          "pr": "0x8c651f04",
+          "stack": "0x8cffeea0",
+          "arguments": [
+            0,
+            1,
+            4,
+            2690613572
+          ],
+          "sr": 1610612976
+        },
+        {
+          "target": "0x8c652554",
+          "pr": "0x8c6524b8",
+          "stack": "0x8cffeed4",
+          "arguments": [
+            2355387166,
+            0,
+            4,
+            2690613572
+          ],
+          "sr": 1610612976
+        },
+        {
+          "target": "0x8c645b1e",
+          "pr": "0x8c65258c",
+          "stack": "0x8cffee8c",
+          "arguments": [
+            0,
+            0,
+            4,
+            2690613572
+          ],
+          "sr": 1610612976
+        },
+        {
+          "target": "0x8c5ffcf0",
+          "pr": "0x8c645b38",
+          "stack": "0x8cffee84",
+          "arguments": [
+            2357127424,
+            0,
+            4,
+            2690613572
+          ],
+          "sr": 1610612832
+        },
+        {
+          "target": "0x8c6005c2",
+          "pr": "0x8c645b38",
+          "stack": "0x8cffee84",
+          "arguments": [
+            2357127424,
+            0,
+            4,
+            2690613572
+          ],
+          "sr": 1610612832
+        },
+        {
+          "target": "0x8c6452d6",
+          "pr": "0x8c6005d2",
+          "stack": "0x8cffee80",
+          "arguments": [
+            2357127424,
+            0,
+            4,
+            2690613572
+          ],
+          "sr": 1610612832
+        },
+        {
+          "target": "0x8c10d960",
+          "pr": "0x8c6452de",
+          "stack": "0x8cffee7c",
+          "arguments": [
+            2357127424,
+            0,
+            4,
+            2690613572
+          ],
+          "sr": 1610612832
+        },
+        {
+          "target": "0x8c00f100",
+          "pr": "0x8c6452de",
+          "stack": "0x8cffee7c",
+          "arguments": [
+            2357127424,
+            0,
+            0,
+            2
+          ],
+          "sr": 1610612832
+        },
+        {
+          "target": "0x8c653444",
+          "pr": "0x8c642148",
+          "stack": "0x8cffefd8",
+          "arguments": [
+            8,
+            1,
+            2,
+            2357865272
+          ],
+          "sr": 1073741825
+        },
+        {
+          "target": "0x8c653444",
+          "pr": "0x8c64214e",
+          "stack": "0x8cffefd8",
+          "arguments": [
+            8,
+            0,
+            2,
+            2357865272
+          ],
+          "sr": 1073741825
+        },
+        {
+          "target": "0x8c653444",
+          "pr": "0x8c64215e",
+          "stack": "0x8cffefd8",
+          "arguments": [
+            292,
+            1398656,
+            2,
+            2357865272
+          ],
+          "sr": 1073741824
+        },
+        {
+          "target": "0x8c653444",
+          "pr": "0x8c642166",
+          "stack": "0x8cffefd8",
+          "arguments": [
+            300,
+            1112064,
+            2,
+            2357865272
+          ],
+          "sr": 1073741824
+        },
+        {
+          "target": "0x8c653444",
+          "pr": "0x8c64216e",
+          "stack": "0x8cffefd8",
+          "arguments": [
+            296,
+            0,
+            2,
+            2357865272
+          ],
+          "sr": 1073741824
+        },
+        {
+          "target": "0x8c653444",
+          "pr": "0x8c642176",
+          "stack": "0x8cffefd8",
+          "arguments": [
+            304,
+            1111808,
+            2,
+            2357865272
+          ],
+          "sr": 1073741824
+        },
+        {
+          "target": "0x8c653444",
+          "pr": "0x8c64217e",
+          "stack": "0x8cffefd8",
+          "arguments": [
+            356,
+            1398656,
+            2,
+            2357865272
+          ],
+          "sr": 1073741824
+        },
+        {
+          "target": "0x8c653444",
+          "pr": "0x8c642186",
+          "stack": "0x8cffefd8",
+          "arguments": [
+            324,
+            2147483648,
+            2,
+            2357865272
+          ],
+          "sr": 1073741824
+        },
+        {
+          "target": "0x8c653476",
+          "pr": "0x8c64218e",
+          "stack": "0x8cffefd8",
+          "arguments": [
+            324,
+            2147483648,
+            2,
+            2357865272
+          ],
+          "sr": 1073741824
+        }
+      ],
+      "full_state_match": true,
+      "ordered_boundaries_match": true
+    },
+    {
+      "label": "ordinary original filesystem worker afterRTE",
+      "entry": "0x8c6005c2",
+      "steps": 29,
+      "firmware_boundaries": [
+        {
+          "target": "0x8c00f100",
+          "pr": "0x8c6452de",
+          "stack": "0x8cffeff8",
+          "arguments": [
+            324,
+            2147483648,
+            0,
+            2
+          ],
+          "sr": 1073741825
+        }
+      ],
+      "runtime_state": [
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        0,
+        2,
+        0,
+        0,
+        2,
+        0,
+        0,
+        1
+      ],
+      "exception_state": [
+        1073741824,
+        2355372128,
+        2365583320,
+        384,
+        800,
+        0,
+        0
+      ],
+      "frame_events_state": [
+        4,
+        0,
+        2,
+        0,
+        2,
+        0,
+        2,
+        0,
+        1
+      ],
+      "boundaries": [
+        {
+          "target": "0x8c6005c2",
+          "pr": "0x8cfed000",
+          "stack": "0x8cfff000",
+          "arguments": [
+            324,
+            2147483648,
+            2,
+            2357865272
+          ],
+          "sr": 1073741825
+        },
+        {
+          "target": "0x8c6452d6",
+          "pr": "0x8c6005d2",
+          "stack": "0x8cffeffc",
+          "arguments": [
+            324,
+            2147483648,
+            2,
+            2357865272
+          ],
+          "sr": 1073741825
+        },
+        {
+          "target": "0x8c10d960",
+          "pr": "0x8c6452de",
+          "stack": "0x8cffeff8",
+          "arguments": [
+            324,
+            2147483648,
+            2,
+            2357865272
+          ],
+          "sr": 1073741825
+        },
+        {
+          "target": "0x8c00f100",
+          "pr": "0x8c6452de",
+          "stack": "0x8cffeff8",
+          "arguments": [
+            324,
+            2147483648,
+            0,
+            2
+          ],
+          "sr": 1073741825
+        }
+      ],
+      "full_state_match": true,
+      "ordered_boundaries_match": true
+    }
+  ],
+  "complete_IRQs": 2,
+  "IRQ_firmware_calls": 2,
+  "following_ordinary_firmware_calls": 1,
+  "firmware_call_instruction": "0x8c6452da",
+  "actual_architectural_return": "0x8c6452de",
+  "guest_execution_changed": false,
+  "comparisons_removed": false,
+  "host_observer_uses_live_CPU": true,
+  "scope": "Original startup/allocators/realmount/finalizer produceinputs. Originalsubmission executes twofullcopiedvector/context/SDK/filesystemcallback/worker/firmware/RTE paths withoutSDKwatchdog. A followingordinaryworkerentry provesobserverCPUselectionrestoresafterRTE. PRcomesfromliveoriginalCPU andmatchesactualjsr6452da+4,notnativeexpected-value substitution. FullRAM/CPU/FPU/device/event/boundarycomparisons retained. ExternalVBlankobservations remain declared;pixelsandfull6050b0frame unfinished.",
+  "sha256": {
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\verify_renderer_filesystem_irq_delivery.py": "fa40e3014fa20176c2c0cbf1d7e0ede482d5c5dc3e3324089bc91669b0823367",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\verify_renderer_filesystem_irq.py": "1bc2361f533505efc76c03860378ebc66d2c2e41e667e3919b5978bffeb87ac5",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\renderer_filesystem_irq_reference.py": "669007833d61ee2c98169bfcc5d398e16454662dd1fc8282174b6568f56d76c6",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\write_watch_renderer_filesystem_irq.py": "24926b5dd157123e9331a3099a1e94d986299a3235cf015eca66c4a37744a583",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\analysis\\renderer_filesystem_irq_observer_connection.json": "69722e6fb1c58efe64b8fe56b5639f08f42d7d8acbd2a214e1512263736ae023",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\work\\sonic-adventure\\build\\renderer_filesystem_callback.dll": "6f759929cd94c954235e47578520ffee7ca7a8a883a23a90baa239100c9c144c"
+  }
+}

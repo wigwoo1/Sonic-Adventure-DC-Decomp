@@ -1,0 +1,99 @@
+Sonic Adventure Dreamcast Rev A: filesystem callback in the graphics IRQ path
+
+Status: callback and software integration verified; full frames remain unfinished.
+Overall estimate: approximately 10% by weighted whole-project milestones.
+This is not measured recovered-code coverage. The goal remains active.
+
+What changed
+  Original 5ffcf0 checks the incoming context's word at offset 20 hexadecimal.
+  Value 1 returns immediately. Other values tail-branch to the existing original
+  worker at 6005c2, preserving the caller's return address and arguments.
+
+  The callback has seven entry instructions. Ghidra includes the worker's shared
+  327 instructions in its 334-row body. All 334 rows were checked against the
+  original executable; all 327 shared rows match the retained worker listing.
+  The implementation delegates to that actual native worker. Shared code earns
+  no duplicate credit. No backend result or replacement game helper is supplied.
+
+  The newly reached firmware calls exposed an older reference-observer bug:
+  during an interrupt, it recorded the suspended frame's PR instead of the PR
+  of the CPU currently executing the interrupt. The additive corrected observer
+  follows the live CPU and restores its borrowed selection in try/finally.
+  Guest execution, native code, wait guards and every comparison stay intact.
+  The actual JSR at 6452da produces return address 6452de.
+
+What passed
+  Current native build: work/sonic-adventure/build/renderer_filesystem_callback.dll
+  and its import library. It compiles from 287 C sources with Wall/Wextra/Werror.
+  Accepted reference: renderer_filesystem_irq_reference.py and the corresponding
+  write_watch_renderer_filesystem_irq.py observer. Earlier observers remain
+  historical evidence and do not qualify the interrupt firmware observations.
+
+  89 original/native comparisons match: 80 normal returns and nine typed stops.
+  Gate, scene and control checks total 903. The texture scene retains 437
+  independent exact oracles. All seven gate rows and both branch outcomes execute.
+  Another 53 TA-event contract cases pass 357 checks on this same native DLL.
+
+  Original startup, allocators and a real 21-sector filesystem mount produce
+  the contexts and worker tables. Thirty-two gate cases cover two caller records,
+  values 0/1/2/ffffffff, both FPU banks and both initial T values. Non-1 cases run
+  the actual worker. The locked gate preserves all RAM. Full machine, RAM, VRAM,
+  device state and ordered service boundaries remain compared.
+
+  A focused submission test completes two original vector/context/SDK/filesystem/
+  worker/firmware/RTE paths. A following ordinary worker call verifies that the
+  observer switches back to the caller after RTE. No watchdog recovery is used.
+  Masks, BL, disabled service, absent VBlank and damaged vectors retain their
+  existing wait/fault outcomes.
+
+  The actual 138-texture/player/particle chain passes 23 normal calls, transfers
+  224 bytes including its exact 160-byte quad, and completes both interrupt paths.
+  The original code clears the busy flag. No captured fault frame is resumed.
+
+Current frontier and limits
+  The full 6050b0 wrapper now reaches input read 601eb8 and stops because the
+  input context is uninitialized. Both native and original reference executions
+  agree on that partial state. This is not a complete or displayed frame.
+
+  Input accessor 65f3a0 reads the context pointer at 8c8a83b4. With that pointer
+  zero, it returns offset 44c hexadecimal for channel zero. The next task is to
+  run the genuine producer of this context through original startup/allocators.
+  Do not supply the pointer, skip the input handler or reuse the stopped frame.
+
+  Shared-worker pending-I/O branches are not newly qualified by the idle-context
+  gate tests. Malformed contexts and arbitrary firmware/error/nested-interrupt
+  domains remain outside this qualification. The observer fix concerns the tested
+  firmware hook; it does not qualify every older legacy hook.
+
+  TA parameter-buffer/current-pointer generation, automatic VBlank timing,
+  rasterization, displayed pixels and complete startup remain unfinished.
+  VBlank and timer observations are declared external inputs. Background VRAM
+  writes match the software profile; they do not prove physical GPU allocation.
+  The separate legacy 639b98 invalid-matrix-pop guard obligation remains open.
+
+Inventory and publication
+  One newly qualified original entry brings the registry to 1,656 entries,
+  1,653 unique module/address pairs and 700 confirmed exact-name native links.
+  These counts do not establish the total number of routines in the game.
+
+  Prior source, proof and build bytes remain preserved. Retail executables,
+  disc images, textures, models, music, raw pixel traces, toolchains and secrets
+  are excluded from publication. Builds are incomplete research artifacts, not
+  a playable PC port. PC frame-rate/resolution features and later ports/settings
+  remain planned. Texture Off still means vertex/material colours without sampling.
+
+Evidence and reproduction
+  analysis/renderer_filesystem_callback_qualification.json
+  analysis/renderer_filesystem_callback_translation.json
+  analysis/renderer_filesystem_irq_verification.json
+  analysis/renderer_filesystem_irq_delivery_verification.json
+  analysis/renderer_filesystem_irq_controls_verification.json
+  analysis/renderer_filesystem_irq_event_bus_verification.json
+  analysis/renderer_filesystem_irq_scene_frontier.json
+
+  Build: PowerShell -File outputs/sonic-adventure/build_renderer_filesystem_callback.ps1
+  Current tests: verify_renderer_filesystem_irq.py,
+  verify_renderer_filesystem_irq_delivery.py, verify_renderer_filesystem_irq_controls.py,
+  verify_renderer_filesystem_irq_event_bus.py and verify_renderer_filesystem_irq_scene.py.
+  Matching retail inputs must be supplied locally. Reports are write-once.
+  Continue with Sol High for the original input-context producer.
