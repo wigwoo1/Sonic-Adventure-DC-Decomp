@@ -1,3 +1,15 @@
+Player-work constructor/helper lifecycle,2026-11-01
+Three complete originals06c350/04b440/07d67c:319 rows/42 outcomes execute.
+Original fixed heap initialization,4096-task pool,parent creation and full
+constructor run on carried state.317 comparisons/12456 independent checks pass.
+268-source build and strict unbounded compiler checks pass;710 original rows
+byte-checked.1626 registry entries/1623 distinct addresses/670 confirmed links.
+Canonical reuse has no duplicate credit.09844a pool qualification,0777e0sort
+caller-alias contract and stored0b3a2e callback remain open. See
+PLAYER_WORK_LIFECYCLE.txt. Incomplete research DLLs,not playable.
+Overall10%weighted milestone estimate,not measured code coverage. Goalactive;
+continueSolHigh. All port,display,SUPIR andvertex-colour TextureOff goals remain.
+
 Contact candidate scan/clamp/response075686 and075f8c,2026-10-28
 Two complete originals:645 rows/54 branch outcomes exercised.619 fresh
 original/native comparisons and4888 checks pass, including344 semantic cases.

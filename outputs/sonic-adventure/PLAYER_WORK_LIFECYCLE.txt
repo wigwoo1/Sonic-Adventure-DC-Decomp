@@ -1,0 +1,73 @@
+Player work constructor and allocation lifecycle - verified software research
+
+Status: VERIFIED within the documented software test scope. This is an
+incomplete research build, not a playable game. Overall project completion
+remains approximately 10% by weighted milestones, not measured code coverage.
+
+Three complete original routines now qualify:
+  0x8c06c350 - full player-work constructor:281 rows,40 branch outcomes.
+  0x8c04b440 - allocate/reuse character auxiliary work:20 rows,2 outcomes.
+  0x8c07d67c - allocate fifteen work records/reset counter:18 rows,no branches.
+All319 rows and42 outcomes execute. No original branch was discarded.
+Registry:1626 entries,1623 distinct module/address pairs,670 confirmed links
+by exact registered-name intersection with this DLL's actual exported names.
+These are different counts; none is a percentage of the game's total code.
+
+What changed
+The complete constructor is connected to original heap allocation, task
+creation, flag reads, parameter copying and movement reset helpers. Tests first
+execute the real fixed heap initializer and4096-task pool constructor, then
+create the parent task and run the player constructor on the same carried state.
+No allocation return values, query outputs or execution frames are supplied.
+The earlier draft snapshot remains preserved as historical evidence.
+
+Build and tests
+268-source Windows research DLL builds with Wall/Wextra/Werror. Strict compiler
+checks also pass without the optional historical research wait-bounds define.
+710 exported original instruction rows match the local Rev A input byte-for-byte.
+267 lifecycle comparisons/12172 independent checks include132 constructors
+covering eight character kinds,individual/all/clear progression flags,both player
+indices,and four floating register-bank/rounding combinations. Allocations,
+zeroed work payloads,parameter bytes,self pointers,scales,player tables and the
+spawned child's fields have independent checks beyond original/native agreement.
+33 extra comparisons/101 checks cover raw numeric modes,invalid pointers and
+declared empty-heap states:21 returns,six numeric stops,six mapping stops.
+17 retained movement/live-callback comparisons/183 checks also pass unchanged
+through the new DLL:16 normal cases andone existing numeric-domain stop.
+Total:317 comparisons and12456 independent checks for this milestone.
+
+The retained suite needs verify_player_work_lifecycle_retained_checked.py.
+Its first launch stopped during host imports before guest execution. The checked
+entry loads the existing host import floor first; assertions/results/guest
+limits were not changed. The retained report's allocation-family coverage
+section grants no new coverage or qualification to the movement special tail.
+
+Scope and remaining work
+The actual initialized heap spans8c7ee8e0..8c87e8e0. Constructor allocations are
+inside that heap and disjoint from the declared8cf00000 test stack. This does
+not prove every retail caller's stack,object or callback alias contracts.
+The two globally unresolved0777e0 sort outcomes remain open.
+09068e and five registered heap/task routines are reused with zero duplicate
+credit. The separately connected09844a task-pool initializer remains
+unregistered:111/114 rows and11/16 outcomes observed. Finish its fixed-loop and
+empty-heap qualification next. Child callback0b3a2e is stored,not executed here.
+Physical hardware,FPU/MMU/exceptions/devices,the complete boot/game loop and
+all playable ports remain unfinished. Planned FPS/resolution/SUPIR/settings
+features are not implemented. Texture Off must disable texture sampling and
+use vertex/material colours. No SARecomp implementation was imported.
+
+How to check without programming
+Read analysis/player_work_lifecycle_qualification.json for accepted routines and
+limits; the verification/frontier reports list each tested input and result.
+Research DLLs are test libraries. There is no game EXE to launch yet.
+
+Local repeat check,with matching retail input and the workstation tool paths:
+  python -B outputs/sonic-adventure/verify_player_work_lifecycle.py --smoke
+Build:
+  powershell -File outputs/sonic-adventure/build_player_work_allocation.ps1
+The full evidence scripts refuse to overwrite prior proof reports; use an
+additive report revision when collecting new formal evidence. Historical
+absolute paths and original proof hashes remain preserved.
+
+Recommended next model:Sol High for the remaining original allocation/stack
+and callback dependencies. The goal remains active.
