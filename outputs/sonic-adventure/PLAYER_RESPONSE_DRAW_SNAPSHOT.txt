@@ -1,0 +1,53 @@
+Sonic Adventure Dreamcast Rev A - response renderer research snapshot
+
+This is incomplete research code, not a playable game or a fully qualified
+renderer. Overall project completion remains approximately 10%, estimated
+from weighted milestones rather than measured recovered-code coverage.
+
+What is included
+The original debug-line renderer at 0x8c63ce24 has a complete instruction
+listing, Ghidra draft, translated C body and integration with the existing
+research pipeline. Its listing contains 684 instructions and 32 conditional
+branch outcomes. Generation and successful linking do not qualify its full
+behavior. No new routine has been registered or awarded recovery credit.
+The previous qualified-routine count of 675 linked entries is unchanged.
+
+Verification performed for this snapshot
+- The 273-source Windows research DLL was rebuilt successfully with the existing
+  Clang/LLD script, including -Wall -Wextra -Werror.
+- All 684 instruction encodings match the local original executable. The
+  translated non-delay labels were checked; 40 delay rows are inlined by the
+  retained translator. This static check does not independently prove their
+  behavior.
+- Six Python files and two PowerShell scripts passed syntax/parse checks.
+- Three selected original/native comparisons matched whole software state and
+  ordered boundaries. Two returned normally. The debug-enabled case executed
+  168 of the renderer's 684 rows and stopped at the unresolved dependency
+  0x8c64f5e8 on both sides. That matching stop is a limitation, not success at
+  rendering the complete line or returning from the complete renderer.
+- No game callee output or execution frame was supplied by these checks.
+
+Remaining work
+Recover and verify the dependency at 0x8c64f5e8, then expand response/renderer
+coverage and qualify the remaining outcomes. The response helper at 0x8c072946,
+movement owner and movement routing still need full qualification. This snapshot
+does not change those earlier limitations or claim physical hardware accuracy.
+
+Files to inspect
+analysis/player_response_draw_snapshot_checks.json records the exact smoke
+cases, software stops and source/build hashes. The translation and connection
+reports describe their separate generation/integration scope. Historical reports
+are preserved unchanged; their counts describe their own snapshots.
+
+Reproduction (from a workspace with the documented tools and matching retail input)
+powershell -File outputs/sonic-adventure/build_player_response_draw.ps1
+python -B outputs/sonic-adventure/check_player_response_draw_snapshot.py
+The check preserves its historical report and refuses to overwrite it. To rerun,
+use a separate checkout without the report or an additive revision. Retail
+inputs and assets are local-only and are not distributed with the repository.
+
+Research builds
+player_response_draw.dll and player_response_draw.lib are test artifacts, not
+a game executable. The release archive preserves previous research builds and
+adds these source-matched files, with per-file hashes and a SHA256 manifest.
+The decompilation goal remains active.
