@@ -1,3 +1,13 @@
+Latest verified milestone: complete collision child0344dc and debug-line
+wrapper043a40 now software-qualified. 126original/native comparisons and752
+checks;all526subject instructions/52outcomes exercised. Current DLL confirms
+678unique linked registered routines;1,634registry rows/1,631unique addresses.
+Native C and the verified274-source DLL are unchanged;strict compile passed.
+A real two-call stack-reuse test exposes the larger response caller validity
+contract,which remains open. See COLLISION_RESPONSE_QUALIFICATION.txt.
+Overall completion remains10% weighted milestones,not measured code coverage.
+The full game and ports remain unfinished;goal active.
+
 Latest verified milestone: complete near-plane line clipping at 0x8c64f5e8.
 274-source research build;187 original/native comparisons and1,362 checks,
 including544 independent exact oracles. 1,632 registered entries;676 confirmed

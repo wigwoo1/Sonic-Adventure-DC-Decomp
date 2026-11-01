@@ -1,0 +1,120 @@
+{
+  "status": "unchecked_child_output_contract_demonstrated_with_real_call_stack_reuse",
+  "original_native_comparisons": 3,
+  "checks": 24,
+  "cases": [
+    {
+      "label": "cold declared null collision information",
+      "status": -1,
+      "stop_pc": "0x8c639b68",
+      "steps": 586,
+      "before": {
+        "output": 2364538840,
+        "words": [
+          0,
+          0,
+          0
+        ],
+        "collision_info": 0
+      },
+      "after": {
+        "output": 2364538840,
+        "words": [
+          0,
+          0,
+          0
+        ],
+        "state_words": [
+          0,
+          0,
+          0
+        ]
+      },
+      "full_state_match": true,
+      "ordered_boundaries_match": true
+    },
+    {
+      "label": "first real successful call",
+      "status": 0,
+      "stop_pc": "0x8cfed000",
+      "steps": 1095,
+      "before": {
+        "output": 2364538840,
+        "words": [
+          0,
+          0,
+          0
+        ],
+        "collision_info": 2359951360
+      },
+      "after": {
+        "output": 2364538840,
+        "words": [
+          3212836864,
+          0,
+          0
+        ],
+        "state_words": [
+          3212836864,
+          0,
+          0
+        ]
+      },
+      "full_state_match": true,
+      "ordered_boundaries_match": true
+    },
+    {
+      "label": "second call reuses real prior stack with null collision information",
+      "status": 0,
+      "stop_pc": "0x8cfed000",
+      "steps": 712,
+      "before": {
+        "output": 2364538840,
+        "words": [
+          3212836864,
+          0,
+          0
+        ],
+        "collision_info": 0
+      },
+      "after": {
+        "output": 2364538840,
+        "words": [
+          3212836864,
+          0,
+          0
+        ],
+        "state_words": [
+          3212836864,
+          0,
+          0
+        ]
+      },
+      "full_state_match": true,
+      "ordered_boundaries_match": true
+    }
+  ],
+  "supplied_game_callee_outputs": 0,
+  "supplied_execution_frames": 0,
+  "stack_bytes_seeded_or_repaired": 0,
+  "caller_frame_bytes": 136,
+  "child_frame_bytes": 88,
+  "output_offset_within_caller_frame": 96,
+  "output_size": 12,
+  "child_output_initialization_on_rejection": false,
+  "caller_checks_child_result_before_output_copy": false,
+  "retail_validity_invariant_proven": false,
+  "response_helper_registered": false,
+  "new_original_routine_credit": 0,
+  "overall_completion_percent": 10,
+  "dll_sha256": "19aa02c7f54f9955ca50a64fcf9c057706ae3eaee6854e5b56d45c4f38696ea4",
+  "scope": "Cold and genuine two-call carried-state witnesses. The first successful real response call creates the stack output;the next rejected child leaves it unchanged and the caller consumes it. No private stack value,callee result or execution frame is supplied. This proves the observed software contract and why initialization must not be invented in the decompilation. It does not prove invalid collision information occurs in ordinary retail gameplay or globally establish allocation/stack alias exclusion.",
+  "sha256": {
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\verify_collision_response_caller_contracts.py": "9723a5051f463684a7a07dc27909b52f8dde3a146a4a65f731b255e77997ec67",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\write_watch_collision_response_contracts.py": "5acdd9925c728e12fe34b17738958bb351c57210edb117d0ca405017464a270e",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\write_watch_collision_response_arguments.py": "8937c301edf14e5e2e395b0cc82b9d34bbde370b1c7da90357853e2ec79cd736",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\player_collision_response_fixtures.py": "c264c46dbf0cb2a418a6929d607506ccb428d418f2efe66b71f3053be9d8cfec",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\analysis\\player-movement-owner-dependencies\\8c072946_instructions.tsv": "addb3f6c76acf9831a1ffcbe6c299b518a4d69bec93d3f1b22bc4b515f5798ae",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\work\\sonic-adventure\\build\\player_response_clip.dll": "19aa02c7f54f9955ca50a64fcf9c057706ae3eaee6854e5b56d45c4f38696ea4"
+  }
+}

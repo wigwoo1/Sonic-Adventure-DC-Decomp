@@ -1,0 +1,82 @@
+Sonic Adventure Dreamcast Rev A - collision response and debug-line wrapper
+
+Two previously translated originals are now behavior-qualified and registered:
+0x8c0344dc, the complete 476-instruction collision-direction child, and
+0x8c043a40, the complete 50-instruction debug-line argument wrapper.
+The current research DLL has 678 unique routines confirmed by exact registered
+name/export intersection. The registry contains 1,634 rows and 1,631 unique
+module/address pairs. Support and continuation exports receive no extra credit.
+
+Verification
+111 collision-child comparisons executed every one of its 476 instructions and
+52 conditional outcomes. 102 returned normally; nine reached the same existing
+downstream renderer numerical stop at 0x8c63d2d8. Tests cover all six shape types,
+zero/nonzero directions, all four type-4 direction choices, shape flags and
+rotations, debug on/off, inclusive index=count, rejection and six explicit
+output/actor-position aliases. There are 619 checks, including 153 independent
+exact result/rejection/direction checks and 30 bounded mathematical direction
+checks. The type-4 cardinal oracle permits absolute error 2^-20 for original
+matrix rounding. Original/native full-state comparison remains exact.
+
+12 direct wrapper comparisons returned normally through the actual renderer.
+109 checks include independent expectations for all six floating-point point
+arguments, endpoint colours 0xffffffff/0xff8888bb, descriptor pointers/count/flags,
+and its actual 0x34-byte frame. The observer only reads what original stores
+created. No callee output or execution frame is supplied.
+
+Three further comparisons and 24 checks demonstrate an unresolved caller
+contract using genuine completed-call stack reuse. Across this milestone:
+126 original/native comparisons and 752 checks passed. Ten comparisons retain
+matched numerical software stops; they are not normal completions.
+
+What the caller contract means
+The child reports failure for invalid collision structures or unsupported shape
+types and leaves the caller-owned direction output unchanged. The larger
+0x8c072946 caller does not test that result before reading and copying the three
+output words. Its actual local frame is 0x88 bytes, and the output occupies its
+final 12 local bytes at offset 0x60, below the saved registers.
+
+One real successful call writes a negative-X direction into that local output.
+A second call carries the completed RAM/CPU/FPU forward, changes only ordinary
+call and collision/motion inputs, and supplies null collision information. The
+child rejects it, but the caller consumes the prior call's direction and can
+return normally. A cold case with zero backing bytes instead reaches the
+existing numerical stop. No private stack byte is seeded or repaired.
+
+This is evidence about original software behavior, not proof that ordinary
+retail gameplay supplies such invalid structures. The decompilation preserves
+the unchecked read. It must not silently initialize the output or invent a
+successful child result. The retail collision-flag/info validity invariant,
+allocation/stack alias exclusions and broader response numerical domain still
+need evidence. The larger response routine remains unregistered.
+
+Build and preservation
+Native C did not change. The existing verified 274-source research DLL was
+reused with its hash checked. A new strict unbounded compile of all 274 sources
+passed -Wall -Wextra -Werror, and all 526 subject instruction encodings matched
+the original input. No new DLL build is claimed for this milestone. Existing
+CPU/FPU/bus/ABI behavior, guest limits, return membership, source and proofs are
+preserved. Historical reports describe their own snapshots.
+
+Evidence
+analysis/collision_response_qualification.json summarizes accepted scope.
+analysis/player_collision_response_verification.json retains child cases.
+analysis/collision_response_line_wrapper_verification.json records actual packed
+arguments. analysis/collision_response_caller_contracts.json records the genuine
+carried-state sequence and the remaining caller invariant.
+analysis/collision_response_compile_checks.json and the preservation report pin
+the corresponding original/source/build hashes.
+
+To reproduce with matching local retail inputs and documented tools, use the
+verify_player_collision_response.py, verify_collision_response_line_wrapper.py,
+verify_collision_response_caller_contracts.py and
+check_collision_response_qualification.py scripts in a separate scratch copy
+without their generated reports, or create an additive verification revision.
+The scripts refuse to overwrite historical reports. Preserve the original
+workspace proofs and published builds. Retail assets and toolchains are not
+distributed with the repository.
+
+The renderer, movement owner/routing, physical hardware, full game and requested
+ports/settings remain unfinished. Research artifacts are not playable builds.
+Overall completion stays approximately 10%, estimated from weighted milestones
+rather than measured recovered-code coverage. The goal remains active.
