@@ -1,0 +1,100 @@
+Sonic Adventure Dreamcast Rev A: original input initialization and frame callbacks
+
+Status: software control flow verified in the declared profile; ports unfinished.
+Overall estimate: approximately 10% by weighted whole-project milestones.
+This is not measured recovered-code coverage. The goal remains active.
+
+What changed
+  The original input initializer at 601a34 now runs before the texture/frame
+  sequence. Original caller 010180 supplies mode zero and static buffers
+  8c67c680 / 8c6886a0 from its literal pool. These are not heap allocations.
+  The existing 646304 / 65ebb0 / 65f558 chain constructs context 8c8a72b8,
+  selects the uncached buffer aliases and initializes all 24 status records.
+  No context pointer, allocator output or game-helper result is supplied.
+  The complete 010180 startup/reset wrapper is not executed by this test.
+
+  That initializer registers an additional callback in the graphics IRQ path.
+  Newly recovered 646024 increments the original tick counter and either calls
+  a configured real callback or tail-branches to actual submission routine 6463ac.
+  Both entries are translated from all 229 original instruction rows.
+
+  The accepted source is source/sa_renderer_input_tick_mmio.c. It permits the
+  reached aligned 32-bit error-status register 5f6908 through the existing bus.
+  The bus retains its reads and write-one-to-clear behavior. Earlier candidate
+  source and renderer_input_tick.dll are retained as unqualified history because
+  that candidate's guard rejected this valid read. No wait guard was changed.
+  Early export folder names include irq-mask; 646024 is an input tick callback,
+  not an interrupt-mask setter.
+
+What passed
+  The accepted renderer_input_tick_mmio.dll compiles from 288 C sources with
+  Wall/Wextra/Werror. All 285 shared inputs from the prior build are unchanged.
+  All 229 new rows and all 36 conditional outcomes execute in passing controls.
+  177 explicit unit scenarios exercise callback bindings, counter rollover,
+  both FPU banks/T values, submission readiness, each error bit and acknowledgement.
+  The configured no-op callback is the real retained original 05180c routine.
+
+  On the accepted DLL, 263 original/native comparisons match: 262 normal returns
+  and one matching typed clock-exhaustion stop. These have 2,797 checks, including
+  478 independent exact oracles in the successful scene. Another 53 TA-event
+  platform cases pass 357 checks on this same DLL.
+
+  The real 138-texture archive/player/particle sequence completes a normal
+  return from original frame wrapper 6050b0 and then actual child cleanup.
+  It transfers 224 TA bytes, including the exact 160-byte quad, completes two
+  original vector/SDK/input/filesystem/firmware/RTE paths, clears the busy flag
+  without watchdog recovery, and updates all 24 input channels. The frame counter
+  and final five-word context publication are checked independently.
+
+  Full CPU/FPU, hidden state, all RAM/VRAM, device state and ordered service
+  boundaries remain compared. Every sequence starts from original producers;
+  no faulted or captured private frame is resumed.
+
+Timing and test-oracle limits
+  The old four-sample frame clock profile still stops honestly at timer read
+  602612 with matching status -4; its partial state is discarded. A separate,
+  fresh run uses 34 declared monotonic external timer samples and completes.
+  VBlank observations are also declared external inputs. This is a control-flow
+  qualification under that profile, not automatic clocks or physical timing.
+
+  The error-register test initially inspected the first retained event as though
+  it were a new read. Diagnosis found one earlier restored acknowledgement write;
+  the history was not full. The accepted test checks the exact declared status,
+  actual device read-counter increment and final acknowledged status instead.
+  All native/reference trace bytes, counters and execution comparisons remain.
+  An earlier working test docstring mentions a full trace; that wording is
+  historical and does not describe the diagnosed cause.
+
+Current limits and next work
+  No connected controller, response packet delivery, sustained frame loop,
+  automatic timer/VBlank progression, reset boot, physical rasterization or
+  displayed game pixels are qualified. TA parameter/current-pointer production
+  remains open. A successful wrapper return is not a complete playable frame.
+  Legacy invalid matrix-pop behavior at 639b98 remains a separate obligation.
+
+  Next: replace finite peripheral timing samples with a reproducible progression
+  model, retain exhaustion/mask/fault controls, and verify consecutive original
+  frame/draw calls and actual TA state before pixel claims. Continue Sol High.
+  Luna Low remains sufficient for routine publication checks.
+
+Inventory and preservation
+  Two new original entries bring the registry to 1,658 entries, 1,655 unique
+  module/address pairs and 702 confirmed exact-name native links. These do not
+  establish the game's total routine count. The prior registry/source/proof/build
+  history is preserved. Candidate builds remain research evidence only.
+
+  Retail disc/executable/module files, textures, models, music, raw pixel traces,
+  toolchain bundles and secrets are excluded from public snapshots.
+  PC 60/120/240 FPS and 8K, later Android/3DS stereoscopic ports, N64/PS1 work,
+  SUPIR texture options and settings remain unfinished. Texture Off still means
+  vertex/material colours without texture sampling.
+
+Reproduction and beginner review
+  Build: PowerShell -File outputs/sonic-adventure/build_renderer_input_tick_mmio.ps1
+  Tests: verify_renderer_input_tick_constructor.py,
+  verify_renderer_input_tick_error_controls.py, verify_renderer_input_tick_event_bus.py,
+  verify_renderer_input_tick_mmio_scene.py (expected exhaustion), and
+  verify_renderer_input_tick_clock_scene.py (normal wrapper return).
+  Reports are write-once and require matching retail inputs supplied locally.
+  Open analysis/renderer_input_tick_qualification.json for the collected results.
+  There is no playable game EXE to launch from these research artifacts.

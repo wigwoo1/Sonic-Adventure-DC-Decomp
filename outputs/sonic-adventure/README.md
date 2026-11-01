@@ -1,3 +1,13 @@
+Latest verified step: original input context and tick/submission callbacks
+The real textured particle sequence now completes original frame wrapper
+6050b0 under declared external timer/VBlank inputs. Two new original entries;
+1,658 registry entries / 1,655 unique pairs / 702 confirmed native links.
+263 comparisons match (262 normal, one retained clock-exhaustion stop);
+229 rows and all 36 outcomes covered. See RENDERER_INPUT_CONSTRUCTOR.txt.
+Approximately 10% weighted whole-project milestones, not code coverage.
+Automatic timing, displayed pixels and the playable ports remain unfinished.
+Goal active; continue Sol High.
+
 Original filesystem callback and live interrupt observation
 
 Original 5ffcf0 is now software-qualified and runs the actual shared 6005c2 worker. A fresh 287-source research DLL matches 89 original/native comparisons: 80 normal returns and nine expected typed stops. The real 138-texture/player/particle chain completes both IRQ/RTE paths and reaches uninitialized input read 601eb8. A reference-only firmware observer correction records the live IRQ return address; all guest execution and comparisons remain intact.
