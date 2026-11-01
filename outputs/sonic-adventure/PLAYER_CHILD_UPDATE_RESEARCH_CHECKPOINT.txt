@@ -1,0 +1,43 @@
+Player child effect family - compilation checkpoint, 2026-11-01
+
+This snapshot preserves unfinished research. It is not a playable port and does
+not qualify the effect family as behaviorally equivalent to the original game.
+The whole-project estimate remains approximately 10% weighted milestones, not
+measured recovered-code coverage. The qualified routine count remains 680.
+
+The new proposal contains 16 original bodies and 2,534 instruction rows: the
+0x8c0b3b1a update callback, cleanup/draw, record allocation/removal, spawning,
+geometry and sprite dependencies. Eleven bodies are new unregistered proposals;
+five are previously registered canonical routines reused without duplicate credit.
+The shared geometry block before entry 0x8c0b3480 is retained in the proposal.
+
+Verification performed for this publication:
+- All 2,534 instruction rows match bytes in the local matching Rev A executable.
+- All 46 translation-input hash pins and 283 connection-input hash pins match.
+- All 277 C sources pass strict compiler checks with warnings treated as errors.
+- A fresh optimized 277-source DLL compile and link succeeds in a separate local
+  check directory. Existing DLLs, import libraries and historical proof files
+  are preserved. The new research DLL and import library remain available in
+  the prerelease archive with their own recorded hashes.
+
+These checks establish input preservation and compilability. They do not prove
+full callback behavior, all branches, drawing correctness, physical Dreamcast
+hardware behavior or a playable game. No new routines are registered here.
+The fixture and reference scripts are unfinished research tools. Do not infer
+successful end-to-end qualification from their presence or from a build passing.
+
+Next reverse-engineering milestone: verify ordinary allocated-child execution,
+including the collision setup consumed by the geometry dependency, followed by
+record creation/removal, cleanup and drawing. Additive qualification evidence
+must distinguish authored scene inputs from actual original initialization.
+
+Files:
+  analysis/player_child_update_translation.json
+  analysis/player_child_update_connection.json
+  analysis/player_child_update_publication_checks.json
+  source/sa_player_child_update.c
+  source/sa_player_child_update_connected.c
+  build_player_child_update.ps1
+
+The original executable is a local verification input and is excluded from
+publication. Build artifacts are incomplete Windows research libraries.
