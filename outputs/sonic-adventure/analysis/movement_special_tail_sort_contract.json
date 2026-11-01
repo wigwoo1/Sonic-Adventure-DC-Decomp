@@ -1,0 +1,41 @@
+{
+  "status": "conditional_sort_guard_invariant;caller_contract_not_established",
+  "conditional_edges": [
+    [
+      "0x8c077b14",
+      "0x8c077b18"
+    ],
+    [
+      "0x8c077b86",
+      "0x8c077c02"
+    ]
+  ],
+  "conditional_rows": [
+    "0x8c077b18",
+    "0x8c077b1a"
+  ],
+  "invariant": "N starts0, increases at most once per I increment;each next body requires I<signed16(G). Therefore0<=N<=I<=32767. Sort requiresN!=0, so CMP/PL N and CMP/PZ(N-1) both succeed.",
+  "required_premises": [
+    "Entry is the original routine entry, with immutable code/literals.",
+    "Original callees return with a balanced stack and preserved R10.",
+    "Caller-reachable object/query/callback writes do not alias the private SP+4 and SP+0x10 counters during the prepass.",
+    "No asynchronous mutation or nonlocal entry bypasses those initializations."
+  ],
+  "inspected_caller": "0x8c0730d8 stage0902/0903 tail routing restores and forwards the same R4/R5/R6 arguments;it does not itself prove their allocations or disjointness from the future private frame.",
+  "finite_counter_values_checked": 32768,
+  "positive_kept_values_checked": 32767,
+  "full_game_caller_contract_proven": false,
+  "globally_closed_branch_outcomes": 0,
+  "remaining_full_game_work": "Recover/trace actual state/query allocation and possible aliases or demonstrate a faithful counterexample. Do not discard these edges merely because present fixtures are disjoint.",
+  "original_instruction_rows_byte_checked": 1281,
+  "runtime_code_changed": false,
+  "new_original_routine_credit": 0,
+  "overall_completion_percent": 10,
+  "sha256": {
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\analyze_movement_special_tail_sort_contract.py": "261d30dc7ac8474241f4ead228fe86090465d3a6f5d775ef89c20af7a6e4cc83",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\work\\sonic-adventure\\extracted\\1ST_READ.BIN": "45bc5d3c25dcfe2cc2c5701311d46783f33e4daa44a951cd9896724d66f0367a",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\analysis\\movement-special-tail\\8c0777e0_instructions.tsv": "33cf6711d7642b60643c1f931ebd3275a329e4795410f4a9ffcdafa24aee17f6",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\analysis\\collision-contact-input-owners\\8c0730d8_instructions.tsv": "92acc17237ae314f23776bd2c2b169cfe98630d01f88150338b373a51015d9fd",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\source\\sa_movement_special_tail.c": "003e611a822d13ba37890559aa77b85a5cf092c0298afcbf20157143454b9a1e"
+  }
+}
