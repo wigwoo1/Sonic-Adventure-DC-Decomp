@@ -1,3 +1,15 @@
+Movement path integration andfour verified shape helpers,2026-11-01
+Complete point/direction originals02fc12/02fd32/02fe5c/031a84 qualify:425rows/
+56outcomes execute.395fresh comparisons/2173checks pass,including148 exact
+semantic cases andeight real allocation-to-movement lifecycles.272-source
+build/strict checks pass;4063emitted original rows byte-checked.1631registry
+entries/1628unique addresses/675confirmedlinks. Full072b44/0730d8 bodies are
+connected butremainunregistered:328/629rows+39/92outcomes and251/2041rows+5/234.
+Guide:PLAYER_MOVEMENT_PATH.txt. Missing owner/routing branches,constructor
+ownership,actual stack/alias/callback/physical/fullgame/port obligations remain.
+Overall10%weighted milestones,not measured code coverage. Goalactive;keep
+SolHigh. Incomplete research builds,not a playable game.
+
 Task pool initializer09844a qualification,2026-11-01
 Complete114-row body:111rows/12outcomes execute;3rows/4outcomes are proven
 unreachable for normal immutable synchronous original-entry execution. All
