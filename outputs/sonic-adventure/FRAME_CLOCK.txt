@@ -1,0 +1,65 @@
+Sonic Adventure Dreamcast Rev A: discrete-event frame-clock research
+
+Status: VERIFIED isolated platform contract; full scene integration unfinished.
+Overall estimate: approximately 10% by weighted whole-project milestones.
+This estimate is not recovered-code coverage. The decompilation goal is active.
+
+What changed
+  New authored platform support combines the existing elapsed-cycle TMU0 core
+  with scanline progression and latched VBlank events. Reads do not advance time.
+  The caller explicitly supplies elapsed PCLK cycles or requests the next
+  configured VBlank-in boundary. These APIs are intended for future host-frame
+  and idle scheduling; they are not yet connected to the complete game verifier.
+
+  The existing original display setup produced 858 clocks per line, 525 lines,
+  VBlank interrupt comparison lines 520 and 21. The unit suite exercises this
+  register profile for twelve periods as well as synthetic timing profiles.
+  Frequencies (50 MHz PCLK / 27 MHz video) and reset phase are declared software
+  inputs, not measurements of a physical Dreamcast or verified CPU cycle costs.
+
+What passed
+  Optimized native C compiled with Wall/Wextra/Werror and no runtime dependency.
+  240 profiles, 6,720 operations and 18,130 checks against an independent
+  line-by-line Python model; native code counts crossed boundaries arithmetically.
+  400 large-interval partition cases and twelve original-configured periods.
+  Read stability, projected field/window status, latched events, partial interrupt
+  acknowledgement, merging with other device events, parent error preservation,
+  unsupported mode-change rejection, disabled clock and bounded trace faults.
+  analysis/frame_clock_verification.json pins nine source/test/build hashes.
+
+Limits
+  No new original routine is recovered or linked. Registry counts remain 1,658
+  entries, 1,655 unique module/address pairs, 702 confirmed exact-name links.
+  Existing renderer_input_tick_mmio.dll and all prior source/proof/build files
+  are preserved. The new frame_clock.dll/.lib are separate research artifacts.
+  This suite has not demonstrated consecutive complete original game frames,
+  automatic guest interrupt delivery, reset boot, physical pixels or playability.
+  Only scanline, field and vertical-window status are projected; HBlank events,
+  electrical hsync/blank signals and live timing-mode changes are unqualified.
+  Existing TMU0 limitations in TMU0_CLOCK.txt still apply. Unsupported research
+  status codes do not assert that real hardware raises corresponding exceptions.
+
+  The proof's automatic_host_and_idle_boundary_time field describes the explicit
+  next_in API's two scheduling reasons. It does not claim game-scene integration.
+  Original frame tests still use their previously documented peripheral profiles.
+
+How to check
+  Open analysis/frame_clock_verification.json to read the test counts and scope.
+  Build dependencies: PowerShell -File outputs/sonic-adventure/build_tmu0_clock.ps1
+  Build: PowerShell -File outputs/sonic-adventure/build_frame_clock.ps1
+  Test: python -B outputs/sonic-adventure/verify_frame_clock.py
+  The report is write-once: rerun in a fresh checkout after building, rather than
+  overwriting the original evidence. This standalone suite needs no retail assets.
+  Research DLLs have test interfaces and are not a playable game executable.
+
+Next task
+  Continue with Sol High to integrate persistent clock state at documented host
+  and idle boundaries, deliver interrupts through the original vectors/RTE path,
+  and compare consecutive original frame/draw calls. Do not inject helper results,
+  advance time on reads, resume faulted state or relax existing wait guards.
+
+Primary register references (facts only; no third-party code copied)
+  https://github.com/KallistiOS/KallistiOS/blob/master/kernel/arch/dreamcast/hardware/video.c
+  https://github.com/KallistiOS/KallistiOS/blob/master/kernel/arch/dreamcast/include/dc/asic.h
+  https://github.com/flyinghead/flycast/blob/7adbf3caef251b153e348df3f469a0f35878339d/core/hw/pvr/pvr_regs.h
+  https://github.com/flyinghead/flycast/blob/7adbf3caef251b153e348df3f469a0f35878339d/core/hw/pvr/spg.cpp
