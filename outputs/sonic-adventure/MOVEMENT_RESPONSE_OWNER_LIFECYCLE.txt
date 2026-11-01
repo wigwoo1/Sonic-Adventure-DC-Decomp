@@ -1,0 +1,83 @@
+Sonic Adventure Dreamcast Rev A - allocated owner/response initialization
+
+This milestone verifies an original initialization dependency and a real owner
+call path. It adds research evidence, not recovered-routine credit. Counts stay
+at 1,634 registry entries, 1,631 unique module/address pairs and 678 unique
+routines confirmed by exact registered-name/export intersection.
+Overall completion remains approximately 10%, a weighted milestone estimate,
+not measured recovered-code coverage. The game and requested ports are unfinished.
+
+Actual allocated lifecycle
+The tests execute original heap initialization, task-pool initialization, parent
+task allocation and the complete player constructor on carried RAM/CPU/FPU state.
+Actor, auxiliary, player-state and query addresses come from those actual calls.
+No allocator result is supplied. Their live intervals are disjoint from each
+other and the declared 0x8cf00000 nested test stack in these runs.
+
+The constructor leaves state+0x50's old surface normal at zero. With a declared
+incoming collision and velocity, immediately running the owner reaches the real
+response helper and a matching 0x8c639b68 numerical software stop. Eight such
+cold cases are retained as limitations, not normal completions.
+
+An original movement-owner update with actor flags2 and zero motion produces
+the up normal (0,1,0) in the allocated state. The test does not seed that vector.
+A subsequent declared incoming collision uses actor flags1, collision flags0x88,
+shape flags0x801 and incoming velocity (2,0,0). The owner calls 0x8c072946 from
+0x8c072f58, forwarding the actual allocated actor/aux/state pointers with its
+actual 0x4c-byte frame. All eight initialized cases return normally. Constructor
+parameters and bindings remain live; no replacement execution frame is supplied.
+
+The paired control starts from the same completed initialized state. Its inputs
+differ only in the four copied shapes' 0x800 flag bits. The control returns
+normally without making the response call. The comparisons cover both player
+indices and four retained register-bank/rounding combinations.
+
+Other candidate call path
+A separate byte-backed ordinary-entry control-flow proof analyzes the original
+0x8c072de2/0x8c072dec comparisons. Reaching the second taken gate would require
+the same unchanged R5 value to equal both4and5. Removing only that impossible
+CFG edge disconnects the region containing 0x8c072e84 and retains 0x8c072f58.
+The proof identifies 31 gated instruction rows. All remain in native source;
+no runtime branch, guard or instruction was removed. The proof is restricted
+to ordinary entry and ordinary call returns, not arbitrary intermediate PCs,
+asynchronous register corruption, physical hardware or nonlocal resumptions.
+
+Checks and remaining limits
+50 original/native comparisons and 311 checks pass across eight allocation
+lifecycles. Eight initialized response updates, eight shape-flag controls and
+eight initialization updates return normally. Eight cold cases reach the same
+existing numerical stop on both sides. Heap/pool/constructor phases also pass.
+Current lifecycle observations cover 321/629 owner rows and27/92outcomes,
+200/236response rows and9/18outcomes, and20/2041routing rows and1/234outcomes.
+These counts describe this suite; earlier reports retain their historical
+coverage. No whole-owner, routing or broader response qualification is granted.
+
+Collision structures and phase order are authored test inputs. This evidence
+does not prove how every retail caller schedules these updates or that every
+retail collision flag/info producer supplies valid structures. Those validity,
+initialization, alias and normal-boot requirements remain open.
+
+All 274 unchanged native sources pass a fresh strict unbounded compile with
+-Wall -Wextra -Werror. All1,146owner/response/constructor instruction encodings
+match the original Rev A executable. The existing verified research DLL is
+hash-checked and reused; no new DLL build or native behavior change is claimed.
+Existing CPU/FPU/bus/ABI behavior, return membership and guest limits are retained.
+
+Evidence and reproduction
+analysis/movement_response_owner_research.json summarizes accepted evidence.
+analysis/movement_response_owner_allocated_verification.json records every phase,
+actual argument capture, control case and exact remaining coverage gaps.
+analysis/movement_response_owner_gate_proof.json records the contradictory gate,
+gated rows and proof scope. The compile and preservation reports pin hashes.
+
+With the documented tools and matching local retail input, use
+verify_movement_response_owner_allocated.py,
+prove_movement_response_owner_gate.py and check_movement_response_owner.py.
+Historical reports refuse to overwrite themselves; rerun in a separate scratch
+copy without the generated reports or create an additive verification revision.
+Preserve published source, original evidence and build hashes.
+
+Research artifacts are not playable builds. Full game decompilation, physical
+hardware, PC60/120/240FPS8K, Android, stereoscopic3DS, N64/PS1, SUPIR and settings
+remain unfinished. TextureOff must disable sampling and use vertex/material
+colours. The goal remains active.

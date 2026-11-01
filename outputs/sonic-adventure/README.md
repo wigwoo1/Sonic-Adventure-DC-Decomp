@@ -1,3 +1,13 @@
+Latest research: genuine allocated constructor -> original movement normal
+initialization -> owner collision response verified across eight lifecycles.
+50original/native comparisons/311checks;the actual072f58call returns normally
+after initialization. A byte-backed contradictory-gate proof identifies31
+retained rows around072e84;no instructions are removed. Whole owner/routing
+and retail producer/startup invariants remain open. Counts stay at678confirmed
+linked routines and1,634registry rows. See MOVEMENT_RESPONSE_OWNER_LIFECYCLE.txt.
+Overall estimate remains10% weighted milestones,not measured code coverage.
+The full game and ports remain unfinished;goal active.
+
 Latest verified milestone: complete collision child0344dc and debug-line
 wrapper043a40 now software-qualified. 126original/native comparisons and752
 checks;all526subject instructions/52outcomes exercised. Current DLL confirms
