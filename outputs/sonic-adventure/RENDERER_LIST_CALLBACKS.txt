@@ -1,0 +1,97 @@
+Sonic Adventure Dreamcast Rev A: TA list completion and frame interrupt path
+
+Status: software components verified; full frames and a playable port unfinished.
+Overall estimate: approximately 10% by weighted whole-project milestones.
+This is not measured recovered-code coverage. The goal remains active.
+
+What changed
+  Original 651f1e copies 192 bytes of background parameter metadata into mapped
+  VRAM and updates list/ring state, flags and the elapsed hardware downcounter.
+  Original 604568 clears a global; 604570 stores its argument. Canonical 604546
+  now has a complete register-preserving integration, including its optional real
+  callback. Its previous recovery is reused without duplicate routine credit.
+
+  The authored frame_events_bus_eol.c consumes actual accepted command packets.
+  End-of-list control word zero raises the corresponding list-completion bit.
+  The unused trailing words may retain an earlier store-queue header; the actual
+  game does this at 641f88. The service does not require that unused tail to be zero.
+  Supported ordinary vertices are packed/intensity 32-byte polygons. Unsupported
+  float/volume headers and sprite/modifier vertices stop explicitly. This is a
+  bounded list-event model, not a complete TA or GPU implementation.
+
+  Original 645de0 copies the vectors. Original display startup registers 652210
+  at VBR+224 and enables the graphics mask at 6930. The authored platform observes
+  pending device status after the actual 6416ec RTS/delay-slot return. Original
+  copied vectors, context save/restore, registered callbacks and RTE execute.
+  VBlank observations remain declared external inputs; automatic timing is pending.
+
+What passed
+  Current research build: work/sonic-adventure/build/renderer_list_callbacks.dll
+  and its import library, compiled from 286 C sources with Wall/Wextra/Werror.
+  The build preserves 282 shared compilation inputs from the prior TA-DMA build.
+
+  100 original/native comparisons: 90 normal returns and 10 matching typed stops.
+  All 114 callback-group instruction rows and 10 conditional outcomes execute.
+  Callback/scene checks total 1,009. The texture scene retains 437 independent
+  exact oracles. Another 53 platform-contract cases pass 357 checks on this DLL.
+
+  The original empty finalization/submission sequence returns after two interrupts,
+  without SDK watchdog recovery. Missing VBlank, CPU/device masks, BL and disabled
+  service retain the wait. Damaged vectors/registration retain their actual faults.
+  No game completion flag, allocator result, helper result or stopped frame is supplied.
+
+  Inventory after qualification: 1,655 registry entries, 1,652 unique module/address
+  pairs, and 699 confirmed exact-name native links. Three newly qualified original
+  routines are credited. These counts do not establish the game's total routine count.
+
+What remains
+  The full empty 6050b0 wrapper reaches an uninitialized input read at 601eb8.
+  The actual 138-texture/player/particle chain passes 23 calls, transfers the exact
+  224-byte TA payload containing the 160-byte quad, and executes list completion.
+  It then stops at missing filesystem callback 5ffcf0 during generic IRQ dispatch.
+  That interrupt has not returned. Its partial fault state is discarded.
+
+  TA parameter-buffer generation/current-pointer advancement, automatic VBlank
+  timing, rasterization and displayed pixels remain unqualified. The original
+  callback now writes background metadata into VRAM under the declared software
+  register profile. Matching these writes does not prove correct physical GPU
+  allocation or that texture memory remains unchanged across interrupt handling.
+  Earlier scene-template preservation flags describe retained game bodies; this
+  snapshot adds four callback translations and an authored event service.
+
+  Only the qualification report below identifies the accepted component/domain.
+  Earlier broad, strict-EOL and VRAM-incomplete proposals and their DLLs remain
+  historical research artifacts. A passing historical test does not qualify their
+  untested domains. None of these DLLs is a game executable or playable port.
+
+Evidence and reproduction
+  analysis/renderer_list_callbacks_qualification.json
+  analysis/renderer_list_callbacks_verification.json
+  analysis/renderer_list_callbacks_flags_verification.json
+  analysis/renderer_list_callbacks_controls_verification.json
+  analysis/renderer_list_callbacks_event_bus_verification.json
+  analysis/renderer_list_callbacks_scene_frontier.json
+
+  Build: PowerShell -File outputs/sonic-adventure/build_renderer_list_callbacks.ps1
+  Verification scripts: verify_renderer_list_callbacks.py,
+  verify_renderer_list_callbacks_flags.py, verify_renderer_list_callbacks_controls.py,
+  verify_renderer_list_callbacks_event_bus.py and verify_renderer_list_callbacks_scene.py.
+  Reports are write-once. Tests require matching locally supplied game inputs;
+  retail executables, assets, raw pixel traces and toolchains are not published.
+
+Next work
+  Recover 5ffcf0 and its actual 6005c2 tail without stubs, then repeat the real
+  textured frame. Establish the original input producer for 601eb8. Implement
+  actual TA parameter/current-pointer state and automatic VBlank timing before
+  claiming physical frame output. Preserve all wait/fault controls and the
+  separate legacy 639b98 invalid-matrix-pop obligation. Continue with Sol High.
+
+Primary hardware references used for constants and architectural contracts
+  https://kos-docs.dreamcast.wiki/group__asic__regs.html
+  https://kos-docs.dreamcast.wiki/asic_8h.html
+  https://kos-docs.dreamcast.wiki/group__pvr__commands.html
+  https://kos-docs.dreamcast.wiki/group__pvr__bitmasks.html
+  https://kos-docs.dreamcast.wiki/group__pvr__primitives__headers.html
+  https://www.renesas.com/en/document/mah/sh7750-sh7750s-sh7750r-group-users-manual-hardware
+
+No implementation code was imported from these references.

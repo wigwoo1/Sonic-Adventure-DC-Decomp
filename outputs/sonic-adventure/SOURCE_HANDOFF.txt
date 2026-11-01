@@ -1,3 +1,9 @@
+Original TA list callbacks and frame interrupt integration
+
+Three original callbacks are now software-qualified; canonical604546 is reused without duplicate credit. A fresh286-source research DLL passes100 original/native comparisons, including90 normal returns and10 matching typed stops, plus53 TA-event contract cases/357checks. Original empty submission returns aftertwoIRQs without watchdog recovery. The real138-texture/player/particle chain reaches missing filesystem callback5ffcf0; full empty6050b0 reaches uninitialized input601eb8. TA parameter generation, automatic timing anddisplayed pixels remain unfinished.
+
+See RENDERER_LIST_CALLBACKS.txt andanalysis/renderer_list_callbacks_qualification.json. Inventory:1655entries/1652unique module-address pairs/699confirmed exact-name links. Approximately10%weighted whole-project milestones,not measured code coverage. Incomplete research artifacts,not a playable port. Goal active;continue Sol High.
+
 Native TA command-DMA milestone;frame completion pending
 
 A fresh284-source research DLL adds a TA command-transfer endpoint using two additive authored backend sources;282shared C inputs andall original game code remain unchanged.40 DMA contract cases/387checks/185independent oracles pass.27actual original/native comparisons include25normal returns andtwo exact wait frontiers. The original textured-particle frame transfers224bytes,including the exact160-byte generated quad,then waits honestly at64207e. TA list completion/originalIRQ delivery anddisplayed pixels remain unfinished.
