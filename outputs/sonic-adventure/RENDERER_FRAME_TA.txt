@@ -1,0 +1,79 @@
+Sonic Adventure Dreamcast Rev A - native TA command DMA transfer
+
+Verified component: an additive native software endpoint accepts original TA
+command DMA. Whole-frame completion remains pending. Approximately10%weighted
+whole-project milestones,not measured recovered-code coverage. Goal active.
+These DLLs are incomplete research artifacts,not a playable PC port.
+
+What changed
+  source/frame_ta_command_bus.c accepts contiguous32-byte DMA command packets.
+  source/pvr_ta_dma_bus.c adds the command-input destination while preserving the
+    historical texture-transfer branch. Both original backend files remain intact.
+  Observation route0/1 means CPU store queue;route2 means DMA. DMA capture leaves
+    CPU QACR,store-queue words andprefetch/flush/invalidate counters unchanged.
+  Existing binary structures/call signatures andall original game C stay unchanged.
+  write_watch_renderer_frame_submit.py adds the compact event list's missingextend
+    method byappending every event in order. Compact clear spans andevery exact
+    boundary/full-memory comparison are preserved.
+
+Evidence
+  build_renderer_frame_ta.ps1 compiles284 C sources withWall/Wextra/Werror to
+    work/sonic-adventure/build/renderer_frame_ta.dll and.lib.282 C inputs are exact
+    historical files;only two authored backend selections change. The old284-source
+    renderer_context_owner DLL/import library andall prior builds remain intact.
+  verify_renderer_frame_ta_dma.py passes40 native/reference contract cases,
+    387 checks and185 independent exact oracles. It checks packet payload/order,
+    all DMA fields andordered MMIO writes,source aliases/end boundaries,capacity,
+    invalid descriptors,active-transfer rejection andpartial failed sink writes.
+  verify_renderer_frame_ta_state.py compares four actual original entries from
+    raw game RAM andreal heap/display/context producers. The empty frame emits
+    two SQ andtwo DMA packets,then reaches the actual matched wait64207e.
+  verify_renderer_frame_ta_scene.py compares23 actual original calls including
+    the138-texture/player/particle path,485 checks and437 independent oracles.
+    Native/original complete RAM,CPU,FPU,hidden graphics state andordered boundaries
+    match. The frame emits nine packets:two SQ packets andseven DMA packets.
+    Actual650bc8 arguments are10000000,acb7fd00,224,16. The224 DMA bytes contain
+    anoriginal32-byte list header,the exact160-byte quad atoffset32,and32 zero
+    terminator bytes. No particle command word changes during transfer.
+    All8MiB texture VRAM remain unchanged throughdraw/submission,with SHA256:
+    9b6b5a3309cb53d20bc01b77d4c7e2884f468f64e32de8da88261ed884bdcdc1
+  qualify_renderer_frame_ta.py checks hashes,payload inclusion,actual callees and
+    DLL exports. Core contract cases are separate fromoriginal instruction tests.
+    The27original/native comparisons comprise25 normal returns andtwo matching
+    typed wait stops. They are not27 completed frames.
+
+Current frontier and limits
+  The untimed DMA service completes the byte transfer andraises DMA pending bit19.
+  TA list interpretation/completion events andtheir original IRQ/callback delivery
+  are not implemented here. The original641f00 wait remains at64207e withstatus-4;
+  its partial state is discarded. No callback result,gameflag,waitguard orprivate
+  frame is changed toforce progress. Frame return,GPU pixels,physical timing and
+  the complete game/ports remain unqualified. The64-packet research bound remains.
+  The separately retained short global-timer control stops filesystem mount at
+  602612. Correct frame timer samples apply only at6050b0;other service clocks keep
+  their prior scenario policy. Earlier raw/no-BIOS andmatrix-stack controls retain
+  their own limitations. The unchecked legacy matrix-underflow guard remains an
+  explicit future obligation;the successful scene uses the real638fe4 initializer.
+  GPU identity/display/scan/IRQ inputs,host-disc service,caller arena/counts andscene
+  inputs are declared software-platform/component inputs,not a reset-boot proof.
+  Registry1652entries/1649unique(module,address) pairs/696exact-name links remains
+  unchanged. No new original routine credit is awarded for authored platform code.
+
+Primary contract references (no upstream implementation code imported)
+  KallistiOS PVR addresses:TA input10000000,YUV10800000,texture input11000000.
+  https://kos-docs.dreamcast.wiki/group__pvr__addresses.html
+  KallistiOS DMA API distinguishes TA command loading andtexture loading.
+  https://kos-docs.dreamcast.wiki/group__pvr__dma.html
+  KallistiOS ASIC event definitions distinguish DMA19 fromopaque7,transparent9,
+  modifier8/10 andpunch-through21 list completion. These list events are pending
+  work;they must be delivered throughactual original handlers rather than changing
+  the game's waiting flags directly.
+  https://kos-docs.dreamcast.wiki/asic_8h.html
+
+Read analysis/renderer_frame_ta_{connection,dma_verification,state_frontier,
+scene_frontier,qualification,preservation}.json for exact scope andhashes.
+Reports are write-once;runs need matching private retail inputs andexternal tools.
+Retail inputs,assets andraw pixel traces are excluded. There is no game EXE tolaunch.
+Next task:TA list completion andactual original interrupt/callback delivery.
+Continue Sol High. PC60/120/240FPS8K,Android,stereo3DS,N64/PS1,SUPIR/settings remain
+planned. Texture Off disables sampling anduses vertex/material colours.

@@ -1,3 +1,9 @@
+Native TA command-DMA milestone;frame completion pending
+
+A fresh284-source research DLL adds a TA command-transfer endpoint using two additive authored backend sources;282shared C inputs andall original game code remain unchanged.40 DMA contract cases/387checks/185independent oracles pass.27actual original/native comparisons include25normal returns andtwo exact wait frontiers. The original textured-particle frame transfers224bytes,including the exact160-byte generated quad,then waits honestly at64207e. TA list completion/originalIRQ delivery anddisplayed pixels remain unfinished.
+
+See RENDERER_FRAME_TA.txt andanalysis/renderer_frame_ta_qualification.json. Existing source/proof/build bytes andregistry1652entries/1649unique pairs/696exact-name links are preserved;zero new original routine credit. Approximately10%weighted whole-project milestones,not measured code coverage. Incomplete research artifacts,not playable. Goal active;continue Sol High for TA completion events andoriginalIRQ/callback delivery.
+
 Actual renderer/matrix producer integration
 
 Original startup and actual allocators now produce the renderer context andmatrix stack before the real138-texture/player/particle chain.35 comparisons pass:12 producer tests/76checks/40independent oracles and23 scene calls/487checks/438oracles. Actual160-byte quad8cb7fd20lies inside the actual owned allocation andadvances the original context cursor. No polygon pointer,cursor,screen dimensions ormatrix-stack state is supplied.
