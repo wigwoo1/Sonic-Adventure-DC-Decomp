@@ -1,0 +1,72 @@
+Movement special tail: additional verified gates (2026-11-01)
+
+Status: PARTIALLY VERIFIED. Complete routine qualification remains unfinished.
+Whole-project completion: approximately 10% weighted acceptance milestones.
+No routine-registration or completed-port credit is added by this update.
+
+The complete 8c0777e0 translation and existing 265-source research DLL remain
+unchanged. This update adds ordinary-entry tests and source-bound reachability
+arguments. The earlier MOVEMENT_SPECIAL_TAIL_RESEARCH.txt snapshot is preserved;
+the coverage figures below extend that historical snapshot.
+
+Newly executed:
+- 276 complete original/native comparisons and 2,192 checks for ending gates,
+  quarter-turn clamp selection, class filters, prior-ground/reference cases,
+  yaw rebuilding and sloped contacts.
+- 8 complete comparisons and 64 checks for mixed-object late-clamp ordering.
+  This suite explicitly checks both banks and both rounding modes.
+- 36 ending-cancellation cases include independent exact rational checks of
+  the half-motion position subtraction and zero auxiliary velocity. Inputs
+  are captured read-only before the original heading call. Earlier collision
+  work can already have changed the actor position; the oracle uses that actual
+  pre-ending position rather than assuming the original argument is unchanged.
+
+All 284 new cases complete normally and match complete CPU/FPU/RAM/device/queue
+state and ordered native/original boundaries. Original world, collision, copy,
+matrix and math callees produce results. No game-callee results, contact output
+tables or execution frames are supplied. The read-only ending capture adds no
+stores, replacement results or changes to original comparison expectations.
+
+Combined evidence, including earlier hash-validated suites and retained controls:
+1,437 comparisons and 10,573 checks. Earlier suites were not rerun merely to
+increase these totals. These are comparisons/checks, not distinct routines.
+
+Observed coverage: 1,265 of 1,273 instruction rows and 132 of 138 outcomes.
+Two additional outcomes and three associated rows have limited source-bound
+impossibility arguments: the repeated identical FCMP cannot change its predicate,
+and the candidate helper normally returns only 0 or 12 before comparison with 2.
+The proof states its synchronous software and unchanged-control assumptions.
+It does not qualify arbitrary return-stack corruption or asynchronous hardware.
+All original rows and branches remain in the C source.
+
+Still unresolved: five rows and four conditional outcomes, covering the positive
+count sorting guards and repeated nonzero-response path. These remain open;
+no missing outcome has been silently discarded. Natural allocation/aliasing,
+live callbacks, independent nonlocal resumptions, physical hardware and full
+gameplay also remain open. Function 8c0777e0 is still unregistered.
+
+Build/check evidence: existing research DLL tested, strict compiler syntax check
+of its original body/bridge/probe passed, and four new Python scripts parsed.
+All 16,505 previously selected source/proof/doc files, 2,765 archived builds,
+original retail input identity, prior registry and goal settings were preserved.
+No runtime code or existing build artifacts were replaced. No SARecomp code
+was imported. Texture Off and all other port/display requirements are unchanged.
+
+Reproduce from this workspace's outputs/sonic-adventure directory:
+python -B verify_movement_special_tail_gates.py
+python -B verify_movement_special_tail_object_order.py
+python -B prove_movement_special_tail_gates.py
+python -B summarize_movement_special_tail_gates.py
+
+Proof/summary scripts refuse to overwrite an existing proof. In a separate
+working copy, move their existing generated JSON reports into a dated evidence
+folder before reproducing those commands; keep those reports and their hashes.
+Matching original game inputs and the project's external build tools are needed.
+The evidence files are analysis/movement_special_tail_*gates*,
+analysis/movement_special_tail_object_order_verification.json,
+analysis/movement_special_tail_gate_reachability.json and
+analysis/movement_special_tail_gate_progress.json.
+
+Research builds remain incomplete DLLs/import libraries, not a playable game.
+The next reverse-engineering task is the remaining count/response control flow.
+Continue with Sol High for that analysis. The full decompilation goal stays active.
