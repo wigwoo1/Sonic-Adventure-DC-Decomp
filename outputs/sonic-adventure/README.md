@@ -1,3 +1,7 @@
+# Child records and collision extent: verified research update
+
+Four complete original routines (142 rows / 22 conditional outcomes) are now software-qualified in their tested domains. 215 fresh original/native comparisons and 1,128 checks pass, including 16 actual allocated-child collision/setup/update/record lifecycles and genuine heap exhaustion. The combined research DLL has 684 confirmed exact-name unique routine links; registry: 1,640 entries / 1,637 unique module/address pairs. Overall estimate remains approximately 10% weighted milestones, not measured code coverage. Full attachment, effect update/draw, retail startup and ports remain unfinished. See [the guide](PLAYER_CHILD_RECORDS_AND_EXTENT.txt).
+
 Latest verified milestone: original child initializer0b3a2e and player-character
 query07ce40are software-qualified.276-source dependency-connected build;143
 original/native comparisons/1,346checks and16actual allocated-child lifecycles.

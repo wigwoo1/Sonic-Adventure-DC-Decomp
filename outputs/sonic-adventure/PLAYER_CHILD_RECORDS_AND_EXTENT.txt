@@ -1,0 +1,81 @@
+Sonic Adventure Dreamcast Rev A - child records and collision extent
+
+Status: VERIFIED within the documented software test domains. The complete game,
+effect family, renderer and ports remain unfinished. This is not a playable port.
+Overall estimate: approximately 10% weighted milestones, not measured code coverage.
+
+Newly qualified originals (142 rows, all 22 conditional outcomes exercised):
+  8c02f400 - collision extent calculation, 88 rows
+  8c0b33a0 - allocate and prepend a child effect record, 23 rows
+  8c0b33ce - unlink and free a record, 16 rows
+  8c0b3afc - free a child's remaining record list, 15 rows
+
+The combined library now has 684 confirmed unique routines linked by their exact
+registered names. The registry contains 1,640 entries / 1,637 unique module and
+address pairs. These counts have different meanings and are not a percentage
+of the whole game's routines. Reused byte copy 8c604500 receives no duplicate credit.
+
+Why this matters
+
+The original player constructor leaves actor+0x38 unset. Original 8c02f4b0
+allocates a collision header and a copy of its shape records, binds its owner,
+and installs that collision pointer. Executing this original setup lets the
+actual child's stored update callback run through its geometry dependency and
+return normally. The test no longer depends on an authored actor collision
+pointer for these allocated-child lifecycles. Shape templates and host phase
+order are still declared test inputs, not proof of complete retail startup.
+
+Evidence
+
+- 215 fresh complete original/native comparisons and 1,128 checks pass.
+- 265 independent exact oracles check copy bytes, flags, kind/count/owner fields,
+  default/computed extent bits, list insertion/removal and lifecycle bindings.
+- 16 actual heap/pool/parent/constructor/attachment/child lifecycles pass across
+  eight collision kinds and two player slots with retained bank/rounding modes.
+- Genuine exhaustion preserves the existing record list; freeing storage allows
+  the original allocator to reuse it. No allocator result or private frame is supplied.
+- 278 C files compile/link, and strict unbounded compiler checks pass with all
+  warnings treated as errors. All 201 newly emitted original rows match Rev A bytes.
+- The existing seven-row byte-copy loop is integrated. Its internal BF/S backedge
+  is classified as a local loop using the observer's existing facility. Actual
+  calls/tail entries and exact state comparisons remain; CPU semantics are unchanged.
+
+Important limits
+
+The complete 106-row attachment routine is retained but unregistered. Its normal
+path and genuine second-allocation failure pass (94 rows / 13 outcomes). First
+header-allocation failure enters a retained diagnostic loop (12 rows / 3 outcomes)
+that this suite does not execute. No new timeout is added to the guest code.
+
+The complete 481-row effect update is retained but unregistered; this suite
+executes 223 rows / 9 outcomes with no particle payloads drawn. Full spawning,
+nonempty updates/drawing, remaining geometry/renderer paths, physical hardware
+and actual retail scheduler/scene setup remain open.
+
+The initial connection report retained its predecessor's source-count field,
+277. The additive compile report independently counts and compiles the actual
+278 distinct build sources and documents the correction. The pinned initial
+report is preserved.
+
+How to check
+
+Open analysis/player_child_records_and_extent_qualification.json for scope and
+hashes. Open analysis/player_collision_attach_verification.json and
+analysis/player_child_record_exhaustion_verification.json for individual results.
+There is no game executable to launch. DLLs are incomplete research artifacts.
+
+To reproduce with matching local retail inputs and the documented tools:
+  build_player_collision_attach.ps1 -Workspace WORKSPACE
+  python -B verify_player_collision_attach.py
+  python -B verify_player_child_record_exhaustion.py
+  python -B check_player_collision_attach.py
+
+Reports are write-once. Preserve existing proofs/builds when repeating research;
+use a separate workspace or additive report/build names for another run.
+
+Next: recover and exercise particle spawning and nonempty update/draw from the
+actual initialized child. Keep separate attachment-error-loop and retail scene
+and scheduler obligations. Sol High remains appropriate for this reverse engineering.
+PC 60/120/240 FPS and 8K, Android, stereoscopic 3DS, N64/PS1, SUPIR textures and
+display settings remain planned. Texture Off must disable sampling and use
+vertex/material colours. The goal remains active.

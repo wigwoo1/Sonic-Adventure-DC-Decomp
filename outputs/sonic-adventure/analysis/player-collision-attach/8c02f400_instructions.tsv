@@ -1,0 +1,89 @@
+address	length	bytes	instruction	flows
+8c02f400	2	e62f	mov.l r14,@-r15	
+8c02f402	2	d62f	mov.l r13,@-r15	
+8c02f404	2	c62f	mov.l r12,@-r15	
+8c02f406	2	436c	mov r4,r12	
+8c02f408	2	b62f	mov.l r11,@-r15	
+8c02f40a	2	34eb	mov #0x34,r11	
+8c02f40c	2	a62f	mov.l r10,@-r15	
+8c02f40e	2	962f	mov.l r9,@-r15	
+8c02f410	2	fbff	fmov.s fr15,@-r15	
+8c02f412	2	ebff	fmov.s fr14,@-r15	
+8c02f414	2	dbff	fmov.s fr13,@-r15	
+8c02f416	2	cbff	fmov.s fr12,@-r15	
+8c02f418	2	224f	sts.l PR,@-r15	
+8c02f41a	2	c285	mov.w @(0x4,r12),r0	
+8c02f41c	2	c354	mov.l @(0xc,r12),r4	
+8c02f41e	2	be20	mulu.w r11,r0	
+8c02f420	2	5fd9	mov.l 0x8c02f5a0,r9	
+8c02f422	2	436e	mov r4,r14	
+8c02f424	2	5fdd	mov.l 0x8c02f5a4,r13	
+8c02f426	2	8dfd	fldi0 fr13	
+8c02f428	2	1a0b	sts MACL,r11	
+8c02f42a	2	4c3b	add r4,r11	
+8c02f42c	2	b23e	cmp/hs r11,r14	
+8c02f42e	2	258d	bt/s 0x8c02f47c	8c02f47c 
+8c02f430	2	0fea	_mov #0xf,r10	
+8c02f432	2	14e0	mov #0x14,r0	
+8c02f434	2	e6fe	fmov.s @(r0,r14),fr14	
+8c02f436	2	18e0	mov #0x18,r0	
+8c02f438	2	e6ff	fmov.s @(r0,r14),fr15	
+8c02f43a	2	1ce0	mov #0x1c,r0	
+8c02f43c	2	e6fc	fmov.s @(r0,r14),fr12	
+8c02f43e	2	e260	mov.l @r14,r0	
+8c02f440	2	a920	and r10,r0	
+8c02f442	2	0388	cmp/eq #0x3,r0	
+8c02f444	2	068b	bf 0x8c02f454	8c02f454 
+8c02f446	2	e364	mov r14,r4	
+8c02f448	2	0b4d	jsr @r13	8c63a75c 
+8c02f44a	2	0874	_add #0x8,r4	
+8c02f44c	2	e0f0	fadd fr14,fr0	
+8c02f44e	2	0cf4	fmov fr0,fr4	
+8c02f450	2	0ea0	bra 0x8c02f470	8c02f470 
+8c02f452	2	f0f4	_fadd fr15,fr4	
+8c02f454	2	e364	mov r14,r4	
+8c02f456	2	0b4d	jsr @r13	8c63a75c 
+8c02f458	2	0874	_add #0x8,r4	
+8c02f45a	2	fcf3	fmov fr15,fr3	
+8c02f45c	2	f2f3	fmul fr15,fr3	
+8c02f45e	2	0bff	fmov.s fr0,@-r15	
+8c02f460	2	ecf0	fmov fr14,fr0	
+8c02f462	2	eef3	fmac fr0,fr14,fr3	
+8c02f464	2	ccf0	fmov fr12,fr0	
+8c02f466	2	cef3	fmac fr0,fr12,fr3	
+8c02f468	2	0b49	jsr @r9	8c63a9c4 
+8c02f46a	2	3cf4	_fmov fr3,fr4	
+8c02f46c	2	f9f4	fmov.s @r15+,fr4	
+8c02f46e	2	00f4	fadd fr0,fr4	
+8c02f470	2	d5f4	fcmp/gt fr13,fr4	
+8c02f472	2	018f	bf/s 0x8c02f478	8c02f478 
+8c02f474	2	347e	_add #0x34,r14	
+8c02f476	2	4cfd	fmov fr4,fr13	
+8c02f478	2	b23e	cmp/hs r11,r14	
+8c02f47a	2	da8b	bf 0x8c02f432	8c02f432 
+8c02f47c	2	4ac7	mova 0x8c02f5a8,r0	
+8c02f47e	2	dcf2	fmov fr13,fr2	
+8c02f480	2	08f3	fmov.s @r0,fr3	
+8c02f482	2	08e0	mov #0x8,r0	
+8c02f484	2	32f2	fmul fr3,fr2	
+8c02f486	2	27fc	fmov fr2,@(r0,r12)	
+8c02f488	2	48c7	mova 0x8c02f5ac,r0	
+8c02f48a	2	08f2	fmov.s @r0,fr2	
+8c02f48c	2	d5f2	fcmp/gt fr13,fr2	
+8c02f48e	2	038b	bf 0x8c02f498	8c02f498 
+8c02f490	2	47c7	mova 0x8c02f5b0,r0	
+8c02f492	2	08f1	fmov.s @r0,fr1	
+8c02f494	2	08e0	mov #0x8,r0	
+8c02f496	2	17fc	fmov fr1,@(r0,r12)	
+8c02f498	2	264f	lds.l @r15+,PR	
+8c02f49a	2	f9fc	fmov.s @r15+,fr12	
+8c02f49c	2	f9fd	fmov.s @r15+,fr13	
+8c02f49e	2	f9fe	fmov.s @r15+,fr14	
+8c02f4a0	2	f9ff	fmov.s @r15+,fr15	
+8c02f4a2	2	f669	mov.l @r15+,r9	
+8c02f4a4	2	f66a	mov.l @r15+,r10	
+8c02f4a6	2	f66b	mov.l @r15+,r11	
+8c02f4a8	2	f66c	mov.l @r15+,r12	
+8c02f4aa	2	f66d	mov.l @r15+,r13	
+8c02f4ac	2	0b00	rts	
+8c02f4ae	2	f66e	_mov.l @r15+,r14	

@@ -1,0 +1,1428 @@
+{
+  "status": "genuine_record_exhaustion_preserves_list_and_released_space_is_reusable",
+  "original_native_comparisons": 29,
+  "checks": 116,
+  "bank_rounding_combinations": 4,
+  "phases": [
+    {
+      "label": "original heap initialization",
+      "entry": "0x8c098a10",
+      "status": 0,
+      "return_value": 589824,
+      "steps": 1769501,
+      "boundaries": [
+        {
+          "target": "0x8c098a10",
+          "pr": "0x8cfed000",
+          "stack": "0x8cf00000",
+          "arguments": [
+            2360344576,
+            2359361536,
+            2359427072,
+            0
+          ],
+          "sr": 1073741984
+        }
+      ],
+      "full_state_match": true,
+      "ordered_boundaries_match": true
+    },
+    {
+      "label": {
+        "mode": 0,
+        "rm": 0,
+        "phase": "allocate real first node"
+      },
+      "entry": "0x8c0b33a0",
+      "status": 0,
+      "return_value": 2357127408,
+      "steps": 69,
+      "boundaries": [
+        {
+          "target": "0x8c0b33a0",
+          "pr": "0x8cfed000",
+          "stack": "0x8cf00000",
+          "arguments": [
+            2360410112,
+            255,
+            589824,
+            2356801596
+          ],
+          "sr": 1073741985
+        },
+        {
+          "target": "0x8c098a80",
+          "pr": "0x8c0b33ac",
+          "stack": "0x8ceffff8",
+          "arguments": [
+            52,
+            255,
+            589824,
+            2356801596
+          ],
+          "sr": 1073741985
+        }
+      ],
+      "full_state_match": true,
+      "ordered_boundaries_match": true
+    },
+    {
+      "label": {
+        "mode": 0,
+        "rm": 0,
+        "phase": "consume entire remaining heap"
+      },
+      "entry": "0x8c098a80",
+      "status": 0,
+      "return_value": 2357127488,
+      "steps": 38,
+      "boundaries": [
+        {
+          "target": "0x8c098a80",
+          "pr": "0x8cfed000",
+          "stack": "0x8cf00000",
+          "arguments": [
+            589728,
+            2357127472,
+            0,
+            2356801596
+          ],
+          "sr": 1073741985
+        }
+      ],
+      "full_state_match": true,
+      "ordered_boundaries_match": true
+    },
+    {
+      "label": {
+        "mode": 0,
+        "rm": 0,
+        "phase": "genuine record allocation failure"
+      },
+      "entry": "0x8c0b33a0",
+      "status": 0,
+      "return_value": 0,
+      "steps": 25,
+      "boundaries": [
+        {
+          "target": "0x8c0b33a0",
+          "pr": "0x8cfed000",
+          "stack": "0x8cf00000",
+          "arguments": [
+            2360410112,
+            2357717216,
+            0,
+            2356801596
+          ],
+          "sr": 1073741985
+        },
+        {
+          "target": "0x8c098a80",
+          "pr": "0x8c0b33ac",
+          "stack": "0x8ceffff8",
+          "arguments": [
+            52,
+            2357717216,
+            0,
+            2356801596
+          ],
+          "sr": 1073741985
+        }
+      ],
+      "full_state_match": true,
+      "ordered_boundaries_match": true
+    },
+    {
+      "label": {
+        "mode": 0,
+        "rm": 0,
+        "phase": "free actual node"
+      },
+      "entry": "0x8c0b33ce",
+      "status": 0,
+      "return_value": 0,
+      "steps": 41,
+      "boundaries": [
+        {
+          "target": "0x8c0b33ce",
+          "pr": "0x8cfed000",
+          "stack": "0x8cf00000",
+          "arguments": [
+            2360410112,
+            2357127408,
+            2357717216,
+            2356801596
+          ],
+          "sr": 1073741985
+        },
+        {
+          "target": "0x8c098b42",
+          "pr": "0x8cfed000",
+          "stack": "0x8cf00000",
+          "arguments": [
+            2357127408,
+            0,
+            0,
+            2356801596
+          ],
+          "sr": 1073741985
+        }
+      ],
+      "full_state_match": true,
+      "ordered_boundaries_match": true
+    },
+    {
+      "label": {
+        "mode": 0,
+        "rm": 0,
+        "phase": "allocate freed space again"
+      },
+      "entry": "0x8c0b33a0",
+      "status": 0,
+      "return_value": 2357127408,
+      "steps": 59,
+      "boundaries": [
+        {
+          "target": "0x8c0b33a0",
+          "pr": "0x8cfed000",
+          "stack": "0x8cf00000",
+          "arguments": [
+            2360410112,
+            2357127392,
+            0,
+            2356801596
+          ],
+          "sr": 1073741984
+        },
+        {
+          "target": "0x8c098a80",
+          "pr": "0x8c0b33ac",
+          "stack": "0x8ceffff8",
+          "arguments": [
+            52,
+            2357127392,
+            0,
+            2356801596
+          ],
+          "sr": 1073741984
+        }
+      ],
+      "full_state_match": true,
+      "ordered_boundaries_match": true
+    },
+    {
+      "label": {
+        "mode": 0,
+        "rm": 0,
+        "phase": "original cleanup of recycled node"
+      },
+      "entry": "0x8c0b3afc",
+      "status": 0,
+      "return_value": 2357127408,
+      "steps": 56,
+      "boundaries": [
+        {
+          "target": "0x8c0b3afc",
+          "pr": "0x8cfed000",
+          "stack": "0x8cf00000",
+          "arguments": [
+            2360344576,
+            2357717216,
+            0,
+            2356801596
+          ],
+          "sr": 1073741985
+        },
+        {
+          "target": "0x8c0b33ce",
+          "pr": "0x8c0b3b0e",
+          "stack": "0x8ceffff8",
+          "arguments": [
+            2360410112,
+            2357127408,
+            0,
+            2356801596
+          ],
+          "sr": 1073741984
+        },
+        {
+          "target": "0x8c098b42",
+          "pr": "0x8c0b3b0e",
+          "stack": "0x8ceffff8",
+          "arguments": [
+            2357127408,
+            0,
+            0,
+            2356801596
+          ],
+          "sr": 1073741985
+        }
+      ],
+      "full_state_match": true,
+      "ordered_boundaries_match": true
+    },
+    {
+      "label": {
+        "mode": 0,
+        "rm": 0,
+        "phase": "release pressure allocation"
+      },
+      "entry": "0x8c098b42",
+      "status": 0,
+      "return_value": 2357127408,
+      "steps": 34,
+      "boundaries": [
+        {
+          "target": "0x8c098b42",
+          "pr": "0x8cfed000",
+          "stack": "0x8cf00000",
+          "arguments": [
+            2357127488,
+            2357127392,
+            0,
+            2356801596
+          ],
+          "sr": 1073741985
+        }
+      ],
+      "full_state_match": true,
+      "ordered_boundaries_match": true
+    },
+    {
+      "label": {
+        "mode": 0,
+        "rm": 1,
+        "phase": "allocate real first node"
+      },
+      "entry": "0x8c0b33a0",
+      "status": 0,
+      "return_value": 2357127408,
+      "steps": 69,
+      "boundaries": [
+        {
+          "target": "0x8c0b33a0",
+          "pr": "0x8cfed000",
+          "stack": "0x8cf00000",
+          "arguments": [
+            2360410112,
+            255,
+            589824,
+            2356801596
+          ],
+          "sr": 1073741985
+        },
+        {
+          "target": "0x8c098a80",
+          "pr": "0x8c0b33ac",
+          "stack": "0x8ceffff8",
+          "arguments": [
+            52,
+            255,
+            589824,
+            2356801596
+          ],
+          "sr": 1073741985
+        }
+      ],
+      "full_state_match": true,
+      "ordered_boundaries_match": true
+    },
+    {
+      "label": {
+        "mode": 0,
+        "rm": 1,
+        "phase": "consume entire remaining heap"
+      },
+      "entry": "0x8c098a80",
+      "status": 0,
+      "return_value": 2357127488,
+      "steps": 38,
+      "boundaries": [
+        {
+          "target": "0x8c098a80",
+          "pr": "0x8cfed000",
+          "stack": "0x8cf00000",
+          "arguments": [
+            589728,
+            2357127472,
+            0,
+            2356801596
+          ],
+          "sr": 1073741985
+        }
+      ],
+      "full_state_match": true,
+      "ordered_boundaries_match": true
+    },
+    {
+      "label": {
+        "mode": 0,
+        "rm": 1,
+        "phase": "genuine record allocation failure"
+      },
+      "entry": "0x8c0b33a0",
+      "status": 0,
+      "return_value": 0,
+      "steps": 25,
+      "boundaries": [
+        {
+          "target": "0x8c0b33a0",
+          "pr": "0x8cfed000",
+          "stack": "0x8cf00000",
+          "arguments": [
+            2360410112,
+            2357717216,
+            0,
+            2356801596
+          ],
+          "sr": 1073741985
+        },
+        {
+          "target": "0x8c098a80",
+          "pr": "0x8c0b33ac",
+          "stack": "0x8ceffff8",
+          "arguments": [
+            52,
+            2357717216,
+            0,
+            2356801596
+          ],
+          "sr": 1073741985
+        }
+      ],
+      "full_state_match": true,
+      "ordered_boundaries_match": true
+    },
+    {
+      "label": {
+        "mode": 0,
+        "rm": 1,
+        "phase": "free actual node"
+      },
+      "entry": "0x8c0b33ce",
+      "status": 0,
+      "return_value": 0,
+      "steps": 41,
+      "boundaries": [
+        {
+          "target": "0x8c0b33ce",
+          "pr": "0x8cfed000",
+          "stack": "0x8cf00000",
+          "arguments": [
+            2360410112,
+            2357127408,
+            2357717216,
+            2356801596
+          ],
+          "sr": 1073741985
+        },
+        {
+          "target": "0x8c098b42",
+          "pr": "0x8cfed000",
+          "stack": "0x8cf00000",
+          "arguments": [
+            2357127408,
+            0,
+            0,
+            2356801596
+          ],
+          "sr": 1073741985
+        }
+      ],
+      "full_state_match": true,
+      "ordered_boundaries_match": true
+    },
+    {
+      "label": {
+        "mode": 0,
+        "rm": 1,
+        "phase": "allocate freed space again"
+      },
+      "entry": "0x8c0b33a0",
+      "status": 0,
+      "return_value": 2357127408,
+      "steps": 59,
+      "boundaries": [
+        {
+          "target": "0x8c0b33a0",
+          "pr": "0x8cfed000",
+          "stack": "0x8cf00000",
+          "arguments": [
+            2360410112,
+            2357127392,
+            0,
+            2356801596
+          ],
+          "sr": 1073741984
+        },
+        {
+          "target": "0x8c098a80",
+          "pr": "0x8c0b33ac",
+          "stack": "0x8ceffff8",
+          "arguments": [
+            52,
+            2357127392,
+            0,
+            2356801596
+          ],
+          "sr": 1073741984
+        }
+      ],
+      "full_state_match": true,
+      "ordered_boundaries_match": true
+    },
+    {
+      "label": {
+        "mode": 0,
+        "rm": 1,
+        "phase": "original cleanup of recycled node"
+      },
+      "entry": "0x8c0b3afc",
+      "status": 0,
+      "return_value": 2357127408,
+      "steps": 56,
+      "boundaries": [
+        {
+          "target": "0x8c0b3afc",
+          "pr": "0x8cfed000",
+          "stack": "0x8cf00000",
+          "arguments": [
+            2360344576,
+            2357717216,
+            0,
+            2356801596
+          ],
+          "sr": 1073741985
+        },
+        {
+          "target": "0x8c0b33ce",
+          "pr": "0x8c0b3b0e",
+          "stack": "0x8ceffff8",
+          "arguments": [
+            2360410112,
+            2357127408,
+            0,
+            2356801596
+          ],
+          "sr": 1073741984
+        },
+        {
+          "target": "0x8c098b42",
+          "pr": "0x8c0b3b0e",
+          "stack": "0x8ceffff8",
+          "arguments": [
+            2357127408,
+            0,
+            0,
+            2356801596
+          ],
+          "sr": 1073741985
+        }
+      ],
+      "full_state_match": true,
+      "ordered_boundaries_match": true
+    },
+    {
+      "label": {
+        "mode": 0,
+        "rm": 1,
+        "phase": "release pressure allocation"
+      },
+      "entry": "0x8c098b42",
+      "status": 0,
+      "return_value": 2357127408,
+      "steps": 34,
+      "boundaries": [
+        {
+          "target": "0x8c098b42",
+          "pr": "0x8cfed000",
+          "stack": "0x8cf00000",
+          "arguments": [
+            2357127488,
+            2357127392,
+            0,
+            2356801596
+          ],
+          "sr": 1073741985
+        }
+      ],
+      "full_state_match": true,
+      "ordered_boundaries_match": true
+    },
+    {
+      "label": {
+        "mode": 4,
+        "rm": 0,
+        "phase": "allocate real first node"
+      },
+      "entry": "0x8c0b33a0",
+      "status": 0,
+      "return_value": 2357127408,
+      "steps": 69,
+      "boundaries": [
+        {
+          "target": "0x8c0b33a0",
+          "pr": "0x8cfed000",
+          "stack": "0x8cf00000",
+          "arguments": [
+            2360410112,
+            255,
+            589824,
+            2356801596
+          ],
+          "sr": 1073741985
+        },
+        {
+          "target": "0x8c098a80",
+          "pr": "0x8c0b33ac",
+          "stack": "0x8ceffff8",
+          "arguments": [
+            52,
+            255,
+            589824,
+            2356801596
+          ],
+          "sr": 1073741985
+        }
+      ],
+      "full_state_match": true,
+      "ordered_boundaries_match": true
+    },
+    {
+      "label": {
+        "mode": 4,
+        "rm": 0,
+        "phase": "consume entire remaining heap"
+      },
+      "entry": "0x8c098a80",
+      "status": 0,
+      "return_value": 2357127488,
+      "steps": 38,
+      "boundaries": [
+        {
+          "target": "0x8c098a80",
+          "pr": "0x8cfed000",
+          "stack": "0x8cf00000",
+          "arguments": [
+            589728,
+            2357127472,
+            0,
+            2356801596
+          ],
+          "sr": 1073741985
+        }
+      ],
+      "full_state_match": true,
+      "ordered_boundaries_match": true
+    },
+    {
+      "label": {
+        "mode": 4,
+        "rm": 0,
+        "phase": "genuine record allocation failure"
+      },
+      "entry": "0x8c0b33a0",
+      "status": 0,
+      "return_value": 0,
+      "steps": 25,
+      "boundaries": [
+        {
+          "target": "0x8c0b33a0",
+          "pr": "0x8cfed000",
+          "stack": "0x8cf00000",
+          "arguments": [
+            2360410112,
+            2357717216,
+            0,
+            2356801596
+          ],
+          "sr": 1073741985
+        },
+        {
+          "target": "0x8c098a80",
+          "pr": "0x8c0b33ac",
+          "stack": "0x8ceffff8",
+          "arguments": [
+            52,
+            2357717216,
+            0,
+            2356801596
+          ],
+          "sr": 1073741985
+        }
+      ],
+      "full_state_match": true,
+      "ordered_boundaries_match": true
+    },
+    {
+      "label": {
+        "mode": 4,
+        "rm": 0,
+        "phase": "free actual node"
+      },
+      "entry": "0x8c0b33ce",
+      "status": 0,
+      "return_value": 0,
+      "steps": 41,
+      "boundaries": [
+        {
+          "target": "0x8c0b33ce",
+          "pr": "0x8cfed000",
+          "stack": "0x8cf00000",
+          "arguments": [
+            2360410112,
+            2357127408,
+            2357717216,
+            2356801596
+          ],
+          "sr": 1073741985
+        },
+        {
+          "target": "0x8c098b42",
+          "pr": "0x8cfed000",
+          "stack": "0x8cf00000",
+          "arguments": [
+            2357127408,
+            0,
+            0,
+            2356801596
+          ],
+          "sr": 1073741985
+        }
+      ],
+      "full_state_match": true,
+      "ordered_boundaries_match": true
+    },
+    {
+      "label": {
+        "mode": 4,
+        "rm": 0,
+        "phase": "allocate freed space again"
+      },
+      "entry": "0x8c0b33a0",
+      "status": 0,
+      "return_value": 2357127408,
+      "steps": 59,
+      "boundaries": [
+        {
+          "target": "0x8c0b33a0",
+          "pr": "0x8cfed000",
+          "stack": "0x8cf00000",
+          "arguments": [
+            2360410112,
+            2357127392,
+            0,
+            2356801596
+          ],
+          "sr": 1073741984
+        },
+        {
+          "target": "0x8c098a80",
+          "pr": "0x8c0b33ac",
+          "stack": "0x8ceffff8",
+          "arguments": [
+            52,
+            2357127392,
+            0,
+            2356801596
+          ],
+          "sr": 1073741984
+        }
+      ],
+      "full_state_match": true,
+      "ordered_boundaries_match": true
+    },
+    {
+      "label": {
+        "mode": 4,
+        "rm": 0,
+        "phase": "original cleanup of recycled node"
+      },
+      "entry": "0x8c0b3afc",
+      "status": 0,
+      "return_value": 2357127408,
+      "steps": 56,
+      "boundaries": [
+        {
+          "target": "0x8c0b3afc",
+          "pr": "0x8cfed000",
+          "stack": "0x8cf00000",
+          "arguments": [
+            2360344576,
+            2357717216,
+            0,
+            2356801596
+          ],
+          "sr": 1073741985
+        },
+        {
+          "target": "0x8c0b33ce",
+          "pr": "0x8c0b3b0e",
+          "stack": "0x8ceffff8",
+          "arguments": [
+            2360410112,
+            2357127408,
+            0,
+            2356801596
+          ],
+          "sr": 1073741984
+        },
+        {
+          "target": "0x8c098b42",
+          "pr": "0x8c0b3b0e",
+          "stack": "0x8ceffff8",
+          "arguments": [
+            2357127408,
+            0,
+            0,
+            2356801596
+          ],
+          "sr": 1073741985
+        }
+      ],
+      "full_state_match": true,
+      "ordered_boundaries_match": true
+    },
+    {
+      "label": {
+        "mode": 4,
+        "rm": 0,
+        "phase": "release pressure allocation"
+      },
+      "entry": "0x8c098b42",
+      "status": 0,
+      "return_value": 2357127408,
+      "steps": 34,
+      "boundaries": [
+        {
+          "target": "0x8c098b42",
+          "pr": "0x8cfed000",
+          "stack": "0x8cf00000",
+          "arguments": [
+            2357127488,
+            2357127392,
+            0,
+            2356801596
+          ],
+          "sr": 1073741985
+        }
+      ],
+      "full_state_match": true,
+      "ordered_boundaries_match": true
+    },
+    {
+      "label": {
+        "mode": 4,
+        "rm": 1,
+        "phase": "allocate real first node"
+      },
+      "entry": "0x8c0b33a0",
+      "status": 0,
+      "return_value": 2357127408,
+      "steps": 69,
+      "boundaries": [
+        {
+          "target": "0x8c0b33a0",
+          "pr": "0x8cfed000",
+          "stack": "0x8cf00000",
+          "arguments": [
+            2360410112,
+            255,
+            589824,
+            2356801596
+          ],
+          "sr": 1073741985
+        },
+        {
+          "target": "0x8c098a80",
+          "pr": "0x8c0b33ac",
+          "stack": "0x8ceffff8",
+          "arguments": [
+            52,
+            255,
+            589824,
+            2356801596
+          ],
+          "sr": 1073741985
+        }
+      ],
+      "full_state_match": true,
+      "ordered_boundaries_match": true
+    },
+    {
+      "label": {
+        "mode": 4,
+        "rm": 1,
+        "phase": "consume entire remaining heap"
+      },
+      "entry": "0x8c098a80",
+      "status": 0,
+      "return_value": 2357127488,
+      "steps": 38,
+      "boundaries": [
+        {
+          "target": "0x8c098a80",
+          "pr": "0x8cfed000",
+          "stack": "0x8cf00000",
+          "arguments": [
+            589728,
+            2357127472,
+            0,
+            2356801596
+          ],
+          "sr": 1073741985
+        }
+      ],
+      "full_state_match": true,
+      "ordered_boundaries_match": true
+    },
+    {
+      "label": {
+        "mode": 4,
+        "rm": 1,
+        "phase": "genuine record allocation failure"
+      },
+      "entry": "0x8c0b33a0",
+      "status": 0,
+      "return_value": 0,
+      "steps": 25,
+      "boundaries": [
+        {
+          "target": "0x8c0b33a0",
+          "pr": "0x8cfed000",
+          "stack": "0x8cf00000",
+          "arguments": [
+            2360410112,
+            2357717216,
+            0,
+            2356801596
+          ],
+          "sr": 1073741985
+        },
+        {
+          "target": "0x8c098a80",
+          "pr": "0x8c0b33ac",
+          "stack": "0x8ceffff8",
+          "arguments": [
+            52,
+            2357717216,
+            0,
+            2356801596
+          ],
+          "sr": 1073741985
+        }
+      ],
+      "full_state_match": true,
+      "ordered_boundaries_match": true
+    },
+    {
+      "label": {
+        "mode": 4,
+        "rm": 1,
+        "phase": "free actual node"
+      },
+      "entry": "0x8c0b33ce",
+      "status": 0,
+      "return_value": 0,
+      "steps": 41,
+      "boundaries": [
+        {
+          "target": "0x8c0b33ce",
+          "pr": "0x8cfed000",
+          "stack": "0x8cf00000",
+          "arguments": [
+            2360410112,
+            2357127408,
+            2357717216,
+            2356801596
+          ],
+          "sr": 1073741985
+        },
+        {
+          "target": "0x8c098b42",
+          "pr": "0x8cfed000",
+          "stack": "0x8cf00000",
+          "arguments": [
+            2357127408,
+            0,
+            0,
+            2356801596
+          ],
+          "sr": 1073741985
+        }
+      ],
+      "full_state_match": true,
+      "ordered_boundaries_match": true
+    },
+    {
+      "label": {
+        "mode": 4,
+        "rm": 1,
+        "phase": "allocate freed space again"
+      },
+      "entry": "0x8c0b33a0",
+      "status": 0,
+      "return_value": 2357127408,
+      "steps": 59,
+      "boundaries": [
+        {
+          "target": "0x8c0b33a0",
+          "pr": "0x8cfed000",
+          "stack": "0x8cf00000",
+          "arguments": [
+            2360410112,
+            2357127392,
+            0,
+            2356801596
+          ],
+          "sr": 1073741984
+        },
+        {
+          "target": "0x8c098a80",
+          "pr": "0x8c0b33ac",
+          "stack": "0x8ceffff8",
+          "arguments": [
+            52,
+            2357127392,
+            0,
+            2356801596
+          ],
+          "sr": 1073741984
+        }
+      ],
+      "full_state_match": true,
+      "ordered_boundaries_match": true
+    },
+    {
+      "label": {
+        "mode": 4,
+        "rm": 1,
+        "phase": "original cleanup of recycled node"
+      },
+      "entry": "0x8c0b3afc",
+      "status": 0,
+      "return_value": 2357127408,
+      "steps": 56,
+      "boundaries": [
+        {
+          "target": "0x8c0b3afc",
+          "pr": "0x8cfed000",
+          "stack": "0x8cf00000",
+          "arguments": [
+            2360344576,
+            2357717216,
+            0,
+            2356801596
+          ],
+          "sr": 1073741985
+        },
+        {
+          "target": "0x8c0b33ce",
+          "pr": "0x8c0b3b0e",
+          "stack": "0x8ceffff8",
+          "arguments": [
+            2360410112,
+            2357127408,
+            0,
+            2356801596
+          ],
+          "sr": 1073741984
+        },
+        {
+          "target": "0x8c098b42",
+          "pr": "0x8c0b3b0e",
+          "stack": "0x8ceffff8",
+          "arguments": [
+            2357127408,
+            0,
+            0,
+            2356801596
+          ],
+          "sr": 1073741985
+        }
+      ],
+      "full_state_match": true,
+      "ordered_boundaries_match": true
+    },
+    {
+      "label": {
+        "mode": 4,
+        "rm": 1,
+        "phase": "release pressure allocation"
+      },
+      "entry": "0x8c098b42",
+      "status": 0,
+      "return_value": 2357127408,
+      "steps": 34,
+      "boundaries": [
+        {
+          "target": "0x8c098b42",
+          "pr": "0x8cfed000",
+          "stack": "0x8cf00000",
+          "arguments": [
+            2357127488,
+            2357127392,
+            0,
+            2356801596
+          ],
+          "sr": 1073741985
+        }
+      ],
+      "full_state_match": true,
+      "ordered_boundaries_match": true
+    }
+  ],
+  "executed_rows": [
+    "0x8c098a10",
+    "0x8c098a12",
+    "0x8c098a14",
+    "0x8c098a16",
+    "0x8c098a18",
+    "0x8c098a1a",
+    "0x8c098a1c",
+    "0x8c098a1e",
+    "0x8c098a20",
+    "0x8c098a22",
+    "0x8c098a24",
+    "0x8c098a26",
+    "0x8c098a28",
+    "0x8c098a2a",
+    "0x8c098a2c",
+    "0x8c098a2e",
+    "0x8c098a30",
+    "0x8c098a32",
+    "0x8c098a34",
+    "0x8c098a36",
+    "0x8c098a38",
+    "0x8c098a3a",
+    "0x8c098a3c",
+    "0x8c098a3e",
+    "0x8c098a40",
+    "0x8c098a42",
+    "0x8c098a44",
+    "0x8c098a46",
+    "0x8c098a48",
+    "0x8c098a4a",
+    "0x8c098a4c",
+    "0x8c098a4e",
+    "0x8c098a50",
+    "0x8c098a52",
+    "0x8c098a54",
+    "0x8c098a56",
+    "0x8c098a58",
+    "0x8c098a5a",
+    "0x8c098a80",
+    "0x8c098a82",
+    "0x8c098a84",
+    "0x8c098a86",
+    "0x8c098a88",
+    "0x8c098a8a",
+    "0x8c098a8c",
+    "0x8c098a8e",
+    "0x8c098a90",
+    "0x8c098a92",
+    "0x8c098a94",
+    "0x8c098a96",
+    "0x8c098a98",
+    "0x8c098a9a",
+    "0x8c098a9c",
+    "0x8c098a9e",
+    "0x8c098aa0",
+    "0x8c098aa2",
+    "0x8c098aa4",
+    "0x8c098aa6",
+    "0x8c098aa8",
+    "0x8c098aaa",
+    "0x8c098aac",
+    "0x8c098aae",
+    "0x8c098ab0",
+    "0x8c098ab2",
+    "0x8c098ab4",
+    "0x8c098ab6",
+    "0x8c098ab8",
+    "0x8c098aba",
+    "0x8c098abc",
+    "0x8c098ac2",
+    "0x8c098ac4",
+    "0x8c098ac6",
+    "0x8c098ac8",
+    "0x8c098aca",
+    "0x8c098acc",
+    "0x8c098ace",
+    "0x8c098ad0",
+    "0x8c098ad2",
+    "0x8c098ad4",
+    "0x8c098ad6",
+    "0x8c098ad8",
+    "0x8c098ada",
+    "0x8c098adc",
+    "0x8c098ade",
+    "0x8c098ae0",
+    "0x8c098ae2",
+    "0x8c098ae4",
+    "0x8c098ae6",
+    "0x8c098ae8",
+    "0x8c098aee",
+    "0x8c098af0",
+    "0x8c098af2",
+    "0x8c098af4",
+    "0x8c098af6",
+    "0x8c098af8",
+    "0x8c098b06",
+    "0x8c098b08",
+    "0x8c098b0a",
+    "0x8c098b42",
+    "0x8c098b44",
+    "0x8c098b4a",
+    "0x8c098b4c",
+    "0x8c098b4e",
+    "0x8c098b50",
+    "0x8c098b52",
+    "0x8c098b80",
+    "0x8c098b82",
+    "0x8c098b84",
+    "0x8c098b86",
+    "0x8c098b88",
+    "0x8c098b8a",
+    "0x8c098b8c",
+    "0x8c098b8e",
+    "0x8c098b96",
+    "0x8c098b98",
+    "0x8c098b9a",
+    "0x8c098b9c",
+    "0x8c098b9e",
+    "0x8c098ba0",
+    "0x8c098ba2",
+    "0x8c098ba4",
+    "0x8c098ba6",
+    "0x8c098bca",
+    "0x8c098bcc",
+    "0x8c098bce",
+    "0x8c098bd0",
+    "0x8c098bd2",
+    "0x8c098bda",
+    "0x8c098bdc",
+    "0x8c098bde",
+    "0x8c098be0",
+    "0x8c098be2",
+    "0x8c098be4",
+    "0x8c098be6",
+    "0x8c098be8",
+    "0x8c098bea",
+    "0x8c098c18",
+    "0x8c098c1a",
+    "0x8c098c1c",
+    "0x8c098c1e",
+    "0x8c098c20",
+    "0x8c098c22",
+    "0x8c098c24",
+    "0x8c098c26",
+    "0x8c098c28",
+    "0x8c098c2a",
+    "0x8c0b33a0",
+    "0x8c0b33a2",
+    "0x8c0b33a4",
+    "0x8c0b33a6",
+    "0x8c0b33a8",
+    "0x8c0b33aa",
+    "0x8c0b33ac",
+    "0x8c0b33ae",
+    "0x8c0b33b0",
+    "0x8c0b33b2",
+    "0x8c0b33b4",
+    "0x8c0b33b6",
+    "0x8c0b33b8",
+    "0x8c0b33ba",
+    "0x8c0b33bc",
+    "0x8c0b33be",
+    "0x8c0b33c4",
+    "0x8c0b33c6",
+    "0x8c0b33c8",
+    "0x8c0b33ca",
+    "0x8c0b33cc",
+    "0x8c0b33ce",
+    "0x8c0b33d0",
+    "0x8c0b33d2",
+    "0x8c0b33d4",
+    "0x8c0b33d6",
+    "0x8c0b33d8",
+    "0x8c0b33de",
+    "0x8c0b33e0",
+    "0x8c0b33e2",
+    "0x8c0b33e4",
+    "0x8c0b33e8",
+    "0x8c0b33ea",
+    "0x8c0b33ec",
+    "0x8c0b3afc",
+    "0x8c0b3afe",
+    "0x8c0b3b00",
+    "0x8c0b3b02",
+    "0x8c0b3b04",
+    "0x8c0b3b06",
+    "0x8c0b3b08",
+    "0x8c0b3b0a",
+    "0x8c0b3b0c",
+    "0x8c0b3b0e",
+    "0x8c0b3b10",
+    "0x8c0b3b12",
+    "0x8c0b3b14",
+    "0x8c0b3b16",
+    "0x8c0b3b18"
+  ],
+  "executed_conditional_outcomes": [
+    [
+      "0x8c098a34",
+      "0x8c098a26"
+    ],
+    [
+      "0x8c098a34",
+      "0x8c098a38"
+    ],
+    [
+      "0x8c098a82",
+      "0x8c098a84"
+    ],
+    [
+      "0x8c098a8a",
+      "0x8c098a8c"
+    ],
+    [
+      "0x8c098a90",
+      "0x8c098a92"
+    ],
+    [
+      "0x8c098a90",
+      "0x8c098b06"
+    ],
+    [
+      "0x8c098a9e",
+      "0x8c098aa2"
+    ],
+    [
+      "0x8c098aa6",
+      "0x8c098aa8"
+    ],
+    [
+      "0x8c098aae",
+      "0x8c098ab0"
+    ],
+    [
+      "0x8c098aae",
+      "0x8c098ac6"
+    ],
+    [
+      "0x8c098ab4",
+      "0x8c098ab8"
+    ],
+    [
+      "0x8c098abc",
+      "0x8c098ac2"
+    ],
+    [
+      "0x8c098ac8",
+      "0x8c098aca"
+    ],
+    [
+      "0x8c098ae0",
+      "0x8c098ae4"
+    ],
+    [
+      "0x8c098ae8",
+      "0x8c098aee"
+    ],
+    [
+      "0x8c098b44",
+      "0x8c098b4a"
+    ],
+    [
+      "0x8c098b52",
+      "0x8c098b80"
+    ],
+    [
+      "0x8c098b86",
+      "0x8c098b8a"
+    ],
+    [
+      "0x8c098b86",
+      "0x8c098be0"
+    ],
+    [
+      "0x8c098b8e",
+      "0x8c098b96"
+    ],
+    [
+      "0x8c098b9a",
+      "0x8c098b9c"
+    ],
+    [
+      "0x8c098ba0",
+      "0x8c098ba2"
+    ],
+    [
+      "0x8c098ba6",
+      "0x8c098bca"
+    ],
+    [
+      "0x8c098bcc",
+      "0x8c098bce"
+    ],
+    [
+      "0x8c098bd2",
+      "0x8c098bda"
+    ],
+    [
+      "0x8c098be4",
+      "0x8c098be6"
+    ],
+    [
+      "0x8c098bea",
+      "0x8c098c18"
+    ],
+    [
+      "0x8c098c1c",
+      "0x8c098c20"
+    ],
+    [
+      "0x8c0b33b0",
+      "0x8c0b33b2"
+    ],
+    [
+      "0x8c0b33b0",
+      "0x8c0b33c6"
+    ],
+    [
+      "0x8c0b33be",
+      "0x8c0b33c4"
+    ],
+    [
+      "0x8c0b33d6",
+      "0x8c0b33de"
+    ],
+    [
+      "0x8c0b33e2",
+      "0x8c0b33e8"
+    ],
+    [
+      "0x8c0b3b06",
+      "0x8c0b3b08"
+    ],
+    [
+      "0x8c0b3b12",
+      "0x8c0b3b14"
+    ]
+  ],
+  "supplied_allocator_results": 0,
+  "supplied_game_callee_outputs": 0,
+  "supplied_private_execution_frames": 0,
+  "new_original_routine_credit": 0,
+  "overall_completion_percent": 10,
+  "sha256": {
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\verify_player_child_record_exhaustion.py": "a1296f351d1d141f1e9df290a01fdbfc9f20e4c31c4c158d2a050f9b11ec1caa",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\player_collision_attach_fixtures.py": "070bca9592353dce4b50fdeb481f13cadd4cc160faec9c14f8ae42c58b44a6cd",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\player_collision_attach_reference.py": "045f49ab03647c626ce6d2ac05a125ed305dc97d5141c088ffcfc1ae93d3ecf8",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\write_watch_player_collision_attach.py": "1e5ff469cd7ec2d123557c58cb9b8cdc549c9b37f966d797c3e845a3d1d89b40",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\analysis\\player_child_update_translation.json": "10bb7169ffe5da8a0361d11a1358e370c53b2514aea489dba12547c2b8c136aa",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\analysis\\player_collision_attach_translation.json": "026eb97d7287537b8b21801a2a0993ab1be16d9dc89895e5c005391abd2ba8d8",
+    "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\work\\sonic-adventure\\build\\player_collision_attach.dll": "08b4618849fca21f544ee5476eadb1c9c6858242e38ca524301a78d55c500deb"
+  }
+}
