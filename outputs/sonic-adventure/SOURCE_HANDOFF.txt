@@ -1,3 +1,13 @@
+Latest verified milestone: original child initializer0b3a2e and player-character
+query07ce40are software-qualified.276-source dependency-connected build;143
+original/native comparisons/1,346checks and16actual allocated-child lifecycles.
+All68new rows/7feasible outcomes execute;one constant-zero outcome is proven
+infeasible and retained. Two canonical helpers receive no duplicate credit.
+Current counts:1,636registry rows/1,633unique addresses/680confirmedlinks.
+Subsequent callbacks and retail startup remain open. See PLAYER_CHILD_CALLBACK.txt.
+Overall estimate remains10% weighted milestones,not measured code coverage.
+The full game and ports remain unfinished;goal active.
+
 Latest research: genuine allocated constructor -> original movement normal
 initialization -> owner collision response verified across eight lifecycles.
 50original/native comparisons/311checks;the actual072f58call returns normally

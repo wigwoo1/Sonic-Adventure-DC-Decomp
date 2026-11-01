@@ -1,0 +1,95 @@
+Sonic Adventure Dreamcast Rev A - original child initializer and character query
+
+Two complete originals are now software-qualified and registered:
+0x8c0b3a2e: 56-instruction child-task initializer.
+0x8c07ce40: 12-instruction player-character query.
+Counts are now 1,636 registry entries, 1,633 distinct module/address pairs and
+680 unique routines confirmed by exact registered-name/export intersection.
+Overall completion remains approximately 10%, a weighted milestone estimate,
+not measured recovered-code coverage. This is incomplete research software,
+not a playable game or port.
+
+What the initializer actually does
+The player constructor stores 0x8c0b3a2e in its newly allocated child's callback
+field. The exact entry was absent from the original exported function index;
+Ghidra established it explicitly in a read-only session using the stored pointer.
+No nearby function was assumed to own it, and project changes were discarded.
+
+The initializer installs pointers 0x8c0b3b1a, 0x8c0b3f2c and 0x8c0b3afc in the
+child task, resets selected child-actor fields, and searches five original table
+records with character IDs [2,7,0,3,5] and stride0xd8. The query reads player0's
+actor byte at offset9. An absent player0 pointer tail-calls the original unsigned
+16-bit global getter. These are character IDs; an early working description of
+the query as a stage query was corrected from the original instructions.
+
+The initializer does not call the movement owner. Assigned subsequent callbacks
+are stored but have not been executed or qualified in this milestone. The real
+retail scheduler order and movement/collision startup requirements remain open.
+
+Build and dependency recovery
+The complete 275-source initializer/query proposal compiled, but its first
+execution stopped at an unrouted original dependency 0x8c042dc4. Its source,
+reports and compiled artifacts are preserved. Qualification applies to the
+276-source dependency-connected build, not that earlier incomplete proposal.
+
+The final build adds exact original bodies for the already recovered constant
+zero routine0x8c042dc4 and global getter0x8c04f698. These six instruction rows
+are canonical reuse with zero duplicate routine credit. Their uniform adapter
+names differ from historical registered names, so exact-name DLL inventory
+conservatively excludes those aliases. No query result was supplied by a test.
+
+Both builds compile. The final 276-source build and a separate strict unbounded
+-Wall -Wextra -Werror check pass. All74emitted original instruction encodings
+match the local Rev A executable. Only the two actual initializer JSR returns
+are added to return membership. Existing CPU/FPU/bus/ABI behavior, guest limits
+and prior source/proof files remain unchanged; no new guest wait bound is added.
+
+Verification
+88 direct original/native comparisons passed983checks, including292independent
+exact checks of callback pointers, reset fields, untouched child bytes, table
+selection, search count, player0 argument, index-byte wrapping, unsigned16fallback
+values and unchanged tail-call PR. All68new original instructions and7feasible
+conditional outcomes execute across the declared cases.
+
+The eighth static conditional outcome is proven infeasible: the original four
+bytes0b0000e0 at0x8c042dc4 encode RTS with MOV#0,R0 in its delay slot. The caller
+immediately performs TST R0,R0 followed by BF. That taken branch cannot occur
+under ordinary original call/return. The code and branch remain in source;
+no nonzero callee result is invented to force them.
+
+50 more comparisons and326checks cover16genuine allocation lifecycles: original
+heap/pool/parent/constructor state carries into the actual stored initializer on
+the actual allocated child. Eight character IDs and two player indices use four
+retained register-bank/rounding combinations. Callback transitions, exact table
+pointer, reset fields, floating player index and query/fallback counts pass.
+The absent-player0 cases use a declared global character input and execute the
+actual fallback getter. Five direct canonical-helper comparisons and37checks
+also pass. Total:143comparisons and1,346checks, all normal returns.
+
+Remaining limits
+Ordinary-entry software qualification does not cover arbitrary externally
+supplied intermediate PCs, asynchronous register corruption, physical hardware,
+full boot, subsequent callbacks or every retail scheduler/collision producer.
+The renderer, movement owner/routing and broader response contracts retain
+their prior gaps. PC60/120/240FPS8K, Android, stereoscopic3DS, N64/PS1, SUPIR and
+texture/display settings remain planned. TextureOff must disable sampling and
+use vertex/material colours. The goal remains active.
+
+Evidence and reproduction
+analysis/player_child_callback_qualification.json records accepted scope.
+The direct, allocated and dependency verification reports contain exact cases,
+coverage, the constant-return proof and source/build hashes. Compile and
+preservation reports pin all corresponding files. Historical reports retain
+their original bytes and scope.
+
+With matching local retail input and documented tools, build with
+build_player_child_callback_dependencies.ps1 and use
+verify_player_child_callback.py, verify_player_child_callback_allocated.py,
+verify_player_child_callback_dependencies.py and check_player_child_callback.py.
+Reports refuse to overwrite historical evidence. Reproduce in a separate scratch
+copy without generated reports or create an additive revision. Retail inputs,
+assets, toolchains and credentials are excluded from public snapshots.
+
+The source-matched prerelease archive preserves existing research DLLs/libraries
+and adds the proposal/final build stages with per-file hashes and SHA256SUMS.
+It is a collection of incomplete test artifacts, not a game executable.
