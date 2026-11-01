@@ -1,0 +1,62 @@
+Native pixel renderer research snapshot
+
+Status: PARTIALLY VERIFIED. Approximately 10% weighted whole-project milestones;
+this estimate is not measured recovered-code coverage. There is no playable port.
+
+The standalone pvr_pixels.dll implements a bounded host software profile: 16-bit
+ARGB1555, RGB565 and ARGB4444 texture decoding, linear/rectangular twiddled layout,
+explicit mip selection, triangle strips, integer coverage/depth/interpolation,
+nearest sampling, texture shading and blending. Texture Off bypasses sampling and
+uses vertex/material colours. It is a renderer option, not a finished game menu.
+
+verify_pvr_pixels.py passes 343 checks: 196,608 colour-word expansions, 81 texture
+layout cases and 256 random raster cases. Full colour/depth buffers are compared
+with a separately authored recursive texture/rational raster reference. A
+7680-wide single-row case checks indexing/scaling, not 8K frame performance.
+
+pixel_jobs.dll captures accepted command intervals immutably. A supported job
+signals render completion only after native pixel work succeeds. Its 13 checks
+cover parent-write failure, immutable ownership, 36 vertex-coloured pixels with
+zero texture samples, duplicate execution, IRQ acknowledgement, rejected geometry
+and reset cancellation. This standalone component has NOT yet replaced declared
+backend acknowledgements in the whole original/native scene verifier. The Python
+pixel_jobs_reference.py integration scaffold is not whole-scene qualified.
+
+verify_render_pixel_inputs.py preserves a private captured quad and VRAM from the
+existing matched scene; its report retains 33 normal original/native comparisons
+and a disabled-completion control, 598 checks and 529 exact oracles. Captured
+VRAM, packet bytes and generated images remain under work and are not published.
+
+verify_render_pixel_output.py compares complete 640x480 colour/depth buffers for
+seven explicit mip levels and Texture Off. Every decoded texture alpha in this
+fixture is zero: all seven textured cases leave colour unchanged while four
+fragments pass depth. Off produces four vertex-coloured pixels without sampling.
+An initial assertion incorrectly required a visible textured result and failed.
+The initial test and failure log are preserved privately, with their hashes in
+analysis/render_pixel_output_verification.json. The revised test explicitly checks
+transparency; no renderer code was changed for this fixture. Visible retail
+texture rendering and correct asset-to-address mapping remain unqualified.
+
+Limits: no physical Dreamcast golden-image comparison, automatic mip LOD, VQ,
+paletted/YUV/bump formats, fog, bilinear filtering, modifiers, sprite commands,
+full clipping, framebuffer VRAM writeback or real background plane. Images use an
+explicit debug background and host fixed-point precision. Full scene integration,
+playable boot, real-time 60/120/240 FPS and 8K performance remain unfinished.
+No new original routine credit: 1,658 entries / 1,655 unique pairs / 702 links.
+
+Build with build_pvr_pixels.ps1 and build_pixel_jobs.ps1; run the matching
+verify_pvr_pixels.py and verify_pixel_jobs.py with Python -B. Existing report files
+are write-once to preserve evidence; archive an existing output before rerunning.
+Retail-dependent tests additionally require the matching local private inputs.
+Research DLLs and import libraries are incomplete artifacts, not a game to launch.
+
+Primary format references (facts consulted; implementations were not copied):
+https://raw.githubusercontent.com/KallistiOS/KallistiOS/master/kernel/arch/dreamcast/include/dc/pvr/pvr_header.h
+https://raw.githubusercontent.com/KallistiOS/KallistiOS/master/kernel/arch/dreamcast/hardware/pvr/pvr_texture.c
+https://raw.githubusercontent.com/flyinghead/flycast/master/core/rend/TexCache.cpp
+
+Next milestone: qualify real pixel-job execution throughout the complete matched
+original/native scene, without supplying scripted render-completion tokens.
+Recommended model: Sol High for that reverse engineering and integration. Luna
+Low is suitable for routine publication checks once no new code needs review.
+The decompilation goal remains active.

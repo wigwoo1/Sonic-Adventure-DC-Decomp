@@ -1,3 +1,13 @@
+Latest research step: standalone native pixels (partially verified)
+Texture/triangle tests pass 343 checks; immutable pixel jobs pass 13 checks.
+Texture Off uses vertex/material colours without sampling. Eight captured-quad
+buffer cases match an independent host reference; the textured fixture is fully
+transparent and does not qualify visible retail textures. Whole-scene pixel-job
+integration and physical GPU pixel matching remain unfinished.
+See PVR_PIXELS.txt and analysis/pvr_pixels_qualification.json.
+Approximately 10% weighted whole-project milestones; no new routine credit.
+Incomplete research artifacts, not a playable port. Goal remains active.
+
 Latest verified step: host render-job completion and original IRQ handling
 A 291-source research build preserves 289 previous C inputs. The new job core
 passes 12,000 operations / 30,777 checks. The scene passes 33 normal comparisons
