@@ -1,0 +1,72 @@
+Sonic Adventure Dreamcast Rev A - actual renderer and matrix context producers
+
+Verified software milestone: the original textured particle path now uses its
+real renderer context and real allocated matrix stack. It no longer receives the
+old geometry fixture's polygon root,cursor,screen dimensions ormatrix-stack state.
+Approximately10% weighted whole-project milestones,not measured code coverage.
+Incomplete research artifacts,not a playable game. Goal active;continue Sol High.
+
+Actual ordinary-entry chain:
+  602128 initializes a declared caller system-heap arena8cb00000..8cc00000.
+  604702 builds the original display/config record88fdb4. Its+20hex output-pointer
+    field contains88fcd4. It selects640x480 andruns real display initialization.
+  604dce normalizes the declared counts andallocates525040bytes through6021d6.
+    656940 consumes the constructed record andwrites root88fcd4 ->8a33c0.
+    The actual owned block is8cb7fd00;its command cursor starts atacb7fd20.
+  Existing original game heap,calloc,filesystem mount/directory,texture table,
+    SDK heap and099750/0997bc/608134 load all138 EFF_REGULAR texture entries.
+  An actual original calloc buffer andcanonical638fe4 initialize the matrix stack
+    andfloating-matrix state. This already recovered code is reused unchanged.
+  Original task/player/collision/child/spawn/view/stored draw/cleanup execute.
+    The draw writes one160-byte quad at8cb7fd20 inside the actual owned block,
+    then advances the original context cursor by160bytes. QACR is12/12.
+
+35 successful original/native comparisons:
+  verify_renderer_context_producer_state.py:12 comparisons,76 checks and40
+    independent oracles across both FPU banks andnearest/zero rounding. Formulas
+    check heap allocation/free units,uncached alias,record fields andreal cursor.
+  verify_renderer_context_producer_matrix.py:23 comparisons,487 checks and438
+    independent oracles in one declared player0/character0/platform0/nearest scene.
+    All138 entries have zero errors andexact duplicate-ID reference counts;
+    there are136 distinct descriptors. Complete RAM/CPU/FPU/hidden graphics state
+    andordered boundaries match. All8MiB texture VRAM persist through the draw.
+    New uploaded VRAM SHA256:
+    9b6b5a3309cb53d20bc01b77d4c7e2884f468f64e32de8da88261ed884bdcdc1
+  qualify_renderer_context_producer.py validates proof/source hashes,actual owned
+    allocation bounds,cursor advance,command markers andDLL exports.1163 static
+    instruction rows are byte-checked;full initializer branch domains are not
+    thereby qualified. The existing284-source native DLL/C sources are preserved;
+    no new compile orroutine credit is claimed. Retained strict C evidence applies.
+
+Controls and remaining obligations:
+  With raw game RAM andno BIOS disc vector,the original/native mount stops at a
+    null firmware target. That control is preserved. The successful run explicitly
+    binds the existing declared host-disc service at8c0000bc ->8c00f100. This is
+    software platform input,not recovered BIOS or a supplied game-helper result.
+  The first combined run lacked matrix-stack initialization. Original639b98
+    underflowed depth0 andstopped at639bbe;the old unchecked native helper kept
+    executing. This invalid/uninitialized-domain mismatch remains an explicit
+    legacy guard obligation. No comparison was relaxed. The successful run calls
+    the real638fe4 initializer with a real allocated buffer before spawning.
+  GPU identity/display-mode,scan/IRQ samples,host-disc policy,caller arena/counts
+    andscene inputs are declared. External timing/sample services remain per-call
+    scenarios,not a complete physical-platform continuity claim. No private fault
+    frame is resumed andno allocator/game-callee return is supplied.
+  Actual geometry is staged inRAM. GPU frame submission/consumption,displayed
+    pixels,reset boot,scene scheduling andfull game/port coverage remain unfinished.
+  All source/proof/build history is preserved. An unnecessary unpublished duplicate
+    matrix recovery proposal was archived privately withhashes;the canonical
+    source remains unchanged. Registry1652 entries/1649unique(module,address)
+    pairs/696confirmed exact-name links remains unchanged;game total is unproven.
+
+Evidence:analysis/renderer_context_producer_{state_verification,
+matrix_verification,qualification,preservation}.json andthe retained raw-vector
+frontier. Resource-reference evidence is inanalysis/renderer-matrix-context.
+Reruns require matching locally supplied retail inputs andexternal tools. Reports
+are write-once;preserve them anduse fresh names for later audits. Raw retail
+pixel traces/assets are not published. There is no game executable to launch.
+
+Next:trace original frame submission/consumption from this actual context and
+owned command buffer. Keep the invalid matrix-stack guard obligation visible.
+PC60/120/240FPS8K,Android,stereo3DS,N64/PS1,SUPIR andsettings remain planned.
+Texture Off disables texture sampling anduses vertex/material colours.

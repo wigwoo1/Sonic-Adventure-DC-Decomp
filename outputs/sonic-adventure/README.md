@@ -1,3 +1,9 @@
+Actual renderer/matrix producer integration
+
+Original startup and actual allocators now produce the renderer context andmatrix stack before the real138-texture/player/particle chain.35 comparisons pass:12 producer tests/76checks/40independent oracles and23 scene calls/487checks/438oracles. Actual160-byte quad8cb7fd20lies inside the actual owned allocation andadvances the original context cursor. No polygon pointer,cursor,screen dimensions ormatrix-stack state is supplied.
+
+Existing284-source DLL/C sources andall prior proofs/builds remain unchanged;no new routine credit orfresh native compile. Registry1652entries/1649unique pairs/696exact-name links. GPU frame consumption/pixels andwhole game remain unfinished;external hardware/disc/scene input contracts andthe invalid matrix-stack guard obligation remain explicit. See RENDERER_CONTEXT_PRODUCER.txt andanalysis/renderer_context_producer_qualification.json. Approximately10%weighted whole-project milestones,not measured code coverage. Goal active;continue Sol High for actual frame submission/consumption.
+
 # Renderer release milestone
 
 Four complete original renderer surface/ownership release helpers are now verified and linked:6052e0,6567f2,663920,665660. All102 instruction rows/14 conditional outcomes execute. Fresh284-source build and strict C checks pass;124 original/native comparisons,760 checks and324 independent exact oracles pass. The texture/player/particle regression also passes20 comparisons/472 checks/429 oracles on the new DLL.
