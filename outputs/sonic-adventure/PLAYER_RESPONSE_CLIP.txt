@@ -1,0 +1,68 @@
+Sonic Adventure Dreamcast Rev A - qualified near-plane line clipping
+
+The complete original 0x8c64f5e8 helper is now recovered and software-qualified.
+It clips a line against the near plane and handles vertex colours and optional
+signed texture coordinates. It is integrated with the real response/debug-line
+renderer path. This remains incomplete research software, not a playable port.
+Overall completion remains approximately 10%, a weighted milestone estimate,
+not measured recovered-code coverage.
+
+What passed
+136 direct original/native comparisons executed all 296 original instructions
+and all 16 conditional branch outcomes. They passed 1,113 checks, including
+544 independent exact geometry, colour, signed-UV and return-value checks.
+Cases include clipping in both directions, visible/hidden/exact-plane endpoints,
+texture flags, optional UV output and four retained mode/rounding combinations.
+The original fixed output slots at exact-plane boundaries are preserved.
+
+51 further comparisons entered the actual 0x8c072946 response routine and passed
+249 checks. 37 returned normally, including eight debug-enabled cases that call
+the real 0x8c043a40 wrapper, 0x8c63ce24 renderer and new clipping helper. Fourteen
+degenerate inputs reached the same 0x8c639b68 numerical software stop on both
+sides. Those stops are retained limitations, not normal game completions.
+No callee result or private execution frame was supplied.
+
+The 274-source Windows DLL build passed. A separate strict, unbounded syntax
+check passed with -Wall -Wextra -Werror. Every new original instruction encoding
+matches the local Rev A executable. Existing guest execution limits, CPU/FPU,
+bus interfaces and prior source/proof files remain unchanged.
+
+Counts
+Only the clipping helper receives new routine credit: 1,632 registry entries,
+1,629 unique module/address pairs, and 676 unique routines confirmed by exact
+registered-name intersection with the current DLL's exports. Support and
+continuation exports are not counted as additional recovered originals.
+
+What is still open
+The response routine's 236 rows/18 outcomes and wrapper's 50 rows were observed,
+but their broader initialization, aliasing and numerical input contracts remain
+unqualified here. Null collision information can leave an original caller local
+unwritten; the declared state/aux input alias can overwrite velocity components.
+Those adversarial observations do not prove normal gameplay reachability.
+The larger child 0x8c0344dc has 149/476 rows and 11/52 outcomes observed; the
+renderer 0x8c63ce24 has 330/684 rows and 11/32 outcomes observed. Neither is
+registered. The movement owner/routing, retail stack provenance, physical
+hardware and full game remain unfinished. Future PC/Android/stereo 3DS/N64/PS1
+ports, SUPIR and settings remain planned. Texture Off must disable sampling
+and retain vertex/material colours.
+
+Evidence and reproduction
+analysis/player_response_clip_qualification.json summarizes the accepted scope.
+analysis/player_response_clip_verification.json contains direct checks;
+analysis/player_response_clip_path_verification.json retains integration cases,
+numeric stops and exact coverage gaps. Compile and preservation reports pin
+the corresponding source/build hashes. Earlier reports retain their bytes and
+describe their historical snapshots.
+
+From a workspace with the documented tools and matching local retail input:
+powershell -File outputs/sonic-adventure/build_player_response_clip.ps1
+python -B outputs/sonic-adventure/verify_player_response_clip.py
+python -B outputs/sonic-adventure/verify_player_response_clip_path.py
+python -B outputs/sonic-adventure/check_player_response_clip.py
+Verification scripts preserve their historical reports and refuse to overwrite
+them; rerun in a separate checkout without the report or use an additive
+revision. Retail inputs, assets, toolchains and credentials are not published.
+
+player_response_clip.dll and its import library are incomplete Windows research
+artifacts. The source-matched prerelease archive includes per-file hashes and
+a checksum manifest; it is not a game executable. The goal remains active.
