@@ -1,3 +1,14 @@
+Latest verified step: persistent frame clock and original interrupt delivery
+A 290-source research build passes 33 normal original/native comparisons and
+four typed-stop controls (599 checks / 530 exact oracles). Four consecutive
+original draw/frame calls use explicit elapsed time and register-derived VBlank,
+without timer/scan/IRQ sample lists during the automatic phase. Reads do not
+advance time. Later calls still need twelve VBlank passes; target frame rates,
+physical pixels and the playable ports remain unfinished. See RENDERER_FRAME_CLOCK.txt.
+No new original routine credit: 1,658 entries / 1,655 unique pairs / 702 links.
+Approximately 10% weighted whole-project milestones, not measured code coverage.
+Goal active; continue Sol High for original wait/render-completion continuity.
+
 Latest verified step: native elapsed-cycle TMU0 timer foundation
 The new platform core passes 90,677 checks; the original timer initializer
 and reader pass 68 comparisons without clock sample lists. Register reads

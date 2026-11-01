@@ -1,0 +1,76 @@
+Sonic Adventure Dreamcast Rev A: persistent frame clock and original IRQ delivery
+
+Overall estimate: approximately 10% by weighted whole-project milestones.
+This is not measured recovered-code coverage. The goal remains active.
+
+Implementation
+  The additive renderer_frame_clock.dll compiles 290 C inputs. It preserves all
+  286 shared inputs from renderer_input_tick_mmio.dll and retains the old ABIs.
+  New host support binds the verified TMU/scan clock outside the transfer bus.
+  Original game functions, instructions, delay slots and wait guards are retained.
+
+  At declared host frame entry 6050b0, time advances explicitly to the next
+  configured VBlank-in event. After the original idle helper's RTS/delay slot at
+  642060/6420a0, already-ready device events are serviced first; otherwise the
+  scheduler explicitly advances to the next VBlank-in event. Reads never advance
+  time. No opcode cost, physical clock accuracy or reset-boot order is asserted.
+
+  VBlank comparison lines and geometry come from the actual original display
+  setup. Clock rates and initial phase remain declared software inputs. Hardware
+  events merge through ASIC status/masks/acknowledgements. The original vector,
+  interrupt context, callback dispatch and RTE restore the interrupted state.
+  No guest completion flag, helper result or saved CPU execution frame is supplied.
+
+Verification
+  verify_renderer_frame_clock_scene.py records the initial four-frame positive
+  proof. The exact initial helper source is retained under analysis/frame-clock-
+  history, with its hash mapping in renderer_frame_clock_initial_source_preservation.json.
+  The reference was then extended so host time also advances when interrupt
+  delivery is disabled. The final current-source verification is
+  verify_renderer_frame_clock_controls.py and its separate report.
+
+  The final suite repeats the genuine system/display/heap/input/filesystem
+  producers, loads all 138 EFF_REGULAR texture descriptors, constructs the real
+  player/particle and matrix stack, draws the particle, runs original TMU init
+  6025e8, and executes four consecutive original draw/frame calls before cleanup.
+  It compares all CPU/FPU/special/hidden state, complete RAM/VRAM/sound memory,
+  device state, command packets, ordered boundaries and clock accesses.
+
+  Negative inputs independently copy a normally returned public state. They
+  disable the clock, set SR.BL, mask interrupts at level15, or disable delivery.
+  Fault results are discarded and never carried into the positive sequence.
+  Transfer completion can still interrupt with the clock stopped; VBlank cannot.
+  See analysis/renderer_frame_clock_controls_verification.json for actual
+  statuses/counts, and renderer_frame_clock_qualification.json for collected scope.
+
+Limits and next work
+  Startup retains its previous documented external peripheral profiles. Only
+  after real display/resource/draw producers return normally is the persistent
+  clock attached. During subsequent original TMU/frame calls no timer, scanline
+  or IRQ sample list is consumed. This is an explicit host/idle scheduling model,
+  not physical hardware continuity or CPU instruction-cycle timing.
+
+  First frame services two VBlanks; each later frame services twelve in the
+  tested profile. Normal return and complete-state matching do not establish
+  target frame rates. Trace the original wait/render-completion paths next;
+  do not shorten guards, inject guest flags or call these results 60 FPS support.
+  The previously checked two SDK watchdog call sites are absent from these
+  positive frames; broader render-completion and frame-pacing behavior is open.
+
+  There are no displayed GPU pixels, playable game EXE, verified real controller,
+  reset-boot proof, finished audio/gameplay or finished PC/mobile/console ports.
+  Physical signals, unsupported live timing changes and TMU domains remain
+  limited as described in FRAME_CLOCK.txt and TMU0_CLOCK.txt.
+  No new original routine credit: registry 1,658 entries, 1,655 unique
+  module/address pairs, 702 confirmed exact-name native links.
+
+How to check
+  Open analysis/renderer_frame_clock_qualification.json for the current summary.
+  Build the standalone TMU/frame dependencies first, then:
+    PowerShell -File outputs/sonic-adventure/build_renderer_frame_clock.ps1
+    python -B outputs/sonic-adventure/verify_renderer_frame_clock_controls.py
+  Use a fresh checkout/output report destination: proof files are write-once.
+  Game-dependent tests require the user's matching local Rev A retail inputs.
+  Retail game inputs/assets, toolchain bundles, caches and credentials are not
+  supplied in publication. Prerelease DLLs/import libraries are incomplete research
+  artifacts. Keep Sol High for the remaining original wait/rendering investigation.
