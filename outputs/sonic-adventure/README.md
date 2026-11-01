@@ -1,3 +1,9 @@
+# Renderer release milestone
+
+Four complete original renderer surface/ownership release helpers are now verified and linked:6052e0,6567f2,663920,665660. All102 instruction rows/14 conditional outcomes execute. Fresh284-source build and strict C checks pass;124 original/native comparisons,760 checks and324 independent exact oracles pass. The texture/player/particle regression also passes20 comparisons/472 checks/429 oracles on the new DLL.
+
+Correction:6052e0/6567f2 release allocations;they do not produce the88fcd4 renderer context. The incoming root argument is ignored. Next trace604702 startup callbacks and the genuine indirect writer. Full renderer frame submission/pixels and all ports remain unfinished. Registry:1652 entries/1649 unique module-address pairs/696 exact-name links in the current DLL. See RENDERER_CONTEXT_OWNER.txt and analysis/renderer_context_owner_qualification.json. Incomplete research artifacts,not playable. Approximately10% weighted whole-project milestones,not measured recovered-code coverage. Goal active;continue Sol High. Texture Off remains planned to disable sampling and use vertex/material colours.
+
 # Textured particle command path: verified software integration
 
 Original game code now loads all 138 EFF_REGULAR texture entries and draws an allocated particle into a 160-byte RAM command buffer. Uploaded textures persist across calls in all 8 MiB of simulated video memory. Primary evidence: 23 comparisons, including 20 scene comparisons / 472 checks / 429 independent oracles plus three continuity tests. This verifies software command staging; GPU submission and displayed pixels remain unfinished. The existing 283-source build is preserved, with zero new routine credit: 1,648 registry entries / 1,645 unique module/address pairs / 692 confirmed unique exact-name links. Retail upload trace values remain private. Approximately 10% weighted milestones, not measured code coverage. See [the guide](PLAYER_TEXTURE_DRAW.txt).

@@ -1,0 +1,61 @@
+Sonic Adventure Dreamcast Rev A - renderer surface and ownership release
+
+Verified software milestone: four complete original release helpers,102 original
+instruction rows and14 conditional outcomes. This family cleans up allocations;
+it does not create the renderer context. Incomplete research artifacts,not playable.
+Overall estimate:approximately10% by weighted whole-project milestones,not measured
+recovered-code coverage. Goal stays active;Sol High remains appropriate.
+
+Recovered and linked original entries:
+  8c6052e0 - release stored surfaces and conditionally free owned system memory
+  8c6567f2 - release stored surface pair;clear20 bookkeeping bytes on success
+  8c663920 - translate/release first surface;try second address after failure
+  8c665660 - inverse map24-bit interleaved VRAM address bits
+
+The earlier context-provider hypothesis is corrected by checked bytecode.
+6052e0 loads the88fcd4 root address into R4,but6567f2 replaces R4/R5 from
+8a33ec/8a33f0 before use. Its callees release memory.602288 frees system-heap
+memory after the original8fffffff address mask when6734ac says it is owned.
+Do not call these routines as initialization before texture loading. Original
+604702 startup records/callbacks remain the next context-producer research path.
+
+Verification:
+  build_renderer_context_owner.ps1 creates an additive284-source DLL/import lib.
+  check_renderer_context_owner.py passes strict Wall/Wextra/Werror for284 C files,
+    verifies102 original instruction rows against the preserved executable,
+    validates return routes and source/proof hashes,and adds no guest wait bounds.
+  verify_renderer_context_owner.py passes124 original/native comparisons,
+    760 checks and324 independent exact oracles. Actual original constructors
+    663140/602128 and allocators6634a0/6021d6 produce handles and owned blocks.
+    Both FPU banks and nearest/zero rounding are covered. All102 rows/14 outcomes
+    execute;complete RAM,CPU,FPU,hidden state and ordered boundaries match.
+    Oracles check address mapping,primary/fallback release,stale error7,
+    bookkeeping reset/preservation,4MiB coalesced free intervals,and owned versus
+    retained system-heap allocations. Caller arena/ownership inputs are declared.
+  verify_renderer_context_owner_texture_regression.py replays the real texture
+    and allocated-player/particle chain on the new DLL:20 comparisons,472 checks,
+    429 independent oracles,138 texture entries/136 distinct descriptors,all8MiB
+    uploaded texture memory preserved and one160-byte RAM quad command buffer.
+    Retail pixel trace values/assets remain private;only generated draw commands,
+    metadata and hashes are public. No GPU frame is consumed or displayed.
+  qualify_renderer_context_owner.py validates proof hashes and actual DLL exports.
+
+Registry after qualification:1652 entries,1649 unique(module,address) pairs and
+696 unique exact registered-name links in the current combined research DLL.
+These are distinct measures;the total number of game routines remains unproven.
+Generation/connection reports retain zero credit until this qualification report.
+All previous published source/proof/build bytes are preserved except established
+append-preserving status files. Historical proof qualifications remain scoped.
+
+Evidence:analysis/renderer_context_owner_{translation,connection,compile_checks,
+verification,texture_regression_verification,qualification,preservation}.json
+Sources:source/sa_renderer_context_owner.c and its connected/probe support.
+Builds:work/sonic-adventure/build/renderer_context_owner.dll and.lib
+
+Reruns need matching locally supplied retail inputs and external build tools.
+Reports are write-once evidence;preserve them and use fresh names for new audits.
+There is no game executable to launch. Renderer context creation,submission,
+physical GPU pixels,full startup/scheduler/game coverage and every requested port
+remain unfinished. PC60/120/240FPS8K,Android,stereo3DS,N64/PS1,SUPIR and display
+settings remain planned. Texture Off disables sampling and uses vertex/material
+colours. Next:trace604702's real startup callbacks and indirect88fcd4 writer.
