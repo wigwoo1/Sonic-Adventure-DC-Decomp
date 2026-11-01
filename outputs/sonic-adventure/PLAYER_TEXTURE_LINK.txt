@@ -1,0 +1,103 @@
+Sonic Adventure Dreamcast Rev A - texture linker recovery and API correction
+
+Status: three complete helper routines are software-qualified in documented
+domains. The original filename linker64c374 and its helper chain now compile
+and its genuine missing-file path matches. Complete texture loading and visible
+rendering remain unfinished. These are incomplete research artifacts, not a
+playable port. Overall completion remains approximately10% by weighted
+milestones, not measured recovered-code coverage. The goal remains active.
+
+Three newly accepted originals:
+  8c64c320 - in-place filename uppercase conversion:19 instruction rows.
+  8c64e58e - SDK file cursor absolute/relative/end update:22 rows.
+  8c601500 - null/inactive/active file-handle error query:12 rows.
+All53rows and12conditional outcomes execute.280 comparisons/1183 checks
+include340 independent exact oracles. Domains cover both FPU banks,nearest/zero
+rounding,empty/mixed/all nonzero byte strings,four alignments,wrapped cursor
+arithmetic,invalid origin no-op,and signed16 errors. Original/native complete
+CPU/FPU/RAM state and ordered call boundaries match.
+Registry:1648 entries/1645 unique module-address pairs. The current combined
+research DLL has692 confirmed unique exact-name routine links. These counts
+are distinct from full-game execution and from the unknown total game coverage.
+
+New code and build:
+  player_texture_link.dll/.lib,283 sources.
+  22 original bodies/2771 instruction rows are recovered and byte-checked.
+  Seven previously registered bodies/176 rows receive no duplicate credit.
+  Only the three complete helpers above receive new qualification credit.
+  All283 final sources pass strict Wall/Wextra/Werror compilation checks.
+The main filename linker has1528rows/112conditional outcomes. Its valid
+missing-file suite executes122rows/5outcomes;the other branches remain explicit
+qualification obligations. Compilation is not proof of complete behavior.
+
+A correction to the preceding resource milestone:
+The real call chain is0990de ->099750 ->0997bc ->608134. It reads the compressed
+archive,decodes it,and invokes an in-memory texture loader. The original099750
+wrapper copies attributes/pointers to a static scene list with null filename
+fields. It does not call filename API608c82 afterward. The previous suggested
+step608c82 ->64c34c ->64c374 was therefore an inappropriate API composition
+for this particular list. Its formerly missing64c374implementation is still
+useful game-code recovery,but a null-filename guard is not a real game frontier.
+Historical reports retain their bytes;this guide and the new evidence correct
+that interpretation explicitly.
+
+The new19-comparison resource suite preserves actual ordinary producer calls:
+original heap/calloc,filesystem mount,directory/open/size/close,table/allocator
+initialization,driver defaults,and actual EFF_REGULAR.PRS read/decompression.
+Both complete buffers still match their independently preserved hashes:
+  124234compressed bytes:
+  2c62f8a4035181cb5366a8ea5332a793ae304b0a9546c43faa186e35c6d04096
+  358304decoded bytes:
+  686237260763d1b8a826f0949e1d3d9a2565216ab15b6418b6168e8e3e96aa0b
+Retail inputs,decoded textures and toolchains are excluded from publication.
+
+The direct in-memory API also requires writable temporary name buffers. These
+are produced using original calloc and607264,as in the wrapper's contract.
+Calling608134 with the real decoded PVM and that proper list returnsFFFFFFFF
+(game-level failure,with normal stack unwinding). Only the first record has
+become a table descriptor:global index182b,error6,zero references,flags0.
+The library error globals report failed index0,index182b,error6. This narrows
+the next investigation to conversion6536ec and its required graphics/driver
+setup. The earlier wrapper's normal return did not prove successful textures.
+A final null-filename negative witness matches stop-3at10d3f6 and is discarded.
+
+A separate12-comparison suite exercises the filename API appropriately. It
+builds a new caller list through original calloc/607264 and supplies the caller
+input MISSING.PVR,count1. The mounted retail directory genuinely lacks that
+file. Original608c82/64c374/name processing/open/error-descriptor creation all
+execute and return normally withFFFFFFFF. The descriptor has error2 and zero
+references;the failed list index is0. No missing-file result is fabricated.
+
+Together the three suites perform311 fresh comparisons/1299 checks. The helper
+and resource suites record353 independent exact oracles;the missing-file suite
+also independently checks failure/error/reference/index semantics. No allocator
+or game-callee result,private execution frame,forced branch,new native wait
+bound,CPU/numerical/bus ABI change or fabricated callback is used. The large
+asset uses the existing host audit instruction_budget25000000. Entry stack
+8cfff000 and allocated workspaces avoid the resource's fixed CD0/CEE buffers.
+
+Metadata erratum:the new generation report inherited the scalar baseline label
+1642,although its generator actually selected/asserted1645 prior registry rows.
+Its already-pinned bytes are preserved. The strict audit records this and
+independently recomputes every canonical/new classification against the actual
+1645-row baseline;all match. Source,behavior and qualification credit agree.
+
+How to inspect without programming:
+Open analysis/player_texture_link_qualification.json for accepted scope and
+limits. Open analysis/player_texture_link_resource_verification.json for the
+actual in-memory failure and descriptor fields,and
+analysis/player_texture_filename_missing_verification.json for the valid
+filename failure path. Earlier proofs/builds remain available unchanged.
+Developer workflows:build_player_texture_link.ps1,
+verify_player_texture_link_helpers.py,verify_player_texture_link_resource.py,
+verify_player_texture_filename_missing.py andcheck_player_texture_link.py.
+Verifiers refuse to overwrite proofs;use new evidence names for later work.
+
+Next:trace actual conversion6536ec and the original graphics/driver setup
+behind error6,then return to the genuine memory-resource loader and child draw.
+Keep remaining filename-linker formats,scene-state producers,effect updates,
+retail startup/scheduler and physical rendering obligations. Continue Sol High
+for reverse engineering. No model switch or goal pause is requested.
+PC60/120/240FPS/8K,Android,stereoscopic3DS,N64/PS1,SUPIR HD textures and display
+settings remain planned. TextureOff must disable texture sampling and use
+vertex/material colours.
