@@ -1,0 +1,100 @@
+Sonic Adventure Dreamcast Rev A - textured particle command-path integration
+
+Verified software milestone: the original game code loads all138 EFF_REGULAR
+texture entries and draws an actual allocated particle into a RAM command buffer.
+Uploaded texture memory persists between the original calls. This is not a
+displayed GPU frame or playable port. Overall completion remains approximately
+10% by weighted milestones, not measured recovered-code coverage. Goal active.
+
+What now works in the documented test
+The original game heap/filesystem,SDK texture table/heap,graphics memory-manager
+constructor663140 and driver defaults run before archive loader099750. The
+constructor supplies actual VRAM free lists; no allocator result is supplied.
+Complete124234-byte compressed and358304-byte decompressed buffers match the
+preserved local retail hashes. An independent parser of this asset's PVMH109
+header checks every global index and exact duplicate-index reference count.
+All138 entries point to136 actual table descriptors,with zero errors.
+
+The ordinary chain then executes task-pool initialization,parent allocation,
+player construction,collision attachment,the stored child initializer,particle
+spawning,the original640x480view builder,stored draw callback and cleanup.
+Declared scene inputs are player0/character0,shape position(0,1,10),height100,
+scene flag2,platform mode0 and FPU bank0/nearest rounding. Scene/scheduler and
+complete renderer-buffer setup are not yet supplied by the full retail startup.
+
+The draw uses actual texture entry132/global index184f. It passes the former
+606a9etexture fault and produces160bytes at RAM8cca0000:one32-byte header and
+four32-byte vertices. Three vertex commands areE0000000;the last isF0000000.
+The original acquisition routine configures QACR12/12 and stages commands in
+RAM. No GPU frame submission or pixel display is claimed. The vertices are near
+screen position320,190 with depth0.1;the full generated command words are in the
+verification report. Every byte and ordered call boundary matches independently
+decoded original instructions. Actual particle cleanup also returns normally.
+
+Why the verification adapter changed
+The earlier checker recreated device memory for each ordinary call. That could
+prove descriptor creation but could not establish that uploaded texture bytes
+survived into drawing. The additive write_watch_player_texture_draw.py adapter
+now carries exactly matched normal-return graphics outputs:all8MiB VRAM,GPU
+registers,store queues,DMA state and sound payloads. It retains every previous
+original/native full-state and boundary comparison. Native C/DLL bytes,CPU
+execution,numerical/bus ABI and wait guards remain unchanged. External timing
+and sample services retain their declared scenario inputs;this is not a complete
+physical-platform continuity proof or a captured private-frame entry.
+
+An independent3-comparison continuity test executes a real128-byte VRAM copy,
+a real register writer and a retail RTS/NOP. All8MiB and the register value
+survive the subsequent calls. The main scene test performs20 comparisons and
+472 counted checks,including429 independent oracles,with read-only command
+capture. Primary evidence is23 comparisons total. An earlier20-comparison scene
+run/468 checks is also retained;it is a second run of the same declared scene,
+not additional distinct gameplay-domain coverage.
+
+Published evidence excludes retail data
+The raw detailed trace included pixel words during texture upload. Exact raw
+source/proof bytes and hashes are preserved privately under
+work/sonic-adventure/private-player-texture-draw-proof,with a hash manifest.
+The public report retains only the50 generated quad trace events;8708 other
+trace events are omitted from serialization. All native/original comparisons,
+counts,descriptor evidence,geometry,call boundaries and hashes are retained.
+The filter verification documents the exact changes. Reproduction scripts now
+filter these values before writing the public report. Retail inputs,decoded
+textures,toolchains,caches and credentials are excluded from publication.
+
+Code and counts
+The existing283-source player_texture_link.dll/.lib is reused unchanged.
+Retained strict compile/source hashes are verified;no new native build is claimed.
+New Python workflows parse and the integration tests above pass. There is zero
+new original-routine credit:registry1648 entries/1645 unique module-address
+pairs/692 confirmed unique exact-name links remain unchanged. Existing bodies
+gain scoped integration evidence. Full sprite-family and rendering qualification
+remain incomplete;this test uses one scene and one floating-point configuration.
+
+How to inspect without programming
+Open analysis/player_texture_draw_qualification.json for the accepted scope.
+Open analysis/player_texture_draw_commands_verification.json and find
+"actual stored visible particle draw with loaded textures". Its
+sprite_command_buffers field contains the actual160-byte result. The descriptors
+field lists all138 checked texture entries. No screenshot or playable EXE is
+provided. Source and reports remain available for later development.
+
+Developer workflows (matching local retail inputs/toolchain required):
+  verify_player_texture_draw_state.py
+  verify_player_texture_draw.py
+  verify_player_texture_draw_commands.py
+  qualify_player_texture_draw.py
+  record_player_texture_draw.py
+  verify_player_texture_draw_preservation.py
+Verifiers preserve existing proofs and refuse to overwrite output files. Use
+additive evidence names when extending the work. Do not rerun the one-time raw
+trace sanitizer against a newer/published checkpoint.
+
+Next:trace the actual renderer-buffer/context producers and frame submission/
+consumption through real callers of605dac/6065b0/605e0a and global890104.
+The read-only131-row reference export is in player-texture-draw-references.
+Keep scene/camera producers,scheduler,physical GPU pixels,all sprite variants
+and full-game startup obligations. Continue Sol High for reverse engineering.
+No model switch or goal pause is requested.
+PC60/120/240FPS/8K,Android,stereoscopic3DS,N64/PS1,SUPIR HD textures and display
+settings remain planned. TextureOff disables sampling and uses vertex/material
+colours. Current archives are incomplete research artifacts,not playable ports.
