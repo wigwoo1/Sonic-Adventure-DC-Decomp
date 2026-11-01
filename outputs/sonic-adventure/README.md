@@ -1,3 +1,15 @@
+Latest verified step: host render-job completion and original IRQ handling
+A 291-source research build preserves 289 previous C inputs. The new job core
+passes 12,000 operations / 30,777 checks. The scene passes 33 normal comparisons
+plus a matched disabled-completion control: 598 checks / 529 exact oracles.
+Declared backend acknowledgements reduce later frames from twelve VBlank
+services to two; original IRQ/RTE and wait guards remain intact. Actual pixel
+rendering is still unfinished. This is a completion interface, not a playable port.
+See RENDER_COMPLETION.txt and analysis/renderer_render_completion_qualification.json.
+No new original routine credit: 1,658 entries / 1,655 unique pairs / 702 links.
+Approximately 10% weighted whole-project milestones, not measured code coverage.
+Goal active; continue Sol High for the native pixel-rendering backend.
+
 Latest verified step: persistent frame clock and original interrupt delivery
 A 290-source research build passes 33 normal original/native comparisons and
 four typed-stop controls (599 checks / 530 exact oracles). Four consecutive

@@ -1,0 +1,85 @@
+Sonic Adventure Dreamcast Rev A: original rendering wait and host completion API
+
+Status: VERIFIED software lifecycle and original IRQ handling under declared
+backend acknowledgements. No pixel renderer is implemented by this component.
+Overall estimate: approximately 10% weighted whole-project milestones, not
+measured code coverage. All requested playable ports and FPS targets are unfinished.
+The goal remains active; continue Sol High for the native rendering backend.
+
+Why the old scene needed twelve VBlank services
+  Read-only tracing executes the original instructions and retains every prior
+  complete-state comparison. Original startup stores10 at8c8a2f78 (651316) and
+  at8c8a2f7c (651322). Each frame issues a real PVR render-start command. The prior
+  platform support generates TA-list, DMA and VBlank events, but has no backend
+  rendering completion. The previous list remains occupied. Original651be6
+  increments8c8a30bc; later frames reach11 before651f06 clears8c8a30c0.
+  PVR list completion is distinct from render completion. The trace records
+  both opaque and translucent list endings and their actual original callbacks.
+  See renderer_frame_pacing_verification.json and renderer_frame_rendering_verification.json.
+
+New interface
+  render_completion.c owns a single in-flight host job. The original register
+  write at005f8014 withFFFFFFFF creates a monotonically identified job and captures
+  sixteen current rendering parameter registers. Later configuration writes do
+  not alter that job descriptor. A matching, explicit backend acknowledgement
+  through sa_render_completion_finish is required before render-stage IRQ bits
+  are latched. Register reads, time passage and VBlank never finish a job.
+  Wrong/duplicate/cancelled tokens cannot finish work. ASIC acknowledgements
+  clear selected pending bits. ISP/TSP reset cancels active work; TA-only reset
+  leaves it active. Parent bus failures preserve the owned lifecycle state.
+
+  A real renderer must process the job and then report completion. The current
+  scene test supplies backend acknowledgements as declared external test inputs;
+  it does not rasterize pixels or prove that a backend has rendered an image.
+  All three render-stage events arrive together in this host-job profile.
+  Physical stage ordering and real GPU timing remain unqualified. Only the
+  observedFFFFFFFF start command and one in-flight job are supported here;
+  research errors for other inputs/capacity do not assert physical hardware faults.
+  Calls and borrowed state are serialized on one owner thread. A future worker
+  must marshal completion back to that owner; this API is not a lock-free queue.
+
+What passed
+  Native optimized C compiled with Wall/Wextra/Werror and no runtime dependency.
+  Independent lifecycle oracle:12,000 operations,80 profiles,30,777 checks.
+  Exact controls cover immutable descriptors, identifiers, reset cancellation,
+  partial acknowledgement, disabled support, overflow and callback failures.
+
+  A291-source scene DLL preserves289 previous C inputs and all game bodies.
+  33 normal original/native comparisons include the real138-texture resource,
+  player/particle/matrix producers, original timer initializer, four consecutive
+  drawing/frame calls and cleanup. Complete CPU/FPU/special/hidden state,
+  RAM/VRAM/sound/device state, packets and ordered boundaries match. There are
+  598 checks and529 independent exact oracles. A separate, normally-returning
+  disabled-completion control also matches and retains12 VBlank services.
+  With declared backend acknowledgements the positive frames each service2
+  VBlanks. Prior job completion is consumed through the real original vector,
+  context/ISR and RTE path; the next actual render start creates the next job.
+  No guest flag, game-helper result, allocator result or private CPU frame is
+  supplied. Original wait guards are unchanged and the prior proofs remain intact.
+
+What remains
+  Implement actual host rendering, texture decoding and image output before
+  treating completion inputs as real rendering results. Two VBlank services in
+  a declared scheduler profile do not establish60/120/240 FPS or real-time pacing.
+  Startup still uses earlier external-device profiles; this is not reset boot
+  or a complete physical Dreamcast. No playable EXE, displayed-pixel match,
+  finished audio/gameplay, Android/3DS/N64/PS1 port or stereoscopic output is proven.
+  New original routine credit:0. Registry remains1,658 entries,1,655 unique
+  module/address pairs,702 confirmed exact-name native links.
+
+How to check
+  Open analysis/renderer_render_completion_qualification.json for collected scope.
+  Existing dependencies: build_tmu0_clock.ps1 and build_frame_clock.ps1.
+  Build: PowerShell -File outputs/sonic-adventure/build_render_completion.ps1
+         PowerShell -File outputs/sonic-adventure/build_renderer_render_completion.ps1
+  Verify: python -B outputs/sonic-adventure/verify_render_completion.py
+          python -B outputs/sonic-adventure/verify_renderer_render_completion.py
+  Reports are write-once. Before rerunning, preserve existing output reports
+  elsewhere so the specified new report/frontier paths do not already exist.
+  Scene tests need the matching local Rev A inputs. Retail inputs/assets,
+  toolchains, caches and credentials are excluded from public snapshots.
+  Prerelease DLLs/import libraries are incomplete research artifacts.
+
+Primary register/event facts; no third-party implementation code copied
+  https://github.com/KallistiOS/KallistiOS/blob/master/kernel/arch/dreamcast/include/dc/pvr/pvr_regs.h
+  https://github.com/KallistiOS/KallistiOS/blob/master/kernel/arch/dreamcast/include/dc/asic.h
