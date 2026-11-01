@@ -1,0 +1,84 @@
+Sonic Adventure Dreamcast Rev A - particle spawning and draw wrapper
+
+Status: VERIFIED in the documented software test domains. Visible textured
+rendering and the complete game remain unfinished. This is not a playable port.
+Overall estimate remains approximately 10% weighted milestones, not code coverage.
+
+Newly qualified originals:
+  8c0b37f2 - create and populate a particle record, 286 original rows
+  8c0b3f2c - traverse child records and call the sprite renderer, 61 rows
+
+All 347 rows and 14 conditional outcomes execute. The research DLL now contains
+686 confirmed unique routines linked by their exact registered names. Registry:
+1,642 entries / 1,639 unique module-address pairs. These are different counts;
+they do not establish the game's total routine count or a measured percentage.
+
+What passed
+
+192 fresh complete original/native comparisons and 1,118 checks include 336
+independent exact checks. Eight actual allocated-child lifecycles cover both
+player slots, both FPU banks and the retained nearest/zero rounding modes.
+
+The original heap, task pool, parent/player constructor, collision attachment,
+stored child initializer, spawning, nonempty update and cleanup run. Scene flag,
+height, shape position and screen dimensions are declared test inputs. Their
+complete retail producers and scheduling order remain separate obligations.
+
+The suite covers absent scene flags, both height rejection gates, two actual
+particle creations, genuine heap exhaustion, release and reuse. It independently
+checks the random seed sequence/call count, list links, copied scene height and
+the packet positions, dimensions, word parameter, headers and flags generated
+by the actual draw caller. No particle/texture descriptor, allocator result,
+callee output or private execution frame is supplied.
+
+Normal draw qualification covers clipped and suppressed particles, including
+two-record traversal and empty lists. Suppression preserves all particle bytes.
+The 278-source library is preserved and reused; no fresh link was needed because
+the C sources did not change. Strict unbounded compiler checks pass for all 278
+sources; all 347 particle rows are checked against the original executable.
+
+The next real dependency
+
+Eight visible-scene witnesses execute the original view builder from declared
+640x480 dimensions. Both original and recovered drawing then stop at 8c606a9e:
+the game requests a texture whose descriptor has not yet been loaded. These
+partial executions are compared and discarded, not reused as private-frame inputs.
+
+The static texture list is EFF_REGULAR, with 138 entries; this sprite selects
+entry 132. The matching SONICADV/EFF_REGULAR.PRS is present locally and its
+compressed hash matches the preserved inventory. Retail assets are excluded
+from the public repository and research archives.
+
+The resource batch at 8c0990de calls loader 8c099750, which uses file/decode loader
+8c0997bc. All three original listings/drafts have been exported and their 229
+instruction rows byte-checked. They are research drafts, not qualified native
+implementations, and receive no additional routine credit. The next task is to
+integrate their actual descriptor/file/PRS/texture dependencies and execute the
+real texture producer, then resume visible drawing. No descriptor is hand-filled.
+
+Other unfinished work
+
+The full 481-row effect update remains unregistered; this suite executes 352
+rows / 19 outcomes. Other sprite/geometry/renderer paths, original scene state,
+retail startup/scheduler, physical GPU pixels, the full game and ports remain open.
+
+How to check
+
+Open analysis/player_child_particles_qualification.json for scope and hashes,
+analysis/player_child_particles_verification.json for individual cases, and
+analysis/player_child_particle_texture_frontier.json for the exact next dependency.
+There is no game executable to launch. DLLs remain incomplete research artifacts.
+
+Reproduction with matching local inputs and documented external tools:
+  python -B verify_player_child_particles.py
+  python -B check_player_child_particles.py
+  ghidra/export_player_child_particle_loader.ps1 -Workspace WORKSPACE
+  python -B analyze_player_child_particle_texture_frontier.py
+
+Reports are write-once. Use another workspace or additive report names when
+repeating research; preserve the existing source, proof and build hashes.
+
+Keep Sol High for the texture-loading reverse engineering. Planned PC
+60/120/240 FPS and 8K, Android, stereoscopic 3DS, N64/PS1, SUPIR and texture/display
+settings retain their scope. Texture Off disables sampling and uses vertex/
+material colours. The goal remains active.

@@ -1,3 +1,7 @@
+# Particle spawning and draw wrapper: verified research update
+
+Two more complete originals (347 rows / 14 conditional outcomes) are software-qualified in documented domains. 192 fresh original/native comparisons and 1,118 checks pass, with eight real allocated-child lifecycles and genuine exhaustion/reuse. The combined research DLL now has 686 confirmed exact-name unique routine links; registry: 1,642 entries / 1,639 unique module/address pairs. The existing 278-source build is preserved. Visible drawing reaches the original missing EFF_REGULAR texture descriptor; the real loader is identified and remains to be integrated. Approximately 10% weighted milestones, not measured code coverage; full game and ports unfinished. See [the guide](PLAYER_CHILD_PARTICLES.txt).
+
 # Child records and collision extent: verified research update
 
 Four complete original routines (142 rows / 22 conditional outcomes) are now software-qualified in their tested domains. 215 fresh original/native comparisons and 1,128 checks pass, including 16 actual allocated-child collision/setup/update/record lifecycles and genuine heap exhaustion. The combined research DLL has 684 confirmed exact-name unique routine links; registry: 1,640 entries / 1,637 unique module/address pairs. Overall estimate remains approximately 10% weighted milestones, not measured code coverage. Full attachment, effect update/draw, retail startup and ports remain unfinished. See [the guide](PLAYER_CHILD_RECORDS_AND_EXTENT.txt).
