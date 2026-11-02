@@ -1,0 +1,59 @@
+Model geometry research checkpoint - PARTIALLY VERIFIED
+
+This snapshot preserves unfinished research. It does not qualify a model-rendering
+path, add recovered-routine credit, or produce a new working game library.
+Overall project estimate remains approximately 10% of weighted milestones, not
+measured code coverage. The decompilation goal remains active.
+
+The five new draft files are:
+- verify_renderer_model_geometry.py
+- recover_renderer_model_geometry_checked.py
+- build_renderer_model_geometry.ps1
+- source/sa_renderer_model_geometry_checked.c
+- analysis/renderer_model_geometry_checked_translation.json
+
+The exploratory verifier extends the existing original/native scene test. It
+uses the model root selected by the original literal at 8c044a00, original renderer
+initialization, and the original matrix-translation API. It does not supply a
+replacement camera pointer. The recorded original run stops at 8c620f60 while
+reading through a null view pointer from slot 8c8ea3e0. The older native helper
+continues by aliasing that invalid address into RAM. This is a failed comparison;
+it is not evidence of successful native model drawing. Faulted state is discarded.
+Normal public-return checkpoints and retail-dependent diagnostic inputs remain
+private. The exploratory script saves a write-once checkpoint and must use a fresh
+output location when reproduced; it is not a passing regression test.
+
+The checked C draft reuses 271 already recovered instruction rows from 8c620f2c
+and 8c6215fa with reached RAM-access checks. Publication review compares every
+listing row and each reported retail span against the user's matching executable,
+checks translation dependency hashes and Python syntax, and compiles the changed
+C file with optimization and warnings treated as errors. These checks do not prove
+the replacement's runtime behavior.
+
+The full 291-source link fails: undefined symbol sa_motion_publish_stop. The draft
+declares that helper as an external function, while existing connected code uses
+the static inline definition in source/sa_draw_motion_stop.h. No successfully
+linked renderer_model_geometry.dll is produced or included in this release.
+The exact check results and linker diagnostics are in
+analysis/renderer_model_geometry_publication_checks.json.
+
+Next work: preserve this draft, make an additive corrected copy using the existing
+stop-publication helper, compare the cold invalid-view failure with the unchanged
+original guards and all partial state, then trace the original producer of slot
+8c8ea3e0. Do not invent a camera pointer, relax checks, resume faulted state, or
+claim model rasterization before that producer and path are verified. Continue
+with Sol High for this reverse-engineering work.
+
+All previously published source/proof files and compiled build bytes are retained.
+The prerelease archive contains the existing incomplete Windows research DLLs and
+import libraries with a manifest tied to this source snapshot. Their component
+reports retain their original, limited qualification. They are not a playable PC
+port, and this publication does not rebuild or requalify all historical artifacts.
+Retail disc files, executables, textures, models, images, toolchains, caches and
+credentials are excluded. No new routine credit: 1,658 registry entries / 1,655
+unique module-address pairs / 702 confirmed exact-name links remain unchanged.
+
+How to check without programming: open this file and the linked JSON report in
+GitHub. The report explicitly records full_link_passed=false and
+original_native_model_behavior_qualified=false. The release page labels downloads
+as incomplete research artifacts and provides SHA256SUMS.txt.
