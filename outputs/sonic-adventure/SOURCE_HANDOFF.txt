@@ -1,3 +1,12 @@
+Latest verified step: original source-record dependency reaches the model path
+The guarded geometry copy links and matches 17 cold-pointer cases. Three original
+source-record routines pass 59 unit comparisons covering all 223 instruction rows.
+With the original caller-selected record, initialization and the retail model
+wrapper return with exact original/native state. No model packets are submitted:
+the original 11-vertex mesh exceeds the current vertex capacity 0. That capacity
+is unchanged. See MODEL_VIEW_PRODUCER.txt for evidence and the next buffer owner.
+Approximately10% weighted milestones; no new registry credit. Goal active.
+
 Latest verified step: original TA list-init now owns collector reuse
 Twelve original/native frames render twelve jobs and retire 108 packets using
 the unchanged 64-packet collector. Original list-init writes trigger reuse; no
