@@ -1,3 +1,12 @@
+Latest qualified step: camera draw, state-2 update and following native frame
+The original camera callbacks and next prepared frame now return normally.
+Sixteen bodies contain 1,830 statically recovered rows; runtime checks cover
+the reached paths with an empty candidate table. Strict 310-source build,
+19 full comparisons (18 normal, one expected guard) and three new native jobs
+pass. The original IRQ path acknowledges prior completion; no token is injected.
+See CAMERA_DRAW_STATE2.txt. Full game/level coverage remains unfinished.
+Approximately 10% weighted milestones; goal active.
+
 Latest qualified step: complete prepared particle frame and native render jobs
 The original frame path submits all 194 packets, retires its list and completes
 native pixel work. Both texture modes match complete colour/depth images for

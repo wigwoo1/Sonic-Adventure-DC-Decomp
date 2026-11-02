@@ -1,0 +1,110 @@
+Original camera draw, state-2 history/selection and the next prepared frame
+
+PARTIALLY VERIFIED. Approximately 10% of weighted whole-project milestones,
+not a measured percentage of original code. The goal remains active. The full
+game, main frame loop and requested ports remain unfinished and not playable.
+
+The real stored camera draw callback at 8c01c296 now reaches the recovered
+8c01bd9e body and returns normally, matching 460 original instructions. The
+actual level-0 scheduler then completes a state-2 camera update in 3,232 matched
+instructions, including history, vector subtraction, selector, projection and
+shared position-write paths. The original task and work pointers are retained.
+
+From that matched normal return, all six original particle callbacks complete
+19,789 instructions and retain 186 packets. The next original frame path
+acknowledges the previous native job through its own IRQ register writes,
+submits 189 packets and returns after 8,319 matched instructions. Native pixel
+work then completes job 2 with full colour/depth/statistics equality against
+the independent oracle. It renders 60 triangles and processes 1,346 fragments;
+1,312 pass depth and no textures are sampled in this subsequent frame. The
+particles now start separating visually. There is no manual acknowledgment,
+clock reset, geometry patch, injected camera pointer or completion token.
+
+The first prepared frame remains separately qualified with both texture modes:
+194 packets, 62 triangles, 1,294 fragments, zero texture samples for Off and four
+samples for on. Its original assertion set passes on the current camera DLL.
+
+Recovered source and qualified scope
+
+Five new translation units contain 1,830 byte-checked original instruction rows
+across 16 entry bodies. This includes the 564-row camera draw, the 42-row movement
+history helper, 13-row in-place vector subtraction, state-2 selection/transition
+helpers and their shared position-write tail. All rows are statically emitted
+as C with complete decoded control-flow checks; no runtime opcode decoder is
+added to the native game implementation. External services remain explicit.
+
+The primary six-call prepared camera sequence reaches 571 distinct rows in those new
+bodies. This is path coverage for these tests, not whole-game coverage. The
+camera candidate table remains empty, so populated candidate/volume paths and
+several statically recovered selector bodies are not runtime qualified. The
+Ghidra draft is evidence only, including its unreachable-block warnings. Actual
+translation uses original bytes, all decoded rows and original control flow.
+The initial draw-generation report retains historical template scope wording;
+its exact entry/row/byte evidence is authoritative and its actual scope is the
+camera draw described here.
+
+Guarded memory/FPU/return behavior, original register advances, delay-slot effects
+and dynamic caller arguments remain intact. The shared position tail receives
+the original PR restored before its tail branch. The complete comparison still
+checks CPU/FPU and hidden state, entire RAM/VRAM/sound RAM, device effects,
+owned command streams, image bytes and ordered call boundaries.
+
+Current build and checks
+
+build_model_camera_position_tail.ps1 compiles 310 C sources with Clang/LLD,
+-Wall -Wextra -Werror and the existing strict options. It uses a UTF-8 response
+file containing quoted forward-slash paths, avoiding Windows' command-line
+length limit. The earlier long-command launch scripts and failures remain
+historical evidence. Original source, proof reports and builds are preserved.
+
+verify_camera_draw_state2_sequence.py passes ten original/native comparisons:
+six normal actual-sequence calls plus four declared vector-API cases. The latter
+cover separate buffers, aliasing, overlap and an invalid-source partial stop.
+There are nine normal returns and one expected guarded stop; no failed state
+is saved or resumed. The actual scene checkpoint contains no synthetic buffers.
+
+verify_model_camera_position_tail_render_regression.py retains every assertion
+from the original complete-frame test. Its eight normal comparisons complete
+two actual native jobs with both texture modes. Together the current reports
+contain 19 full comparisons: 18 normal returns and one expected pointer stop.
+A separate warm-camera comparison returns normally after another 3,168 original
+instructions and preserves both completed jobs and the retired generation.
+Three new native jobs complete in these current tests. The sequence inherits
+one already-completed job from its pinned producer, which is counted separately.
+
+Current reports:
+analysis/camera_draw_state2_sequence_verification.json
+analysis/model_camera_position_tail_render_regression_verification.json
+analysis/camera_draw_state2_warm_verification.json
+analysis/camera_draw_state2_build_verification.json
+analysis/camera_draw_state2_qualification.json
+
+The private normal checkpoint camera-draw-state2-normal has zero active packets,
+189 retired/submitted job packets across three pages, two completed jobs and
+render completion bits 7 still pending after the query. The next original frame
+can acknowledge prior completion normally; this does not qualify drained shutdown.
+Repeated queries do not execute or complete a job twice. No host pointers are
+serialized into job seeds. Retail RAM, packet payloads and diagnostic images
+are excluded from publication; report hashes remain available as evidence.
+
+Next work
+
+Continue the actual camera and main-frame dependencies from matched normal
+states, and recover the real producers/owners needed to populate camera/level
+data. Do not substitute fabricated candidate tables to claim gameplay coverage.
+Preserve all particles, original numerical behavior and native render ownership.
+Continue Sol High for this reverse engineering; Luna Low suits routine publishing.
+
+Registry bookkeeping remains 1,658 entries, 1,655 unique module/address pairs
+and 702 previously confirmed exact links; no registry credit is added by these
+inferred source labels. These are not measured total game-routine counts. Real
+60/120/240 FPS, 8K performance, physical PowerVR precision/timing, SUPIR/HD and
+settings UI, Android, stereoscopic 3DS and later N64/PS1 ports remain unfinished.
+Texture Off must bypass sampling and retain vertex/material colours.
+
+For a beginner, open this guide and the current reports. The verified subsequent
+image is work/sonic-adventure/camera-draw-state2-normal/native_second_frame.png
+inside your workspace. It shows a prepared particle scene, not a full level.
+The prerelease contains incomplete research DLLs/import libraries, with no game
+EXE. Reproduction needs matching private retail inputs and producer checkpoints
+in a separately prepared workspace; reports and checkpoints are write-once.
