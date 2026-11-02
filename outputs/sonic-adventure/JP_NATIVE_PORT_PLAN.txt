@@ -1,0 +1,111 @@
+Japanese-source native port: integration order and current evidence
+
+Overall estimate remains 10% of the revised weighted milestones. The verified
+Japanese source baseline is complete. Native PC gameplay, English localization,
+performance/settings, Android, stereoscopic 3DS and demakes remain unfinished.
+The active objective is JP_BASED_PORT_GOAL.txt. USA byte-for-byte reconstruction
+is no longer a prerequisite; its source, proofs and builds remain preserved.
+
+Use reshaped/sonic-adventure at commit
+25a3d3154dbe657325e97dbe8c5291086f6af5c0 as a pinned external dependency.
+No upstream game C is copied into our public source tree. The original matching
+checkout is /root/sa-source-review in WSL sa-dc-source-review. The separate GCC
+checkout is /root/sa-native-integration. Full game images, disc data and compiler
+bundles remain private. Our tools, adapters, metadata and instructions can be
+published independently. Upstream build tools/tests retain their MIT notices;
+the upstream game-source redistribution question remains unresolved.
+
+1. Establish the complete GCC baseline.
+
+The original 247-image matching build was independently verified. The isolated
+GCC workflow checks those original/rebuilt image hashes before and after make,
+copies private inputs into a fresh worktree, and runs one make -j8 gcc there.
+The first workflow stopped before making a worktree because of a mistyped hash
+literal. Windows and WSL agreed on the intact input; v2 corrects that literal.
+Keep both workflow files and logs. Use the terminal result and separate manifest
+qualification report to determine whether the GCC build actually completed.
+A running process, partial manifest or compile log alone proves no completion.
+The GCC target is little-endian 32-bit SH-4, not x86/ARM. Even a passing GCC build
+does not prove console runtime, native PC operation or full-game 60 FPS support.
+
+2. Integrate coherent native platform dependencies.
+
+An unchanged upstream task/heap source and our authored test bridge compile to
+native Windows x64 objects with no diagnostics after a host size_t adapter.
+The adapter uses the compiler's pointer-sized size_t through the SDK's existing
+SIZE_T_DEFINED guard; it leaves Uint32 and upstream source bytes unchanged.
+The initial build failed on that type conflict. The second reaches the linker
+and stops on eleven imports. No third linking attempt or dummy implementation
+was used; there is no linked DLL or heap/task runtime test from these probes.
+
+See analysis/jp_native_link_dependency_inventory.json for the original providers.
+The imports are collision_free, event_free, _unit_matrix_, njPushMatrix,
+njPopMatrix, njTranslateV, njRotateX/Y/Z, njCalcVector and njAddVector. These are
+whole-translation-unit imports; the heap functions themselves do not all call
+Ninja. Some providers use SH-4 inline assembly in .c files, hidden under
+__clang__ guards. A C filename or successful parsing is not a portable body.
+
+Port real shared math/matrix and task/collision/event lifecycle providers as a
+dependency group. Reuse verified USA numerical implementations where semantics
+and calling conventions are established. Use the upstream GCC renderer's C
+replacement and relocation metadata; direct hardware/store-queue paths still
+need host interfaces. Defining GCC alone enables SH-4-specific headers and is
+not a native-port configuration.
+
+Make 32-bit disc addresses/data layouts explicit and separate them from host
+pointers. Audit pointer-to-Uint32 casts, packed records, enum/long sizes and
+relocated overlay imports. Do not widen every game scalar or cast raw disc
+records to 64-bit host structures. Retain the upstream behavior guards needed
+for modern compilers and verify floating-point operation order where relevant.
+
+3. Bring up the native game loop and content path.
+
+Create genuine host interfaces for input, time, files, memory, rendering, audio
+and saves. Compile game and overlay code from source; retail modules supply
+declared data, not executable SH-4 code for a PC build. Resolve shared symbols
+and per-image ownership through the existing placement/import metadata.
+First prove boot/menu, then a controllable stage with rendering/audio/save-load,
+then all characters, stages, events, bosses, minigames and Chao. Keep the old
+prepared-frame renderer proof as scoped reference evidence, not a game proof.
+The old research rasterizer rejects real stage commands including offset colour,
+VQ textures, filtering and fog; do not bypass those guards to claim completion.
+
+4. Integrate English with explicit asset and cue mappings.
+
+The directory inventory contains 2,106 JP files and 2,832 USA files, with 1,748
+common paths. Its 326 localization filename candidates are a heuristic list,
+not 326 verified localized assets. The USA disc has EVENT_ADX_US.AFS alongside
+EVENT_ADX.AFS. All extracted audio remains private.
+
+The actual archives contain 2,088 JP Japanese clips, 2,044 USA Japanese clips
+and 2,044 USA English clips. The source's VOICE_FILES=2148 is a load capacity,
+not an exact archive count. Independent payload comparisons identify 1,664
+two-sided unique Japanese clip pairs; 1,539 change index and only 125 retain it.
+424 JP indices have no unique identity anchor. Equal filenames or numerical IDs
+cannot justify swapping the archives unchanged.
+
+analysis/jp_english_voice_candidates.json proposes English indices through the
+USA Japanese bank. Japanese byte identity is verified; USA English-bank binding,
+cue semantics, playback and timing are not. Check those before activating a map.
+Resolve duplicate/unmatched clips through event/source context. Stage message
+text and page timing come from generated disc-data includes, so port the typed
+text/timing data and fonts/UI alongside the source, with verified USA mappings.
+No English localization has been implemented by these inventories.
+
+5. Complete presentation features and later platforms.
+
+After end-to-end native behavior is established, separate game logic timing from
+60/120/240 FPS presentation. Upstream's 60 FPS implementation has documented
+mode limits and draw-side-effect caveats; it is not proof of generalized high
+FPS. Add up-to-8K rendering, aspect ratios and resolution controls. Then optional
+SUPIR texture packs, HD toggle and 100/75/50/25/Off texture settings; Off samples
+no textures and uses vertex/material colours. Keep original assets supported.
+
+Carry the verified portable core to Android and stereoscopic 3DS, with measured
+device-specific settings. Keep N64 and original PlayStation demakes as later
+content/engine adaptations. Preserve the complete requested scope throughout.
+
+For a beginner: consult the passing verification reports and each terminal
+result. A compile-only probe, proposed mapping or queued job is explicitly not a
+playable game. Keep Sol High for this integration work; Luna Low is suitable for
+routine documentation and publication after a snapshot has been reviewed.

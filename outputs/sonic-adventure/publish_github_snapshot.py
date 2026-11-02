@@ -85,61 +85,62 @@ def prepare(workspace):
         for path in base.rglob('*'):
             if path.is_file() and path.relative_to(destination).as_posix() not in allowed:
                 raise RuntimeError(f'Stale staged file requires review: {path}')
-    manifest = dict(project='Sonic Adventure Dreamcast Rev A research',
+    manifest = dict(project='Sonic Adventure Japanese-source native-port research',
                     files=entries, excluded_local_extensions=excluded,
                     retail_game_files_included=False, playable_game=False,
                     qualification='Historical proofs describe their specific domains; drafts are not verified code.')
     (destination / 'PUBLICATION_MANIFEST.json').write_text(json.dumps(manifest, indent=2)+'\n', encoding='utf-8')
     (destination / '.gitignore').write_text('work/\npublication/\n__pycache__/\n*.pyc\n.env*\n*.pem\n*.key\n*.bin\n*.BIN\n*.gdi\n*.cdi\n*.iso\n*.chd\n*.dll\n*.lib\n*.exe\n', encoding='utf-8')
     (destination / '.gitattributes').write_text('* -text\n', encoding='utf-8')
-    (destination / 'README.md').write_text('''# Sonic Adventure Dreamcast decompilation research
+    (destination / 'README.md').write_text('''# Sonic Adventure Japanese-source native-port research
 
-Work in progress for Sonic Adventure (USA), Dreamcast Rev A. **This is not a
-playable PC port or a complete decompilation.** Overall milestone estimate: 10%.
-The estimate is not measured recovered-code coverage.
+Work in progress using the complete matching Japanese Dreamcast HDR-0001 v1.007
+source as the primary development base. **There is no playable native PC port yet.**
+Overall estimate: 10% of weighted milestones, not measured code coverage.
 
-The project aims for a native PC port at 60/120/240 FPS and up to 8K, later
-Android and stereoscopic Nintendo 3DS ports, and eventual N64/PlayStation demakes.
-SUPIR HD textures and display settings are planned; they are not implemented.
+The original Japanese matching build is verified. The isolated GCC baseline also
+builds: 247 code images and seven motion-data images, with all 4,160 manifest file
+hashes checked. GCC still targets Dreamcast SH-4. Native Windows object compilation
+has started; the current probe does not link or run. English localization remains
+unimplemented; verified clip identities provide candidate mapping anchors only.
+
+The goal is complete native PC gameplay with English localization, 60/120/240 FPS,
+up to 8K, display/texture settings and optional SUPIR enhancements, followed by
+Android and stereoscopic 3DS ports and eventual N64/PlayStation demakes.
+Texture Off must disable sampling and use vertex/material colours.
 
 ## Current code and evidence
 
-- [Project README](outputs/sonic-adventure/README.md)
-- [Source access and detailed status](outputs/sonic-adventure/SOURCE_HANDOFF.txt)
-- [Recovered C and support code](outputs/sonic-adventure/source/)
-- [Verification reports and research drafts](outputs/sonic-adventure/analysis/)
-- [Latest angle helper evidence](outputs/sonic-adventure/DRAW_ANGLE_CURVE.txt)
-- [Persistent renderer initialization](outputs/sonic-adventure/DRAW_FRAME_SEQUENCE.txt)
-- [Build and verification workflow](outputs/sonic-adventure/build_and_verify.ps1)
+- [Current goal](outputs/sonic-adventure/JP_BASED_PORT_GOAL.txt)
+- [Integration order and limits](outputs/sonic-adventure/JP_NATIVE_PORT_PLAN.txt)
+- [Verified GCC baseline and native/localization evidence](outputs/sonic-adventure/JP_GCC_BASELINE.txt)
+- [Integration workflows](outputs/sonic-adventure/jp_port_tools/)
+- [Authored native adapters](outputs/sonic-adventure/native/)
+- [Verification reports](outputs/sonic-adventure/analysis/)
+- [Preserved USA research and source handoff](outputs/sonic-adventure/SOURCE_HANDOFF.txt)
 
-Research DLLs and import libraries are provided as prerelease assets with SHA256
-manifests. They expose test interfaces; there is no game executable to launch.
-Qualification varies by component. Consult each original report and its limits.
-No disc image, original executable, decoded retail modules, textures, models,
-music, proprietary SDK, toolchain bundle or credentials are included.
+The pinned upstream dependency is
+[reshaped/sonic-adventure at 25a3d315](https://github.com/reshaped/sonic-adventure/tree/25a3d3154dbe657325e97dbe8c5291086f6af5c0).
+Its game C remains external while redistribution permission is unresolved.
+This repository publishes our authored integration code, metadata and tools;
+it does not vendor those game-source bodies or assign them a license.
 
-## Reproducing work
+## Builds and reproduction
 
-Keep this repository's `outputs/sonic-adventure` layout. Scripts generally resolve
-the workspace two levels above that directory and use `work/sonic-adventure` for
-locally extracted game inputs and build outputs. Supply your own matching Rev A
-game inputs separately. Python, Clang/LLD, PowerShell and, for analysis, Ghidra/JDK
-are external dependencies. Some older scripts retain the original workstation's
-tool paths; public portability of the complete workflow is still unfinished.
-Historical reports pin the original paths and hashes; publication preserves
-their bytes instead of silently rewriting their evidence.
+Prerelease DLLs/import libraries are preserved historical Windows USA research
+artifacts, not the Japanese GCC game build or a playable PC port. Their original
+reports define their qualification. No disc images, retail models/textures/audio,
+complete game images, toolchain bundles or credentials are published.
 
-`PUBLICATION_MANIFEST.json` records the exact published source/document bytes.
-Use `publish_github_snapshot.py --workspace PATH` to prepare a new snapshot, then
-add `--publish` to upload using Git Credential Manager. Retail input folders and
-toolchain caches are excluded by the publisher's allowlist.
+Keep the outputs/sonic-adventure layout and provide matching local inputs and the
+pinned upstream checkout separately. The current GCC workflow uses an isolated
+WSL worktree. Read the baseline guide for required commands, external toolchains,
+private paths and fresh-output requirements. Portable installation is unfinished.
 
-## Attribution
-
-Sonic Adventure and its original materials belong to their respective owners.
-This is an independent research project. The numerical dependency in
-`outputs/sonic-adventure/third_party/skmp-sh4-fpu` retains its upstream MIT notice.
-No project-wide license is assigned by this snapshot.
+PUBLICATION_MANIFEST.json records selected source/document hashes. Each research
+archive contains BUILD_MANIFEST.json and has a SHA256SUMS companion. Historical
+source/proofs and all previous research builds remain preserved. No project-wide
+license is assigned; existing third-party notices remain with their components.
 ''', encoding='utf-8')
     builds = []
     for folder in (workspace/'work/sonic-adventure/build', workspace/'outputs/sonic-adventure/work/sonic-adventure/build'):

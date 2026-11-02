@@ -1,0 +1,72 @@
+Build a complete, playable native Sonic Adventure port using the matching
+Japanese Dreamcast HDR-0001 v1.007 source project at
+https://github.com/reshaped/sonic-adventure as the primary development base.
+Pin the upstream revision and preserve its reproducible matching build.
+Use the user's Japanese and USA Rev A copies as local inputs and references.
+
+The priority is a source-based native port with English localization. A complete
+byte-for-byte USA Rev A decompilation is no longer a prerequisite. Preserve our
+existing USA source, tools, proofs, hashes and builds, and reuse verified work
+where it helps. Track deliberate differences from the USA version. Do not
+describe a localized Japanese-based port as a matching USA decompilation.
+
+First establish a repeatable upstream source/GCC baseline and a practical native
+PC integration plan. The Japanese matching build is already verified for all
+247 rebuilt images; preserve that evidence and rerun it when relevant inputs
+change. The upstream GCC build still targets Dreamcast SH-4, so it is a starting
+point rather than a native Windows/Android port. Reuse whole compatible source
+modules and existing build metadata wherever practical. Focus new reverse
+engineering on actual missing functionality and necessary version differences.
+
+Develop the native PC platform layer, replacing Dreamcast-specific assembly,
+hardware access and SDK dependencies with tested host implementations. Support
+the complete game: all playable characters, stories, stages, bosses, events,
+menus, minigames and Chao features, with working rendering, audio, controls and
+save/load behavior. Establish end-to-end gameplay tests before calling it playable
+or complete. Preserve gameplay timing when changing presentation frame rate.
+
+Incorporate English text, dialogue/subtitles, voices, fonts, menus, UI graphics
+and relevant localization code or behavior from the user's USA copy. Validate
+asset formats, references, timing, saves and regional differences. Supply local
+extraction/conversion tools; do not publish retail assets or disc images.
+
+Provide 60/120/240 FPS options, render resolutions up to 8K, render-resolution
+selection and aspect-ratio selection. Add a SUPIR-based texture-upscaling workflow
+and an HD-texture toggle. Texture-resolution settings must include 100%, 75%,
+50%, 25% and Off. Off must disable texture sampling and render with vertex and
+material colours. Keep original textures usable and make enhanced texture packs
+optional. Verify each setting; a research demo is not evidence of full-game support.
+
+After the native PC baseline works, develop Android and Nintendo 3DS ports.
+The 3DS port must support stereoscopic 3D and appropriate device-specific
+performance and graphics settings. The final stretch goals are Nintendo 64 and
+original PlayStation demakes, adapting models, assets and engine behavior to
+their hardware while documenting compromises and requirements.
+
+Keep all resulting original source, build instructions, verification evidence
+and beginner-friendly documentation accessible. Track upstream source and retain
+its notices and provenance. Its game source currently has no stated reuse
+license: keep it as a pinned external dependency while public redistribution
+permission is unresolved, and do not assign it a license ourselves. Publish our
+reviewed code, integration tools, documentation and appropriate research builds
+to https://github.com/wigwoo1/Sonic-Adventure-DC-Decomp at least daily when changed.
+Provide access to required upstream source through documented pinned references.
+Exclude retail inputs/assets, credentials, caches and toolchain bundles. Use
+ordinary commits and fast-forward pushes, preserve history, and attach
+source-matched build archives and checksums. Clearly label incomplete builds.
+
+Report an estimated whole-project completion percentage with every progress
+update, explain its basis, and distinguish source recovery from native port and
+localization progress. Initial planning weights are: verified Japanese source
+baseline 10%; complete native PC gameplay 30%; English localization 10%; FPS and
+display options 10%; HD texture workflow/settings 5%; Android 10%; stereoscopic
+3DS 15%; N64/PlayStation demakes 10%. These are planning estimates, not measured
+code coverage. Currently only the 10% source-baseline milestone is complete.
+
+Follow the existing beginner-friendly reporting and model/budget rules. Keep
+Sol High for initial integration, platform architecture and difficult debugging;
+recommend a lower model when routine work is suitable. Break work into verifiable
+milestones, compile and run relevant checks after code changes, preserve working
+functionality, and never claim untested behavior works. After two genuinely
+different failed attempts, stop guessing and report the evidence and next action.
+Keep the goal active and follow the user's pause/model-switch instructions.

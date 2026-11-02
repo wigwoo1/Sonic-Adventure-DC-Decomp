@@ -1,0 +1,91 @@
+Verified Japanese GCC baseline and first native-integration evidence
+
+PARTIALLY VERIFIED project milestone. Overall estimate: 10% of revised weighted
+milestones, not recovered-code coverage. Goal active; no playable PC port yet.
+The primary base is now the complete Japanese source, as JP_BASED_PORT_GOAL.txt
+and JP_NATIVE_PORT_PLAN.txt describe. Earlier USA research remains preserved.
+
+The pinned upstream revision is 25a3d3154dbe657325e97dbe8c5291086f6af5c0.
+The original matching checkout /root/sa-source-review is unchanged. A separate
+detached worktree, /root/sa-native-integration in WSL sa-dc-source-review, ran
+make -j8 gcc successfully in approximately 22 minutes. Its fetched GNU sources
+and library inputs passed upstream hashes; its installed compiler is GCC 16.2.0.
+The full game C remains an external dependency, not publicly copied here.
+
+The completed GCC manifest contains 254 linked images: the 247 code images from
+the matching baseline and seven motion-data images. Independent checks confirm
+32-bit little-endian SuperH ELF headers for all 254, rehash their output files,
+and validate all 4,160 tool/spec/input/output hashes through the pinned upstream
+manifest parser. The original 247 original/rebuilt image pairs and tracked
+source files were checked before and after the build and remain unchanged.
+See analysis/jp_gcc_baseline_v2_verification.json and jp_gcc_build_manifest.txt.
+
+This is a Dreamcast SH-4 build, not x86 or ARM. No Dreamcast runtime test or
+native PC gameplay test was performed. The GCC build's 60 FPS/16:9 code is not
+evidence that every requested mode or 120/240 FPS already works. Complete images
+include private disc data and are excluded from public research archives.
+
+The first isolated runner stopped before changing a worktree because a copied
+hash literal omitted one character pair. Independent Windows/WSL hashing agreed
+on the intact input; build_isolated_gcc_baseline_v2.py corrects that literal.
+The first qualifier expected only 247 images. qualify_gcc_baseline_v2.py checks
+the actual code/motion sets against upstream metadata and includes all seven
+motion banks. Initial files/logs and corrected versions are preserved.
+
+Native Windows evidence
+
+The unchanged upstream src/system/task.c and our authored heap bridge compile
+to Windows x64 objects, both with empty diagnostics. The initial attempt caught
+the SDK's 32-bit size_t conflict with the native compiler. jp_host_types.h uses
+the native type through the SDK's SIZE_T_DEFINED guard without editing upstream
+code or widening Uint32. The second attempt reaches the linker, which names
+eleven unresolved whole-translation-unit imports. The attempts stop there.
+There is no linked DLL and no heap/task behavior test. Private object files are
+excluded from public artifacts. See jp_native_heap_build_v2_verification.json
+and jp_native_link_dependency_inventory.json under analysis/.
+
+The dependencies identify a concrete first integration group: task, collision
+and event lifecycles plus real Ninja matrix/vector providers and their state.
+Some .c providers contain SH-4 assembly guarded out under Clang, so compiling
+declarations alone does not implement them. The next native step must implement
+or adapt the actual providers with explicit host/data layouts and behavior tests.
+
+English-localization evidence
+
+The supplied discs contain 2,106 JP files and 2,832 USA files, with 1,748 common
+paths. Directory-name candidates are research leads, not equivalent resources.
+The USA disc includes a separate SONICADV/EVENT_ADX_US.AFS English voice archive.
+
+Private AFS indexing verifies 2,088 JP Japanese clips, 2,044 USA Japanese clips
+and 2,044 USA English clips, with bounds and payload hashes. VOICE_FILES=2148 in
+the JP source is a load capacity; the observed JP archive fits it. Two-sided
+unique Japanese payload identities provide 1,664 cross-version pairs. Each pair
+was independently byte-compared. Of these, 1,539 change index and 125 keep it;
+424 JP entries lack a unique identity anchor. Five adversarial matcher checks
+cover moved IDs, duplicate ambiguity, unmatched payloads and empty entries.
+
+The resulting English indices are candidates only. English bank binding, event
+cue IDs, text/voice timing and playback remain unverified; no English audio or
+text has been activated. See jp_english_localization_inventory.json,
+jp_english_voice_archive_inventory.json and jp_english_voice_candidates.json in
+analysis/. Original stage text/timing is imported through generated disc-data
+includes, so localization requires explicit table/font/UI conversion too.
+
+Reproduction and next milestone
+
+jp_port_tools/ holds the authored worktree builder, qualifier and inventory tools.
+Run the Linux tools in the named WSL distribution with explicit --workspace,
+--source/--destination or --checkout arguments, matching local disc inputs and a
+fresh destination. Run the Windows native probe with --upstream pointing to the
+pinned external source and --compiler to Clang. Existing reports/output names
+are write-once; use a fresh workspace for a full replay. These are research
+workflows, not a portable game installer.
+
+For a beginner, start with the passing GCC report and integration plan. The
+native link failure and candidate voice mappings are explicit limits, not a
+failed GCC build or completed localization. Keep Sol High for the native ABI
+and real SDK dependency work; Luna Low suits routine reviewed publication.
+PC gameplay, 60/120/240 FPS/8K/settings, SUPIR textures, Android, stereoscopic
+3DS and N64/PlayStation work remain required. Texture Off must sample no textures
+and use vertex/material colours. Retail assets, RAM, toolchains and credentials
+remain private; historical Windows research DLLs are incomplete and non-playable.

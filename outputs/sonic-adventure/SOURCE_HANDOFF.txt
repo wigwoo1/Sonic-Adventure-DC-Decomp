@@ -1,3 +1,10 @@
+Japanese-source native-port direction: see JP_GCC_BASELINE.txt and JP_NATIVE_PORT_PLAN.txt.
+Pinned upstream GCC build passed: 247 code images plus seven motion-data images.
+All 4,160 manifest hashes and 254 SH-4 ELF headers checked; original matching build intact.
+Windows task/heap objects compile; link stops on eleven real dependencies.
+English voice research identifies 1,664 unique Japanese clip anchors; English binding unverified.
+Overall estimate: 10% revised weighted milestones; goal active; no playable PC port.
+
 Original USA world render-end and queued fixture job: see STAGE_RENDER_END.txt.
 Strict 317-C build; 14 CPU comparisons (12 normal, two guards).
 Fixture job 5 queues 8,709 packets; both pixel backends reject unsupported commands.
