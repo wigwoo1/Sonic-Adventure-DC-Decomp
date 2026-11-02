@@ -1,0 +1,64 @@
+Native Japanese-source integration: first shared Ninja math component
+
+This is an incomplete research DLL, not a playable game. Overall completion
+remains approximately 10% of weighted milestones, not measured code coverage.
+
+The authored native implementations provide njInitMatrix, njGetMatrix,
+njSetMatrix, njUnitMatrix, njPushMatrix, njPopMatrix, njTranslateV, njRotateX,
+njRotateY, njRotateZ, njCalcVector and njAddVector, plus their matrix globals.
+They replace SH-4-specific SDK behavior through the existing pinned MIT-licensed
+vector/approximation core. No external upstream game source or retail asset is
+linked or embedded in this component. The upstream source remains a reference.
+
+The current matrix is separate from the stack's deferred saved copies. In
+particular, pushing a replacement leaves the new saved slot untouched, and a
+zero-count pop reloads the saved slot. These details are observable by game code.
+Initialization uses the original x/y reflection. Rotations wrap at 16 angle bits.
+
+Build: native Windows x64, Clang C17, O2, no floating-point contraction, warnings
+treated as errors. The first standalone link exposed missing memcpy and the
+Windows _fltused ABI marker. The optional freestanding runtime supplies an actual
+byte-copy implementation and the marker; the subsequent build passed with zero
+diagnostics. Link that runtime only once, or use the eventual host CRT instead.
+
+Verification: the expanded v2 verifier passes 5,696 comparisons against the
+supplied Japanese 1ST_READ.BIN machine code, plus 196 independent initialization,
+geometry and native-safety checks. The original 5,312-comparison proof is retained.
+Both active SH-4 register banks, both normalization flags, implicit and explicit
+matrices, non-affine matrices, positive/negative/wrapped angles, in-place vectors,
+full-stack rejection, zero pop, multi-pop, deferred slots and memory guards are
+covered. Exact comparisons check output bits, guarded parameter/stack memory,
+depth/capacity/normalization, translated native/guest pointer offsets and returns.
+
+Limits: original instruction numerics and native implementations share the
+already pinned approximation core. This is not an independent new hardware
+validation. Native scratch registers and SH-4 FPSCR effects are not API outputs.
+The qualified input domain is finite normal values and exact zero, nearest
+rounding, denormals flushed in the numerical core, disabled exceptions. Alternate
+FPU environments, nonfinite/subnormal inputs and all possible aliases remain
+unqualified. One game thread owns the globals. Initialization requires a valid,
+nonempty caller-owned stack. Pop counts above depth are deliberately rejected
+instead of reproducing the original unsigned-underflow memory access.
+
+This does not yet integrate the complete game task translation unit. The earlier
+eleven-import task/heap link proof remains unchanged; it has not been rerun here.
+Collision/event cleanup providers, native object layouts and heap/task lifecycle
+need qualification next. English cue binding and full gameplay remain unfinished.
+
+Files:
+ native/jp_ninja_math.c and .h: authored native implementation/API
+ native/jp_math_freestanding_runtime.c: optional standalone runtime
+ jp_port_tools/build_native_ninja_math.py: reproducible build command
+ jp_port_tools/verify_native_ninja_math_v2.py: expanded contract verifier
+ analysis/jp_ninja_math_build_verification.json: compiler inputs/results
+ analysis/jp_ninja_math_v2_verification.json: behavior proof and limitations
+
+From the workspace root, using Python and the installed Clang executable:
+ python -B outputs/sonic-adventure/jp_port_tools/build_native_ninja_math.py --workspace WORKSPACE --compiler CLANG_EXE
+ python -B outputs/sonic-adventure/jp_port_tools/verify_native_ninja_math_v2.py --workspace WORKSPACE --upstream PINNED_UPSTREAM_CHECKOUT
+
+The builder preserves existing DLLs rather than overwriting them. The verifier
+requires the matching Japanese local input and existing SH-4 numerical test DLL.
+See the workflow arguments and pinned build evidence for local prerequisites.
+No test requires publishing those private game inputs. Use Sol High for the next
+native ABI and task lifecycle integration task; routine documentation can use Luna.
