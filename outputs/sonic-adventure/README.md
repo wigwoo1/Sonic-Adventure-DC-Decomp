@@ -1,3 +1,8 @@
+Original USA world/land producer research: see MODEL_WORLD_LAND.txt.
+Strict 313-C build; 61 comparisons (53 normal, eight expected guard stops).
+Prepared native frame 4 passes; actual level resources remain unqualified.
+Overall estimate: 10% weighted milestones; goal active; ports unfinished.
+
 Original USA world-reset/candidate writers: see MODEL_WORLD_WRITERS.txt.
 Strict 311-C build; 67 comparisons (59 normal, eight expected guard stops);
 prepared scene completes native job 3; no real populated level qualified.

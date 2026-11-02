@@ -1,0 +1,88 @@
+Original USA world/land producers and their native dependencies
+
+PARTIALLY VERIFIED. Whole-project estimate remains 10% of weighted milestones,
+not measured recovered-code coverage. Goal active; all intended ports unfinished.
+
+This batch statically emits 12 original USA entries / 888 byte-checked rows:
+8c0519c0 (world callback), 8c051a52 (load act), 8c051cc0 (start land),
+8c0528ae (register object), 8c051e56, 8c051f64, 8c052048, 8c0520c8,
+8c052a00 (clear pool), 8c094dc4 (original two-instruction zero hook),
+8c09d9c6 (allocate/load wrapper) and 8c09f3e0 (container scan/relocation wrapper).
+Symbol names are provisional investigation labels. In particular 8c052048
+advances motion clocks; its emitted draw_added symbol does not imply drawing.
+No Japanese game C was imported. The existing recovered registry is unchanged:
+1,658 entries / 1,655 module-address pairs / 702 prior exact links; new credit 0.
+
+Build and behavior evidence
+
+Use build_model_world_land_dependencies_v2.ps1 for the current 313-C-source
+Windows research DLL. The strict Clang build passes -Wall -Wextra -Werror.
+The intermediate 312-source build also passes and is preserved. The first
+313-source emission failed because its two-instruction hook did not reference
+the RAM ABI parameter. The v2 source adds only (void)m annotations; original
+source, proof and failed diagnostic are retained. Existing dispatch routes and
+guards are unchanged except for the 12 declared new routes. Current DLL SHA256:
+e299197f0efd020d3819ca51b014cca10ff481868c66ae81f1c41368ce2512b5
+
+Four successful reports record 61 original/native comparisons: 53 normal returns
+and eight expected guard stops. Counts include retained frame regressions, not
+61 unique scenarios or 61 game routines. API checks cover both FPU banks and
+FMOV sizes, registration thresholds/capacity/angle masks, reached PR and pointer
+guards, registration-to-near-collector/query handoff, pool widths/canaries,
+land-header decisions, motion clocks, and container header/unknown-chunk scans.
+Full machine state and ordered boundaries match, including partial guard states.
+Invalid states are discarded. Standalone fixture geometry stays out of the
+canonical scene. Positive resource loading and container handlers remain untested.
+
+The initial API test expected a texture-state increment for a null texture name.
+The original/native comparison already matched. The source shows that increment
+requires a non-null name. The v2 test corrects that postcondition and explicitly
+clears its declared fixture buffer; the initial verifier and failed log remain.
+See analysis/model_world_land_api_v2_verification.json for the passing 47 cases.
+
+The unpatched prepared camera/six-particle scene completes native job 4 on this
+DLL: 189 retired packets, zero active packets and seven pending entries. This
+adds one job; two retained texture regressions add two more. Texture Off samples
+zero texels and On samples four. Native pixels and depth match independently.
+The retained pixel backend is unchanged. This is still a small prepared scene,
+not a populated game level. See the frame and render_regression verification
+reports; the private fourth-frame diagnostic image contains particle stars.
+
+Actual callback boundary and next resource producer
+
+A declared native task_create(2,1,8c0519c0), using arguments observed in original
+stage_start, installs the world callback. Scheduler level 1 reaches a matching
+RAM guard at 8c0521b2: mov.l @(0x1c,r14),r2 attempts address 0xfffb2fa2.
+The selected land pointer is 0x0c900ba8; its entry pointer is outside RAM in this
+prepared context. No geometry/global/callee output was patched, and the stopped
+state was neither resumed nor made canonical. The complete stage loader/start
+was not executed. The selected header's original file identity is unresolved;
+two byte-correspondence checks did not establish it. This is not a successful
+world-rendering test or a reason to remove the original resource guard.
+
+Original references identify stage_load at 8c04e490 calling world_load_act at
+8c04e540. Its stage-file-loader boundary is 8c04e4ce -> 8c09ce90, followed by
+world bounds at 8c04e4d4 -> 8c052ba0. The next-producer evidence includes original
+listings/drafts for that 136-row stage loader, act change 8c04f872 and file-size
+helper 8c09da74. These are future targets, not newly tested native routines.
+Recover the authentic file/overlay/catalog producer and initialization context
+before claiming a populated level. All-path coverage and real gameplay remain
+unqualified. Per-entry reached/unreached rows are in the qualification report.
+
+Reproduction and checking
+
+For a beginner, open analysis/model_world_land_qualification.json, then the four
+named verification reports and the 313-source build report. They identify what
+passed and what remains untested. Read-only Ghidra workflow sources are under
+world_land_tools/. Pass -Workspace with the full workspace path explicitly;
+their historical defaults are not a portable installer. Existing evidence is
+write-once. Replay in a fresh workspace/output location with matching private USA
+inputs, the preserved state-producer chain, Ghidra/JDK and Python/Clang installed.
+
+Original retail inputs/assets, RAM/checkpoints, private images, toolchains and
+credentials are excluded. Prereleases contain incomplete Windows research DLLs
+and import libraries, not a playable game. Historical source/builds are retained.
+Native 60/120/240 FPS, 8K, SUPIR/HD texture settings (including Off vertex/material
+colours), Android, stereoscopic 3DS and eventual N64/PS1 work remain required.
+Continue Sol High for the authentic resource producer; Luna Low suits routine
+publication once a reviewed snapshot is frozen.
