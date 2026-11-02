@@ -1,3 +1,9 @@
+Original USA world render-end and queued fixture job: see STAGE_RENDER_END.txt.
+Strict 317-C build; 14 CPU comparisons (12 normal, two guards).
+Fixture job 5 queues 8,709 packets; both pixel backends reject unsupported commands.
+No new completed pixel job; original bank handoff remains unqualified.
+Overall estimate: 10% weighted milestones; goal active; ports unfinished.
+
 Original USA stage resources and textures: see STAGE_RESOURCE_LOADING.txt.
 Strict 314/315/316-C builds; 27 comparisons (22 normal, five host stops).
 Original stage bytes and texture-loading path pass; whole world frame unqualified.

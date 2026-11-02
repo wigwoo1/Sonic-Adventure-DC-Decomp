@@ -1,0 +1,73 @@
+Original USA world render-end wrapper and queued level-rendering frontier
+
+PARTIALLY VERIFIED. Overall estimate: 10% weighted milestones, not measured code
+coverage. Goal active. No playable game or complete level frame is qualified.
+
+8c038dfc is statically translated from eight original instruction rows. It calls
+8c036ffc, restores its incoming PR from the stack, then tail-calls 8c605e0a.
+Both callees already existed. The new 317-C-source build passes strict Clang
+-Wall -Wextra -Werror. Use build_stage_render_end.ps1. DLL SHA256:
+35bef98bc504ae45a5e7e5fad3c4dd335f132e2b6081dad1f24c903aba075293
+Earlier source, proofs and builds remain intact. No Japanese game C was copied.
+
+analysis/stage_render_end_verification.json records 11 original/native
+comparisons: nine normal returns and two matching host guards. Four declared
+begin/end API profiles cover both integer banks and the zero/all-set FR/SZ/PR
+combinations. Checks include ordered call boundaries, incoming PR at the tail
+call, restored stack, unchanged FPU/GBR/inactive bank and the original geometry
+flag OR. All eight new rows are reached. This is scoped behavior, not complete
+function or game coverage; registry credit remains zero.
+
+The unchanged prepared CPU profile still stops at 8c037d5a after 2,666 packets.
+Under an explicitly isolated bank-1 API profile, the world callback now returns
+normally after 697,118 instructions, selecting 59 land records and emitting
+7,132 packets. This CPU profile has not been promoted to canonical game state.
+Original boot/handoff still needs separate qualification. No geometry, globals
+or game-callee results were patched, and no faulted state was resumed or saved.
+
+Original frame handoff under the isolated CPU profile
+
+The first frame verifier records successful world, particle and frame submission
+calls, then correctly fails before executing the next query: its pixel-work
+precondition rejects unsupported rendering commands. It produces no passing
+verification report. The second verifier incorrectly assumed the queued packet
+count equals the pre-frame active count (7,318). A read-only observation measures
+8,709 packets in the submitted job. Both failed verifiers/logs are preserved.
+
+analysis/stage_render_end_frame_fixture_v3_verification.json records the two
+successful retained prefix comparisons plus a newly repeated frame submission.
+Together with the 11 API/profile comparisons this makes 14 formal original/native
+comparisons: 12 normal returns and two guards. These are not 14 unique routines.
+The separately verified native/reference pixel rejection is one backend test.
+
+The actual immutable job has 8,709 packets, job ID 5, ready=true, processed=4.
+Both independent reference and native pixel execution reject it with -2.
+Completion counters, queued job, prior colour image and prior depth image remain
+unchanged. No completion token or successful rendering result was synthesized.
+The query's guest instructions were not executed. There is no new completed
+pixel job or diagnostic level image from this batch.
+
+The first header is 808c000e c8800000 2009a4db c80b1e08. The first rejected PCW
+mask is bit 2 (specular/offset colour). The same header also requests table fog,
+bilinear filtering and a mipmapped VQ RGB565 texture. The queued job contains
+153 headers, 146 with offset colour and 129 with VQ. Those feature combinations
+are beyond the current host raster profile. These are observed requests, not
+newly implemented or physically accurate hardware behavior. KallistiOS primary
+SDK documentation supplies the field names:
+https://kos-docs.dreamcast.wiki/group__pvr__bitmasks.html
+https://kos-docs.dreamcast.wiki/group__pvr__primitives__headers.html
+https://cadcdev.sourceforge.net/docs/kos-current/group__pvr__txr__fmts.html
+
+Next: qualify the authentic disc bootstrap register-bank contract, then extend
+the renderer's offset-colour, VQ/mipmap, filtering and fog domains with explicit
+inputs and independent checks. Keep the current unsupported-feature guards and
+the four-job prepared-scene proof intact while doing so. Full game startup, all
+task levels, player control, executable overlays and hardware timing/FPS remain
+unqualified. Native PC/Android/stereoscopic 3DS and eventual N64/PS1 work remains.
+
+For a beginner, open the two passing reports named above and the strict build
+report analysis/stage_render_end_build_verification.json. The saved queued state
+is private and labelled NOT_CANONICAL. Retail inputs, RAM, models/textures, private
+images and toolchain bundles are excluded from publication. Research prereleases
+contain incomplete Windows DLLs/import libraries, not a playable executable.
+Continue Sol High for the boot/rendering work; Luna Low suits routine publication.

@@ -1,0 +1,30 @@
+isolated_bank1_world_level1 0 0x8cfed000 697118 packets 7132
+original_particle_level5_under_fixture 0 0x8cfed000 19789 packets 7318
+original_frame_under_fixture 0 0x8cfed000 8356 packets 0
+Traceback (most recent call last):
+  File "C:\Users\wigwo\Documents\Codex\2026-10-03\de\outputs\sonic-adventure\verify_stage_render_end_frame_fixture.py", line 42, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "C:\Users\wigwo\Documents\Codex\2026-10-03\de\outputs\sonic-adventure\verify_stage_render_end_frame_fixture.py", line 35, in main
+    if call('original_frame_under_fixture',0x8c6050b0) and call('original_query_under_fixture',0x8c04fe40):
+                                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\wigwo\Documents\Codex\2026-10-03\de\outputs\sonic-adventure\verify_stage_render_end_frame_fixture.py", line 22, in call
+    r,path=scene.call(entry,args,compare=q.fast.compare)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\wigwo\Documents\Codex\2026-10-03\de\outputs\sonic-adventure\model_scene_verified_state.py", line 26, in call
+    result,path,self.m,self.s,self.f=(compare or q.fast.compare)(self.m,self.s,self.f,self.c)
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\wigwo\Documents\Codex\2026-10-03\de\outputs\sonic-adventure\ta_job_stream_native.py", line 45, in compare
+    try:return fn(*args)
+               ^^^^^^^^^
+  File "paged_TA_complete_state_comparison", line 39, in compare
+  File "C:\Users\wigwo\Documents\Codex\2026-10-03\de\outputs\sonic-adventure\renderer_ta_jobs_stream_comparison.py", line 15, in watched
+    ref=base_watched(*args)
+        ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\wigwo\Documents\Codex\2026-10-03\de\outputs\sonic-adventure\renderer_ta_stream_list_comparison.py", line 5, in build
+    ref=parent(*args);c=args[-1];ref.ta_lists=Lifecycle(c.get('ta_list_seed'),c.get('ta_list_enabled',True))
+        ^^^^^^^^^^^^^
+  File "C:\Users\wigwo\Documents\Codex\2026-10-03\de\outputs\sonic-adventure\renderer_stream_pixel_comparison.py", line 14, in build
+    assert ref.pixel_jobs.execute(ref.render_completion,ref.vram)==0,'reference pixel work must succeed before a completion event'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: reference pixel work must succeed before a completion event
