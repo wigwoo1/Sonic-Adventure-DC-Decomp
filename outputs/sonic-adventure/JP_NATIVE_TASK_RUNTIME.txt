@@ -1,0 +1,85 @@
+Japanese-source native task runtime: verified Windows x64 integration
+
+Overall estimate: approximately 10% of weighted project milestones, not measured
+code coverage. This component is not a playable game or a complete host platform.
+
+The repeatable v2 workflow builds the complete pinned task.c, the original four
+collision/event cleanup bodies and our native matrix/vector component. It checks
+2,432 external input hashes before and after compilation and records the source
+file, byte range and hash of each selected lifecycle body. No placeholder cleanup
+functions are used. External game source and game-containing DLL/import-library
+outputs stay in a private work subdirectory and are excluded from release builds.
+
+Important native adaptation
+
+The first expanded low-memory test found a real 64-bit porting bug. The original
+allocator permits a free remainder of 16 bytes, matching its 32-bit header size.
+The native header contains four 64-bit pointers and is 32 bytes. A 16-byte free
+remainder overlaps the end header and creates a free-list cycle. Three live CPU
+samples and the cyclic end-header pointers were captured before the stuck test
+was stopped. The original failing build and workflow remain preserved.
+
+The v2 builder generates a private native copy of the complete task source and
+changes one exact allocation condition: it consumes an entire free block when
+the remainder would be shorter than its native header. The original upstream
+checkout is never edited. On valid 32-bit aligned blocks, a nonnegative remainder
+shorter than the 16-byte header can only be zero, matching the original exact-fit
+condition. This adaptation does not make the native image a matching SH-4 build.
+
+Verification
+
+All five compilation units and the DLL link passed with zero diagnostics.
+The native API suite passes 1,610 checks, including:
+ - 240 live heap payloads, memory separation, alignment and coalescing;
+ - exhaustion and recovery of all 4,096 task slots;
+ - 32 real auxiliary-allocation failure cases covering every record-flag set;
+ - rollback of partially allocated tasks, exact fits and pool-initialization OOM;
+ - the observed 16-byte-remainder regression, now terminating without corruption;
+ - root priority, parent/child drawing, scheduled destruction and callbacks that
+   delete their current task during step, draw and child-step iteration;
+ - real owned/non-owned collision shapes and event motion/previous/path cleanup;
+ - five independent child-position/angle transform cases, existing-list retention,
+   partial bulk creation after allocation failures and matrix-state restoration.
+
+Test callback failures are explicitly captured and checked after native calls,
+so ctypes cannot silently turn a callback assertion into a passing result.
+
+Native task/work sizes are 96/88 bytes; pointers are 8 bytes while SDK scalars
+remain 4 bytes. The bridge exposes actual sizes and offsets, which the verifier
+checks against its host declarations. These are runtime records, not disc record
+layouts. Disc metadata and overlay/data pointers still need explicit decoding,
+relocation and ownership rules. This workflow qualifies Windows x64 only.
+
+Limits: host API behavior, not SH-4 register-state equality or full-game support.
+Valid native records and the tested callback mutation patterns are covered.
+Arbitrary deletion of a cached successor, hostile size arithmetic, cyclic lists,
+all other game modules, complete rendering/audio/input/saves and gameplay remain
+unfinished. The source's original callback/GCC presentation branches are distinct;
+the native task build uses the direct original callback branch. This does not yet
+integrate the GCC presentation/split-frame system or prove 60/120/240 FPS behavior.
+
+Reproduce
+
+Use the pinned upstream commit 25a3d3154dbe657325e97dbe8c5291086f6af5c0
+from https://github.com/reshaped/sonic-adventure as an external checkout. Preserve
+its file bytes: disable automatic Git line-ending conversion. No retail input is
+needed to build or run these particular native API tests.
+
+From the workspace root, substitute full local paths:
+ python -B outputs/sonic-adventure/jp_port_tools/build_native_task_runtime_v2.py --workspace WORKSPACE --upstream UPSTREAM_CHECKOUT --compiler CLANG_EXE --output WORKSPACE/work/sonic-adventure/NEW_PRIVATE_FOLDER
+ python -B outputs/sonic-adventure/jp_port_tools/verify_native_task_runtime_v2.py --workspace WORKSPACE --build WORKSPACE/work/sonic-adventure/NEW_PRIVATE_FOLDER
+
+The output directory must be new and private, outside the publication build
+folder. Existing outputs and proofs are never overwritten. Use the v2 workflows;
+the unversioned first workflow/tests are retained only as historical evidence of
+the diagnosed header bug and can hang on that known failure case.
+
+Read analysis/jp_native_task_runtime_build_verification.json and
+analysis/jp_native_task_runtime_verification.json for actual evidence and scope.
+The native bridge/layout header and all workflow code are authored integration
+code. Generated external game bodies and their compiled artifacts are not public.
+
+Next: connect the real host platform boundary and identify the remaining boot,
+asset/overlay relocation, renderer, audio, input and frame-loop dependencies as
+coherent modules. Preserve the matching Japanese/GCC baselines and old USA proofs.
+Use Sol High for that architecture work; routine documentation can use Luna Low.

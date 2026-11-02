@@ -6,9 +6,10 @@ Overall estimate: 10% of weighted milestones, not measured code coverage.
 
 The original Japanese matching build is verified. The isolated GCC baseline also
 builds: 247 code images and seven motion-data images, with all 4,160 manifest file
-hashes checked. GCC still targets Dreamcast SH-4. Native Windows object compilation
-has started; the current probe does not link or run. English localization remains
-unimplemented; verified clip identities provide candidate mapping anchors only.
+hashes checked. GCC still targets Dreamcast SH-4. A native Windows task/heap
+component now links with real cleanup functions and a documented 64-bit allocator
+adaptation; 1,610 host API checks pass. There is no native game loop yet. English
+localization remains unimplemented; clip identities are candidate anchors only.
 
 The goal is complete native PC gameplay with English localization, 60/120/240 FPS,
 up to 8K, display/texture settings and optional SUPIR enhancements, followed by
@@ -20,6 +21,7 @@ Texture Off must disable sampling and use vertex/material colours.
 - [Current goal](outputs/sonic-adventure/JP_BASED_PORT_GOAL.txt)
 - [Integration order and limits](outputs/sonic-adventure/JP_NATIVE_PORT_PLAN.txt)
 - [Verified GCC baseline and native/localization evidence](outputs/sonic-adventure/JP_GCC_BASELINE.txt)
+- [Verified native task runtime and limits](outputs/sonic-adventure/JP_NATIVE_TASK_RUNTIME.txt)
 - [Integration workflows](outputs/sonic-adventure/jp_port_tools/)
 - [Authored native adapters](outputs/sonic-adventure/native/)
 - [Verification reports](outputs/sonic-adventure/analysis/)

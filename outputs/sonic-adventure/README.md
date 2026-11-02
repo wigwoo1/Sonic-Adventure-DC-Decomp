@@ -1,3 +1,9 @@
+Native task runtime update: see JP_NATIVE_TASK_RUNTIME.txt.
+The pinned task source now links with real lifecycle cleanup and native math.
+A documented generated-source adaptation fixes 64-bit heap-header splitting.
+All 1,610 host API checks pass; game-containing artifacts remain private.
+Overall estimate remains 10% weighted milestones; no playable native game.
+
 Japanese-source native-port direction: see JP_GCC_BASELINE.txt and JP_NATIVE_PORT_PLAN.txt.
 Pinned upstream GCC build passed: 247 code images plus seven motion-data images.
 All 4,160 manifest hashes and 254 SH-4 ELF headers checked; original matching build intact.

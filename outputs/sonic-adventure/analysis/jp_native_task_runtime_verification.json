@@ -1,0 +1,77 @@
+{
+  "status": "native_task_runtime_host_contracts_verified",
+  "checks_passed": 1610,
+  "ABI_checks": 12,
+  "sections": {
+    "heap_pool": {
+      "checks": 1207,
+      "heap_live_payloads": 240,
+      "task_slots_exhausted_and_recovered": 4096
+    },
+    "allocation_failures": {
+      "checks": 240,
+      "auxiliary_failure_cases": 32,
+      "exact_fit_case": true,
+      "pool_initialization_failure": true
+    },
+    "callbacks": {
+      "checks": 35,
+      "self_deleting_iteration_phases": 3,
+      "callback_failures_propagate": true
+    },
+    "cleanup": {
+      "checks": 27,
+      "event_motions": 3,
+      "previous_motions": 1,
+      "event_paths": 2,
+      "owned_and_nonowned_shapes": true
+    },
+    "children": {
+      "checks": 89,
+      "independent_transform_cases": 5,
+      "partial_allocation_case": true
+    }
+  },
+  "layout": {
+    "version": 1,
+    "pointer_bytes": 8,
+    "scalar_bytes": 4,
+    "task_bytes": 96,
+    "work_bytes": 88,
+    "motion_bytes": 72,
+    "force_bytes": 32,
+    "event_bytes": 160,
+    "collision_bytes": 48,
+    "event_motion_bytes": 48,
+    "event_path_bytes": 32,
+    "task_spec_bytes": 40,
+    "heap_header_bytes": 32,
+    "work_vars": 8,
+    "work_ang": 32,
+    "work_pos": 44,
+    "work_collision": 72,
+    "work_event": 80,
+    "event_motions": 72,
+    "event_previous": 80,
+    "event_paths": 96,
+    "event_motion_next": 32,
+    "event_path_next": 24,
+    "collision_flags": 2,
+    "collision_shapes": 16
+  },
+  "DLL_sha256": "64e5e69898ee935c6a50bad70c9fbb85052cf700f9584487710f32ebd1af3ebe",
+  "build_report_sha256": "d119b09c57e3e85fdc2a2d42f6f9a166547c5e706d1bc1bfa730bc4fae670b63",
+  "verifier_sha256": "5e3dee5f8e48cc0ee53304279dae50558571c776c694e3177af5d50513cdc0fb",
+  "support_sha256": "e69c0f8e8ebd333fd9be00cd37f39f4597c0d3812bbf5789a49c26dbc92552c2",
+  "scope": "Complete task source with documented native-header split fix, exact four lifecycle bodies and authored native math; native host allocation, scheduling, ownership, failure rollback and geometric API contracts. No dummy lifecycle functions.",
+  "limitations": [
+    "Host API contracts, not SH-4 CPU/register equality or complete-game behavior.",
+    "Valid host-owned records and supported callback mutation patterns; deleting an arbitrary cached successor, malformed/cyclic lists and hostile size arithmetic are not qualified.",
+    "Windows x64 only; disc records still require explicit decoding/relocation. Runtime union aliases and all other game modules need separate review.",
+    "Game-containing DLL and generated external source remain private; no new gameplay or English localization claim."
+  ],
+  "game_containing_artifact_publishable": false,
+  "overall_completion_percent": 10,
+  "goal_paused": false,
+  "playable": false
+}

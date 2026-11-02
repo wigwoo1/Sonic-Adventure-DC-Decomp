@@ -1,0 +1,20 @@
+{
+  "status": "diagnosed_original_native_heap_short_tail_overwrite_fixed_in_generated_v2_source",
+  "original_32bit_heap_header_bytes": 16,
+  "native_heap_header_bytes": 32,
+  "triggering_free_remainder_bytes": 16,
+  "live_thread_samples": 3,
+  "free_list_tail_self_cycle_observed": true,
+  "original_test_process_stopped_after_capture": true,
+  "raw_private_cycle_evidence_sha256": "5a95358fe7c7ccc7e1b8ae3fda72299c6e6b115e9c190d3399ca4ac2aee2b535",
+  "raw_private_thread_samples_sha256": "80a978554347ef952b6f1242080fadb299d8a650016be00722ba712200e96c0f",
+  "original_failure_workflow": "jp_port_tools/build_native_task_runtime.py",
+  "corrected_workflow": "jp_port_tools/build_native_task_runtime_v2.py",
+  "fix": "Consume an entire free block when its remainder is shorter than the native four-pointer header.",
+  "original_upstream_source_modified": false,
+  "complete_generated_task_source_used": true,
+  "v2_runtime_checks_passed": 1610,
+  "overall_completion_percent": 10,
+  "goal_paused": false,
+  "playable": false
+}
