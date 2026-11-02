@@ -1,0 +1,68 @@
+Banked game VRAM and visible retail texture pixels
+
+Status: VERIFIED within the explicit host software profile. Approximately 10%
+weighted whole-project milestones, not measured code coverage. Not a playable port.
+
+The earlier pixel integration supplied the bank-linear game VRAM array directly
+to a renderer whose texture addresses require an interleaved view. The native and
+Python renderer agreed on that input but the captured texture appeared transparent.
+The new adapter corrects this storage-contract mismatch. Existing game memory,
+VRAM buses, recovered C, native binaries and all earlier proof files are preserved.
+
+banked_pixel_jobs.dll builds four C sources with warnings treated as errors. The
+new conversion alternates four-byte words from the two four-MiB storage banks
+into a separate texture-view workspace. It never rewrites the game VRAM. Source
+and destination overlap, null pointers and invalid sizes are rejected before copy.
+Texture Off invokes the existing vertex/material path without VRAM or workspace.
+Jobs signal completion only after actual native work; no completion token is fed
+to the game. The adapter is synchronous and currently copies the full 8 MiB view
+for a textured job; real-time performance is not qualified.
+
+Verification:
+- Full 8,388,608-byte conversion against an independent whole-word oracle;
+  4,102 probes against the established aperture mapping and six rejection controls.
+- Thirteen native job checks, including Off with null VRAM/workspace pointers.
+- A unique EFF_REGULAR.PRS entry, ordinal132/global0x184f, matches all 10,922 mip
+  texel bytes. File and VRAM padding are excluded explicitly. All seven mip-level
+  native RGBA decodes match independently read retail archive texels.
+- Eight native render cases match complete independent colour/depth buffers.
+  The captured 640x480 quad changes two RGB pixels with its retail texture;
+  Off changes four RGB pixels with zero texture samples. PNG lossless round trips
+  and RGB changes are checked separately so alpha-only changes cannot pass.
+- The complete four-frame fixture passes 33 normal original/native comparisons
+  and two matched controls: 604 checks / 535 independent exact oracles. Complete
+  CPU/FPU/hidden/RTE, RAM/VRAM/sound/device, pixel-job, colour/depth and ordered
+  observations match. Normal frames retain two VBlank services; disabled completion
+  retains twelve and counter11 release. The Off control returns normally and is
+  discarded. Original wait guards and game C bodies are unchanged.
+
+All four jobs complete. The final render event remains pending7 after cleanup;
+this proof does not claim a drained shutdown. It does not prove physical GPU
+pixels/timing, automatic LOD, full texture formats/filtering/clipping, framebuffer
+VRAM writeback, background-plane rendering, full reset boot, long-running gameplay,
+60/120/240 FPS or 8K performance. Existing PVR_PIXELS.txt lists renderer limits.
+Retail inputs, captured VRAM and generated images remain private under work.
+The initial conversion test had a Python generator syntax error before execution;
+its source/log are preserved privately. The corrected test passed; native C did
+not change for that correction. No faulted game state was resumed.
+
+Reproduce:
+1. Build build_banked_pixel_jobs.ps1 using the existing Clang/LLD installation.
+2. Run Python -B on verify_banked_vram_view.py and verify_banked_pixel_jobs_unit.py.
+3. With the matching private capture/retail inputs, run
+   verify_banked_texture_output.py and verify_renderer_banked_pixel_jobs.py.
+Existing reports/images are write-once; preserve them before a new run.
+The existing renderer_render_completion.dll and pvr_pixels/pixel_jobs libraries
+must also be present. Research DLLs/import libraries are not a game executable.
+
+Primary facts consulted, without copying emulator/SDK implementations:
+Flycast's pvr_mem.cpp distinguishes its 32-bit and 64-bit views by word-bank
+interleaving. This project's established aperture model uses bank-linear storage.
+https://raw.githubusercontent.com/flyinghead/flycast/master/core/hw/pvr/pvr_mem.cpp
+KallistiOS's raw texture loader selects its VRAM64 transfer path.
+https://raw.githubusercontent.com/KallistiOS/KallistiOS/master/kernel/arch/dreamcast/hardware/pvr/pvr_texture.c
+
+No new original routine credit: 1,658 entries / 1,655 unique pairs / 702 links.
+Next: qualify longer rendering sequences and reusable command-buffer ownership.
+Continue Sol High for that integration/reverse engineering. Full decompilation and
+all requested ports/settings remain unfinished. The goal remains active.

@@ -1,3 +1,12 @@
+Latest verified step: corrected VRAM layout and visible retail texture pixels
+The new bank-linear-to-texture-view adapter preserves the game VRAM backend.
+All seven mip levels match a unique retail archive entry. The native fixture
+produces two textured RGB pixels; Texture Off produces four vertex-coloured
+RGB pixels with zero samples. The four-frame scene passes 33 comparisons and
+two controls: 604 checks / 535 exact oracles. See BANKED_TEXTURE_PIXELS.txt.
+Hardware accuracy, playable boot and FPS targets remain unfinished.
+Approximately 10% weighted milestones; no new routine credit. Goal active.
+
 Latest verified step: real native pixel work in the complete matched scene
 Four original submissions now complete through actual native packet rendering;
 no scripted completion acknowledgements are supplied. The scene passes 33 normal
