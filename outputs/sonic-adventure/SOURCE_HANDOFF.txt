@@ -1,3 +1,11 @@
+Latest verified step: allocated star tasks and their camera dependency
+Original allocation, six child callbacks and parent removal match. The next
+callback correctly stops at the uninitialized camera pointer; startup remains
+unfinished. Six callback comparisons and 12 retained rendering comparisons
+pass on the guarded backend, with two strict 292-source builds. Texture Off
+samples zero textures. See MODEL_CALLBACK_CAMERA_DEPENDENCY.txt for limits.
+Approximately 10% weighted milestones; no new routine credit. Goal active.
+
 Latest verified step: original star model produces native pixels and frame jobs
 The original model emits 31 floating-colour packets / 10 triangles. Additive
 backends render 5,929 model pixels matching an independent rational oracle. Two

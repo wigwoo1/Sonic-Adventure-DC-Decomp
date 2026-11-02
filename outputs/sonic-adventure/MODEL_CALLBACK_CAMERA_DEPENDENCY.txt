@@ -1,0 +1,69 @@
+Original allocated star callbacks and their camera dependency
+
+PARTIALLY VERIFIED: the original task creation, allocation, removal, callback
+installation and reached cold-camera failure are verified. Camera startup and
+complete callback-driven rendering remain unfinished. The entire project is
+approximately 10% complete by weighted milestones, not measured code coverage.
+The goal remains active. Research DLLs are incomplete, not a playable port.
+
+Five existing native entry points are connected to the current frame ABI:
+8c07b320, 8c044680, 8c04481a, 8c0448b4 and scheduler 8c09878c. Original recovered
+bodies and earlier backends remain intact. The scheduler's original instruction
+listing is included in the independent flat reference. No routine credit is added.
+
+The test starts from an existing matched normal public return. Its real player
+actor owns work 8c8571c0, also selected by original character descriptor slot 0.
+The original spawn function returns guest R0=0 while successfully creating its
+level-6 parent. The original scheduler runs that stored callback, allocates six
+distinct level-5 children, and then deletes the parent on its next pass. Running
+level 5 installs secondary callback 8c0448b4 in all six original task records.
+Task pointers, work, callback values, allocator results and RNG are not fabricated.
+
+On the next pass, the real callback reaches a read of camera yaw. Original literal
+8c0449f0 selects pointer slot 8c18b7ec, which is zero in this prefix. The original
+execution correctly stops at 8c0448fa. The older valid-RAM-only callback copy
+aliased that null access into RAM and continued. An additive guarded translation
+of the same 274 original rows now reproduces the reached failure and its complete
+partial state. The test compares six calls: five normal returns and this matched
+partial stop, including ordered call boundaries and complete guest/device state.
+Only the preceding normal return is saved; the failed state is never resumed.
+No preview model call, scene translation or camera pointer injection is used.
+
+Retained rendering regressions on model_camera_dependency.dll execute the same
+12 original/native calls as the prior float-colour model test. Both separate
+Texture Off/on scenarios retain their full image/depth/state assertions: 31 model
+packets, 10 model triangles and 5,929 changed model pixels. Each original frame
+captures 39 packets and completes an actual native job on the following call.
+Texture Off performs zero texture samples; the texture-on case samples the earlier
+quad four times. These regressions still use the explicitly declared preview
+translation from MODEL_FLOAT_RENDER.txt. They do not establish that the newly
+connected stored callbacks render successfully with an authentic game camera.
+The 64-packet collector and all original regression assertions remain unchanged.
+
+Two separate 292-source strict Clang/LLD builds cover model_callback_roots.dll
+and model_camera_dependency.dll. Current source hashes and bounded qualification
+are recorded in analysis/model_callback_camera_publication_qualification.json.
+The new reports are model_callback_camera_dependency_verification.json and
+model_callback_render_regression_verification.json. Earlier proofs are preserved.
+
+Read-only Ghidra exports locate writes to the camera slot. Further instruction
+listings and decompiler drafts are research evidence, not newly verified native
+routines. In-memory function seeding does not modify the saved Ghidra project or
+retail input. The camera-owner draft at 8c0197ba has state-dependent initialization
+and update paths; none is claimed as integrated or tested by this publication.
+Do not treat the nearby empty function at 8c01975c as a proven destructor.
+
+Next work is to recover the actual camera factory, initialize the pointer through
+its real allocated owner and continue the six stored callbacks from a fresh
+normal prefix. Preserve reached guards and actual dependencies rather than
+supplying camera data. Full gameplay, all rendering formats, hardware precision,
+performance at 60/120/240 FPS or 8K, SUPIR and the requested ports remain unfinished.
+Texture Off must continue to bypass sampling and use vertex/material colours.
+Continue Sol High for that reverse engineering. Luna Low is suitable for routine
+publication checks once the verification inputs are settled.
+
+For a beginner: open this file and the two verification reports in the repository.
+The prerelease contains test DLLs/import libraries, with no game executable.
+Reproduction requires matching private retail inputs and the preserved normal
+producer checkpoints. Public verifier outputs are write-once: preserve existing
+reports/checkpoints before using a separate workspace to repeat the workflow.
