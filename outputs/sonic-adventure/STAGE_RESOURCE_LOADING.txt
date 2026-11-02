@@ -1,0 +1,86 @@
+Original USA stage data, textures and the current rendering frontier
+
+PARTIALLY VERIFIED. Overall estimate: 10% weighted milestones, not measured code
+coverage. Goal active. This is not a playable game or complete decompilation.
+
+Three new source batches contain 18 original entries / 2,033 byte-checked rows:
+model_stage_resources: seven entries / 1,357 rows, including the original
+43-entry BRAF table with 37 distinct targets;
+stage_world_render_gate: eight entries / 339 rows, with explicit live GBR;
+stage_texture_load: three entries / 337 rows.
+Strict builds with 314, 315 and 316 C sources pass -Wall -Wextra -Werror.
+Current build: build_stage_texture_load.ps1 -> stage_texture_load.dll, SHA256
+ffd4f8d69aca7d4b91ca8c5423df834509a74e6fbb61c07193b30042fccda943.
+Earlier source/proof/build files are preserved. No Japanese game C was imported.
+New routine-registry credit is zero; static emission and scoped behavior checks
+are distinct from complete-function qualification.
+
+Positive resource-loading result
+
+The original native stage-file path selects stg00.PRS and decodes it at
+0x0c900000. All 194,259 output bytes match the separately decoded private
+STG00.BIN, SHA256:
+cb5eefd82d7606ca71025af8889cfd016a087da702c0d884af8f13db08bcaa9a.
+The file helper and complete stage-file API both matched original execution.
+The formal resource chain then completed world bounds and native task creation.
+Original stage and act texture loading also completed, followed by world-act
+setup. No manual file-buffer, geometry, global-variable or game-callee-result
+patch was applied to these normal sequences. Native file I/O supplies the user's
+retail inputs through the existing platform boundary.
+
+Reached main-code bytes were checked against the original executable. No shared
+bank code PCs were reached in these sequences. General executable-overlay
+dispatch is not qualified by loading or interpreting stage data.
+
+Passing formal reports currently record 27 original/native comparisons:
+22 normal returns and five host stops, including two expected PR-mode guards.
+They are:
+  analysis/model_stage_resource_chain_verification.json (4 comparisons);
+  analysis/stage_world_render_chain_verification.json (2);
+  analysis/stage_texture_world_chain_verification.json (7);
+  analysis/stage_resource_api_v2_verification.json (14).
+Comparisons include full state and ordered call/device boundaries. These are
+scoped API/prepared-scene checks, not 27 unique game routines or all-path proofs.
+The original API verifier selected the earlier 314-source backend for a helper
+added later; it correctly stopped -2. The v2 verifier selects the 316-source
+family. The initial verifier and failed log are preserved.
+
+Rendering frontier
+
+The original world path now selects 59 land records. The first prepared-context
+stop was a null texture surface for texture 14 of 21. Running the original stage
+and act texture loaders removed that stop. The unmodified CPU entry profile
+then emits 2,666 command packets and stops at 8c037d5a, a guarded index-stream
+read. Its active registers contain known inactive-bank test sentinels after a
+clipping path that switches integer register banks.
+
+An isolated bank-1 entry-profile experiment advances to 7,132 packets and an
+unconnected end-state helper at 8c038dfc. This changes the CPU call fixture only:
+it does not establish the real game's entry state and is never saved as a
+canonical game continuation. The missing mode/boot producer must be established
+before changing the normal checkpoint. The Renesas SH7750 hardware manual says
+RB is set at reset, but that alone does not prove the post-BIOS game handoff:
+https://www.renesas.com/en/document/mah/sh7750-sh7750s-sh7750r-group-users-manual-hardware
+
+No partial frame was submitted, no faulted state was resumed or saved, and no
+new complete native pixel job was qualified by this batch. The prior four-job
+prepared-frame proof remains intact. Whole stage_load/stage_start, all task
+levels, real player control, all stage selectors, executable overlay routing,
+all container handlers and hardware timing/FPS remain unqualified. Unknown or
+unused stage selectors can reach the original fatal spin at 8c09d926; these
+paths were not run as native successful-return tests.
+
+Next: recover/verify the original register-bank initialization contract, recover
+the end-state helper 8c038dfc, and retry from a trusted normal state. Preserve the
+unmodified bank-0 stop and label bank-1 experiments as fixtures until the original
+producer is proved. Do not hide the failure with patched geometry or relaxed
+guards. Sol High remains appropriate for this reverse engineering; Luna Low is
+suitable for routine publication after the snapshot is reviewed.
+
+For a beginner: open the four reports above and their strict-build reports.
+Normal checkpoints and detailed diagnostics are private under work/sonic-adventure.
+Retail inputs, decoded assets, RAM/checkpoints, diagnostic images, toolchains and
+credentials remain excluded from public source/research archives. Native PC
+60/120/240 FPS, 8K, SUPIR/HD and texture/display settings, Android, stereoscopic
+3DS and eventual N64/PS1 work remain unfinished. Texture Off must retain the
+planned vertex/material-colour behavior; a complete settings UI is not present.

@@ -1,3 +1,8 @@
+Original USA stage resources and textures: see STAGE_RESOURCE_LOADING.txt.
+Strict 314/315/316-C builds; 27 comparisons (22 normal, five host stops).
+Original stage bytes and texture-loading path pass; whole world frame unqualified.
+Overall estimate: 10% weighted milestones; goal active; ports unfinished.
+
 Original USA world/land producer research: see MODEL_WORLD_LAND.txt.
 Strict 313-C build; 61 comparisons (53 normal, eight expected guard stops).
 Prepared native frame 4 passes; actual level resources remain unqualified.
