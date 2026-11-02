@@ -1,3 +1,8 @@
+Original USA world-reset/candidate writers: see MODEL_WORLD_WRITERS.txt.
+Strict 311-C build; 67 comparisons (59 normal, eight expected guard stops);
+prepared scene completes native job 3; no real populated level qualified.
+Overall estimate: 10% weighted milestones; goal active; ports unfinished.
+
 Japanese matching baseline and source-map research: see CROSS_VERSION_SOURCE_MAP.txt.
 247 Japanese images rebuilt byte-for-byte; 354 provisional two-sided unique
 USA byte-span pairs, with no new native routine credit or imported game C.

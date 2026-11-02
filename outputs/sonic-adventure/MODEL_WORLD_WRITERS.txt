@@ -1,0 +1,83 @@
+Original USA world-reset and collision-candidate writers
+
+PARTIALLY VERIFIED. Whole-project estimate: 10% weighted milestones, not measured
+recovered-code coverage. Goal active; decompilation and all intended ports unfinished.
+
+Three original USA Rev A entries are now statically emitted and connected:
+  8c051a16 world reset: 30 instruction rows;
+  8c052518 collect nearby world candidates: 376 rows;
+  8c052e30 collect all world candidates: 130 rows.
+All 536 original instruction rows and CFG targets were checked against the
+private USA executable. No upstream Japanese game C was copied. Source names
+and data roles informed investigation; cross-version equivalence is not claimed.
+The original evidence is under analysis/model-world-writers/; the translation,
+build and behavior reports are under analysis/model_world_writer*.json.
+
+Build and actual verification
+
+The strict Clang build passes with 311 C sources and -Wall -Wextra -Werror.
+A response file avoids the Windows command-length limit. The previous 310-source
+dispatch is preserved with only three additional routes; no new wait/return or
+memory-guard relaxation was added. model_world_writers.dll SHA256:
+7574f9c22443af38667c4a0f11bb1d27b2d090c2f23f43c84fb0d5cb15ac6d0a
+
+Five verification reports record 67 original/native comparisons: 59 normal
+returns and eight expected guard stops. Nine comparisons repeat earlier nearby
+cases to measure coverage; these are not 67 unique scenarios. Comparisons check
+full machine state and ordered boundaries, including partial states at guards.
+Faulted states are discarded. Declared standalone API fixtures cover reversed
+copy order, capacities, flags, rotations, both players, distance boundaries,
+invalid pointers and opaque pointer/flag values. A populated fixture produces
+three candidates and hands them to the existing query; it is not a live level.
+
+Reached instruction coverage: reset 30/30, collect-all 130/130, nearby 369/376.
+Five missing nearby rows implement a 1,024-world-count early return after the
+128 nearby-added limit. Two implement a nonpositive per-entry player-count path;
+the original entry initializes that count to one or two. Stable declared inputs
+can supply at most 128 added plus 128 land entries here. We did not patch state
+mid-call to force those branches. This is not an all-path qualification.
+
+The actual previously prepared scene executes seven new normal-return calls
+without injecting land, geometry or globals. Its camera, six particle tasks and
+following frame complete one additional native pixel job (total job 3), retaining
+189 packets across three pages, zero active packets and seven pending entries.
+World/registered candidate counts remain zero: no populated level is running.
+That job reports 60 triangles, 1,377 fragments and 1,280 passed depth tests.
+Two additional regression jobs retain texture sampling checks: Off = zero
+samples, On = four. There are three newly completed jobs in this batch, excluding
+the two inherited jobs. The renderer is the retained qualified native pixel
+backend; this batch extends game CPU routines, not the pixel implementation.
+
+Evidence corrections and scope
+
+The initial report labels its second PR guard bank_input=1, while that setup
+actually retained FR0. The original report/source are preserved. The handoff
+supplement explicitly checks FR1+PR1 and documents the correction. All four
+normal FR/SZ combinations in the initial report were correctly configured.
+The generated C's first heading inherits matrix wording from its emitter
+template. The three function bodies, original-byte manifest and 536-row scope
+above define this batch; that historical heading is not a behavioral claim.
+
+The recovered registry is unchanged: 1,658 entries, 1,655 module-address pairs,
+702 prior exact links. This native connection batch adds no registry credit.
+Earlier proofs remain byte-for-byte intact. Retail inputs/assets, RAM/checkpoint
+captures, private diagnostic images and toolchains are excluded from publication.
+The prerelease contains incomplete Windows research DLLs/import libraries;
+there is no playable game executable.
+
+Next dependency and checking this update
+
+Original USA references identify stage_start at 8c04e660 installing the world
+callback 8c0519c0. Private original evidence also covers 8c051a52 (load act),
+8c051cc0 (start land), and 8c0528ae (register object). These are next recovery
+targets, not newly verified native code. Authentic stage/resource initialization
+is required to supply a real populated world; fixture geometry cannot replace it.
+
+For a beginner: open the five analysis verification reports and the build report
+named above. Their status and case lists show exactly what passed. Reproduction
+requires private matching USA retail inputs, the preserved native-state producer
+chain and external Python/Clang tools; this checkout is not a game installer.
+Native 60/120/240 FPS, 8K, SUPIR/HD texture settings (including Off vertex/material
+colours), Android, stereoscopic 3DS and eventual N64/PS1 work remain unfinished.
+Use Sol High for the next stage/land producer investigation. Luna Low is suitable
+for routine publication and file handling after the verified work is frozen.
