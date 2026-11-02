@@ -1,3 +1,12 @@
+Latest verified step: original star model produces native pixels and frame jobs
+The original model emits 31 floating-colour packets / 10 triangles. Additive
+backends render 5,929 model pixels matching an independent rational oracle. Two
+original frame scenarios submit 39 packets each and complete actual native jobs.
+Texture Off samples zero textures. All 271 platform checks and 14 original/native
+calls pass. The visible position is an explicit test input, not a game camera.
+See MODEL_FLOAT_RENDER.txt. Hardware accuracy, gameplay and ports remain unfinished.
+Approximately 10% weighted milestones; no new routine credit. Goal active.
+
 Latest verified step: original source-record dependency reaches the model path
 The guarded geometry copy links and matches 17 cold-pointer cases. Three original
 source-record routines pass 59 unit comparisons covering all 223 instruction rows.

@@ -1,0 +1,91 @@
+Original star-model rendering and floating-colour backend
+
+VERIFIED within the bounded software profile below. Overall project completion
+remains approximately 10% of weighted milestones, not measured code coverage.
+The goal stays active. The game and all requested ports remain unfinished.
+
+What now works
+
+The original static vertex-buffer owner 8c60edb0 is called with the original
+startup caller's buffer 8c7ac8e0 and capacity 4096. All 24 instructions execute;
+the pointer and capacity are not patched. The original 11-vertex model then
+reaches its actual classifier. In the previous scene all vertices have near-only
+clip flag 1, correctly rejecting them behind near plane 3. That control is retained.
+
+A declared external translation (0,0,-20) is passed through original matrix API
+8c63a804 to place the existing test model in front of the view. This is a test
+scene input, not a reconstruction of the game's camera/spawn sequence. No retail
+vertices, clip flags, source pointers, private frames or helper returns are
+invented or patched. The model comes from original literal 8c044a00 as before.
+
+The native original model code emits one header and 30 floating-colour vertices:
+31 accepted packets and 10 triangles. The previous event backend correctly stopped
+outside its declared profile at header 808c0010. Additive backend copies now support
+this untextured, non-volume 32-byte floating ARGB layout and flat/Gouraud colour.
+Older packed/intensity formats and unsupported-format failures remain intact.
+The host renderer converts finite channels in [0,1] to nearest 8-bit components.
+That is an explicit software profile, not a hardware rounding-accuracy claim.
+
+Native C rendering of these actual model packets matches an independent rational
+pixel/depth/statistics oracle over the complete 640x480 output. The orange star
+changes 5,929 pixels. Its packet and colour/depth hashes are identical with textures
+enabled or Off, with zero samples for this untextured model. Original retail
+inputs, captured vertex data and diagnostic images remain private.
+
+Actual original frame ownership
+
+Two separate fresh scenarios cover textures Off/on. Each executes the original
+buffer initializer, matrix translation, model wrapper, timer initializer, complete
+6050b0 frame wrapper and a normal query. There are 12 full original/native matched
+calls, plus the two buffer/culling controls. Existing execution, RAM/device,
+CPU/FPU/hidden/RTE, colour/depth and ordered-boundary comparisons are retained.
+
+Each original frame issues the real render-start write. Native code captures 39
+immutable packets, including all 31 model packets. Original list-init retires 39
+packets without loss, keeping the collector at 64. On the following normal call,
+actual native pixel work completes the owned job:12 triangles/5933 fragments.
+Texture Off samples zero textures; texture-on samples the earlier quad four times.
+No external completion token is provided. Original interrupt/vector/RTE and two
+VBlank services match. Final render bits 7 remain pending; drained shutdown is not
+claimed. These are two independent scenarios, not a long gameplay/session test.
+
+Platform tests pass 271 checks over 125 raster cases and 10 event sequences. They
+include 96 randomized float-colour draws, 20 late invalid-channel failures with
+unchanged images, four packed/intensity regressions, and explicit unsupported
+texture/offset/volume/format guards. Both new strict builds pass: 292 game/support
+C files and the four-file native pixel/job library. Old sources/builds are intact.
+
+An initial raster test omitted VRAM while enabling textures; the fixture was
+corrected to meet the existing API contract. An initial frame probe omitted
+binding original relocated vector rows, and an initial formal test mixed ctypes
+bindings from old/new comparison families. Both fixtures were corrected before
+the fresh passing runs. Their sources/logs remain hash-pinned privately. Native
+game code, original guards and comparison assertions were not altered for them;
+failed states were discarded and never resumed.
+
+Reproduce using build_model_float_color.ps1, build_float_color_pixels.ps1 and
+Python -B on verify_model_vertex_buffer_owner.py, verify_float_color_platform.py,
+and verify_model_float_render.py, with matching private retail inputs and the
+documented verified normal producer checkpoints. Outputs are write-once; preserve
+them before rerunning. See analysis/model_float_render_qualification.json.
+
+Primary layout facts consulted; no upstream implementation code copied:
+KallistiOS describes colour format 1 as four floats. Flycast's untextured float
+vertex layout contains XYZ and A/R/G/B after its control word, totaling 32 bytes.
+https://raw.githubusercontent.com/KallistiOS/KallistiOS/master/kernel/arch/dreamcast/include/dc/pvr/pvr_header.h
+https://raw.githubusercontent.com/flyinghead/flycast/master/core/hw/pvr/ta_structs.h
+
+Limits and next work
+
+This does not qualify textured floating 64-byte vertices, modifiers, shadow,
+offset/specular, fog, all texture formats, large scene streams, physical TA RAM,
+hardware GPU precision, actual FPS/8K performance, reset boot or gameplay. SUPIR,
+the in-game settings UI and PC/Android/stereoscopic 3DS/N64/PS1 targets remain.
+Texture Off must continue to bypass sampling and use vertex/material colours.
+
+Next: connect authentic original scene/camera and stored particle/model callback
+production through complete frames, replacing the declared preview translation.
+Expand formats only when reached, and retain original ownership and guard checks.
+No new registry credit: 1658 entries/1655 unique pairs/702 confirmed exact links.
+Continue Sol High for reverse engineering. Prerelease DLLs are research artifacts,
+not a playable game. Source/proofs/builds and all old hashes are preserved.
