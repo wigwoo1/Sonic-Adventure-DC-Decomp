@@ -1,3 +1,11 @@
+Latest qualified step: complete prepared particle frame and native render jobs
+The original frame path submits all 194 packets, retires its list and completes
+native pixel work. Both texture modes match complete colour/depth images for
+62 triangles. Strict 305-source build, eight normal full comparisons and 331
+native ownership/failure checks pass. No external completion token is used.
+This prepared scene remains separate from full game/frame-loop qualification.
+See TA_STREAM_RENDER_JOBS.txt. Approximately 10% weighted milestones; goal active.
+
 Latest qualified step: owned TA pages and complete original particle passes
 All six actual particles now complete with 186 packets across three owned
 64-packet pages. A second matched normal pass retains 372 packets across six

@@ -1,0 +1,112 @@
+Complete original particle-frame submission and owned native render jobs
+
+PARTIALLY VERIFIED. Approximately 10% of weighted whole-project milestones;
+this is not a source-coverage measurement. The goal remains active. The game
+and all requested ports remain unfinished; the research DLL is not playable.
+
+The original prepared scene now reaches complete native pixel work. Its six
+original particle tasks produce 186 packets. The original frame path appends
+its own commands, submits a 194-packet job, waits through two native-clock
+VBlank services, and retires the active list into four owned 64-packet pages.
+No particle, vertex, clip flag, camera direction or game-callee return is
+substituted. No preview translation or external completion token is used.
+
+The job retains an independent native-owned copy after the active list resets.
+At the next normal public call, native rasterization processes all 194 packets
+before emitting completion flags. Colour, depth and statistics match the
+independent rational oracle over the full 640x480 image. Both Texture Off and
+texture-on cases pass. Each draws 62 triangles and processes 1,294 fragments;
+Off samples no textures, while on samples the existing frame quad four times.
+The initial prepared particles overlap visibly as a small central orange star.
+This is a verified prepared scene, not a completed level or a full boot sequence.
+
+What changed
+
+ta_stream_jobs_store.c retains the previously qualified capture core as an exact
+prefix and adds owned interval copies, generation restoration, submission
+cursors and temporary contiguous raster input. The original ta_stream.c and
+its 64-packet-page implementation remain preserved. Actual storage still grows
+by owned pages. A fixed frame array has not been enlarged.
+
+stream_pixel_jobs.c captures an immutable packet interval at the actual original
+render-start register write. It prepares a candidate copy before the parent
+bus write, commits ownership only after that write succeeds, and releases the
+candidate on failure. Guest list-init can retire active pages without changing
+the submitted job. Reset cancels live work without declaring it complete.
+
+Native pixel work materializes the complete owned input, preserving header and
+strip continuity across page boundaries. It retains the existing raster math,
+format/viewport guards and two-pass validation before pixel mutation. Only the
+former fixed input-length restriction changes to the validated owned-input
+counter range. The independent oracle receives the same complete input and
+retains its previous rational raster math. The old bounded renderer and its
+earlier builds remain available with their original bytes and hashes.
+
+The native completion function runs only after successful complete raster work.
+Unsupported input, allocation failure or a wrong job identifier cannot produce
+fake completion. Texture Off bypasses VRAM conversion and sampling and uses
+vertex/material colours. Serialized matched job seeds contain no host pointers;
+they restore the actual immutable packet content into new native-owned pages.
+
+Verification
+
+build_model_ta_jobs.ps1 builds 305 C sources with Clang/LLD and the existing
+-Wall -Wextra -Werror checks. This DLL contains both the original native game
+pipeline and the new page-backed job/raster path. The source/recipe/build hashes
+are recorded in analysis/model_ta_jobs_build_verification.json.
+
+verify_model_ta_jobs.py passes eight complete original/native comparisons:
+four normal public calls for each texture mode. All CPU/FPU and hidden state,
+complete RAM/VRAM/sound RAM, device effects, packet content and ordered call
+boundaries remain compared. It submits and completes two actual native jobs.
+Each case also proves that a repeated call cannot execute or complete the job
+twice. Nonempty retired generations survive normal-call restoration unchanged.
+The actual channel-2 DMA producer reaches the owned FIFO capture endpoint.
+
+verify_stream_pixel_jobs.py passes 331 native checks, including a synthetic
+302-packet, five-page, 100-triangle job compared against the independent full
+colour/depth/statistics oracle. These declared API records are separate from
+the original-game checks. Tests exercise failed owner/page/materialization
+allocations, failed parent writes, in-flight submission, later list reuse,
+generation retirement, viewport and job-identifier guards, unsupported input,
+IRQ acknowledgment, duplicate execution and cancellation. The fault-test
+allocator releases every tracked allocation. Its callbacks provide only host
+memory, never game results.
+
+Current reports:
+analysis/model_ta_jobs_verification.json
+analysis/stream_pixel_jobs_verification.json
+analysis/model_ta_jobs_build_verification.json
+analysis/model_ta_jobs_qualification.json
+
+The successful prepared scene remains private in model-ta-jobs-frame-normal,
+with a matched normal CPU return, 194 retained job/retired packets, one completed
+job, and zero active packets. Captured RAM, packet payloads and diagnostic images
+are excluded from publication. The colour/depth hashes are public evidence.
+
+Limits and next work
+
+Render completion bits 7 remain pending after the query, as in the prior declared
+host-job profile. Drained shutdown, physical PowerVR precision/timing, real-time
+performance, full game behavior and complete frame-loop execution remain open.
+No 60/120/240 FPS or 8K performance qualification follows from these tests.
+
+Next recover and qualify the original stored camera draw path at 8c01bd9e and
+continue later camera/frame-loop dependencies from matched normal checkpoints.
+Preserve all source owners, all original packets and the verified render-job
+lifecycle. Continue Sol High for reverse engineering and renderer work; Luna
+Low is suitable for routine publishing. Do not resume a faulted/overflow state,
+patch geometry, drop packets or supply fabricated completion events.
+
+Registry bookkeeping remains 1,658 entries, 1,655 unique module/address pairs and
+702 previously confirmed exact links. This host-backend integration claims no
+new original-routine credit. SUPIR/HD/settings, 8K performance, Android,
+stereoscopic 3DS and later N64/PS1 targets remain unfinished. Texture Off must
+continue to disable sampling while retaining vertex/material colours.
+
+For a beginner: read this guide and the current reports. The private verified
+images are work/sonic-adventure/model-ta-jobs-verified-frames/native_frame_0.png
+and native_frame_1.png in your workspace. They show the small prepared scene.
+The prerelease contains research DLLs/import libraries, with no game EXE to run.
+Reproduction requires the matching private retail inputs and producer checkpoints
+in a separately prepared workspace; proof files and checkpoints are write-once.
