@@ -1,3 +1,11 @@
+Latest qualified step: owned TA pages and complete original particle passes
+All six actual particles now complete with 186 packets across three owned
+64-packet pages. A second matched normal pass retains 372 packets across six
+pages. Strict 301-source build; 14 normal full comparisons and four storage
+ownership/failure test groups pass. Large-stream pixel jobs remain unfinished.
+See TA_STREAM_OWNERSHIP.txt for evidence, limits and reproduction.
+Approximately 10% weighted milestones; no new registry credit. Goal active.
+
 Latest qualified step: original scene and first camera positioning
 Original scene setup and first allocated-camera positioning now return normally.
 The complete two-head copy dispatch retains all 17 selectors and overlap order.

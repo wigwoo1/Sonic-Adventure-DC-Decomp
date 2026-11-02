@@ -1,0 +1,110 @@
+Owned native TA packet pages and complete original particle passes
+
+PARTIALLY VERIFIED. Whole-project completion remains approximately 10% of
+weighted milestones, not measured source coverage. The goal remains active.
+These research libraries are not a playable game or completed port.
+
+The complete original level-5 scheduler now returns normally with all six real
+particle tasks. Its first pass matches 19,627 instructions and produces 186
+packets: six headers and 180 vertices, with finite coordinates. A second pass
+from that matched normal return matches 19,789 instructions. It appends another
+186 packets, preserving the exact earlier prefix, for 372 packets in total.
+The differing instruction counts belong to the two actual successive states.
+
+The old fixed collector still has its original 64-packet ABI and behavior.
+The new native stream instead owns linked pages of 64 complete packets each.
+The first actual pass uses three pages; the second total uses six. It allocates
+pages as needed and reports allocation failure explicitly. No fixed array is
+enlarged, no particle is omitted, and no vertex, clip flag, camera direction or
+game-callee result is supplied to make the scene fit. The original overflow
+state is never resumed: both passes start from the hash-pinned normal scene/
+camera checkpoint and then carry only completely matched normal returns.
+
+Native storage and bus behavior
+
+ta_stream.c implements the portable owned stream and allocator interface.
+ta_stream_win32.c supplies native VirtualAlloc/VirtualFree allocation for this
+Windows research build. No Python callback supplies allocations during the
+original-game comparisons. Allocation callbacks in the separate fault tests
+only exercise host-memory failures; they never provide game/device results.
+
+Accepted SQ packets retain their original destination, queue index and eight
+words. DMA FIFO words are assembled in order and become visible only as complete
+packets. Original prefetch/flush counters and ordered trace effects remain
+checked. Non-command accesses use the existing parent bus. The stream is bound
+below channel-2 DMA so its writes cannot bypass the new capture endpoint.
+
+List events keep their original header, vertex, EOL, pending and acknowledgment
+rules. Guest list-init strobes retire the active page chain into separate owned
+storage and start a new generation. Explicit storage snapshots make independent
+deep copies. Later append operations, list retirement and subsequent retirement
+cannot change an existing snapshot. A failed snapshot releases its temporary
+pages and leaves the previous snapshot and submission cursor intact.
+
+Current verification
+
+build_model_ta_stream.ps1 compiles 301 C files with Clang/LLD, -Wall -Wextra
+-Werror and the existing strict build options. The only new platform import
+library is kernel32.lib for host memory allocation. Earlier sources, reports,
+builds and their original hashes remain preserved.
+
+verify_model_ta_stream_v3.py performs two complete original/native comparisons.
+CPU/FPU and hidden state, full RAM/VRAM/sound RAM, device state, ordered call
+boundaries, every command packet and queue effects all remain compared.
+The private normal checkpoint after the first pass retains 186 packets and is
+explicitly a normal return, not a rendered frame. Captured RAM, packet payloads,
+vertices, retail inputs and images are excluded from public publication.
+
+verify_ta_stream_ownership.py passes four groups of native ownership tests:
+197 SQ packets across four pages, immutable 195-packet snapshots and repeated
+retirement; partial FIFO assembly, trailing EOL words and acknowledgment;
+allocation failure with transactional snapshot replacement and full cleanup;
+and malformed accesses, parent failures, widths and unsupported packet guards.
+All allocations tracked by the fault-test allocator are released.
+
+verify_model_ta_stream_bounded_render_v2.py retains every original assertion from
+the existing visible-model regression on the new DLL through the unchanged
+bounded device profile. Its twelve normal comparisons complete two actual
+native jobs and preserve the existing 5,929-pixel model result. Texture Off
+samples no textures. The declared preview translation is still a test input;
+that regression is separate from the new actual particle stream.
+
+Authoritative reports:
+analysis/model_ta_stream_v3_verification.json
+analysis/ta_stream_ownership_verification.json
+analysis/model_ta_stream_bounded_render_v2_verification.json
+analysis/model_ta_stream_build_verification.json
+analysis/model_ta_stream_qualification.json
+
+Limits and next work
+
+The new paged capture comparison explicitly rejects pixel-job seeds and restore
+of a nonempty retired generation until those integrations have their own full
+verification. It does not claim a completed frame from the 186-packet stream.
+The generic native snapshot API has ownership tests, but connecting snapshots
+to original render-start strobes and completed pixel jobs remains to be done.
+The bounded preview's two completed jobs do not qualify that integration.
+
+Next connect immutable page snapshots to the original render-start path and
+native pixel jobs. Preserve all packet ordering, header/strip continuity and
+list-generation ownership, and compare the complete resulting colour/depth
+images against the independent oracle. Then continue original draw 8c01bd9e
+and later camera updates. Do not substitute completion tokens, drop packets,
+resume faults or claim that raising a constant qualifies complete rendering.
+
+Continue Sol High for that renderer and reverse-engineering work. Luna Low is
+suitable for routine publishing. Registry counts remain 1,658 entries, 1,655
+unique module/address pairs and 702 previously confirmed exact links; this
+backend change earns no new original-routine credit. Full game behavior,
+60/120/240 FPS, 8K performance, SUPIR/settings, Android, stereoscopic 3DS and
+later N64/PS1 ports remain unfinished. Texture Off must bypass sampling and
+retain vertex/material colours.
+
+For a beginner, read this guide and the current reports to see the verified
+scope. The prerelease contains research DLLs and import libraries; there is
+no game executable to launch. Reproduction requires your matching private
+retail inputs and normal producer checkpoints. Reports are write-once.
+Earlier verifier candidates and failure logs remain evidence of their narrower
+states: one host loop accidentally reused the disc-queue variable, and one
+candidate assumed identical instruction counts across different task states.
+Both were corrected without changing guest instructions or comparison checks.
