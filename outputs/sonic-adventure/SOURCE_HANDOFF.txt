@@ -1,3 +1,9 @@
+Native renderer boundary update: see JP_NATIVE_RENDERER_BOUNDARY.txt.
+Portable matrix backend: 2,946 checks. Renderer data-access helpers: 2,624 checks.
+Complete renderer object compiles with 14 entry points; 33 imports remain.
+Only the asset-free MIT dependency host probe is a new public research build.
+Overall estimate remains 10% weighted milestones; no playable native game.
+
 Native task runtime update: see JP_NATIVE_TASK_RUNTIME.txt.
 The pinned task source now links with real lifecycle cleanup and native math.
 A documented generated-source adaptation fixes 64-bit heap-header splitting.

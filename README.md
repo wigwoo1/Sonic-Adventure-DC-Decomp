@@ -11,6 +11,10 @@ component now links with real cleanup functions and a documented 64-bit allocato
 adaptation; 1,610 host API checks pass. There is no native game loop yet. English
 localization remains unimplemented; clip identities are candidate anchors only.
 
+The portable matrix backend passes 2,946 checks, and adapted renderer data-access
+helpers pass 2,624 checks. The complete model renderer compiles with 14 native
+entry points, but still has 33 imports and is not a linked host renderer.
+
 The goal is complete native PC gameplay with English localization, 60/120/240 FPS,
 up to 8K, display/texture settings and optional SUPIR enhancements, followed by
 Android and stereoscopic 3DS ports and eventual N64/PlayStation demakes.
@@ -21,6 +25,7 @@ Texture Off must disable sampling and use vertex/material colours.
 - [Current goal](outputs/sonic-adventure/JP_BASED_PORT_GOAL.txt)
 - [Integration order and limits](outputs/sonic-adventure/JP_NATIVE_PORT_PLAN.txt)
 - [Verified GCC baseline and native/localization evidence](outputs/sonic-adventure/JP_GCC_BASELINE.txt)
+- [Renderer boundary, verified scopes and remaining work](outputs/sonic-adventure/JP_NATIVE_RENDERER_BOUNDARY.txt)
 - [Verified native task runtime and limits](outputs/sonic-adventure/JP_NATIVE_TASK_RUNTIME.txt)
 - [Integration workflows](outputs/sonic-adventure/jp_port_tools/)
 - [Authored native adapters](outputs/sonic-adventure/native/)

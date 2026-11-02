@@ -1,0 +1,100 @@
+Native renderer boundary: portable matrix backend and complete renderer object
+
+Overall completion remains approximately 10% of weighted project milestones,
+not measured code coverage. There is no playable native PC game or linked host
+renderer yet. This milestone adapts and compiles the complete external GCC model
+renderer, tests its rewritten data-access helpers and qualifies its dependency's
+portable matrix configuration. It does not display or rasterize game triangles.
+
+Use the primary Japanese source at 25a3d3154dbe657325e97dbe8c5291086f6af5c0.
+Its gcc.mk pins SH4ZAM to 70dbb177b20c1734fbe4f97df0f8c6ec87a8e8d3.
+Both stay external. Public JSON metadata verifies all dependency headers, the
+matrix-state source, license and the additional game-side renderer inputs, plus
+the existing 2,432 task/header input hashes. The production workflows need no
+private checkpoint file and no retail game inputs for these particular checks.
+
+Portable backend configuration
+
+The pinned dependency defaults to pthread TLS on Windows and spells two compiler
+attributes as C++ constexpr in its MSVC branch. Our C17 host configuration uses
+its documented disabled-TLS mode and Clang's matching C function attributes.
+One game thread owns active-matrix state, consistent with the current native
+Ninja component; IO/audio workers must not call this matrix API. No dependency
+file is edited, no SH-4 architecture macro is faked and no routines are vendored.
+Dependency headers are treated as system headers; authored code retains -Werror.
+
+The actual portable dependency source compiles and links with zero diagnostics.
+It passes 2,946 checks: 128 matrices, 768 independently calculated binary32 vector
+transforms, shared state across two caller translation units, unaligned matrix
+loads/stores, guarded outputs and in-place vectors. These are portable arithmetic
+contracts, not bit-identical SH-4 FTRV instruction rounding or thread isolation.
+The standalone host probe contains no game source or retail assets; its DLL and
+import library are publishable research artifacts under the retained MIT notice.
+
+Complete renderer compilation
+
+The generated native copy retains the complete external model-renderer C module.
+Six SH-4 assembly helpers become typed C loads, stores and pointer advances:
+next_vector, project_end, take_point, send_textured, next_index and next_uv.
+A cache-prefetch address is computed with native uintptr_t. The renderer's own
+GCC palette declarations are selected through two narrowly scoped native header
+conditions, without defining GCC globally or enabling SH-4-only SDK intrinsics.
+
+A 32-bit texture field is not cast to a 64-bit pointer. A declared host texture
+resolver must turn its handle/list index into a valid native texture record.
+The resolver remains an unresolved integration requirement; no placeholder body
+is linked. The original header-update logic still consumes its returned record.
+
+The complete renderer compiles with zero diagnostics and defines 14 native entry
+points. Its object still has 33 imports: matrix/global renderer state, native
+texture lookup, Ninja header/vertex submission, presentation services and runtime
+support. Object compilation proves neither a complete link nor working rendering.
+The external game source, generated copies, renderer object and helper test DLL
+remain private and are excluded from public build archives.
+
+Helper verification
+
+The actual adapted helpers pass 2,624 checks over 1,006 cases. Binary guards,
+source immutability, pointer strides, signed 16-bit indices and UV extremes,
+finite projection arithmetic and prefetch destinations are checked. Copy-only
+paths preserve arbitrary float words, including NaN payloads and signed zeros.
+The passing probe compiles exact function/type spans extracted from the same
+generated source as the complete renderer object; hashes bind those spans.
+
+The first helper probe attempted to remove unused renderer services with LTO;
+the Windows linker still required them. Its failed evidence is retained. The
+passing helper-only probe selects the exact spans and supplies only a real native
+CPU prefetch hint. No fake graphics, texture or presentation functions stand in
+for unresolved services. This probe is not a whole-renderer runtime link.
+
+Reproduce with Windows x64 Clang
+
+Use separate external checkouts at the pinned commits, preserving file bytes.
+Alternatively use the SH4ZAM dependency fetched by the already verified GCC
+baseline. Do not copy its implementation files into this public source tree.
+Substitute full local paths and fresh private output directories below work/.
+
+ python -B outputs/sonic-adventure/jp_port_tools/build_sh4zam_host_probe.py --workspace WORKSPACE --sh4zam SH4ZAM_CHECKOUT --compiler CLANG_EXE --output WORKSPACE/work/sonic-adventure/NEW_SHZ_FOLDER
+ python -B outputs/sonic-adventure/jp_port_tools/verify_sh4zam_host_probe.py --workspace WORKSPACE --build WORKSPACE/work/sonic-adventure/NEW_SHZ_FOLDER
+ python -B outputs/sonic-adventure/jp_port_tools/build_native_renderer_object_v3.py --workspace WORKSPACE --upstream JAPANESE_CHECKOUT --sh4zam SH4ZAM_CHECKOUT --compiler CLANG_EXE --output WORKSPACE/work/sonic-adventure/NEW_RENDERER_FOLDER
+ python -B outputs/sonic-adventure/jp_port_tools/build_native_renderer_helpers.py --workspace WORKSPACE --upstream JAPANESE_CHECKOUT --sh4zam SH4ZAM_CHECKOUT --compiler CLANG_EXE --renderer-build WORKSPACE/work/sonic-adventure/NEW_RENDERER_FOLDER --output WORKSPACE/work/sonic-adventure/NEW_HELPER_FOLDER
+ python -B outputs/sonic-adventure/jp_port_tools/verify_renderer_helper_probe_v2.py --workspace WORKSPACE --build WORKSPACE/work/sonic-adventure/NEW_HELPER_FOLDER
+
+Use these latest workflows. Earlier unversioned/v2 renderer-object workflows and
+the original generic helper harness are preserved research predecessors; their
+reports explain what failed or which private metadata they originally needed.
+All outputs and existing proofs are preserved rather than overwritten.
+
+Evidence: analysis/jp_sh4zam_host_build_verification.json,
+analysis/jp_sh4zam_host_verification.json,
+analysis/jp_native_renderer_object_verification.json,
+analysis/jp_native_renderer_helper_build_verification.json and
+analysis/jp_native_renderer_helpers_verification.json.
+SH4ZAM's pin and license are retained in third_party/SH4ZAM_HOST_NOTICE.txt.
+
+Next: unify Ninja and portable-renderer active-matrix storage, implement real
+header/vertex submission and a validated native texture-handle registry, then
+link and execute the renderer and connect the real frame/input platform layer.
+Native/32-bit disc-record conversion, boot/overlay loading, audio, saves, English
+localization, higher presentation rates and the later platforms remain unfinished.
+Use Sol High for this integration work; routine documentation can use Luna Low.
