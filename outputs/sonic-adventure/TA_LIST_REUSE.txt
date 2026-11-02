@@ -1,0 +1,73 @@
+Guest TA list-init and reusable command collection
+
+Status: VERIFIED within the explicit untimed host profile. Approximately 10%
+weighted whole-project milestones, not measured code coverage. Not a playable port.
+
+The original frame code submits rendering, pulses TA reset, selects alternating
+parameter/object-buffer bases, then writes bit31 to TA_LIST_INIT. The old research
+collector retained all accepted packets cumulatively and would exhaust its fixed
+64 entries. The new standalone ta_list_lifecycle.dll retires current collection
+only after a successful original TA_LIST_INIT strobe. No harness queue reset or
+capacity increase is used. Existing game/support C, binaries and proofs remain.
+
+At this guest write, native code preserves a copy of the retired context, clears
+current/partial command storage, resets list-decoder/current-collector cursors and
+rebases the pixel capture cursor. The already submitted immutable job survives;
+its words, descriptor, completion ownership and pending interrupt events are not
+discarded. Pending list events remain until original ASIC acknowledgement. The
+next context can be collected while the prior job is still owned by the backend.
+TA reset requests are observed separately; TA_LIST_CONT is forwarded and does not
+discard complete collected packets. This does not qualify full multipass/partial
+continuation or every soft-reset behaviour, or physical TA parameter-RAM encoding.
+
+Verification:
+- Native unit chain uses the existing frame FIFO, list-event and banked pixel
+  components: 12,092 complete state comparisons and 1,002 actual native jobs.
+  It covers overlap of collection/render ownership, preserved pending events,
+  continued collection, parent failure, word-width and four overflow controls.
+  With lifecycle disabled, the existing 64-packet limit still returns failure.
+- Partial-DMA tests verify that list-init clears an unfinished packet, rejects
+  an orphaned continuation and retires a complete eight-lane DMA packet without
+  fabricating EOL completion. The negative fixture is discarded afterward.
+- A fresh original/native fixture executes twelve consecutive frames and twelve
+  native rendered jobs: 49 normal comparisons, two matched controls, 772 checks
+  and 671 independent exact oracles. Seventeen original init strobes and fourteen
+  original TA-reset requests explain every recorded lifecycle transition.
+- The twelve contexts retire 108 accepted packets. Current collection remains
+  empty after each frame, its capacity stays64, and no positive packet is dropped.
+  Full CPU/FPU/hidden/RTE, RAM/VRAM/sound/device, job, colour/depth and ordered
+  observations match. Rendered retail RGB remains identical to BANKED_TEXTURE_PIXELS.
+  Normal frames retain two VBlank services; disabled completion retains twelve.
+  Texture Off retains vertex/material output and zero texture samples.
+
+The first unit fixture omitted an ASIC-acknowledgement parent handler and returned
+an honest unsupported-write error. That fixture was corrected before the fresh
+successful run; its initial source/log are preserved privately and hash-pinned.
+No native lifecycle C correction or faulted game-state continuation was needed.
+
+Scope limits: this is still a 64-packet-per-context research profile using a small
+particle fixture. It does not qualify arbitrary large level/model command streams,
+physical parameter-table VRAM writes, multipass rendering, hardware pixels/timing,
+framebuffer writeback/background-plane rendering, full reset boot, gameplay,
+60/120/240 FPS or 8K performance. After cleanup the final render event remains
+pending7; shutdown draining is not claimed. All retail inputs/images remain private.
+
+Reproduce with build_ta_list_lifecycle.ps1 and Python -B on
+verify_ta_list_lifecycle.py, verify_ta_list_partial_reset.py and
+verify_renderer_ta_list_reuse.py. The scene additionally needs the existing native
+libraries and matching private Rev A retail inputs. Reports are write-once; preserve
+them before rerunning. Research DLLs/import libraries are incomplete artifacts.
+
+Primary facts consulted, without copying emulator/SDK implementation:
+Flycast handles bit31 of TA_LIST_INIT by selecting/resetting TA list context;
+its TA decoder separates context selection from an in-flight render consumer.
+https://raw.githubusercontent.com/flyinghead/flycast/master/core/hw/pvr/pvr_regs.cpp
+https://raw.githubusercontent.com/flyinghead/flycast/master/core/hw/pvr/ta.cpp
+KallistiOS distinguishes scene registration and off-screen rendering ownership.
+https://raw.githubusercontent.com/KallistiOS/KallistiOS/master/kernel/arch/dreamcast/hardware/pvr/pvr_scene.c
+
+No new original routine credit: 1,658 entries / 1,655 unique pairs / 702 links.
+Next: advance actual model/level geometry production and its command-volume needs
+beyond this particle-only fixture. Continue Sol High for the reverse engineering.
+Full decompilation and every requested port/settings target remain unfinished.
+The decompilation goal remains active.

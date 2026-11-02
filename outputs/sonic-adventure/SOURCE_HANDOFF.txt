@@ -1,3 +1,12 @@
+Latest verified step: original TA list-init now owns collector reuse
+Twelve original/native frames render twelve jobs and retire 108 packets using
+the unchanged 64-packet collector. Original list-init writes trigger reuse; no
+harness reset or capacity inflation is used. The scene passes 49 comparisons
+plus two controls: 772 checks / 671 exact oracles. Native units pass 12,092
+comparisons and 1,002 jobs. See TA_LIST_REUSE.txt and its qualification.
+Large level/model streams, hardware accuracy and playable boot remain unfinished.
+Approximately 10% weighted milestones; no new routine credit. Goal active.
+
 Latest verified step: corrected VRAM layout and visible retail texture pixels
 The new bank-linear-to-texture-view adapter preserves the game VRAM backend.
 All seven mip levels match a unique retail archive entry. The native fixture
