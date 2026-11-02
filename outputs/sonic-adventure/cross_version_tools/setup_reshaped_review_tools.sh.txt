@@ -1,0 +1,16 @@
+#!/bin/bash
+set -euo pipefail
+export DEBIAN_FRONTEND=noninteractive
+apt-get update
+apt-get install -y --no-install-recommends build-essential curl git ca-certificates python3-venv xz-utils
+review=/root/sa-source-review
+if test -e "$review"; then
+    printf '%s\n' 'Review checkout already exists; inspect before replacing it.' >&2
+    exit 1
+fi
+git clone --no-hardlinks /mnt/c/Users/wigwo/Documents/Codex/2026-10-03/de/work/sonic-adventure/reshaped-sonic-adventure-review "$review"
+cd "$review"
+test "$(git rev-parse HEAD)" = 25a3d3154dbe657325e97dbe8c5291086f6af5c0
+export PYTHONDONTWRITEBYTECODE=1
+PYTHONPATH=tools:tests python3 -m unittest discover -s tests -p test_config.py -q
+printf '%s\n' 'Fresh Ubuntu tools installed; pinned source copied; targeted config tests completed.'

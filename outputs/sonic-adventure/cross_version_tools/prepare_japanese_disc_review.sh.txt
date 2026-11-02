@@ -1,0 +1,21 @@
+#!/bin/bash
+set -euo pipefail
+cd /root/sa-source-review
+test "$(git rev-parse HEAD)" = 25a3d3154dbe657325e97dbe8c5291086f6af5c0
+disc='/mnt/f/AI Games/Sonic Adventure v1.007 (1998)(Sega)(JP)[!][H1C11A, H1C11E]'
+descriptor="$disc/Sonic Adventure v1.007 (1998)(Sega)(JP)[!][H1C11A, H1C11E, HIC16C].gdi"
+test -r "$descriptor"
+test ! -e orig/jp-v1.007.gdi
+for track in track01.bin track02.raw track03.bin; do
+    test -r "$disc/$track"
+    test ! -e "orig/$track"
+done
+cp -- "$descriptor" orig/jp-v1.007.gdi
+for track in track01.bin track02.raw track03.bin; do
+    ln -s -- "$disc/$track" "orig/$track"
+done
+make build/gdi
+build/gdi list orig/jp-v1.007.gdi 1ST_READ.BIN LOADER.BIN
+make unpack
+awk '$2 ~ /^orig\// {print}' SHA256SUMS | sha256sum -c --quiet
+printf '%s\n' 'All required extracted retail files match the pinned upstream original-file checksums.'

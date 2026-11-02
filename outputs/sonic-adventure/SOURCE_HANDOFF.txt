@@ -1,3 +1,8 @@
+Japanese matching baseline and source-map research: see CROSS_VERSION_SOURCE_MAP.txt.
+247 Japanese images rebuilt byte-for-byte; 354 provisional two-sided unique
+USA byte-span pairs, with no new native routine credit or imported game C.
+Overall estimate remains 10% weighted milestones; goal active; ports unfinished.
+
 Latest qualified step: camera draw, state-2 update and following native frame
 The original camera callbacks and next prepared frame now return normally.
 Sixteen bodies contain 1,830 statically recovered rows; runtime checks cover

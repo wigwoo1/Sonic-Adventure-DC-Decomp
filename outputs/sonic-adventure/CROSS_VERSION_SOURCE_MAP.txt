@@ -1,0 +1,93 @@
+Japanese source baseline and provisional USA Rev A correspondence
+
+PARTIALLY VERIFIED integration research. Overall project estimate remains 10%
+of weighted milestones, not measured recovered-code coverage. The goal is active.
+The USA decompilation and native PC/Android/3DS ports remain unfinished.
+
+The independently reproduced Japanese HDR-0001 v1.007 build uses upstream commit
+25a3d3154dbe657325e97dbe8c5291086f6af5c0 of:
+https://github.com/reshaped/sonic-adventure
+All 247 rebuilt images match the supplied disc byte-for-byte. make -j4 all
+passed 6,769 file checksum checks; make -j4 check passed 4,309 file checks and
+the code-accounting check. make test discovered 1,185 tests: 1,061 passed and
+124 were skipped. Skipped tests remain unverified. The matching build uses
+declared original disc data for assets; it is a Dreamcast build, not a PC port.
+The code accounting is 5,820,458 bytes, 97.7% C and 2.3% assembly.
+
+The new source-backed inventory contains 26,020 (image,address) entry instances
+across those 247 Japanese images and 17,519 distinct (source,name) pairs. Shared
+code linked into several overlays and assembly aliases affect these numbers.
+812 C-definition instances have no own placed symbol and are recorded separately.
+These are not a measured total routine count for either version of the game.
+
+The main executable has 6,356 source-named entries. Each contiguous span ends
+at the next named entry of the same source/section or its placement boundary.
+It may include literal pools or gaps; this is not a recovered CFG/function extent.
+The conservative search compares all bytes without masking addresses, constants
+or register/opcode differences and requires equal alignment modulo four:
+  1,196 spans are shorter than the 32-byte minimum;
+  4,791 have no exact span match;
+     13 have multiple or truncated USA matches;
+    356 have one USA occurrence, across 355 distinct USA addresses.
+Of the 356, 187 start at an entry in the existing USA Ghidra snapshot and 169 do
+not. Two-sided occurrence and address checks retain 354 one-to-one byte-span
+candidates. Ghidra independently checked the original memory hashes of all
+356 candidates, without creating or renaming functions/instructions. 240 have
+observed incoming references. Reference and entry observations are included.
+
+These are candidate correspondences. Identical bytes and unique locations do
+not prove matching globals, external callees, entry CPU state, CFG extents or
+behavior. No USA routine is newly registered, imported or credited. In
+particular, the 354 pairs do not mean 354 additional decompiled/native routines.
+The prior registry remains 1,658 entries / 1,655 unique module-address pairs /
+702 previously confirmed exact links. New native game-code credit is zero.
+
+Verification and preservation
+
+Eight adversarial matcher checks pass: changed tail constants and addresses,
+duplicate spans, alignment changes, short returns, truncated ambiguity and
+invalid instruction boundaries. The independent checker re-reads original
+inputs and all reported spans, checks source/table hashes, and reclassifies
+the data. These tests check the research tool, not game behavior. The prior
+310-C-source native DLL, normal checkpoint, historical source/proofs and all
+2,887 Windows research builds are preserved. No native C was changed or
+rebuilt for this analysis-only update. Earlier runtime proofs retain their
+original scope; they are not counted as new tests here.
+
+Research files are under analysis/cross-version-source-map/. The Japanese
+matching report, raw build/check/test logs, source inventory, candidate map,
+Ghidra observations and independent verification report are provided as hashes
+and metadata. Retail images, original/rebuilt game binaries, textures, RAM
+captures, private diagnostic images and toolchain bundles are excluded.
+
+Reproduction and source access
+
+cross_version_tools/ contains our exact workflow sources. It imports the pinned
+upstream MIT build/parser tools rather than copying upstream game C. The two
+shell sources keep their exact bytes under .sh.txt names for compatibility with
+the historical publisher's text allowlist; restore their .sh names to execute.
+The recorded workflow uses the separate WSL distribution sa-dc-source-review,
+Ubuntu 24.04.5, and /root/sa-source-review. It expects matching private retail
+inputs and historical workspace paths. To replay in a different workspace,
+adapt paths in copies and use fresh output names: proofs are write-once. A
+checkout alone does not include the required disc, toolchain or native-state
+producer chain. The reports describe the actual runs, not a portable installer.
+
+Upstream's README licenses its build tools and tests under MIT but gives the
+remaining game source no license. This update imports no upstream game C and
+assigns it no license. Public game-source reuse permission remains unresolved.
+The upstream GCC build targets little-endian SH-4 and adds documented 60 FPS
+and 16:9 modes; it is not an x86/ARM port or a generalized 120/240 FPS solution.
+
+Next: qualify call/data/CPU-context correspondence, starting with the collision
+world writers and the actual level-data producer. Use the map to batch work,
+preserve the verified USA paths, and establish portable platform boundaries.
+Continue Sol High for this reverse engineering/integration. Luna Low suits
+routine file handling and publication. Native 60/120/240 FPS, 8K, SUPIR/HD and
+settings, Texture Off vertex/material colours, Android, stereoscopic 3DS and
+eventual N64/PS1 work remain required and unqualified.
+
+For a beginner: read this guide, then open the independent verification report.
+A candidate-map entry is evidence to investigate, not a promise that its source
+can be pasted into the native port. The prerelease remains incomplete Windows
+research DLLs/import libraries, not a playable game.
