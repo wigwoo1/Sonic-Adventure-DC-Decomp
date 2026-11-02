@@ -1,3 +1,12 @@
+Latest verified step: original allocated camera and scheduled star callbacks
+The original camera factory and first scheduled update publish the real allocated
+work pointer. All six stored star callbacks then complete 8,905 instructions.
+Two actual frame scenarios and two retained preview controls pass, including
+Texture Off with zero sampling. Total: 44 comparisons and a strict 293-source
+build. Later camera updates remain unfinished at 8c019400 and 8c01a100.
+See MODEL_CAMERA_OWNER.txt for the verified scope and reproduction workflow.
+Approximately 10% weighted milestones; no new registry credit. Goal active.
+
 Latest verified step: allocated star tasks and their camera dependency
 Original allocation, six child callbacks and parent removal match. The next
 callback correctly stops at the uninitialized camera pointer; startup remains

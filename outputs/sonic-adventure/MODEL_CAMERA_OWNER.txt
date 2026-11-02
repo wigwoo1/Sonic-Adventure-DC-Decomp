@@ -1,0 +1,97 @@
+Original allocated camera and scheduled star callbacks
+
+PARTIALLY VERIFIED. Original camera allocation and its first scheduled update
+now work in the bounded native pipeline. Later camera updates still require
+unrecovered dependencies. Overall completion remains approximately 10% of weighted
+project milestones, not measured recovered-code coverage. The goal remains active.
+These builds are incomplete research libraries, not a playable game.
+
+Current build: build_model_camera_owner_v3.ps1 -> model_camera_owner_v3.dll.
+The strict Clang/LLD build includes 293 C files. The new static translation contains
+272 original camera rows in five bodies: descriptor 8c01951e, factory 8c01957e,
+owner callback 8c0197ba, pointer-clear leaf 8c019760 and tail wrapper 8c019768.
+It also reuses 33 original scheduler rows, with reached memory/return guards.
+All 305 rows are checked against the matching original executable bytes.
+
+The factory uses the existing allocator, original packed-stage getter and preset
+tables, descriptor initializer and projection helper. It returns normally after
+360 matched instructions. The task reuses an actually freed allocator slot and
+owns its zero-initialized work; no task, camera pointer or helper return is supplied.
+The first level-0 scheduler pass executes 102 original instructions. Its stored
+8c0197ba callback publishes the allocated work at global slot 8c18b7ec and changes
+the camera work state from 0 to 1.
+
+The old lower renderer dispatcher could not reach the new camera callback. The
+guarded scheduler now uses the existing main dispatcher, allowing the actual
+stored callback to execute while retaining original call order and state checks.
+No observer event is suppressed or supplied. Earlier source and proof files remain.
+
+The six previously allocated level-5 particles then run through their actual
+stored callbacks. This pass matches 8,905 instructions and calls the original
+model wrapper six times. It produces no particle packets in this starting view;
+no position, clip flag or scene translation is patched to make them visible.
+This establishes camera ownership and callback execution, not a finished camera
+or a visible full-game scene. The older declared preview translation remains a
+separate rendering control, described in MODEL_FLOAT_RENDER.txt.
+
+Two fresh scenarios cover Texture Off/on. Each follows the original camera and
+particle path, then initializes the host timing contract from actual original
+registers. Original frame submission retires nine packets without loss, keeping
+the collector at 64. The following normal call completes the actual native pixel
+job: two triangles and four fragments from the existing quad. Texture Off samples
+zero textures; texture-on samples four. Both original VBlank services, complete
+guest CPU/FPU/hidden state, RAM/VRAM/sound, ordered boundaries, colour/depth images,
+render ownership and device states match. No external completion token is supplied.
+Render bits 7 remain pending afterward; shutdown draining is not qualified.
+
+These scenarios end at two honestly retained incomplete-service boundaries:
+the next scheduled camera update reaches 8c019400; the actual stored tail wrapper
+reaches 8c01a100. Native and independent bounded reference execution match the
+partial state and stop address. The retail game has code there; these stops mark
+the current research pipeline's missing dependencies. Neither stopped state is
+saved or resumed. A separate fresh case calls the task's actual stored clear
+function, matches all four instructions and clears the slot. Task deletion itself
+is not claimed. Only a preceding normal return is saved with the current DLL hash.
+
+The main verification passes 32 comparisons: 30 normal returns and two matched
+incomplete-service stops. The unchanged visible-model test assertions also pass
+12 comparisons on the new backend: two native jobs, 31 model packets, ten model
+triangles and 5,929 model pixels each, matching the independent pixel/depth oracle.
+Those tests intentionally retain their declared preview translation and do not
+qualify actual camera placement. Total: 44 comparisons and four native frame jobs.
+
+Verification reports:
+analysis/model_camera_owner_v2_verification.json
+analysis/model_camera_owner_render_regression_verification.json
+analysis/model_camera_owner_qualification.json
+
+An initial candidate failed strict compilation on two unused parameters. A second
+compiled candidate exposed the missing scheduler dispatch connection. Both sources
+and logs are retained; v3 is the tested build. The first formal frame test assumed
+eight packets from the preview profile, while this original scheduled scene retires
+nine. An observational rerun established the actual count; the corrected verifier
+retains the complete original/native comparisons. Initial fixture/diagnostic files
+are preserved. Superseded candidates are research history, not the current target.
+
+No new registry credit is claimed: 1,658 entries, 1,655 unique module/address pairs
+and 702 previously confirmed exact links remain the recorded totals. The five new
+camera bodies have this bounded qualification; later branches and full camera
+behavior remain unfinished. Instruction rows and registry counts are not a total
+game routine count or a whole-project completion measurement.
+
+Next: recover 8c019400 and the shared-tail body at 8c01a100, then continue actual
+scheduled camera state 1 from a fresh matched normal return. Its Ghidra body has
+noncontiguous shared code and must be recovered completely. Preserve actual caller
+inputs and ownership; never fabricate camera values, private frames or callee results.
+Continue Sol High for this reverse engineering. Luna Low is suitable for routine
+publication checks after verification inputs are settled.
+
+For a beginner: read this guide and the reports above to see what passed. The
+prerelease contains test DLLs/import libraries, with no game executable to launch.
+Reproduction needs private matching retail inputs and verified producer checkpoints.
+Run the v3 build, verify_model_camera_owner_v2.py and
+verify_model_camera_owner_render_regression.py in a separate prepared workspace;
+their reports/checkpoints are write-once. Retail inputs, captured vertices and
+diagnostic images are not published. Hardware precision, gameplay, performance at
+60/120/240 FPS or 8K, SUPIR and the requested ports/settings remain unfinished.
+Texture Off must continue to bypass sampling and use vertex/material colours.
