@@ -1,3 +1,12 @@
+Latest qualified step: original scene and first camera positioning
+Original scene setup and first allocated-camera positioning now return normally.
+The complete two-head copy dispatch retains all 17 selectors and overlap order.
+Strict 299-source build; 99 full comparisons (94 normal and five expected
+bounded stops), plus two lower-API checks. The finite six-particle stream reaches
+the existing 64-packet collector limit; its full frame remains unfinished.
+See MODEL_CAMERA_POSITION.txt for evidence, limitations and reproduction.
+Approximately 10% weighted milestones; no new registry credit. Goal active.
+
 Latest verified step: original allocated camera and scheduled star callbacks
 The original camera factory and first scheduled update publish the real allocated
 work pointer. All six stored star callbacks then complete 8,905 instructions.
