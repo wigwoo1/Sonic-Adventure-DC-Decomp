@@ -1,3 +1,13 @@
+Latest verified step: real native pixel work in the complete matched scene
+Four original submissions now complete through actual native packet rendering;
+no scripted completion acknowledgements are supplied. The scene passes 33 normal
+comparisons plus a disabled-completion control: 601 checks / 532 exact oracles.
+Complete pixel-job, colour/depth, CPU/memory/device and ordered state match.
+The captured texture remains transparent; visible retail pixels and hardware
+accuracy are unqualified. See RENDERER_PIXEL_JOBS.txt and its qualification.
+Approximately 10% weighted milestones; no new routine credit. Not playable.
+Goal active; continue Sol High for texture/address/format investigation.
+
 Latest research step: standalone native pixels (partially verified)
 Texture/triangle tests pass 343 checks; immutable pixel jobs pass 13 checks.
 Texture Off uses vertex/material colours without sampling. Eight captured-quad

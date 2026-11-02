@@ -1,0 +1,62 @@
+Original/native scene with native pixel jobs
+
+Status: VERIFIED within the explicit host software profile. Approximately 10%
+weighted whole-project milestones, not measured code coverage. Not a playable port.
+
+verify_renderer_pixel_jobs.py retains the complete original/native CPU, integer,
+FPU, hidden/special, RTE, RAM, VRAM, sound, device and ordered-boundary comparisons.
+It adds native pixel-job capture beneath the existing render-completion bus.
+The existing 291-source game/support DLL and all earlier C/proof bytes are reused.
+All three native libraries also compile in isolated folders. Every PE section
+payload matches the tested canonical DLL. See the build verification report and
+verify_renderer_pixel_jobs_builds.py; metadata byte identity is not claimed.
+
+Four original frame submissions capture immutable accepted packet intervals.
+Before the next ordinary public call, actual native pixel work must succeed before
+the backend signals render completion. The original vector/context/ISR/RTE paths
+consume those events. No completion token, guest flag, callee result or private
+execution frame is supplied. The native work runs synchronously on the host owner
+thread at these explicit service points; physical GPU scheduling is not modelled.
+
+The scene passes 33 normal original/native comparisons and one normal disabled-
+completion control: 601 checks and 532 independent exact oracles. All four native
+jobs complete, including the final queued job before ordinary particle cleanup.
+Each phase compares complete colour/depth buffers and the complete pixel-job state.
+Ordered guest boundaries additionally compare job state and image hashes. These
+observations supplement the unchanged memory/device comparisons. Normal frames
+retain two VBlank services; the disabled control retains twelve and counter11
+release. Existing wait guards and original game bodies are unchanged.
+
+An initial wrapper run stopped at ctypes before native pixel execution because
+the VRAM word array was passed where a byte pointer was required. The wrapper
+now passes an explicit byte pointer and sizeof byte count. The initial source
+and failure log are preserved privately and hash-pinned in the qualification.
+The legacy entry point also requires its own module-specific ctypes bus pointer.
+The bridge checks field offsets, sizes and callback signatures before conversion.
+Thirteen direct bridge checks exercise capture, actual pixels, completion, failure
+and reset through that legacy bus type. The private unit adapter initially lost
+its owning bus object and faulted; retaining that object fixed the adapter. Its
+failure log is preserved privately. The scene wrapper retains its bus objects
+throughout each synchronous C call. The successful scene restarted from fresh
+original inputs; no faulted state resumed.
+
+The captured texture fixture is transparent in this host profile. These results
+do not qualify visible retail texture rendering or asset-to-address mapping.
+See PVR_PIXELS.txt for the existing 343 renderer checks, 13 job checks and eight
+captured-quad buffer cases, including vertex-coloured Texture Off without sampling.
+
+Host images use an explicit debug background, nearest sampling, explicit mip level
+and fixed-point precision. Physical PowerVR pixels/timing, automatic LOD, full
+formats/filtering/clipping, framebuffer VRAM writeback, background-plane rendering,
+playable boot, 60/120/240 FPS and 8K performance remain unfinished. Retail inputs,
+VRAM snapshots and generated retail-derived images are excluded from publication.
+
+Reproduce with Python -B outputs/sonic-adventure/verify_renderer_pixel_jobs.py,
+after supplying matching local Rev A inputs and building the existing renderer,
+pvr_pixels and pixel_jobs libraries. Existing report files are write-once;
+preserve them before a new run. Research DLLs are incomplete test artifacts.
+No new original routine credit: 1,658 entries / 1,655 unique pairs / 702 links.
+
+Next: investigate texture/address/format inputs to obtain independently qualified
+visible retail texture output. Continue Sol High for that reverse engineering.
+The full decompilation and all requested ports remain unfinished; goal active.
