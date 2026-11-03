@@ -1,0 +1,97 @@
+Native presentation object, independent clocks and task-hook integration
+
+Overall estimate: 10% weighted milestones, not measured code coverage.
+Japanese matching/GCC source baseline verified. Native PC integration remains
+partial; English and later ports unfinished. Goal active; no playable port.
+
+Actual upstream source
+The complete pinned gcc/src/system/present.c now compiles to a Windows x64
+object with 12 public presentation entry points and zero diagnostics. Native
+adaptations replace its timer-start MMIO accesses with explicit clock calls,
+fold native pointer bits into the task-mark hash, expose the existing shadow
+declarations through one native header condition, and use the real portable
+SIMD configuration. No fake GCC/SH-4 target macro is defined. External C's
+valid partial aggregate initializers retain their implicit zero fields.
+
+The object has 76 external references, not 76 newly recovered routines. A
+coherent production link supplies 31 of these from existing real native
+components, CRT and the new clocks. The combined renderer/presentation frontier
+still has 48 unresolved services. This broader scope includes frame scheduling,
+view/matrix operations, camera/player state, 2D/sprite/particle/shadow draws,
+render submission, overlays and other providers. The full link still fails.
+No fixture or dummy production services are supplied to force a passing link.
+
+Two independent clock domains
+The authored service uses real Windows QueryPerformanceCounter by default, or
+an explicit platform monotonic provider. Wall time advances at 781250 counts
+per second. Timer 1 advances at 12500000 ticks per active second and pauses only
+while its start bit is cleared. Pausing timer 1 never pauses the wall clock.
+Integer quotient/remainder scaling retains fractional ticks across observations.
+The SDK wall-count bridge preserves 32-bit wrapping. Timer-1 countdown uses a
+reload-plus-one period. Unrelated start-register bits are retained; this is not
+a complete hardware timer-unit emulator. Provider failures, backwards ticks or
+overflow stop updates and require explicit reinitialization.
+
+Verification
+- Complete presentation object, clock core/SDK bridge and presentation-aware
+  task object compile without diagnostics. The clock DLL links cleanly.
+- 12873 clock checks: arbitrary-precision rational reference, 2048 randomized
+  transitions at eight provider frequencies, independent pause/resume, retained
+  fractions, reload/count wrapping, fault handling and actual Windows QPC.
+- 4494 isolated checks run byte-preserved upstream present_untimed, timer_stop
+  and mark-table functions. They cover nested exclusion, split/step eligibility,
+  preservation of start bits, actual QPC pause/resume, 900 opaque pointer keys,
+  the 768-entry limit and updates after the table fills.
+- The first attempt to isolate by linker section removal still required other
+  production services. The successful fixture extracts the named actual source
+  functions and needed declarations byte-for-byte from the separately compiled
+  complete adapted source. It does not replace them with simplified routines.
+- Fixture frame_step is controlled test input, not a production scheduler.
+  Opaque mark keys are never dereferenced; these checks are not task replay.
+  No Japanese retail opcode or physical SH-4 prescaler timing claim is made.
+
+Task integration finding
+The earlier qualified task runtime compiled the vanilla task callbacks. That
+version does not notify the new presentation code before deleting a task, and
+does not route steps/draws through present_run/present_draw. Blindly reusing it
+would leave retained drawings pointing at potentially released resources.
+The new private task object activates the five original GCC presentation guards
+under a native feature flag and preserves the earlier 64-bit heap-header fix.
+Its only new imports are present_draw, present_forget and present_run. All three
+are supplied by the complete actual presentation object in the production link
+audit. The audit links one direct matrix-state provider, plus real lifecycle and
+task bridge objects. Retained-draw deletion/replay runtime behavior is not yet
+qualified; this must be tested before enabling replay in a game build.
+
+Scope and distribution
+Only the authored clock DLL/import library are new eligible public artifacts.
+Complete presentation/task objects and the source-containing probe DLL remain
+private. Original sources and historical proofs are preserved. Six presentation
+inputs and the task source/header match pinned upstream Git objects at
+25a3d3154dbe657325e97dbe8c5291086f6af5c0. Public tools reproduce adaptations from
+that external source without distributing original game C or retail assets.
+Each separately loaded DLL has its own clock state; final game objects must be
+linked into one coherent runtime. One game thread owns the current clock service.
+Provider callback/context lifetimes must cover all calls. Source untimed calls
+must remain balanced; invalid source call sequences are not newly supported.
+
+Reproduce the asset-free clock (fresh output directory, your compiler path):
+python -B outputs/sonic-adventure/jp_port_tools/build_native_clock.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --compiler "C:/Program Files (x86)/Microsoft Visual Studio/18/BuildTools/VC/Tools/Llvm/x64/bin/clang.exe" --output work/sonic-adventure/clock-local-check
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_clock.py --workspace . --build work/sonic-adventure/clock-local-check --report work/sonic-adventure/clock-local-check/clock_verification.json
+
+Build the complete presentation object with build_native_presentation_object.py
+using --workspace, --upstream, --sh4zam, --compiler and fresh --output paths.
+The pinned MIT SH4ZAM checkout is the one documented in JP_SHARED_MATRIX_RUNTIME.
+Use build_presentation_clock_probe.py with --workspace, --presentation pointing
+to that build, --clock pointing to the clock build, --compiler and --output.
+Then run verify_presentation_clock_probe.py with --build and a fresh --report.
+These new tests require external source/headers, not retail executable/assets.
+The task-object tool also takes --baseline pointing to the earlier qualified
+task runtime. Full production dependency auditing needs prior real native
+objects described by its command/report; it deliberately excludes the probe.
+
+Next: qualify retained-draw lifecycle with the presentation-aware task source,
+including deletion/destructors and replay state restoration. Port the real
+remaining frame/view/render providers; then execute complete producer/consumer
+frames. Frame pacing, full native rendering, 60/120/240 FPS gameplay correctness,
+asset loading/decoding and English integration remain unfinished.

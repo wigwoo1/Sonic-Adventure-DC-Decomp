@@ -1,3 +1,9 @@
+Native presentation/clock update: see JP_NATIVE_PRESENTATION_CLOCK.txt.
+Complete presentation source compiles; 12,873 clock checks and 4,494 isolated
+actual timer/mark checks pass. Presentation-aware task hooks also compile.
+Combined production frame/renderer still needs 48 services; no playable port.
+Overall estimate remains 10% weighted milestones; goal active.
+
 Native renderer state update: see JP_NATIVE_RENDER_STATE.txt.
 142 state host checks, 12,096 Japanese comparisons and 1,441 model preflight
 checks pass. Ten real state imports resolved; seven frame services remain.

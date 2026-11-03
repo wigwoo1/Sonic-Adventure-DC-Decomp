@@ -1,0 +1,91 @@
+{
+  "status": "native_clock_linked_behavior_unverified",
+  "commands": [
+    {
+      "command": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\18\\BuildTools\\VC\\Tools\\Llvm\\x64\\bin\\clang.exe",
+        "--target=x86_64-pc-windows-msvc",
+        "-std=c17",
+        "-O2",
+        "-ffp-contract=off",
+        "-ffreestanding",
+        "-fno-builtin",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-Wno-unknown-pragmas",
+        "-c",
+        "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\native\\jp_native_clock.c",
+        "-o",
+        "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\work\\sonic-adventure\\jp-native-clock-v1\\clock.obj"
+      ],
+      "exit_code": 0,
+      "diagnostic_bytes": 0,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\18\\BuildTools\\VC\\Tools\\Llvm\\x64\\bin\\clang.exe",
+        "--target=x86_64-pc-windows-msvc",
+        "-std=c17",
+        "-O2",
+        "-ffp-contract=off",
+        "-ffreestanding",
+        "-fno-builtin",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-Wno-unknown-pragmas",
+        "-include",
+        "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\native\\jp_host_types.h",
+        "-I",
+        "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\work\\sonic-adventure\\reshaped-sonic-adventure-review\\sdk\\include",
+        "-c",
+        "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\native\\jp_clock_sdk_bridge.c",
+        "-o",
+        "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\work\\sonic-adventure\\jp-native-clock-v1\\sdk_clock.obj"
+      ],
+      "exit_code": 0,
+      "diagnostic_bytes": 0,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\18\\BuildTools\\VC\\Tools\\Llvm\\x64\\bin\\clang.exe",
+        "--target=x86_64-pc-windows-msvc",
+        "-shared",
+        "-fuse-ld=lld",
+        "-Wl,/export:syTmrGetCount",
+        "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\work\\sonic-adventure\\jp-native-clock-v1\\clock.obj",
+        "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\work\\sonic-adventure\\jp-native-clock-v1\\sdk_clock.obj",
+        "-Wl,kernel32.lib",
+        "-o",
+        "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\work\\sonic-adventure\\jp-native-clock-v1\\jp_native_clock.dll"
+      ],
+      "exit_code": 0,
+      "diagnostic_bytes": 0,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "compiler_sha256": "4b0a905d901d2dd9f0fd034c9c4b91ae9e1fd9ab29dc3a29b022b044e8b7ba44",
+  "authored_source_sha256": {
+    "outputs/sonic-adventure/native/jp_native_clock.c": "beddb5b16c63dd9ee8025ff12dcfc27de432e81b5729b844379a53cf873efa9f",
+    "outputs/sonic-adventure/native/jp_clock_sdk_bridge.c": "0c4f60432040480348a36afa49fdf93f092dc29be4a3062d078bd9a4945b1f68",
+    "outputs/sonic-adventure/native/jp_native_clock.h": "d6382d65eb91effda5c32b7b6c2c3e0a72b9ced270a7a581f0bf67543ca11620",
+    "outputs/sonic-adventure/native/jp_host_types.h": "c46fa3f855a24c3bad1fe84d8810ede94618d7cd4560d86c300d3a403f8dbd2e",
+    "outputs/sonic-adventure/jp_port_tools/build_native_clock.py": "f83cfe6b8125300f272c515731c4f3b38b05d4f02b628dfe19d2c4a79a22dbd7"
+  },
+  "object_sha256": {
+    "clock.obj": "de641ccb2a9237af7e07c1a66c6c430c6694856492881a15a35461c3854f8cf5",
+    "sdk_clock.obj": "38cd3fc5149fdea04faba430248c25cb81748914495e4560d6e9b4a86a4f7fd3"
+  },
+  "dll_sha256": "b09e202a9a0539b4bbff32dbedd5a7b58c0367a7c6241eb3180a456ea1985c41",
+  "game_source_linked": false,
+  "retail_assets_embedded": false,
+  "wall_counts_per_second": 781250,
+  "timer1_ticks_per_second": 12500000,
+  "complete_presentation_or_game_qualified": false,
+  "overall_completion_percent": 10,
+  "goal_paused": false,
+  "playable": false
+}
