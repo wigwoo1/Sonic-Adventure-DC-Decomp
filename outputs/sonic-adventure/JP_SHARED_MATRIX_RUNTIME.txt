@@ -1,0 +1,85 @@
+Shared native Ninja / renderer matrix runtime
+
+Overall project estimate remains approximately 10% of weighted milestones, not
+measured code coverage. The native game and complete renderer remain unfinished.
+
+The native Ninja API and SH4ZAM renderer interface now use the same active matrix
+within one runtime. Previously, independently tested components had separate
+matrix storage. Linking those separate state implementations into a game would
+leave object placement and rendering out of sync.
+
+The shared successor keeps the frozen jp_ninja_math.c source unchanged. Its
+jp_ninja_math_shared.c implementation differs only by its state-interface header,
+explicit 64-byte storage alignment and an accessor returning the actual sixteen
+float words. The authored SH4ZAM state adapter checks its pinned type size,
+alignment and word offset, then returns that same storage. Do not also link the
+dependency's separate shz_xmtrx_sw.c state implementation into this runtime.
+One game thread owns a runtime instance. Separately built DLLs remain separate
+instances; the eventual game must link one state implementation consistently.
+
+Verified results
+
+ - Shared component: 961 checks of storage identity, alignment, native pointers
+   above 4 GB, two-way API visibility, exact copy-word preservation, cross-API
+   geometric examples, deferred stack slots, zero/multiple pops and failed pushes.
+ - Original Japanese routines: 5,696 instruction-contract comparisons plus 196
+   independent checks against the supplied local 1ST_READ.BIN.
+ - Portable backend: 2,946 checks, including 768 independently calculated vector
+   transforms and state access across separate caller source files.
+ - Real source task runtime rebuilt with the shared state: all 1,610 heap/task/
+   cleanup/transform checks pass, plus its own 961 shared-state checks.
+
+Both builds compile and link without diagnostics. The task build uses the native
+CRT and retains the documented native heap-header fix; it still compiles the real
+pinned task source and exact collision/event cleanup bodies. It contains game
+code and stays private. The standalone shared component contains only authored
+code and the pinned MIT numerical/dependency code; it has no retail assets and
+can be published as an incomplete research DLL/import library with the notices.
+
+The complete renderer's existing native object was also linked against the real
+new component's import library. Its matrix accessor and two CRT imports resolve.
+The expected incomplete link now reports 30 remaining graphics, texture,
+presentation and state services instead of 33. No dummy providers were supplied.
+No complete renderer DLL, rendered frame or playable game resulted from that
+audit. Import counts are dependency counts, not total game-routine counts.
+
+Scope and limits
+
+Shared storage identity does not make portable vector arithmetic identical to
+all SH-4 FPU behavior. Japanese comparisons retain the earlier nearest-rounding,
+DN=1 value scope; the backend arithmetic tests use finite moderate values and
+zeros. Copy-only tests preserve arbitrary float words. Original fiber/interrupt
+code also uses round-to-zero environments; the main game-thread policy still
+needs a deliberate audit before gameplay/replay-fidelity claims. Graphics
+submission, texture-handle ownership, frame/input integration, boot and asset
+relocation remain unfinished. There is no new FPS or texture-settings support.
+
+Reproduce
+
+Use the pinned Japanese and SH4ZAM checkouts described by
+JP_NATIVE_RENDERER_BOUNDARY.txt and the public input manifests. Use Windows x64
+Clang and fresh private output directories beneath workspace/work/sonic-adventure.
+No game disc is needed for the shared-state/backend or task API tests. The
+original-instruction comparison additionally needs the matching Japanese main
+binary and the existing verified SH-4 numerical research DLL locally.
+
+ python -B outputs/sonic-adventure/jp_port_tools/build_shared_matrix_runtime.py --workspace WORKSPACE --sh4zam SH4ZAM_CHECKOUT --compiler CLANG_EXE --output WORKSPACE/work/sonic-adventure/NEW_SHARED_FOLDER
+ python -B outputs/sonic-adventure/jp_port_tools/verify_shared_matrix_state.py --workspace WORKSPACE --build WORKSPACE/work/sonic-adventure/NEW_SHARED_FOLDER
+ python -B outputs/sonic-adventure/jp_port_tools/verify_sh4zam_host_probe_v2.py --workspace WORKSPACE --build WORKSPACE/work/sonic-adventure/NEW_SHARED_FOLDER --dll WORKSPACE/work/sonic-adventure/NEW_SHARED_FOLDER/jp_shared_matrix.dll --report WORKSPACE/work/sonic-adventure/NEW_SHARED_FOLDER/portable_backend_verification.json
+ python -B outputs/sonic-adventure/jp_port_tools/verify_native_ninja_math_v3.py --workspace WORKSPACE --upstream JAPANESE_CHECKOUT --dll WORKSPACE/work/sonic-adventure/NEW_SHARED_FOLDER/jp_shared_matrix.dll --binary JAPANESE_1ST_READ_BIN --numeric-dll NUMERICAL_RESEARCH_DLL --report WORKSPACE/work/sonic-adventure/NEW_SHARED_FOLDER/japanese_contract_verification.json
+ python -B outputs/sonic-adventure/jp_port_tools/build_native_task_runtime_v3.py --workspace WORKSPACE --upstream JAPANESE_CHECKOUT --sh4zam SH4ZAM_CHECKOUT --compiler CLANG_EXE --output WORKSPACE/work/sonic-adventure/NEW_TASK_FOLDER
+ python -B outputs/sonic-adventure/jp_port_tools/verify_native_task_runtime_v2.py --workspace WORKSPACE --build WORKSPACE/work/sonic-adventure/NEW_TASK_FOLDER
+ python -B outputs/sonic-adventure/jp_port_tools/verify_shared_matrix_state_v2.py --workspace WORKSPACE --build WORKSPACE/work/sonic-adventure/NEW_TASK_FOLDER
+
+Existing sources, outputs and reports are preserved. The frozen standalone
+baseline and its old proofs remain reproducible; use the shared successor for
+new renderer integration. Public analysis/jp_shared_matrix_* reports describe
+the passing standalone component. analysis/jp_task_shared_* reports describe the
+private game-containing regression build. The renderer link audit remains
+explicitly incomplete.
+
+Next: implement real native graphics header/vertex submission and texture-handle
+services, then link and execute the renderer and connect frame/input platform
+services. The original SDK's njkm.c contains the source protocol definitions;
+Dreamcast store-queue address operations need host-owned buffer replacements.
+Keep Sol High for this integration; Luna Low is suitable for routine docs.

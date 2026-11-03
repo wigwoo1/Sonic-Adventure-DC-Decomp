@@ -1,3 +1,9 @@
+Shared matrix runtime update: see JP_SHARED_MATRIX_RUNTIME.txt.
+Ninja and renderer state are unified: 961 checks in standalone and real task builds.
+5,696 Japanese comparisons, 196 independent checks, 2,946 backend checks and
+1,610 real task regressions pass. Renderer link audit leaves 30 real services.
+Overall estimate remains 10% weighted milestones; no playable native game.
+
 Native renderer boundary update: see JP_NATIVE_RENDERER_BOUNDARY.txt.
 Portable matrix backend: 2,946 checks. Renderer data-access helpers: 2,624 checks.
 Complete renderer object compiles with 14 entry points; 33 imports remain.
