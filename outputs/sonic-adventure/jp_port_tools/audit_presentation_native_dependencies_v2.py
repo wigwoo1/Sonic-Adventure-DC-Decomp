@@ -13,6 +13,10 @@ def main():
     sources=[];input_reports={}
     pb=json.loads((a.presentation/'build_verification.json').read_text())
     present=a.presentation/'present.obj';assert sha(present)==pb['object_sha256'];sources.append(present)
+    if 'lifetime_object_sha256' in pb:
+        lifetime=a.presentation/'replay_lifetime.obj'
+        assert sha(lifetime)==pb['lifetime_object_sha256'];sources.append(lifetime)
+    input_reports[str(a.presentation/'build_verification.json')]=sha(a.presentation/'build_verification.json')
     for folder,fields in [(a.clock,'object_sha256'),(a.preflight,'linked_objects_sha256')]:
         path=folder/'build_verification.json';input_reports[str(path)]=sha(path);b=json.loads(path.read_text())
         for name,h in b[fields].items():
@@ -45,6 +49,7 @@ def main():
     text=log.read_text();remaining=sorted(set(re.findall(r'undefined symbol: (\S+)',text)))
     assert run.returncode!=0 and remaining and not (d/'presentation_unfinished.dll').exists()
     assert all(n not in remaining for n in ['jp_clock_read_tstr','jp_clock_write_tstr','syTmrGetCount','present_record','present_untimed'])
+    assert all(n not in remaining for n in ['jp_replay_enter','jp_replay_leave','jp_replay_destroying'])
     errors=[line for line in text.splitlines() if 'error:' in line]
     assert len(errors)==len(remaining)+1 and errors[-1].startswith('clang: error: linker command failed')
     satisfied=sorted(set(pb['undefined_symbols'])-set(remaining))
@@ -56,6 +61,7 @@ def main():
         linked_objects_sha256={str(s):sha(s) for s in sources},input_build_reports_sha256=input_reports,
         full_presentation_linked_or_executed=False,test_fixture_or_dummy_services_linked=False,
         production_task_presentation_hooks_active=True,single_direct_matrix_state_provider=True,
+        native_replay_lifetime_provider_linked='lifetime_object_sha256' in pb,
         retained_draw_lifecycle_runtime_verified=False,
         renderer_frame_services_implemented_by_real_source=['present_record','present_untimed','frame_later_draws'],
         verifier_sha256=sha(Path(__file__)),overall_completion_percent=10,goal_paused=False,playable=False)

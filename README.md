@@ -21,9 +21,11 @@ Native texture records and real owned payload release now pass 1,947 host checks
 and 15,232 Japanese lifecycle comparisons. The actual GCC texture selector runs.
 Native renderer state now passes 12,096 Japanese comparisons, with 142 state
 host checks and 1,441 model preflight checks. The complete presentation source now compiles natively. Its broader scope has
-76 references: 31 are supplied, while the combined production frame/renderer
+79 references: 34 are supplied, while the combined production frame/renderer
 link still needs 48 services. The clock passes 12,873 checks; actual timer/mark
-boundaries pass 4,494 isolated checks. Full replay and gameplay are unfinished. English integration
+boundaries pass 4,494 isolated checks. Task/replay integration passes 7,601
+checks, including a native guard against restoring into deleted/reused tasks.
+Full-frame execution and gameplay are unfinished. English integration
 begins as the needed asset/text/audio systems become usable. Game-containing
 runtime artifacts remain private.
 
@@ -37,6 +39,7 @@ Texture Off must disable sampling and use vertex/material colours.
 - [Current goal](outputs/sonic-adventure/JP_BASED_PORT_GOAL.txt)
 - [Integration order and limits](outputs/sonic-adventure/JP_NATIVE_PORT_PLAN.txt)
 - [Verified GCC baseline and native/localization evidence](outputs/sonic-adventure/JP_GCC_BASELINE.txt)
+- [Task deletion, retained ownership and replay qualification](outputs/sonic-adventure/JP_NATIVE_REPLAY_LIFECYCLE.txt)
 - [Native presentation, independent clocks and remaining dependencies](outputs/sonic-adventure/JP_NATIVE_PRESENTATION_CLOCK.txt)
 - [Renderer state, model bounds and remaining frame services](outputs/sonic-adventure/JP_NATIVE_RENDER_STATE.txt)
 - [Native texture ownership, verified scope and remaining integration](outputs/sonic-adventure/JP_NATIVE_TEXTURE_OWNERSHIP.txt)

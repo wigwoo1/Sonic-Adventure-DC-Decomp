@@ -1,0 +1,76 @@
+Native task deletion and replay callback qualification
+
+Overall completion: about 10%, a weighted milestone estimate, not code coverage.
+Japanese matching/GCC baseline established. Native PC integration remains
+partial; English content and later ports are unfinished. No playable port.
+
+What changed
+The real presentation-aware task object now runs against an isolated selection
+of the actual pinned presentation functions. All five task hooks are exercised:
+root/child steps, root/child draws, and deletion before the destructor. Retained
+3D and 2D owners become distinct deleted/released markers before task resources
+are freed; matching shadows are removed while unrelated order is preserved.
+Immediate reuse of a task slot cannot relabel the old retained drawings.
+
+The tests exposed an additional native integration hazard. A replay callback
+can delete its own task and allocate a replacement in the same slot. The old
+code then restores the deleted task's snapshot into that replacement. The
+preserved failing test observed timer 123 overwrite the replacement's timer 777.
+This establishes an API-level failure; real-scene reachability is not established.
+
+An authored native lifetime guard now tracks synchronous replay scopes. The
+real deletion hook invalidates all active scopes for that task, before the
+retention-mode early exit and before its destructor. A returning callback skips
+snapshot restoration when its task was destroyed, even if the slot was reused
+or an inner callback destroyed an outer task. Unaffected callbacks still restore
+their work, motion, player record and collision shapes. This is deliberately
+separate from the original external source, which remains unchanged.
+
+Verification
+7601 integration checks pass on Windows x64. They include 64 retained deletion
+and reuse cycles; all eight player slots with 0 through 9 collision shapes;
+the existing eight-shape replay limit and overflow fallback; camera, killed and
+DREW_LATER suppression; nested task/aspect state; ordinary versus replay draw
+behavior; 24 destructive-callback cases; and real heap/pool failure regressions.
+The complete adapted presentation source and isolated fixture compile without
+diagnostics. The actual task, cleanup, heap bridge and shared matrix providers
+are linked. Rebuilt provider objects match their earlier bytes except the COFF
+compile-time header field. No rendering services are replaced with dummy code.
+
+The production audit separately links the COMPLETE presentation/model objects
+with the real native providers and lifetime guard. Presentation has 79 external
+references, of which 34 are supplied; the combined frontier still lacks 48
+services. The three extra references are the guard's real entry points. This
+count is a component dependency frontier, not a count of game routines.
+The complete production frame/renderer does not link or execute yet.
+
+Scope and remaining work
+The fixture owns controlled camera/player pointers, frame-step and aspect
+inputs. Its generated game C and DLL remain private. No frame image, gameplay,
+English localization or 60/120/240 FPS gameplay is proved by these tests.
+Deleting/reusing a task is covered. Freeing or replacing individual work,
+motion, player or shape pointers without destroying the task is unqualified.
+Malformed records, arbitrary cached-successor deletion, nonlocal jumps and
+concurrent callbacks are outside the supported test contract. The lifetime
+guard uses one game thread and one linked instance with paired stack scopes.
+GPU/packet consumption and texture resource retention still need end-to-end
+qualification before full replay can be enabled.
+
+Reproduction (PowerShell, from the workspace root)
+Use the pinned external source and prerequisite builds described in
+JP_NATIVE_PRESENTATION_CLOCK.txt. PYTHON and CLANG below mean your installed
+Python interpreter and Windows x64 Clang compiler paths. Use fresh private
+output folders; do not overwrite preserved proof or build files.
+
+PYTHON -B outputs/sonic-adventure/jp_port_tools/build_native_presentation_object_v2.py --workspace . --baseline work/sonic-adventure/jp-native-presentation-object-v2 --compiler CLANG --output work/sonic-adventure/jp-native-presentation-object-v3
+
+PYTHON -B outputs/sonic-adventure/jp_port_tools/build_presentation_lifecycle_probe.py --workspace . --presentation work/sonic-adventure/jp-native-presentation-object-v3 --task work/sonic-adventure/jp-presentation-task-object-v1 --baseline work/sonic-adventure/jp-native-task-shared-runtime-v1 --clock work/sonic-adventure/jp-native-clock-v1 --compiler CLANG --output work/sonic-adventure/jp-presentation-lifecycle-probe-v4
+
+PYTHON -B outputs/sonic-adventure/jp_port_tools/verify_presentation_lifecycle_probe.py --build work/sonic-adventure/jp-presentation-lifecycle-probe-v4 --report work/sonic-adventure/jp-presentation-lifecycle-probe-v4/lifecycle_verification_final.json
+
+Public analysis/jp_native_replay_* reports record the exact source, object,
+compiler command, private fixture and verification hashes. Retail game files,
+generated game C and game-containing artifacts are excluded from publication.
+Next work: actual view/matrix and remaining frame/render providers, followed
+by integrated packet/resource lifetime and full-frame execution checks.
+Sol High remains appropriate for that platform integration work.

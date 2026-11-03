@@ -1,0 +1,92 @@
+{
+  "status": "actual_task_retention_and_supported_replay_callbacks_verified",
+  "checks": 7601,
+  "groups": {
+    "deletion": {
+      "checks": 4548,
+      "details": {
+        "real_deletion_and_reuse_cycles": 64,
+        "keeper_modes": [
+          0,
+          1,
+          2
+        ]
+      }
+    },
+    "scheduling": {
+      "checks": 18,
+      "details": {
+        "root_and_child_hooks": true,
+        "root_and_child_draw_hooks": true,
+        "replay_suppresses_simulation": true
+      }
+    },
+    "callbacks": {
+      "checks": 486,
+      "details": {
+        "replay_restore_cycles": 48,
+        "guard_cases": [
+          "camera",
+          "later",
+          "killed",
+          "no_callback",
+          "step_as_draw"
+        ]
+      }
+    },
+    "players": {
+      "checks": 880,
+      "details": {
+        "player_slot_and_shape_cases": 80,
+        "supported_maximum_shapes": 8
+      }
+    },
+    "lifetime_mutation": {
+      "checks": 217,
+      "details": {
+        "destructive_callback_cases": 24,
+        "keeper_modes": [
+          0,
+          1,
+          2
+        ],
+        "player_self_destruction_and_reuse": true,
+        "nested_outer_invalidation": true
+      }
+    },
+    "heap_regression": {
+      "checks": 1208,
+      "details": {
+        "heap_live_payloads": 240,
+        "task_slots_exhausted_and_recovered": 4096
+      }
+    },
+    "allocation_rollback_regression": {
+      "checks": 242,
+      "details": {
+        "auxiliary_failure_cases": 32,
+        "exact_fit_case": true,
+        "pool_initialization_failure": true
+      }
+    }
+  },
+  "DLL_sha256": "d27cf0f17faa0fe876fe540cb88be1b62e021b149929196b21d3f20a9d2f768c",
+  "build_report_sha256": "7c3b6c5995c1ace504370aacfcbf17a613769e0147c1d01dba7c941ab4e9339e",
+  "verifier_sha256": "41df6401925028653a3c3917fe2e2205da22af9ffe74fce146832398c22f99e6",
+  "support_sha256": "e69c0f8e8ebd333fd9be00cd37f39f4597c0d3812bbf5789a49c26dbc92552c2",
+  "clock_support_sha256": "fd4343779c31d6f6e9c5212fc8d937bc0eb006ab03206a519746518bd4039b6f",
+  "heap_regression_verifier_sha256": "5e3dee5f8e48cc0ee53304279dae50558571c776c694e3177af5d50513cdc0fb",
+  "full_presentation_linked": false,
+  "rendered_game_image": false,
+  "gameplay_verified": false,
+  "limitations": [
+    "Isolated actual functions and complete task object; no renderer or frame loop execution.",
+    "Task deletion/reuse is qualified; replacing/freeing individual record pointers without task destruction remains unqualified.",
+    "The eight-shape fallback prevents replay; it does not make malformed records safe.",
+    "Windows x64 host ABI only; no 60/120/240 FPS gameplay or localization claim."
+  ],
+  "game_containing_artifact_publishable": false,
+  "overall_completion_percent": 10,
+  "goal_paused": false,
+  "playable": false
+}

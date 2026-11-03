@@ -1,3 +1,9 @@
+Native replay lifecycle update: see JP_NATIVE_REPLAY_LIFECYCLE.txt.
+7601 integration checks pass, including retained ownership, player snapshots,
+and a fix for restoration into a deleted/reused task. Full frames remain
+unlinked: the production frame/renderer still needs 48 real services.
+Overall estimate remains 10% weighted milestones; goal active.
+
 Native presentation/clock update: see JP_NATIVE_PRESENTATION_CLOCK.txt.
 Complete presentation source compiles; 12,873 clock checks and 4,494 isolated
 actual timer/mark checks pass. Presentation-aware task hooks also compile.
