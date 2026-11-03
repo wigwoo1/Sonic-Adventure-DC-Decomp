@@ -1,0 +1,75 @@
+Native renderer state and geometry preflight
+
+Whole-project estimate: 10% weighted milestones, not measured code coverage.
+Japanese matching/GCC source baseline verified; native PC integration partial;
+English support and later platforms unfinished. Goal active, no playable port.
+
+Order of work
+Use the Japanese source to establish a native PC core. Begin English integration
+as asset, text, font and audio systems become usable, while gameplay integration
+continues. Full Japanese-only gameplay completion is not a prerequisite for that
+English work. Finish complete English PC gameplay, presentation/performance and
+texture features, then Android/stereoscopic 3DS and the demake stretch goals.
+Display and performance foundations can be developed alongside the core.
+
+This milestone
+Actual pinned njControl.c and njSetScreen.c provide 3D initialization, material
+and control settings, depth queue and screen selection. An authored ClipZ value
+implementation replaces the original assembly. The native owner supplies the
+ten selected model-renderer state objects and a guarded, aligned scratch buffer.
+Scratch supports the pinned GCC renderer's 16-byte points, up to 2048 points.
+Native configuration sets screen dimensions, projection, clip planes and aspects;
+actual source setters and the current owner share the same state.
+
+Model preflight checks supplied array lengths, counts, mesh indices, material
+references, finite geometry and texture-handle bindings. The caller must provide
+truthful accessible array lengths and keep arrays alive. It checks triangles,
+quads, polygons and strips before the unchecked renderer can read them.
+For each polygon, a conservative queue bound covers clipping and strip closing.
+Reservation includes headers and both opaque/translucent lists. Growth can move
+views. A later-list reservation failure may retain an earlier successful storage
+growth, but no geometry has been committed by preflight.
+
+Verification
+- State runtime: three C units compile and link with no diagnostics.
+- 142 host checks: ownership, budget rejection preserving prior storage, guards,
+  pointer width, configuration and rejected invalid settings without mutation.
+- 12,096 comparisons against 672 original Japanese calls: seven state APIs,
+  including ClipZ NaNs, infinities and signed zero, material bit preservation,
+  screen fields and depth-queue values. Original executor remains unchanged;
+  comparisons use nearest rounding/DN1 and do not qualify whole-game arithmetic.
+- Composed state/texture/queue/preflight runtime compiles and links cleanly.
+- 1,441 preflight checks over 128 valid models plus malformed inputs. Actual
+  owned queue reservations withstand conservative simulated writer envelopes.
+  These probes do not execute the complete renderer or qualify raster output.
+- Actual complete-renderer link audit resolves ten state imports. Seven real
+  frame/presentation services remain: event_skipping, frame_later_draws,
+  frame_step, port_draw_aspect, port_view_aspect, present_record, present_untimed.
+  No dummy frame functions or constants were supplied to force a passing link.
+
+Limits and next step
+High-resolution tests configure state up to 8192x4320; they do not render an 8K
+image or measure 8K performance. Geometry bounds cover the pinned writer's loops,
+not every numerical/gameplay condition. Full producer execution must also have
+valid transforms, material/light data and frame-owned texture lifetimes.
+The complete renderer is still unlinked. Next implement real frame recording,
+timing and draw eligibility, integrate preflight before drawing, then execute
+the complete model producer and consume its packets for actual image output.
+Full texture-loader adaptation, decoding, boot/menu and playable stages remain.
+
+Five state-related external files match pinned upstream Git objects at
+25a3d3154dbe657325e97dbe8c5291086f6af5c0. Original source/proofs stay intact.
+Game-containing generated C, objects and DLLs stay private; public files provide
+authored adapters, hash-pinned build tools and verification evidence. No retail
+assets or new game-containing compiled artifacts are published.
+
+Reproduce in PowerShell with your external source and compiler, fresh folders:
+
+python -B outputs/sonic-adventure/jp_port_tools/build_native_render_state.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --compiler "C:/Program Files (x86)/Microsoft Visual Studio/18/BuildTools/VC/Tools/Llvm/x64/bin/clang.exe" --output work/sonic-adventure/render-state-local-check
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_render_state.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --build work/sonic-adventure/render-state-local-check --binary work/sonic-adventure/jp-ninja-math-reference/1ST_READ.BIN --report work/sonic-adventure/render-state-local-check/state_verification.json
+python -B outputs/sonic-adventure/jp_port_tools/build_native_model_preflight.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --state work/sonic-adventure/render-state-local-check --textures work/sonic-adventure/jp-native-texture-runtime-v4 --compiler "C:/Program Files (x86)/Microsoft Visual Studio/18/BuildTools/VC/Tools/Llvm/x64/bin/clang.exe" --output work/sonic-adventure/model-preflight-local-check
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_model_preflight.py --workspace . --build work/sonic-adventure/model-preflight-local-check --report work/sonic-adventure/model-preflight-local-check/preflight_verification.json
+
+Build the previous texture and queue components as their guides describe first.
+The Japanese comparison needs your matching executable. The preflight check uses
+synthetic data and no retail assets. Neither check proves complete game runtime.

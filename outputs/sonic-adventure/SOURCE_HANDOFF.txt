@@ -1,3 +1,8 @@
+Native renderer state update: see JP_NATIVE_RENDER_STATE.txt.
+142 state host checks, 12,096 Japanese comparisons and 1,441 model preflight
+checks pass. Ten real state imports resolved; seven frame services remain.
+Complete rendering and gameplay remain unfinished. Overall estimate 10%.
+
 Native texture ownership update: see JP_NATIVE_TEXTURE_OWNERSHIP.txt.
 1,947 host checks and 15,232 Japanese lifecycle comparisons pass. Actual GCC
 texture selection runs; three imports resolved, 17 real services remain.

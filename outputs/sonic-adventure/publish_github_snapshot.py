@@ -113,8 +113,11 @@ link audit now resolves ten further services through an authored host-owned
 queue, qualified by 6,994 host checks and 11,777 Japanese contract comparisons.
 Native texture records and real owned payload release now pass 1,947 host checks
 and 15,232 Japanese lifecycle comparisons. The actual GCC texture selector runs.
-Seventeen real renderer services remain; full loading, decoding and rendering
-are unfinished. Game-containing runtime artifacts remain private.
+Native renderer state now passes 12,096 Japanese comparisons, with 142 state
+host checks and 1,441 model preflight checks. Seven frame/presentation services
+remain; complete rendering and gameplay are unfinished. English integration
+begins as the needed asset/text/audio systems become usable. Game-containing
+runtime artifacts remain private.
 
 The goal is complete native PC gameplay with English localization, 60/120/240 FPS,
 up to 8K, display/texture settings and optional SUPIR enhancements, followed by
@@ -126,6 +129,7 @@ Texture Off must disable sampling and use vertex/material colours.
 - [Current goal](outputs/sonic-adventure/JP_BASED_PORT_GOAL.txt)
 - [Integration order and limits](outputs/sonic-adventure/JP_NATIVE_PORT_PLAN.txt)
 - [Verified GCC baseline and native/localization evidence](outputs/sonic-adventure/JP_GCC_BASELINE.txt)
+- [Renderer state, model bounds and remaining frame services](outputs/sonic-adventure/JP_NATIVE_RENDER_STATE.txt)
 - [Native texture ownership, verified scope and remaining integration](outputs/sonic-adventure/JP_NATIVE_TEXTURE_OWNERSHIP.txt)
 - [Native graphics queue, verified scope and integration requirements](outputs/sonic-adventure/JP_NATIVE_QUEUE.txt)
 - [Shared matrix runtime, verified scopes and remaining work](outputs/sonic-adventure/JP_SHARED_MATRIX_RUNTIME.txt)
