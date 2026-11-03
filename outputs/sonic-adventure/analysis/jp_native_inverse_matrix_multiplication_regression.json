@@ -1,0 +1,54 @@
+{
+  "status": "native_multi_matrix_contracts_verified_against_original_Japanese_opcodes",
+  "checks": 33208,
+  "original_instruction_contract_comparisons": 2268,
+  "sections": {
+    "independent_exact_integer_products": {
+      "checks": 3836,
+      "original_calls": 256
+    },
+    "finite_normal_products": {
+      "checks": 14848,
+      "original_calls": 1024
+    },
+    "special_and_subnormal_operand_bits_DN1": {
+      "checks": 3716,
+      "original_calls": 256
+    },
+    "arbitrary_operand_words": {
+      "checks": 7420,
+      "original_calls": 512
+    },
+    "overlapping_four_byte_aligned_and_saved_slot_operands": {
+      "checks": 3194,
+      "original_calls": 220
+    },
+    "native_active_source_alias_and_cross_renderer_visibility": {
+      "checks": 193,
+      "original_calls": 0
+    }
+  },
+  "stored_and_implicit_path_difference_cases": 60,
+  "original_binary_sha256": "e038db9029bc0ea8ffdb8ec8fc2e0690d1c324f5f7179f3dc58f56574b1aeeaf",
+  "original_entry_point": "0x8c628868",
+  "numerical_model_DLL_sha256": "2e56428fadb1903c319da319cf6fa3731839eab1b16163e4e820821d6e4c2db2",
+  "external_input_manifest_sha256": "4da19e5b3c19c75cfed991f69f0cbeed2e6741cdb10f973281139431e9b44127",
+  "DLL_sha256": "fd2097e4d946e657d8b42beafb5a560f5a42ce129710caab962595e6813befb8",
+  "build_report_sha256": "4c8a29aafd892fd1888df69fc9d3758c7cb0ec11a08ced938a34e10e56fb952c",
+  "verifier_sha256": "62e0d9fd11590904a07ff952cec30e658dbb6b9e58d07ebf2a37a6caa2524dc7",
+  "executor_sha256": "e1dbae17f07354a51fe7b05258895f980bda38d65b615ff2e8fb9b65dabc75e8",
+  "FPU_layout_support_sha256": "e8ec3b9bd98d83083e7008d6091b5c0ad160974cacc6ce73943873a79f540ad4",
+  "limitations": [
+    "Original instruction execution uses the shared pinned SH-4 numerical model; this is not new independent hardware validation.",
+    "Fixed nearest/DN=1/disabled-exception value policy; native code does not reproduce FPSCR or scratch-register side effects.",
+    "Original comparisons use both active banks with SZ=PR=0. Whole-game entry FPSCR policy remains untraced.",
+    "Valid sixteen-word host operands, including overlapping memory; null source and malformed pointers are outside the API contract.",
+    "Native active-storage source alias is independently tested; SH-4 XMTRX is not addressable RAM.",
+    "No frame rasterization, gameplay, English localization or later-platform qualification."
+  ],
+  "game_source_linked": false,
+  "retail_assets_published": false,
+  "overall_completion_percent": 10,
+  "goal_paused": false,
+  "playable": false
+}

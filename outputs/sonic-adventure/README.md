@@ -1,3 +1,15 @@
+Native determinant/inverse update: see JP_NATIVE_INVERSE_MATRIX.txt.
+1640 original routine comparisons and 28009 determinant/inverse checks pass.
+Multiplication and shared-state regressions pass in the same DLL. The real
+production frame/renderer still needs 46 services. No playable port.
+Overall estimate remains about 10% weighted milestones; goal active.
+
+Native matrix multiplication update: see JP_NATIVE_MULTI_MATRIX.txt.
+2268 original-code comparisons, 33208 contract checks and 961 shared-state
+regressions pass. njMultiMatrix is supplied by the real native object; the
+complete frame/renderer still needs 47 services. No playable port.
+Overall estimate remains about 10% weighted milestones; goal active.
+
 Native replay lifecycle update: see JP_NATIVE_REPLAY_LIFECYCLE.txt.
 7601 integration checks pass, including retained ownership, player snapshots,
 and a fix for restoration into a deleted/reused task. Full frames remain

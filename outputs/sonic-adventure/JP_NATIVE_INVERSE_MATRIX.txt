@@ -1,0 +1,81 @@
+Native determinant and inverse matrix qualification
+
+Overall completion: about 10%, a weighted milestone estimate, not code coverage.
+Japanese matching/GCC baseline established; native PC integration is partial.
+English and later ports are unfinished. There is no playable native port yet.
+
+Actual implementation
+Authored njDetMatrix and njInvertMatrix now use the existing single active
+Ninja/renderer matrix and caller-owned matrices. The original SDK assembly
+stays external at the pinned upstream revision. The determinant preserves its
+minor/cofactor expansion, separate reversed subtractions and operation order.
+The inverse preserves rounded triple products, their addition grouping, sign
+changes and reciprocal scaling. It computes the whole result before writing
+the selected matrix. A null argument updates active state without saving it
+to the deferred stack. Explicit saved-stack operands change only that record.
+
+An EXACT zero determinant, including negative zero and a determinant flushed
+to zero under DN=1, fills all sixteen words with 0x7f7fc99e (3.4e38) and returns
+FALSE. Every other determinant takes the cofactor path and returns TRUE. No
+epsilon cutoff, generic matrix solver or altered singular fallback is used.
+
+The new value-only scalar boundary reuses preserved authored integer cores for
+binary32 addition, subtraction, multiplication and division. It uses the same
+nearest-rounding/DN=1/disabled-exception value policy as the current native
+matrix components. Scalar arithmetic does not depend on host floating-point
+rounding. FPSCR flags/traps and scratch-register effects are outside this ABI.
+NaN/infinity class dispatch completes the value boundary around those cores.
+
+Verification
+- 1640 original Japanese routine calls: 820 determinant and 820 inverse calls,
+  both stored/current paths and both active FPU banks. Original inverse calls
+  execute the actual original determinant too; no determinant hook is substituted.
+- 28009 checks cover output words, BOOL results, complete parameter and guard
+  memory, all deferred-stack records, stable stack metadata and three APIs
+  observing one active matrix. Cases include general finite matrices, exact
+  unimodular matrices, signed zeros, repeated/zero rows and tiny determinants.
+- Independent rational Gaussian elimination checks determinant and inverse
+  values for the exact integer cases, rather than reproducing the cofactor code.
+- Scalar values are checked against the existing independent Python integer-
+  dyadic executor, including finite overflow/underflow and explicit exceptional
+  class cases. These are value-contract checks, not new hardware measurements.
+- The combined DLL also passes all 2268 previous multiplication comparisons
+  (33208 checks) and 961 shared Ninja/renderer state regressions.
+- All native objects and the asset-free research DLL compile/link with zero
+  diagnostics. The real production audit links only the new implementation and
+  scalar objects, excluding all probes and any second matrix-state instance.
+  njInvertMatrix resolves; the determinant is also a real complete provider.
+  The combined frontier falls from 47 to 46 unresolved services. Presentation
+  has 79 raw references, of which 36 are supplied. This is not a game routine count.
+
+Remaining limits
+Original matrix comparisons cover finite inputs with finite intermediate
+scalar results under nearest rounding, DN=1 and SZ=PR=0. The scalar boundary's
+additional nonfinite class tests do not prove complete original matrix behavior
+for all nonfinite inputs. Whole-game FPSCR initialization remains untraced.
+Native performance has not been measured or qualified for frame-rate targets.
+Full-frame rasterization, queued texture/resource lifetime and gameplay remain
+unfinished. English localization, Android, stereoscopic 3DS and demakes are
+not implemented by this component. One game thread owns one runtime instance.
+
+Reproduction
+Use fresh private output folders and the prerequisites in JP_NATIVE_MULTI_MATRIX.txt.
+PYTHON and CLANG below mean the installed Python and Windows x64 Clang paths.
+The reference binary must be supplied locally and match the recorded JP hash.
+
+PYTHON -B outputs/sonic-adventure/jp_port_tools/build_native_inverse_matrix.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --baseline work/sonic-adventure/jp-native-multi-matrix-v2 --compiler CLANG --output work/sonic-adventure/jp-native-inverse-matrix-v1
+
+PYTHON -B outputs/sonic-adventure/jp_port_tools/verify_native_inverse_matrix.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --build work/sonic-adventure/jp-native-inverse-matrix-v1 --binary work/sonic-adventure/jp-ninja-math-reference/1ST_READ.BIN --report work/sonic-adventure/jp-native-inverse-matrix-v1/contract_verification.json
+
+PYTHON -B outputs/sonic-adventure/jp_port_tools/verify_native_multi_matrix.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --build work/sonic-adventure/jp-native-inverse-matrix-v1 --binary work/sonic-adventure/jp-ninja-math-reference/1ST_READ.BIN --numeric-dll work/sonic-adventure/build/sh4_vector_numeric.dll --report work/sonic-adventure/jp-native-inverse-matrix-v1/multiplication_regression.json
+
+PYTHON -B outputs/sonic-adventure/jp_port_tools/verify_shared_matrix_state_v2.py --workspace . --build work/sonic-adventure/jp-native-inverse-matrix-v1
+
+PYTHON -B outputs/sonic-adventure/jp_port_tools/audit_native_dependency_extension.py --workspace . --baseline-audit work/sonic-adventure/jp-multi-matrix-native-link-audit-v2/verification.json --component work/sonic-adventure/jp-native-inverse-matrix-v1 --compiler CLANG --output work/sonic-adventure/jp-inverse-matrix-native-link-audit-v1
+
+analysis/jp_native_inverse_matrix_* records exact source, binary, compiler,
+object and verification hashes. The research DLL is authored/asset-free;
+retail inputs and generated game-source artifacts remain private. Final-game
+integration links the production objects to the existing state owner, never
+loads a second state DLL as a substitute. Next: actual view/frame providers.
+Keep Sol High for the remaining platform and numerical integration work.

@@ -1,0 +1,78 @@
+Native njMultiMatrix and shared rendering state
+
+Whole-project completion remains about 10%, a weighted milestone estimate,
+not measured code coverage. The Japanese matching/GCC baseline is established.
+Native PC integration is partial; English localization and later ports remain
+unfinished. This component is a research library, not a playable game.
+
+Implementation
+The authored native function preserves the pinned Japanese SDK's row-vector
+contract: destination = source * destination. A null destination selects the
+single active Ninja/renderer matrix. It does not save that matrix to the
+deferred stack. All input words are read before any result word is stored,
+so self-aliasing and partially overlapping matrices remain supported.
+
+The original paths differ numerically. The stored destination path executes
+FIPR with the destination column as its first operand and the source row as
+its second. The implicit-current path executes FTRV. The existing SH-4
+multiplier model is operand-sensitive. Replacing both with one generic dot
+product, or reversing FIPR's operands, loses original output bits. The authored
+function deliberately keeps both paths. Original game source stays external.
+
+Verification
+- 2268 calls execute the supplied Japanese machine code at 0x8c628868 and
+  compare it with the native function. Both physical active FPU banks are used.
+- 33208 checks cover exact output words, complete parameter/guard memory,
+  all deferred-stack records, stack depth/pointers/flags, and Ninja plus two
+  renderer translation units observing the same active storage.
+- Inputs include exact integer matrices, finite normals, arbitrary words,
+  signed zeros, subnormals, infinities and NaN payloads under the stated policy.
+  Every overlapping source offset from -15 through +15 float words is tested,
+  including four-byte-aligned addresses that are not sixteen-byte aligned.
+- The cases contain 60 stored/current product differences. Thus a merged
+  numerical path cannot silently pass the original-code comparisons.
+- Independent exact-integer products and active-source squares check matrix
+  order and geometry without using the numerical model as their oracle.
+- 961 existing shared Ninja/renderer state regressions also pass in the new
+  library. The complete component compiles and links with zero diagnostics.
+- The production audit links only multi_matrix.obj into the actual existing
+  frame/renderer composition. njMultiMatrix resolves, leaving 47 unresolved
+  services, down from 48. Of the presentation object's 79 references, 35 are
+  supplied. No test probes, extra state owner or rendering stubs enter that
+  production audit. The complete production frame still does not link.
+
+Limits
+Original opcode execution uses the pinned existing SH-4 numerical instruction
+model. This is not new independent hardware validation. Native values use the
+existing nearest-rounding, DN=1, disabled-exception policy; FPSCR flags and
+scratch-register effects are not reproduced. SZ=PR=0 is the original entry
+contract tested here. The actual whole-game FPSCR policy still needs tracing
+before claiming complete-game numerical fidelity. Pointers must identify valid
+sixteen-word host matrices; a null source is not valid. One game thread owns
+one runtime instance. The native active-source alias has independent tests;
+SH-4's XMTRX registers are not addressable game RAM.
+
+The asset-free research DLL contains authored matrix code, the retained MIT
+numerical model and the real shared-state adapters. It contains no game C or
+retail assets. Loading a separate DLL creates a separate runtime instance.
+For the final game, link multi_matrix.obj to the existing single state owner;
+do not import a second matrix runtime to satisfy this one function.
+
+Reproduction (from the workspace root; use fresh private output directories)
+PYTHON, CLANG and SH4ZAM below mean your installed Python, x64 Clang and the
+previously pinned SH4ZAM source directory. The baseline task providers and
+production link audit come from JP_NATIVE_REPLAY_LIFECYCLE.txt and its inputs.
+
+PYTHON -B outputs/sonic-adventure/jp_port_tools/build_native_multi_matrix.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --baseline work/sonic-adventure/jp-native-task-shared-runtime-v1 --baseline-audit work/sonic-adventure/jp-presentation-native-link-audit-v3/verification.json --sh4zam SH4ZAM --compiler CLANG --output work/sonic-adventure/jp-native-multi-matrix-v2
+
+PYTHON -B outputs/sonic-adventure/jp_port_tools/verify_native_multi_matrix.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --build work/sonic-adventure/jp-native-multi-matrix-v2 --binary work/sonic-adventure/jp-ninja-math-reference/1ST_READ.BIN --numeric-dll work/sonic-adventure/build/sh4_vector_numeric.dll --report work/sonic-adventure/jp-native-multi-matrix-v2/contract_verification.json
+
+PYTHON -B outputs/sonic-adventure/jp_port_tools/verify_shared_matrix_state_v2.py --workspace . --build work/sonic-adventure/jp-native-multi-matrix-v2
+
+PYTHON -B outputs/sonic-adventure/jp_port_tools/audit_native_dependency_extension.py --workspace . --baseline-audit work/sonic-adventure/jp-presentation-native-link-audit-v3/verification.json --component work/sonic-adventure/jp-native-multi-matrix-v2 --compiler CLANG --output work/sonic-adventure/jp-multi-matrix-native-link-audit-v2
+
+Reports in analysis/jp_native_multi_matrix_* bind the source, compiler commands,
+native objects, original input hashes and verification scope. Retail reference
+files remain local. The full renderer, gameplay and localization are unfinished.
+Next dependency group: determinant/inverse and actual view/frame providers.
+Keep Sol High for the reverse engineering and numerical qualification work.
