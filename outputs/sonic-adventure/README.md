@@ -1,3 +1,9 @@
+Native texture ownership update: see JP_NATIVE_TEXTURE_OWNERSHIP.txt.
+1,947 host checks and 15,232 Japanese lifecycle comparisons pass. Actual GCC
+texture selection runs; three imports resolved, 17 real services remain.
+Full loaders, texture decoding and complete rendering remain unfinished.
+Overall estimate remains 10% weighted milestones; goal active.
+
 Native graphics queue update: see JP_NATIVE_QUEUE.txt.
 6,994 host checks, 11,777 Japanese contract comparisons and 1,024 executor
 extension checks pass. Ten renderer imports resolved; 20 real services remain.

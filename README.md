@@ -17,7 +17,10 @@ entry points. A shared Ninja/renderer matrix runtime now passes its original
 Japanese contracts, backend checks and real task regressions. The actual renderer
 link audit now resolves ten further services through an authored host-owned
 queue, qualified by 6,994 host checks and 11,777 Japanese contract comparisons.
-Twenty real graphics/texture/presentation services remain; it is still unlinked.
+Native texture records and real owned payload release now pass 1,947 host checks
+and 15,232 Japanese lifecycle comparisons. The actual GCC texture selector runs.
+Seventeen real renderer services remain; full loading, decoding and rendering
+are unfinished. Game-containing runtime artifacts remain private.
 
 The goal is complete native PC gameplay with English localization, 60/120/240 FPS,
 up to 8K, display/texture settings and optional SUPIR enhancements, followed by
@@ -29,6 +32,7 @@ Texture Off must disable sampling and use vertex/material colours.
 - [Current goal](outputs/sonic-adventure/JP_BASED_PORT_GOAL.txt)
 - [Integration order and limits](outputs/sonic-adventure/JP_NATIVE_PORT_PLAN.txt)
 - [Verified GCC baseline and native/localization evidence](outputs/sonic-adventure/JP_GCC_BASELINE.txt)
+- [Native texture ownership, verified scope and remaining integration](outputs/sonic-adventure/JP_NATIVE_TEXTURE_OWNERSHIP.txt)
 - [Native graphics queue, verified scope and integration requirements](outputs/sonic-adventure/JP_NATIVE_QUEUE.txt)
 - [Shared matrix runtime, verified scopes and remaining work](outputs/sonic-adventure/JP_SHARED_MATRIX_RUNTIME.txt)
 - [Renderer boundary, verified scopes and remaining work](outputs/sonic-adventure/JP_NATIVE_RENDERER_BOUNDARY.txt)

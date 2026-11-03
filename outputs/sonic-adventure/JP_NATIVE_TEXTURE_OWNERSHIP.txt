@@ -1,0 +1,84 @@
+Native texture ownership milestone
+
+Overall project estimate: 10% weighted milestones, not measured code coverage.
+Goal active. No complete native renderer or playable PC game exists yet.
+
+The native runtime now uses opaque, nonrecycled 32-bit texture handles pointing
+through a host table to native records. No record or pixel pointer is truncated.
+A separate binding tracks whether each texaddr field holds a global index or a
+live record handle. Equal numeric values in these two phases do not imply equal
+meaning. Reinitializing a name or retiring a record invalidates its bindings.
+
+Real pinned SDK C implements record creation, searches, reference counts,
+palette-bank packing, texture-header packing, list selection and release. The
+generated private adaptation adds native-width indexing, bounded entry and
+field-aware handle resolution. It preserves the original source files.
+
+Pixel payloads have actual owned allocations and an enforced explicit byte
+budget. Copies preserve all supplied bytes; final release frees real memory.
+The packet texture-address field carries a nonrecycled native resource ID rather
+than a truncated pointer. A future renderer consumer must resolve this ID.
+This milestone stores opaque payloads. It does not decode or display textures.
+
+Verification
+- Ten C units compile and the runtime links without diagnostics. It also links
+  the previously qualified queue object into the same runtime instance.
+- 1,947 host checks cover synthetic payload copies, pointers above 4 GB, SDK
+  creation/search/release, alias reference counts, shared palette surfaces,
+  cached-only records, stale handles, field phases, 96 reuse cycles, binding and
+  record exhaustion, and allocation-budget rollback.
+- 15,232 comparisons against 1,392 original Japanese function calls cover 64
+  valid record-lifecycle scenarios and 32 surface-flag combinations. The original
+  subset CPU executor is unchanged. Original kmFreeTexture is an explicit
+  observed service boundary that returns success; its hardware allocator is not
+  emulated. The host tests separately exercise actual native payload freeing.
+- The actual GCC renderer texture-selection body executes against this table
+  and the real shared queue parameters. Its existing global-index-only cache
+  behavior is retained, including the same-index/different-bank early return.
+- Complete-renderer link audit resolves _nj_current_texlist,
+  _nj_current_texture and jp_renderer_texture_lookup. Seventeen real services
+  remain; complete renderer linking and execution remain unfinished.
+
+Native safety policies differ deliberately from unchecked original cases:
+invalid/stale handles and exhausted records fail, indices use pointer width, and
+freed host descriptor pointers are cleared. Comparisons cover valid SDK logic;
+they do not assert equality of stale guest addresses or hardware allocation.
+
+Required integration and limits
+One game thread owns one runtime. Use jp_textures_initialize with record count,
+binding count and byte budget. The runtime owns its record table and surfaces.
+Record views expire on shutdown/reinitialization. IDs do not recycle during the
+module's lifetime; exhausted ID space fails explicitly. Errors are sticky until
+cleared. SDK direct initialization of a different record table is rejected.
+
+The renderer's original helper dereferences its lookup result. Validate every
+required texture/material before calling the complete draw producer; a null
+lookup is an error, not a substitute texture. Future frame submission must pin
+resources until consumption, rather than using a payload after SDK release.
+
+The generated njtexmem.h overlay changes RECORD to the field-aware resolver.
+This supplies the boundary needed by 136 loader macro uses. Full loader C has
+NOT been compiled or executed: direct pointer/handle stores, overloaded indices,
+original undefined paths, file/PVM loading, cache ownership and rollback still
+need adaptation and verification. The renderer's remaining state, scratch
+storage, bounded producer reservation and frame/presentation also remain work.
+
+Source/proof handling
+Eleven texture-related external files were matched byte-for-byte to upstream Git
+objects at 25a3d3154dbe657325e97dbe8c5291086f6af5c0. Public files contain authored
+adapters, tools, hashes and evidence. Generated game C, its objects and the
+game-containing texture runtime DLL/import library remain private. Existing
+eligible public research artifacts remain preserved; there is no new public
+game-containing build or retail asset in this milestone.
+
+Reproduce in PowerShell with your external source, compiler and prior queue:
+
+python -B outputs/sonic-adventure/jp_port_tools/build_native_texture_runtime.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --queue work/sonic-adventure/jp-native-queue-v4 --compiler "C:/Program Files (x86)/Microsoft Visual Studio/18/BuildTools/VC/Tools/Llvm/x64/bin/clang.exe" --output work/sonic-adventure/texture-local-check
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_texture_runtime.py --workspace . --build work/sonic-adventure/texture-local-check --report work/sonic-adventure/texture-local-check/host_verification.json
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_textures_japanese.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --build work/sonic-adventure/texture-local-check --binary work/sonic-adventure/jp-ninja-math-reference/1ST_READ.BIN --report work/sonic-adventure/texture-local-check/japanese_verification.json
+
+Use a fresh output folder and build the queue first using JP_NATIVE_QUEUE.txt if
+needed. Host checks use synthetic bytes; the Japanese check additionally needs
+your own matching extracted executable. Neither retail executable nor assets
+are distributed. The complete-link audit additionally needs the earlier private
+renderer object and shared-matrix runtime, whose exact hashes are recorded.
