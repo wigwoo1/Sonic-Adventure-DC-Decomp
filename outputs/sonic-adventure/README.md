@@ -1,3 +1,9 @@
+Native graphics queue update: see JP_NATIVE_QUEUE.txt.
+6,994 host checks, 11,777 Japanese contract comparisons and 1,024 executor
+extension checks pass. Ten renderer imports resolved; 20 real services remain.
+Host-owned packets only: complete rendering and playable gameplay unfinished.
+Overall estimate remains 10% weighted milestones; goal active.
+
 Shared matrix runtime update: see JP_SHARED_MATRIX_RUNTIME.txt.
 Ninja and renderer state are unified: 961 checks in standalone and real task builds.
 5,696 Japanese comparisons, 196 independent checks, 2,946 backend checks and

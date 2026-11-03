@@ -1,0 +1,77 @@
+Native graphics queue qualification
+
+Overall project estimate: 10% weighted milestones, not measured code coverage.
+The goal remains active. No complete native renderer or playable PC game exists.
+
+What works
+The authored host queue replaces Dreamcast store-queue addressing for the four
+plain polygon-start functions used by the selected complete model renderer.
+Get/Set km pointers, material attributes, EndVertex and the CPU prefetch adapter
+also have real implementations. Five polygon/modifier lists have separate owned
+buffers. This transports header/vertex blocks; it does not rasterize them.
+
+The Windows x64 DLL and object compile/link with zero diagnostics. Qualification:
+- 6,994 host checks: full packet bytes, 256 interleaved batches, real storage
+  growth, context persistence, cursor synchronization, 64-bit producer pointers
+  above 4 GB, exact-end writes, guard detection and recovery, and budget rollback.
+- 11,777 comparisons against 1,280 original Japanese executable function calls.
+  These cover all eight selected SDK functions: four starts, Get/Set pointers,
+  material attributes and EndVertex. List addresses are compared by offset.
+- 1,024 additional checks qualify the test executor's predecrement-store MMIO
+  extension against its original RAM behavior for all register combinations.
+- Actual complete-renderer link audit resolves ten imports, reducing the prior
+  30 unresolved services to 20. The complete link still fails on those real
+  missing services; no substitute texture or presentation stubs were supplied.
+
+Ownership and required integration
+One game thread owns one queue instance. Call jp_queue_initialize with a byte
+budget, set/select the desired context, and reserve the producer's complete
+32-byte-block bound BEFORE entering a draw routine. The bound includes headers.
+Raw SDK writers cannot check each write: EndVertex bounds checks and guards do
+not make an underestimated producer bound safe. The model-level reservation
+wrapper and a consumer/rasterizer must be implemented before real rendering.
+
+Normal SDK sequence: njGetkmPointer; start a batch; write vertices; njEndVertex;
+repeat batches as needed; njSetkmPointer. A new Get or context selection rejects
+unpersisted changes. Errors are sticky until explicitly cleared. Invalid End
+retains the active batch for recovery. Reserve cannot run during an active batch.
+Views expire on growth, reset, shutdown or subsequent writes. Budget enforcement
+includes guards and simultaneous old/new allocations during preserving growth.
+Frame reset clears committed payload and returns cursors to each list's base.
+
+Original start functions define only three nontextured or four textured header
+words. Native padding is deliberately zero; original padding is not compared as
+defined output. Native safety checks and ownership policies are separate from
+the original unchecked hardware protocol.
+
+Evidence scope
+The historical CPU executor is unchanged. The Japanese verifier derives an
+explicit test-only PREF observer and routes MOV.L predecrement stores through
+the existing MMIO dispatcher. PREF captures a header, with no register effect.
+This does not validate cache timing, arbitration, GPU processing or image output.
+The pinned original executable and symbol-table hashes are checked before use.
+The SDK/game input files remain unmodified; authored build inputs are hash-bound.
+
+Only authored queue C is compiled into the eligible public queue DLL/import
+library, against external SDK type headers. Original game C and assets are not
+linked. The actual model renderer object remains private. Link queue.obj directly
+into the final game runtime: the SDK's direct data references must share the same
+_nj_parameterkm_ and queue globals. Independently loaded DLLs have separate state.
+
+Reproduce from PowerShell (replace the compiler path as needed; supply the pinned
+external source from reshaped/sonic-adventure commit
+25a3d3154dbe657325e97dbe8c5291086f6af5c0):
+
+python -B outputs/sonic-adventure/jp_port_tools/build_native_queue.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --compiler "C:/Program Files (x86)/Microsoft Visual Studio/18/BuildTools/VC/Tools/Llvm/x64/bin/clang.exe" --output work/sonic-adventure/queue-local-check
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_queue.py --workspace . --build work/sonic-adventure/queue-local-check --report work/sonic-adventure/queue-local-check/host_verification.json
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_queue_japanese.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --build work/sonic-adventure/queue-local-check --binary work/sonic-adventure/jp-ninja-math-reference/1ST_READ.BIN --report work/sonic-adventure/queue-local-check/japanese_verification.json
+
+Use a fresh output directory. The Japanese check requires your local extracted
+matching executable, which is not distributed here. The host check needs no
+retail game bytes. Full link-audit reproduction also needs the earlier private
+complete renderer object and shared-matrix runtime; its published evidence
+describes their exact hashes and unresolved services.
+
+Next: real texture-handle registration, renderer state and scratch storage,
+frame/presentation integration, bounded producer reservation and actual rendered
+output. Other SDK start variants will be needed for broader game integration.
