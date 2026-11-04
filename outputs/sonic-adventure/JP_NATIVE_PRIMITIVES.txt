@@ -1,0 +1,105 @@
+Native strips, texture selectors and clipped 3D polygons
+
+Overall completion: about 10%, weighted milestones rather than code coverage.
+The matching Japanese/GCC baseline is established. Native PC integration is
+partial; English and later ports remain unfinished. No complete native frame,
+rendered game image or playable port is established by this milestone.
+
+Actual source now connected
+The complete GCC C branch of njDraw.c supplies njDrawPolygon, njDrawTexture and
+njDrawTextureMemList. These are screen-space strips, distinct from the complete
+njDrawPolygon3D parent. That parent uses actual far/near clipping and all four
+filled/textured/outlined njtri writers. The two remaining SDK texture selectors
+now bind real native records by global ID or record index, retaining bank/cache,
+TSP-size and address-rejection behavior. No clipping/writer/selector body is a
+stub. Generated upstream game C, LLVM and objects remain private.
+
+The full current/stored njCalcPoint ABI is supplied by authored native code.
+Current points use FTRV; stored points use three ordered FIPRs. Input is copied
+before output, supporting point aliasing. Stored output X is written after
+loading column Y and before loading column Z, preserving matrix-output aliases.
+The existing real matrix, queue, texture and picture-settings owners are reused.
+
+Numerical adaptation
+The established Clang-AST boundary routes 241 source float operators through
+integer RZ/DN1 services. Store macros are expanded before type-based rewriting;
+SHC register hints and dead scratch-pointer assignments have no native effect.
+Generated primitive LLVM has no native float arithmetic or comparisons left.
+Square roots use the already qualified value core. Original instruction-model
+traces execute no FMAC in the sampled routines. This is not new hardware testing
+or an FPSCR flags/traps emulator. Original-packet qualification is sampled 4:3
+RZ/DN1 behavior; GCC-wide pictures remain a separate validation gate.
+
+Native bounds and explicit undefined-data policy
+Flat strips require at least one vertex and a count whose replay-word arithmetic
+fits a signed Int. They reserve a complete header/vertex batch before recording
+or writing. The parent accepts 3..32 input points, transforms and clips first,
+then reserves one header plus the complete actual clipped writer bound.
+Input pointers are native; these declarations do not read on-disc pointer records.
+
+The original parent has 33 clipped-point slots, adequate for its intended convex
+domain. A general input can exceed that. Host scratch has 64 slots, the 2*n bound
+for 32 input edges. Twelve extended tests produce 48 clipped points and compare
+against a composition of complete original point/clip/writer routines using
+adequately sized caller buffers. The unsafe original parent is not executed for
+those inputs. No original undefined stack-overflow behavior is claimed preserved.
+
+The original textured parent can read uninitialized local colors when its input
+color pointer is null. Host code explicitly initializes those otherwise undefined
+colors to opaque white. This is checked against an explicit-white original-routine
+composition, not claimed as determinate original-parent output. Untextured parent
+input still requires colors. Undefined vertex/header words are zeroed within the
+reserved host batch. Raw low-level writer callers retain responsibility for valid
+counts, arrays and writable output capacity, as documented in the pinned source.
+
+Verification
+The qualified test passes 371,722 checks across 4,452 original entry calls.
+This includes 384 complete flat-strip calls, 768 complete original 3D-parent calls,
+512 original current/stored point cases, 128 standalone near/far clipping cases,
+256 direct writer calls, complete original selector cache tests and the composed
+extended-buffer cases. Both filled/outlined paths and texture/transparency modes
+run; input counts 3..32 are covered. Standalone clipping reaches 38 output points;
+the explicitly extended parent cases reach 48. All real original dependencies
+execute without hooks. Point tests cross full/partial point aliases and matrix
+output aliases, plus 64 independent exact affine-geometry checks.
+
+Native tests also reject malformed counts/pointers, out-of-range record indices,
+unknown global IDs and whole-strip budget failure without partial queue output.
+These undefined original callers are not executed as original-equivalence tests.
+
+On the combined current runtime, regressions pass:
+  82,489 sprite checks across 1,536 original sprite draws;
+  332,375 polygon checks;
+  36,201 camera/translation checks;
+  961 shared Ninja/renderer matrix-state checks.
+The real production link supplies 55 of 79 presentation imports. All three
+remaining presentation primitive-draw imports are resolved; 26 other combined
+frame/game/platform services remain. The link still fails on those real services
+and produces no game EXE. Import counts are not whole-game completion percentages.
+
+Public research artifact
+jp_native_primitive_support.lib contains exactly the two authored selector and
+square-root-boundary objects, byte-checked against their qualified inputs. It
+requires the existing real queue/texture/math providers. It is not a renderer,
+game build or self-contained library. Point vector-model code and all upstream
+game bodies stay out of this artifact. The game-containing diagnostic DLL is
+private. All previous sources, original matching proofs and builds are retained.
+
+Reproduction, using fresh output paths and the documented installed tools:
+python -B outputs/sonic-adventure/jp_port_tools/build_native_primitive_objects.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --compiler CLANG_PATH --output work/sonic-adventure/NEW_PRIMITIVE_OBJECT_FOLDER
+python -B outputs/sonic-adventure/jp_port_tools/build_native_primitive_runtime.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --baseline QUALIFIED_SPRITE_RUNTIME_FOLDER --primitives work/sonic-adventure/NEW_PRIMITIVE_OBJECT_FOLDER --compiler CLANG_PATH --output work/sonic-adventure/NEW_PRIMITIVE_RUNTIME_FOLDER
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_primitives.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --build work/sonic-adventure/NEW_PRIMITIVE_RUNTIME_FOLDER --binary work/sonic-adventure/jp-ninja-math-reference/1ST_READ.BIN --numeric-dll work/sonic-adventure/build/sh4_vector_numeric.dll --report work/sonic-adventure/NEW_PRIMITIVE_RUNTIME_FOLDER/qualified_contract_verification.json
+python -B outputs/sonic-adventure/jp_port_tools/build_primitive_support_library.py --workspace . --objects work/sonic-adventure/NEW_PRIMITIVE_OBJECT_FOLDER --runtime work/sonic-adventure/NEW_PRIMITIVE_RUNTIME_FOLDER --compiler CLANG_PATH --output work/sonic-adventure/NEW_SUPPORT_LIBRARY_FOLDER
+Pinned source inputs are in jp_port_tools/jp_primitive_external_inputs.json.
+Matching retail inputs and the earlier qualified provider builds are required
+locally. No retail inputs or external game-source bodies are in the public ZIP.
+
+Beginner check: open analysis/jp_native_primitives_qualified_contract_verification.json.
+The status should be complete_original_strip_point_and_clipped_polygon_contracts_verified
+and checks should be 371722. This verifies component behavior; it does not run a game.
+
+Next: qualify the complete actual model producer and advance real frame/render/flip
+services with texture lifetime protection toward a complete native frame. Keep
+retained replay, renderer numerical integration, wide pictures and complete-game
+validation separate. Recommended model: Sol High for this platform work; Luna
+Low is suitable for documentation-only maintenance after verification.

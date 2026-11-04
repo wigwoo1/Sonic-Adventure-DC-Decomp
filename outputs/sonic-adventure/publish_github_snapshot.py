@@ -115,8 +115,8 @@ Native texture records and real owned payload release now pass 1,947 host checks
 and 15,232 Japanese lifecycle comparisons. The actual GCC texture selector runs.
 Native renderer state now passes 12,096 Japanese comparisons, with 142 state
 host checks and 1,441 model preflight checks. The complete presentation source now compiles natively. Its broader scope has
-79 references: 52 are supplied, while the combined production frame/renderer
-link still needs 29 services. The clock passes 12,873 checks; actual timer/mark
+79 references: 55 are supplied, while the combined production frame/renderer
+link still needs 26 services. The clock passes 12,873 checks; actual timer/mark
 boundaries pass 4,494 isolated checks. Task/replay integration passes 7,601
 checks, including a native guard against restoring into deleted/reused tasks.
 Native njMultiMatrix passes 2,268 original-code contract comparisons and 961
@@ -143,6 +143,10 @@ The authored queue DLL/import library is public; game-containing sprite
 diagnostic artifacts remain private. GCC-wide sprite pictures, complete replay,
 renderer inline numerical integration and full frames remain unfinished; BIOS
 handoff is unmeasured. See [the FPSCR guide](outputs/sonic-adventure/JP_NATIVE_FPSCR_CONTEXT.txt).
+Complete strip, point and clipped-polygon providers pass 371,722 checks
+across 4,452 original entries. All four writers, selector caches and point-output
+aliases are qualified. A 48-point host clipping case is checked by original-routine
+composition without executing the original parent's unsafe small scratch.
 Full-frame execution and gameplay are unfinished. English integration
 begins as the needed asset/text/audio systems become usable. Game-containing
 runtime artifacts remain private.
@@ -157,6 +161,7 @@ Texture Off must disable sampling and use vertex/material colours.
 - [Current goal](outputs/sonic-adventure/JP_BASED_PORT_GOAL.txt)
 - [Integration order and limits](outputs/sonic-adventure/JP_NATIVE_PORT_PLAN.txt)
 - [Verified GCC baseline and native/localization evidence](outputs/sonic-adventure/JP_GCC_BASELINE.txt)
+- [Native strip/texture and clipped polygon providers](outputs/sonic-adventure/JP_NATIVE_PRIMITIVES.txt)
 - [Native sprites, intensity headers and discarded batches](outputs/sonic-adventure/JP_NATIVE_SPRITES.txt)
 - [Native 2D polygons, bounded queue and picture aspect](outputs/sonic-adventure/JP_NATIVE_POLYGON2D.txt)
 - [Native camera setup, translation and SDK math](outputs/sonic-adventure/JP_NATIVE_CAMERA.txt)

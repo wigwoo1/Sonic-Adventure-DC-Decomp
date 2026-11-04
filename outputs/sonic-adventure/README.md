@@ -1,3 +1,10 @@
+Current primitive update: see JP_NATIVE_PRIMITIVES.txt. Complete strip/texture,
+point-transform and clipped-polygon routines pass 371,722 checks across 4,452
+original entry calls. All four writers, selector caches and aliasing are
+qualified; 48-point host scratch is checked with original-routine composition.
+Presentation supplies 55 of 79 imports; 26 combined frame services remain.
+About 10% overall. No complete frame or playable native port.
+
 Current sprite update: see JP_NATIVE_SPRITES.txt. The complete SDK/game sprite
 family passes 82,489 checks across 1,536 original draws, including all eight
 triangle clipping cases. Intensity/discard contracts pass 36,879 checks;
