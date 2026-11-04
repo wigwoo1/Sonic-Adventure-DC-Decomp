@@ -1,3 +1,13 @@
+Current frame-wait update: JP_NATIVE_FRAME_WAITS.txt. The complete original
+frame-pacing source compiles with native serialized waits, without enabling
+SH-4 SDK hardware headers. All three spin paths are adapted; original frame,
+step and hold contracts pass, including late-frame synchronization and real
+WM_CLOSE handling. 6,943 new checks plus 12,873 clock regressions pass.
+Four original frame globals are now supplied (60/79 presentation imports).
+Expanding the production graph exposes 22 real dependencies: 43 services
+remain. Render/flip/backend services and gameplay are unfinished. Japanese
+baselines verified; English/later ports unfinished. About 10%; goal active.
+
 Current GPU-jobs update: JP_NATIVE_GPU_JOBS.txt. Four owned GPU targets now
 use real completion/timestamp queries and GPU-only copies into the window.
 6,330 new checks and 718,229 preserved checks pass (724,559 combined).

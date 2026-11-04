@@ -97,6 +97,13 @@ timestamp queries. They pass 6,330 new checks plus 718,229 preserved checks.
 reliable GPU timings on this device. Completed targets copy to a window on the
 GPU; pending output and deferred shutdown are verified. Native frame waits and
 Kamui scheduling/statistics are the next integration work.
+The complete original frame-pacing source now compiles with serialized native
+waits and without SH-4 SDK hardware inlines. Its frame/step/hold behavior passes
+6,943 checks plus all 12,873 clock regressions, including overdue tick counts,
+real QPC/Win32 waits and close handling. Four original frame globals are supplied
+(60/79 presentation imports). Adding the frame source exposes 22 more genuine
+dependencies; the expanded graph has 43 missing services. No trace providers are
+linked into production. Real game render/flip integration remains open.
 Full-frame execution and gameplay are unfinished. English integration
 begins as the needed asset/text/audio systems become usable. Game-containing
 runtime artifacts remain private.
@@ -111,6 +118,7 @@ Texture Off must disable sampling and use vertex/material colours.
 - [Current goal](outputs/sonic-adventure/JP_BASED_PORT_GOAL.txt)
 - [Integration order and limits](outputs/sonic-adventure/JP_NATIVE_PORT_PLAN.txt)
 - [Verified GCC baseline and native/localization evidence](outputs/sonic-adventure/JP_GCC_BASELINE.txt)
+- [Native frame waits and original callback contracts](outputs/sonic-adventure/JP_NATIVE_FRAME_WAITS.txt)
 - [GPU completion jobs and timing limits](outputs/sonic-adventure/JP_NATIVE_GPU_JOBS.txt)
 - [Direct native window rendering and limits](outputs/sonic-adventure/JP_NATIVE_DIRECT_WINDOW.txt)
 - [Captured rendering state and native window](outputs/sonic-adventure/JP_NATIVE_WINDOW_STATE.txt)

@@ -1,0 +1,118 @@
+Native frame waits and serialized vertical callbacks
+===================================================
+
+Status: VERIFIED component milestone. Estimated whole-project completion stays
+about 10% of weighted milestones, not code coverage. Goal active. Japanese
+matching/GCC source baselines remain verified. Native gameplay, English and
+later platforms remain unfinished; these builds are not playable.
+
+The complete original frame-pacing source now compiles natively. Its GCC game
+behavior is selected locally in generated source, while SDK hardware headers
+keep their existing Windows-compatible declarations. No fake SH-4 target macro,
+interrupt-mask implementation or assembly stub is supplied. Original source
+and matching proofs remain unchanged. The adapted complete presentation object
+also compiles, with present_hold's spin replaced by the native wait service.
+
+The three waiting paths are frame_wait, frame_wait_step and present_hold.
+Callbacks run synchronously on the creating game thread. A rational logical
+clock defaults to 60000/1001 Hz, independent of monitor refresh and timer 1.
+It uses the existing 781250-count wall domain, carrying fractional deadlines
+with integer arithmetic and rounding each deadline upward. It does not drift
+by repeatedly using a rounded 13034-count period. Handler installation anchors
+a fresh phase so a pacing reset after loading gets no retroactive callbacks.
+
+Each pump bounds its callback batch and retains overdue work. frame_wait and
+frame_wait_step synchronize overdue ticks before evaluating original pacing
+state. This matters for frame_wait's late-count snapshot: a long draw must
+produce the original negative countdown, not an apparently on-time frame.
+Synchronization drains the backlog with host message checks between batches;
+very long stalls can require many callbacks. Intentional pause/loading policy
+must explicitly reset/reanchor instead of pretending those ticks never existed.
+
+The Windows host adapter uses a real message wait and the verified native
+window's pump. It preserves WM_QUIT for the application and recognizes a closed
+window. Clock/host failure, missing callback and close are explicit errors.
+The adapted frame functions return before further render/pad work on failure,
+including a failure inside the held-picture wait. The application must check
+jp_wait_status and stop its game iteration. There is no full application loop
+yet. Invalid arguments/foreign-thread/reentrant calls are rejected. A callback
+may inspect status/snapshot, but must not reenter/mutate the wait service.
+
+frame_countdown remains a 32-bit int in the native source/header ABI. Callbacks
+are serialized with the game, so there is no interrupt writer; wait predicates
+use volatile reads. The game branches retain split-frame, interval-zero, stage
+fog, sound, backup and loader ordering. No background timer calls into these
+mutable game services. This is a native scheduling boundary, not an emulation
+of the console's interrupt controller, physical scanout or interrupt FP state.
+
+Verification
+------------
+6,943 new checks pass, including independent rational-deadline oracles at five
+rates, bounded catch-up/rebase, both wait predicates, timer-1 independence,
+faults, thread/reentrancy guards, complete original frame/hold function traces,
+automatic late-frame detection, draw-off/held pictures, stage fog ordering and
+GCC split/interval-zero callback behavior. The live QPC/Win32 test executes the
+original step wait and verifies actual WM_CLOSE abort and WM_QUIT preservation.
+The trace providers for audio, loading and render/flip are explicitly TEST
+fixtures; they do not implement those production services.
+
+All 12,873 preserved clock checks pass on the exact new diagnostic DLL bytes:
+19,816 checks in this task. Earlier GPU source/binaries remain unchanged; their
+previous 724,559-check evidence is preserved, not claimed rerun here. Testing
+the scheduler at a 240 Hz rate is not a user-facing 240 FPS gameplay feature.
+No retail inputs are embedded in the tests or the public support library.
+
+The actual production link now includes complete frame pacing and the updated
+presentation object, with no trace fixtures. Four original frame globals are
+supplied. Presentation imports supplied rise from 56/79 to 60/79. Expanding the
+graph also exposes 22 real dependencies: the combined unresolved count is 43
+(previously 25). This larger audit includes stage fog data and actual sound,
+backup, input, loading and bitmap services required by frame_vsync/frame_wait.
+The report lists each missing symbol; none is replaced with a success no-op.
+
+Artifacts and reproduction
+--------------------------
+API/service: native/jp_native_frame_wait.h and jp_native_frame_wait.c
+Windows host: native/jp_native_frame_wait_windows.c
+Build/source adapter: jp_port_tools/build_native_frame_wait.py
+Contracts/live window: jp_port_tools/verify_native_frame_wait.py
+Clock regression: jp_port_tools/verify_native_frame_wait_clock.py
+Production audit: jp_port_tools/audit_native_frame_wait_link.py
+Library: jp_port_tools/build_native_frame_wait_support_library.py
+Reports: analysis/jp_native_frame_wait_*.json
+
+Qualified runtime: work/sonic-adventure/jp-native-frame-wait-v3.
+Presentation baseline: jp-native-presentation-object-v3.
+GPU baseline: jp-native-gpu-jobs-v2 (unchanged).
+Production audit: jp-native-frame-wait-production-link-v2/verification.json.
+Authored library: work/sonic-adventure/build/jp_native_frame_wait_support.lib.
+
+The two-member library contains ONLY wait.obj and windows_idle.obj, checked
+against the real production audit. Link it alongside the qualified GPU support
+and exactly one native clock provider. It replaces SDK njSetVSyncFunction's
+hardware registration. Original adapted frame/present objects and game-containing
+diagnostic DLLs remain external/private. Do not publish the diagnostic DLL.
+The generated-source workflow retains the pinned original function bodies.
+
+Use the existing prerequisite guides to build the presentation/GPU/clock inputs.
+Then, from the workspace, with Python/Clang available (choose fresh outputs):
+python -B outputs/sonic-adventure/jp_port_tools/build_native_frame_wait.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --presentation work/sonic-adventure/jp-native-presentation-object-v3 --gpu work/sonic-adventure/jp-native-gpu-jobs-v2 --production-audit work/sonic-adventure/jp-native-gpu-jobs-production-link-v1/verification.json --compiler PATH_TO_CLANG_EXE --output work/sonic-adventure/waits-fresh
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_frame_wait.py --workspace . --build work/sonic-adventure/waits-fresh --report work/sonic-adventure/waits-fresh/verification.json
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_frame_wait_clock.py --workspace . --build work/sonic-adventure/waits-fresh --output work/sonic-adventure/waits-fresh/clock-regression
+python -B outputs/sonic-adventure/jp_port_tools/audit_native_frame_wait_link.py --workspace . --baseline-audit work/sonic-adventure/jp-native-gpu-jobs-production-link-v1/verification.json --build work/sonic-adventure/waits-fresh --output work/sonic-adventure/waits-fresh-production-audit
+Run the support-library builder with the resulting build/audit and compiler;
+its --help lists arguments. Scripts refuse to overwrite existing proof outputs.
+Absolute SDK/toolchain paths in earlier prerequisites need local adaptation.
+
+For a beginner: read this guide and its reports in GitHub. The download contains
+developer components, not a Sonic Adventure executable.
+
+Next: Sol High
+--------------
+Connect genuine kmRender/kmFlipFrameBuffer submit/ready/present/retire transitions
+and typed statistics to measured GPU jobs. The host must pump ticks during paths
+that do not wait, including interval-zero/flip work, and propagate terminal state
+to the application loop. The real bitmap/input/audio/backup/loader/stage services,
+remaining rendering semantics/assets and native game-loop execution remain open.
+English, 60/120/240 speed-independent presentation, settings/SUPIR, complete
+gameplay and later platforms still require integration and verification.
