@@ -1,3 +1,11 @@
+Current native file/PRS snapshot: JP_NATIVE_ASSET_LOADING.txt. The original
+adapted 512-entry game texture wrapper now uses real native file/PRS/PVM
+loading and checked ownership transfers. A clean build passes 223 asset
+checks, including 27 GPU texture probes / 110,592 pixels, plus 10,519
+texture/frame regression checks. Original logo_draw compiles privately;
+full logo display and production boot remain unverified. No asset-runtime
+DLL or retail content is published. About 10% overall; goal active.
+
 Current native PVM update: JP_NATIVE_PVM_UPLOAD.txt. Bounded archive uploads
 retain six original SDK metadata helpers and use actual shared native
 texture/palette owners. All 27 supplied-disc logo/title textures pass GPU

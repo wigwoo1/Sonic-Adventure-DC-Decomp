@@ -1,0 +1,84 @@
+Native file/PRS asset loading - qualified research snapshot
+
+Overall project estimate: about 10% of weighted milestones. Goal remains active.
+The Japanese matching/GCC baselines are verified. The native game, English
+localization and later platforms remain unfinished. There is no playable port.
+
+What is verified
+
+The native Windows provider reads compressed files below a configured asset
+directory, decompresses them using the unchanged MIT-licensed prskit codec,
+and feeds the existing bounded PVM loader and shared texture owner. The adapted
+original game texture_load_pvm wrapper retains its 512-entry scratch-list
+architecture. A checked field-binding transfer replaces its original raw handle
+copies so the actual game texture list owns the records without losing references.
+Short original filename buffers and destination filename pointers stay intact.
+
+The fresh build completed with no compiler/linker diagnostics. Verification:
+- 223 asset integration checks, including native decoded hashes matching the
+  independently extracted PVM inputs and 27 actual GPU texture comparisons.
+- 110,592 pixels compared across supplied-disc SEGALOGO, TITLE and AVA_TITLE
+  texture probes. The actual original adapted loader wrapper was called.
+- 1,947 retained texture-owner checks and 8,572 retained frame checks against
+  the freshly built owners: 10,742 checks total, without counting repeated runs.
+
+The six-piece original logo_draw probe compiles privately. Its full composition
+has NOT been runtime verified in this snapshot. Individual logo textures passing
+GPU probes does not establish that logo_draw, logo_start or the game boot works.
+The production dependency audit has not yet been rerun with the file provider.
+The previous PVM audit still records 36 unresolved game services; this update
+does not claim that count has improved. Full game-loop/gameplay tests remain open.
+
+Ownership and limits
+
+The asset owner runs on one game thread. Unicode asset-root directories are
+supported; relative game filenames use a bounded ASCII syntax. The provider
+checks canonical file paths remain below the configured root. File size,
+decoded size and peak simultaneous owned buffers have explicit limits.
+One decoded view may be live; release it before reading another file.
+Legacy PRS end markers permit trailing file bytes, matching the game's loader.
+
+Failed partial loads retain their owned references for explicit recovery. Clear
+the relevant asset/PVM/texture errors, then recover pending references using
+jp_assets_recover_pending. Surplus archive textures have bounded, deduplicated
+resident references; jp_assets_release_residents releases them. The full game's
+stage lifecycle still needs to call that service at the appropriate boundaries.
+Do not copy native texture handles into arbitrary fields. Use the checked move
+API so the existing owner follows the field without a second record registry.
+Replace the previous texture-upload owner when linking the new move owner;
+never link two texture owners into the same runtime.
+
+Reproduction (Windows development setup required)
+
+Preserve the outputs/sonic-adventure tree, pinned external upstream checkout,
+previous qualified native PVM objects, Clang/Windows SDK and privately supplied
+Japanese retail inputs. See JP_NATIVE_PVM_UPLOAD.txt for that prerequisite.
+Use fresh output/fixture/report paths below work/sonic-adventure. The tools stop
+instead of overwriting historical qualification outputs.
+
+python -B outputs/sonic-adventure/jp_port_tools/build_native_asset_runtime.py
+  --workspace WORKSPACE --upstream PINNED_UPSTREAM
+  --baseline QUALIFIED_PVM_BUILD --compiler CLANG --output FRESH_ASSET_BUILD
+
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_asset_runtime.py
+  --workspace WORKSPACE --build FRESH_ASSET_BUILD --inputs PRIVATE_PVM_INPUTS
+  --fixtures FRESH_FIXTURE_DIRECTORY --report FRESH_REPORT.json
+
+These are single commands; join the displayed lines when entering them.
+This is a development workflow, not a beginner-ready game installer. The public
+analysis/jp_native_asset_snapshot_* reports describe the exact qualified bytes.
+The earlier asset/runtime proof files remain unchanged locally.
+
+Publication and next work
+
+The source snapshot includes authored adapters/tests and unchanged generic
+prskit source with its original MIT license and provenance. The native asset
+DLL and logo-probe DLL contain external game/SDK bodies and remain private.
+No retail assets, images, complete game-source bodies or new asset-runtime
+binary are included in the public research archive. Existing eligible research
+builds remain preserved and source-manifest-linked, with per-file checksums.
+
+Next: verify the original six-piece logo rendering, audit the real production
+link, then continue native boot and missing game services. Recommended model:
+Sol High for integration/debugging; Luna Low is suitable for documentation-only
+maintenance after those difficult integration steps have been qualified.

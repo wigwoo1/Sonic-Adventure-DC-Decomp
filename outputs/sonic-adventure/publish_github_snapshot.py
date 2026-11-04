@@ -198,6 +198,12 @@ real QPC/Win32 waits and close handling. Four original frame globals are supplie
 (60/79 presentation imports). Adding the frame source exposes 22 more genuine
 dependencies; the expanded graph has 43 missing services. No trace providers are
 linked into production. Real game render/flip integration remains open.
+Native file/PRS loading now drives the adapted original 512-entry texture
+wrapper with checked field ownership transfers. A clean build passes 223 asset
+checks and 10,519 texture/frame regressions, including 27 GPU texture probes
+(110,592 pixels). Full original logo display and production boot are still
+unverified. The asset-runtime/game-containing DLLs and retail inputs stay private.
+
 Bounded PVM archive loading now retains six original SDK metadata helpers and
 loads all 27 textures from supplied-disc logo/title archives into real native
 owners. 31 GPU images / 126,976 pixels and 116,518 combined checks pass.
@@ -232,6 +238,7 @@ Texture Off must disable sampling and use vertex/material colours.
 - [Current goal](outputs/sonic-adventure/JP_BASED_PORT_GOAL.txt)
 - [Integration order and limits](outputs/sonic-adventure/JP_NATIVE_PORT_PLAN.txt)
 - [Verified GCC baseline and native/localization evidence](outputs/sonic-adventure/JP_GCC_BASELINE.txt)
+- [Native file/PRS asset loading and verified scope](outputs/sonic-adventure/JP_NATIVE_ASSET_LOADING.txt)
 - [Bounded PVM archives and supplied-disc native texture probes](outputs/sonic-adventure/JP_NATIVE_PVM_UPLOAD.txt)
 - [Real bitmap queue and bounded texture uploads](outputs/sonic-adventure/JP_NATIVE_BITMAP_UPLOAD.txt)
 - [Real native render/flip and measured statistics](outputs/sonic-adventure/JP_NATIVE_RENDER_FLIP.txt)
