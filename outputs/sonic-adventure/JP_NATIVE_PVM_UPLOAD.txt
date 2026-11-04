@@ -1,0 +1,162 @@
+Bounded native PVM archive uploads and supplied-disc texture probes
+=================================================================
+
+Status: VERIFIED component milestone. Estimated whole-project completion remains
+about 10% of weighted milestones. Japanese matching/GCC source baselines stay
+verified. Complete native gameplay, English and later platforms are unfinished.
+The goal remains active. These research libraries are not a playable game.
+
+What changed
+------------
+njLoadTexturePvmMemory now has a bounded native provider using the previously
+qualified memory-texture loader and the SAME texture/frame/video/queue owners.
+The original SDK get_w, get_l, njCalcPvmStatusSize, njSetTexListToPvmM,
+njSearchEntryCount and njSetPvmTextureList bodies are privately compiled from
+the pinned Japanese dependency. Their scalar copies use native memcpy. The
+table helper's discarded banked_index store is repaired to write texaddr.
+Original upstream source files and older source/proof/build bytes stay intact.
+
+The source span, texture-name array capacity and writable filename capacity are
+explicit host inputs. The loader validates the complete needed header/table,
+entry-number permutation, name buffers, chunk sizes, supported texture payloads
+and palette ranges before changing output metadata or palette state. It accepts
+the original four optional entry fields and preserves ignored header bits,
+including those used by the supplied game. PVR chunks load in number order into
+their matching names, retaining global IDs, filenames and per-texture banks.
+The caller's filename pointer never becomes an expired stack texture descriptor.
+
+PVPL palette colors use four bytes for mode 6 (ARGB8888), whatever the bank,
+retaining the intent of the original GCC mode-versus-bank repair. Native palette
+mode and data go through the actual retained SDK register setters. The actual
+shared Ninja context's PaletteBank takes the chunk's bank rather than its mode.
+Each texture's existing real parameter builder still encodes its own bank.
+16-bit palette modes 0/1/2 and 32-bit mode 6, including the last palette entry,
+are checked. This does not implement the complete njSetPaletteBank/render-state
+service family or claim all palette/file/cache behavior has been recovered.
+
+Loading and recovery contract
+-----------------------------
+Use jp_pvm_load_memory(list, capacity, filename_bytes, data, bytes). It binds
+the borrowed source and destination views, calls real njLoadTexturePvmMemory,
+then ends the views. filename_bytes is the ACTUAL writable capacity of EACH
+list->textures[i].filename buffer. Archives containing filenames need at least
+28 writable bytes per entry. The explicit capacity is the actual number of
+allocated NJS_TEXNAME records. C cannot discover an arbitrary pointer's true
+allocation size; the caller supplies these allocation contracts.
+
+Low-level callers may bind the source with jp_memory_bind_source and output
+with jp_pvm_bind_destination, call the SDK entry point, then end both views.
+An SDK call without these views fails explicitly. A native host/file loader must
+provide them when adapting original game calls; that boot/file integration is
+still pending. Do not let source or output buffers expire during the call.
+All successfully uploaded pixels are owned copies afterward. No texture cache
+borrows the retail archive, and no second native memory owner is constructed.
+
+Invalid archive validation preserves list/name/filename/palette bytes. Failures
+set native/SDK error state. A later allocation/record-capacity failure can retain
+already loaded entries and applied metadata/palette changes, following the SDK's
+partial-load behavior. This is not an all-or-nothing allocation transaction.
+jp_pvm_loaded_count reports currently bound entries without consuming them.
+Stop the game iteration on failure. End the views, deliberately clear memory
+and texture errors, and use jp_pvm_release_loaded to release valid entries.
+That helper skips unbound suffixes, forgets alias bindings, and restores their
+global-ID phase so archives without stored IDs can be retried after recovery.
+Already bound destination names must be released before loading another archive.
+
+One game thread owns the memory/PVM services. Foreign calls cannot change the
+views. The memory owner cannot shut down while a PVM output view remains bound.
+Drain recording/submitted frames and GPU jobs separately before shutting their
+owners down. Captured frames keep their texture allocation AND captured palette
+when another archive changes the live palette or reuses a global index.
+
+Supported texture source kinds are those in JP_NATIVE_BITMAP_UPLOAD.txt.
+File/disc providers, cache-only/BOTH, automatic mip generation, BMP/small-VQ/stride
+upload conversions, unsupported source formats and renderer states still require
+real implementations. Unsupported requests fail; no fake file/cache success is
+provided. Empty valid archives are accepted. As the original loader does, this
+provider consumes the declared texture count and ignores trailing bytes afterward.
+
+Verification
+------------
+The qualified integration run passes 1,448 checks. It covers 32 header-field
+combinations; original entry sizing, permutation/mapping, names and IDs; all
+four palette modes; banked shared surfaces; explicit views/thread ownership;
+207 invalid archive cases, including every truncated prefix of a valid archive;
+output bounds/overlap; allocation-capacity failure and alias cleanup; and retry
+without a stored global-ID table. The checked pointers refer to actual native
+records and owned surfaces, not diagnostic stand-ins.
+
+Private extraction from the supplied Japanese disc provides:
+  SONICADV/SEGALOGO.PRS: six textures
+  SONICADV/TITLE.PRS: six textures
+  SONICADV/AVA_TITLE.PRS: fifteen textures
+The pinned GDI and PRS tools extract/decompress these without modifying original
+inputs. Hashes identify each compressed source and decompressed PVM. Every one
+of the 27 textures loads through the real original metadata helpers and native
+memory owner. Real D3D11 rendering compares a 64x64 probe of each with an
+independent Python Morton-address/channel/sampling oracle. Two additional
+ARGB4444 probes verify translucent alpha; opaque probes honor the actual SDK
+packet's ignore-texture-alpha bit. Two synthetic palette images verify that an
+older captured frame remains green after a later archive replaces its live
+texture and palette with blue. Total: 31 images / 126,976 compared pixels.
+
+These are native texture probes, not execution of the game's title screen or
+boot sequence. The test uses the frame-bound renderer so palettes/registers
+come from immutable frame state. No CPU image is supplied to the GPU. Original
+bitmap/frame rendering and native Presents remain separately regression tested.
+Retail PVM/PRS bytes, their probe images and game-containing diagnostic DLLs
+stay private; only authored code, metadata, hashes and evidence are published.
+
+Preserved suites pass on the new dependencies: 1,947 texture, 8,572 frame,
+103,700 video/window, 129 presenter and 722 bitmap checks. With 1,448 integration
+checks, that is 116,518 checks in this qualification. The presenter count can
+vary with real pending polls. The frozen texture suite uses identical objects
+with its old selection-observer export added; other suites use the exact new
+owner DLL bytes. Frozen reports retain older descriptive fields, superseded
+by the current qualification/build reports where appropriate.
+
+The production audit links the new PVM provider and six original helpers with
+the existing actual graph, without introducing unresolved symbols or fixtures.
+All prior memory services remain defined. The old partial boot/presentation
+graph still has 36 unresolved game services and supplies 65/79 presentation
+imports; it has not yet been expanded to run the real file/PRS/title path.
+No whole-game execution, console pixel fidelity, hardware display timing,
+audio/save/gameplay, English or later-platform completion is claimed.
+
+Reproduction and public component
+---------------------------------
+Supply pinned upstream commit 25a3d3154dbe657325e97dbe8c5291086f6af5c0,
+qualified bitmap-upload prerequisites and local retail inputs. From the workspace
+root, substituting absolute local paths (commands are shown on multiple lines):
+
+python -B outputs/sonic-adventure/jp_port_tools/build_native_pvm_upload.py
+  --workspace WORKSPACE --upstream UPSTREAM --baseline BITMAP_BUILD
+  --compiler CLANG --output NEW_PRIVATE_BUILD
+python -B outputs/sonic-adventure/jp_port_tools/prepare_native_pvm_inputs.py
+  --workspace WORKSPACE --output NEW_PRIVATE_INPUTS --distribution WSL_DISTRO
+  --gdi-tool LINUX_GDI_TOOL --prs-tool LINUX_PRS_TOOL --disc LINUX_LOCAL_GDI
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_pvm_upload.py
+  --workspace WORKSPACE --build NEW_PRIVATE_BUILD --inputs NEW_PRIVATE_INPUTS
+  --report NEW_REPORT.json
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_pvm_regressions.py
+  --workspace WORKSPACE --build NEW_PRIVATE_BUILD --suite SUITE --output NEW_DIR
+  (textures, frames, video, present, bitmap; run window suites separately)
+python -B outputs/sonic-adventure/jp_port_tools/audit_native_pvm_upload_link.py
+  --workspace WORKSPACE --baseline-audit BITMAP_PRODUCTION_AUDIT.json
+  --build NEW_PRIVATE_BUILD --output NEW_AUDIT_DIR
+python -B outputs/sonic-adventure/jp_port_tools/build_native_pvm_support_library.py
+  --workspace WORKSPACE --build NEW_PRIVATE_BUILD --audit NEW_AUDIT.json
+  --compiler CLANG --output NEW_LIBRARY_DIR
+
+The public jp_native_pvm_upload_support.lib has exactly three authored members:
+memory_pvm.obj, textures_upload.obj and bitmap_source.obj. It REPLACES the earlier
+bitmap upload library. Never link both memory/texture owner variants. Actual
+original PVM/bitmap/list/record helper objects remain a separately built pinned
+external dependency, alongside native frame/video/GPU/presenter and one clock
+provider. The public library contains no SDK/game bodies, retail assets or test
+fixtures. It is an incomplete component library, not a standalone game program.
+
+Next: connect native file/PRS loading and real asset-backed boot/title code,
+then the remaining services/renderer states and complete gameplay. English and
+user settings follow the native baseline. Keep Sol High for this integration;
+Luna Low is suitable for documentation-only work. Goal active, about 10% overall.

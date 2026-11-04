@@ -1,3 +1,13 @@
+Current native PVM update: JP_NATIVE_PVM_UPLOAD.txt. Bounded archive uploads
+retain six original SDK metadata helpers and use actual shared native
+texture/palette owners. All 27 supplied-disc logo/title textures pass GPU
+probes, plus alpha and retained-palette cases: 31 images / 126,976 pixels.
+1,448 integration and 115,070 regression checks pass (116,518 total).
+Production still has 36 game services left, with no new unresolved imports;
+the real file/PRS/boot path remains to be connected. Retail assets and
+game-containing DLLs stay private. Japanese baselines verified; full native
+gameplay, English and later ports unfinished. About 10%; goal active.
+
 Current native bitmap upload update: JP_NATIVE_BITMAP_UPLOAD.txt. Original
 GCC queue pointer repair now uploads real owned memory textures through the
 existing SDK record/handle owner. Bounded sources, palette sharing, retry
