@@ -153,6 +153,12 @@ checks across 3,485 original entries pass. Every near-plane corner mask, all
 three strip modes, models up to 2,048 points and shared-queue runs are covered.
 GCC odd-count, frame/skip and extended-unlit policies are checked separately.
 The real production model object is replaced; 26 frame services still remain.
+Owned packet/resource submission storage now passes 8,572 checks across 193
+submissions and 128 actual parent draws. Retained textures survive release before
+submission, owner replacement and out-of-order frame completion. With retention
+enabled, all 200,669 model and 82,489 sprite checks pass. The three-object authored
+support library is public; diagnostic/game bodies stay private. Real render/flip
+and pixel consumption remain unfinished; the same 26 frame services remain.
 Full-frame execution and gameplay are unfinished. English integration
 begins as the needed asset/text/audio systems become usable. Game-containing
 runtime artifacts remain private.
@@ -167,6 +173,7 @@ Texture Off must disable sampling and use vertex/material colours.
 - [Current goal](outputs/sonic-adventure/JP_BASED_PORT_GOAL.txt)
 - [Integration order and limits](outputs/sonic-adventure/JP_NATIVE_PORT_PLAN.txt)
 - [Verified GCC baseline and native/localization evidence](outputs/sonic-adventure/JP_GCC_BASELINE.txt)
+- [Owned frame commands and texture lifetimes](outputs/sonic-adventure/JP_NATIVE_OWNED_FRAMES.txt)
 - [Complete model producer numerical integration](outputs/sonic-adventure/JP_NATIVE_MODEL_RZ.txt)
 - [Native strip/texture and clipped polygon providers](outputs/sonic-adventure/JP_NATIVE_PRIMITIVES.txt)
 - [Native sprites, intensity headers and discarded batches](outputs/sonic-adventure/JP_NATIVE_SPRITES.txt)

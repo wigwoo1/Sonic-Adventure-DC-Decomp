@@ -1,3 +1,12 @@
+Current owned-frame update: see JP_NATIVE_OWNED_FRAMES.txt. Actual committed
+packets and encoded texture payloads survive queue/texture reset and release.
+8,572 ownership checks, 193 submissions and 128 complete parent draws pass.
+With retention enabled, all 200,669 model and 82,489 sprite checks pass.
+All legacy-mode primitive/polygon/camera/shared-state regressions pass.
+One three-object authored support library is public; game DLLs stay private.
+The same 26 real frame services remain; render/flip and pixels are unfinished.
+About 10% overall; goal active; no playable native port.
+
 Current complete-model update: see JP_NATIVE_MODEL_RZ.txt. The full pinned
 GCC model producer retains all 66 source functions; 152 scalar operations
 and vector/point transforms use the existing RZ/DN1 numerical services.

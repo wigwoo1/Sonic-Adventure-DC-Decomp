@@ -1,0 +1,132 @@
+Owned command-frame storage and texture lifetimes
+
+Overall completion: about 10%, estimated weighted milestones, not code coverage.
+The Japanese matching/GCC source baselines remain verified. Native PC integration
+is partial; English integration, gameplay and later ports remain unfinished.
+This component does not implement graphics output, kmRender or kmFlipFrameBuffer.
+
+Actual ownership boundary
+The existing real queue and texture owners now have retained versions. Each new
+translation unit includes its preserved predecessor and is compiled IN PLACE OF
+it, retaining exactly one owner. No original source/proof file is rewritten.
+The new frame owner holds committed raw packet copies and references to the
+actual encoded texture payloads they need. The complete model, sprite and
+primitive bodies remain the same compiled game source.
+
+With frame storage enabled, every textured SDK start captures a valid native
+surface identity before writing
+its header. All nine plain/intensity/high-intensity/punch variants participate.
+njEndVertex commits the reference; a discarded or failed batch rolls back only
+its new reference. Earlier committed batches retain theirs. Texture lookup is
+against the real current owner; an old retained snapshot does not make a stale
+live texture ID acceptable for a new batch.
+Without frame-owner initialization, the preserved legacy queue contract remains
+available for raw packet tests. It does not provide retained-resource ownership.
+
+Texture release still retires its SDK record and updates that owner's counters.
+Physical payload freeing is deferred while a recording or submitted frame holds
+it. An orphaned payload is freed exactly once at its last reference. Records,
+global IDs and texture owners can be reused without aliasing old surface IDs.
+Live texture arrays/records are not borrowed by the submitted frame.
+
+Submission and API contract
+Configure jp_frames_initialize with explicit slot/resource limits and a byte
+budget. One game thread owns the runtime. The queue must be empty/inactive
+before frame-owner initialization, shutdown or replacement.
+
+Before an unchecked raw producer, validate its native assets and reserve its
+complete queue bound as before. Also prepare every texture it may use with
+jp_frames_prepare_textures, passing the native TCW low-21-bit surface IDs from
+validated loaded records. Preparation is atomic and deduplicated. It reserves
+resource capacity/bytes before entering writers that cannot handle allocation
+failure mid-draw. Raw native pointers still require truthful accessible lengths.
+This is not yet whole-game native asset loading or automatic call-site binding.
+
+After complete batches and njSetkmPointer, jp_frames_submit makes an owned copy
+of each of the five committed list streams and advances the live queue to an
+empty recording. Snapshot/list/resource views are read-only and remain valid
+through queue growth/reset/shutdown and texture release/reinitialization/shutdown.
+They expire on jp_frame_release or successful frame-owner shutdown/replacement.
+Surface payloads have no writable-update API in this owner. A future dynamic
+texture writer must preserve versions needed by retained frames.
+
+Submission failure preserves its output ID, recording, existing snapshots and
+resource references. A consumer can release an older frame and retry. Empty
+recordings are supported without fabricating geometry or list terminators.
+No Kamui slot scheduling, vsync or device statistics are simulated here.
+
+The frame budget accounts metadata, guarded packet copies and each unique pinned
+encoded payload, even while the texture owner still owns it. This conservatively
+reserves the full future deferred-free cost. Snapshot release and recording
+discard work during error cleanup; clear sticky errors before retrying writes.
+Queue reset/shutdown discards only the unsent recording. Submitted frames remain
+owned until explicitly released. Destroy/reset the queue before frame shutdown
+when abandoning unsent commands; reinitialization cannot silently drop them.
+
+Verification
+The ownership suite passes 8,572 checks, with 193 submissions and 128 complete
+actual model/sprite/strip parent draws. It covers all nine textured SDK starts,
+release before submission, shared resources, cancelled/pending/failed batches,
+atomic multi-texture preparation, slot and byte-budget failure/retry, stale IDs,
+64 empty submissions and metadata overflow rejection. Sixteen stress runs hold
+five distinct texture generations across four submitted slots and a pending
+recording, then complete consumers out of order. Byte-for-byte packet and encoded
+payload checks survive queue and texture-owner replacement.
+
+Actual nonempty producer output is exercised on opaque, translucent and punch
+lists. The two modifier lists remain empty in these producer tests; complete
+modifier production/consumption is not qualified by the generic snapshot loop.
+
+With retention ENABLED, the unchanged original-model comparison passes 200,669
+checks across 3,485 original entries, plus seven final-model capture checks after
+its texture owner is destroyed. The unchanged sprite comparison also passes
+82,489 checks across 1,536 original draws, including actual clipped/culled discard
+paths; all references retire cleanly. These original software-model proofs stay
+separate from the new ownership reports. There are no original game-body hooks.
+
+The diagnostic texture fixture now invokes the actual njSetTextureParam after
+copy/entry. Its predecessor left a zero TCW, adequate for paired raw-header
+comparisons but not a usable native resource identity. This corrects diagnostic
+setup, without changing an original instruction body or game producer.
+
+On the same combined DLL, legacy-mode regressions pass:
+  371,722 primitive checks;
+  82,489 sprite checks;
+  332,375 polygon checks;
+  36,201 camera/translation checks;
+  961 shared matrix-state checks.
+The existing finite 4:3 RZ/DN1 value/packet scope still applies. Physical hardware,
+status flags, wide pictures, texture decoding, pixel output, full retained game
+replay, frame scheduling and gameplay remain separate unfinished gates.
+
+The real production link replaces its queue/texture objects, adds authored frame
+storage and retains every other real object/hash. No diagnostic observer or
+successful placeholder render/flip provider is linked. It still requires 26
+frame/game/platform services and supplies 55 of 79 presentation imports.
+
+Public research library
+jp_native_owned_frames_support.lib contains exactly three authored objects:
+queue_frames.obj, textures_retained.obj and frames.obj. Member hashes match the
+qualified build. Replace the earlier queue/texture-owner objects when using it;
+linking both versions creates duplicate owners. Real SDK providers remain required.
+The library contains no external game bodies, diagnostic objects or retail assets.
+The game-containing test DLL stays private. All previous research builds remain.
+
+Reproduction, using fresh private output paths:
+python -B outputs/sonic-adventure/jp_port_tools/build_native_frame_runtime.py --workspace . --upstream PINNED_UPSTREAM --baseline QUALIFIED_MODEL_RZ_RUNTIME --compiler CLANG_PATH --output work/sonic-adventure/NEW_FRAME_RUNTIME
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_frames.py --workspace . --build work/sonic-adventure/NEW_FRAME_RUNTIME --report work/sonic-adventure/NEW_FRAME_RUNTIME/final_frame_verification.json
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_frame_model.py --workspace . --upstream PINNED_UPSTREAM --build work/sonic-adventure/NEW_FRAME_RUNTIME --binary MATCHING_JP_1ST_READ --numeric-dll QUALIFIED_NUMERIC_DLL --report work/sonic-adventure/NEW_FRAME_RUNTIME/qualified_model_retention.json
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_frame_sprites.py --workspace . --upstream PINNED_UPSTREAM --build work/sonic-adventure/NEW_FRAME_RUNTIME --binary MATCHING_JP_1ST_READ --numeric-dll QUALIFIED_NUMERIC_DLL --report work/sonic-adventure/NEW_FRAME_RUNTIME/sprite_retention_verification.json
+python -B outputs/sonic-adventure/jp_port_tools/build_owned_frame_support_library.py --workspace . --runtime work/sonic-adventure/NEW_FRAME_RUNTIME --compiler CLANG_PATH --output work/sonic-adventure/NEW_FRAME_SUPPORT_LIBRARY
+The earlier documented pinned upstream, numerical DLL, Clang and component builds
+must be available locally. Retail inputs and generated game bodies are not shipped.
+
+Beginner check: open analysis/jp_native_owned_frames_final_frame_verification.json.
+Expect status actual_native_frame_capture_resource_lifetime_and_rollback_verified
+and checks 8572. This verifies ownership/submission storage, not a rendered frame.
+
+Next: decode/consume these actual packets/resources and produce verified native
+graphics output, then bind meaningful render/flip scheduling/statistics to the
+actual frame/presentation path. Preserve native-asset validation and retained-replay
+gates. Sol High remains appropriate; Luna Low suits documentation-only maintenance.
+The full project goal remains active.
