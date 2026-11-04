@@ -1,0 +1,99 @@
+Native 2D polygon producer and picture-aspect boundary
+
+Overall completion: about 10%, a weighted milestone estimate, not code coverage.
+The matching Japanese/GCC baseline is established. Native PC integration is
+partial; English localization and later platforms remain unfinished.
+There is no playable native port or complete rendered game frame.
+
+What now works within this component
+The complete njDrawPolygon2D producer emits plain/textured fills and outlines
+into the existing host-owned queue. It preserves alternating front/back fill
+order, alternating outline-edge direction, closing edges, colors, signed packed
+UVs, priority depth, opaque/translucent routing and end-of-strip controls.
+All float arithmetic uses the existing integer RZ/DN1 value services, including
+square root; it does not depend on Windows floating-point rounding settings.
+njSetkmColorMode updates the real existing queue/context and render flags.
+
+The GCC replay call receives the original input before picture squeezing.
+Actual sprite-module ownership of port_draw_aspect, port_pillarbox and
+port_sprite_record is adapted into a shared native module, together with the
+three wide-picture helpers. These are real settings/callback storage, not draw
+stubs. The future complete sprite adaptation must reuse this owner rather than
+define the same globals again. The original wide-frame module still needs to
+provide port_wide_anchor and port_wide_cover in the complete production link.
+
+Bounds and lifetime
+Valid fills have 3..32 points; outlines have at least two. Input arrays must
+contain count points/colors and, with textures, count UVs. num is retained but
+is not used as an array-capacity field, matching the SDK contract. Runtime
+pointers are 64-bit; this declaration must not be used to read disc records.
+The producer reserves one header plus count fill vertices or 4*count outline
+vertices before recording or writing anything. Negative/malformed counts,
+missing arrays, integer overflow and insufficient queue budget are rejected.
+The signed flat-word count used by the actual GCC replay owner is also bounded.
+The void SDK entry discards the return value; jp_polygon2d_draw exposes errors.
+Queue failures retain its sticky error/recovery behavior.
+
+Input arrays and the pointer record stay unchanged. They must remain valid
+through the call and cannot be borrowed queue views: reserve/growth can expire
+those views. The existing real presentation owner copies retained 2D vertices;
+this component's runtime tests observe its ABI boundary with a diagnostic
+recorder. Complete retained-draw replay has not been executed here.
+Unused header/vertex words become zero instead of carrying store-queue residue.
+Defined words are compared to the original; undefined words are not claimed
+to match original residue. Queue bytes are geometry packets, not rendered pixels.
+
+Verification
+The Windows build has zero diagnostics and checks the native layout and replay
+enum values against pinned upstream headers. The final producer passes 332,375
+checks, including 592 complete original polygon calls and 1,024 original color
+setter calls. Both FPU banks, all eight drawing modes, every fill count 3..32,
+outline counts through 33 plus 63/64/65/129, exact packet bounds, context state,
+input guards, append/growth, allocation failure and priority boundaries are
+covered. Finite extreme coordinates, zero-length edges and DN inputs are included.
+The complete original Get/Set/start/end/color bodies execute without dependency
+hooks. The original packet path executes no fused multiply-add instructions.
+
+The frozen instruction executor is extended locally for explicit PREF capture
+and exceptional arithmetic classes needed by degenerate outlines. Class values
+follow the Renesas SH-4 Software Manual Rev.6 sections 9.26, 9.30, 9.39 and 9.45:
+https://www.renesas.com/en/document/mas/sh-4-software-manual
+This is a software instruction-model comparison, not new hardware validation.
+FPSCR flags/traps and general nonfinite input-coordinate behavior are not
+qualified. The GCC-wide feature has no counterpart in the Japanese binary;
+its RZ values use a separate Python integer oracle and 1,024 helper samples.
+
+Regressions on the current combined diagnostic DLL pass:
+  6,994 host queue checks;
+  12,801 original queue/executor comparisons (including 1,024 executor checks);
+  36,201 camera/translation checks across 1,920 original calls;
+  961 shared Ninja/renderer matrix-state checks.
+The real production link includes only the three new production objects,
+without diagnostic recorder, wide-owner stand-ins or extra state owners.
+It resolves four previously missing services; 36 combined services remain.
+This link is still intentionally incomplete and produces no game executable.
+
+Artifacts and reproduction
+jp_polygon2d_component.lib contains exactly the three authored production
+objects, verified byte-for-byte against the build report. It is an incomplete
+research component library, not a playable port or a self-contained renderer.
+The diagnostic DLL reuses external SDK initialization bodies and stays private.
+Pinned upstream input hashes are in jp_port_tools/jp_polygon2d_external_inputs.json.
+The upstream checkout and matching retail executable must be supplied locally;
+neither game source bodies nor retail assets are included in the public archive.
+
+From the workspace, using the documented Python and Clang installations:
+python -B outputs/sonic-adventure/jp_port_tools/build_native_polygon2d.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --baseline-audit work/sonic-adventure/jp-camera-native-link-audit-v1/verification.json --compiler CLANG_PATH --output work/sonic-adventure/NEW_BUILD_FOLDER
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_polygon2d.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --build work/sonic-adventure/NEW_BUILD_FOLDER --binary work/sonic-adventure/jp-ninja-math-reference/1ST_READ.BIN --numeric-dll work/sonic-adventure/build/sh4_vector_numeric.dll --report work/sonic-adventure/NEW_BUILD_FOLDER/contract_verification.json
+Always use a fresh build folder and report filename; frozen proofs remain intact.
+
+Beginner check: open analysis/jp_native_polygon2d_contract_verification.json.
+Its status should say complete_native_polygon2d_packet_contract_verified and
+checks should be 332375. The production audit should list 36 remaining imports.
+These reports describe this component's tests; they do not start the game.
+
+Next: complete the actual sprite producers and their header/queue boundary,
+reusing these picture settings. Then continue the real frame services and
+rasterizer, with resource lifetime, numerical and complete-gameplay gates.
+Recommended model: Sol High for this integration. Luna Low is suitable for
+documentation-only maintenance after the technical work is verified.

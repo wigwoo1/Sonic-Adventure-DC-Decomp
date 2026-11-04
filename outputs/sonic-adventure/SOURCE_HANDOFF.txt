@@ -1,3 +1,9 @@
+Current 2D polygon update: see JP_NATIVE_POLYGON2D.txt. Complete plain/textured
+fill and outline output passes 332,375 checks, including 592 whole original
+draws and 1,024 original color-mode calls. Host queue/camera regressions pass.
+Presentation supplies 45 of 79 imports; 36 combined frame services remain.
+About 10% overall; no complete frame or playable native port.
+
 Current camera update: see JP_NATIVE_VIEW_ROTATION.txt and
 JP_NATIVE_CAMERA.txt. The three view rotations pass 3,072 original calls
 and 57,463 checks. Camera setup/translation pass 1,920 original calls and
