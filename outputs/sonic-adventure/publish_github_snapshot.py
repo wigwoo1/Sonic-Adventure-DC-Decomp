@@ -185,6 +185,12 @@ match the legacy renderer exactly, including an empty 8K target; eleven direct
 Presents succeed. Frozen GPU/state/window suites pass 716,351 checks. The new
 coherent authored support library replaces overlapping older graphics libraries.
 Three game-thread waits and real Kamui scheduling/statistics remain open.
+Bounded GPU jobs now retain four independent targets with actual event and
+timestamp queries. They pass 6,330 new checks plus 718,229 preserved checks.
+115 job images / 38,138,880 pixels compare correctly, and 117 submissions yield
+reliable GPU timings on this device. Completed targets copy to a window on the
+GPU; pending output and deferred shutdown are verified. Native frame waits and
+Kamui scheduling/statistics are the next integration work.
 Full-frame execution and gameplay are unfinished. English integration
 begins as the needed asset/text/audio systems become usable. Game-containing
 runtime artifacts remain private.
@@ -199,6 +205,7 @@ Texture Off must disable sampling and use vertex/material colours.
 - [Current goal](outputs/sonic-adventure/JP_BASED_PORT_GOAL.txt)
 - [Integration order and limits](outputs/sonic-adventure/JP_NATIVE_PORT_PLAN.txt)
 - [Verified GCC baseline and native/localization evidence](outputs/sonic-adventure/JP_GCC_BASELINE.txt)
+- [GPU completion jobs and timing limits](outputs/sonic-adventure/JP_NATIVE_GPU_JOBS.txt)
 - [Direct native window rendering and limits](outputs/sonic-adventure/JP_NATIVE_DIRECT_WINDOW.txt)
 - [Captured rendering state and native window](outputs/sonic-adventure/JP_NATIVE_WINDOW_STATE.txt)
 - [Native offscreen GPU consumption and Texture Off](outputs/sonic-adventure/JP_NATIVE_GPU.txt)

@@ -1,0 +1,140 @@
+Native GPU completion and measured rendering jobs
+================================================
+
+Status: VERIFIED component milestone. Estimated whole-project completion is
+about 10% of weighted milestones, not measured code coverage. Goal active.
+Japanese matching/GCC baselines remain verified. Native gameplay, English and
+later platforms remain unfinished. These are incomplete research components.
+
+What changed
+------------
+The native renderer now owns up to four asynchronous jobs. Each job retains an
+RGBA8 GPU target and real D3D11 completion/timestamp queries. Submitting a job
+does not change a window. Completed targets can be copied to a same-sized
+window using GPU CopyResource, then presented or retained for another picture.
+No CPU image transfer is used by this production path. Readback is diagnostic.
+Old offscreen, direct-window and stateful APIs retain their existing behavior.
+
+Query completion distinguishes submitted commands from completed GPU work.
+Two GPU timestamps surround clear/drawing inside a disjoint-query interval.
+Their frequency and validity are returned alongside raw values and an integer
+conversion to the game's 781250 wall counts per second. Invalid/disjoint values
+are explicitly marked gpu_timing_valid=0. They must not be interpreted as a
+zero-cost render. The integer converter rejects reversed values, zero frequency,
+frequency above UINT64_MAX/781251, and unrepresentable scaled durations.
+It preserves output on failure. CPU QPC values separately record preparation,
+submission and the first observed completion. That observation includes polling
+delay; CPU and GPU absolute timestamps are not aligned by this service.
+
+Timestamp intervals measure native elapsed GPU work, not physical scanout or
+Dreamcast speed. Resource preparation is timed separately before GPU drawing.
+The command buffer is flushed once on successful submission; nonblocking polls
+then request query data without repeated implicit flushes. A pending poll
+preserves caller timing storage. Ready timing remains immutable.
+
+Exactly four outstanding jobs are allowed, even if they already finished.
+A fifth returns an explicit capacity error. Release retires a completed/failed
+job; a still-pending release reports Pending and retains it. IDs are not reused
+within the loaded module's lifetime, across owner shutdown/reinitialization.
+Jobs belong to their renderer and creating thread. A close request rejects new
+submissions while existing jobs/windows keep the device alive for draining.
+
+Each job owns a target and all GPU input resources before submission returns.
+CPU frame/palette/texture owners can retire afterward. The payload budget charges
+target/depth (8 bytes per pixel), input payloads and job bookkeeping (152 bytes
+on this qualified ABI), excluding driver/query allocation overhead. Up to four
+retained budgets may coexist; this is a caller-controlled aggregate.
+The query service does not silently resize images to match a changed window:
+a mismatch fails explicitly. Scaling and a user-facing resolution menu remain
+separate integration work.
+
+Verification and practical limits
+---------------------------------
+6,330 new checks pass. Lifecycle/conversion tests pass 4,205 checks; image/job
+regressions add 1,202 + 725 + 198. All 718,229 previous GPU/direct/state/window
+checks also pass on the new provider, for 724,559 combined checks in this task.
+Old source and predecessor proofs are preserved.
+
+117 job submissions produced reliable GPU timestamps on this device. The proofs
+include 118 completed observations because one retained job was polled again.
+Real Pending results were observed; they preserve output, without invented
+delays or forced successful completions. The four-target test retains different
+palette/clip/Off images, rejects a fifth job, and consumes targets after all CPU
+source owners shut down. Exact-budget/one-byte-short, invalid/stale IDs,
+foreign-thread/owner rejection, out-of-order retirement, size mismatch and
+deferred renderer/window close are verified.
+
+115 job images / 38,138,880 complete backbuffer pixels compare correctly.
+111 job targets match the preserved renderer byte for byte across all nine
+layouts, supported texture cases, retained generations and 32 actual producer
+calls. Four independent palette/clipping/Off images add a separate pixel oracle.
+The EMPTY 7680x4320 case is included; this is not 8K gameplay qualification.
+Four job Presents succeeded, alongside eleven direct and four legacy Presents.
+Texture Off still has zero surface fetch/decode/upload and no texture/sampler
+shader bindings. Synthetic test data only; no game asset is embedded here.
+
+No clock-disjoint transition or device removal was induced. These return/validity
+paths are implemented but their physical triggering is not claimed verified.
+Pending-release behavior shares the tested poll path; the tests do not force a
+device stall to hold that separate release branch pending. There is no FPS,
+latency or console-fidelity benchmark claim.
+
+The actual production graph still has 25 missing services and supplies 56/79
+presentation imports. No fake kmRender/kmFlipFrameBuffer or zero timing-statistics
+owner was added to make that link pass. This query service is the measured-work
+dependency for those next adapters; it is not already Kamui slot/vsync emulation.
+
+Files and reproduction
+----------------------
+API: native/jp_native_gpu_jobs.h
+Authored service: native/jp_native_gpu_jobs_extension.c
+Build: jp_port_tools/build_native_gpu_jobs.py
+Lifecycle/conversion: jp_port_tools/verify_native_gpu_jobs.py
+Pixel/regression wrapper: jp_port_tools/verify_native_gpu_jobs_regressions.py
+Production audit: jp_port_tools/audit_native_direct_window_link.py
+Library: jp_port_tools/build_native_gpu_jobs_support_library.py
+Evidence: analysis/jp_native_gpu_jobs_*.json
+Archive component: work/sonic-adventure/build/jp_native_gpu_jobs_support.lib
+
+The qualified runtime is work/sonic-adventure/jp-native-gpu-jobs-v2, built from
+the frozen jp-native-direct-window-v2 baseline. Frame ownership remains
+jp-native-stateful-frames-v4. Reproduce prerequisites using
+JP_NATIVE_DIRECT_WINDOW.txt and JP_NATIVE_WINDOW_STATE.txt. Python, Clang/MSVC
+libraries, Windows SDK and the pinned external providers are required. Tools
+refuse to overwrite output/proof files; choose fresh paths for a new run.
+
+From the workspace (PowerShell; substitute the installed compiler path):
+python -B outputs/sonic-adventure/jp_port_tools/build_native_gpu_jobs.py --workspace . --baseline work/sonic-adventure/jp-native-direct-window-v2 --compiler PATH_TO_CLANG_EXE --output work/sonic-adventure/jobs-fresh
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_gpu_jobs.py --workspace . --build work/sonic-adventure/jobs-fresh --report work/sonic-adventure/jobs-fresh/verification.json
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_gpu_jobs_regressions.py --workspace . --build work/sonic-adventure/jobs-fresh --output work/sonic-adventure/jobs-fresh/regression --suite gpu
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_gpu_jobs_regressions.py --workspace . --build work/sonic-adventure/jobs-fresh --output work/sonic-adventure/jobs-fresh/regression --suite gpu_extended
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_gpu_jobs_regressions.py --workspace . --build work/sonic-adventure/jobs-fresh --output work/sonic-adventure/jobs-fresh/regression --suite stateful
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_direct_window_failures.py --workspace . --build work/sonic-adventure/jobs-fresh --report work/sonic-adventure/jobs-fresh/direct_failure_verification.json
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_video_window_failures.py --workspace . --build work/sonic-adventure/jobs-fresh --report work/sonic-adventure/jobs-fresh/legacy_failure_verification.json
+
+Run the production audit against the previous direct-window audit, then run the
+support-library builder with that audit and the prior library directory; see
+their --help arguments. The new library contains exactly nine authored members
+whose bytes match the actual production graph. It replaces overlapping older
+graphics libraries. Original SDK/game bodies, diagnostic DLLs and retail assets
+remain private/external. Source-generation tools and authored code remain public.
+
+For a beginner: open this guide and its JSON evidence in GitHub. The downloadable
+research library is a developer component; it does not launch Sonic Adventure.
+
+Next (Sol High)
+---------------
+Bind same-thread native vertical ticks and waits to the actual frame/present
+source, then kmRender/flip submit-ready-present-retire transitions and typed
+kmiIntStatisticData. Preserve wall/timer-1 independence and meaningful units.
+The original frame_wait, frame_wait_step and present_hold waits require progress
+before or without Present. Their callback also serves stage fog, sound, backup
+and loading; running it on an unguarded timer thread would race game state.
+Actual game frames, remaining rendering formats/fog/background/sort, English,
+FPS enhancements/settings, gameplay coverage and later ports remain unfinished.
+
+Primary API references (design checked against Microsoft documentation):
+https://learn.microsoft.com/en-us/windows/win32/api/d3d11/ne-d3d11-d3d11_query
+https://learn.microsoft.com/en-us/windows/win32/api/d3d11/ns-d3d11-d3d11_query_data_timestamp_disjoint
+https://learn.microsoft.com/en-us/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-getdata
+https://learn.microsoft.com/en-us/windows/win32/api/d3d11/ne-d3d11-d3d11_async_getdata_flag

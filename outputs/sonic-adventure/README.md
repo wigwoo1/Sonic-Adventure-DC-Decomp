@@ -1,3 +1,13 @@
+Current GPU-jobs update: JP_NATIVE_GPU_JOBS.txt. Four owned GPU targets now
+use real completion/timestamp queries and GPU-only copies into the window.
+6,330 new checks and 718,229 preserved checks pass (724,559 combined).
+115 job images / 38,138,880 backbuffer pixels compare correctly; 117 GPU
+job submissions return reliable timing in these tests. Pending output,
+capacity, source-owner retirement and deferred shutdown are verified.
+The actual production link still needs 25 services. Native game waits,
+Kamui render/flip/statistics and gameplay remain unfinished. Japanese source
+baselines verified; English/later ports unfinished. About 10%; goal active.
+
 Current direct-window update: JP_NATIVE_DIRECT_WINDOW.txt. The renderer draws
 owned frames directly into DXGI backbuffers without a CPU image transfer.
 1,878 new checks pass; 111 direct images / 33,932,288 backbuffer pixels match
