@@ -1,0 +1,74 @@
+Native Ninja matrix-family toward-zero qualification
+
+Overall completion: about 10%, weighted milestones rather than code coverage.
+Japanese matching/GCC source baseline established; native integration partial.
+English and later ports remain unfinished. No playable native port or full frame.
+
+Current implementation
+The authored shared matrix and multiplication variants now use explicit
+toward-zero/DN1 values throughout the qualified Ninja family. Translation,
+rotation, vector transforms, normalization and multiplication select the
+existing SH-4 approximation model's toward-zero mode. Scalar vector addition
+and normalization multiplication use the authored integer RZ scalar boundary.
+They do not depend on the host's current floating-point rounding settings.
+
+The stored njCalcVector path deliberately reads only three matrix rows and
+uses a literal fourth zero in its three FIPRs. Its implicit-current path uses
+the full XMTRX/FTRV behavior. These are different contracts when the matrix's
+fourth row contains exceptional values. Multiplication retains its different
+stored FIPR and current FTRV operand orders, including overlapping inputs.
+
+The nearest-mode source, verification programs, objects and proofs remain
+unchanged. Choose one shared matrix owner and multiplication implementation
+per runtime. Never link the nearest and toward-zero state providers together.
+The existing SH4ZAM state adapter resolves to that one actual active matrix;
+its deferred stack remains separate. The already-qualified toward-zero
+determinant/inverse and scalar objects are reused directly.
+
+Verification
+- 6786 original shared matrix/vector calls across twelve SDK entries, both
+  FPU banks, normalization on/off, stored/current paths, wrapped angles and
+  guarded stack behavior; 196 independent geometry/native-safety checks.
+- Added cases cover vector addition's DN inputs, signed zero, finite overflow
+  and partially overlapping vectors, plus stored vector transforms whose
+  ignored fourth matrix row contains infinity/NaN words. There are 1090 added
+  original calls, including setup and these adversarial cases.
+- 2268 original multiplication comparisons and 33208 checks; stored/current
+  result differences occur in 78 cases, retaining the operand-sensitive paths.
+- 1944 original determinant/inverse regressions, 34725 checks and 961 existing
+  shared-state checks pass in the combined DLL.
+- All new objects and the authored asset-free research DLL compile/link with
+  zero diagnostics. The real production audit replaces only math.obj and
+  multi_matrix.obj, retaining exactly one state owner and excluding probes.
+
+Remaining limits
+This migrates the qualified Ninja matrix family. The external model renderer's
+inline SH4ZAM arithmetic still uses its existing backend and needs separate
+numerical qualification. Do not claim complete renderer/game rounding fidelity.
+The original-opcode numerical service shares the pinned approximation model;
+this is not new hardware validation. General nonfinite vector normalization,
+enabled traps, FPSCR/scratch-register effects, BIOS handoff and performance
+are not qualified. The bounded FPSCR facts are in JP_NATIVE_FPSCR_CONTEXT.txt.
+Full rasterization, resource lifetime, gameplay and all ports remain incomplete.
+
+Reproduction
+Use the pinned inputs and compiler described in JP_NATIVE_INVERSE_MATRIX.txt.
+PYTHON and CLANG below are the installed Python and Windows x64 Clang paths.
+Use fresh private output/report paths. Original game files stay local.
+
+PYTHON -B outputs/sonic-adventure/jp_port_tools/build_native_matrix_rz_runtime.py --workspace . --baseline work/sonic-adventure/jp-native-inverse-matrix-rz-v1 --compiler CLANG --output work/sonic-adventure/jp-native-matrix-rz-v1
+
+PYTHON -B outputs/sonic-adventure/jp_port_tools/verify_native_ninja_math_rz.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --build work/sonic-adventure/jp-native-matrix-rz-v1 --dll work/sonic-adventure/jp-native-matrix-rz-v1/jp_ninja_matrix_rz.dll --binary work/sonic-adventure/jp-ninja-math-reference/1ST_READ.BIN --numeric-dll work/sonic-adventure/build/sh4_vector_numeric.dll --report work/sonic-adventure/jp-native-matrix-rz-v1/ninja_verification.json
+
+PYTHON -B outputs/sonic-adventure/jp_port_tools/verify_native_multi_matrix_rz.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --build work/sonic-adventure/jp-native-matrix-rz-v1 --binary work/sonic-adventure/jp-ninja-math-reference/1ST_READ.BIN --numeric-dll work/sonic-adventure/build/sh4_vector_numeric.dll --report work/sonic-adventure/jp-native-matrix-rz-v1/multiplication_verification.json
+
+Run verify_native_inverse_matrix_rz.py with the same build and reference input
+to inverse_verification.json, then verify_shared_matrix_state_v2.py with this
+build. Both use the commands in JP_NATIVE_FPSCR_CONTEXT.txt with the build path
+changed. The inverse verifier also requires the preserved FPSCR context report.
+
+PYTHON -B outputs/sonic-adventure/jp_port_tools/audit_ninja_toward_zero_binding.py --workspace . --baseline-audit work/sonic-adventure/jp-inverse-matrix-rz-native-link-audit-v1/verification.json --component work/sonic-adventure/jp-native-matrix-rz-v1 --compiler CLANG --output work/sonic-adventure/jp-matrix-rz-native-link-audit-v1
+
+The current frame frontier after the separate view-stack extension is in
+JP_NATIVE_VIEW_STACK.txt. Exact hashes and scopes are in the analysis reports.
+Keep Sol High for remaining view and renderer integration.

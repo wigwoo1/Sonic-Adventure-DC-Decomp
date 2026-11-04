@@ -21,8 +21,8 @@ Native texture records and real owned payload release now pass 1,947 host checks
 and 15,232 Japanese lifecycle comparisons. The actual GCC texture selector runs.
 Native renderer state now passes 12,096 Japanese comparisons, with 142 state
 host checks and 1,441 model preflight checks. The complete presentation source now compiles natively. Its broader scope has
-79 references: 36 are supplied, while the combined production frame/renderer
-link still needs 46 services. The clock passes 12,873 checks; actual timer/mark
+79 references: 38 are supplied, while the combined production frame/renderer
+link still needs 44 services. The clock passes 12,873 checks; actual timer/mark
 boundaries pass 4,494 isolated checks. Task/replay integration passes 7,601
 checks, including a native guard against restoring into deleted/reused tasks.
 Native njMultiMatrix passes 2,268 original-code contract comparisons and 961
@@ -31,9 +31,12 @@ Native determinant/inverse helpers pass 1,640 original-code calls and 28,009
 checks, retaining the exact singular fallback and ordered scalar arithmetic.
 Bounded original FPSCR checks now establish explicit interrupt toward-zero/DN1
 and callback mode preservation. A toward-zero determinant/inverse build passes
-1,944 original calls, 34,725 checks and 961 shared-state regressions. Other
-Ninja/renderer arithmetic still needs numerical migration; BIOS handoff is
-unmeasured. See [the FPSCR guide](outputs/sonic-adventure/JP_NATIVE_FPSCR_CONTEXT.txt).
+1,944 original calls, 34,725 checks and 961 shared-state regressions.
+The shared Ninja matrix family now passes 6,786 toward-zero original calls
+and 196 independent checks; multiplication retains 2,268 original comparisons.
+View initialization, scaling and complete stack clearing pass 3,072 original
+calls and 55,360 checks. View rotation/setup and renderer inline numerical
+integration remain unfinished; BIOS handoff is unmeasured. See [the FPSCR guide](outputs/sonic-adventure/JP_NATIVE_FPSCR_CONTEXT.txt).
 Full-frame execution and gameplay are unfinished. English integration
 begins as the needed asset/text/audio systems become usable. Game-containing
 runtime artifacts remain private.
@@ -48,6 +51,8 @@ Texture Off must disable sampling and use vertex/material colours.
 - [Current goal](outputs/sonic-adventure/JP_BASED_PORT_GOAL.txt)
 - [Integration order and limits](outputs/sonic-adventure/JP_NATIVE_PORT_PLAN.txt)
 - [Verified GCC baseline and native/localization evidence](outputs/sonic-adventure/JP_GCC_BASELINE.txt)
+- [Native toward-zero matrix family](outputs/sonic-adventure/JP_NATIVE_MATRIX_RZ.txt)
+- [View initialization, scaling and matrix-stack clearing](outputs/sonic-adventure/JP_NATIVE_VIEW_STACK.txt)
 - [Native determinant/inverse and scalar qualification](outputs/sonic-adventure/JP_NATIVE_INVERSE_MATRIX.txt)
 - [Native matrix multiplication and original-code comparisons](outputs/sonic-adventure/JP_NATIVE_MULTI_MATRIX.txt)
 - [Task deletion, retained ownership and replay qualification](outputs/sonic-adventure/JP_NATIVE_REPLAY_LIFECYCLE.txt)

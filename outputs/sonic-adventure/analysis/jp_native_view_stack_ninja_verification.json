@@ -1,0 +1,62 @@
+{
+  "status": "native_Ninja_toward_zero_math_contracts_verified_against_Japanese_machine_code",
+  "numerical_policy": "toward_zero_DN1_exceptions_disabled",
+  "build_report_sha256": "5574cc86d3ad0b37800eeee22fd30c50873287b5012444d7ce2dad859f943375",
+  "original_binary_sha256": "e038db9029bc0ea8ffdb8ec8fc2e0690d1c324f5f7179f3dc58f56574b1aeeaf",
+  "DLL_sha256": "6bc352cc85a6c4f79b3540df7bb298aa2f07746da0ced585d4bb7e7564121f79",
+  "original_symbols_sha256": "298df922be8dbede67dc948fdf215b9a5c7fae462e74fb7b883f1b972c435403",
+  "source_reference_sha256": {
+    "sdk/ninja/njInitMatrix.c": "c0b26541d6ed35b423b287ac38e846498e50709a476b5d4ac41638f154966b11",
+    "sdk/ninja/njGetMatrix.c": "78b3abd2abb192300e57d1b49482cfb93424191f21924531698c88f5e1760531",
+    "sdk/ninja/njSetMatrix.c": "ae6955cdaacb6cb8c52d8b1cf6db51135fdfde0f94fd615961ecea1dd281881a",
+    "sdk/ninja/njUnitMatrix.c": "77a80fb0bdc4548049583d6c6881cd5d7e4e4e41ff463d57b8083eee2cd6693f",
+    "sdk/ninja/njPushMatrix.c": "0a4c61b24c208b684e4516701c64fa5b7182fc8018acff9f2a3539280cb8489c",
+    "sdk/ninja/njPopMatrix.c": "a01587758d15f7fd4609248fab2dc32529337e89a270807490f0b90df29eac8d",
+    "sdk/ninja/njTranslateV.c": "f972faf7054922f7e9de6fff405ca2c881f9d9fe1672b88c57f8a7bcafcde666",
+    "sdk/ninja/njRotateX.c": "0c1271c8b532f5db4ac2e3308997a03c13f5473270548899a3859b2b13d0d073",
+    "sdk/ninja/njRotateY.c": "934642d5fc537399a8f654e591e71d7c714363c158663519b3a78072d9a86d8c",
+    "sdk/ninja/njRotateZ.c": "dbd4bddaadbd437bec0d952d73a6a5a3fbab7b13b263313e21d39149901fc038",
+    "sdk/ninja/njCalcVector.c": "7a2b9086720d387c48d0f49d01717be29fb50c2f2fb23736a347b340e0e6c999",
+    "sdk/ninja/njAddVector.c": "4140a5a21b908f20cdfc214ecd6e07145e25e7ae7424d218337735eedd31f9b0"
+  },
+  "original_instruction_contract_comparisons": 6786,
+  "per_function": {
+    "njInitMatrix": 66,
+    "njGetMatrix": 64,
+    "njSetMatrix": 256,
+    "njUnitMatrix": 128,
+    "njPushMatrix": 384,
+    "njPopMatrix": 320,
+    "njTranslateV": 256,
+    "njRotateX": 1280,
+    "njRotateY": 1280,
+    "njRotateZ": 1280,
+    "njCalcVector": 320,
+    "njAddVector": 1152
+  },
+  "independent_geometry_initialization_and_native_safety_checks": 196,
+  "SH4_active_banks_tested": [
+    0,
+    1
+  ],
+  "normalization_flags_tested": [
+    0,
+    1
+  ],
+  "added_scalar_alias_DN_overflow_and_ignored_row_original_calls": 1090,
+  "numerical_model_DLL_sha256": "2e56428fadb1903c319da319cf6fa3731839eab1b16163e4e820821d6e4c2db2",
+  "verifier_sha256": "827d28f044f242e05f4cb8e2b8722cd066bfbcfd1aa2cc65269e130735c5267f",
+  "scope": "Exact matrix/vector output bits, guarded stack and parameter memory, depth/capacity/normalization, translated pointer offsets and push/pop return values. Both implicit-current and explicit matrices; angles wrap at 16 bits; self-aliasing, full-stack no-op, zero pop, base-pop rejection, multi-pop. Original CPU/FPU scratch-register side effects are outside native API contract.",
+  "limitations": [
+    "Shared SH-4 approximation core supplies original instruction numerics; not independent new hardware validation.",
+    "Finite normal inputs and exact zeros, toward-zero rounding, DN=1 and disabled exceptions; nonfinite/subnormal input and alternate FPU environment not qualified.",
+    "Invalid pop above depth is deliberately rejected, unlike original unsigned underflow.",
+    "Global state assumes one game thread; init needs a valid nonempty caller-owned stack.",
+    "Task/collision/event integration, heap lifecycle and full gameplay remain unverified."
+  ],
+  "original_game_source_linked": false,
+  "retail_assets_published": false,
+  "overall_completion_percent": 10,
+  "goal_paused": false,
+  "playable": false
+}

@@ -1,3 +1,10 @@
+Current native matrix/view update: see JP_NATIVE_MATRIX_RZ.txt and
+JP_NATIVE_VIEW_STACK.txt. RZ shared Ninja/multiplication migration passes;
+view initialization, scaling and complete clear pass 3,072 original calls
+and 55,360 checks. Presentation supplies 38 of 79 raw imports; the combined
+link still needs 44 services. View rotation/setup and renderer numerical
+integration remain unfinished. About 10% overall; no playable native port.
+
 FPSCR update: see JP_NATIVE_FPSCR_CONTEXT.txt. Original interrupt contexts
 select toward-zero/DN1; the callback wrapper inherits rounding. The new
 determinant/inverse build passes 1,944 original calls, 34,725 checks and

@@ -1,0 +1,75 @@
+Native view initialization, scaling and matrix-stack clearing
+
+Overall completion: about 10%, weighted milestones rather than code coverage.
+Japanese matching/GCC source baseline established; native PC integration partial.
+English and later ports remain unfinished. No playable native port or full frame.
+
+Three actual SDK providers
+njInitView fills the 120-byte view data structure with its default position,
+direction, roll and absolute fields, copying the real unit matrix. It does not
+activate the view. The native view pointer has the full host pointer width;
+the view data itself contains no pointers and retains the original field offsets.
+
+njScale multiplies each of the first three matrix rows by its corresponding
+factor, keeping the fourth row. A null matrix selects the actual active state;
+an explicit matrix changes only that memory. The integer scalar service uses
+toward-zero/DN1 values, including signed-zero and finite saturation behavior.
+
+njClearMatrix resets stack depth to one and selects the base slot. It starts
+that slot from the unit matrix, scales x/y by -1, and multiplies the current
+view's matrix through the real stored multiplication path. It then copies the
+result to both the saved view matrix and the actual active matrix. Deeper saved
+slots remain intact except where a caller deliberately aliases view storage.
+The real _nj_view_ pointer and _nj_view_matrix_ storage are provided; there is
+no placeholder camera matrix or null-view identity fallback. Clear requires a
+valid current view and initialized nonempty stack, as the original does.
+
+Verification
+- 3072 original calls and 55360 checks: 768 view initializations, 1536 scaling
+  calls and 768 complete clear-stack calls, both FPU banks and varied depths.
+- Original clear executes the actual original njScale and njMultiMatrix bodies;
+  no hooks replace its dependencies. All parameter/stack arenas and guards,
+  actual active state, saved view matrix, depth/capacity/normalization and
+  translated pointer offsets agree with original execution.
+- View storage aliases the base or another saved slot in dedicated cases.
+  Scaling uses stored/current/saved destinations, signed zero, DN operands
+  and finite overflow. Initialization copies arbitrary unit-matrix payloads.
+  Independent view-layout and row-vector reflection geometry checks also pass.
+- The same combined DLL retains all 6786 Ninja matrix/vector comparisons,
+  2268 multiplication comparisons (33208 checks), 1944 determinant/inverse
+  comparisons (34725 checks), and 961 shared-state regressions.
+- All native objects and the authored asset-free research DLL compile/link
+  with zero diagnostics. The real production link adds only view_stack.obj;
+  no diagnostic probes, fake services or duplicate state owner are linked.
+
+Current frontier and remaining work
+Two actual view-state imports now resolve. Presentation has 79 raw imports,
+of which 38 are supplied. The combined frame/renderer link needs 44 services,
+down from 46. The additional three SDK bodies are not an increase of 3072
+decompiled routines: that figure is repeated original-call comparisons.
+
+njSetView and the three required view-rotation helpers are still missing.
+Model-renderer inline arithmetic, full-frame execution, packet/resource
+lifetime and native performance still need qualification. Clear tests use
+finite unit matrices and arbitrary view matrix words through the existing
+vector numerical model; general nonfinite scalar scaling is not qualified
+against original routine execution. These are value/state checks, not FPSCR
+flags/traps or new hardware measurements. Gameplay, English and later ports
+are not implemented by this component. Original source/proofs stay preserved.
+
+Reproduction
+Use the prerequisites and RZ family in JP_NATIVE_MATRIX_RZ.txt.
+PYTHON and CLANG are the installed Python and Windows x64 Clang paths.
+Use fresh private output/report paths; original retail inputs remain local.
+
+PYTHON -B outputs/sonic-adventure/jp_port_tools/build_native_view_stack.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --baseline work/sonic-adventure/jp-native-matrix-rz-v1 --compiler CLANG --output work/sonic-adventure/jp-native-view-stack-v1
+
+PYTHON -B outputs/sonic-adventure/jp_port_tools/verify_native_view_stack.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --build work/sonic-adventure/jp-native-view-stack-v1 --binary work/sonic-adventure/jp-ninja-math-reference/1ST_READ.BIN --numeric-dll work/sonic-adventure/build/sh4_vector_numeric.dll --report work/sonic-adventure/jp-native-view-stack-v1/contract_verification.json
+
+Run the Ninja, multiplication, inverse and shared-state regressions from the
+RZ guide against this build, using jp_ninja_view_stack.dll and fresh report
+paths in this build folder. The inverse report is inverse_verification.json.
+
+PYTHON -B outputs/sonic-adventure/jp_port_tools/audit_native_dependency_extension.py --workspace . --baseline-audit work/sonic-adventure/jp-matrix-rz-native-link-audit-v1/verification.json --component work/sonic-adventure/jp-native-view-stack-v1 --compiler CLANG --output work/sonic-adventure/jp-view-stack-native-link-audit-v1
+
+Keep Sol High for the next view-rotation/setup and platform integration work.
