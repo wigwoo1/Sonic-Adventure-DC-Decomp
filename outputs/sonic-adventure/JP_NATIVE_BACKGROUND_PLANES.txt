@@ -1,0 +1,117 @@
+Native background-plane qualification - incomplete research component
+
+Overall project estimate remains about 10% of weighted milestones; goal active.
+Japanese matching and GCC source baselines remain verified. Full native boot,
+gameplay, English localization, settings and later platforms remain unfinished.
+
+What changed
+
+The original njSetBackColor now calls the actual adapted Kamui background-plane
+producer. Its packet is captured by the existing shared device/video/frame owner
+and rendered by the native GPU. The implementation extends the three-point
+parameter plane over the logical viewport, with perspective-correct attributes,
+packed colors, UV32/UV16, texture sampling and offset colors. It draws before
+ordinary geometry and initializes background depth from the first source depth.
+This is the native interpolation/depth contract tested here. Physical Dreamcast
+precision, scanout and exact background rounding have not been compared.
+
+This is a background packet path, not a replacement with a single clear color.
+The independent reference checks gradients outside the original triangle,
+perspective changes, clipping, foreground depth and asymmetric texture sampling.
+The original six-piece logo still matches its independent full-image oracle
+with the actual njSetBackColor(0,0,0) call enabled, including two real Presents
+through the original frame_wait routine. logo_start/step and boot_init remain
+unexecuted; their input/save/exit services and actual fade progression remain open.
+
+SDK adaptations and provenance
+
+All 18 original background dispatch entries compile privately. Fifteen vertex
+formats produce packets; types 15, 16 and 17 retain their invalid-type result.
+The public entry checks type bounds, null pointers and supplied structure sizes
+before dispatch. Callers must provide readable SDK vertex objects of that size.
+The existing shared RZ numerical provider packs floating colors, avoiding native
+host multiplication differences and signed left-shift overflow. LLVM inspection
+finds no residual native floating arithmetic in the adapted SDK unit.
+
+Tests exposed source-documented SDK defects. The generated native copy repairs
+five wrong-vertex UV reads (handlers 06, 08 and 12), two wrong-vertex offset-color
+reads (handler 04), and one duplicate offset word (handler 07). Distinct values
+in every test vertex detect these defects. Original source bytes are preserved;
+the build report records original/adapted body hashes. Failed build/test outputs
+and source snapshots remain private. The pinned matching baseline is unchanged.
+
+Texture and failure ownership
+
+A captured textured background now pins its real surface even when geometry
+lists are empty. Game texture release and later background-state mutation cannot
+change those captured pixels. The final frame release frees deferred storage.
+Resource-capacity failure preserves earlier references. A snapshot-budget failure
+after acquiring a new background resource rolls back that new reference while
+preserving the original recording and output ID; an exact-budget retry succeeds.
+
+Texture Off renders vertex/material and offset colors with zero sampled-texture
+uploads and zero texture/sampler shader bindings. This verifies the renderer
+behavior required by the future settings UI; that UI is not implemented here.
+Malformed/degenerate/nonfinite planes and unsupported rendering states fail
+explicitly. Packet/plan peak budgets include the old and new plan simultaneously.
+Background fog, modifier effects and other GPU states still follow the documented
+unsupported-state gates; this update does not establish full game rendering.
+
+Verification
+
+The build completed with no compiler/linker diagnostics.
+- Background SDK/renderer/lifetime/original Present suite: 179 checks, 12 images.
+- Plan bounds and atomic capacity/budget retry: 34 checks.
+- Asymmetric UV16 sampling, offset colors and Texture Off: 13 checks, two images.
+- Original logo with actual back-color packet: 30 checks, three 640x480 images.
+These suites compare 17 GPU images / 978,944 pixels and execute three real
+Presents. Gradients permit at most one RGBA8 step against the independent native
+math oracle; solid, texture, Off and original-logo checks compare exact bytes.
+
+Retained suites on the new owners also pass: textures 1,947; frames 8,572;
+video/window 103,700; presenter 129 in this run; bitmap 722; PVM 1,448; asset
+loading 223. Total distinct checks in this qualification: 116,997. Repeated runs
+are not counted. These checks cover their named contracts, not gameplay coverage.
+
+The real production rendering graph still has 36 unresolved game services and
+supplies 65/79 presentation imports. The expanded original boot graph now has
+43 unresolved services, down from 44: njSetBackColor is supplied. No success
+stubs or diagnostic service objects are linked into either production audit.
+
+Public component and reproduction
+
+jp_native_background_render_support.lib contains exactly 13 authored members:
+the new frame and GPU owners, background decoder, existing video/device owners,
+packet/frame/texel consumers, queue bridge, texture-move owner, asset provider,
+PVM memory provider and bitmap source provider. Each member matches the production
+audit byte-for-byte. This combined component replaces overlapping older GPU,
+owned-frame, bitmap/PVM and asset support libraries; never link two generations
+of the same owner. It still needs separately built original game/SDK helpers,
+the separately compiled MIT prskit codec with its notice, and other native services.
+Original SDK/game objects, diagnostic DLLs and retail content are not packaged.
+
+Start from JP_NATIVE_LOGO_ASSETS.txt and the qualified asset/GPU-query builds.
+Keep the project tree, pinned external source and local toolchains. Use fresh
+output/report directories below work/sonic-adventure:
+
+python -B outputs/sonic-adventure/jp_port_tools/build_native_background_runtime.py
+  --workspace WORKSPACE --upstream PINNED_UPSTREAM --baseline ASSET_BUILD
+  --gpu-baseline GPU_QUERY_BUILD --compiler CLANG --output FRESH_BUILD
+
+Run verify_native_background_runtime.py, verify_native_background_limits.py
+and verify_native_background_uv16.py with --workspace, --build and a fresh
+--report path. Join displayed command lines when entering them. The original-logo
+suite additionally uses the private probe/inputs through
+verify_native_background_logo.py. Published analysis/jp_native_background_*
+reports contain the exact hashes, counts and verification boundaries.
+This remains a developer workflow, not a playable-game installer.
+
+Background-purpose reference: KallistiOS primary API documentation,
+https://kos-docs.dreamcast.wiki/group__pvr__global.html . The packet layouts and
+adaptations here are derived from the pinned external SDK files identified in
+the build/audit reports; no emulator implementation is copied into this backend.
+
+Next: connect original title-fade progression/drawing to the qualified background
+and logo path, then supply actual input/exit/save dependencies for original boot.
+Keep Sol High for that integration. Luna Low is suitable for documentation-only
+maintenance after the relevant native work has been qualified.

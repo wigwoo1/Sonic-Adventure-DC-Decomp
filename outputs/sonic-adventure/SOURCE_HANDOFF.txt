@@ -1,3 +1,13 @@
+Latest native background update: JP_NATIVE_BACKGROUND_PLANES.txt. Original back-color
+packets now render through real SDK/frame/GPU providers. Full gradients, UV16,
+offset colors, texture release, Texture Off and the original logo/Present path
+pass: 17 images / 978,944 pixels; 116,997 combined checks. Documented SDK
+packet defects are repaired in generated native copies. A 13-member authored
+support library is available. Expanded original boot has 43 services left;
+actual title fades, input/save/exit and full gameplay remain unfinished.
+Prior snapshot notes below retain their historical verification boundaries.
+Japanese baselines verified; overall about 10%; goal active.
+
 Latest qualified native logo update: JP_NATIVE_LOGO_ASSETS.txt. The unchanged
 original six-piece logo now uses real file/PRS/PVM loading and passes full
 640x480 image comparisons through the original frame-wait and real Present.
