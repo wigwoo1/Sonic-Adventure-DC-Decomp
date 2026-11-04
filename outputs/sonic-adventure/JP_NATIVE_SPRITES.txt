@@ -1,0 +1,104 @@
+Native sprite family, intensity headers and discarded batches
+
+Overall completion: about 10%, estimated weighted milestones, not coverage.
+The matching Japanese/GCC source baseline is established. The native PC port
+is partial; English integration and later platforms remain unfinished.
+No complete native frame, rendered game image or playable port is established.
+
+Actual code now connected
+The complete pinned GCC njSprite.c, njsprite.h and game draw/sprite.c run as
+native sprite producers. All 2D, facing, plane, visibility and near-plane
+clipping paths are retained. Native adaptations replace SH-4 assembly writes,
+QACR registers and store-queue address masks with bounded host queue storage.
+No drawing path is replaced with a stub. The original game's facing-sprite
+sx-for-y-scale behavior and the near-clipping waiting-depth behavior remain.
+
+The qualified picture-settings owner from the polygon milestone is reused.
+The two GCC-added anchor/cover globals now have their real Ninja-global owner,
+adapted from sdk/ninja/njGlobal.c. wide.c consumes these; it does not own them.
+The active matrix is the same existing Ninja/renderer state, not a second copy.
+The SDK texture selector resolves existing opaque native handles and retains
+its bank/cache/header updates, including update-before-address-rejection.
+Retail texture bytes are not needed by these tests; fixtures are synthetic.
+
+Numerical boundary
+A typed Clang-AST adaptation routes 146 actual source float operations to the
+existing integer RZ/DN1 value services. It preserves operation order, explicit
+comparisons and assignments. Point transforms and FSCA use the existing
+qualified vector model and real current matrix. Exact 1/256 UV constants remain
+constant expressions. Generated LLVM contains no residual native scalar float
+add/subtract/multiply/divide/compare operations in this sprite module.
+This is a value contract. FPSCR flags, enabled traps and physical GPU/cache
+timing are not qualified. The original-packet comparisons use the original
+4:3/RZ/DN1 context. GCC-wide sprite picture output, complete retained-draw replay
+and whole-game incoming numerical contexts remain separate validation gates.
+
+Queue ownership
+The new queue version includes the preserved authored plain queue in exactly
+one translation unit. Replace its old queue object; never link both versions.
+The original plain source/header and historical proofs remain byte-identical.
+Eight intensity variants cover opaque/translucent/punch-through, with ordinary
+32-byte headers and offset-color 64-byte headers. Punch/plain is also supplied.
+All four color/offset words retain their raw bits. Undefined header words are
+zero, rather than claiming to reproduce arbitrary store-queue residue.
+
+SDK 3D sprites can start a header and then be culled without calling EndVertex.
+jp_queue_discard_active clears only that uncommitted reservation, preserving
+previous packets, context updates and earlier batches still awaiting SetPointer.
+The game sprite path retains its original vertices-before-header ordering.
+2D sprites reserve five blocks; 3D sprites reserve nine, allowing both clipped
+triangles. Invalid pointers/counts that the adapter can identify and insufficient
+queue budget fail before writing. Frame indices and valid input-array lengths
+remain caller contracts; no on-disc pointer structure is treated as native RAM.
+
+Verification
+The final complete sprite test passes 82,489 checks across 1,536 whole original
+draw calls, plus depth setters/getters and 128 direct SDK texture-selector calls.
+Actual original SDK dependencies execute without hooks. Both original near-clip
+functions reach masks 1,2,3,4,5,7,8,10,11,12,13,14; together their triangles reach
+all eight table indices. The fixtures include all sprite flags, drawn/culled
+paths, four off-screen directions, signed UV extremes, degenerate/signed sizes,
+cardinal/wrapped angles, real native texture ownership and cache/address errors.
+GCC frame suppression and the callback's 3D suppression are additional tests.
+Replay/frame observation in this test DLL is diagnostic, not full production
+replay. The real production link excludes those observers.
+
+The intensity/discard test passes 36,879 checks, including 1,152 original header
+calls and 576 original culled-path cursor/context comparisons. Native allocation,
+guard, malformed-header and sticky-error recovery are checked independently.
+The uniquely named release DLL passes these tests again, plus 6,994 host queue
+checks and 12,801 original queue/executor comparisons. Its import library names
+the correct new DLL and does not replace an old published artifact.
+
+On the combined actual sprite diagnostic runtime, regressions pass 332,375
+polygon checks, 36,201 camera/translation checks and 961 shared-state checks.
+The real production link supplies 52 of 79 presentation imports. Its combined
+remaining services fall from 36 to 29 after seven actual providers are added.
+The link still fails on those real missing services and produces no game EXE.
+
+Source and builds
+New public source consists of authored host services and reproducible adaptation
+tools. Upstream game bodies stay a pinned external dependency. Generated game
+C, LLVM, sprite objects and the game-containing diagnostic DLL remain private.
+The public jp_native_queue_intensity DLL/import-library pair contains authored
+queue code only. It is incomplete research infrastructure, not a playable port.
+Original matching/source proofs and all previous public build files are retained.
+
+Reproduction from the workspace (substitute installed Python/Clang paths):
+python -B outputs/sonic-adventure/jp_port_tools/build_native_queue_intensity.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --compiler CLANG_PATH --output work/sonic-adventure/NEW_QUEUE_FOLDER
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_queue_intensity.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --build work/sonic-adventure/NEW_QUEUE_FOLDER --binary work/sonic-adventure/jp-ninja-math-reference/1ST_READ.BIN --report work/sonic-adventure/NEW_QUEUE_FOLDER/intensity_verification.json
+python -B outputs/sonic-adventure/jp_port_tools/build_native_sprite_objects.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --sh4zam SH4ZAM_PATH --compiler CLANG_PATH --output work/sonic-adventure/NEW_SPRITE_OBJECT_FOLDER
+python -B outputs/sonic-adventure/jp_port_tools/build_native_sprite_runtime.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --baseline QUALIFIED_POLYGON_RUNTIME_FOLDER --sprites work/sonic-adventure/NEW_SPRITE_OBJECT_FOLDER --compiler CLANG_PATH --output work/sonic-adventure/NEW_SPRITE_RUNTIME_FOLDER
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_sprites.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --build work/sonic-adventure/NEW_SPRITE_RUNTIME_FOLDER --binary work/sonic-adventure/jp-ninja-math-reference/1ST_READ.BIN --numeric-dll work/sonic-adventure/build/sh4_vector_numeric.dll --report work/sonic-adventure/NEW_SPRITE_RUNTIME_FOLDER/final_contract_verification.json
+Use fresh output/report paths. Baseline manifests bind reused objects and source
+hashes; their earlier builders and proofs remain available in this workspace.
+
+Beginner check: open analysis/jp_native_sprites_final_contract_verification.json.
+Its status should be complete_original_sprite_packet_contracts_verified, with
+82489 checks and 1536 original_draw_calls. These reports do not launch a game.
+
+Next: recover the remaining real textured/3D primitive producers, then continue
+the complete-frame and rendering backend dependencies. Retain separate resource
+lifetime, localization, high-resolution/FPS and complete-gameplay gates.
+Recommended model: Sol High for platform/renderer integration; Luna Low is
+appropriate for documentation-only maintenance after technical verification.

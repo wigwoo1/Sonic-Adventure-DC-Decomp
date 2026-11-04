@@ -1,3 +1,10 @@
+Current sprite update: see JP_NATIVE_SPRITES.txt. The complete SDK/game sprite
+family passes 82,489 checks across 1,536 original draws, including all eight
+triangle clipping cases. Intensity/discard contracts pass 36,879 checks;
+polygon, camera and shared-state regressions pass. Presentation supplies
+52 of 79 imports; 29 combined frame services remain. About 10% overall.
+No complete frame or playable port; GCC-wide sprite pictures remain gated.
+
 Current 2D polygon update: see JP_NATIVE_POLYGON2D.txt. Complete plain/textured
 fill and outline output passes 332,375 checks, including 592 whole original
 draws and 1,024 original color-mode calls. Host queue/camera regressions pass.
