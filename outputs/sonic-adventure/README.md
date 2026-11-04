@@ -1,3 +1,13 @@
+Latest startup update: JP_NATIVE_LOGO_START.txt. Unchanged original logo_start
+now executes with genuine heap/task initialization, original cover state, real
+asset loading and shared pacing/rendering. 8,266 checks pass, including all
+4,096 task slots and three rendered images / 921,600 pixels with real Presents.
+Task step/draw/destruction, original logo_step and full boot remain unfinished.
+Original startup does not propagate missing-file failure; the host must check
+dependency errors before proceeding. No new game-containing binary is published.
+Earlier notes retain historical scope. Japanese baselines verified; overall
+about 10%; native gameplay, localization and later platforms unfinished. Goal active.
+
 Latest title-fade update: JP_NATIVE_TITLE_FADES.txt. Original black/white fades
 and actual Ninja context/header generation now compose the supplied logo through
 the shared native owners. 28 fade images / 8,601,600 pixels and 117,322 combined

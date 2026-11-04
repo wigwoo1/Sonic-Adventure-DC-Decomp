@@ -1,0 +1,82 @@
+Original logo startup with real native task/heap and cover state
+
+Overall project estimate: about 10% of weighted milestones; goal active.
+Japanese matching and GCC source baselines remain verified. Native gameplay,
+English localization, settings and later platforms remain unfinished.
+
+Verified scope
+
+The unchanged original logo_start now executes with genuine heap_init/task_init,
+title fade state, back-color packets, native file/PRS/PVM texture ownership,
+original frame_pacing_init and original fade_set_cover/fade_get_cover state.
+There is one real task pool/heap in the startup component. Graphics, device,
+textures and pacing continue to use the previously qualified shared owners.
+
+8,266 new checks pass. The actual 4,096-slot task pool is allocated and exhausted;
+the next allocation fails. All eight level heads are exercised after restart.
+The documented 64-bit allocator fix consumes a remainder shorter than a native
+heap header; near-exhaustion payload writes and coalescing are checked. The
+original unlinked-task allocation retains its next pointer until child creation
+replaces it; the verifier preserves that original behavior.
+
+Cover tests exercise complete color-word copies and the original null getter.
+Startup resets logo mode/count, title fade, cover and the actual shared pacing
+variables. The real asset path loads all six supplied SEGALOGO textures. Three
+640x480 images / 921,600 pixels match an independent logo/fade oracle through
+original logo_draw, native GPU completion and three real Windows Presents.
+The intermediate blend allows one RGBA8 step; endpoints match exactly.
+
+Missing-file behavior is also tested. Original logo_start returns void and sets
+the show mode even when the file load fails. The host must check asset, texture
+and wait-provider status before entering the logo loop. A show-mode value alone
+does not establish startup success. A failed load creates no texture references
+or decoded buffer; ordinary initialized asset scratch remains until shutdown.
+The asset error is sticky and must be handled/cleared before normal cleanup.
+
+Integration boundary
+
+The complete presentation-aware task source compiles with all five original
+GCC presentation hooks enabled and the previously qualified native heap fix.
+Its audit object is not linked into this incremental startup DLL. Instead, the
+link uses original startup/allocation function extracts and their real state.
+No replacement present_run/present_draw/present_forget, input, audio or save
+success hooks are supplied. The Windows linker required unresolved references
+even in unused function sections, so function extraction keeps the startup
+dependency boundary explicit. Original sources and earlier attempts are retained.
+
+Task stepping/destruction/replay still require integration with the genuine
+presentation lifecycle. The original logo_step and boot_init have not run.
+The earlier production link counts remain 36 missing rendering services and
+43 for expanded boot; this milestone does not claim to reduce those counts.
+The existing frame-wait diagnostic component retains out-of-scope input/audio/
+loader traces. Startup/rendering verification is not full-game verification.
+
+Reproduction
+
+Use the pinned external Japanese source and the qualified title-fade build from
+JP_NATIVE_TITLE_FADES.txt, its original-logo metadata probe, and the presentation-
+aware task object from build_presentation_task_object.py. Supply local retail
+inputs and the existing Windows Clang/SDK environment. Use fresh private paths.
+
+python -B outputs/sonic-adventure/jp_port_tools/build_native_logo_start_runtime.py
+  --workspace WORKSPACE --upstream PINNED_UPSTREAM --build TITLE_FADE_BUILD
+  --probe TITLE_FADE_LOGO_PROBE --task PRESENTATION_TASK_BUILD
+  --compiler CLANG --output FRESH_PRIVATE_STARTUP_BUILD
+
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_logo_start.py
+  --workspace WORKSPACE --build FRESH_PRIVATE_STARTUP_BUILD
+  --inputs PRIVATE_PVM_INPUT_DIRECTORY --asset-root PRIVATE_PRS_DIRECTORY
+  --report FRESH_PRIVATE_REPORT.json
+
+Join displayed command lines. The verifier briefly opens a diagnostic window.
+analysis/jp_native_logo_start_build.json and jp_native_logo_start_verification.json
+record exact hashes, commands, test groups and limits. The generated original
+game source/metadata, game-containing DLL and retail assets remain private.
+No new binary is eligible for public redistribution in this milestone. Existing
+authored support libraries and historical research binaries are preserved; the
+release archive remains incomplete and is not a playable game.
+
+Next: integrate actual task step/draw/destruction with real presentation hooks,
+then supply original logo_step's real input and exit dependencies. Verify its
+complete frame counts, transitions and texture release before claiming boot.
+Sol High remains appropriate. Luna Low is suitable for routine documentation.
