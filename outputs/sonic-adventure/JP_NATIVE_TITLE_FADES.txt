@@ -1,0 +1,113 @@
+Original title fades and native Ninja context/header integration
+
+Overall project estimate: about 10% of weighted milestones. Goal remains active.
+Japanese matching and GCC source baselines are verified. Native game boot,
+gameplay, English localization, settings and later platforms remain unfinished.
+
+What is verified
+
+The original title_fade_set, title_fade_step, title_fade_draw and white-fade
+helper now execute against the actual native queue/frame/texture/video/GPU owners.
+The original njInitContext, njSetCurrentContext, njColorBlendingMode,
+kmProcessVertexRenderState and UV-size helper provide the real context defaults
+and header calculations. The initialization entry covers contexts/background
+context only; it does not claim to implement full Ninja/system initialization.
+
+Native kmSetVertexRenderState transports the calculated header into the existing
+owned Ninja queue context. It does not retain a caller's temporary context pointer
+or introduce another queue/device owner. Raw hardware strip submission is outside
+this adapter. The complete native game still needs additional SDK/game services.
+
+The SDK header generator uses the existing owned texture token instead of casting
+a host pointer down to a Dreamcast address. Layout assertions check the shared
+surface fields. Invalid filter indices, foreign texture surfaces and null contexts
+fail before updating caller headers. Actual queue-context changes are guarded
+while a producer is active. Invalid context indices preserve the current context
+and color-mode pointers. Pure caller-owned context metadata can be generated
+without changing the queue's selected context.
+
+Original behavior and adaptations
+
+Fade levels and return values retain the original pre-add checks. From zero,
+32 positive steps of eight reach 256; the next call clamps to 255 and returns 1.
+Further positive calls alternate 263 and 255. From 263, negative steps of eight
+reach -33 before the following call returns -1 and resets to zero. The exact
+-30 boundary and zero steps are tested. These are fade-function contracts;
+the complete original logo_step control flow has not yet been executed.
+
+Black and white fade draws retain the original geometry, color, priority and
+transparent/opaque decisions. Two alpha shifts explicitly use unsigned bits to
+avoid host signed-overflow behavior. The original static white helper has external
+visibility in the private extracted component so it can be called and verified.
+Original source files remain unchanged; the build records original body hashes,
+generated source hashes and all adaptations. SDK/game objects and DLLs stay private.
+
+The real default source-alpha/inverse-source-alpha blend factors come from the
+original Ninja context initialization and SDK header generator. Tests exercise
+both blend targets and all twelve Ninja blend modes, including the original
+unchanged-field behavior for factor/target combinations without a matching case.
+Changing blending preserves unrelated header words. No manually chosen TSP blend
+word substitutes for the initialization path in the fade image tests.
+
+Rendered verification
+
+353 new integration checks pass. The suite independently composes the privately
+supplied six-piece logo, then calculates black/white fade colors and native alpha
+blending. It compares 28 actual 640x480 GPU images / 8,601,600 pixels, including
+negative, zero, nearly opaque, intermediate, transparent and overshoot levels.
+Three images run through original frame_wait, actual GPU completion/EOR and real
+Windows Present. Intermediate blends allow at most one RGBA8 step; exact endpoint
+images compare byte-for-byte. Physical Dreamcast blend precision is unverified.
+
+Texture Off produces the expected vertex/material-colored logo plus fade, with
+zero texture uploads and zero texture/sampler bindings. This verifies renderer
+behavior for the planned setting; it does not provide a settings UI.
+
+Retained suites on this runtime pass: background 179; bounds/retry 34; UV16/offset
+13; texture ownership 1,947; frames 8,572; video/window 103,700; presenter 131 in
+this run; bitmap 722; PVM 1,448; asset loading 223. Total distinct checks in this
+qualification: 117,322. Repeated runs are not added. Fade/background suites together
+compare 42 images / 8,658,944 pixels and perform four real Presents. These counts
+describe named integration contracts, not measured whole-game coverage.
+
+Production audit and builds
+
+The real rendering graph still lacks 36 game services. The expanded original boot
+graph still lacks 43. Its old extracted title-fade definitions/state were removed
+and its calls now resolve to the newly qualified shared game provider. Neither
+production audit links diagnostic success stubs. Full logo_start/step/boot_init
+are unexecuted. The diagnostic rendering DLL lacks the real task/heap startup
+providers even though the separate production graph contains their real objects;
+that integration is a next step, not evidence that boot works already.
+
+jp_native_title_fade_support.lib contains fourteen authored production members:
+the preceding thirteen-member background/render/frame/texture/asset component
+plus context_bridge.obj. Every member matches the production audit. It replaces
+overlapping older background/GPU/frame/PVM/asset components; link one generation
+of each owner. The original context/header and title-fade objects remain external
+dependencies built privately from the pinned source. The separate MIT prskit
+codec and other original SDK/game services remain required. No retail assets,
+SDK/game implementations, codec body or diagnostic objects are in the library.
+It is an incomplete research component, not a playable game or installer.
+
+Reproduction
+
+Start from JP_NATIVE_BACKGROUND_PLANES.txt and its qualified background build.
+Keep the project tree, pinned external source, local Clang/Windows SDK and privately
+supplied inputs. Always use fresh private output/report paths:
+
+python -B outputs/sonic-adventure/jp_port_tools/build_native_title_fade_runtime.py
+  --workspace WORKSPACE --upstream PINNED_UPSTREAM --baseline BACKGROUND_BUILD
+  --compiler CLANG --output FRESH_BUILD
+
+Build the private original-logo probe against FRESH_BUILD as described in the
+preceding guides. Then run verify_native_title_fade.py with --workspace, --build,
+--probe, --inputs, --asset-root and a fresh --report path. Join displayed lines
+when entering commands. Published analysis/jp_native_title_fade_* reports contain
+the precise build, source, probe, audit and regression hashes and limitations.
+
+Next: integrate genuine task/heap startup and cover state with the qualified
+rendering providers; supply actual input/exit/save dependencies so the original
+logo startup and progression can execute and transition. Preserve shared owners
+and verify original frame counts before claiming complete boot. Keep Sol High
+for that integration. Luna Low is suitable for documentation-only maintenance.

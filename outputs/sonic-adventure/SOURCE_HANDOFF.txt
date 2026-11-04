@@ -1,3 +1,13 @@
+Latest title-fade update: JP_NATIVE_TITLE_FADES.txt. Original black/white fades
+and actual Ninja context/header generation now compose the supplied logo through
+the shared native owners. 28 fade images / 8,601,600 pixels and 117,322 combined
+checks pass, including real frame-wait/Present and Texture Off. A fourteen-member
+authored support library is published; SDK/game implementations stay external.
+Expanded boot still lacks 43 services. Real task/heap startup and input/exit/save
+integration remain necessary before original logo startup or full boot is claimed.
+Earlier snapshot notes below retain their historical scope. Japanese baselines
+verified; overall about 10%; goal active.
+
 Latest native background update: JP_NATIVE_BACKGROUND_PLANES.txt. Original back-color
 packets now render through real SDK/frame/GPU providers. Full gradients, UV16,
 offset colors, texture release, Texture Off and the original logo/Present path
