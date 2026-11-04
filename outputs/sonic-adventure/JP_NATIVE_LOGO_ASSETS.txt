@@ -1,0 +1,94 @@
+Native asset loading and original Sega-logo rendering qualification
+
+Overall project estimate remains about 10% of weighted milestones. Goal active.
+Japanese matching and GCC source baselines remain verified. Full native boot,
+gameplay, English localization and later platforms remain unfinished.
+
+This follow-up qualifies the full original logo drawing composition that was
+still pending in JP_NATIVE_ASSET_LOADING.txt and the preceding daily snapshot.
+It does not qualify logo_start, logo_step, boot_init or a complete game loop.
+
+What now works in the qualified integration
+
+The unchanged original logo_draw body and its six original texture-list and
+animation entries execute against real shared native providers. The adapted
+original texture_load_pvm wrapper reads SEGALOGO.PRS through the bounded Windows
+file/PRS provider and actual PVM loader. Its checked field transfers preserve
+ownership, record counts and original short filename pointers.
+
+An independent Python oracle decodes the privately supplied PVM images and
+assembles the six pieces using the original animation metadata. It does not
+derive expected pixels from native packets or renderer output. All 640x480
+pixels match for one captured-frame GPU render and two complete original
+frame_wait executions with real GPU completion, EOR callbacks and Windows
+Present: three images, 921,600 pixels, 29 checks. The six original pieces produce
+six batches and twelve triangles. All six textures release without leaked owners.
+Retail images and generated metadata stay private; public reports contain hashes.
+
+The new native file/PRS owner and original texture wrapper were also linked into
+the existing unfinished production graph. All previous texture services remain.
+No new unresolved imports appeared. There are still 36 unresolved game services
+and 65 of the 79 presentation imports are supplied. The graph has not yet booted
+the full game. The logo probe uses genuine providers for the path under test;
+other diagnostic input/audio/loader services are not qualified by its success.
+
+Build and regression evidence
+
+The native asset build completed with zero compiler/linker diagnostics.
+- Asset loader integration: 223 checks, 27 GPU texture probes, 110,592 pixels.
+- Original complete logo composition: 29 checks, three images, 921,600 pixels.
+- Preserved PVM suite: 1,448 checks, 31 images, 126,976 pixels.
+- Preserved texture-owner suite: 1,947 checks.
+- Preserved frame suite: 8,572 checks.
+- Preserved video/window suite: 103,700 checks.
+- Preserved native presenter suite: 131 checks in this run.
+- Preserved bitmap suite: 722 checks.
+Total distinct checks across these suites: 116,772. Repeated runs are not added.
+These counts describe different scopes; they do not measure gameplay coverage.
+
+The initial logo verifier reached cleanup after the pixel/Present checks, then
+incorrectly compared the void clock-shutdown return with integer zero. Its first
+version remains private as failed_verifier_v1.py. Correcting that test assertion
+produced the complete passing 29-check run; native/game code did not change.
+
+Build artifact and reproduction
+
+jp_native_asset_loading_support.lib contains exactly four authored production
+members: textures_move.obj, assets.obj, memory_pvm.obj and bitmap_source.obj.
+Their bytes match the audited objects. It REPLACES the overlapping older
+PVM/bitmap upload support libraries. Link only one texture owner, memory owner,
+frame owner, queue owner and video/device owner.
+
+The library leaves the PRS codec as an external dependency. Compile the unchanged
+public third_party/prskit/prskit.c separately and preserve its MIT LICENSE.txt.
+Original game texture-wrapper and SDK metadata/helper objects must also be built
+separately from the pinned external source. Game/SDK objects and diagnostic DLLs
+are not members of this authored support library and remain private. No retail
+content is embedded. The library is an incomplete research component, not a game.
+
+Use the prerequisite workflow in JP_NATIVE_ASSET_LOADING.txt, then fresh private
+output paths. The original-logo probe builder needs the matching WSL generated
+progress/demo metadata from the preserved Japanese baseline:
+
+python -B outputs/sonic-adventure/jp_port_tools/build_native_logo_asset_probe.py
+  --workspace WORKSPACE --upstream PINNED_UPSTREAM --build ASSET_BUILD
+  --compiler CLANG --output FRESH_PROBE --distribution WSL_DISTRO
+  --generated-root WSL_GENERATED_SOURCE_ROOT
+
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_logo_assets.py
+  --workspace WORKSPACE --probe FRESH_PROBE --inputs PRIVATE_PVM_INPUTS
+  --asset-root PRIVATE_COMPRESSED_ASSET_DIRECTORY --report FRESH_REPORT.json
+
+Join displayed lines into one command. This remains a development workflow,
+not a beginner-ready installer. Published analysis/jp_native_asset_qualified_*
+reports record build, audit, original-logo and regression hashes and limitations.
+
+Next integration work
+
+Connect the real logo startup and progression, including original title-fade
+set/step/draw, back-color state, shared task/heap initialization and actual input
+handling. Verify fading, frame counts, texture release and transition results;
+do not replace missing services with success stubs. Continue from that real boot
+path toward title/gameplay and the remaining production dependencies.
+Recommended model: Sol High for this integration. Luna Low is suitable for
+documentation-only work after the relevant native integration is qualified.

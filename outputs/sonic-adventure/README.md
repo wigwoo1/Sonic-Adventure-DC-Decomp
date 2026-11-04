@@ -1,3 +1,13 @@
+Latest qualified native logo update: JP_NATIVE_LOGO_ASSETS.txt. The unchanged
+original six-piece logo now uses real file/PRS/PVM loading and passes full
+640x480 image comparisons through the original frame-wait and real Present.
+Three logo images / 921,600 pixels and 116,772 combined checks pass. The
+four-member authored asset support library is published separately from
+game/SDK/codec implementations. Production still lacks 36 game services;
+logo startup/fading, full boot and gameplay remain unfinished. Prior
+snapshot notes below describe their earlier verification boundaries.
+Japanese baselines verified; overall about 10%; goal active.
+
 Current native file/PRS snapshot: JP_NATIVE_ASSET_LOADING.txt. The original
 adapted 512-entry game texture wrapper now uses real native file/PRS/PVM
 loading and checked ownership transfers. A clean build passes 223 asset

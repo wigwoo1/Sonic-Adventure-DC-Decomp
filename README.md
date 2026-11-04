@@ -104,6 +104,14 @@ real QPC/Win32 waits and close handling. Four original frame globals are supplie
 (60/79 presentation imports). Adding the frame source exposes 22 more genuine
 dependencies; the expanded graph has 43 missing services. No trace providers are
 linked into production. Real game render/flip integration remains open.
+The unchanged original six-piece Sega-logo draw now matches an independent
+640x480 oracle through native file/PRS/PVM loading, GPU rendering and the
+original frame-wait path with real Present. Three logo images / 921,600 pixels
+and 116,772 combined checks pass. An authored four-member asset library is
+available; codec/game/SDK implementations remain separate. The production
+graph still lacks 36 services. Logo startup/fading and full gameplay remain
+unverified. Earlier snapshot notes below retain their historical scope.
+
 Native file/PRS loading now drives the adapted original 512-entry texture
 wrapper with checked field ownership transfers. A clean build passes 223 asset
 checks and 10,519 texture/frame regressions, including 27 GPU texture probes
@@ -144,6 +152,7 @@ Texture Off must disable sampling and use vertex/material colours.
 - [Current goal](outputs/sonic-adventure/JP_BASED_PORT_GOAL.txt)
 - [Integration order and limits](outputs/sonic-adventure/JP_NATIVE_PORT_PLAN.txt)
 - [Verified GCC baseline and native/localization evidence](outputs/sonic-adventure/JP_GCC_BASELINE.txt)
+- [Original logo composition, asset loading and verified scope](outputs/sonic-adventure/JP_NATIVE_LOGO_ASSETS.txt)
 - [Native file/PRS asset loading and verified scope](outputs/sonic-adventure/JP_NATIVE_ASSET_LOADING.txt)
 - [Bounded PVM archives and supplied-disc native texture probes](outputs/sonic-adventure/JP_NATIVE_PVM_UPLOAD.txt)
 - [Real bitmap queue and bounded texture uploads](outputs/sonic-adventure/JP_NATIVE_BITMAP_UPLOAD.txt)
