@@ -1,0 +1,132 @@
+Native packet and encoded-texture consumers
+
+Overall completion: approximately 10% of weighted milestones, not code coverage.
+Japanese matching/GCC baselines remain verified. Native PC integration is partial;
+English integration, playable gameplay and later platforms remain unfinished.
+
+What this adds
+The authored decoder consumes actual committed frame lists from the existing
+queue/frame owner. It creates independently owned geometry arrays, raw material
+headers and triangle indices for ordinary polygon vertex layouts 0 through 8.
+It handles packed, floating and face/intensity colors, UV32/UV16, 32/64-byte
+headers and vertices, multiple strips and alternating strip winding. UV16 means
+the high half of an IEEE binary32 value, not an IEEE half-precision float.
+All material words remain available to a future graphics backend. Face colors
+and intensity scalars remain separate; hardware rounding is not invented here.
+
+The real frame adapter calls jp_frame_list. No second queue, matrix, texture or
+frame owner is introduced. Decoded geometry survives release of its source
+frame. Texture payload ownership is separate: a graphics consumer must retain
+the original frame until its uploads/reads have finished. Decoding does not
+submit GPU work or retire the source frame automatically.
+
+The decoder validates the whole immutable input before allocating its exact
+bounded output. A second pass builds the plan, with naturally aligned triangle
+indices. Failure preserves the caller's output pointer and identifies the list
+and byte offset. Unsupported modifier, hardware-sprite, two-volume and tile-clip
+commands are rejected explicitly. These remain required future features.
+Header list codes must agree with the queue lane. Ordinary polygon headers and
+exact normal/end-of-strip vertex controls are accepted. Snapshots contain no
+fabricated end-of-list commands. Previous-face intensity needs an earlier
+explicit face header in the same list; unresolved inherited state is rejected.
+Finite used coordinates/colors are required; reserved words are ignored.
+
+Encoded surface conversion
+jp_native_texels converts encoded surface bytes into RGBA8 with complete source,
+output and palette bounds checked before any writes. It supports ARGB1555,
+RGB565, ARGB4444, PAL4/PAL8, rectangular twiddling, non-twiddled 16-bit textures,
+explicit stride, square mip chains and standard/expanded-small VQ codebooks.
+PAL4 uses 64 banks of 16 entries; PAL8 uses four banks of 256 entries. Palettes
+are explicit packed ARGB arrays. Frame capture does not yet snapshot palette or
+other global PVR register state. Stride width is supplied explicitly too.
+
+Input is the GPU surface layout, NOT a raw PVR file. An asset loader must expand
+small VQ books to their 2,048-byte page and normalize 16-bit mip file data to the
+surface's leading-byte layout. This component does not establish retail asset
+loading. An importer must use truthful accessible lengths and validate files.
+YUV, bump, reserved formats, palette+VQ and the VQ 1x1 mip are explicitly
+unsupported. In particular, the VQ 1x1 corner choice is not guessed. These
+remain qualification/integration gates, rather than silently substituted colors.
+Source, palette, destination and metadata must use separate accessible storage.
+Failures preserve output pixels and metadata. Five/six-bit channels use bit
+replication, and four-bit channels expand by 17. No hardware pixel comparison
+is implied by these conversion tests.
+
+Verification and corrections
+The final packet suite passes 12,651 checks across 504 constructed layouts and
+three ordinary lists, all nine vertex formats, exact budgets, malformed/truncated
+commands, face-cache reuse, strip restarts and protected memory boundaries.
+It decodes 32 actual owned frames produced by 128 complete native model, sprite
+and strip parent calls, validates their real texture identities, and checks
+independent decoded geometry after frame release and stale-frame rejection.
+The linked real producer DLL and all its established owner sources are unchanged.
+
+The encoded texture suite passes 5,861 checks over 579 surface/level cases and
+14,067,264 exact RGBA pixel comparisons. Every one of the 65,536 16-bit values
+is tested in each of the three 16-bit formats, in linear and twiddled layouts.
+SDK mip offsets, VQ books/indices, rectangles, stride, palette banks and atomic
+short-span errors are checked. Extended tests add 17,033 checks, 204 nonuniform
+palette cases/34,816 pixels, protected source/output pages, and 6,000 deterministic
+mutated packet streams (1,941 valid, 4,059 rejected). This is not a fuzz coverage
+or security guarantee. The tests use independent synthetic data, not game assets.
+
+During fixture bring-up, NJS_TEXTURE_VTX was initially given the wrong field
+order; the SDK declaration establishes x,y,z,u,v,color. The repeated model fixture
+also replaced the context with TCW zero while leaving the SDK texture cache
+active. The original model legitimately skipped its texture setter on a cache
+hit, so the context must preserve the matching live TCW. Both fixture errors were
+corrected without changing original producers. Integrating real context-switch
+and texture-cache invalidation remains a whole-renderer responsibility.
+
+The first decoder candidate mistakenly read KMVERTEX2's reserved word as offset
+intensity under a non-textured header. The final v2 consumer ignores that word;
+NaN reserved-word fixtures verify it. V1 source/binary/proof bytes are preserved
+privately with a source snapshot, but v2 is the qualified current packet object.
+No established predecessor source or matching proof was rewritten.
+
+Builds and reproduction
+The public jp_native_packet_texel_support.lib contains exactly three authored
+objects: packet decoder, real-frame adapter and texel decoder. Archive members
+are checked byte-for-byte against qualified build objects. It needs the actual
+frame owner for jp_frame_list, and contains no game body, diagnostic producer,
+retail asset or graphics backend. It is an incomplete research component.
+Game-containing diagnostic DLLs remain private. No playable EXE is provided.
+
+From the workspace root, use Python -B with the scripts in jp_port_tools:
+  build_native_packet_consumer.py --workspace WORKSPACE --frames FRAME_BUILD
+    --compiler CLANG --output FRESH_PRIVATE_PACKET_BUILD
+  verify_native_packets.py --workspace WORKSPACE --build PACKET_BUILD
+    --report FRESH_PACKET_REPORT
+  build_native_texel_decoder.py --workspace WORKSPACE --compiler CLANG
+    --output FRESH_PRIVATE_TEXEL_BUILD
+  verify_native_texels.py --workspace WORKSPACE --build TEXEL_BUILD
+    --report FRESH_TEXEL_REPORT
+  verify_native_consumers_extended.py --workspace WORKSPACE --packets PACKET_BUILD
+    --texels TEXEL_BUILD --report FRESH_EXTENDED_REPORT
+  build_native_consumer_support_library.py --workspace WORKSPACE
+    --packets PACKET_BUILD --texels TEXEL_BUILD --extended-report EXTENDED_REPORT
+    --compiler CLANG --output FRESH_PRIVATE_LIBRARY_BUILD
+Each command is one line. Existing outputs are refused to preserve proofs.
+The frame build is the already qualified native runtime from the owned-frame
+guide. Windows x64 Clang/Windows SDK and locally supplied pinned dependencies
+are required for these tests. Android/3DS builds have not been performed.
+
+What comes next
+Consume these real plans and retained encoded resources in the native GPU
+backend, producing verified pixels for complete actual model/sprite/primitive
+captures. Bind depth, blend, fog, clipping, palette versions and sorting from real
+frame state; implement remaining packet/texture families. Texture Off must skip
+texture decoding/upload/sampling and use vertex/material colors. Follow with
+actual render/flip scheduling, presentation, device statistics, native assets,
+retained replay, wide pictures and complete gameplay. The existing production
+frame link still has 26 unresolved services. No kmRender/flip placeholders were
+added. Full game frames and rendered game images are still unverified.
+
+Source provenance
+Layout facts come from reshaped/sonic-adventure at the preserved pin
+25a3d3154dbe657325e97dbe8c5291086f6af5c0: sdk/include/kamui.h, njtypes.h,
+sdk/ninja/kmvertex_kamui_lib.c, kmtex_kamui_lib.c and njPalette.c. Their SHA256
+values are in the accompanying qualification report. Those source bodies remain
+external. Flycast's primary TA parser was also consulted for intensity-alpha
+and UV16 interpretation; no Flycast code was copied or linked. No project-wide
+license is assigned; existing notices and external dependency policy remain.

@@ -1,3 +1,11 @@
+Current packet/texture consumer update: JP_NATIVE_PACKET_TEXEL_CONSUMERS.txt.
+All nine ordinary packet layouts decode actual owned model/sprite/strip output.
+12,651 packet checks, 5,861 texture checks and 17,033 extended checks pass.
+More than 14 million independently expected RGBA texels compare exactly.
+A three-object authored consumer support library is public research code.
+Native GPU drawing, render/flip, full frames and gameplay remain unfinished.
+About 10% overall; Japanese baseline verified; native PC integration partial.
+
 Current owned-frame update: see JP_NATIVE_OWNED_FRAMES.txt. Actual committed
 packets and encoded texture payloads survive queue/texture reset and release.
 8,572 ownership checks, 193 submissions and 128 complete parent draws pass.

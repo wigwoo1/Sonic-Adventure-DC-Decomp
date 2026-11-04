@@ -65,6 +65,12 @@ submission, owner replacement and out-of-order frame completion. With retention
 enabled, all 200,669 model and 82,489 sprite checks pass. The three-object authored
 support library is public; diagnostic/game bodies stay private. Real render/flip
 and pixel consumption remain unfinished; the same 26 frame services remain.
+Ordinary packet decoding now passes 12,651 checks, including 32 actual owned
+frames from 128 complete model/sprite/strip draws. Encoded texture conversion
+passes 5,861 checks and 14,067,264 exact synthetic RGBA comparisons; extended
+bounds/palette/mutated-stream tests pass 17,033 checks. The three authored
+consumer objects are public; game-containing diagnostics stay private. GPU
+drawing, render/flip and the same 26 frame services remain unfinished.
 Full-frame execution and gameplay are unfinished. English integration
 begins as the needed asset/text/audio systems become usable. Game-containing
 runtime artifacts remain private.
@@ -79,6 +85,7 @@ Texture Off must disable sampling and use vertex/material colours.
 - [Current goal](outputs/sonic-adventure/JP_BASED_PORT_GOAL.txt)
 - [Integration order and limits](outputs/sonic-adventure/JP_NATIVE_PORT_PLAN.txt)
 - [Verified GCC baseline and native/localization evidence](outputs/sonic-adventure/JP_GCC_BASELINE.txt)
+- [Native packet and encoded-texture consumers](outputs/sonic-adventure/JP_NATIVE_PACKET_TEXEL_CONSUMERS.txt)
 - [Owned frame commands and texture lifetimes](outputs/sonic-adventure/JP_NATIVE_OWNED_FRAMES.txt)
 - [Complete model producer numerical integration](outputs/sonic-adventure/JP_NATIVE_MODEL_RZ.txt)
 - [Native strip/texture and clipped polygon providers](outputs/sonic-adventure/JP_NATIVE_PRIMITIVES.txt)
