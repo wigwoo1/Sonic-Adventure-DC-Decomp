@@ -1,0 +1,142 @@
+Native bitmap queue and bounded memory-texture uploads
+=====================================================
+
+Status: VERIFIED component milestone. Whole-project estimate remains about 10%
+of weighted milestones. Japanese matching/GCC source baselines remain verified;
+complete native gameplay, English localization and later platforms are unfinished.
+The app goal stays active. These are incomplete research artifacts, not a game.
+
+What works
+----------
+The complete pinned bitmap_clear_queue, bitmap_queue_add and bitmap_flush_queue
+bodies are compiled privately, retaining the Japanese GCC queue-pointer repair.
+Eight nonadjacent bitmap pointers now upload their own pixels into real owned
+native textures. Clear discards pending work; entries beyond eight retain the
+original drop behavior. A failing upload consumes only the successful prefix and
+retains the failed bitmap and remaining queue entries for explicit recovery.
+
+The real SDK njLoadTexture list loop, njSetTextureInfo/Name, record searches,
+record entry, texture parameter and palette-bank builders, and texture release
+are retained. An authored bounded native service replaces hardware-bound memory
+loading. It uses the SAME record/binding/surface owner as real queued frames.
+No pointer is truncated into a 32-bit texture field. Native opaque handles and
+resource IDs preserve that SDK field width. No second device/texture owner exists.
+
+Each new memory upload needs a borrowed source span with an actual byte count.
+jp_memory_load_list(list, pixels, bytes) binds it, calls real njLoadTexture and
+ends the view. Alternatively bind a source, call SDK list/one-texture loaders,
+then unbind. All bytes are copied into owned surface storage synchronously;
+the borrowed bytes and descriptor can then expire. Source descriptors are not
+advanced or rewritten. Sharing an already loaded explicit global index requires
+no source bytes; the existing record/surface is reused with an added reference.
+Palette banks can have separate records sharing one surface. TEXCONTINUE uses
+the previous bound name. Nonpalette continuations share one counted record.
+
+Supported source types: RGB1555/565/4444 rectangle or twiddled, rectangular
+twiddled, square 16-bit mip chains, standard VQ and VQ mip chains, PAL4/8 and
+their square mip chains. Raw explicit-index sources and bounded PVRT chunks,
+optional GBIX and bounded unknown chunks are accepted. A PVRT chunk must contain
+its complete advertised payload. Unindexed PVRs allocate a free user global
+index and reject exhaustion. 16-bit mip sources omit the GPU layout's leading
+four bytes; upload inserts that zero prefix. Palette bit depth follows the
+real native palette-mode register. SDK texture sides remain powers of two from
+8 through 1024; future HD texture replacement/settings require further work.
+
+File/disc reads, cache-only/BOTH, automatic mip generation, BMP conversion,
+small-VQ expansion, stride uploads, YUV/bump and unsupported type combinations
+fail explicitly. Their real providers/conversions remain necessary for the
+full game; no file/cache service or fake successful upload is supplied here.
+The existing renderer still has its separately documented unsupported states.
+
+Ownership and failure behavior
+------------------------------
+Use one game thread. The loader's serialized owner persists after a borrowed
+view ends. Other threads cannot mutate it. jp_memory_shutdown releases that
+thread ownership only when no source view is active. It does not destroy the
+separate texture/frame/GPU owners. Clear both memory and texture errors only as
+part of deliberate recovery. Stop the game loop on errors; recovery must also
+handle any retained recording/submission, then drain owners before shutdown.
+
+The bitmap and its full padded pixel allocation must stay valid until flush.
+Dimensions are the actual allocation contract; C cannot prove an arbitrary
+caller pointer's allocation size. The queue derives its span from the checked
+padded dimensions. The original bitmap allocation/text-drawing helpers are not
+all ported by this milestone. Callers of generic loaders must supply real spans.
+
+Bitmap refresh releases the old live texture before loading the new one, as in
+the original queue. Therefore an allocation/load failure after that release
+does not promise rollback to the old live bitmap. It does preserve failed and
+remaining queue pointers. A frame that already retained the old surface keeps
+that allocation until its own retirement, even while the live bitmap refreshes.
+An invalid old texture release latches the failure too. frame_wait/present_hold
+now stop on bitmap failures before continuing into render/flip. A list loader
+can retain its successful prefix if a later texture fails; callers must release
+that prefix during recovery. SDK names must be reset with njSetTextureName
+before reloading their already bound fields, and released before repurposing.
+
+Verification and limits
+-----------------------
+722 integration checks pass: 74 encoded format/size cases, exact owned byte
+copies and mip prefixes, handle/record metadata, palette-bank sharing, reference
+counts, continuations with a full pool, bounded/malformed chunks, capacity and
+budget failures, thread ownership and shutdown, nonadjacent eight-entry queue,
+retry/clear behavior, and original frame failure guards.
+
+Two original frame_wait calls execute real bitmap flush, GPU render, completion
+and Present. Two full 64x64 images / 8,192 pixels match independent red/green
+oracles. The first frame retains old red pixels while its bitmap becomes green;
+the next frame uses the new green allocation. Readback observes the completed
+GPU job before flip, because a flip-discard swapchain does not preserve its old
+backbuffer. This test-only readback does not supply pixels to the GPU or fake
+completion. Synthetic input pixels are used; no retail assets are published.
+
+Preserved suites pass: 1,947 texture, 8,572 frame ownership, 103,700 video/window
+and 127 presenter checks in the qualified run, totaling 115,068 with integration.
+The present suite's number varies with real pending polls. The frozen texture
+suite needs its old selection observer: identical owner objects are relinked
+with that extra export only. Other suites use exact new runtime DLL bytes.
+The frozen present report's old bitmap-trace description is superseded by its
+qualification wrapper; both bitmap trace definitions are removed in this build.
+
+The actual production graph, without diagnostic fixtures, resolves three more
+services: bitmap_clear_queue, bitmap_flush_queue and texture_queue_count.
+It supplies 65/79 original presentation imports, with 36 services remaining.
+The diagnostic DLL still controls unrelated audio/input/loader/stage services;
+the full game loop, actual title/game assets, audio, saving and gameplay are not
+verified. This milestone does not prove all PVR formats, console pixel fidelity,
+physical display timing, English support or a playable native port.
+
+Reproduction
+------------
+Supply the pinned external dependency (commit
+25a3d3154dbe657325e97dbe8c5291086f6af5c0) and qualified prerequisite builds.
+From the workspace root, with local absolute paths substituted:
+
+python -B outputs/sonic-adventure/jp_port_tools/build_native_bitmap_upload.py
+  --workspace WORKSPACE --upstream UPSTREAM --present PRESENT_BUILD
+  --compiler CLANG --output NEW_PRIVATE_BUILD
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_bitmap_upload.py
+  --workspace WORKSPACE --build NEW_PRIVATE_BUILD --report NEW_REPORT.json
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_bitmap_regressions.py
+  --workspace WORKSPACE --build NEW_PRIVATE_BUILD --suite SUITE --output NEW_DIR
+  (run suites textures, frames, video and present in separate processes)
+python -B outputs/sonic-adventure/jp_port_tools/audit_native_bitmap_upload_link.py
+  --workspace WORKSPACE --baseline-audit PREVIOUS_PRODUCTION_AUDIT.json
+  --build NEW_PRIVATE_BUILD --output NEW_PRIVATE_AUDIT_DIR
+python -B outputs/sonic-adventure/jp_port_tools/build_native_bitmap_support_library.py
+  --workspace WORKSPACE --build NEW_PRIVATE_BUILD --audit NEW_AUDIT.json
+  --compiler CLANG --output NEW_LIBRARY_DIR
+
+The archive's new jp_native_bitmap_upload_support.lib has three authored members:
+textures_upload.obj, memory_upload.obj and bitmap_source.obj. REPLACE the old
+retained texture owner; never link both owners or their containing libraries
+unchanged. Link actual external bitmap queue/list/record providers, native
+frame/video/packet owners, GPU/presenter support and exactly one clock provider.
+The library excludes external SDK/game bodies, diagnostic objects and retail
+assets. It is a component library, not a standalone executable. Private generated
+game-containing DLLs and original matching proofs remain local and preserved.
+
+Next: asset-backed loading/boot, the remaining game services and renderer states,
+then complete gameplay; English and user settings follow the native baseline.
+Sol High is recommended for that integration. Luna Low suits documentation-only
+work. The whole-project goal remains active, about 10% complete.

@@ -1,3 +1,13 @@
+Current native bitmap upload update: JP_NATIVE_BITMAP_UPLOAD.txt. Original
+GCC queue pointer repair now uploads real owned memory textures through the
+existing SDK record/handle owner. Bounded sources, palette sharing, retry
+and old-frame retention are verified. Two original frame-wait GPU images
+match; 722 integration plus 114,346 preserved regression checks pass
+(115,068 total). Production supplies 65/79 presentation imports with 36
+services left. File/cache/remaining formats and full gameplay remain open.
+Japanese baselines verified; English/later platforms unfinished. About 10%;
+goal active; incomplete research artifacts, not a playable game.
+
 Current native render/flip update: JP_NATIVE_RENDER_FLIP.txt. kmRender now
 captures and submits actual GPU work; flip observes completion, dispatches
 real EOR callbacks, waits a logical tick and Presents. Statistics measure
