@@ -1,3 +1,11 @@
+Current native GPU update: see JP_NATIVE_GPU.txt. Actual model/sprite/strip
+packets now render to a hardware offscreen target and return RGBA8 pixels.
+612,609 checks and 100 image comparisons pass with a documented native-float
+pixel oracle. Texture Off has zero shader texture/sampler bindings or uploads.
+A real empty 7680x4320 target/readback passes; 8K gameplay is unverified.
+No game loop/window/flip/vsync or playable port yet. Console pixel fidelity
+and complete effects remain unfinished. About 10% overall; goal active.
+
 Current packet/texture consumer update: JP_NATIVE_PACKET_TEXEL_CONSUMERS.txt.
 All nine ordinary packet layouts decode actual owned model/sprite/strip output.
 12,651 packet checks, 5,861 texture checks and 17,033 extended checks pass.

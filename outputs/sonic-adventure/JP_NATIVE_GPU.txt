@@ -1,0 +1,150 @@
+Native GPU consumption of owned game drawing packets
+
+Overall completion: approximately 10% of weighted milestones, not code coverage.
+The Japanese matching and GCC baselines remain verified. Native PC integration
+is partial; English localization, complete gameplay and later ports are unfinished.
+
+Implemented boundary
+The authored D3D11 backend consumes real owned frame IDs through the qualified
+packet decoder, reads retained encoded texture payloads and uploads decoded
+levels to hardware textures. It renders into an owned RGBA8 target with a D32
+depth target, copies to a staging resource and returns tightly packed RGBA8.
+It supports ordinary vertex layouts 0..8, projected screen positions,
+perspective-correct UV/color interpolation, native floating face/intensity colors,
+offset RGB, all four texture shade modes, alpha controls, depth tests/writes,
+small/orientation culling, eight blend-factor encodings, alpha threshold, point
+and bilinear filtering, repeat/mirror/clamp and supported mip-chain uploads.
+
+Actual SDK model/sprite/strip producers and queue/frame/texture owners are
+unchanged. No game-source body is copied into this backend. No second owner or
+successful empty implementation of kmRender/kmFlipFrameBuffer is introduced.
+The production presentation/frame link still needs the same 26 services.
+
+Texture Off
+The textures=0 backend setting skips frame-surface lookup, decoding, hardware
+texture creation/upload and texture sampling. It uses vertex/material base and
+offset colors with their normal alpha/blend/depth behavior. A separately compiled
+pixel shader omits all texture/sampler declarations and sampling instructions.
+Reflection of the actual compiled shader must report zero texture and sampler
+bindings or GPU initialization fails. Reports also show zero texture uploads and
+decoded texels. A real retained resource with an unsupported/one-byte encoded
+payload renders in Off mode and fails atomically when sampling is enabled.
+This establishes the backend behavior, not an already implemented settings menu.
+
+Ownership and failure contract
+One game thread calls jp_gpu_open, jp_gpu_draw_frame and jp_gpu_close. Frame,
+config/palette and output spans must remain accessible and separate throughout
+the call. Caller owns the frame and releases it afterward. Readback Map waits
+for the submitted work; the backend clears device bindings and releases its
+temporary GPU resources before returning. It borrows no source payload afterward.
+Actual texture shutdown/reinitialization, overlapping old/new generations and
+out-of-order frame completion are verified through the GPU consumer.
+
+Output pixels and report remain unchanged on argument, decoding, unsupported
+state, unsupported texture, budget or API failure. Decode and all batch resource
+creation occur before target drawing; CPU output is copied only after successful
+readback. Errors identify a batch/list and HRESULT for diagnostics. Never call
+unchecked original writers without complete bounds, valid assets and prepared
+resources. The caller must preserve the SDK texture-cache/context invariant.
+
+The explicit per-call budget conservatively counts decoded plan storage,
+CPU/GPU expanded vertices, requested target/depth/staging payloads, batch metadata,
+constant data and decoded/uploaded texture payloads. It does not measure driver
+overhead, shader/device storage or process RAM. This initial implementation can
+upload the same surface for multiple batches; caching/performance remains work.
+
+Verified scope
+The primary suite passes 491,158 checks over 62 images and 490,559 compared
+interior pixels, including 32 complete actual model/sprite/strip parent calls.
+The extended suite passes 121,451 checks over 38 images and 121,112 compared
+interior pixels. All nine ordinary vertex layouts, Gouraud and explicit first/
+last flat choices, ARGB1555/4444/565, VQ, PAL4/PAL8 banks, retained generations
+and exact accounted-budget boundaries are covered. Combined: 612,609 checks,
+100 images and 611,671 compared interior pixels. Test assets are synthetic.
+There is real GPU rasterization of actual game drawing providers, but these are
+component fixtures, not a complete game frame or a Sonic gameplay screenshot.
+
+A 7680x4320 empty target is created, cleared and read back on the hardware device.
+This proves target/readback capability, not 8K gameplay performance or a display
+settings UI. Fractional UNORM clears follow Direct3D's 0.6 integer-ULP tolerance;
+0.5 may become 127 or 128 in an 8-bit channel. The observed hardware produced
+127. Other native-float pixel comparisons allow at most two 8-bit channel steps.
+Geometry coverage edges and nearly exact point-sampling texel boundaries are
+excluded from the numerical oracle. Physical PVR coverage, quantization, shader
+rounding, flat-color convention and whole-scene pixel fidelity are unverified.
+
+Bring-up findings are preserved in private earlier build/source snapshots.
+The new fixture initially copied a registered texture handle into a new name
+array, violating its field-address binding; it now registers the final array.
+The first GPU state gate rejected filter codes 2/3 even without mipmapping.
+Those non-mip modes now use bilinear sampling, while actual trilinear mip passes
+remain explicitly unsupported. Sampling ties and permitted UNORM conversion
+tolerance were identified against Microsoft's specification, not hidden by a
+claim of exact console pixels. No established producer/proof was overwritten.
+
+Explicit integration/fidelity gates
+This is a synchronous offscreen backend. It does not yet implement a window,
+swapchain, kmRender/flip scheduling, vsync, Kamui statistics or the actual game
+frame loop. Native asset loading, retained replay, wide pictures, audio, input,
+saves and gameplay remain required. Native numerical helper proofs do not
+establish entire gameplay FPSCR behavior or enhanced frame-rate support.
+
+Clear color, logical canvas size, palette, stride, small-cull threshold and alpha
+threshold are explicit backend inputs. Real frame register/state capture is not
+implemented. Translucency follows opaque, punch, translucent list order and
+submission order within each list; intersecting hardware autosort is not claimed.
+Native first/last flat choices are explicit; a physical console convention with
+different per-vertex flat colors remains to be qualified. Texture color arithmetic
+uses native floating values, not a proven PVR 8-bit quantization model.
+Punch uses the supplied ISP depth/write state and native alpha test/blend;
+physical PVR punch-specific depth/alpha policies remain a comparison gate.
+Custom hardware clamp registers are not captured; output uses native RGBA8 range.
+
+Table/vertex fog, secondary accumulation buffers, modifier/shadow/two-volume/
+hardware-sprite/tile-clip commands, supersampling, trilinear mip passes and
+non-default mip-D adjustment are rejected. Default mip-D code 4 is supported
+with ordinary native implicit LOD; console LOD equivalence remains unmeasured.
+The texture decoder's YUV/bump/palette-VQ/VQ-1x1 exclusions remain. Positive
+reciprocal depths outside 1e-20..1e20 and negative depths are rejected; zero depth
+uses a native unit interpolation weight. Those numerical outliers and zero-depth
+hardware texturing are not console-qualified. These are remaining required
+features, not claims that unsupported game draws can be discarded.
+
+Builds and reproduction
+jp_native_gpu_support.lib packages exactly the qualified authored GPU object.
+It requires the existing packet/texel support, actual frame owner and Windows
+D3D11/D3DCompiler/DXGUID libraries. No game/diagnostic body or retail asset is
+packaged. The private test DLL imports the real game-containing frame runtime;
+that diagnostic dependency stays private. There is no playable EXE.
+
+Run Python -B from the workspace root; each command is one line:
+  jp_port_tools/build_native_gpu.py --workspace WORKSPACE --packets PACKET_BUILD
+    --texels TEXEL_BUILD --frames FRAME_BUILD --compiler CLANG --output FRESH_GPU_BUILD
+  jp_port_tools/verify_native_gpu.py --workspace WORKSPACE --build GPU_BUILD
+    --report FRESH_PRIMARY_REPORT
+  jp_port_tools/verify_native_gpu_extended.py --workspace WORKSPACE --build GPU_BUILD
+    --report FRESH_EXTENDED_REPORT
+  jp_port_tools/build_native_gpu_support_library.py --workspace WORKSPACE
+    --runtime GPU_BUILD --compiler CLANG --output FRESH_LIBRARY_BUILD
+Prefix script paths with outputs/sonic-adventure/. Existing output/report paths
+are refused. Provide the already qualified packet/texel/frame builds locally,
+Windows x64 Clang/SDK and a hardware D3D11 feature-level-11_0 device. No software
+fallback or platform performance claim follows from this proof.
+
+Next integration milestone
+Capture/bind actual frame rendering state and provide real window presentation,
+render/flip scheduling and device statistics to the production frame path.
+Qualify missing effects and physical PVR semantics against reference scenes;
+then integrate native assets and complete gameplay. Keep the original JP matching
+proof, upstream pin and USA research intact. English integration follows usable
+asset/font/audio systems; enhancements and later platforms remain in the goal.
+
+Primary API/reference sources
+https://learn.microsoft.com/en-us/windows/win32/api/d3d11/nf-d3d11-d3d11createdevice
+https://learn.microsoft.com/en-us/windows/win32/api/d3dcompiler/nf-d3dcompiler-d3dcompile
+https://learn.microsoft.com/en-us/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-map
+https://microsoft.github.io/DirectX-Specs/d3d/archive/D3D11_3_FunctionalSpec.htm
+Field layouts remain from the pinned external SDK documented in the packet/
+texture guide. Primary Flycast source was consulted for non-mip filter behavior;
+no emulator code was copied or linked. Existing notices remain; no new project-
+wide license is assigned. The Android/3DS backends remain unfinished.

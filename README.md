@@ -71,6 +71,13 @@ passes 5,861 checks and 14,067,264 exact synthetic RGBA comparisons; extended
 bounds/palette/mutated-stream tests pass 17,033 checks. The three authored
 consumer objects are public; game-containing diagnostics stay private. GPU
 drawing, render/flip and the same 26 frame services remain unfinished.
+A hardware D3D11 offscreen backend now consumes these real owned frames.
+The GPU suites pass 612,609 checks over 100 images and 611,671 compared interior
+pixels, including 32 complete actual model/sprite/strip parent calls. Texture
+Off skips decoding/upload and its compiled shader has no texture/sampler
+bindings. Empty 7680x4320 target/readback works; gameplay performance is unverified.
+A one-object authored GPU support library is public research code. Window/flip/
+vsync, actual game frames and console pixel fidelity remain unfinished.
 Full-frame execution and gameplay are unfinished. English integration
 begins as the needed asset/text/audio systems become usable. Game-containing
 runtime artifacts remain private.
@@ -85,6 +92,7 @@ Texture Off must disable sampling and use vertex/material colours.
 - [Current goal](outputs/sonic-adventure/JP_BASED_PORT_GOAL.txt)
 - [Integration order and limits](outputs/sonic-adventure/JP_NATIVE_PORT_PLAN.txt)
 - [Verified GCC baseline and native/localization evidence](outputs/sonic-adventure/JP_GCC_BASELINE.txt)
+- [Native offscreen GPU consumption and Texture Off](outputs/sonic-adventure/JP_NATIVE_GPU.txt)
 - [Native packet and encoded-texture consumers](outputs/sonic-adventure/JP_NATIVE_PACKET_TEXEL_CONSUMERS.txt)
 - [Owned frame commands and texture lifetimes](outputs/sonic-adventure/JP_NATIVE_OWNED_FRAMES.txt)
 - [Complete model producer numerical integration](outputs/sonic-adventure/JP_NATIVE_MODEL_RZ.txt)
