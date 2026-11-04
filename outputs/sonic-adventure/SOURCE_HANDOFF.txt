@@ -1,3 +1,13 @@
+Current native render/flip update: JP_NATIVE_RENDER_FLIP.txt. kmRender now
+captures and submits actual GPU work; flip observes completion, dispatches
+real EOR callbacks, waits a logical tick and Presents. Statistics measure
+native work and the actual SDK device record is shared. The original frame
+wait executes real render/flip. Eight Presents and four GPU images pass;
+130 integration plus 132,088 regression checks pass (132,218 combined).
+The production audit supplies 63/79 presentation imports; 39 services
+remain, without trace fixtures. Japanese baselines verified; full gameplay,
+English and later ports unfinished. About 10%; goal active.
+
 Current frame-wait update: JP_NATIVE_FRAME_WAITS.txt. The complete original
 frame-pacing source compiles with native serialized waits, without enabling
 SH-4 SDK hardware headers. All three spin paths are adapted; original frame,

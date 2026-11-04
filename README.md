@@ -104,6 +104,13 @@ real QPC/Win32 waits and close handling. Four original frame globals are supplie
 (60/79 presentation imports). Adding the frame source exposes 22 more genuine
 dependencies; the expanded graph has 43 missing services. No trace providers are
 linked into production. Real game render/flip integration remains open.
+Native kmRender/flip/reset and typed measured statistics now drive actual GPU
+jobs and real window Presents. EOR callbacks are delivered once on the game
+thread. The original frame_wait executes this backend; eight Presents and four
+image comparisons pass, with 132,218 checks including preserved regressions.
+The actual typed SDK device owner is shared. Production supplies 63/79 original
+presentation imports with 39 services left; audio/bitmap/loader traces remain
+diagnostic-only. Full game execution and hardware slot latency remain open.
 Full-frame execution and gameplay are unfinished. English integration
 begins as the needed asset/text/audio systems become usable. Game-containing
 runtime artifacts remain private.
@@ -118,6 +125,7 @@ Texture Off must disable sampling and use vertex/material colours.
 - [Current goal](outputs/sonic-adventure/JP_BASED_PORT_GOAL.txt)
 - [Integration order and limits](outputs/sonic-adventure/JP_NATIVE_PORT_PLAN.txt)
 - [Verified GCC baseline and native/localization evidence](outputs/sonic-adventure/JP_GCC_BASELINE.txt)
+- [Real native render/flip and measured statistics](outputs/sonic-adventure/JP_NATIVE_RENDER_FLIP.txt)
 - [Native frame waits and original callback contracts](outputs/sonic-adventure/JP_NATIVE_FRAME_WAITS.txt)
 - [GPU completion jobs and timing limits](outputs/sonic-adventure/JP_NATIVE_GPU_JOBS.txt)
 - [Direct native window rendering and limits](outputs/sonic-adventure/JP_NATIVE_DIRECT_WINDOW.txt)

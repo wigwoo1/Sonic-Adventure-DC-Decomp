@@ -1,0 +1,140 @@
+Native render/flip, completion callbacks and measured statistics
+==============================================================
+
+Status: VERIFIED component milestone. Estimated whole-project completion remains
+about 10% of weighted milestones, not code coverage. Goal active. Japanese
+matching/GCC source baselines remain verified. English, complete native gameplay
+and later platforms remain unfinished. These research builds are not playable.
+
+What changed
+------------
+kmRender now captures the real packet queue into an owned frame and submits an
+actual GPU job. kmFlipFrameBuffer polls real completion, dispatches the registered
+EOR callback once on the game thread, waits for a future logical tick, copies the
+completed GPU target to the window and calls real Present. Successful flip
+retires both frame/job owners and advances the native write-slot index modulo
+four. kmResetPointer drops the actual recording. No CPU image transfer occurs
+in this production path. One submission may await flip; duplicate render is an
+explicit sequence error. This is a serial native adapter, not a recreation of
+Kamui's original four-slot DMA/2V/3V hardware latency behavior.
+
+The typed kmiIntStatisticData is now owned by real native work. render_start
+and ta_start use complemented wrapping wall counts. ta_time measures synchronous
+capture/preparation/submission. render_time measures native submission through
+observed completion, including preparation, queue and polling delay. It is a
+native conservative estimate, not a console-only raster duration. GPU timestamps
+remain separately qualified by their disjoint validity flag; CPU/GPU absolute
+timestamps are never subtracted. Unused hardware DMA/overflow fields describe
+no such native operations; they are not fabricated measurements.
+
+The actual GCC pvr_fits body has a guard which refuses split-frame estimates
+until a real native completion sample exists, or while the backend has failed.
+The rest of its original prediction remains intact. Original frame_wait and
+show_first now stop on backend failure; show_first also restores timer-1 state
+before returning. Audio, bitmap, loading and other game services in the isolated
+integration DLL remain explicitly labelled trace providers. Render/flip/reset,
+GPU jobs, callback registration, statistics and window presentation are real.
+
+Device ownership and failure behavior
+------------------------------------
+The adapter uses the SAME typed kmiDeviceExtension as SDK video setters and
+frame-state capture. A private export-only relink exposes its address for
+diagnostic binding; every original frame-owner object stays byte-identical.
+Production jp_present_initialize_sdk binds the existing global directly.
+No second device record or clock provider is created by the public library.
+
+Initialize clock/waits/video, bind the presenter, then install frame pacing and
+game EOR callbacks. Use a matching GPU/window pair. Stop/drain the presenter
+before resetting video/clock/wait/frame owners. Snapshot IDs are borrowed for
+inspection; the presenter owns their release. The window/GPU/context/callback
+storage must remain valid until shutdown finishes.
+
+Capture failure preserves the recording. GPU failure after capture retains the
+owned frame for explicit drain. Unsupported presort/fog/background/texture
+states continue to fail instead of being forced into a passing mode. Failed
+present/timeout/closed-window paths do not increment native successful-Present
+counts. A terminal failure stops later original frame work. Shutdown drains GPU
+ownership without game callbacks even after the window/tick host closes. A drain
+failure retains ownership for a later attempt, rather than forgetting work.
+The original application loop must check native wait/presenter status and stop
+its iteration; that full loop is not implemented yet.
+
+Each flip chooses the next logical boundary after readiness is observed and
+overdue callbacks are serviced. Controlled-clock tests verify that a second
+unconditional tick is not inserted. Late host observation is conservative;
+physical scanout timing is not proved. Native wall timing runs while timer 1 is
+paused. Present interval 0/1 is a backend option, not a completed FPS settings UI.
+
+Verification
+------------
+The qualified integration run passes 130 checks (pending-poll count can vary).
+It compares four complete backbuffers / 16,384 pixels across opaque, translucent,
+punch-through and Texture Off cases. Eight actual native Kamui Presents succeed,
+including four complete original frame_wait calls using real GPU/render/flip.
+Real EOR argument/thread/once-only delivery, typed busy state, all three list
+maxima, downcounter units, first-sample prediction gating, source error guards,
+duplicate-render rejection, deadline failure and shutdown after WM_CLOSE pass.
+Controlled wall time plus actual GPU jobs also checks tick ordering/countdowns
+against an independent rational oracle. Timing tests under real QPC are separate
+from this controlled-clock ordering test; no fake GPU completion is supplied.
+
+Preserved suites pass on the new dependencies: 6,943 wait, 8,572 frame ownership,
+103,700 video/window and 12,873 clock checks. Together with the integration run:
+132,218 checks in this qualification. The export-only frame owner and the extended
+wait service retain their old contracts. Earlier proof/source files are intact.
+No device-loss/disjoint transition was induced; original hardware slot timing,
+all title/game frames, audio, assets and gameplay are not claimed verified.
+
+The actual production graph resolves four more genuine services: kmRender,
+kmFlipFrameBuffer, kmResetPointer and kmiIntStatisticData. It now supplies 63/79
+original presentation imports and still needs 39 services. Its link audit excludes
+all trace fixtures. The report enumerates the remaining stage/bitmap/audio/input/
+backup/loading/replay dependencies. Source baseline completion does not imply
+that this incomplete native production graph is a playable port.
+
+Artifacts and reproduction
+--------------------------
+API: native/jp_native_present.h
+Services: native/jp_native_present.c and jp_native_present_sdk.c
+Wait extension: native/jp_native_frame_service_extension.c
+Build/source workflow: jp_port_tools/build_native_present.py
+Integration: jp_port_tools/verify_native_present.py
+Preserved suites: jp_port_tools/verify_native_present_regressions.py
+Production audit: jp_port_tools/audit_native_present_link.py
+Public library: jp_port_tools/build_native_present_support_library.py
+Evidence: analysis/jp_native_present_*.json
+
+Qualified private build: work/sonic-adventure/jp-native-present-v6.
+Current integration proof: verification_extended.json.
+Production audit: jp-native-present-production-link-v1/verification.json.
+Authored archive component: work/sonic-adventure/build/jp_native_present_support.lib.
+
+The library has exactly four authored members: wait_service.obj, windows_idle.obj,
+kamui_present.obj and present_sdk.obj. It REPLACES the earlier wait support library;
+link alongside GPU-jobs support and exactly one native clock provider. The original
+adapted frame/game-present objects, diagnostic DLLs and export-only frame DLL remain
+private/external. The public library contains no game/SDK bodies, assets or trace
+providers. All source-generation tools and authored service code are public.
+
+After reproducing prerequisites from JP_NATIVE_FRAME_WAITS.txt and JP_NATIVE_GPU_JOBS.txt:
+python -B outputs/sonic-adventure/jp_port_tools/build_native_present.py --workspace . --wait work/sonic-adventure/jp-native-frame-wait-v3 --frames work/sonic-adventure/jp-native-stateful-frames-v4 --gpu work/sonic-adventure/jp-native-gpu-jobs-v2 --compiler PATH_TO_CLANG_EXE --output work/sonic-adventure/present-fresh
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_present.py --workspace . --build work/sonic-adventure/present-fresh --report work/sonic-adventure/present-fresh/verification_extended.json
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_present_regressions.py --workspace . --build work/sonic-adventure/present-fresh --output work/sonic-adventure/present-fresh/wait-regression --suite waits
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_present_regressions.py --workspace . --build work/sonic-adventure/present-fresh --output work/sonic-adventure/present-fresh/frame-regression --suite frames
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_present_regressions.py --workspace . --build work/sonic-adventure/present-fresh --output work/sonic-adventure/present-fresh/video-regression --suite video
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_frame_wait_clock.py --workspace . --build work/sonic-adventure/present-fresh --output work/sonic-adventure/present-fresh/clock-regression
+Run the audit against the previous frame-wait production audit, then the support
+library builder with that audit/build/compiler. Their --help lists arguments.
+Use fresh outputs; scripts preserve existing proof files. Existing absolute
+toolchain/SDK paths need adaptation on another machine.
+
+For a beginner: open this guide and its reports in GitHub. Research libraries
+are developer components and do not launch Sonic Adventure.
+
+Next: Sol High
+--------------
+Recover real bitmap/memory-texture queue services and continue the remaining
+production dependencies toward an asset-backed native boot. Keep unsupported
+rendering features explicit until fog/background/sort/texture semantics work.
+Full native game-loop execution, English, speed-independent FPS enhancements,
+settings/SUPIR, complete gameplay and later ports remain unfinished.
