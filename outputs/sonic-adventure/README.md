@@ -1,3 +1,10 @@
+FPSCR update: see JP_NATIVE_FPSCR_CONTEXT.txt. Original interrupt contexts
+select toward-zero/DN1; the callback wrapper inherits rounding. The new
+determinant/inverse build passes 1,944 original calls, 34,725 checks and
+961 shared-state checks; 724 context checks qualify bounded code paths.
+Other Ninja/renderer arithmetic still needs numerical migration; 46
+services remain unresolved. About 10% overall; no playable native port.
+
 Native determinant/inverse update: see JP_NATIVE_INVERSE_MATRIX.txt.
 1640 original routine comparisons and 28009 determinant/inverse checks pass.
 Multiplication and shared-state regressions pass in the same DLL. The real

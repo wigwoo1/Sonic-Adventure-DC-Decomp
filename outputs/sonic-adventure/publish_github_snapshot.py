@@ -123,6 +123,11 @@ Native njMultiMatrix passes 2,268 original-code contract comparisons and 961
 shared-state regressions, preserving the distinct FIPR/FTRV paths.
 Native determinant/inverse helpers pass 1,640 original-code calls and 28,009
 checks, retaining the exact singular fallback and ordered scalar arithmetic.
+Bounded original FPSCR checks now establish explicit interrupt toward-zero/DN1
+and callback mode preservation. A toward-zero determinant/inverse build passes
+1,944 original calls, 34,725 checks and 961 shared-state regressions. Other
+Ninja/renderer arithmetic still needs numerical migration; BIOS handoff is
+unmeasured. See [the FPSCR guide](outputs/sonic-adventure/JP_NATIVE_FPSCR_CONTEXT.txt).
 Full-frame execution and gameplay are unfinished. English integration
 begins as the needed asset/text/audio systems become usable. Game-containing
 runtime artifacts remain private.

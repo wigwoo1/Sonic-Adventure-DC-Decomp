@@ -1,0 +1,112 @@
+{
+  "status": "bounded_original_FPSCR_contexts_verified_RZ_integration_required",
+  "checks": 724,
+  "upstream_commit": "25a3d3154dbe657325e97dbe8c5291086f6af5c0",
+  "external_input_manifest_sha256": "a1b00559a03c524a96c299b1f37053e512c754b16e1a97eb9e5ba81bc5380dc1",
+  "verifier_sha256": "9e567a1484dd272bd41ef55dbedba7179366eb53f20708f1ac3f4dbf192f1ca1",
+  "executor_sha256": "e1dbae17f07354a51fe7b05258895f980bda38d65b615ff2e8fb9b65dabc75e8",
+  "original_binary_sha256": "e038db9029bc0ea8ffdb8ec8fc2e0690d1c324f5f7179f3dc58f56574b1aeeaf",
+  "startup_entry_executions": 64,
+  "original_interrupt_default_setting_slice_executions": 264,
+  "complete_original_callback_executions": 64,
+  "original_inverse_calls": 2,
+  "startup_entry_preserves_incoming_FPSCR": true,
+  "interrupt_handler_entry_mode": "0x40001",
+  "callback_preserves_RM_DN": true,
+  "source_control_edges_checked": {
+    "src/system/frame.c": [
+      "njSetVSyncFunction(frame_vsync);"
+    ],
+    "sdk/ninja/njSystem.c": [
+      "syChainAddHandler(SYD_CHAIN_EVENT_IML6_VBLANK,"
+    ],
+    "sdk/shinobi/syChain.c": [
+      "kmSetVSyncCallback(syChainMasterHandlerPVR_V, NULL);",
+      "isr->usrIsr(isr->arg);"
+    ],
+    "sdk/ninja/kmcalbac_kamui_lib.c": [
+      "kmiRegisterCallback(kmiHardwareResource, VSYNC_CALLBACK, callback,"
+    ],
+    "sdk/ninja/interupt_kamui_lib.c": [
+      "kmiExCallBackFunc(kmiDeviceExtension.callback[i].function,"
+    ],
+    "sdk/shinobi/rfiber.c": [
+      "#define FIBER_FPSCR 0x40001",
+      "set_fpscr(FIBER_FPSCR);",
+      "set_fpscr(fpscr);"
+    ]
+  },
+  "nearest_component_DLL_sha256": "fd2097e4d946e657d8b42beafb5a560f5a42ce129710caab962595e6813befb8",
+  "rounding_mode_mismatch_witness": {
+    "input_words": [
+      3219000061,
+      1074275859,
+      1068939714,
+      1075101983,
+      1076886532,
+      1060452644,
+      3201849820,
+      3221586938,
+      3208992028,
+      3223816824,
+      3225288984,
+      3225002186,
+      3190834267,
+      1073175196,
+      3209585473,
+      3222650722
+    ],
+    "nearest_words": [
+      1057774527,
+      1061322972,
+      1049876357,
+      3204137007,
+      1063234659,
+      1059406496,
+      1052774686,
+      3190869316,
+      3222816343,
+      3220037025,
+      3217403628,
+      1067096599,
+      1069556608,
+      1066339446,
+      1062345329,
+      3211998856
+    ],
+    "toward_zero_words": [
+      1057774528,
+      1061322976,
+      1049876359,
+      3204137012,
+      1063234664,
+      1059406498,
+      1052774688,
+      3190869332,
+      3222816345,
+      3220037027,
+      3217403631,
+      1067096601,
+      1069556611,
+      1066339447,
+      1062345330,
+      3211998861
+    ],
+    "native_old_matches_nearest": true,
+    "native_old_matches_toward_zero": false
+  },
+  "main_boot_ROM_handoff_mode_measured": false,
+  "full_interrupt_dispatch_executed": false,
+  "next_action": "Qualify native toward-zero/DN1 arithmetic and matrix providers; retain nearest baseline as historical proof.",
+  "limitations": [
+    "Startup execution stops at _INIT; it does not execute the boot ROM, hardware initialization or main.",
+    "Interrupt tests execute the actual four-instruction default-setting slices; they do not emulate complete interrupt dispatch.",
+    "The complete original callback runner executes with a diagnostic hook; source edges locate the frame-vsync callback.",
+    "Main-thread RZ is consistent with CPU reset and source intent but BIOS handoff and all subsequent contexts remain unmeasured.",
+    "The old nearest-mode matrix component is not qualified for toward-zero contexts."
+  ],
+  "overall_completion_percent": 10,
+  "completion_basis": "weighted_milestone_estimate_not_code_coverage",
+  "goal_paused": false,
+  "playable": false
+}

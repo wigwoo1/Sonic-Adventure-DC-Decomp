@@ -1,0 +1,87 @@
+Native floating-point contexts and toward-zero determinant/inverse
+
+Overall completion: about 10%, a weighted milestone estimate, not code coverage.
+The Japanese matching/GCC baseline is established. Native PC integration is
+partial; English integration and later ports remain unfinished. No playable port.
+
+What this update establishes
+The original game's entry preserves its incoming floating-point control state
+through its jump to _INIT. It does not select rounding there. The SDK's two
+interrupt masters explicitly select 0x40001: single precision, round toward zero,
+denormals treated as zero, exceptions disabled. Their restoration paths reset
+that temporary mode before restoring the interrupted state. The complete Kamui
+callback wrapper clears only transfer width SZ and preserves the caller's RM/DN.
+The pinned source connects frame_vsync through Ninja's vertical-blank chain and
+Kamui's callback registration. Fiber execution also selects 0x40001 temporarily.
+
+These are bounded source/opcode observations, not a full console boot trace.
+The Renesas hardware manual lists 0x00040001 at reset and RM=01 as toward zero:
+https://www.renesas.com/en/document/mah/sh7750-sh7750s-sh7750r-group-users-manual-hardware
+R01UH0456EJ0702 Rev.7.02, sections 5.6.1, 6.3.2 and 6.4.
+CPU reset and upstream source intent support toward-zero as the intended game
+policy. They do not measure the BIOS handoff or every later game context.
+
+Why it changes the native work
+An actual original inverse call gives different result words under nearest and
+toward-zero rounding. The preserved nearest-mode native DLL matches the former.
+It cannot establish fidelity for toward-zero contexts. Its sources, proofs and
+builds remain unchanged, with their original qualification intact.
+
+The new authored jp_ninja_scalar32_rz services reuse the existing integer scalar
+cores with explicit 0x40001. The preserved authored determinant/inverse source
+is compiled with its four scalar calls bound to those toward-zero services.
+There is no host rounding switch, epsilon singular cutoff, duplicate matrix
+state or replacement determinant hook. Exact zero still fills the sixteen
+inverse words with 0x7f7fc99e and returns FALSE. The original ordering of every
+cofactor, triple product and sum remains intact.
+
+Verified scope
+- 724 context checks: 64 original startup-entry runs, 264 executions of the
+  original four-instruction interrupt mode-setting slices, and 64 complete
+  original callback-wrapper runs. Callback arguments, incoming RM/DN, restored
+  FPSCR/float banks, SP and stack guards are checked. Nineteen external files
+  were byte-checked against the pinned upstream Git revision.
+- 1944 original determinant/inverse calls under toward-zero/DN1, both float
+  banks and stored/current/saved-stack operands; 34725 total checks. Cases
+  include random matrices, independent exact rational geometry, singular rows,
+  signed zero, tiny determinants and the precise diagnosed rounding mismatch.
+  The scalar checks use the independent integer-dyadic Python executor, plus
+  explicit infinity/NaN/zero cases. Full memory guards and stack metadata agree.
+- The new asset-free DLL compiles/links with zero diagnostics and passes 961
+  existing shared-state regressions. Copies through Ninja and two SH4ZAM test
+  translation units observe the same actual active matrix.
+- A real production link audit replaces exactly the old inverse/scalar objects.
+  No probe DLL, diagnostic probe object, fake service or second state owner is
+  added. The same 46 unresolved services remain; presentation still has 79 raw
+  imports and 36 supplied imports. No additional game routine is counted here.
+
+Remaining work and limits
+Other shared Ninja arithmetic, multiplication and renderer arithmetic still
+need a deliberate toward-zero migration and their own original-code checks.
+The candidate production link is therefore not yet a consistent whole-game
+numerical implementation. Full frame execution/rasterization, native performance,
+English localization and later-platform work remain unfinished. The boot ROM,
+complete interrupt dispatch, all game contexts, flags/traps and complete matrix
+nonfinite propagation have not been qualified by these tests. A source call edge
+does not count as executing its hardware path.
+
+Reproduction
+Use the pinned dependency and prerequisites in JP_NATIVE_INVERSE_MATRIX.txt.
+PYTHON and CLANG mean the installed Python and Windows x64 Clang paths.
+Use fresh output/report paths; retail/reference inputs stay private.
+
+PYTHON -B outputs/sonic-adventure/jp_port_tools/verify_fpscr_context.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --binary work/sonic-adventure/jp-ninja-math-reference/1ST_READ.BIN --nearest-build work/sonic-adventure/jp-native-inverse-matrix-v1 --report work/sonic-adventure/jp_fpscr_context_verification_v1.json
+
+PYTHON -B outputs/sonic-adventure/jp_port_tools/build_native_inverse_matrix_rz.py --workspace . --baseline work/sonic-adventure/jp-native-inverse-matrix-v1 --compiler CLANG --output work/sonic-adventure/jp-native-inverse-matrix-rz-v1
+
+PYTHON -B outputs/sonic-adventure/jp_port_tools/verify_native_inverse_matrix_rz.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --build work/sonic-adventure/jp-native-inverse-matrix-rz-v1 --binary work/sonic-adventure/jp-ninja-math-reference/1ST_READ.BIN --report work/sonic-adventure/jp-native-inverse-matrix-rz-v1/contract_verification.json
+
+PYTHON -B outputs/sonic-adventure/jp_port_tools/verify_shared_matrix_state_v2.py --workspace . --build work/sonic-adventure/jp-native-inverse-matrix-rz-v1
+
+PYTHON -B outputs/sonic-adventure/jp_port_tools/audit_inverse_toward_zero_binding.py --workspace . --baseline-audit work/sonic-adventure/jp-inverse-matrix-native-link-audit-v1/verification.json --component work/sonic-adventure/jp-native-inverse-matrix-rz-v1 --compiler CLANG --output work/sonic-adventure/jp-inverse-matrix-rz-native-link-audit-v1
+
+The inverse verifier expects the context report at the first command's path.
+Reports under analysis/jp_native_fpscr_* record input/tool/build/proof hashes.
+Published DLL/import-library additions contain authored code and no game assets.
+Keep Sol High for the next numerical/platform integration task. Luna is suitable
+for routine documentation work once that difficult integration is completed.
