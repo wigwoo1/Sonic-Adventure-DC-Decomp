@@ -1,0 +1,164 @@
+Captured rendering state and native window presentation
+
+Overall completion remains approximately 10% of weighted milestones, not measured
+code coverage. Japanese matching/GCC baselines remain verified. Native PC work is
+partial; complete gameplay, English integration and later platforms are unfinished.
+
+What now works
+Each owned frame can now carry an immutable copy of palette entries and format,
+the complete fog table/colors/density, color-clamp registers, stride control,
+cull value, alpha threshold, logical canvas, pixel/global clipping, sort mode and
+background metadata. Later SDK changes and owner shutdown/reinitialization leave
+older frames' state intact. The state is charged as frame-owner metadata. There
+is still one queue, texture, frame and matrix owner; the new frame object replaces
+its predecessor rather than linking a second owner. Original source/proofs stay.
+
+The bound GPU path uses the frame's captured palette, stride, uniform clear color,
+culling threshold, alpha threshold and scissor. It no longer needs a caller's
+mutable current palette for those frames. The snapshot's generation advances for
+both register changes and device-field changes observed at capture. IDs and
+generations do not recycle across owner reinitialization. One game thread owns
+these APIs; future native vsync callbacks must be marshalled accordingly.
+
+Sixteen complete original SDK setting routines are compiled privately from the
+pinned source and connected to a real typed native kmiDeviceExtension plus the
+authored register owner. Those routines set alpha threshold, culling, clamp,
+fog color/vertex color/table/density, palette mode/data/bank, border color,
+background render state, sort, global/pixel clip and stride. Ten floating
+operators use the existing integer RZ/DN1 value services; the generated LLVM has
+zero residual native floating arithmetic/comparisons. The background color macro
+is expanded with unsigned 32-bit shifts to preserve SH-4 bit behavior without
+signed C shift overflow. Upstream GCC's defined sort-status repair is retained.
+These are source-level value/ABI checks, not new physical-console comparisons.
+
+Original SDK quirks remain visible: alpha threshold is shifted by 15, and the
+bulk palette-bank range that exceeds the palette end excludes the final entry.
+Tests compare these behaviors, including the fog table's packed neighboring
+densities and four palette channel formats. Original external bodies stay private.
+
+A real Win32 window now shares the renderer's D3D11 device and owns a DXGI
+flip-discard swapchain. It supports upload, backbuffer readback, programmatic
+resize, message pumping, Present interval 0/1 and graceful close. Wrong-thread
+operations fail. GPU shutdown is deferred while a window still needs its device.
+Actual WM_CLOSE, resource cleanup, buffer bounds and failed resize are checked.
+The API has an end-to-end bound-frame -> render -> upload -> Present operation.
+
+This initial presentation path explicitly reads the GPU result back to CPU and
+uploads it to the swapchain. It is useful for integration/verification but is not
+the final high-performance path. Direct GPU presentation and asynchronous work
+remain necessary before frame-rate/performance qualification. A Present success
+means DXGI accepted the frame, not proof of physical monitor scanout timing.
+Occlusion is reported as a distinct unsuccessful presentation. Programmatic
+resize is verified; automatic interactive resize policy and a settings UI remain.
+
+Verification
+The new state/window suite passes 103,700 checks, with nine bound images and
+99,328 compared pixels, exact hardware backbuffer upload/readback, swapchain
+sizes 128/192/96 and four successful visible Present calls. Its assets are
+synthetic. State is checked after both texture/render-state owners shut down,
+after later versions are created, and during out-of-order frame retirement.
+Another 42 checks verify failed capture/retry, seven retained state versions,
+failing state-source callbacks, actual WM_CLOSE, wrong-thread rejection, short
+buffers and invalid resize. These tests opened and closed a research window.
+
+The unchanged ownership suite passes all 8,572 checks/193 submissions/128 actual
+parent calls on the stateful owner. Both unchanged GPU suites pass their 491,158
+and 121,451 checks on the replacement GPU object: 100 images and 611,671 compared
+interior pixels, including 32 complete actual model/sprite/strip parent calls.
+The earlier empty 7680x4320 hardware-target/readback check also passes. Combined
+new and preserved suites pass 724,923 checks. These counts do not measure game
+coverage, complete native frames, physical PVR fidelity or 8K gameplay performance.
+
+The real production link audit replaces the frame object and adds the real state,
+SDK setting and window/consumer providers, with no diagnostic game-loop fixture.
+The data symbol kmiDeviceExtension is now supplied by the actual native device
+state owner: presentation imports supplied increase from 55/79 to 56/79, and the
+combined unresolved service count falls from 26 to 25. This is a link dependency
+count, not a remaining-game-routine count or a claim that scheduling is complete.
+
+Limits and next integration
+kmRender, kmFlipFrameBuffer, kmiIntStatisticData and real pacing/vsync integration
+are still unresolved. There are no fabricated successful render/flip routines or
+fake timing counters. The game frame source still relies on vsync updates while
+waiting, and split-frame decisions consume actual render/transfer timing in the
+original count units. Those must be bound to meaningful native work and waits.
+The next milestone is that render/flip/statistics/scheduling integration with the
+actual frame/presentation source, followed by native assets and complete gameplay.
+
+Fog state is captured but fog rendering is not implemented. Modifier/shadow,
+two-volume, hardware sprites, tile clipping, translucent autosort, secondary
+buffers, nonuniform/textured backgrounds, custom color clamp, supersampling and
+the previous mip/texture-format exclusions remain required gates. The bound path
+rejects unsupported captured state; it does not silently discard those effects.
+Background plane metadata is preserved but no original background-plane provider
+or full background interpolation is claimed. Uniform face-color clearing works.
+Global/pixel scissor scaling is a native policy, not a PVR coverage proof.
+
+Texture Off still skips surface lookup/decoding/upload and uses a compiled shader
+with zero texture/sampler bindings. Vertex/material colors remain. This is backend
+behavior; the requested settings menu, HD/SUPIR workflow, 60/120/240 FPS, English
+assets/UI and Android/3DS/demakes remain in the active goal and are unfinished.
+
+API/build usage
+Include jp_native_video_sdk.h and initialize jp_video_sdk_initialize before
+stateful frame submission when using
+the original SDK setters. Its registered device source owns canvas/clear/clip/
+background fields; use SDK setters for those fields. The pure jp_video_initialize
+mode is available for an authored caller without the SDK device source. Unknown
+register access is an explicit sticky error. Clear errors before retrying, and
+never use the register owner as an undocumented arbitrary-MMIO emulator.
+
+jp_frame_video copies a frame's immutable state. jp_gpu_draw_bound_frame consumes
+that state; the older jp_gpu_draw_frame retains its explicit-config contract.
+Create a window on the game thread, pump it, draw/upload and present, then close
+the window and renderer. Caller still retires each source frame. Output/report
+buffers are preserved on errors. Inputs and outputs must be separate accessible
+storage. Window/device/swapchain overhead is outside per-draw payload budgeting;
+bound snapshots/palette scratch and the temporary presentation image are counted.
+
+jp_native_window_state_support.lib contains nine byte-verified authored members:
+queue, retained texture owner, stateful frame owner, video registers, typed SDK
+device bridge, packet decoder/frame adapter, texel decoder and GPU/window object.
+Use this coherent replacement instead of linking the older queue/frame/consumer/
+GPU libraries alongside it. Original SDK setter/game-body objects, numerical
+providers and Windows libraries remain dependencies. No original game/SDK body,
+diagnostic observer or retail asset is packaged in that public library.
+
+From the workspace root, run Python -B with scripts under
+outputs/sonic-adventure/jp_port_tools (each command is one line):
+  build_native_stateful_frames.py --workspace WORKSPACE --upstream PINNED_SOURCE
+    --baseline OLD_FRAME_BUILD --compiler CLANG --output FRESH_STATEFUL_BUILD
+  build_native_window.py --workspace WORKSPACE --frames STATEFUL_BUILD
+    --gpu-baseline OLD_GPU_BUILD --compiler CLANG --output FRESH_WINDOW_BUILD
+  verify_native_video_window.py --workspace WORKSPACE --build WINDOW_BUILD
+    --report FRESH_REPORT
+  verify_native_video_window_failures.py --workspace WORKSPACE --build WINDOW_BUILD
+    --report FRESH_FAILURE_REPORT
+  verify_native_stateful_regressions.py --workspace WORKSPACE --frames STATEFUL_BUILD
+    --window WINDOW_BUILD --output STATEFUL_BUILD/regression --suite frames
+  verify_native_stateful_regressions.py --workspace WORKSPACE --frames STATEFUL_BUILD
+    --window WINDOW_BUILD --output WINDOW_BUILD/regression --suite gpu
+  verify_native_stateful_regressions.py --workspace WORKSPACE --frames STATEFUL_BUILD
+    --window WINDOW_BUILD --output WINDOW_BUILD/regression --suite gpu_extended
+  audit_native_window_link.py --workspace WORKSPACE --baseline-audit OLD_LINK_REPORT
+    --frames STATEFUL_BUILD --window WINDOW_BUILD --output FRESH_LINK_AUDIT
+  build_native_window_support_library.py --workspace WORKSPACE --frames STATEFUL_BUILD
+    --window WINDOW_BUILD --audit NEW_LINK_REPORT --compiler CLANG --output FRESH_LIBRARY
+Use the prior qualified frame/GPU/link builds documented by the earlier guides.
+The regression subdirectories shown above are required by the library workflow;
+the second GPU suite reuses the first suite's directory and manifest.
+Report/build paths must be fresh to preserve proofs. Windows x64 Clang/SDK and a
+feature-level-11_0 hardware device are required. The visible test briefly shows
+a synthetic research window; no playable game or retail art is included.
+
+Source provenance
+External SDK pin: reshaped/sonic-adventure
+25a3d3154dbe657325e97dbe8c5291086f6af5c0. Compiler reports pin the external file
+hashes and list every retained setter/numerical adaptation. Authored frame/GPU
+predecessors remain unchanged; builders make explicit checked adaptations in
+fresh private source files. Reproduction scripts and authored extensions are
+public. Existing notices remain; no project-wide license is assigned.
+DXGI/Win32 API contracts follow Microsoft's primary documentation:
+https://learn.microsoft.com/en-us/windows/win32/api/dxgi/nf-dxgi-idxgifactory-createswapchain
+https://learn.microsoft.com/en-us/windows/win32/api/dxgi/nf-dxgi-idxgiswapchain-present
+https://learn.microsoft.com/en-us/windows/win32/api/dxgi/nf-dxgi-idxgiswapchain-resizebuffers

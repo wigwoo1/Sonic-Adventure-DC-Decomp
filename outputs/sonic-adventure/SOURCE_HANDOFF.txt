@@ -1,3 +1,11 @@
+Current state/window update: JP_NATIVE_WINDOW_STATE.txt. Owned frames retain
+palette/fog/clip/clear state and can render/present through a real Win32/DXGI
+window. New state/window suites pass 103,742 checks and four visible Presents.
+All 8,572 ownership and 612,609 GPU regression checks pass on new providers.
+The production link has 25 unresolved services (56/79 presentation imports
+supplied). Kamui render/flip/statistics, real game frames and gameplay remain
+unfinished. About 10% overall; Japanese baseline verified; goal active.
+
 Current native GPU update: see JP_NATIVE_GPU.txt. Actual model/sprite/strip
 packets now render to a hardware offscreen target and return RGBA8 pixels.
 612,609 checks and 100 image comparisons pass with a documented native-float

@@ -172,6 +172,13 @@ Off skips decoding/upload and its compiled shader has no texture/sampler
 bindings. Empty 7680x4320 target/readback works; gameplay performance is unverified.
 A one-object authored GPU support library is public research code. Window/flip/
 vsync, actual game frames and console pixel fidelity remain unfinished.
+Owned frames now capture palette/fog/clip/clear metadata, and a native Win32/
+DXGI window presents their bound images. New suites pass 103,742 checks, including
+real backbuffer comparisons and four successful visible Presents. All 8,572
+ownership and 612,609 GPU checks pass on the new providers. The coherent authored
+nine-object support library is public. The real device-state owner resolves one
+production import: 56/79 presentation imports are supplied, and 25 combined
+services remain. Kamui scheduling/statistics and actual game frames remain open.
 Full-frame execution and gameplay are unfinished. English integration
 begins as the needed asset/text/audio systems become usable. Game-containing
 runtime artifacts remain private.
@@ -186,6 +193,7 @@ Texture Off must disable sampling and use vertex/material colours.
 - [Current goal](outputs/sonic-adventure/JP_BASED_PORT_GOAL.txt)
 - [Integration order and limits](outputs/sonic-adventure/JP_NATIVE_PORT_PLAN.txt)
 - [Verified GCC baseline and native/localization evidence](outputs/sonic-adventure/JP_GCC_BASELINE.txt)
+- [Captured rendering state and native window](outputs/sonic-adventure/JP_NATIVE_WINDOW_STATE.txt)
 - [Native offscreen GPU consumption and Texture Off](outputs/sonic-adventure/JP_NATIVE_GPU.txt)
 - [Native packet and encoded-texture consumers](outputs/sonic-adventure/JP_NATIVE_PACKET_TEXEL_CONSUMERS.txt)
 - [Owned frame commands and texture lifetimes](outputs/sonic-adventure/JP_NATIVE_OWNED_FRAMES.txt)
