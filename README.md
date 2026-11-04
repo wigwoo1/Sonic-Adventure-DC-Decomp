@@ -85,6 +85,12 @@ ownership and 612,609 GPU checks pass on the new providers. The coherent authore
 nine-object support library is public. The real device-state owner resolves one
 production import: 56/79 presentation imports are supplied, and 25 combined
 services remain. Kamui scheduling/statistics and actual game frames remain open.
+The native direct window path now renders into DXGI backbuffers without CPU
+image transfer. It passes 1,878 new checks: 111 direct images / 33,932,288 pixels
+match the legacy renderer exactly, including an empty 8K target; eleven direct
+Presents succeed. Frozen GPU/state/window suites pass 716,351 checks. The new
+coherent authored support library replaces overlapping older graphics libraries.
+Three game-thread waits and real Kamui scheduling/statistics remain open.
 Full-frame execution and gameplay are unfinished. English integration
 begins as the needed asset/text/audio systems become usable. Game-containing
 runtime artifacts remain private.
@@ -99,6 +105,7 @@ Texture Off must disable sampling and use vertex/material colours.
 - [Current goal](outputs/sonic-adventure/JP_BASED_PORT_GOAL.txt)
 - [Integration order and limits](outputs/sonic-adventure/JP_NATIVE_PORT_PLAN.txt)
 - [Verified GCC baseline and native/localization evidence](outputs/sonic-adventure/JP_GCC_BASELINE.txt)
+- [Direct native window rendering and limits](outputs/sonic-adventure/JP_NATIVE_DIRECT_WINDOW.txt)
 - [Captured rendering state and native window](outputs/sonic-adventure/JP_NATIVE_WINDOW_STATE.txt)
 - [Native offscreen GPU consumption and Texture Off](outputs/sonic-adventure/JP_NATIVE_GPU.txt)
 - [Native packet and encoded-texture consumers](outputs/sonic-adventure/JP_NATIVE_PACKET_TEXEL_CONSUMERS.txt)

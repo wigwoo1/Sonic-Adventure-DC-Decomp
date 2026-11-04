@@ -1,3 +1,12 @@
+Current direct-window update: JP_NATIVE_DIRECT_WINDOW.txt. The renderer draws
+owned frames directly into DXGI backbuffers without a CPU image transfer.
+1,878 new checks pass; 111 direct images / 33,932,288 backbuffer pixels match
+the prior renderer exactly, including an empty 8K target. Eleven direct
+Presents succeeded; frozen GPU/state/window suites pass 716,351 checks.
+The actual production link still needs 25 services. Native frame waits,
+Kamui render/flip/statistics and gameplay remain unfinished. Japanese source
+baselines verified; English/later ports unfinished. About 10%; goal active.
+
 Current state/window update: JP_NATIVE_WINDOW_STATE.txt. Owned frames retain
 palette/fog/clip/clear state and can render/present through a real Win32/DXGI
 window. New state/window suites pass 103,742 checks and four visible Presents.

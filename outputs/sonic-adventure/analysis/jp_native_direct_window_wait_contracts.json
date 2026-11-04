@@ -1,0 +1,156 @@
+{
+  "status": "native_render_flip_wait_contracts_traced_not_implemented",
+  "upstream_commit": "25a3d3154dbe657325e97dbe8c5291086f6af5c0",
+  "external_source_sha256": {
+    "src/system/frame.c": "54e27d894217925eb9a5194df014e03f8a99a6e6dfd10ef00bb692f06b951150",
+    "src/system/frame.h": "b54c6b267774f0f917cfde81b1ae384f48e15d9d9f1e286d6780a7dfcb0aac8e",
+    "gcc/src/system/present.c": "7a2cc2d59db5dccd2ab77606dd27e5c502e9e9b55a09ed032b5361bce3c028e0",
+    "sdk/ninja/kmsurfac_kamui_lib.c": "d6e14d4bb7b4aada7077d81f3289ab45450e00d312f3c1f44f1f55aa8508f64f",
+    "sdk/ninja/interupt_kamui_lib.c": "9f3155753e4171972914dfe677a9b152280e4ac266e95766344ee6862a94ea63",
+    "sdk/include/kamui.h": "c87ce01634acc830b434a1efc706c2982b2a5bb3c1f5ee1a0a76b3b58998057c",
+    "src/system/timer.c": "ffc59b8948e5fe893ae7fd7dd00503784da92c62f6cab297ed8fc9112a354dea"
+  },
+  "contract_source_lines": {
+    "src/system/frame.c": {
+      "while (frame_countdown > 0)": [
+        118
+      ],
+      "while (frame_countdown > left)": [
+        153
+      ],
+      "frame_countdown--;": [
+        172
+      ],
+      "njSetVSyncFunction(frame_vsync);": [
+        98
+      ],
+      "buExecServer();": [
+        188
+      ],
+      "loader_poll_drive();": [
+        189
+      ],
+      "sdSysServer();": [
+        186
+      ]
+    },
+    "gcc/src/system/present.c": {
+      "while (frame_countdown == frame_interval)": [
+        1403
+      ],
+      "~kmiIntStatisticData.render_start": [
+        1229
+      ],
+      "kmiDeviceExtension.render_busy != 0": [
+        1232
+      ],
+      "kmiIntStatisticData.ta_time": [
+        1237
+      ],
+      "kmRender();": [
+        1257
+      ],
+      "kmFlipFrameBuffer();": [
+        1263
+      ]
+    },
+    "sdk/ninja/kmsurfac_kamui_lib.c": {
+      "KMSTATUS kmRender(void)": [
+        566
+      ],
+      "KMSTATUS kmFlipFrameBuffer(void)": [
+        356
+      ],
+      "kmiIntStatisticData.list_max[i]": [
+        654,
+        655,
+        698,
+        699,
+        832,
+        833
+      ],
+      "kmiDeviceExtension.list_limit[i]": [
+        657,
+        702,
+        835
+      ],
+      "kmiDeviceExtension.flip_pending != 0": [
+        404,
+        420,
+        427
+      ]
+    },
+    "sdk/ninja/interupt_kamui_lib.c": {
+      "kmiIntStatisticData.render_start = (unsigned int)TCNT0;": [
+        409
+      ],
+      "kmiIntStatisticData.ta_time = kmiIntStatisticData.ta_start - TCNT0;": [
+        682
+      ]
+    }
+  },
+  "frame_pacing_call_sites": [
+    {
+      "path": "src/event/play.c",
+      "line": 190,
+      "call": "frame_pacing_init(2, 1);"
+    },
+    {
+      "path": "src/event/play.c",
+      "line": 333,
+      "call": "frame_pacing_init(2, 2);"
+    },
+    {
+      "path": "src/main.c",
+      "line": 648,
+      "call": "frame_pacing_init(2, 2);"
+    },
+    {
+      "path": "src/player/npc.c",
+      "line": 950,
+      "call": "frame_pacing_init(2, 2);"
+    },
+    {
+      "path": "src/progress/demo.c",
+      "line": 141,
+      "call": "frame_pacing_init(1, 1);"
+    },
+    {
+      "path": "src/progress/title.c",
+      "line": 627,
+      "call": "frame_pacing_init(2, 2);"
+    },
+    {
+      "path": "src/stage/stage.c",
+      "line": 2478,
+      "call": "frame_pacing_init(2, 2);"
+    }
+  ],
+  "wait_loops_requiring_same_game_thread_pump": [
+    "frame_wait: countdown > 0",
+    "frame_wait_step: countdown > left",
+    "present_hold: countdown == interval"
+  ],
+  "verified_source_facts": [
+    "Default initialization uses interval 2 / steps 2; events also use 2 / 1; demos use 1 / 1.",
+    "frame_wait waits before kmRender/kmFlipFrameBuffer. Present-only callbacks cannot release this wait.",
+    "The GCC hold path waits for a callback without issuing a flip. A render-driven callback alone would hang it.",
+    "frame_vsync changes stage fog and runs sound, backup and loader services. It must be serialized with game state, not invoked on an unguarded timer thread.",
+    "The GCC pvr_fits decision consumes render_busy and render_start/render_time/ta_time. Filling these with zeros would change split-frame policy.",
+    "The native wall clock exposes 781250 counts per second separately from pausable timer 1. render_start requires complemented 32-bit wall counts.",
+    "Kamui closes five lists in four slots, tracks list maxima and limits, and flip waits for progress with timeout behavior. Direct rendering alone supplies none of this.",
+    "The upstream split presentation adapts 30 FPS steps to two pictures. It does not establish 120/240 FPS support."
+  ],
+  "next_required_work": [
+    "Define explicit native vertical tick scheduling independent of window refresh and game step rate; establish source VSYNC_COUNTS rate.",
+    "Adapt all three busy waits to a game-thread wait/message pump with bounded close/error propagation.",
+    "Bind owned frame submission to kmRender and safe ready/present/retire transitions to kmFlipFrameBuffer.",
+    "Measure actual CPU preparation and GPU completion; supply typed statistics and real busy/completion states, never synthetic zero costs.",
+    "Verify the actual frame/present source with controlled clocks and real hardware rendering before claiming a game loop."
+  ],
+  "native_clock_source_sha256": "beddb5b16c63dd9ee8025ff12dcfc27de432e81b5729b844379a53cf873efa9f",
+  "verifier_sha256": "9afb2ae8ac7529809eea0232f26e98479a2015b9d37d28ee7c45c4375a7b4415",
+  "implemented": false,
+  "playable": false,
+  "overall_completion_percent": 10
+}

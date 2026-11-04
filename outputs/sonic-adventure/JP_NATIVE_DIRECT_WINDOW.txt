@@ -1,0 +1,123 @@
+Native direct rendering into the research window
+===============================================
+
+Status: VERIFIED component milestone. Estimated whole-project completion stays
+about 10% of weighted milestones, not code coverage. Goal active. The Japanese
+matching/GCC source baselines remain verified. Native gameplay, English and later
+platforms remain unfinished. This is an incomplete research build, not a game.
+
+What changed
+------------
+The renderer can draw owned frames directly into the current DXGI backbuffer.
+The production direct path creates no image staging texture, CPU image buffer,
+image Map/readback or CPU image upload. It shares the existing D3D11 device and
+the same checked geometry/material/texture renderer with the readback API.
+The new nine-object authored support library replaces earlier overlapping
+queue/texture/frame/GPU libraries. Do not link both versions together.
+
+jp_window_render_frame binds the frame's immutable palette, clip, logical canvas,
+clear and supported register state. jp_window_render_configured_frame is the
+explicit-state counterpart of the older offscreen API; it does not bind those
+captured registers. Both use the window's actual dimensions. Neither presents.
+jp_window_draw_direct_frame renders captured state and then calls real Present.
+The old readback/window APIs retain their ABI and behavior for compatibility.
+
+Successful render means commands submitted. It does not prove GPU completion or
+physical scanout. Inputs are copied into owned D3D resources before return, so
+the retained frame, source palette and textures may be released afterward.
+GPU completion is forced separately by the verifier's diagnostic readback.
+Validation failures preserve the backbuffer/report. A device failure after GPU
+commands begin may alter the backbuffer; no flip is issued on render failure.
+Real device removal mid-submission was not injected. Window calls stay on the
+creating thread. Premature renderer close still safely defers device release.
+
+The direct budget charges the target and depth payloads (8 bytes per pixel),
+without the offscreen API's extra staging image (4 bytes per pixel). The old
+window pipeline also needs its CPU image. Driver allocations/overhead are outside
+this conservative payload budget. No frame-rate or latency improvement was
+measured; resource creation/caching and proper completion/timing remain work.
+
+Verification
+------------
+1,878 new direct-path checks pass. The frozen suites also pass 716,351 checks
+on the new provider: 491,158 main GPU, 121,451 extended GPU, 103,700 captured
+state/window and 42 failure checks. Their source and predecessor proofs remain
+unchanged. The original CPU-image oracle is retained; actual backbuffer readback
+is additionally compared byte for byte on every successful image call.
+
+111 direct images / 33,932,288 complete backbuffer pixels compare exactly,
+including all nine layouts, first/last flat choices, perspective/depth/blending,
+supported formats/palette banks, retained generations and 32 actual complete
+producer calls. This includes an EMPTY 7680x4320 backbuffer, not 8K gameplay.
+Independent synthetic pixel oracles still check the ordinary image paths.
+Captured-state direct comparisons include palette/clipping/clear generations
+and shutdown/reinitialization of live owners. Eleven visible direct Presents
+succeeded, in addition to four preserved legacy window Presents.
+
+The direct failure suite verifies exact budget versus one byte short, invalid
+frames/settings/intervals, foreign-thread rejection and unchanged backbuffer/
+report/counter after failed preflight. A textured frame is rendered and all CPU
+frame/palette/texture owners are retired before diagnostic readback; the GPU
+result remains correct. Texture Off keeps zero texture fetch/decode/upload and
+zero texture/sampler shader bindings, using vertex/material colors.
+
+The actual production link audit still has 25 unresolved services and supplies
+56 of 79 presentation imports. It contains no diagnostic loop fixtures or fake
+success services. Direct output removes a real integration cost; it does not
+resolve kmRender, kmFlipFrameBuffer or kmiIntStatisticData by itself.
+
+Files and reproduction
+----------------------
+Public API: native/jp_native_direct_window.h
+Authored target integration: native/jp_native_direct_window_extension.c
+Workflow: jp_port_tools/build_native_direct_window.py
+Pixel comparisons: jp_port_tools/verify_native_direct_window.py
+Failure/lifetime checks: jp_port_tools/verify_native_direct_window_failures.py
+Production audit: jp_port_tools/audit_native_direct_window_link.py
+Library: jp_port_tools/build_native_direct_window_support_library.py
+Wait research: jp_port_tools/audit_native_render_flip_waits.py
+Reports: analysis/jp_native_direct_window_*.json
+Eligible archive library: work/sonic-adventure/build/jp_native_direct_window_support.lib
+
+This workspace's qualified runtime is work/sonic-adventure/jp-native-direct-window-v2.
+Its baseline is jp-native-window-v4 and its unchanged frame owner is
+jp-native-stateful-frames-v4. Reproduce those prerequisites using
+JP_NATIVE_WINDOW_STATE.txt before building this extension on a fresh machine.
+Use a fresh work output directory: scripts refuse to overwrite proof files.
+
+PowerShell example, from the workspace, with Python/Clang on PATH:
+python -B outputs/sonic-adventure/jp_port_tools/build_native_direct_window.py --workspace . --baseline work/sonic-adventure/jp-native-window-v4 --compiler PATH_TO_CLANG_EXE --output work/sonic-adventure/direct-fresh
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_direct_window.py --workspace . --build work/sonic-adventure/direct-fresh --output work/sonic-adventure/direct-fresh/regression --suite gpu
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_direct_window.py --workspace . --build work/sonic-adventure/direct-fresh --output work/sonic-adventure/direct-fresh/regression --suite gpu_extended
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_direct_window.py --workspace . --build work/sonic-adventure/direct-fresh --output work/sonic-adventure/direct-fresh/regression --suite stateful
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_direct_window_failures.py --workspace . --build work/sonic-adventure/direct-fresh --report work/sonic-adventure/direct-fresh/direct_failure_verification.json
+python -B outputs/sonic-adventure/jp_port_tools/audit_native_direct_window_link.py --workspace . --baseline-audit work/sonic-adventure/jp-native-window-production-link-v1/verification.json --build work/sonic-adventure/direct-fresh --output work/sonic-adventure/direct-fresh-production-audit
+
+The support-library builder also requires the baseline nine-object library
+directory, real production audit, compiler and fresh output directory; see --help.
+Diagnostic DLLs still depend on external original SDK/game/numerical providers
+and stay private. The public library contains exactly nine authored objects,
+including the replacement GPU/window object, with each member checked against
+the actual production graph. It embeds no retail assets or original SDK bodies.
+
+For a beginner: open this guide and the linked JSON reports in GitHub. A research
+DLL/library is a component for developers; downloading it does not launch Sonic.
+
+Next native frame milestone (Sol High)
+--------------------------------------
+The source audit identifies three waits that need a game-thread native pump:
+frame_wait, frame_wait_step and present_hold. Render/Present-only callbacks
+cannot wake waits which precede rendering or intentionally hold a picture.
+frame_vsync also mutates fog and runs sound, backup and loader services, so an
+unguarded background timer callback would race game state.
+The game normally initializes two steps over two vertical ticks; events also
+use two ticks/one step, and demos one tick/one step. GCC's split-frame scheduling
+uses measured render/TA costs and a downcounter start timestamp. These cannot
+be replaced with zero statistics or assumed monitor-refresh timing.
+
+Implement real submit/ready/present/retire transitions, native waits and measured
+CPU/GPU completion timings against the actual frame/present source next.
+Fog rendering, textured backgrounds, autosort/modifiers, remaining texture
+formats, real asset loading, full retained replay and gameplay are still open.
+60/120/240 FPS speed independence, English, SUPIR/settings UI and later ports
+require further integration and verification.
