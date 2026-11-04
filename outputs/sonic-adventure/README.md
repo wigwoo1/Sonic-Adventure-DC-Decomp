@@ -1,3 +1,10 @@
+Current camera update: see JP_NATIVE_VIEW_ROTATION.txt and
+JP_NATIVE_CAMERA.txt. The three view rotations pass 3,072 original calls
+and 57,463 checks. Camera setup/translation pass 1,920 original calls and
+36,201 checks; camera math executes 3,626 complete original acos chains.
+Presentation supplies 42 of 79 raw imports; 40 combined frame services
+remain. About 10% overall; no full frame or playable native port.
+
 Current native matrix/view update: see JP_NATIVE_MATRIX_RZ.txt and
 JP_NATIVE_VIEW_STACK.txt. RZ shared Ninja/multiplication migration passes;
 view initialization, scaling and complete clear pass 3,072 original calls

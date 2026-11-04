@@ -1,0 +1,64 @@
+Native view-direction and roll helpers
+
+Overall completion: about 10%, weighted milestones rather than code coverage.
+Japanese matching/GCC baseline established; native PC integration partial.
+English and later ports remain unfinished. No playable native port or full frame.
+
+Actual implementation
+njRotateViewXAbsolute derives the view direction from its absolute direction
+and an X rotation. njRotateViewYRelative rotates its current direction about Y,
+retaining the Y field. njRotateViewZAbsolute writes absolute roll plus the full
+32-bit angle, with integer wrap. The X/Y trigonometric instruction wraps its
+angle at 16 bits; the Z result deliberately is not truncated to 16 bits.
+Null view arguments select the real current-view pointer. That pointer keeps
+its full native width. The helpers do not rebuild or activate a view matrix.
+
+Both floating helpers preserve the original sequence: a rounded cosine
+product followed by a fused sine product-plus-sum with one final rounding.
+The authored word-valued FMAC boundary reuses the preserved exact integer
+core under RZ/DN1. It does not use a host float multiply followed by addition.
+Its class-value dispatch is separate from hardware FPSCR flags and traps.
+Reference: Renesas SH-4 Software Manual rev6, section 9.36:
+https://www.renesas.com/en/document/mas/sh-4-software-manual
+
+Verification
+- 3072 original calls and 57463 checks: 1024 per helper, both active float
+  banks, explicit/current views, aliasing the actual current target, wrapped
+  angles, signed zero, DN operands and finite direction values over a wide
+  exponent range. All view/stack arenas and guards, matrix globals, current
+  matrix, saved view matrix, stack metadata and full-width pointers agree.
+- The scalar FMAC tests use an independent exact integer-dyadic reference,
+  an exact cancellation witness and explicit exceptional class results.
+  There are 1045 original instruction cases where separately rounded
+  multiply/add gives a different value. Independent view geometry and
+  full-width integer roll-wrap checks also pass.
+- The same DLL passes 3072 original view/scale/clear regressions (55360
+  checks) and 961 shared-state checks. New objects and the asset-free research
+  DLL compile/link with zero diagnostics. Production links only the two new
+  implementation objects, with no probes or duplicate view/matrix state.
+
+Scope and integration
+The standalone rotation audit resolves three real services and leaves 41.
+The subsequent camera update in JP_NATIVE_CAMERA.txt leaves 40. Neither
+number is a count of decompiled game routines. Nonfinite FMAC class tests
+are explicit value checks; complete original nonfinite rotation behavior,
+flags/traps and new physical-hardware validation are not established.
+Original SDK bodies remain external. The original numerical instruction
+service shares the existing pinned approximation model for FSCA.
+
+Reproduction
+Use the prerequisites in JP_NATIVE_VIEW_STACK.txt, fresh private folders,
+matching JP reference binary and the pinned upstream source. PYTHON and
+CLANG below are the installed Python and Windows x64 Clang paths.
+
+PYTHON -B outputs/sonic-adventure/jp_port_tools/build_native_view_rotation.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --baseline work/sonic-adventure/jp-native-view-stack-v1 --compiler CLANG --output work/sonic-adventure/jp-native-view-rotation-v1
+
+PYTHON -B outputs/sonic-adventure/jp_port_tools/verify_native_view_rotation.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --build work/sonic-adventure/jp-native-view-rotation-v1 --binary work/sonic-adventure/jp-ninja-math-reference/1ST_READ.BIN --numeric-dll work/sonic-adventure/build/sh4_vector_numeric.dll --report work/sonic-adventure/jp-native-view-rotation-v1/contract_verification.json
+
+Run verify_native_view_stack.py against this build to view_stack_regression.json,
+and verify_shared_matrix_state_v2.py against this build as in the previous guide.
+
+PYTHON -B outputs/sonic-adventure/jp_port_tools/audit_native_dependency_extension.py --workspace . --baseline-audit work/sonic-adventure/jp-view-stack-native-link-audit-v1/verification.json --component work/sonic-adventure/jp-native-view-rotation-v1 --compiler CLANG --output work/sonic-adventure/jp-view-rotation-native-link-audit-v1
+
+Full-frame rendering, renderer numerical integration, resource lifetime and
+performance remain unqualified. Keep Sol High for the remaining platform work.

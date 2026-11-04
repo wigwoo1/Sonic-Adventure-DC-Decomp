@@ -1,0 +1,89 @@
+Native camera setup, translation and SDK math values
+
+Overall completion: about 10%, weighted milestones rather than code coverage.
+Japanese matching/GCC baseline established; native PC integration partial.
+English and later ports remain unfinished. No playable native port or full frame.
+
+Actual camera providers
+njSetView now computes the actual view matrix from position, direction and
+roll. It copies the unit matrix, applies negative roll, derives pitch/yaw with
+the SDK's numerical behavior, translates by negative position, activates the
+real current-view pointer, and executes the real matrix-stack clear provider.
+The order, 16-bit angle masks, truncation and signed-zero comparisons are
+preserved. The original roll negation wraps at 32 bits without C signed overflow.
+njTranslate provides its actual stored/current behavior through the qualified
+RZ translation-vector implementation. No camera matrix or service is a stub.
+
+An authored integer-value square-root boundary reuses the preserved scalar
+core. The authored arc-cosine boundary preserves the SDK's asin/atan reduction,
+coefficient words, five fused polynomial steps, power-of-two scaling and
+ordered scalar arithmetic. It does not substitute the host CRT acosf.
+The discarded remainder calculation is reduced to its exact eighth-bin
+quotient in the bounded positive argument used by the atan reduction.
+
+The SDK's math error data is exposed as jp_sdk_math_errno, with EDOM 1101
+and ERANGE 1100. A valid result leaves a previous error intact. This native
+data adapter avoids colliding with the host CRT's _errno() function. Future
+native SDK consumers must bind their original _errno data references to this
+adapter; it does not redefine the host CRT error API or claim that all SDK
+consumers have already been integrated.
+
+Verification
+- 3626 original acosf calls execute the complete actual runtime dependency
+  chain: acoss, asins, atans, the polynomial, power scaling and remainder.
+  There are no replacement hooks. The 17325 checks cover exact result words,
+  both FPU banks, preserved mode/stack, SDK error data, dense endpoint/grid
+  inputs, random words, DN/zero/NaN/infinity and out-of-domain cases.
+- Square-root values use an independent Python integer-root service and exact
+  rational squaring brackets, rather than the native C bit-trial algorithm.
+  Independent sampled acos approximation checks supplement original matching.
+- 1920 original parent calls and 36201 checks: 1152 translations and 768
+  complete njSetView calls. Original camera setup executes actual rotations,
+  translation, scale, multiplication, stack clearing and all math dependencies.
+  No original dependency body is hooked or replaced. Full view/parameter/stack
+  arenas, guards, metadata, error state, saved/current matrices and translated
+  native pointers agree. View storage aliases base/saved slots in dedicated
+  cases. Independent camera-position/forward geometry cases also pass.
+- The combined DLL retains all 3072 original rotation comparisons (57463
+  checks), 3072 view/scale/clear comparisons (55360 checks) and 961 shared-state
+  regressions. Unchanged existing implementation objects are hash-checked.
+- All native objects and the authored asset-free research DLL compile/link
+  with zero diagnostics. The real production link adds only camera, math and
+  square-root implementation objects. It links no test probes, dummy services,
+  original game bodies or second matrix/view state owner.
+
+Current frontier and remaining limits
+Presentation has 79 raw imports, of which 42 are supplied. The combined
+production frame/renderer link needs 40 services, down from 44 before the
+rotation/camera batch. Five additional SDK bodies are implemented in this
+batch; repeated original calls are tests, not a unique game-routine count.
+
+Parent camera comparisons cover finite incoming matrix/unit/pose state and
+nonzero finite direction length over the sampled range. Vertical directions
+exercise original yaw domain errors. General nonfinite/zero-length camera
+propagation, FPSCR flags/traps and the whole game's numerical context are not
+qualified. Numerical instruction services are models, not new hardware tests.
+Renderer inline arithmetic, full-frame rasterization, resource lifetime,
+performance/FPS targets, gameplay, English and later ports remain unfinished.
+The full matching Japanese proof and all previous sources/builds are preserved.
+
+Reproduction
+Use the pinned inputs, compiler and fresh private paths from
+JP_NATIVE_VIEW_ROTATION.txt. PYTHON and CLANG mean the installed tools.
+Original retail/reference inputs remain local. Game source stays external.
+
+PYTHON -B outputs/sonic-adventure/jp_port_tools/build_native_camera.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --baseline work/sonic-adventure/jp-native-view-rotation-v1 --compiler CLANG --output work/sonic-adventure/jp-native-camera-v1
+
+PYTHON -B outputs/sonic-adventure/jp_port_tools/verify_native_camera_math.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --build work/sonic-adventure/jp-native-camera-v1 --binary work/sonic-adventure/jp-ninja-math-reference/1ST_READ.BIN --numeric-dll work/sonic-adventure/build/sh4_vector_numeric.dll --report work/sonic-adventure/jp-native-camera-v1/math_verification.json
+
+PYTHON -B outputs/sonic-adventure/jp_port_tools/verify_native_camera.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --build work/sonic-adventure/jp-native-camera-v1 --binary work/sonic-adventure/jp-ninja-math-reference/1ST_READ.BIN --numeric-dll work/sonic-adventure/build/sh4_vector_numeric.dll --report work/sonic-adventure/jp-native-camera-v1/contract_verification.json
+
+Run the rotation and view-stack verifiers against this build to
+rotation_regression.json and view_stack_regression.json, then run the shared
+state verifier. Read the previous guides for those exact commands.
+
+PYTHON -B outputs/sonic-adventure/jp_port_tools/audit_native_dependency_extension.py --workspace . --baseline-audit work/sonic-adventure/jp-view-rotation-native-link-audit-v1/verification.json --component work/sonic-adventure/jp-native-camera-v1 --compiler CLANG --output work/sonic-adventure/jp-camera-native-link-audit-v1
+
+Exact sources, mathematical constants, binaries, objects and verification
+hashes are recorded in analysis/jp_native_camera_* and jp_native_view_rotation_*.
+Keep Sol High for actual frame/primitive providers and renderer integration.
