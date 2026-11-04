@@ -1,0 +1,104 @@
+Complete native model producer: RZ/DN1 numerical integration
+
+Overall completion remains about 10%, a weighted milestone estimate rather
+than measured game-code coverage. The Japanese matching and GCC source builds
+are established. Native PC gameplay, English integration and later platforms
+remain unfinished. This milestone does not establish a rendered game frame.
+
+What changed
+The entire pinned GCC draw/model.c now compiles through the existing native
+value services. All 66 source functions remain; its 14 public entry points
+remain available. The seven established data-access/assembly replacements and
+native texture-handle lookup are reused. The original source is unchanged.
+
+Clang's typed AST routes 152 scalar operations through integer RZ/DN1 helpers.
+The square root, FIPR dot products and FTRV transforms use the established
+value cores. Transform, point-transform and column access all read the same
+actual Ninja current-matrix storage used by camera, sprites and primitives.
+There is no extra model matrix owner. Generated model LLVM contains no native
+float add/subtract/multiply/divide/comparison instructions. Native frame timing
+and hardware status flags are outside this value contract.
+
+The complete game-containing diagnostic runtime links the real model body,
+queue, scratch, texture records, matrix, camera, sprites and primitive providers.
+Diagnostic frame/replay observers and private-state accessors let tests inspect
+their boundaries. They are excluded from the production link audit.
+
+Verification
+The model suite passes 200,669 checks across 3,485 original entry calls, with
+75,698 defined original packet words compared. Complete original bodies execute
+without game-dependency hooks. Original traces execute no FMAC instructions.
+The instruction reference adds GBR long loads, SETT/CLRT, signed 64-bit products
+and explicit supervisor register-bank switching. Its 652 independent checks
+cover every long-load displacement, T states, both banks and signed boundaries.
+This is software instruction-model testing, not new physical-console testing.
+
+The model tests cover:
+  complete projection and palette/specular lighting;
+  complete draw_model, nested and unculled paths;
+  all four meshset types and 12 texture/environment/alpha/light combinations;
+  original constant-attribute and own/constant/offset material-alpha modes;
+  models with up to 2,048 points, including 1,900-point cases;
+  every near-plane corner mask for each of the three strip modes;
+  original culling, public visibility, light division/reset and shading restore;
+  twelve three-model runs sharing a queue while current matrices change;
+  actual producer output staying within the preflight reservations and guards.
+
+The numerical contract is sampled finite valid 4:3 RZ/DN1 behavior, with traps
+disabled. FPSCR status flags, wide pictures, whole-game numerical policy,
+pixel output, timing and complete retained replay are not established here.
+Original assembly and pinned GCC intentionally differ in some cases. Sixteen
+odd-count cases check the GCC correction while separately accounting for the
+original padded extra point. The extended unlit-offset policy explicitly sends
+zero beyond original slot 511, rather than copying the original accidental
+adjacent lit-offset reads. Four frame/skip cases test GCC policy separately.
+The source also retains its documented off-screen/exceptional-input changes;
+arbitrary invalid assets or all exceptional values are outside this proof.
+
+On the SAME combined runtime, regressions pass:
+  371,722 primitive checks across 4,452 original entry calls;
+  82,489 sprite checks across 1,536 original draws;
+  332,375 polygon checks;
+  36,201 camera/translation checks;
+  961 shared matrix-state checks.
+
+Production and lifetime boundary
+The real production audit replaces the previous model.obj with the complete
+RZ model object, retaining every other real provider and its hash. It still
+requires the same 26 frame/game/platform services. The 55 of 79 presentation
+imports supplied is unchanged; a numerical migration does not inflate that
+count. The real link still fails on those services and produces no game EXE.
+
+Raw model entries require valid native assets, adequate scratch and complete
+queue reservations. The existing jp_model_preflight requires truthful accessible
+array lengths; it validates indices, materials, textures and UVs before the
+actual unchecked drawer. Its bound is now exercised by the real full producer,
+including clipping and multi-model queue growth. This does not turn arbitrary
+native pointers or on-disc 32-bit records into trusted native assets. Whole-game
+call-site binding and resource loading remain integration work.
+
+Queued texture references also need a frame lifetime contract before a renderer
+can consume them safely after release/reuse. The current texture owner frees
+surface payloads on release. Real render/flip services, resource retention,
+packet consumption and graphics output remain the next frame milestone.
+
+Reproduction with the installed documented Clang and SH4ZAM dependency:
+python -B outputs/sonic-adventure/jp_port_tools/build_native_model_rz.py --workspace . --upstream PINNED_UPSTREAM --sh4zam PINNED_SH4ZAM --compiler CLANG_PATH --output work/sonic-adventure/NEW_MODEL_OBJECT_FOLDER
+python -B outputs/sonic-adventure/jp_port_tools/build_native_model_runtime_rz.py --workspace . --upstream PINNED_UPSTREAM --baseline QUALIFIED_PRIMITIVE_RUNTIME --model work/sonic-adventure/NEW_MODEL_OBJECT_FOLDER --compiler CLANG_PATH --output work/sonic-adventure/NEW_MODEL_RUNTIME_FOLDER
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_model_rz.py --workspace . --upstream PINNED_UPSTREAM --build work/sonic-adventure/NEW_MODEL_RUNTIME_FOLDER --binary work/sonic-adventure/jp-ninja-math-reference/1ST_READ.BIN --numeric-dll work/sonic-adventure/build/sh4_vector_numeric.dll --report work/sonic-adventure/NEW_MODEL_RUNTIME_FOLDER/qualified_contract_verification.json
+External inputs are pinned by jp_task_external_inputs.json and
+jp_renderer_external_inputs.json. Matching original retail inputs, the numerical
+reference DLL and earlier qualified component builds must be available locally.
+Generated game C, LLVM, objects and the diagnostic DLL remain private. The
+public research archive preserves the earlier authored/historical builds; it
+does not contain a new game-containing model DLL or a playable port.
+
+Beginner check: open analysis/jp_native_model_rz_qualified_contract_verification.json.
+Its status should be sampled_complete_actual_model_RZ_contracts_verified,
+checks 200669 and original_entry_calls 3485. These are component checks.
+
+Next: implement real frame submission and render/flip with queued texture
+lifetime protection, then exercise actual packet consumption and image output.
+Retain whole-game/native-asset loading, retained replay and wide-picture gates.
+Recommended model: Sol High for this work. Luna Low is suitable for verified
+documentation-only maintenance. The full project goal remains active.

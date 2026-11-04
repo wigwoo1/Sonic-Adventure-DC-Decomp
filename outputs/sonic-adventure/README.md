@@ -1,3 +1,12 @@
+Current complete-model update: see JP_NATIVE_MODEL_RZ.txt. The full pinned
+GCC model producer retains all 66 source functions; 152 scalar operations
+and vector/point transforms use the existing RZ/DN1 numerical services.
+200,669 checks across 3,485 original entries pass, including every clipping
+corner mask in all three strip modes and models with up to 2,048 points.
+All primitive/sprite/polygon/camera/shared-state regressions pass. The real
+production model object is replaced; the same 26 frame services remain.
+About 10% overall. No complete native frame or playable PC port.
+
 Current primitive update: see JP_NATIVE_PRIMITIVES.txt. Complete strip/texture,
 point-transform and clipped-polygon routines pass 371,722 checks across 4,452
 original entry calls. All four writers, selector caches and aliasing are

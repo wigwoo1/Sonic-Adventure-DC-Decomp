@@ -141,12 +141,18 @@ draws, reaching all eight triangle clipping cases. Intensity/discard contracts
 pass 36,879 checks. Its 146 scalar operations use integer RZ services.
 The authored queue DLL/import library is public; game-containing sprite
 diagnostic artifacts remain private. GCC-wide sprite pictures, complete replay,
-renderer inline numerical integration and full frames remain unfinished; BIOS
+wide-picture numerical integration and full frames remain unfinished; BIOS
 handoff is unmeasured. See [the FPSCR guide](outputs/sonic-adventure/JP_NATIVE_FPSCR_CONTEXT.txt).
 Complete strip, point and clipped-polygon providers pass 371,722 checks
 across 4,452 original entries. All four writers, selector caches and point-output
 aliases are qualified. A 48-point host clipping case is checked by original-routine
 composition without executing the original parent's unsafe small scratch.
+The complete GCC model producer now routes 152 scalar operators and its vector
+math through the same RZ/DN1 services. Its 66 source functions remain; 200,669
+checks across 3,485 original entries pass. Every near-plane corner mask, all
+three strip modes, models up to 2,048 points and shared-queue runs are covered.
+GCC odd-count, frame/skip and extended-unlit policies are checked separately.
+The real production model object is replaced; 26 frame services still remain.
 Full-frame execution and gameplay are unfinished. English integration
 begins as the needed asset/text/audio systems become usable. Game-containing
 runtime artifacts remain private.
@@ -161,6 +167,7 @@ Texture Off must disable sampling and use vertex/material colours.
 - [Current goal](outputs/sonic-adventure/JP_BASED_PORT_GOAL.txt)
 - [Integration order and limits](outputs/sonic-adventure/JP_NATIVE_PORT_PLAN.txt)
 - [Verified GCC baseline and native/localization evidence](outputs/sonic-adventure/JP_GCC_BASELINE.txt)
+- [Complete model producer numerical integration](outputs/sonic-adventure/JP_NATIVE_MODEL_RZ.txt)
 - [Native strip/texture and clipped polygon providers](outputs/sonic-adventure/JP_NATIVE_PRIMITIVES.txt)
 - [Native sprites, intensity headers and discarded batches](outputs/sonic-adventure/JP_NATIVE_SPRITES.txt)
 - [Native 2D polygons, bounded queue and picture aspect](outputs/sonic-adventure/JP_NATIVE_POLYGON2D.txt)
