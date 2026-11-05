@@ -1,0 +1,93 @@
+One original frame-counter owner across native rendering and pacing
+
+Overall project estimate: about 10% of weighted milestones; goal active.
+Japanese matching and GCC source baselines are verified. Full native boot,
+gameplay, English localization, settings and later platforms remain unfinished.
+
+Problem and resulting behavior
+
+The preceding diagnostic renderer and frame-wait DLL each defined frame_step.
+The renderer could therefore use a different simulation-step number from the
+one original frame_pacing_init/frame_wait updated. This blocked genuine task/
+presentation integration even though isolated startup/image tests passed.
+
+The original four frame-state declarations now have one storage owner in the
+shared native frame DLL: frame_interval, frame_countdown, frame_step_count and
+frame_step. The renderer references that same step. Original frame pacing and
+the frame-wait diagnostic import all four variables from that owner. No new
+DLL or circular import is introduced. A native header marks owner/export and
+consumer/import declarations; a private original-header overlay applies the
+same Windows import attributes to its existing declarations.
+
+The original frame_pacing_init, frame_set_interval, frame_wait, frame_wait_step
+and frame_vsync bodies remain byte-identical to their previously adapted native
+inputs. Only storage/declaration ownership changes. The complete real pacing
+object also compiles with imported state; the runtime frame-wait diagnostic
+retains its previously documented out-of-scope service traces. Original game
+sources and all preceding proof/build files remain unchanged.
+
+Verification
+
+101 focused checks establish cross-DLL data identity, exact signed integer
+values, renderer-control writes, original pacing/interval changes and four
+registered original vsync callbacks through the actual native clock/wait owner.
+Five complete original model-parent calls verify that the real FRAME_DRAWS gate
+observes this same step: step zero draws, step one needs later draws enabled,
+and step two skips. Actual original pacing restores draw-ready step zero.
+
+Retained suites on the new exact DLL bytes pass: original logo startup 8,266;
+owned frames 8,572 (193 submissions / 128 complete parent draws); presentation
+130 in this run (four images and eight real Presents). Total distinct checks
+for this qualification: 17,069. The earlier 82-check intermediate suite is
+preserved privately and is not added again. Combined image suites compare seven
+images / 937,984 pixels and perform eleven real Presents. These counts describe
+named contracts, not measured game coverage or a gameplay FPS benchmark.
+
+The original logo startup still checks all 4,096 task slots, the native heap
+short-split fix, cover state, actual assets and missing-file behavior. The host
+must check dependency errors because the original startup returns void. See
+JP_NATIVE_LOGO_START.txt for that qualification and its remaining limits.
+
+Remaining integration
+
+The diagnostic present_record/present_untimed observation providers remain.
+This milestone does not execute real task stepping/drawing/destruction or the
+original logo_step/boot_init. Camera/player state and genuine presentation
+lifecycle still need connection to the real task/heap and shared native owners.
+The preceding 36/43 production missing-service counts were not remeasured or
+claimed reduced. Full frame-redrawing/split state is not qualified here.
+
+Next, replace diagnostic presentation hooks with the genuine source functions
+and connect the full task lifecycle without duplicate clock/matrix/frame owners
+or success stubs. Then provide actual input/exit dependencies and execute the
+complete original logo state machine, transitions and texture release.
+
+Builds and reproduction
+
+The new game-containing DLLs and original state-declaration object stay private.
+No new public binary is produced. All 2,942 historical/authored research binary
+payloads remain unchanged. The research archive is source-matched, incomplete
+and not a playable game. Retail inputs, generated game bodies and images are
+excluded. The Japanese source remains a pinned external dependency.
+
+Start from JP_NATIVE_TITLE_FADES.txt and the original-logo startup guide. With
+the same pinned source, local Clang/Windows SDK and private inputs, use fresh
+private output and report paths. Join the displayed command lines:
+
+python -B outputs/sonic-adventure/jp_port_tools/build_native_shared_frame_state.py
+  --workspace WORKSPACE --upstream PINNED_UPSTREAM --baseline TITLE_FADE_BUILD
+  --present BITMAP_UPLOAD_BUILD --compiler CLANG --output FRESH_PRIVATE_BUILD
+
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_shared_frame_state.py
+  --workspace WORKSPACE --build FRESH_PRIVATE_BUILD --report FRESH_REPORT.json
+
+Rebuild the original-logo metadata probe and startup component against the new
+frame build using the existing builders, then run verify_native_logo_start.py.
+Run verify_native_bitmap_regressions.py with --suite frames and --suite present,
+using distinct fresh --output directories. Reports under analysis/
+jp_native_shared_frame_state_* record exact commands, hashes, scope and counts.
+Load the frame DLL, then GPU/window DLL, then presenter and startup DLL; Windows
+must resolve each shared owner once. Do not mix old/new DLL generations.
+
+Sol High remains appropriate for the next task/presentation integration. Luna
+Low is suitable for routine documentation and straightforward status checks.

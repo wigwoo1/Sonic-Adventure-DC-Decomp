@@ -104,6 +104,13 @@ real QPC/Win32 waits and close handling. Four original frame globals are supplie
 (60/79 presentation imports). Adding the frame source exposes 22 more genuine
 dependencies; the expanded graph has 43 missing services. No trace providers are
 linked into production. Real game render/flip integration remains open.
+Original frame pacing and rendering now share one storage owner for the four
+original frame counters. 17,069 checks pass, including cross-DLL identity, actual
+vsync callbacks, complete original model draw/skip behavior, logo startup, owned
+frames and real Presents. Task execution and genuine presentation replay remain
+unintegrated. No new game-containing binary is published. Earlier snapshot
+notes below retain their historical verification scope.
+
 The unchanged original logo_start now executes with real task/heap startup,
 cover state, file/PRS/PVM texture loading and shared native pacing/rendering.
 8,266 startup checks pass, including 4,096 task slots, eight task levels and
@@ -176,6 +183,7 @@ Texture Off must disable sampling and use vertex/material colours.
 - [Current goal](outputs/sonic-adventure/JP_BASED_PORT_GOAL.txt)
 - [Integration order and limits](outputs/sonic-adventure/JP_NATIVE_PORT_PLAN.txt)
 - [Verified GCC baseline and native/localization evidence](outputs/sonic-adventure/JP_GCC_BASELINE.txt)
+- [Shared native frame counters and original rendering/pacing behavior](outputs/sonic-adventure/JP_NATIVE_SHARED_FRAME_STATE.txt)
 - [Original logo startup, real tasks/heap and cover state](outputs/sonic-adventure/JP_NATIVE_LOGO_START.txt)
 - [Original title fades, Ninja context headers and native composition](outputs/sonic-adventure/JP_NATIVE_TITLE_FADES.txt)
 - [Native background planes, lifetime checks and original logo integration](outputs/sonic-adventure/JP_NATIVE_BACKGROUND_PLANES.txt)

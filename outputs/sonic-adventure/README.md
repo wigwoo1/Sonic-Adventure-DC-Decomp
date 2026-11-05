@@ -1,3 +1,13 @@
+Latest shared-frame update: JP_NATIVE_SHARED_FRAME_STATE.txt. Renderer and
+original frame pacing now use one owner for all four original frame counters.
+The original model draw/skip gate observes actual pacing state. 17,069 checks
+pass across focused ownership, startup, retained frames and presentation suites.
+Task execution and genuine presentation recording/replay remain unfinished.
+All 2,942 public binary payloads are preserved; no new private game DLL is
+published. Earlier notes retain historical scope. Japanese baselines verified;
+overall about 10%; native gameplay, localization and later ports unfinished.
+Goal active.
+
 Latest startup update: JP_NATIVE_LOGO_START.txt. Unchanged original logo_start
 now executes with genuine heap/task initialization, original cover state, real
 asset loading and shared pacing/rendering. 8,266 checks pass, including all
