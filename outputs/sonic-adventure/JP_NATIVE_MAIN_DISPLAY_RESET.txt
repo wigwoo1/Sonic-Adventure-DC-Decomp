@@ -1,0 +1,110 @@
+Complete native main display reset - verified research milestone
+
+Overall project estimate: about 10%; goal active. No playable native game yet.
+This qualifies display_reset_full, not the complete system_boot_init sequence.
+The Japanese source baseline remains an external pinned dependency at
+25a3d3154dbe657325e97dbe8c5291086f6af5c0. Original sources/proofs are preserved.
+
+What changed
+
+The complete original display_reset_full now links to its existing real native
+dependencies and the original main-owned matrix_stack, screen, view, texmemlist
+and fog_table. There is one actual owner for each state; no replacement reset
+body, dummy dependency, second queue, renderer or texture runtime is introduced.
+Every previous production object is byte-identical. Only a private game-source
+object is added, and the existing frame/GPU/presentation/exit/logo DLLs relink.
+
+The parent initializes 128 matrices, the 640x480 logical screen, 70-degree field
+of view, view transform, 2,048 texture records, black background, filtering,
+render controls/material, depth range/clipping, white fog, all 128 fog entries,
+culling, original random seed, default print size and model-draw state.
+
+One native literal adaptation is required. Original SHC's 0.05F argument is
+binary32 word 0x3d4ccccc, while native Clang rounds the decimal to 0x3d4ccccd.
+The generated private copy uses exact 0x1.999998p-5F to retain the original word.
+Control flow and call order remain unchanged. Upstream source stays untouched.
+
+Verification actually performed
+
+- Main reset suite: 1,841,658 assertions, including 1,841,440 pixel comparisons.
+  Eleven complete original entry calls include three whole display-reset calls
+  compared against native execution, with selected contexts 0, 1 and 5.
+  Main matrix/view/screen state, untouched trailing matrix bytes, all texture
+  record sparse writes, shared SDK/context state, all fog words/registers,
+  actual device/background state, random seed and font lifetime agree.
+  The parent and its dependencies execute without test hooks. Original font
+  initialization alone uses explicit guest texture-allocation/VRAM-copy
+  services, once each; physical VRAM/bus/cache/interrupt behavior is not tested.
+- Four actual GPU images exercise the initialized view, perspective, fog,
+  culling, background and default-size original font. The synthetic triangle
+  and text scene passes at 640x480 and 1280x960, plus Texture Off. The independent
+  pixel oracle reports maximum channel error zero within a two-level tolerance;
+  a 0.025 logical-pixel triangle-edge strip is excluded. A submitted frame's
+  captured video state and rendering survive another genuine reset.
+  Texture Off performs zero font decoding, uploads or sampled bindings.
+- The reset now precedes actual boot_init in the existing logo/exit suite:
+  5,959 assertions, six actual native reset calls, three whole 191-step logo
+  runs, 570 real GPU frames and Presents, and 175,104,000 logo pixels checked.
+  Complete cleanup, task destruction, quit/pending-work exit and explicit
+  partial/unbound failure paths remain checked in fresh child processes.
+- Frame retention: 8,572 checks with the actual shared video owner.
+- Save defaults/reset/checksums: 591 checks and 29 original entry calls.
+
+Total fresh feature/regression assertions: 1,856,780. Full-image logo comparison
+counts are reported separately. These are bounded assertions, not routine
+counts, measured project coverage or evidence that gameplay works. Previous
+broader renderer/formatter suites remain attached to preserved unchanged object
+builds; they were not all rerun for this parent-only addition.
+
+The stronger logo fixture initially exposed an old oracle assumption: without
+the parent it expected no fog. The real parent enables white fog, and the actual
+logo reciprocal depth gives factor 1/255. The new Python caller derives the old
+suite with an explicit image-oracle adaptation: independent table lookup, first
+render-target quantization, then the original black fade. It checks six real
+textured quads and their constant depth/fog state on every frame. Maximum
+per-channel logo tolerance is one RGBA8 level. No native render state or game
+function is patched to satisfy the test. The original verifiers and failed
+diagnostic evidence remain intact; the derived harness hash is recorded.
+Font-before-reset is qualified in the separate main suite. The logo lifetime
+fixtures retain their original absent-font setup; they do not establish the
+complete system_boot_init ordering.
+
+Screenshots and publication
+
+Actual renderer-owned window pixels were captured for the default-font triangle
+test and reset-then-logo sequence. The triangle is synthetic test geometry, not
+gameplay. Screenshots contain locally supplied font/logo pixels and remain
+private; they can be shown in chat. No screenshot, original font include, retail
+asset or game-containing DLL is added to GitHub.
+
+Public authored build/verification tools, this guide and hash-based analysis
+reports are published. All 2,959 earlier research archive payloads remain
+byte-identical. This milestone adds no new public binary: its new object
+contains original external game code and stays private. The source-matched
+prerelease archive gets an updated source manifest and checksums. Archives are
+incomplete research artifacts; there is no playable EXE.
+
+Reproduce locally
+
+Use Windows Python 3, Clang/Windows SDK, the previous qualified print-format-v3
+build/link recipe, pinned external source, private authentic font include and
+the matching user-supplied JP binary. Set PY and CLANG to local executable paths;
+run from the workspace, selecting fresh output directories for each rerun.
+
+& $PY -B outputs/sonic-adventure/jp_port_tools/build_native_display_reset.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --baseline work/sonic-adventure/jp-native-print-format-v3 --compiler $CLANG --output work/sonic-adventure/jp-native-main-display-reset-v4
+& $PY -B outputs/sonic-adventure/jp_port_tools/verify_native_display_reset.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --build work/sonic-adventure/jp-native-main-display-reset-v4 --binary work/sonic-adventure/jp-ninja-math-reference/1ST_READ.BIN --numeric-dll work/sonic-adventure/build/sh4_vector_numeric.dll --font-input work/sonic-adventure/jp-native-built-in-font-atlas-v1 --output work/sonic-adventure/jp-native-main-display-reset-check-v4
+
+Prepare the existing actual-owner views, run the existing frame/video and save
+verifiers against this build, then use the resulting save proof:
+
+& $PY -B outputs/sonic-adventure/jp_port_tools/verify_native_display_reset_boot.py --workspace . --build work/sonic-adventure/jp-native-main-display-reset-v4 --inputs work/sonic-adventure/jp-native-pvm-inputs-v1 --asset-root work/sonic-adventure/jp-native-asset-fixtures-v1/資産 --save-proof work/sonic-adventure/jp-native-main-display-reset-v4/save-verification.json --output work/sonic-adventure/jp-native-main-display-reset-boot-check-v2
+
+The analysis reports retain exact sources, commands, local dependency paths,
+compiler/DLL hashes, layouts, bounds, original matching proof and image hashes.
+
+Next: audit and implement full system_boot_init dependencies with real native
+owners, especially audio initialization, vertex/scratch setup, card/VMU and
+peripheral integration. Audio, loader/overlay traces, the complete main loop,
+gameplay, disk saving, English content and later platform work remain unfinished.
+Use Sol High for this integration. Luna Low is suitable for routine documentation
+after qualification; the active goal should not be paused for this milestone.

@@ -1,3 +1,15 @@
+Latest complete main display reset: JP_NATIVE_MAIN_DISPLAY_RESET.txt.
+Goal active; overall about 10%. The complete parent now uses original main-owned
+matrix/screen/view/texture/fog data and real existing native dependencies.
+1,856,780 fresh feature/regression assertions include 1,841,440 reset-scene
+pixels; 570 reset-then-boot/logo GPU frames also pass independent whole-image
+fog/fade checks. Actual private screenshots are available in chat. One exact
+float literal adaptation retains original SHC bits; call order/control flow
+remain unchanged. All prior production objects and all 2,959 public archive
+payloads remain byte-identical; no new public binary this milestone. Original
+game/font objects and screenshots stay private. Full system_boot_init, gameplay
+and later work remain unfinished; no playable EXE. Earlier notes are historical.
+
 Latest original float/variadic formatting: JP_NATIVE_PRINT_FORMATTING.txt.
 Goal active; overall about 10%. Genuine njPrintF/njPrint now use the original
 SHC formatter and 27 decimal/runtime sources through bounded native arguments
