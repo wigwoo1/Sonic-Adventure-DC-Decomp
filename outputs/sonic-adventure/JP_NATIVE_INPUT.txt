@@ -1,0 +1,125 @@
+Native Windows input and original Japanese pad-processing helpers
+
+Overall project estimate: about 10% of weighted milestones; goal active.
+Japanese matching and GCC source baselines remain verified. Full native boot,
+gameplay, localization, settings and later platforms remain unfinished.
+
+Verified input provider
+
+The authored provider samples Windows keyboard and XInput, converts them to the
+original SDK peripheral record ABI and maintains four stable controller records.
+The SDK entry points njGetPeripheral/pdGetPeripheral/pdGetPeripheralInfo,
+pdExecPeripheralServer and pdExitPeripheral operate this real owner. There is
+also an explicit alternate sample-source interface for deterministic tests.
+
+The original on/off/old/press/release masks are derived from owned physical
+history. The original demo recorder can overlay a peripheral view without
+fabricating physical button edges on the next poll. Disconnection releases held
+buttons and supplies the original unsupported-axis/trigger sentinels. Metadata
+reports no controller description for a disconnected record. Native input
+failure is explicit and sticky; a failed source or malformed last port cannot
+partially publish preceding ports. Ownership is on one game thread. Nested poll
+and shutdown calls are rejected without destroying the outer operation.
+
+XInput is loaded from the Windows system directory; no DLL is downloaded or
+bundled. Actual polling reports absent controllers as disconnected. Invalid
+keyboard windows are rejected. Input is neutral while the supplied game window
+is unfocused. A configured keyboard supplies a logical player-zero controller;
+it can combine with XInput controller zero. An application must initialize this
+provider and check its status; a returned empty SDK record alone proves nothing.
+
+Default keyboard mappings (rebinding UI is unfinished): WASD is the primary
+stick; arrows are the d-pad; Space is A; Z is B; X is X; C is Y; Enter is Start;
+Q/E are left/right triggers. Escape produces the original A+B+X+Y+Start quit
+combination. Opposed WASD directions cancel. A keyboard axis overrides that
+axis of controller zero while its keys are held; other channels remain intact.
+XInput primary and secondary sticks normalize to -128..127 and invert Y for
+the original SDK convention. Trigger shoulders/analog thresholds map to L/R.
+
+Original game helpers
+
+The complete original pad.c compiles natively. Its eleven functions are retained
+in the full object. The currently linked helper boundary contains its original
+state and ten functions, including analog processing, button repeat and quit
+counting. It deliberately excludes pad_scan until recording_update is supplied.
+The full-object link audit fails on exactly recording_update; no recorder or
+other game service is replaced with a success stub or forced unresolved link.
+
+Analog math uses the existing exact RZ/DN1 scalar and square-root providers and
+the already qualified authored arc-tangent core. The two-argument sign/quadrant
+rule follows original _in_atan2s. Seventeen typed scalar operations are rewritten
+through the existing integer services; LLVM inspection finds no residual native
+floating add/subtract/multiply/divide/compare operations in the full pad object.
+The final angle conversion remains bounded/truncating for valid controller axes.
+The original GCC repair restricts player_pads_on to its two actual elements.
+Signed axis shifts become defined multiplication by 256. Original literal-pool
+words 0x292bf9a8 and 0x4622f986 are checked against the supplied Japanese binary
+and retained for stroke scaling and angle units. Original source is unchanged.
+
+The helpers retain original quirks, including component dead-zone subtraction
+once either axis passes its threshold. This is not replaced with a different
+modern stick curve. Their camera-relative direction uses the existing real
+camera_work owner. The helper probe supplies explicit input preconditions; it
+does not substitute for pad_scan's port compaction or recorder call.
+
+Verification and limits
+
+The Windows provider passes 150,352 checks: every 16-bit XInput button mask,
+every signed axis value, keyboard conversions, 1,024 controlled four-port
+updates, stable SDK aliases, edge history, error atomicity, reentrancy and
+foreign-thread rejection. Real Windows keyboard-only, controller-only and
+combined services each poll eight times in an owned hidden, unfocused window.
+No keyboard events are injected. Focused physical key presses and physical
+controller button/axis events have not been verified.
+
+4,851 further checks execute 1,104 original Japanese helper calls: 384 complete
+analog parents, 592 button parents and 128 quit parents. Both original FPU banks
+run with single precision, RZ/DN1 and traps disabled. The full original atan2f,
+_in_atan2s, _in_atans, _app_atans, _in_fmods and _in_ldexps chain executes without
+dependency hooks. Complete eight-player analog arrays and four-port button
+arrays compare byte-for-byte. The analog qualification covers original valid
+controller units -128..127, not arbitrary malformed 16-bit demo samples.
+
+The extended shared runtime also passes 8,266 original-logo startup checks and
+125 genuine-task/rendering checks. Total for this qualification: 163,594 named
+checks. The retained suites compare eight 640x480 images / 2,457,600 pixels and
+perform eight real Presents. Counts do not measure whole-game coverage.
+
+Original pad_scan, logo_step and boot_init have not executed. The existing
+frame-wait input trace is still present; the new native provider is not yet
+wired into that frame loop. The native game therefore does not yet have a
+complete playable control path. Recover the genuine recorder with bounded
+native storage, connect sampling, then implement native shutdown/exit and
+verify the complete logo state machine. Full gameplay and later ports follow.
+
+Builds and reproduction
+
+The authored standalone jp_native_input.dll and matching import library are
+eligible research artifacts. They contain no original game/Sega SDK function
+body or retail asset. Their SDK types remain pinned external inputs. The
+integrated frame DLL contains original game helpers and stays private. Choose
+one input owner: the standalone component OR the integrated frame component;
+do not load both into the same game process. All prior builds are preserved.
+
+Use the pinned upstream checkout, existing Windows Clang/SDK and fresh paths.
+Join displayed command lines:
+
+python -B outputs/sonic-adventure/jp_port_tools/build_native_input_backend.py
+  --workspace WORKSPACE --upstream PINNED_UPSTREAM --compiler CLANG
+  --output FRESH_INPUT_BUILD
+
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_input_backend.py
+  --workspace WORKSPACE --build FRESH_INPUT_BUILD --report FRESH_INPUT_REPORT.json
+
+python -B outputs/sonic-adventure/jp_port_tools/build_native_pad_helpers.py
+  --workspace WORKSPACE --upstream PINNED_UPSTREAM --baseline TASK_NATIVE_BUILD
+  --input FRESH_INPUT_BUILD --binary PRIVATE_JP_1ST_READ --compiler CLANG
+  --output FRESH_PAD_BUILD
+
+verify_native_pad_helpers.py takes --workspace, --upstream, --build, --binary,
+--numeric-dll (the qualified original-opcode model) and a fresh --report path.
+Rebuild the original-logo probe/startup against FRESH_PAD_BUILD using the task
+guide, then run the existing startup and task/rendering verifiers. Exact hashes,
+commands, link audit and verification scopes are in analysis/jp_native_input_*.
+These research components are not a playable game. Sol High remains appropriate
+for the recorder, original scan integration and native exit lifecycle.

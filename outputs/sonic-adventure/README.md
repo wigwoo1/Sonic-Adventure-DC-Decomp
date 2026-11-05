@@ -1,3 +1,13 @@
+Latest input update: JP_NATIVE_INPUT.txt. Real Windows keyboard/XInput
+sampling and the original Japanese analog/button/quit helpers are qualified.
+163,594 checks pass, including 1,104 original helper calls and retained native
+startup/rendering checks. The full pad source compiles; its link still needs
+genuine recording_update. Full pad_scan/logo_step and physical controller/key
+events are unverified; the frame-wait input trace is not replaced yet. Two
+authored input research artifacts are added; game-containing DLLs stay private.
+Earlier notes retain historical scope. Japanese baselines verified; overall
+about 10%; gameplay, localization and later platforms unfinished. Goal active.
+
 Latest task/presentation update: JP_NATIVE_TASK_PRESENTATION.txt. Complete
 original task execution and genuine recording/lifecycle hooks now share the
 native heap, clock, matrix, texture and frame owners. 24,695 checks pass.
