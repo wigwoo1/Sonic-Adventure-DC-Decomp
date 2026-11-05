@@ -1,3 +1,15 @@
+Latest original float/variadic formatting: JP_NATIVE_PRINT_FORMATTING.txt.
+Goal active; overall about 10%. Genuine njPrintF/njPrint now use the original
+SHC formatter and 27 decimal/runtime sources through bounded native arguments
+and output buffers. Whole original formatting/packet and actual text pixels
+match, including 0.125 rounding to 0.13 for two decimals. 59,951 fresh checks
+include prior print/frame/save and 570 existing boot/logo frames. Existing
+queue/texture/frame/GPU/game objects remain unchanged. All 2,958 prior public
+payloads are preserved plus one authored boundary library, 2,959 total. Original
+formatter/font/game objects and screenshots stay private. Full system boot,
+display reset, gameplay and later work remain unfinished; no playable EXE.
+Earlier notes retain historical scope.
+
 Latest genuine native text printing: JP_NATIVE_PRINTING.txt.
 Goal active; overall about 10%. Original shared print state, font initialization,
 character/string and decimal/binary/hex callers now produce verified native text.

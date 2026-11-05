@@ -198,6 +198,18 @@ real QPC/Win32 waits and close handling. Four original frame globals are supplie
 (60/79 presentation imports). Adding the frame source exposes 22 more genuine
 dependencies; the expanded graph has 43 missing services. No trace providers are
 linked into production. Real game render/flip integration remains open.
+Latest original float/variadic formatting: JP_NATIVE_PRINT_FORMATTING.txt.
+Goal active; overall about 10%. Genuine njPrintF/njPrint now use the original
+SHC formatter and 27 decimal/runtime sources through bounded native arguments
+and output buffers. Whole original formatting/packet and actual text pixels
+match, including 0.125 rounding to 0.13 for two decimals. 59,951 fresh checks
+include prior print/frame/save and 570 existing boot/logo frames. Existing
+queue/texture/frame/GPU/game objects remain unchanged. All 2,958 prior public
+payloads are preserved plus one authored boundary library, 2,959 total. Original
+formatter/font/game objects and screenshots stay private. Full system boot,
+display reset, gameplay and later work remain unfinished; no playable EXE.
+Earlier notes retain historical scope.
+
 Latest genuine native text printing: JP_NATIVE_PRINTING.txt.
 Goal active; overall about 10%. Original shared print state, font initialization,
 character/string and decimal/binary/hex callers now produce verified native text.
@@ -403,6 +415,7 @@ Texture Off must disable sampling and use vertex/material colours.
 - [Current goal](outputs/sonic-adventure/JP_BASED_PORT_GOAL.txt)
 - [Integration order and limits](outputs/sonic-adventure/JP_NATIVE_PORT_PLAN.txt)
 - [Verified GCC baseline and native/localization evidence](outputs/sonic-adventure/JP_GCC_BASELINE.txt)
+- [Original float and variadic formatting](outputs/sonic-adventure/JP_NATIVE_PRINT_FORMATTING.txt)
 - [Genuine native text printing](outputs/sonic-adventure/JP_NATIVE_PRINTING.txt)
 - [Original game randomness and direct SDK surfaces](outputs/sonic-adventure/JP_NATIVE_RANDOM_DIRECT_SURFACES.txt)
 - [Genuine native texture initialization](outputs/sonic-adventure/JP_NATIVE_TEXTURE_INITIALIZATION.txt)

@@ -1,0 +1,125 @@
+Original float and variadic text formatting - incomplete native-port milestone
+
+Whole-project estimate: about 10%. Goal active. Native debug text now includes
+njPrintF and njPrint, using the actual external SHC formatter and decimal helpers.
+This is still a research build. Full system boot, gameplay, English integration,
+performance options and later platforms remain unfinished. Original JP matching
+source/GCC qualifications are separate from native-port progress.
+
+The latest native build is jp-native-print-format-v3, based on the preserved
+jp-native-print-v7. One private print SDK object is replaced by the previous
+shared state/functions plus the two additional genuine bodies. All previous
+queue, texture, frame, video, GPU, random, save and game objects remain unchanged.
+The new build locally compiles 27 external runtime sources, including _fmtout,
+_xtostr, _xti, _its and their integer/multiprecision helpers. These objects and
+the original font remain private. No host CRT printf/sprintf formatter is used.
+
+Why preserve the original formatter
+
+The runtime has source-documented SHC behavior that differs from standard PC
+printf. For example, %.2f of 0.125 is 0.13; %-05d of 42 is 42000; %#06x of 255
+is 000xff. %g chooses its style/counts precision differently. Reusing the
+original formatter preserves these behaviors, including original finite-value
+rounding, padding, integer length modifiers and strings. Only native argument,
+buffer and numerical boundaries are adapted.
+
+Windows native varargs use compiler builtins. Integer/long values remain 32-bit;
+strings and %n use real native-width pointers. %p preserves the original 32-bit
+display value (low 32 bits of a native pointer). Floating arguments arrive as
+native doubles, then narrow to the original single RZ/DN1 value and widen exactly
+for the original decimal helpers. The _log10 body retains its splits; its
+exponent*0.301L result is replaced by an exact integer service over the complete
+widened-single exponent domain, -125..128. Every exponent matches whole original
+code execution. No new host FP arithmetic is present in the authored boundary.
+FPSCR flags/traps, host floating flags, console timings and whole-game FPSCR
+contexts are outside this fixed value-only qualification.
+
+Bounded native policies
+
+Formatting is owned by one game thread. Caller buffers must be valid writable
+storage, 1..32,768 bytes including the terminator. Format and string arguments
+must be valid and terminate within 32,767 characters. The original formatter
+retains its 512 width/precision limits. Every string emission and NUL write is
+checked against the supplied buffer. Failures return -1, clear the output string
+where a nonzero valid buffer exists, and expose jp_print_format_status. The
+original formatter's errno state is namespaced away from the host CRT.
+
+An invalid/truncated directive, INT_MIN star width, negative emission length
+from the original alternate-hex-zero bug, null string or excess output becomes
+a native formatting error. The carry/zero-fill loops check their bounds before
+reading or stepping outside arrays. %n retains its original count-store semantics;
+callers must provide valid writable int pointers, and such stores can precede a
+later formatting error. Undefined or overlapping caller storage is not emulated.
+
+njPrint keeps its 128-byte local buffer: at most 127 output bytes fit, and failed
+formatting produces no queue draw. njPrintF preserves its 20-byte local buffer
+and five decimals, accepts finite values and digit counts 1..13, and checks that
+the rounded integer part fits the requested digits. Oversized values, nonfinite
+values or negative padding produce no draw. Valid negative values still emit
+their sign separately, as the original does. Signed zero and subnormal handling
+follow the fixed original value policy. Existing real print size/colour state,
+16-bit coordinate wrapping, metadata preservation and frame retention remain.
+
+Verification
+
+- 22,072 feature checks; 758 complete original entry calls. No formatter,
+  number-conversion or print function hooks. Guest initialization alone uses
+  explicit texture allocator/VRAM-copy services, once each. This does not
+  emulate the physical allocator/VRAM bus/cache or interrupts.
+- 217 complete original formatter cases cover integers, flags, widths,
+  precisions, short/long modifiers, strings, pointers, %n, finite floats,
+  nonfinite classes and subnormals. Native buffer contents, returned counts,
+  terminators and guards match. An independent literal GPU test includes the
+  original half-up rounding result 0.13.
+- 94 whole original njPrintF cases and four whole variadic njPrint cases,
+  including eight mixed arguments crossing native registers/stack. Their
+  41,272 defined header/vertex words and 5,938 packet blocks match exactly.
+- 6,155 widening cases match the existing independent manual-based FCNVSD
+  oracle; 8,200 narrowing cases match an independent integer dyadic rounding
+  oracle. All 254 possible nonzero widened-single frexp exponents run through
+  the whole original _log10 implementation.
+- Native undefined-domain/buffer tests include exact-capacity and one-byte
+  overflow at capacities 1/2/4/128, zero capacity, overlong print output, null
+  strings, invalid directives and invalid fixed-float padding/classes.
+- One actual native-window screenshot shows float and variadic text. All
+  122,880 scene pixels match an independent font/literal placement oracle.
+  Texture Off renders the same submitted geometry with zero sampled texture/
+  sampler bindings, uploads or decoded font texels.
+- Frozen prior print suite: 24,937 checks and 298 original calls; exact glyph
+  grid/readable scene pixels and their prior screenshot hashes are preserved.
+  Its old false formatter flag describes that harness's scope, not the absence
+  of the newly verified functions. New formatting evidence is authoritative.
+- Existing mixed print/SDK queue: 124 checks, 48 alternating batches.
+- Frozen frame retention: 8,572 checks, 193 submissions, 128 real parent draws.
+- Genuine save defaults/reset/CRC: 591 checks, 29 original calls.
+- Existing boot_init/logo/exit: 3,655 checks, 570 actual GPU images/Presents.
+
+Total fresh feature/regression checks: 59,951. GPU/queue implementation objects
+are unchanged; previous broad GPU/fog/texture qualifications remain attached to
+their preserved builds and were not all rerun. Counts are bounded assertions,
+not routine counts or whole-project coverage. The checked boot_init/logo path
+does not establish display_reset_full, full system_boot_init or gameplay.
+
+Reproduce locally
+
+Use Windows Clang/SDK and Python 3. Set PY/CLANG to local executables; use fresh
+output paths. Retain the previous print-v7 link recipe, pinned upstream commit
+25a3d3154dbe657325e97dbe8c5291086f6af5c0, and authentic private font include.
+
+& $PY -B outputs/sonic-adventure/jp_port_tools/build_native_print_format.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --baseline work/sonic-adventure/jp-native-print-v7 --compiler $CLANG --output work/sonic-adventure/jp-native-print-format-v3
+& $PY -B outputs/sonic-adventure/jp_port_tools/verify_native_print_format.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --build work/sonic-adventure/jp-native-print-format-v3 --binary work/sonic-adventure/jp-ninja-math-reference/1ST_READ.BIN --font-input work/sonic-adventure/jp-native-built-in-font-atlas-v1 --output work/sonic-adventure/jp-native-print-format-check-v4
+& $PY -B outputs/sonic-adventure/jp_port_tools/package_native_print_format.py --workspace . --build work/sonic-adventure/jp-native-print-format-v3 --verification work/sonic-adventure/jp-native-print-format-check-v4 --compiler $CLANG --output work/sonic-adventure/jp-native-print-format-support-v1
+
+Use the previous guides' actual-owner views, print/frame/save/boot regression
+commands with the new build and fresh outputs. Published analysis records exact
+source/command/runtime/report hashes. The authored support library contains one
+complete authored object, no original formatter/SDK/game bodies or retail data.
+All 2,958 previous public payloads remain, plus this library: 2,959 artifacts.
+Font pixels/generated includes, game-containing DLLs and screenshots remain
+private; screenshots can be shared in chat. Original matching proof, upstream
+source, previous builds and verification evidence remain intact.
+
+Next: bind main-owned matrix/screen/view/texture/fog state and qualify genuine
+display_reset_full and full system_boot_init, retaining explicit remaining
+audio/loader/overlay/card dependencies. Sol High remains appropriate. Luna Low
+is suitable for routine documentation and publication after qualification.
