@@ -104,6 +104,18 @@ real QPC/Win32 waits and close handling. Four original frame globals are supplie
 (60/79 presentation imports). Adding the frame source exposes 22 more genuine
 dependencies; the expanded graph has 43 missing services. No trace providers are
 linked into production. Real game render/flip integration remains open.
+Latest original game randomness/direct SDK surfaces: JP_NATIVE_RANDOM_DIRECT_SURFACES.txt.
+Goal active; overall about 10%. Genuine rand/srand/state and array_shuffle now
+share the actual native runtime and match whole original-code execution. A
+direct font-sized surface survives regular texture-table resets with shared
+resource IDs, budgets and frame retention. Authentic font-atlas pixels render
+correctly, while real print functions remain the next integration work.
+1,079,599 fresh checks/comparisons pass plus separate boot captures. All 2,956
+previous public binaries are preserved plus one two-object authored support
+library, 2,957 total. Font pixels/screenshots/game DLLs stay private. No playable
+EXE; complete printing/system boot/display reset/gameplay remains unverified.
+Earlier notes retain historical scope.
+
 Latest native texture initialization: JP_NATIVE_TEXTURE_INITIALIZATION.txt.
 Goal active; overall about 10%. Genuine njInitTexture now uses the actual
 game-owned native record table through the single shared owner. 502 new checks
@@ -286,6 +298,7 @@ Texture Off must disable sampling and use vertex/material colours.
 - [Current goal](outputs/sonic-adventure/JP_BASED_PORT_GOAL.txt)
 - [Integration order and limits](outputs/sonic-adventure/JP_NATIVE_PORT_PLAN.txt)
 - [Verified GCC baseline and native/localization evidence](outputs/sonic-adventure/JP_GCC_BASELINE.txt)
+- [Original game randomness and direct SDK surfaces](outputs/sonic-adventure/JP_NATIVE_RANDOM_DIRECT_SURFACES.txt)
 - [Genuine native texture initialization](outputs/sonic-adventure/JP_NATIVE_TEXTURE_INITIALIZATION.txt)
 - [Native perspective and display setup](outputs/sonic-adventure/JP_NATIVE_DISPLAY_SETUP.txt)
 - [Visible native GPU fog](outputs/sonic-adventure/JP_NATIVE_GPU_FOG.txt)

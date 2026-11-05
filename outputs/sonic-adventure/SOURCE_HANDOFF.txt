@@ -1,3 +1,15 @@
+Latest original game randomness/direct SDK surfaces: JP_NATIVE_RANDOM_DIRECT_SURFACES.txt.
+Goal active; overall about 10%. Genuine rand/srand/state and array_shuffle now
+share the actual native runtime and match whole original-code execution. A
+direct font-sized surface survives regular texture-table resets with shared
+resource IDs, budgets and frame retention. Authentic font-atlas pixels render
+correctly, while real print functions remain the next integration work.
+1,079,599 fresh checks/comparisons pass plus separate boot captures. All 2,956
+previous public binaries are preserved plus one two-object authored support
+library, 2,957 total. Font pixels/screenshots/game DLLs stay private. No playable
+EXE; complete printing/system boot/display reset/gameplay remains unverified.
+Earlier notes retain historical scope.
+
 Latest native texture initialization: JP_NATIVE_TEXTURE_INITIALIZATION.txt.
 Goal active; overall about 10%. Genuine njInitTexture now uses the actual
 game-owned native record table through the single shared owner. 502 new checks

@@ -1,0 +1,148 @@
+Original game randomness and direct SDK/font surfaces
+
+Whole-project estimate: about 10%, weighted milestones. Goal active.
+Japanese matching/GCC source baselines are verified. Full native gameplay,
+English, enhancements and later platforms are unfinished. No playable EXE.
+
+What changed
+
+The genuine SDK rand, srand and _rnext state now link into the actual shared
+native frame owner. The original unsigned 32-bit LCG state/seed behavior and
+15-bit output mask are preserved. These are the game's own symbols and state,
+not Windows CRT aliases. Windows x64's 32-bit unsigned long is asserted at
+compile time; another platform must explicitly retain this game ABI.
+
+The complete original array_shuffle/memory_swap game family also runs there.
+Its FLOAT/FMUL/FMUL/FTRC choice of record is routed through authored integer
+RZ/DN1 numerical boundaries, with no host floating arithmetic/conversions in
+the adapted shuffle or numerical object. The two separate multiply roundings
+are retained, including large counts that are not exactly binary32 integers.
+Zero-byte records still consume count-1 random draws. Native invalid-pointer,
+negative-size/count and overflowing extent inputs reject before touching the
+array or consuming randomness. The valid original caller owns the full array.
+
+A single direct SDK surface is added inside the same texture owner, sharing
+its nonrecycled resource-ID generator and frame retention. This is needed for
+the original debug font, which lives outside Ninja's regular record table.
+Source audit confirms system_boot_init initializes that font before calling
+display_reset_full, which initializes the regular record table. The direct
+surface now survives genuine njInitTexture, including a zero-record table.
+Explicit full host-owner initialization/shutdown retires both resource classes.
+
+Direct bytes participate in live-resource counts, ordinary upload budgets,
+SDK table-replacement budgets and simultaneous old/new replacement budgets.
+Replacement allocates/copies first. Failure preserves the old descriptor and
+resource. Submitted frames retain old direct/regular generations until their
+last reference retires. The existing original njSetTextureParam consumes the
+direct surface through the same native ownership/ID boundary. No duplicate
+texture/frame owner or second resource-ID generator is introduced.
+
+Authentic font data and scope
+
+The original 32,768-byte Japanese built-in font is prepared privately from the
+supplied, hash-verified 1ST_READ.BIN. Its symbol and exact SDK split agree on
+0x8c67fe90..0x8c687e90; njInitPrint's original pool word at 0x8c622908 points
+to it. A generated private include round-trips to the exact original bytes.
+The 128x128 twiddled ARGB1555 atlas renders through the real direct surface,
+SDK parameter builder, captured frame and D3D11 backbuffer. All 16,384 pixels,
+including alpha, equal an independent twiddle/ARGB1555 decoder. One screenshot
+is the actual original font atlas on that native test path. Font pixels,
+generated include, linked font-data objects and screenshots remain private.
+
+This does not execute genuine njInitPrint, njPrintSize, njCharacter or text
+printing yet. Their shared state, store-queue transport and formatting remain
+the next integration work. It is an authentic font-atlas rendering test,
+not a title/menu/text scene or gameplay screenshot. The source's unbounded
+variadic buffer and njPrintF negative-padding bug require explicit bounded
+native policies outside the original defined formatting domain.
+
+Verification
+
+- PRNG/game shuffle: 430,666 checks and 17,480 complete original entry calls,
+  no function hooks. Original callees include 24,896 rand calls and 7,658 real
+  memory_swap calls. 264 seeds each run 64 steps against an independent LCG.
+  All 32,768 possible output values are checked at ten shuffle count bounds,
+  327,680 pick cases. Independent integer-to-float checks cover 67,747 inputs.
+  160 complete original shuffles compare entire guarded arrays, independent
+  permutations and exact RNG consumption. Both ucrtbase/msvcrt streams remain
+  independent; the actual native owner imports neither CRT rand nor srand.
+- Direct surface: 88 checks, 11 actual GPU images, 720,896 compared pixels.
+  Record reset, zero records, replacement, multiple submitted generations,
+  exact budgets, stale aliases, full owner reset and final frees pass.
+- Authentic font-atlas preparation/rendering: 16 checks, two GPU images,
+  16,384 original atlas pixels and an actual swapchain readback/Present.
+- Genuine texture initializer regression: 502 checks, 84 original calls.
+- Frozen native texture and Japanese lifecycle suites: 1,947 + 15,232 checks/
+  comparisons. The historical lifecycle kmFreeTexture service boundary stays
+  explicit; it is separate from the no-hook PRNG and initializer comparisons.
+- Frozen frame retention: 8,572 checks, 193 submissions, 128 real parent draws.
+- Real file/PRS/PVM/game-wrapper regression: 223 checks, 27 GPU images.
+- Frozen GPU primary/extended suites: 491,158 + 121,451 checks, 100 images.
+  Actual direct-window comparisons add 1,033 + 613 checks.
+- GPU fog: 3,852 checks, 319 images, maximum channel error 1 (tolerance 2).
+- Save defaults/reset/CRC: 591 checks, 29 original calls.
+- Genuine boot_init/logo/exit: 3,655 checks, 570 actual GPU images/Presents.
+
+Total fresh feature/regression checks and comparisons: 1,079,599. These are
+bounded coverage counts, not recovered-routine counts or a completion metric.
+A separate repeated boot capture adds 1,185 checks and 190 frames; three fresh
+private logo screenshots match prior qualified captures. Texture Off continues
+to skip texture decode/upload/sampling and has zero sampled texture/sampler
+bindings. With the font atlas Off, the test renders only its white vertex
+geometry; glyph-shape text printing has not been implemented.
+
+The native numerical contract is fixed single RZ/DN1 value behavior. FPSCR
+flags/traps, new physical-console precision/timing and whole-game FPSCR context
+are not established by these tests. All prior game/SDK/GPU objects are preserved;
+genuine random/shuffle objects are added and one authored texture owner is
+replaced. Historical inherited build flags retain their original scope; the
+latest direct-surface fields and fresh proofs describe this runtime. Complete
+display_reset_full/system_boot_init/main dispatch, real audio/overlays/card
+integration and playable 8K performance remain unverified.
+
+Reproduce locally
+
+Use Windows Clang/SDK, Python 3 and the pinned external source at commit
+25a3d3154dbe657325e97dbe8c5291086f6af5c0. Keep the previous texture-init-v5
+baseline/link recipe. Set PY/CLANG to local executables; choose fresh output
+folders rather than overwriting preserved source, builds or proofs.
+
+& $PY -B outputs/sonic-adventure/jp_port_tools/build_native_game_random.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --baseline work/sonic-adventure/jp-native-texture-init-v5 --compiler $CLANG --output work/sonic-adventure/jp-native-game-random-v1
+& $PY -B outputs/sonic-adventure/jp_port_tools/build_native_standalone_texture.py --workspace . --baseline work/sonic-adventure/jp-native-game-random-v1 --compiler $CLANG --output work/sonic-adventure/jp-native-standalone-texture-v2
+& $PY -B outputs/sonic-adventure/jp_port_tools/verify_native_game_random.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --build work/sonic-adventure/jp-native-standalone-texture-v2 --binary work/sonic-adventure/jp-ninja-math-reference/1ST_READ.BIN --report work/sonic-adventure/jp-native-standalone-texture-v2/random-verification.json
+& $PY -B outputs/sonic-adventure/jp_port_tools/verify_native_standalone_texture.py --workspace . --build work/sonic-adventure/jp-native-standalone-texture-v2 --output work/sonic-adventure/jp-native-standalone-texture-check-v3
+& $PY -B outputs/sonic-adventure/jp_port_tools/verify_native_builtin_font_atlas.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --build work/sonic-adventure/jp-native-standalone-texture-v2 --binary work/sonic-adventure/jp-ninja-math-reference/1ST_READ.BIN --output work/sonic-adventure/jp-native-built-in-font-atlas-v1
+
+Frozen harness views select actual compiled modules and replace no function
+bodies. The standalone texture harness gets a byte-identical filename alias
+and its old status-string precondition. The frame suite requires the actual
+video owner initialized first; the wrapper does this without replacing code.
+
+& $PY -B outputs/sonic-adventure/jp_port_tools/prepare_native_runtime_views.py --workspace . --build work/sonic-adventure/jp-native-standalone-texture-v2 --asset-metadata work/sonic-adventure/jp-native-asset-heartbeat-build-v1/build_verification.json
+& $PY -B outputs/sonic-adventure/jp_port_tools/verify_native_retention_with_video.py --workspace . --build work/sonic-adventure/jp-native-standalone-texture-v2/owner_view --report work/sonic-adventure/jp-native-standalone-texture-v2/frame-regression.json
+
+Use the previous guides' frozen texture, file, GPU, fog, save, boot and capture
+commands with the new runtime/views and fresh output paths. Run primary GPU
+before extended in the same folder. Published analysis preserves exact metadata,
+commands, source/runtime hashes and fresh results. Retail inputs stay local.
+
+& $PY -B outputs/sonic-adventure/jp_port_tools/package_native_random_direct_surface.py --workspace . --build work/sonic-adventure/jp-native-standalone-texture-v2 --verification work/sonic-adventure/jp-native-standalone-texture-check-v3 --compiler $CLANG --output work/sonic-adventure/jp-native-random-direct-support-v2
+
+Publication and next step
+
+jp_native_random_direct_surface_support.lib contains exactly two verified
+authored objects: the replacement texture owner and random-pick numeric helper.
+It contains no genuine SDK/game bodies or retail font pixels. Replace the old
+texture owner when linking; do not link duplicate owners. Genuine PRNG/state/
+shuffle and other SDK providers remain pinned external build dependencies.
+All 2,956 previous public payloads are preserved plus this library, 2,957 total.
+The incomplete research archive is tied to its exact source manifest/checksum.
+
+Next: integrate the real print initialization/exit, size/color, character and
+string/integer callers, sharing original state and using the prepared private
+font include. Adapt direct store-queue writes with bounded native transactions,
+preserve context/parameter metadata and the -2 texture-cache sentinel, then
+compare original packets and actual glyph images. Keep unsafe float/variadic
+formatting scope explicit until qualified. Afterward qualify display_reset_full.
+Sol High remains appropriate. Luna Low is sufficient for routine documentation
+and publication checks after qualification. The goal remains active.
