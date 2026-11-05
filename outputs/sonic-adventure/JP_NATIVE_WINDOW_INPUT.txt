@@ -1,0 +1,70 @@
+Native window ownership and real input during original frame waits
+
+Overall project estimate: about 10% of weighted milestones, rounded. The
+Japanese matching/GCC source baselines remain verified. Native gameplay,
+English integration and later ports remain unfinished. There is no playable
+native game yet. Goal active; the prior recorder/input publication is retained.
+
+The renderer now exposes a borrowed native HWND through jp_window_native_handle.
+This function executes inside the real GPU/window owner, using its actual
+window record. It returns NULL on foreign threads, closed windows and a closing
+GPU. Callers keep the window object alive, stop input before closing it, and
+never call with a freed object. An opaque jp_window pointer is not an HWND.
+The new extension adds no copied window layout, device or input owner.
+
+The two original frame-wait paths now call the actual SDK peripheral provider
+in the shared frame DLL. The presenter's local peripheral trace implementation
+has been removed. A passive trace event remains after actual polling for
+diagnostics. Polling failure returns before overlay/sound work; callers must
+check jp_input_status along with the other native service statuses and stop
+the current game iteration on failure. Only explicit recovery clears errors.
+The SDK export forwards to the existing provider; address identity is verified.
+
+Fresh verification: 9,564 checks pass.
+
+1,173 window/input checks cover the actual HWND/process/thread, 128 stock Windows
+keyboard polls from frame waits, 129 controlled successful polls, two explicit
+poll failures, 65 complete frame_wait calls, 194 frame_wait_step calls and 192
+complete pad scans. The stock keyboard test uses a hidden unfocused renderer
+window, so it proves real OS polling and neutral focus handling. No global key
+events are injected. It does not prove physical focused keyboard/controller
+events. Controlled samples reach the actual provider and original port-compacting
+game scan; no SDK/game function is replaced by a fixture. Wrong-thread handle
+borrowing, WM_CLOSE invalidation and deferred GPU closing are checked.
+
+8,266 original startup and 125 task/presentation regression checks pass on the
+new runtime, with eight actual GPU images, 2,457,600 compared pixels and eight
+Presents. The frozen suites receive neutral samples through the actual input
+provider. Their frames perform three and five successful provider polls,
+respectively. Their historical descriptions of an input trace are superseded
+by the new wrapper qualification reports. Audio/loader/overlay traces remain.
+
+The frame/game runtime is relinked from the exact existing objects. Original
+recorder, pad, RZ arithmetic, task/heap, shared clock and state owners remain.
+Old qualified builds and their proofs are preserved. The complete original
+logo_step still needs native sbExitSystem and syBtExit; it has not executed.
+Native exit lifecycle, the complete split-frame controller and gameplay remain
+unfinished. Current components must not be presented as a full PC game.
+
+Reproduction (PowerShell from the workspace; use fresh output directories)
+
+$py = 'C:\Users\wigwo\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe'
+$cc = 'C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\VC\Tools\Llvm\x64\bin\clang.exe'
+& $py -B outputs/sonic-adventure/jp_port_tools/build_native_window_input.py --workspace . --baseline work/sonic-adventure/jp-native-recorder-input-v2 --gpu-baseline work/sonic-adventure/jp-native-background-runtime-v4 --compiler $cc --output work/sonic-adventure/my-window-input
+& $py -B outputs/sonic-adventure/jp_port_tools/verify_native_window_input.py --workspace . --build work/sonic-adventure/my-window-input --report work/sonic-adventure/my-window-input/verification.json
+
+The rendered regressions additionally use build_native_logo_asset_probe.py and
+build_native_task_logo_start.py for the new build, followed by
+verify_native_window_input_regressions.py --suite startup or --suite task.
+Provide --workspace, --build, --startup, --inputs, --asset-root and a fresh
+--output directory. Inputs/assets are supplied locally, not downloaded from
+this repository. See JP_NATIVE_RECORDER_INPUT.txt and JP_NATIVE_LOGO_START.txt
+for the prerequisite original-source and asset workflows.
+
+Pinned upstream: reshaped/sonic-adventure at
+25a3d3154dbe657325e97dbe8c5291086f6af5c0. Game source remains external.
+Retail assets and game-containing diagnostic DLLs stay private. Any authored
+support artifacts are incomplete research components, not a playable port.
+Do not load standalone and integrated input/recording owners together.
+
+Recommended next model: Sol High for native exit and complete logo integration.

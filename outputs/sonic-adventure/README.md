@@ -1,3 +1,13 @@
+Latest window/input update: JP_NATIVE_WINDOW_INPUT.txt. The renderer exports
+a validated borrowed HWND; original frame waits now poll the actual shared
+input provider and return on input failures. 9,564 fresh checks pass, including
+eight rendered startup/task images and Presents. Input trace events are passive
+observations; audio/loader/overlay traces remain. Physical focused input and the
+full logo loop remain unverified. Native exit services are next. Two authored
+window support artifacts are added; game-containing DLLs stay private. Earlier
+notes retain historical scope. Japanese baselines verified; overall about 10%;
+native gameplay, English and later platforms unfinished. Goal active.
+
 Latest recorder/input update: JP_NATIVE_RECORDER_INPUT.txt. Genuine original
 recording_update and complete pad_scan now link with owned native recording
 storage, actual atomic file saves, playback and the original QUIT-state effect.
