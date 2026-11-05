@@ -1,3 +1,13 @@
+Latest save-state/disk update: JP_NATIVE_SAVE_STATE_DISK.txt. Goal active.
+The full unchanged Japanese save.c store/load/update family now uses genuine
+shared progress state, with an authored Windows disk backend around real save
+exports. 5,840 fresh checks pass: 101 original-machine calls without hooks,
+cross-process persistence and boot/logo/exit regression. Fresh private native
+logo captures are available. Saving through game menus and full gameplay remain
+unfinished. All 2,951 old public artifacts retained plus two authored disk
+artifacts; complete game DLLs/assets/screenshots stay private. Overall about
+10%. Earlier notes preserve historical scope and results.
+
 Latest boot/save update: JP_NATIVE_BOOT_SAVES.txt. Development has resumed.
 The unchanged original boot_init now runs the real Japanese save-reset/default/
 CRC chain using shared saves/slot/rings/demo state. 4,246 fresh checks pass,

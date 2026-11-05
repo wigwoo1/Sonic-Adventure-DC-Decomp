@@ -1,0 +1,81 @@
+{
+  "status": "authored_native_save_disk_IO_compiled_behavior_unverified",
+  "commands": [
+    {
+      "command": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\18\\BuildTools\\VC\\Tools\\Llvm\\x64\\bin\\clang.exe",
+        "--target=x86_64-pc-windows-msvc",
+        "-std=c17",
+        "-O2",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-Wno-unknown-pragmas",
+        "-include",
+        "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\native\\jp_host_types.h",
+        "-IC:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\work\\sonic-adventure\\jp-native-save-disk-v1\\imports",
+        "-IC:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\native",
+        "-IC:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\work\\sonic-adventure\\reshaped-sonic-adventure-review\\sdk\\include",
+        "-IC:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\work\\sonic-adventure\\reshaped-sonic-adventure-review\\src",
+        "-c",
+        "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\native\\jp_native_save_disk.c",
+        "-o",
+        "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\work\\sonic-adventure\\jp-native-save-disk-v1\\save_disk.obj"
+      ],
+      "exit_code": 0,
+      "diagnostic_bytes": 0,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\18\\BuildTools\\VC\\Tools\\Llvm\\x64\\bin\\clang.exe",
+        "--target=x86_64-pc-windows-msvc",
+        "-shared",
+        "-fuse-ld=lld",
+        "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\work\\sonic-adventure\\jp-native-save-disk-v1\\save_disk.obj",
+        "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\work\\sonic-adventure\\jp-native-save-state-v1\\frames\\jp_native_frames.lib",
+        "-Wl,kernel32.lib",
+        "-o",
+        "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\work\\sonic-adventure\\jp-native-save-disk-v1\\jp_native_save_disk.dll"
+      ],
+      "exit_code": 0,
+      "diagnostic_bytes": 0,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "exit_code": 0,
+  "diagnostic_bytes": 0,
+  "DLL": "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\work\\sonic-adventure\\jp-native-save-disk-v1\\jp_native_save_disk.dll",
+  "DLL_sha256": "85fd768d81880e2eb4bd818be584298240e9d42a4d42457fa8457858131efd40",
+  "object_sha256": "58c47e21d74482cb40dafebafff551ca3d75d6614b28cc65d668de0988df6402",
+  "compiler_sha256": "4b0a905d901d2dd9f0fd034c9c4b91ae9e1fd9ab29dc3a29b022b044e8b7ba44",
+  "frame_DLL": "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\work\\sonic-adventure\\jp-native-save-state-v1\\frames\\jp_native_frames.dll",
+  "frame_DLL_sha256": "1865f9cba4b7294950236d15f1c1f27e9824ebf92dfa3a90d624c4cf94c446e1",
+  "state_build_sha256": "9673a953fe820c0ea1af03e77e6de7d4b14d1ee047fede044512f29a602c28aa",
+  "authored_source_sha256": {
+    "outputs/sonic-adventure/native/jp_native_save_disk.c": "13db8c85de1fa4f0caf78a8d57697e389c4a3ed9a987b8595be07573db1925c8",
+    "outputs/sonic-adventure/native/jp_native_save_disk.h": "1c7bc135af1187e4d01f0c01d416f5eef1d1fa2bb49e196824077804c92f2f1f",
+    "outputs/sonic-adventure/native/jp_host_types.h": "c46fa3f855a24c3bad1fe84d8810ede94618d7cd4560d86c300d3a403f8dbd2e",
+    "outputs/sonic-adventure/jp_port_tools/build_native_save_disk.py": "37cd84c933d854df3f6494b0d678142100b2480853313c724f5fe30e8641dac9"
+  },
+  "external_header_sha256": {
+    "src\\save\\save.h": "7c8d043cc1f82a9fea5a7616bb52bc40e58de724316bd3e14ca6e6ee54f1b510",
+    "src\\save\\card.h": "efeb61b91c8255afbf62eaaff06e66149608cc4be1b0b102953acbf85a46a1c0"
+  },
+  "defined_external_function_names": [
+    "jp_save_disk_status",
+    "jp_save_disk_clear_error",
+    "jp_save_disk_snapshot",
+    "jp_save_disk_initialize",
+    "jp_save_disk_shutdown",
+    "jp_save_disk_write",
+    "jp_save_disk_read",
+    "jp_save_disk_apply"
+  ],
+  "original_game_or_SDK_bodies_linked": false,
+  "retail_assets_embedded": false,
+  "artifact_publishable": true,
+  "full_card_UI_or_game_main_loop_integrated": false,
+  "playable": false,
+  "overall_completion_percent": 10
+}

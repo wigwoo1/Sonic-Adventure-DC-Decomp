@@ -198,6 +198,16 @@ real QPC/Win32 waits and close handling. Four original frame globals are supplie
 (60/79 presentation imports). Adding the frame source exposes 22 more genuine
 dependencies; the expanded graph has 43 missing services. No trace providers are
 linked into production. Real game render/flip integration remains open.
+The full unchanged Japanese save store/load/update family now uses genuine
+shared runtime progress, with authored Windows disk persistence. 5,840 fresh
+checks pass, including 101 original-machine calls without dependency hooks,
+fresh-process restore and 570 actual GPU images/Presents through boot/logo/exit.
+Read/apply separation, CRC/index validation and atomic replacement failures are
+verified. Game menus, full boot/main loop and gameplay remain unfinished. The
+2,951 earlier binary payloads are preserved plus two authored disk support
+artifacts; game-containing DLLs and retail inputs/screenshots stay private.
+Overall about 10%; goal active. Earlier notes retain historical scope.
+
 Development has resumed. The unchanged original boot_init and its genuine
 Japanese save reset/default/CRC dependencies now run in the shared native owner.
 4,246 fresh checks pass, including 29 original machine-code calls without hooks,
@@ -329,6 +339,7 @@ Texture Off must disable sampling and use vertex/material colours.
 - [Current goal](outputs/sonic-adventure/JP_BASED_PORT_GOAL.txt)
 - [Integration order and limits](outputs/sonic-adventure/JP_NATIVE_PORT_PLAN.txt)
 - [Verified GCC baseline and native/localization evidence](outputs/sonic-adventure/JP_GCC_BASELINE.txt)
+- [Full original save state and native disk persistence](outputs/sonic-adventure/JP_NATIVE_SAVE_STATE_DISK.txt)
 - [Original boot initialization, save defaults and CRC](outputs/sonic-adventure/JP_NATIVE_BOOT_SAVES.txt)
 - [Complete original logo loop and native system exit](outputs/sonic-adventure/JP_NATIVE_EXIT_LOGO.txt)
 - [Renderer-owned HWND and real frame-wait input polling](outputs/sonic-adventure/JP_NATIVE_WINDOW_INPUT.txt)

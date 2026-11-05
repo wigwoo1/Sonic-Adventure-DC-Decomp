@@ -1,0 +1,106 @@
+Full Japanese save state and native Windows disk persistence
+
+Overall estimate: about 10% of the complete project, using weighted milestones.
+Goal active. Japanese source baselines are verified. Full native gameplay,
+English localization, enhancements and later platforms remain unfinished.
+These are incomplete research artifacts; there is no playable game executable.
+
+What changed
+
+The entire unchanged original src/save/save.c from external upstream revision
+25a3d3154dbe657325e97dbe8c5291086f6af5c0 is linked into the shared frame/game
+owner, replacing the earlier partial save-reset owner. Original defaults,
+ring_reset and shared demo/slot/ring state remain single definitions. Seven
+actual progress/stage declarations now provide shared runtime storage:
+stage_clears, event_flags, story_records, dat_8c7a2718, events_played, lives,
+play_time. Original save.c owns saves and stage_last_cleared exactly once.
+The intentionally unused original save_stage_lists table requires the scoped
+-Wno-unused-variable compile exception; the upstream source is not edited.
+
+The new authored jp_native_save_disk support library imports this genuine
+shared state. An existing Unicode directory contains SONICADV_JP.SAV: three
+original 1,184-byte Japanese records, 3,552 bytes total. No disc/card wrapper
+or retail asset is embedded. save_store/save_update must be called explicitly
+by the owner before writing when a progress snapshot is desired. Reading only
+updates serialized snapshots; apply(slot) invokes genuine save_load to restore
+active progress. The service does not initialize the game or drive its menus.
+
+Writes validate the original CRCs and character bounds, write and flush a
+same-directory temporary, close it, then atomically replace the target. Failed
+replacement preserves the previous file and removes the service's temporary.
+This is tested for actual Windows file locks, not a guarantee against every
+storage failure or power loss. Reads validate exact length, all CRCs and all
+character indices before modifying live state. CRC alone does not prevent an
+out-of-range character from indexing the original lives table. Other game
+fields retain original behavior: this is not a complete semantic validator
+for every possible scene/script. The format is version-specific, not an
+English/USA-compatible save promise. Unknown bytes are preserved.
+
+One game thread owns the service. Errors stay set until clear_error or shutdown;
+foreign threads cannot clear or mutate owner state. There are no persistent
+file handles. Call disk shutdown before shutting down the shared game owner.
+VMU/menu/card callbacks and the full game main loop are not yet integrated.
+
+Verification
+
+1,514 state checks: 72 complete original-machine calls with no dependency hooks,
+covering store/update/load for all three slots and all eight character numbers.
+Actual private packers and character getter/setter execute. Full record and
+shared-data comparisons preserve exact-one flag packing, unknown story bytes,
+unselected slots and update's limited field changes. Another 128 native cases
+broaden value coverage with an independent CRC implementation.
+
+591 fresh default/reset/CRC checks: 29 complete original-machine calls, no hooks.
+3,655 boot/logo/exit checks: six actual boot_init calls, 570 actual GPU images
+and Presents, 175,104,000 compared pixels. Frozen prior verifiers are unchanged.
+80 disk checks: real Windows file I/O and atomic replacement; Unicode paths;
+read-versus-apply separation; all slots; fresh-process loading of genuine game
+progress; wrong-size, corrupt-CRC and CRC-valid invalid-character rejection;
+invalid-slot rejection; sticky errors; foreign threads; shutdown/reopen;
+replacement lock failure with the prior file and all live state preserved.
+Windows reports ERROR_ACCESS_DENIED for the tested locked replacement; the
+test also accepts ERROR_SHARING_VIOLATION, both genuine OS refusal outcomes.
+Total fresh feature/regression checks: 5,840. These are bounded tests, not a
+claim that the whole game or saving through the player-facing UI works.
+
+An additional repeated capture case has 1,185 checks and 190 actual frames.
+Three screenshots are taken directly from the real GPU window backbuffer at
+frames 16, 32 and 180. The opaque window's displayed RGB values are preserved;
+there is no generated or retouched game image. Screenshots remain private
+under work/ and may be shared in chat. Public evidence records their hashes.
+Saving is invisible, so the visual result remains the genuine boot logo.
+
+Reproduce locally (PowerShell, workspace root)
+
+Use Python 3, the previously qualified boot-saves-v3 dependency chain, the clean
+pinned external source checkout, a matching privately supplied Japanese game
+binary and asset fixtures. Source and proof manifests record exact compiler,
+input and dependency hashes. The public research archive alone cannot run the
+private game-containing diagnostic DLLs. Existing guides explain prerequisites.
+
+Set PY to your Python executable and CLANG to qualified Clang with the Windows
+SDK/linker available. Choose fresh output directories for each run. Example:
+
+& $PY -B outputs/sonic-adventure/jp_port_tools/build_native_save_state.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --baseline work/sonic-adventure/jp-native-boot-saves-v3 --compiler $CLANG --output work/sonic-adventure/jp-native-save-state-v1
+& $PY -B outputs/sonic-adventure/jp_port_tools/verify_native_save_state.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --build work/sonic-adventure/jp-native-save-state-v1 --binary work/sonic-adventure/jp-ninja-math-reference/1ST_READ.BIN --report work/sonic-adventure/jp-native-save-state-v1/save-state-verification.json
+& $PY -B outputs/sonic-adventure/jp_port_tools/verify_native_boot_saves.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --build work/sonic-adventure/jp-native-save-state-v1 --binary work/sonic-adventure/jp-ninja-math-reference/1ST_READ.BIN --report work/sonic-adventure/jp-native-save-state-v1/save-verification.json
+& $PY -B outputs/sonic-adventure/jp_port_tools/build_native_save_disk.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --state work/sonic-adventure/jp-native-save-state-v1 --compiler $CLANG --output work/sonic-adventure/jp-native-save-disk-v1
+& $PY -B outputs/sonic-adventure/jp_port_tools/verify_native_save_disk.py --workspace . --build work/sonic-adventure/jp-native-save-disk-v1 --output work/sonic-adventure/jp-native-save-disk-check-v2
+& $PY -B outputs/sonic-adventure/jp_port_tools/verify_native_boot_entry.py --workspace . --build work/sonic-adventure/jp-native-save-state-v1 --inputs work/sonic-adventure/jp-native-pvm-inputs-v1 --asset-root work/sonic-adventure/jp-native-asset-fixtures-v1/資産 --save-proof work/sonic-adventure/jp-native-save-state-v1/save-verification.json --output work/sonic-adventure/jp-native-save-state-boot-check-v1
+& $PY -B outputs/sonic-adventure/jp_port_tools/capture_native_boot_progress.py --workspace . --build work/sonic-adventure/jp-native-save-state-v1 --inputs work/sonic-adventure/jp-native-pvm-inputs-v1 --asset-root work/sonic-adventure/jp-native-asset-fixtures-v1/資産 --save-proof work/sonic-adventure/jp-native-save-state-v1/save-verification.json --pixel-dll work/sonic-adventure/jp-native-save-state-boot-check-v1/pixel_difference.dll --output work/sonic-adventure/jp-native-save-state-progress-captures-v1
+
+Publication and next work
+
+Authored source/tools, verification evidence and authored disk support DLL/lib
+may be published. Complete external-source game/SDK bodies, their compiled
+frame/presenter/logo DLLs, Japanese retail inputs and screenshots remain private.
+All 2,951 previous public build payloads are preserved byte-for-byte; the new
+two authored disk support artifacts make 2,953 entries. The archive is labeled
+incomplete research, with a new exact public source-manifest binding/checksums.
+Original matching proof and old source/proof files retain their hashes.
+
+Next: audit the real system/game boot and mode-dispatch dependency frontier,
+then integrate the next actual dependency without substituting gameplay with
+test callbacks. Saving needs a real game-thread/menu lifecycle before users
+can save during play. Continue Sol High for that integration. Luna Low is
+suitable for routine documentation/publication checks after qualification.
