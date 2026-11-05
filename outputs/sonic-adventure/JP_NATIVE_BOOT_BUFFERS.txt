@@ -1,0 +1,123 @@
+Original boot buffers and native scratch ownership - verified milestone
+
+Overall project estimate: about 10%; goal active. No playable native game yet.
+The Japanese matching/GCC source baseline is preserved. This milestone advances
+native system startup; full system_boot_init, gameplay, English content and
+later platforms remain unfinished.
+
+What now works
+
+The actual main-owned aligned 0x40000-byte texture_buffer now serves both the
+original texture-loading buffer and njInit3D's 4,096-entry scratch declaration.
+The actual main-owned shape_buffer has 6,144 floats. Four complete original SDK
+setters are linked without body changes: njInitTextureBuffer, njInitShape,
+njSetTextureMemorySize and njSetBorderColor. Their corresponding original SDK
+globals live once in the shared native frame owner. The existing genuine
+njInit3D body retains its existing native boundary guard.
+
+The authored scratch owner now supports explicit registration of caller-owned
+memory. Registration verifies its alignment/extent and leaves its contents and
+the active SDK binding untouched. The genuine njInit3D call then selects that
+registered buffer and count. Shutdown never frees or clears caller memory.
+Invalid/stale registrations and failed allocation/budget replacements retain the
+previous binding. Successful owned reinitialization forgets the registration.
+The caller must retain a borrowed extent until reinitialization or shutdown.
+
+The original SDK declaration uses 64 bytes per vertex. The pinned GCC model
+producer writes 16-byte projected points, with separate fixed lighting arrays
+limited by DRAW_MOST_POINTS=2048. Model preflight retains that limit, even when
+the genuine SDK's _nj_vertex_num_ is 4096. Scratch reset clears the active
+16-byte projected extent; it preserves the remaining original buffer bytes.
+No second scratch runtime, duplicate SDK globals or fake initializer is added.
+Only the authored render-state owner object is replaced. All other production
+objects, including complete model, print, texture, queue, GPU and prior main
+display-reset providers, remain byte-identical.
+
+Verification actually performed
+
+- Buffer/lifetime suite: 1,076 checks and 427 whole original entry calls,
+  without dependency hooks. Seven original njInit3D calls cover counts
+  1/2/2047/2048/2049/4095/4096 and relocated 64-bit native pointers. Each of the
+  four new SDK setters has 105 whole original comparisons, including sector
+  boundary rounding, unchanged 32-bit configuration words and actual border-register
+  effects. Null pointers are compared only for setters that do not dereference
+  them. Owned/borrowed lifetime, alignment, extent, overlap, invalid selection,
+  failed/successful replacement, stale registration and caller canaries pass.
+- The frozen complete-model suite runs through the real borrowed main buffer:
+  200,675 checks, 3,485 original entry calls and 75,698 defined packet words.
+  It covers model sizes through 2,048 points, all four mesh types, 24 clipping
+  cases, 16 explicitly documented GCC odd-count corrections and twelve shared
+  queue runs. Its original SDK/game function bodies remain real. The unused
+  main-buffer tail remains byte-identical. This suite checks original model
+  values/packets and does not itself verify model pixels or console timing.
+- Whole main display-reset suite after real boot-buffer setup: 1,841,664
+  checks, four actual GPU images and 1,841,440 independently compared pixels.
+  The original camera, projection, fog, background and original default-size
+  font work at 640x480 and 1280x960. Texture Off has zero decoded font texels,
+  uploads and sampled bindings. Maximum pixel channel error is zero; the prior
+  two-level tolerance and 0.025 logical-pixel triangle-edge exclusion remain.
+  These pictures use synthetic geometry and are not gameplay.
+- Actual buffer setup -> original display reset -> original boot_init/logo
+  and exit: 5,989 checks, three complete 191-step logo runs, 570 real GPU
+  frames/Presents and 175,104,000 whole-image logo pixel comparisons. The
+  independent fog/fade oracle and all cleanup/quit/pending-work/partial/unbound
+  cases pass. Logo fixtures retain their prior absent-font lifetime setup;
+  font-before-reset is checked separately in the display suite.
+- Frame retention: 8,572 checks, 193 submissions, 128 real parent draws.
+- Original save defaults/reset/checksums: 591 checks and 29 original calls.
+
+Total fresh assertions: 2,058,567. Full-image logo comparison counts are separate.
+Counts describe bounded checks, not routine counts or whole-project coverage.
+Only Python caller setup changes in the reused model/display/startup suites;
+the derived model-harness hash and unchanged original verifier hashes are
+recorded. No native function is replaced by a test. Earlier broad unrelated
+renderer/formatter suites remain attached to their preserved builds.
+
+The texture-memory setter stores the original configuration word. Native host
+texture budgets remain explicit host settings; this setter does not establish
+console VRAM allocation, Kamui system configuration or native hardware startup.
+No shape-motion consumer is qualified merely by registering its buffer.
+
+Next dependencies
+
+A compile-only audit of the complete original system_boot_init against the
+actual linked COFF providers reduces missing symbols from 17 to 11:
+cable_mode, card_init, dat_8c78b4d8, dat_8c78b4dc, frame_pacing_init,
+njInitVertexBuffer, sbInitSystem, sound_system_init, syCblCheckCable,
+text_style_init and vmu_init. These are an inventory, not eleven equally sized
+tasks or a measure of remaining game code. The next substantial graphics work
+is real vertex-list/system configuration, allocation and vblank integration;
+audio, VMU/card, loader/overlay and full main/game-loop behavior remain.
+Full system_boot_init has not executed.
+
+Reproduce locally
+
+Use Windows Python 3, Clang/Windows SDK, the prior main-display-reset-v4 link
+recipe and pinned external source commit
+25a3d3154dbe657325e97dbe8c5291086f6af5c0. Original JP binary, font include and
+retail inputs stay private. Set PY and CLANG to local executables. From the
+workspace, use fresh output paths for reruns:
+
+& $PY -B outputs/sonic-adventure/jp_port_tools/build_native_boot_buffers.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --baseline work/sonic-adventure/jp-native-main-display-reset-v4 --compiler $CLANG --output work/sonic-adventure/jp-native-boot-buffers-v3
+& $PY -B outputs/sonic-adventure/jp_port_tools/verify_native_boot_buffers.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --build work/sonic-adventure/jp-native-boot-buffers-v3 --binary work/sonic-adventure/jp-ninja-math-reference/1ST_READ.BIN --output work/sonic-adventure/jp-native-boot-buffers-check-v1
+& $PY -B outputs/sonic-adventure/jp_port_tools/prepare_native_runtime_views.py --workspace . --build work/sonic-adventure/jp-native-boot-buffers-v3 --asset-metadata work/sonic-adventure/jp-native-asset-heartbeat-build-v1/build_verification.json
+& $PY -B outputs/sonic-adventure/jp_port_tools/verify_native_boot_buffer_models.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --build work/sonic-adventure/jp-native-boot-buffers-v3/owner_view --binary work/sonic-adventure/jp-ninja-math-reference/1ST_READ.BIN --numeric-dll work/sonic-adventure/build/sh4_vector_numeric.dll --report work/sonic-adventure/jp-native-boot-buffers-v3/model-borrowed-verification.json
+& $PY -B outputs/sonic-adventure/jp_port_tools/verify_native_boot_buffers_display.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --build work/sonic-adventure/jp-native-boot-buffers-v3 --binary work/sonic-adventure/jp-ninja-math-reference/1ST_READ.BIN --numeric-dll work/sonic-adventure/build/sh4_vector_numeric.dll --font-input work/sonic-adventure/jp-native-built-in-font-atlas-v1 --output work/sonic-adventure/jp-native-boot-buffers-display-check-v2
+
+Use the previous guides' frame/video and save commands with this build, then
+verify_native_boot_buffers_startup.py with the resulting save proof and actual
+retail input paths. Package only the authored owner with
+package_native_boot_scratch.py. Published analysis records exact hashes,
+commands, reports, bounds, dependencies and screenshot hashes.
+
+Publication and model
+
+The public archive retains all 2,959 previous payloads byte-for-byte and adds
+one authored scratch-support library: 2,960 research artifacts. That library
+contains one authored object, including the preserved authored owner; no
+external original game/SDK bodies or retail pixels are packaged. Game-containing
+DLLs, original source includes and actual screenshots stay private. Captures
+can be shared in chat. There is no playable executable in the release.
+
+Use Sol High for vertex/system startup integration. Luna Low remains suitable
+for routine documentation once implementation is qualified. Keep the goal active.

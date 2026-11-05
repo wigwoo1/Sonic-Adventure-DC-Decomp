@@ -198,6 +198,18 @@ real QPC/Win32 waits and close handling. Four original frame globals are supplie
 (60/79 presentation imports). Adding the frame source exposes 22 more genuine
 dependencies; the expanded graph has 43 missing services. No trace providers are
 linked into production. Real game render/flip integration remains open.
+Latest original boot buffers: JP_NATIVE_BOOT_BUFFERS.txt.
+Goal active; overall about 10%. The actual main-owned texture/vertex and shape
+buffers now bind through complete original SDK setters and an extended single
+native scratch owner. 2,058,567 fresh assertions include 427 original buffer
+entry calls, 3,485 model entry calls, actual GPU reset-scene pixels and 570
+startup/logo frames. Caller-owned memory survives shutdown; model lighting
+retains its separate 2,048-point safety bound while SDK boot declares 4,096.
+All 2,959 prior public payloads remain byte-identical plus one authored scratch
+library, 2,960 total. Private screenshots are available in chat. Eleven full
+system-boot function/data symbols remain; full startup/gameplay are unfinished.
+No playable executable; earlier notes retain historical scope.
+
 Latest complete main display reset: JP_NATIVE_MAIN_DISPLAY_RESET.txt.
 Goal active; overall about 10%. The complete parent now uses original main-owned
 matrix/screen/view/texture/fog data and real existing native dependencies.
@@ -427,6 +439,7 @@ Texture Off must disable sampling and use vertex/material colours.
 - [Current goal](outputs/sonic-adventure/JP_BASED_PORT_GOAL.txt)
 - [Integration order and limits](outputs/sonic-adventure/JP_NATIVE_PORT_PLAN.txt)
 - [Verified GCC baseline and native/localization evidence](outputs/sonic-adventure/JP_GCC_BASELINE.txt)
+- [Original native boot buffers](outputs/sonic-adventure/JP_NATIVE_BOOT_BUFFERS.txt)
 - [Complete native main display reset](outputs/sonic-adventure/JP_NATIVE_MAIN_DISPLAY_RESET.txt)
 - [Original float and variadic formatting](outputs/sonic-adventure/JP_NATIVE_PRINT_FORMATTING.txt)
 - [Genuine native text printing](outputs/sonic-adventure/JP_NATIVE_PRINTING.txt)
