@@ -198,6 +198,16 @@ real QPC/Win32 waits and close handling. Four original frame globals are supplie
 (60/79 presentation imports). Adding the frame source exposes 22 more genuine
 dependencies; the expanded graph has 43 missing services. No trace providers are
 linked into production. Real game render/flip integration remains open.
+The shared native frame owner now provides the original display setters and
+authored tangent/perspective value ports. 138,170 checks execute 68,111 whole
+original calls; all 65,536 tangent angles and 12 real 3D projection images pass.
+Fresh fog/save/boot/logo/exit regressions also pass, 931,636 feature/regression
+assertions including pixel checks. Actual boot screenshots remain private and
+may be shared in chat. All 2,954 earlier binaries are preserved plus one
+authored projection support library, 2,955 total. No playable game executable;
+full system boot/main loop/gameplay remain unverified. Overall about 10%, goal
+active. Earlier notes retain historical scope.
+
 Visible native GPU table/vertex/Mode-2 fog now uses captured frame registers
 and original unscaled reciprocal depth. 3,852 new checks compare 319 actual fog
 images; material, format, window, job and boot/logo/exit regressions pass.
@@ -359,6 +369,7 @@ Texture Off must disable sampling and use vertex/material colours.
 - [Current goal](outputs/sonic-adventure/JP_BASED_PORT_GOAL.txt)
 - [Integration order and limits](outputs/sonic-adventure/JP_NATIVE_PORT_PLAN.txt)
 - [Verified GCC baseline and native/localization evidence](outputs/sonic-adventure/JP_GCC_BASELINE.txt)
+- [Native perspective and display setup](outputs/sonic-adventure/JP_NATIVE_DISPLAY_SETUP.txt)
 - [Visible native GPU fog](outputs/sonic-adventure/JP_NATIVE_GPU_FOG.txt)
 - [Original boot fog state and main-loop frontier](outputs/sonic-adventure/JP_NATIVE_BOOT_FOG.txt)
 - [Full original save state and native disk persistence](outputs/sonic-adventure/JP_NATIVE_SAVE_STATE_DISK.txt)

@@ -1,3 +1,12 @@
+Latest native display setup: JP_NATIVE_DISPLAY_SETUP.txt. Goal active; overall
+about 10%. Six genuine SDK setters and authored tangent/perspective value ports
+now share the actual frame owner. 138,170 checks execute 68,111 original calls;
+12 real 3D projection images and fog/save/boot regressions pass. 931,636 fresh
+assertions include pixel checks. Actual boot screenshots remain private and
+may be shared in chat. All 2,954 earlier binaries are preserved plus one
+authored projection library, 2,955 total. Full system boot/gameplay remains
+unverified; no playable executable. Earlier notes retain historical scope.
+
 Latest visible GPU fog update: JP_NATIVE_GPU_FOG.txt. Goal active. Actual
 D3D11 table/vertex/Mode-2 fog uses captured frame registers and unscaled depth.
 3,852 new checks compare 319 fog images; renderer/window/job and boot/logo/exit

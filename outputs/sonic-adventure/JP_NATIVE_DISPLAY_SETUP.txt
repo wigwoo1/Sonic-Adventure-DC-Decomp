@@ -1,0 +1,101 @@
+Native perspective and display setup
+
+Overall estimate: about 10% of the complete project, weighted milestones.
+Goal active. The matching Japanese and GCC source baselines are verified.
+Native gameplay, English, enhancements and later platforms remain unfinished.
+There is no playable executable; these are incomplete research components.
+
+What changed
+
+The actual shared frame owner now provides njTan and njSetPerspective through
+authored native value-contract implementations. They use the existing qualified
+FSCA and toward-zero, denormal-flushing arithmetic services, not host tanf.
+Perspective preserves the original angle shift/wrap and screen-width division,
+including the original omission of aspect multiplication in this helper.
+No FPSCR flags, new console hardware timing or physical precision are claimed.
+
+Six genuine functions from the pinned external sdk/ninja/njSystem.c are compiled
+into the same owner: njTextureFilterMode, njSuperSampleMode, njTextureClampMode,
+njTextureFlipMode, njPolygonCullingMode and njPolygonCullingSize. Unknown enums
+preserve the original prior-state behavior. The culling-size setter clears the
+float sign bit and writes the actual native video register owner.
+
+The existing frame objects and GPU implementation are preserved byte-for-byte.
+Only two new frame objects are added; GPU, presenter, exit and genuine boot/logo
+modules are relinked to the new frame owner. Original source/proofs and matching
+hashes remain intact. Ninja context/parameter metadata is compared separately
+from Kamui's current global header; these are distinct original SDK states.
+
+Verification
+
+- 138,170 checks execute 68,111 complete original-machine calls with no function
+  hooks. All 65,536 tangent angles, 132 highword periodicity cases and 1,280
+  perspective cases pass. Perspective cases include raw signed zeros, denormals,
+  normal widths through 7680, infinities and quiet/signalling NaN words.
+- All six native contexts, three polygon list codes and 576 display-enum cases
+  match original full context bytes and actual njGetkmPointer parameter words.
+  Culling magnitude register bits match for ordinary and exceptional values.
+- The actual njDrawPolygon3D producer projects synthetic geometry through the
+  new perspective helper, actual immutable packets and D3D11. Twelve cases
+  cover 45/70/90 degrees, two depths and two picture-aspect factors. Independent
+  geometry and pixel checks pass: 785,368 assertions, 785,188 compared pixels.
+  A 0.02 logical-pixel edge strip is excluded for GPU subpixel coverage policy.
+  The retained GCC producer uses port_draw_aspect rather than Ninja aspect_x;
+  this is explicit in the fixture. Perspective itself still omits aspect.
+- Frozen GPU fog regression: 3,852 checks, 319 images, 171,712 pixels, maximum
+  channel error 1 within tolerance 2. Texture Off still has zero sampled
+  texture/sampler bindings. Captured state and asynchronous lifetimes pass.
+- Fresh save-default/reset/CRC regression: 591 checks, 29 whole original calls.
+- Genuine boot_init/logo/exit regression: 3,655 checks, six boot_init calls,
+  570 actual GPU images/Presents and 175,104,000 compared pixels.
+
+Total fresh feature/regression assertions: 931,636, including pixel assertions.
+These are bounded test coverage counts, not recovered game routine counts.
+A separate repeated capture test passes 1,185 checks and 190 actual frames.
+Three private PNGs show the genuine logo fade-in/logo/fade-out. Three additional
+PNG backbuffers show synthetic perspective triangles, clearly not gameplay.
+Screenshots can be shared in chat; retail-derived images are not published.
+
+Earlier full save/disk/renderer qualifications remain preserved evidence for
+their original builds. Their object hashes are retained here, but those entire
+suites were not newly rerun in this milestone. Current proofs bind exactly to
+the new frame owner and relinked modules. Historical inherited report flags do
+not establish full system boot or gameplay. Audio/loader/overlay traces remain.
+The setters' context equivalence does not prove physical supersampling or every
+texture filtering mode is implemented in the native GPU backend.
+
+Reproduce locally
+
+Use Windows Clang/SDK, Python 3 and the pinned external source at commit
+25a3d3154dbe657325e97dbe8c5291086f6af5c0. Keep the prior GPU fog build and
+jp-native-boot-fog-v3 frame link recipe. Set PY/CLANG to local executable paths.
+Use fresh output directories; existing proof files must not be overwritten.
+Matching retail JP binary/logo fixtures are needed for original-machine and
+boot tests, not for the synthetic projection render test.
+
+& $PY -B outputs/sonic-adventure/jp_port_tools/build_native_display_setup.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --baseline work/sonic-adventure/jp-native-gpu-fog-v1 --frame-recipe work/sonic-adventure/jp-native-boot-fog-v3 --compiler $CLANG --output work/sonic-adventure/jp-native-display-setup-v2
+& $PY -B outputs/sonic-adventure/jp_port_tools/verify_native_display_setup.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --build work/sonic-adventure/jp-native-display-setup-v2 --binary work/sonic-adventure/jp-ninja-math-reference/1ST_READ.BIN --numeric-dll work/sonic-adventure/build/sh4_vector_numeric.dll --report work/sonic-adventure/jp-native-display-setup-v2/display-verification.json
+& $PY -B outputs/sonic-adventure/jp_port_tools/verify_native_projection_render.py --workspace . --build work/sonic-adventure/jp-native-display-setup-v2 --output work/sonic-adventure/jp-native-display-projection-check-v7
+& $PY -B outputs/sonic-adventure/jp_port_tools/verify_native_gpu_fog.py --workspace . --build work/sonic-adventure/jp-native-display-setup-v2 --output work/sonic-adventure/jp-native-display-fog-check-v1
+
+Use the previous boot guide's save/boot/capture commands with this build and
+fresh report/output paths. Published analysis records exact local inputs and
+hashes. Capture actual window backbuffers after verification, never mockups.
+
+& $PY -B outputs/sonic-adventure/jp_port_tools/package_native_projection.py --workspace . --build work/sonic-adventure/jp-native-display-setup-v2 --render-proof work/sonic-adventure/jp-native-display-projection-check-v7 --compiler $CLANG --output work/sonic-adventure/jp-native-projection-support-v1
+
+Publication
+
+jp_native_projection_support.lib contains exactly one authored object, defining
+njTan, njSetPerspective and the raw-word diagnostic. It requires the actual
+shared screen owner and qualified numerical services; it is not standalone.
+The separate object containing original SDK bodies and complete game DLLs stay
+private. All 2,954 earlier public binaries are preserved, plus one authored
+support library, for 2,955 total research payloads with a source-bound manifest.
+
+Next: resolve the remaining display_reset_full dependencies, checking definitions
+inside retained objects as well as exports. Texture initialization, constant
+render-state setters, text sizing and main-owned state need separate audits.
+Then qualify the real parent before tackling full system boot/main dispatch.
+Sol High remains appropriate for this integration. Luna Low is sufficient for
+routine documentation or publication checks after verification.
