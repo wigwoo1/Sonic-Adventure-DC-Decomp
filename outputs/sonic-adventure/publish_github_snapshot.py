@@ -198,6 +198,15 @@ real QPC/Win32 waits and close handling. Four original frame globals are supplie
 (60/79 presentation imports). Adding the frame source exposes 22 more genuine
 dependencies; the expanded graph has 43 missing services. No trace providers are
 linked into production. Real game render/flip integration remains open.
+Development has resumed. The unchanged original boot_init and its genuine
+Japanese save reset/default/CRC dependencies now run in the shared native owner.
+4,246 fresh checks pass, including 29 original machine-code calls without hooks,
+six real boot calls and 570 GPU images/Presents. Three save slots retain their
+exact 1,184-byte Japanese layout. Disk save/load, full system boot/main dispatch
+and gameplay remain unfinished. All 2,951 existing public artifacts are retained;
+new game-containing DLLs stay private, with no new public binary. Overall remains
+about 10%. Earlier paused-status notes retain their historical context.
+
 The complete original logo loop and real native exit now have reviewed,
 source-bound results: 3,601 checks, three full 191-call runs, 570 actual GPU
 images/Presents and child-process cleanup/exit cases. The daily publisher
@@ -320,6 +329,7 @@ Texture Off must disable sampling and use vertex/material colours.
 - [Current goal](outputs/sonic-adventure/JP_BASED_PORT_GOAL.txt)
 - [Integration order and limits](outputs/sonic-adventure/JP_NATIVE_PORT_PLAN.txt)
 - [Verified GCC baseline and native/localization evidence](outputs/sonic-adventure/JP_GCC_BASELINE.txt)
+- [Original boot initialization, save defaults and CRC](outputs/sonic-adventure/JP_NATIVE_BOOT_SAVES.txt)
 - [Complete original logo loop and native system exit](outputs/sonic-adventure/JP_NATIVE_EXIT_LOGO.txt)
 - [Renderer-owned HWND and real frame-wait input polling](outputs/sonic-adventure/JP_NATIVE_WINDOW_INPUT.txt)
 - [Genuine recorder, native storage and complete pad scan](outputs/sonic-adventure/JP_NATIVE_RECORDER_INPUT.txt)

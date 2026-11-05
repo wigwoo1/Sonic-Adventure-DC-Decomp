@@ -1,0 +1,107 @@
+Original boot_init, Japanese save defaults/checksums and shared native state
+
+Overall project estimate: about 10% of weighted milestones, rounded. The
+Japanese matching/GCC source baselines are verified. Native gameplay, English
+integration, enhancements and later platforms remain unfinished. Development
+has resumed at the user's request. There is no playable native game yet.
+
+The unchanged original boot_init now executes its real dependency chain:
+logo_start; reset demo_next/demo_playing/demo_event/save_slot; save_reset_all.
+The latter initializes all three save slots with genuine board/cart/shooting,
+mole and boss-trial defaults, character lives, Sonic's initial story position,
+the original CRC and the actual ring-reset effect. Eleven original save/default/
+checksum/ring functions are compiled without replacing their bodies. This is
+memory initialization/checking, not filesystem saving or loading.
+
+The serialized Japanese save is exactly 0x4a0 (1,184) bytes, with three slots.
+Compile-time checks cover the scalar record sizes and major section offsets.
+No host pointers occur in this serialized record. Original checksum behavior
+is retained, including comparison of only the low 16 bits of its 32-bit field.
+Checksum validation does not establish semantic validity of every field, and
+USA save-file compatibility is not established by this milestone.
+
+The original saves/save_slot/rings/demo_playing declarations now have one real
+owner in the shared frame DLL. The presenter's old local demo_playing definition
+is removed. Consumer headers import demo_playing/demo_event/save_slot, while
+demo_next continues to use its existing frame owner. Other qualified task/heap,
+clock, matrix, input, recorder and rendering implementations are retained.
+There is no duplicate game-state owner or dummy boot/save service.
+
+Verification: 4,246 fresh checks
+
+591 save-family checks include 29 calls to the Japanese machine code. The
+original default helpers, reset, CRC and library memory dependencies execute
+without hooks. Full three-slot byte images and selected-slot behavior agree.
+An independent table-driven CRC checks 256 native records, including sixteen
+whole original CRC comparisons; corruption and original upper-checksum-half
+behavior are covered. Rings reset and unrelated slot/demo state remain correct.
+
+3,655 native boot/render/exit checks include six genuine boot_init calls and
+three full 191-call logo runs. Their 570 actual GPU images/Presents compare
+175,104,000 pixels against the independent supplied-Japanese texture/fade
+oracle, with zero error on the tested device. Quit, pending rendering, real task
+destruction, retained file views, partial-bootstrap recovery and process exit
+remain verified by the frozen exit/logo suite.
+
+The new boot caller reuses the unchanged frozen verification worker. Its Python
+entry selector calls the actual exported boot_init instead of beginning at
+logo_start, seeds dirty save/demo state and checks the real output against the
+Japanese-machine-code save proof. Native game/SDK functions and bodies are not
+patched or replaced. A separate check writes the presenter's probe demo flag
+and observes it through the frame DLL, proving that the imported field shares
+storage. Child-process result files record both caller and frozen-suite checks.
+
+Scope still unfinished
+
+system_boot_init, game_init, the full main mode dispatcher and split-frame
+controller are not executed here. Audio/loader/overlay diagnostic traces remain.
+Physical focused input events, save_store/save_load and disk persistence remain
+unverified. Nothing here proves full gameplay, localization or FPS performance.
+
+The next audit compiles the entire original save.c without changing its bytes.
+Its intentionally unused save_stage_lists table needs the documented unused-
+variable warning exception for this isolated audit. Beyond retained helpers,
+the remaining shared data providers include event_flags, events_played,
+story_records, stage_clears, dat_8c7a2718, lives and play_time. ring_reset is
+already qualified in the boot/save owner and must be retained when that owner
+is split to avoid duplicate saves/reset definitions. No missing provider is
+stubbed or forced into a link. This audit is not a linked save-store/load proof.
+
+Reproduction (PowerShell from the workspace, fresh output directories)
+
+$py = 'C:\Users\wigwo\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe'
+$cc = 'C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\VC\Tools\Llvm\x64\bin\clang.exe'
+$up = 'work/sonic-adventure/reshaped-sonic-adventure-review'
+& $py -B outputs/sonic-adventure/jp_port_tools/build_native_boot_saves.py --workspace . --upstream $up --baseline work/sonic-adventure/jp-native-window-input-v3 --logo work/sonic-adventure/jp-native-exit-logo-v2 --compiler $cc --output work/sonic-adventure/my-boot-saves
+& $py -B outputs/sonic-adventure/jp_port_tools/verify_native_boot_saves.py --workspace . --upstream $up --build work/sonic-adventure/my-boot-saves --binary work/sonic-adventure/jp-ninja-math-reference/1ST_READ.BIN --report work/sonic-adventure/my-boot-saves/save-verification.json
+& $py -B outputs/sonic-adventure/jp_port_tools/verify_native_boot_entry.py --workspace . --build work/sonic-adventure/my-boot-saves --inputs work/sonic-adventure/jp-native-pvm-inputs-v1 --asset-root 'work/sonic-adventure/jp-native-asset-fixtures-v1/資産' --save-proof work/sonic-adventure/my-boot-saves/save-verification.json --output work/sonic-adventure/my-boot-entry-check
+
+The original Japanese input and prior qualified private builds are prerequisites;
+see JP_NATIVE_EXIT_LOGO.txt and JP_NATIVE_WINDOW_INPUT.txt. The pinned upstream
+revision remains 25a3d3154dbe657325e97dbe8c5291086f6af5c0. Public evidence is
+analysis/jp_native_boot_saves_*.json. The source-matched research archive retains
+all previous authored/historical artifacts; this milestone adds no public
+binary. New game-containing DLLs, original source/metadata, retail assets,
+toolchains, caches and credentials stay private. No upstream game-source
+redistribution license is invented. Earlier source and proof hashes are retained.
+
+Next work: real shared progress/save state, complete save-store/load operations,
+and continued boot/main-loop integration. Recommended model: Sol High.
+
+Screenshots of actual test builds
+
+capture_native_boot_progress.py adds a passive observer after the real DXGI
+window readback and captures frames 16, 32 and 180 during a full boot/logo test.
+The images show actual fade-in, full logo and fade-out output. No native game,
+SDK or rendering function is patched or replaced. PNG encoding preserves the
+opaque window's displayed RGB channels; the compositor-ignored alpha channel
+is omitted. No generated, reconstructed or retouched image is substituted.
+
+& $py -B outputs/sonic-adventure/jp_port_tools/capture_native_boot_progress.py --workspace . --build work/sonic-adventure/my-boot-saves --inputs work/sonic-adventure/jp-native-pvm-inputs-v1 --asset-root 'work/sonic-adventure/jp-native-asset-fixtures-v1/資産' --save-proof work/sonic-adventure/my-boot-saves/save-verification.json --pixel-dll work/sonic-adventure/my-boot-entry-check/pixel_difference.dll --output work/sonic-adventure/my-boot-screenshots
+
+The capture run repeats one already qualified case (1,185 checks, 190 images/
+Presents). It is reported separately from the 4,246 feature checks above.
+Screenshots and their capture manifest stay in the private output directory.
+The authoring/capture workflow and hash-only evidence may be published, but
+retail-derived screenshot pixels are excluded from GitHub. Actual screenshots
+can be shared in chat so the user can inspect visible progress.

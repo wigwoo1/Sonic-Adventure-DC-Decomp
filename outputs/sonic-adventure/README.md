@@ -1,3 +1,13 @@
+Latest boot/save update: JP_NATIVE_BOOT_SAVES.txt. Development has resumed.
+The unchanged original boot_init now runs the real Japanese save-reset/default/
+CRC chain using shared saves/slot/rings/demo state. 4,246 fresh checks pass,
+including 29 original-machine calls without hooks, six boot calls and 570 GPU
+images/Presents. Disk save/load and the full system boot/main loop remain open.
+All 2,951 previous public artifacts are retained; new game-containing DLLs stay
+private, with no new public binary. Japanese baselines verified; overall about
+10%; full gameplay, English and later ports unfinished. Earlier notes retain
+historical scope. Goal active.
+
 Latest exit/logo publication: JP_NATIVE_EXIT_LOGO.txt. Existing source-bound
 results were reviewed by the daily publisher while development remains paused.
 The complete original logo loop and real native system exit pass 3,601 checks:
