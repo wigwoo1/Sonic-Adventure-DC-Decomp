@@ -1,3 +1,13 @@
+Latest boot-fog update: JP_NATIVE_BOOT_FOG.txt. Goal active. Seven real SDK
+fog routines now use the existing native context/video-register owner. Two
+diagnostic-only fog setters are replaced by actual setters with passive events.
+8,670 fresh checks pass, including 310 original-machine calls without hooks.
+Save/disk and boot/logo/exit regressions pass. Visible GPU table-fog shading and
+full system boot/gameplay remain unfinished. All 2,953 previous public artifact
+payloads are preserved; no new public binary. Game-containing DLLs/assets and
+actual retail-derived screenshots stay private. Overall about 10%. Earlier
+notes retain historical scope.
+
 Latest save-state/disk update: JP_NATIVE_SAVE_STATE_DISK.txt. Goal active.
 The full unchanged Japanese save.c store/load/update family now uses genuine
 shared progress state, with an authored Windows disk backend around real save

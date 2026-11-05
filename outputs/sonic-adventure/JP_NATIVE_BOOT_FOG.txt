@@ -1,0 +1,126 @@
+Original boot fog state and main-loop dependency audit
+
+Overall estimate: about 10% of the complete project, weighted milestones.
+Goal active. Japanese matching/GCC source baselines are verified; native
+gameplay, English, enhancements and later platforms remain unfinished.
+This is an incomplete research build, not a playable port.
+
+Implemented boundary
+
+Seven real SDK routines now link into the existing shared frame owner:
+njGenerateFogTable, njSetFogColor, njSetFogDensity, njSetFogTable,
+njSetFadeColor, njFogEnable and njFogDisable. External upstream is pinned at
+25a3d3154dbe657325e97dbe8c5291086f6af5c0. Original inputs are not edited.
+The generator's two floating divisions use the already qualified RZ/DN1
+integer numerical provider, preserving expression order and original values.
+Generated LLVM contains no remaining host float arithmetic/comparisons.
+
+The existing native context and video-register owners remain single shared
+instances. Fog color/density/table calls reach their actual SDK register
+setters. Enable/disable process actual SDK context fields and apply them to
+the native Ninja queue. Earlier presentation diagnostics that merely recorded
+fog-setter events have been removed. Their stage-hook events now passively
+observe actual calls through macros; each argument is evaluated once.
+Other controlled audio/loader/overlay diagnostics remain, as previously noted.
+
+This does not implement visible GPU table-fog shading. The D3D11 backend still
+rejects unsupported fog modes. Frame state already stores immutable packed fog
+registers, but the shader must consume them before full display_reset_full can
+enable fog and render gameplay. njGenerateFogTable3 and other non-boot fog
+variants are not integrated by this task. Full system boot/game_init, mode
+dispatch, card/menu saving and complete gameplay remain unverified.
+
+Verification
+
+2,830 fog checks execute 209 complete original-machine calls with no function
+dependency hooks. All seven routines and their real nested Kamui register and
+context dependencies execute. RZ/DN1 contexts alternate FR register banks.
+All 128 generated float bit patterns match the original instructions and an
+independent exact-rational, round-toward-zero oracle. All packed table registers
+are compared after 16 supplied tables; scalar color/fade/density inputs cover
+fixed and random 32-bit values. Generator buffer guards remain intact.
+
+All six native context slots are checked using opaque, translucent and punch-
+through polygon-list codes, varied blend fields and repeated enable/disable.
+Every scalar context field matches the original after the documented 32/64-bit
+NULL pointer-layout adaptation. Real original njGetkmPointer calls independently
+confirm the four Ninja parameter words after each fog change. Ninja metadata
+and Kamui's separate current global header are distinct. The latter's complete
+transport is not qualified here. No experimental blend override is retained;
+the existing authored context bridge object remains byte-for-byte unchanged.
+
+A real submitted frame retains its old fog registers after later setters.
+Windy stage hooks update actual native fog state, skip it during the relevant
+demo case, and emit the same passive observation events. No generated game
+images or fake setters establish these results.
+
+Fresh regressions on this exact build: 591 save-default/reset/CRC checks,
+1,514 full save-state checks, 80 real disk checks (including a fresh process),
+and 3,655 boot/logo/exit checks. Total: 8,670 feature/regression checks and
+310 original-machine calls without function hooks. Six real boot_init calls
+produce 570 actual GPU images/Presents with 175,104,000 compared pixels.
+This is sampled instruction-model verification, not new Dreamcast hardware
+timing validation or a proof that the complete game works.
+
+A separate repeated capture case runs 1,185 checks and captures 190 actual GPU
+backbuffers. Three private screenshots show logo fade-in, logo and fade-out.
+Visible results remain the boot logo because GPU table-fog shading is open.
+The capture script and hashes may be published; retail-derived PNGs stay in
+private work/ and can be shared in chat.
+
+Main/boot frontier
+
+audit_native_main_boot.py compiles the original main, game_init,
+system_boot_init, display_reset_full and game_mode_step bodies and inspects PE
+exports and actual compiled object definitions without executing those DLLs.
+The main extract also retains genuine game_leave so the compiler does not
+incorrectly treat its private leave flag as immutable and remove shutdown.
+Availability is not runtime qualification. Some callable exports still belong
+to diagnostics; indirect overlay calls and complete platform semantics require
+separate work. Objects/extracted game source remain private.
+
+Inspection-only warning exceptions retain the original void main signature,
+unused private state in individual extracts, and game_mode_step's original
+bare return in a non-void function. No source body is rewritten to silence
+these. A native executable cannot treat this inspection as qualification.
+
+The post-fog audit removes njFogEnable, njGenerateFogTable and njSetFogDensity
+from display_reset_full's missing compiled definitions. Texture setup,
+perspective, filtering/clamp/flip, print/culling helpers and matrix storage
+remain. Platform boot also needs audio/video system setup, card/VMU and text.
+game_init/main require audio streaming, history, real file/overlay loading,
+timers, card lifecycle and stage/menu dispatch. _fltused and srand in the audit
+also need deliberate native runtime handling, not guessed game routine counts.
+
+Reproduce locally
+
+Use the qualified save-state-v1 chain and the pinned clean external source,
+matching Japanese executable and privately supplied logo fixtures. Python 3,
+qualified Windows Clang/SDK and its llvm-readobj.exe must be available. Choose
+fresh output directories. Set PY and CLANG to local executable paths. Run from
+the workspace root; the referenced save/disk and boot guides give prerequisites.
+
+& $PY -B outputs/sonic-adventure/jp_port_tools/build_native_boot_fog.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --baseline work/sonic-adventure/jp-native-save-state-v1 --compiler $CLANG --output work/sonic-adventure/jp-native-boot-fog-v3
+& $PY -B outputs/sonic-adventure/jp_port_tools/verify_native_boot_fog.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --build work/sonic-adventure/jp-native-boot-fog-v3 --binary work/sonic-adventure/jp-ninja-math-reference/1ST_READ.BIN --report work/sonic-adventure/jp-native-boot-fog-v3/fog-verification.json
+& $PY -B outputs/sonic-adventure/jp_port_tools/verify_native_boot_saves.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --build work/sonic-adventure/jp-native-boot-fog-v3 --binary work/sonic-adventure/jp-ninja-math-reference/1ST_READ.BIN --report work/sonic-adventure/jp-native-boot-fog-v3/save-verification.json
+& $PY -B outputs/sonic-adventure/jp_port_tools/verify_native_save_state.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --build work/sonic-adventure/jp-native-boot-fog-v3 --binary work/sonic-adventure/jp-ninja-math-reference/1ST_READ.BIN --report work/sonic-adventure/jp-native-boot-fog-v3/save-state-verification.json
+& $PY -B outputs/sonic-adventure/jp_port_tools/build_native_save_disk.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --state work/sonic-adventure/jp-native-boot-fog-v3 --compiler $CLANG --output work/sonic-adventure/jp-native-boot-fog-disk-v1
+& $PY -B outputs/sonic-adventure/jp_port_tools/verify_native_save_disk.py --workspace . --build work/sonic-adventure/jp-native-boot-fog-disk-v1 --output work/sonic-adventure/jp-native-boot-fog-disk-check-v1
+& $PY -B outputs/sonic-adventure/jp_port_tools/verify_native_boot_entry.py --workspace . --build work/sonic-adventure/jp-native-boot-fog-v3 --inputs work/sonic-adventure/jp-native-pvm-inputs-v1 --asset-root work/sonic-adventure/jp-native-asset-fixtures-v1/資産 --save-proof work/sonic-adventure/jp-native-boot-fog-v3/save-verification.json --output work/sonic-adventure/jp-native-boot-fog-boot-check-v1
+& $PY -B outputs/sonic-adventure/jp_port_tools/capture_native_boot_progress.py --workspace . --build work/sonic-adventure/jp-native-boot-fog-v3 --inputs work/sonic-adventure/jp-native-pvm-inputs-v1 --asset-root work/sonic-adventure/jp-native-asset-fixtures-v1/資産 --save-proof work/sonic-adventure/jp-native-boot-fog-v3/save-verification.json --pixel-dll work/sonic-adventure/jp-native-boot-fog-boot-check-v1/pixel_difference.dll --output work/sonic-adventure/jp-native-boot-fog-progress-captures-v1
+& $PY -B outputs/sonic-adventure/jp_port_tools/audit_native_main_boot.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --baseline work/sonic-adventure/jp-native-boot-fog-v3 --compiler $CLANG --output work/sonic-adventure/jp-native-main-boot-frontier-after-fog-v1
+
+Publication and next work
+
+Publish authored workflow, documentation and verification evidence. Complete
+external SDK/game bodies and all newly linked game-containing DLLs stay private.
+All 2,953 earlier public build payloads remain byte-for-byte intact; this task
+adds no public binary. The incomplete research archive binds to the new public
+source manifest and receives fresh checksum manifests. Original source and
+matching proof hashes are preserved.
+
+Next: implement and independently verify actual GPU table-fog shading using
+the captured original register format. Then continue the audited display/system
+boot dependencies and real main loop without replacing them with diagnostics.
+Sol High remains appropriate. Luna Low is sufficient for routine documentation
+and publication checks after qualification.

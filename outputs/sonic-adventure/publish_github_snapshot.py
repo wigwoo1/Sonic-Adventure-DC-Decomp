@@ -198,6 +198,16 @@ real QPC/Win32 waits and close handling. Four original frame globals are supplie
 (60/79 presentation imports). Adding the frame source exposes 22 more genuine
 dependencies; the expanded graph has 43 missing services. No trace providers are
 linked into production. Real game render/flip integration remains open.
+Seven real SDK boot-fog routines now share the native context/register owner;
+two diagnostic fog setters are replaced by real calls with passive events.
+8,670 fresh checks pass, including 310 complete original-machine calls without
+hooks, save/disk regression and 570 actual GPU images/Presents through boot.
+Actual private backbuffer screenshots are captured. Visible GPU table-fog
+shading, full system boot/main loop and gameplay remain unfinished. All 2,953
+earlier public artifacts are retained; no new public binary. Complete game
+DLLs and retail assets/screenshots stay private. Overall about 10%; goal active.
+Earlier notes retain historical scope.
+
 The full unchanged Japanese save store/load/update family now uses genuine
 shared runtime progress, with authored Windows disk persistence. 5,840 fresh
 checks pass, including 101 original-machine calls without dependency hooks,
@@ -339,6 +349,7 @@ Texture Off must disable sampling and use vertex/material colours.
 - [Current goal](outputs/sonic-adventure/JP_BASED_PORT_GOAL.txt)
 - [Integration order and limits](outputs/sonic-adventure/JP_NATIVE_PORT_PLAN.txt)
 - [Verified GCC baseline and native/localization evidence](outputs/sonic-adventure/JP_GCC_BASELINE.txt)
+- [Original boot fog state and main-loop frontier](outputs/sonic-adventure/JP_NATIVE_BOOT_FOG.txt)
 - [Full original save state and native disk persistence](outputs/sonic-adventure/JP_NATIVE_SAVE_STATE_DISK.txt)
 - [Original boot initialization, save defaults and CRC](outputs/sonic-adventure/JP_NATIVE_BOOT_SAVES.txt)
 - [Complete original logo loop and native system exit](outputs/sonic-adventure/JP_NATIVE_EXIT_LOGO.txt)
