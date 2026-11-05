@@ -1,3 +1,14 @@
+Latest real native vertex-list allocation: JP_NATIVE_QUEUE_ALLOCATION.txt.
+Goal active; overall about 10%. Five existing renderer queues can be allocated
+together, preserving their previous buffers and submitted frames on failure.
+17,145 fresh checks pass, including each staged allocation failure, complete
+frame lifetime regression, save defaults and 570 actual startup GPU frames.
+One authored support library is added; all 2,962 previous payloads are retained.
+SDK njInitVertexBuffer and kmSetSystemConfiguration integration is next. Full
+system startup/gameplay, English and later ports remain unfinished. No playable
+EXE. Original game/SDK objects, retail assets and screenshots remain private.
+Earlier notes retain their historical scope.
+
 Latest retired vblank handle correction: JP_NATIVE_VBLANK_REARM.txt.
 Goal active; overall about 10%. A final lifecycle probe found that an unrelated
 callback reusing a retired Ninja slot could block a fresh blank arm request.

@@ -1,0 +1,66 @@
+Native vertex-list allocation milestone
+Overall project estimate: about 10%; goal active. Incomplete research build.
+
+What changed
+The existing five real renderer queues can now be preallocated together.
+This is the allocation foundation needed by native system configuration and
+njInitVertexBuffer; those two SDK entry points are not integrated yet.
+The byte-matching Japanese baseline remains separate from native-port progress.
+English localization, full gameplay and later platforms remain unfinished.
+
+Ownership and behavior
+Compile native/jp_native_queue_allocation.c in place of jp_native_queue_direct.c,
+never alongside it. It includes the preserved original authored queue layers;
+there is one pool set, one SDK cursor table and one frame recording owner.
+jp_queue_preallocate accepts five byte minima in jp_queue_list order: opaque,
+translucent, punch-through, opaque modifier, translucent modifier. Minima must
+be multiples of 32. The owning game thread must have an empty, inactive live
+recording. Each list uses actual aligned host memory with its existing guards.
+All replacements are staged before any old buffer is freed or changed.
+Guard storage and simultaneous old/new buffers count toward the memory budget.
+Failures preserve buffers/cursors/contexts/frames and set the usual sticky
+queue error. Clear it before retrying. Bigger buffers are retained; zero minima
+do not disable a list. Normal checked producer reservation/growth still applies.
+No fake console heap allocation, direct TA pointer, or P1/P2 alias is returned.
+Submitted frames retain independent owned bytes across queue replacement.
+
+Verification
+249 allocation/lifetime checks exercise both production code and a separate
+private diagnostic build. The latter forces allocation failure at each of the
+five staging positions and checks temporary cleanup and retry. Its hooks are
+not compiled into the production owner or packaged library.
+8,573 complete frame/resource-lifetime regression checks passed, including
+193 submissions and 128 actual original producer draws.
+591 original Japanese save-layout/default/CRC comparisons passed.
+7,732 real startup/reset/logo/exit/EOR checks passed: 570 GPU-rendered frames
+and Presents, with independent image comparisons across 175,104,000 pixels.
+Total: 17,145 checks. Startup's native caller requests opaque 416 bytes and
+translucent 655,360 bytes, corresponding to the main request's host minima.
+This proves the allocations are actually used by the renderer. It does not
+claim the original njInitVertexBuffer or full system_boot_init ran.
+Actual startup screenshots are captured privately and can be shared in chat.
+
+Reproduce locally (PowerShell, replace PYTHON/CLANG/WORKSPACE with local paths)
+PYTHON -B outputs/sonic-adventure/jp_port_tools/build_native_queue_allocation.py --workspace WORKSPACE --baseline work/sonic-adventure/jp-native-vblank-chain-v4 --frame-baseline work/sonic-adventure/jp-native-boot-buffers-v3 --compiler CLANG --output work/sonic-adventure/jp-native-queue-allocation-v1
+PYTHON -B outputs/sonic-adventure/jp_port_tools/verify_native_queue_allocation.py --workspace WORKSPACE --build work/sonic-adventure/jp-native-queue-allocation-v1 --output work/sonic-adventure/jp-native-queue-allocation-check-v2
+PYTHON -B outputs/sonic-adventure/jp_port_tools/verify_native_queue_allocation_frames.py --workspace WORKSPACE --build work/sonic-adventure/jp-native-queue-allocation-v1/queue_view --report work/sonic-adventure/jp-native-queue-allocation-v1/frame-regression.json
+PYTHON -B outputs/sonic-adventure/jp_port_tools/verify_native_boot_saves.py --workspace WORKSPACE --upstream work/sonic-adventure/reshaped-sonic-adventure-review --build work/sonic-adventure/jp-native-queue-allocation-v1 --binary work/sonic-adventure/jp-ninja-math-reference/1ST_READ.BIN --report work/sonic-adventure/jp-native-queue-allocation-v1/save-verification.json
+PYTHON -B outputs/sonic-adventure/jp_port_tools/verify_native_queue_allocation_startup.py --workspace WORKSPACE --build work/sonic-adventure/jp-native-queue-allocation-v1 --inputs work/sonic-adventure/jp-native-pvm-inputs-v1 --asset-root work/sonic-adventure/jp-native-asset-fixtures-v1/資産 --save-proof work/sonic-adventure/jp-native-queue-allocation-v1/save-verification.json --output work/sonic-adventure/jp-native-queue-allocation-startup-v1
+Output paths must be fresh. Local build recipes retain verified prerequisite
+object paths and need the pinned external source and locally supplied assets.
+See build_verification.json for exact compiler flags, inputs and SHA256 values.
+Tools use the existing architecture, original SDK/game dependencies and real
+GPU backend. They do not download/publish retail inputs or external source.
+
+Public/private boundary
+The new public support library contains exactly one authored queue object.
+All historical published source/proof/build bytes remain preserved. Complete
+SDK/game-containing DLLs, retail font/texture inputs and captures remain private.
+Research artifacts are not a playable PC port and contain no playable EXE.
+
+Next
+Map native kmSetSystemConfiguration and njInitVertexBuffer into these real
+queues, retaining original scalar/list-selection contracts and the qualified
+Ninja/vblank wait. Keep the lower frame module independent of presentation.
+Full parent startup belongs in a higher module with real remaining services.
+Sol High is recommended for that platform work; Luna Low suits routine docs.
