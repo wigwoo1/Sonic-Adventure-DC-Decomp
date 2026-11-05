@@ -1,3 +1,14 @@
+Latest native texture initialization: JP_NATIVE_TEXTURE_INITIALIZATION.txt.
+Goal active; overall about 10%. Genuine njInitTexture now uses the actual
+game-owned native record table through the single shared owner. 502 new checks
+execute 84 whole original calls; captured textures survive SDK reset and
+shutdown, and Texture Off still performs no sampling. Frozen texture/frame/
+file/GPU/fog/save/boot regressions pass: 648,829 checks/comparisons. Real logo
+screenshots remain private and may be shared in chat. All 2,955 previous public
+binaries are preserved plus one authored replacement-owner library, 2,956 total.
+No playable EXE; full system boot/display reset/gameplay remains unverified.
+Earlier notes retain historical scope.
+
 Latest native display setup: JP_NATIVE_DISPLAY_SETUP.txt. Goal active; overall
 about 10%. Six genuine SDK setters and authored tangent/perspective value ports
 now share the actual frame owner. 138,170 checks execute 68,111 original calls;

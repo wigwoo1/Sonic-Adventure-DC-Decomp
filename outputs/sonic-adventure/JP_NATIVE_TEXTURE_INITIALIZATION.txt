@@ -1,0 +1,143 @@
+Genuine texture initialization and game-owned record storage
+
+Overall estimate: about 10% of the whole project, weighted milestones.
+Goal active. Japanese matching/GCC baselines are verified. Full native gameplay,
+English, enhancements and later platforms remain unfinished. No playable EXE.
+
+What changed
+
+The complete original njInitTexture body now runs in the actual shared frame
+owner, calling the existing real njInitTexMemList. Two native entry/exit guards
+prepare ownership and close its initialization window. Its original field
+writes remain intact. The game can supply its native-width record table,
+including main's 2,048 entries, rather than silently receiving another table.
+
+The authored replacement owner includes the prior move/upload/retention owner
+and adds caller-owned table lifetime. Caller tables are never freed by shutdown.
+Owned tables can reinitialize/shrink in place and retain their actual allocation
+capacity. Valid zero-record initialization is supported, including NULL/zero.
+Allocation from an empty table is safely rejected by the existing native guards.
+
+New sidecars allocate before replacement. Invalid alignment, partial overlap,
+overflow/owned-capacity violations or insufficient budget leave caller storage,
+the prior owner, path and error-surface metadata intact. Native initialization
+retires old handles/payloads; submitted frame payloads remain retained until
+their actual final reference retires. IDs never recycle. This native resource
+cleanup is an explicit policy beyond the original initializer's memory writes;
+the original caller must normally release old textures before initialization.
+
+The original texture path, error-surface fields, record counter/cursor and
+untouched list/cache/error values retain their actual behavior. Only path byte
+zero is cleared. Virtual/physical error-surface pointers, record dummy fields
+and native padding stay untouched. Persistent raw Ninja values are distinct
+from native ownership handles; stale handles still fail lookup safely.
+
+jp_texture_sdk_limits selects binding count and logical byte budget for SDK
+initialization. Defaults are 16,384 bindings and 64 MiB. The entire logical
+record table is charged even when caller-owned, with transient replacement
+accounting. A shrunken heap table is still charged at its retained physical
+capacity; a focused lower-bound/budget test covers this case. Frames retain
+their separate existing budget. The prior explicit
+jp_textures_initialize API keeps its original behavior and qualification.
+One game thread owns these globals; caller storage must remain valid/writable.
+
+Verification
+
+- New initializer suite: 502 checks, 84 whole original-code calls without any
+  function hooks, 44 contexts and counts 0 through 4,096, including 2,048.
+  Complete random-seeded original/native memory arenas and guards are checked,
+  including bytes the SDK deliberately leaves untouched. The real subsequent
+  record entry verifies the original free-slot cursor restarts at slot zero.
+- Owned/caller-owned transitions, same-table replacement, zero capacity,
+  stale handles, invalid ranges and budget failure preservation pass. Genuine
+  allocation failure was not injected; its cleanup path is reviewed code.
+- Seven actual D3D images compare all 458,752 pixels against independent
+  constant-colour expectations. Two submitted texture generations survive SDK
+  reset, same borrowed-table reset and owner shutdown. A rejected reset leaves
+  the live texture usable. Three PNGs are actual synthetic test backbuffers,
+  not gameplay. Texture Off performs no texture decode/upload/sampling and
+  has zero sampled texture/sampler bindings, using vertex colours instead.
+- Frozen native texture-owner suite: 1,947 checks.
+- Frozen Japanese lifecycle suite: 15,232 comparisons, 1,392 original calls.
+  Its historical kmFreeTexture service boundary remains explicitly recorded;
+  it is separate from the new initializer's no-hook comparisons.
+- Frozen frame-retention suite: 8,572 checks, 193 submissions, 128 complete
+  actual model/sprite/strip parent draws.
+- Real file/PRS/PVM/original game wrapper regression: 223 checks, 27 GPU images,
+  110,592 pixels from the locally supplied logo/title texture archives.
+- Frozen GPU suites: 491,158 + 121,451 checks, 100 images; actual direct-window
+  comparisons add 1,033 + 613 checks, including an empty 8K target capability.
+- GPU fog regression: 3,852 checks and 319 images, maximum channel error 1.
+- Save defaults/reset/CRC: 591 checks, 29 original calls.
+- Boot/logo/exit: 3,655 checks, six real boot_init calls, 570 images/Presents.
+
+Total feature/regression checks and comparisons: 648,829, including per-pixel
+assertions in frozen renderer tests. These counts are not decompiled routines.
+An additional repeated boot capture passes 1,185 checks and 190 real frames;
+three private logo screenshots match the prior qualified captures exactly.
+
+The old complete source/proofs/builds retain their hashes. All original frame
+objects except the authored texture owner are preserved; GPU/presenter/exit/
+boot objects are relinked against the new owner. Complete system_boot_init,
+display_reset_full, main dispatch, physical gameplay and English are unverified.
+Audio/loader/overlay traces remain. Bounded pixel tests do not establish exact
+Dreamcast hardware precision/dithering/timing or playable 8K performance.
+
+Reproduce
+
+Use Python 3, Windows Clang/SDK, the previous display-setup build and pinned
+external source 25a3d3154dbe657325e97dbe8c5291086f6af5c0. Retail JP binary and
+local logo/title archives are needed for game-dependent tests. Use fresh output
+folders; do not overwrite preserved proofs. Set PY/CLANG to local executables.
+
+& $PY -B outputs/sonic-adventure/jp_port_tools/build_native_texture_initialization.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --baseline work/sonic-adventure/jp-native-display-setup-v2 --compiler $CLANG --output work/sonic-adventure/jp-native-texture-init-v5
+& $PY -B outputs/sonic-adventure/jp_port_tools/verify_native_texture_initialization.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --build work/sonic-adventure/jp-native-texture-init-v5 --binary work/sonic-adventure/jp-ninja-math-reference/1ST_READ.BIN --output work/sonic-adventure/jp-native-texture-init-check-v6
+
+For the frozen renderer suites, use the previous GPU guide's metadata-only
+gpu_view, selecting this actual GPU_DLL. Run primary before extended in the
+same fresh regression folder, using verify_native_direct_window.py. No native
+function is replaced. Actual video-owner initialization is required by the
+frozen frame suite too: load frames_DLL, call Video(lib).init(640,480,
+0xff000000,1), then invoke verify_native_frames.main with its DLL metadata
+pointing to the actual frames_DLL, not the top-level game/logo DLL.
+
+The frozen standalone texture suites expect jp_native_textures.dll and an old
+status string. Their metadata-only texture_view uses a byte-identical copy of
+the actual frame DLL under that filename, with dll_sha256 set to its exact hash
+and status set to native_texture_runtime_linked_behavior_unverified. This is a
+test precondition only, not a replacement implementation. Texture tests use
+this copy in their separate process. Actual shared-owner/frame/GPU integration
+is independently tested by the new initializer, file, fog and boot suites.
+The published projection reports record their original parent build hashes.
+
+The frozen asset harness also needs vendored_MIT_source_sha256 from the retained
+jp-native-asset-heartbeat-build-v1 report. asset_view adds only those verified
+hashes and records its original metadata parent; prskit/assets/game-wrapper
+objects remain byte-identical. Run verify_native_asset_runtime.py with fresh
+fixtures, the local PVM input manifest and this asset_view. The public analysis
+files preserve exact metadata views, proof paths, commands and hashes.
+
+Use the previous boot guide's save/boot/capture commands with this build and
+fresh report paths. Keep retail-derived captures private; share actual images
+in chat when helpful. Screenshots must be real captures, never mockups.
+
+& $PY -B outputs/sonic-adventure/jp_port_tools/package_native_texture_initialization.py --workspace . --build work/sonic-adventure/jp-native-texture-init-v5 --verification work/sonic-adventure/jp-native-texture-init-check-v6 --compiler $CLANG --output work/sonic-adventure/jp-native-texture-init-support-v2
+
+Publication and next step
+
+jp_native_texture_initialization_support.lib contains exactly one authored
+replacement owner object, verified member-for-member. Link it instead of the
+old move/upload/retention owner, never alongside another owner. It depends on
+the real guarded SDK functions, existing frame/asset services and system CRT.
+It contains no genuine external SDK/game function bodies or retail assets.
+The genuine njInitTexture object and complete game-containing DLLs stay private.
+
+All 2,955 earlier public payloads are retained plus this authored support library,
+2,956 total, with source-bound archive and checksum manifests. Retail inputs,
+toolchains, caches, credentials and screenshots stay outside the public archive.
+
+Next: qualify njPrintSize and the original srand/random-state contract, then
+bind main-owned data and qualify genuine display_reset_full. Existing internal
+render setters already have definitions; do not duplicate them because they
+are absent from exports. Sol High remains appropriate for integration. Luna
+Low is sufficient for routine documentation/publication checks after qualification.

@@ -198,6 +198,17 @@ real QPC/Win32 waits and close handling. Four original frame globals are supplie
 (60/79 presentation imports). Adding the frame source exposes 22 more genuine
 dependencies; the expanded graph has 43 missing services. No trace providers are
 linked into production. Real game render/flip integration remains open.
+Latest native texture initialization: JP_NATIVE_TEXTURE_INITIALIZATION.txt.
+Goal active; overall about 10%. Genuine njInitTexture now uses the actual
+game-owned native record table through the single shared owner. 502 new checks
+execute 84 whole original calls; captured textures survive SDK reset and
+shutdown, and Texture Off still performs no sampling. Frozen texture/frame/
+file/GPU/fog/save/boot regressions pass: 648,829 checks/comparisons. Real logo
+screenshots remain private and may be shared in chat. All 2,955 previous public
+binaries are preserved plus one authored replacement-owner library, 2,956 total.
+No playable EXE; full system boot/display reset/gameplay remains unverified.
+Earlier notes retain historical scope.
+
 The shared native frame owner now provides the original display setters and
 authored tangent/perspective value ports. 138,170 checks execute 68,111 whole
 original calls; all 65,536 tangent angles and 12 real 3D projection images pass.
@@ -369,6 +380,7 @@ Texture Off must disable sampling and use vertex/material colours.
 - [Current goal](outputs/sonic-adventure/JP_BASED_PORT_GOAL.txt)
 - [Integration order and limits](outputs/sonic-adventure/JP_NATIVE_PORT_PLAN.txt)
 - [Verified GCC baseline and native/localization evidence](outputs/sonic-adventure/JP_GCC_BASELINE.txt)
+- [Genuine native texture initialization](outputs/sonic-adventure/JP_NATIVE_TEXTURE_INITIALIZATION.txt)
 - [Native perspective and display setup](outputs/sonic-adventure/JP_NATIVE_DISPLAY_SETUP.txt)
 - [Visible native GPU fog](outputs/sonic-adventure/JP_NATIVE_GPU_FOG.txt)
 - [Original boot fog state and main-loop frontier](outputs/sonic-adventure/JP_NATIVE_BOOT_FOG.txt)
