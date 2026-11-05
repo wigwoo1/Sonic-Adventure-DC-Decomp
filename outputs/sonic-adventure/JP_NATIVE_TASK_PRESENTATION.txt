@@ -1,0 +1,116 @@
+Genuine task execution and presentation recording in the shared native runtime
+
+Overall project estimate: about 10% of weighted milestones; goal active.
+Japanese matching and GCC source baselines remain verified. Native gameplay,
+English localization, settings and later platforms remain unfinished.
+
+What changed
+
+The complete presentation-aware original task source now links and executes
+beside genuine present_run, present_draw, present_forget, present_record and
+present_untimed. Actual task allocation, stepping, child calls, drawing and
+destruction use the same heap, matrix, texture, context and frame owners.
+Real collision/event cleanup functions and the already qualified replay lifetime
+guard are retained. The documented 64-bit heap split adaptation and five GCC
+presentation hooks remain enabled. No task lifecycle success stubs are added.
+
+Original camera/player state declarations now own their actual records. The
+private lifecycle test helpers control these records but no longer define
+replacement globals. The three Ninja accounting counters use the existing real
+renderer owner; three vsync fields use the original SDK declarations. The
+original presentation prefix owns split/redraw/later-draw state. Symbol audits
+verify a single shared definition for each selected task/state/clock service.
+
+The unchanged clock and SDK count objects moved into the shared frame DLL.
+Presenter clock exports forward to those exact functions. Tests verify identical
+function addresses, not merely similar results. Private header overlays import
+the actual counters/clock from that owner without changing original headers.
+There is no circular DLL import and no second clock accumulation state.
+
+Unchanged original logo_start now imports this complete task/heap owner. Its
+diagnostic accessors forward there too; the logo DLL contains no additional task
+pool or heap arena. Its original cover setter/getter remain together. Existing
+startup error checks still apply because the original function returns void.
+
+Recording and original behavior
+
+Actual retained draws, sprite animation copies, flat vertices, task marks and
+callback records are handled by the original selected presentation functions.
+An optional authored observer receives diagnostics; it never substitutes for the
+real recording or timing functions. With observers disabled, original recording
+still runs. Two notification calls instrument the original record/untimed entry
+points. The native pointer-hash/timer boundaries and replay deletion guard retain
+their earlier qualifications. Other selected function bodies remain unchanged.
+
+Original task destruction retags retained records as resource-released when a
+destructor may release textures. It preserves list counts; it does not delete
+those entries. Tests check all six actual logo records receive that tag. The
+original middle wide anchor is an offset of zero, not screen coordinate 320.
+
+Verification
+
+125 focused checks pass. They audit real linked symbol ownership, shared clock
+and task/heap forwarding, nested untimed calls, actual root/child scheduling,
+retained logo/fade records, observer-independent recording and GPU presentation.
+Four real root steps and four child steps execute. An actual redraw callback
+produces pixels while its work record is restored. A real destructor releases
+the six logo texture owners before GPU submission; the queue retains their
+payloads until completion and then frees them. Five 640x480 images / 1,536,000
+pixels match an independent original-logo/fade oracle with five real Presents.
+
+Retained suites also pass on the exact new runtime: lifecycle 7,601; original
+logo startup 8,266; owned frames 8,572; presentation 131 in this run. Total for
+this qualification: 24,695 distinct checks. Combined image suites compare twelve
+images / 2,473,984 pixels with sixteen real Presents. These are named contracts,
+not measured whole-game completion, Dreamcast pixel precision or gameplay FPS.
+
+The lifecycle suite exercises deletion/reuse, scheduling, player work/motion/
+shape restoration, destructive replay callbacks, heap coalescing and allocation
+rollback. The prior standalone suite's historical limitation text is preserved;
+the new focused report supplies the additional shared-rendering evidence.
+
+Limits and next work
+
+Presentation phases are controlled by private test accessors. The complete
+original present_step/present_second/present_end controller has not executed.
+This milestone proves genuine task hooks and recording, not complete split-frame
+gameplay. Original logo_step and boot_init remain unexecuted. Audio, input,
+loader and other out-of-scope services in the frame-wait diagnostic still use
+their documented traces. Previous production missing-service counts were not
+remeasured or claimed reduced by this runtime qualification.
+
+Next: provide actual input/exit dependencies for original logo_step and verify
+its complete frame counts, transitions and texture release. Recover the full
+presentation controller and its remaining real scene services afterward. Keep
+all original matching/GCC proofs, earlier native sources and binaries intact.
+
+Builds and reproduction
+
+The new task/presentation DLLs, generated original source, metadata and retail
+inputs stay private. jp_native_presentation_observer_support.lib contains only
+the one authored passive-observer member. It contains no game/SDK function,
+diagnostic fixture, clock/heap/texture owner or retail asset. It is an optional
+research component, not a playable game. Earlier support libraries are preserved.
+
+With the pinned source, existing Windows Clang/SDK and qualified private builds,
+use fresh output directories. Join displayed command lines:
+
+python -B outputs/sonic-adventure/jp_port_tools/build_native_task_presentation_runtime.py
+  --workspace WORKSPACE --upstream PINNED_UPSTREAM --baseline SHARED_FRAME_BUILD
+  --presentation NATIVE_PRESENTATION_OBJECT_BUILD --task PRESENTATION_TASK_BUILD
+  --task-runtime SHARED_TASK_RUNTIME_BUILD --compiler CLANG --output FRESH_BUILD
+
+Build the original-logo probe against FRESH_BUILD using the existing asset-probe
+builder. Then build_native_task_logo_start.py accepts --workspace, --upstream,
+--build FRESH_BUILD, --probe NEW_LOGO_PROBE, --compiler and --output FRESH_STARTUP.
+
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_task_presentation.py
+  --workspace WORKSPACE --build FRESH_BUILD --startup FRESH_STARTUP
+  --inputs PRIVATE_PVM_INPUTS --asset-root PRIVATE_PRS_DIRECTORY
+  --report FRESH_REPORT.json
+
+The image verifier briefly opens a diagnostic window. Reports under analysis/
+jp_native_task_presentation_* record exact commands, hashes, counts and scope.
+Load the new frame DLL before the GPU/window, presenter and startup DLLs. Keep
+one generation of every owner; do not mix older diagnostic DLLs with these.
+Sol High remains appropriate. Luna Low is suitable for routine documentation.

@@ -1,3 +1,13 @@
+Latest task/presentation update: JP_NATIVE_TASK_PRESENTATION.txt. Complete
+original task execution and genuine recording/lifecycle hooks now share the
+native heap, clock, matrix, texture and frame owners. 24,695 checks pass.
+Actual task callbacks and destruction are verified with GPU image comparisons,
+including texture release before submission. Full split-frame control, original
+logo_step, gameplay and localization remain unfinished. Game DLLs stay private;
+only one authored passive-observer member is added to the research builds.
+Earlier notes retain historical scope. Japanese baselines verified; overall
+about 10%; goal active.
+
 Latest shared-frame update: JP_NATIVE_SHARED_FRAME_STATE.txt. Renderer and
 original frame pacing now use one owner for all four original frame counters.
 The original model draw/skip gate observes actual pacing state. 17,069 checks
