@@ -1,0 +1,35 @@
+Real host texture-budget query (configuration dependency)
+Whole-project estimate: about 10%; goal active. No playable native PC port.
+
+native/jp_native_texture_budget.c replaces standalone_texture_owner.obj and
+includes that preserved authored owner. It adds jp_texture_budget_query with
+limit/charged/available size_t fields, using the existing owner's actual budget,
+record/binding metadata, texture payloads and standalone font allocation.
+No second allocator, texture registry or fabricated console address is added.
+The query does not initialize, free, replace or otherwise modify live textures.
+Errors use the existing sticky status and leave the caller's output unchanged.
+
+Available means remaining host budget. It is not console VRAM fragmentation,
+an OS allocation guarantee, or the separately owned immutable-frame budget.
+Do not map it to Kamui's largest contiguous console block without explicitly
+defining the native allocation contract. kmGetFreeTextureMem, njCalcTexture,
+kmSetSystemConfiguration and njInitVertexBuffer remain to be integrated.
+
+Verification: 229 checks passed against the actually linked native texture owner
+at three memory limits. Actual record and standalone font allocations are both
+charged exactly once. Repeated queries preserve identities and every payload
+byte. Null/sticky/uninitialized/shutdown failures preserve caller output.
+Allocation failure preserves font and accounting; font release restores space.
+Compile and link passed with warnings treated as errors. All other original
+production objects remain byte-identical. No retail input was needed.
+
+Reproduce with local prerequisites (fresh output directory required):
+PYTHON -B outputs/sonic-adventure/jp_port_tools/verify_native_texture_budget.py --workspace WORKSPACE --baseline work/sonic-adventure/jp-native-queue-allocation-v1 --output work/sonic-adventure/jp-native-texture-budget-v1
+Replace PYTHON and WORKSPACE with absolute local paths. Exact compiler/linker
+commands, source/object hashes and checks are in the output verification.json.
+The linked DLL contains external game/SDK code and must remain private.
+
+This changes a configuration dependency, not visible gameplay. The previous
+published queue milestone and startup screenshot remain valid for their stated
+scope. Preserve the matching Japanese baseline and all historical USA proofs.
+Continue with Sol High for configuration integration; Luna Low suits docs.

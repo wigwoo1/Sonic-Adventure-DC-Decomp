@@ -1,0 +1,45 @@
+Native Ninja vertex initialization lifecycle - initial integration
+Overall project estimate: about 10%; goal active; full game remains unfinished.
+
+The SDK-facing njInitVertexBuffer entry now runs a native adaptation using the
+real shared vertex queues, real original Ninja blank callback, native rational
+wait clock and actual original njCalcTexture. A higher module imports the frame
+and presentation modules, preserving their acyclic ownership. Its SDK globals
+are committed after allocation succeeds. Percentages use value-only RZ scalar
+multiply/divide and a truncating integer-to-binary32 conversion.
+
+The Windows shared-variable declaration conflict is resolved by an operation
+in the existing texture owner: jp_texture_cache_maximum updates the same actual
+SDK cache variable. No duplicate cache or modified SDK header is required.
+The SDK entry is an adapted implementation, not an unchanged matching body.
+It uses separate real host allocations rather than a console heap alias. The
+generic kmSetSystemConfiguration hardware/framebuffer lifecycle is unfinished;
+the config structure's pVertexBuffer is NULL for these noncontiguous host pools.
+Do not present this as a complete generic Kamui configuration implementation.
+Caller-supplied console vertex-buffer semantics remain unimplemented.
+
+Failed waits/texture checks/allocations now cancel the newly armed original
+Ninja blank handler. Cleanup is allowed after terminal wait failure without
+clearing that failure. A recycled slot occupied by an unrelated callback is
+preserved. Busy/reentry guards protect the original wait/chain owner.
+
+Build and 25 focused integration checks passed. Actual owners, original Ninja
+callbacks and original texture query ran; no native function was substituted.
+Checks cover main queue capacities, committed SDK scalar globals, shared texture
+maximum, SDK entry, invalid arguments, real allocation failure and retry,
+callback reentry, recycled-slot identity and terminal wait failure cleanup.
+This is initial integration, not full numerical/display/boot qualification.
+Complete scalar/percentage differential tests, borrowed-buffer handling and
+actual startup/logo regression remain before broad qualification/publication.
+No new image was rendered in these dependency tests.
+
+Reproduce using local prerequisite builds and a fresh output path:
+PYTHON -B outputs/sonic-adventure/jp_port_tools/verify_native_vertex_lifecycle.py --workspace WORKSPACE --baseline work/sonic-adventure/jp-native-vertex-lists-v1 --presentation work/sonic-adventure/jp-native-vblank-chain-v4/jp_native_present.dll --gpu work/sonic-adventure/jp-native-queue-allocation-v1/jp_native_window_input.dll --output work/sonic-adventure/jp-native-vertex-lifecycle-v6
+Exact compiler/linker commands and private DLL hashes are in verification.json.
+Generated SDK-derived imports and game/SDK-containing DLLs remain private.
+The last published queue milestone remains preserved; these newer dependency
+changes are pending the next reviewed snapshot. Preserve both earlier compiler
+diagnostics as historical evidence, but their declaration blocker is resolved.
+Japanese matching baseline, USA research and all existing proofs are intact.
+English, gameplay and later platforms remain unfinished. Sol High or the user's
+selected Sol Extra High is suitable for continued integration; Luna Low for docs.

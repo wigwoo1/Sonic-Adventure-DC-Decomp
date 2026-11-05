@@ -1,0 +1,66 @@
+Qualified native vertex initialization and startup integration
+Whole-project estimate: about 10%; goal active. No playable PC port yet.
+
+The adapted njInitVertexBuffer now completes the real Ninja blank wait,
+configures the actual native vertex queues, commits SDK scalar/list/config
+state and refreshes the original shared texture maximum through njCalcTexture.
+The texture owner exposes a cache operation, avoiding Windows DLL variable
+declaration conflicts and retaining exactly one shared SDK cache variable.
+The higher lifecycle module imports frame/presentation; lower modules do not
+import it. Failed waits and allocations clean up only the armed Ninja handler.
+Recycled unrelated callback slots survive cancellation.
+
+Qualification evidence
+25 prior integration assertions cover SDK entry, actual main queue capacities,
+SDK state/cache, allocation failure/retry, reentry and terminal wait cleanup.
+2,081 new comparisons run the original Japanese machine routine 130 times.
+All original integer globals, flags, model, word count and all five percentage
+bit patterns match, including five >2^24 integer-rounding cases. The guest
+platform supplies explicit allocation/config/texture-space and vblank delivery
+services. The original njInitVertexBuffer, njBlank, njCalcTexture and floating
+instructions execute; no initializer/float body is hooked. Native functions
+are real providers. This checks scalar semantics, not console allocator/VRAM.
+82 state assertions preserve the same font allocation, handle and every byte
+through 24 normal/bypass reconfigurations; reject an active recording atomically;
+recover after a real callback destroys texture ownership during the wait.
+The preserved state report labels its total reconfiguration calls as 28; the
+script actually makes 27. This metadata count is corrected here; the verified
+82-assertion total and original report bytes are preserved.
+591 original Japanese save-layout/default/CRC assertions pass on the new build.
+7,714 startup/logo/EOR/exit assertions pass after six actual native SDK initializer
+calls: 570 real GPU frames/Presents, 175,104,000 independently compared pixels.
+New assertions this qualification: 10,468. Including retained initial integration:
+10,493. Actual startup backbuffer screenshot is private and shared in chat.
+
+Native adaptations and remaining scope
+Console P1/P2 aliases, TA bypass pointers and contiguous/banked command heaps are
+replaced by separately owned growable native queues. Native texture free/maximum
+block queries mean remaining host budget, not console fragmentation or an OS
+allocation guarantee. SDK pVertexBuffer is NULL for these noncontiguous queues;
+the original logical word count and share fields are retained. Existing native
+renderer/presenter already own framebuffer allocation. The generic hardware
+kmSetSystemConfiguration lifecycle and caller-supplied console command-buffer
+branch are not implemented/qualified here. Main/movie use no supplied buffer.
+Full system_boot_init, audio/card/VMU/text-style/cable startup services, gameplay,
+English and later platforms remain unfinished. No full game EXE is published.
+The matching Japanese baseline/GCC baseline and historical USA research remain
+separate, preserved evidence; they do not demonstrate native gameplay.
+
+Public artifacts and reproduction
+Four new support libraries contain one exact authored object each for their
+separate frame/presentation/higher-lifecycle roles. They are not a combined game
+or standalone executable. Original SDK/game objects, diagnostic DLLs, retail
+inputs/fonts/textures and screenshots remain private. Pinned upstream sources
+remain an external dependency with original notices and unresolved redistribution.
+All historical archive payloads remain byte-identical.
+
+Run locally with the existing prerequisite builds; output paths must be fresh:
+PYTHON -B outputs/sonic-adventure/jp_port_tools/verify_native_vertex_lifecycle_original.py --workspace WORKSPACE --upstream work/sonic-adventure/reshaped-sonic-adventure-review --build work/sonic-adventure/jp-native-vertex-lifecycle-v6 --binary work/sonic-adventure/jp-ninja-math-reference/1ST_READ.BIN --gpu work/sonic-adventure/jp-native-queue-allocation-v1/jp_native_window_input.dll --output work/sonic-adventure/jp-native-vertex-lifecycle-original-v1
+PYTHON -B outputs/sonic-adventure/jp_port_tools/verify_native_vertex_lifecycle_state.py --workspace WORKSPACE --build work/sonic-adventure/jp-native-vertex-lifecycle-v6 --gpu work/sonic-adventure/jp-native-queue-allocation-v1/jp_native_window_input.dll --output work/sonic-adventure/jp-native-vertex-lifecycle-state-v1
+PYTHON -B outputs/sonic-adventure/jp_port_tools/build_native_vertex_lifecycle_startup.py --workspace WORKSPACE --baseline work/sonic-adventure/jp-native-queue-allocation-v1 --lifecycle work/sonic-adventure/jp-native-vertex-lifecycle-v6 --original-proof work/sonic-adventure/jp-native-vertex-lifecycle-original-v1 --output work/sonic-adventure/jp-native-vertex-lifecycle-startup-build-v1
+PYTHON -B outputs/sonic-adventure/jp_port_tools/verify_native_boot_saves.py --workspace WORKSPACE --upstream work/sonic-adventure/reshaped-sonic-adventure-review --build work/sonic-adventure/jp-native-vertex-lifecycle-startup-build-v1 --binary work/sonic-adventure/jp-ninja-math-reference/1ST_READ.BIN --report work/sonic-adventure/jp-native-vertex-lifecycle-startup-build-v1/save-verification.json
+PYTHON -B outputs/sonic-adventure/jp_port_tools/verify_native_vertex_lifecycle_startup.py --workspace WORKSPACE --build work/sonic-adventure/jp-native-vertex-lifecycle-startup-build-v1 --inputs work/sonic-adventure/jp-native-pvm-inputs-v1 --asset-root work/sonic-adventure/jp-native-asset-fixtures-v1/資産 --save-proof work/sonic-adventure/jp-native-vertex-lifecycle-startup-build-v1/save-verification.json --output work/sonic-adventure/jp-native-vertex-lifecycle-startup-check-v1
+Use absolute local PYTHON/WORKSPACE paths. See JP_NATIVE_VERTEX_LIFECYCLE.txt for
+the initial build command; build reports preserve exact commands and hashes.
+Continue with Sol High or the selected Sol Extra High for parent integration.
+Luna Low is suitable for routine documentation.

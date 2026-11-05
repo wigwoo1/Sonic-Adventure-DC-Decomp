@@ -1,0 +1,39 @@
+Original Ninja texture-space query with native allocation provider
+Overall project estimate: about 10%; goal active; full gameplay unfinished.
+
+The actual original njCalcTexture body is extracted unchanged from pinned
+external sdk/ninja/njTexture.c and linked privately. A native kmGetFreeTextureMem
+provider reads the same real owner budget qualified in JP_NATIVE_TEXTURE_BUDGET.txt.
+This is the real query dependency at the end of njInitVertexBuffer. The latter
+and kmSetSystemConfiguration remain to be integrated; full startup is unfinished.
+
+Policy: the native texture owner uses independent host allocations under one
+budget. Both total remaining allowance and largest permitted single request
+therefore equal its available bytes. This does not promise an OS allocation
+will succeed, and does not emulate the console's bank/VQ fragmentation.
+Metadata, actual payloads and the standalone font are charged by that owner.
+Separate submitted-frame storage retains its own budget and lifetime contract.
+Values saturate at the SDK's 32-bit byte-count limit on a 64-bit host.
+Null output pointers are rejected without touching valid outputs. An invalid
+owner gives zero outputs and a failure status, keeping original njCalcTexture
+safe even though its original body ignores that status.
+
+Original flag behavior is retained: flag 0 returns live total, flag 2 returns
+the stored maximum, other flags return the largest permitted request. The
+provider does not refresh the cached maximum; original vertex initialization
+must do that at its original point. Shutdown clears live allowance, preserving
+the original cached value. Queries never free or reinitialize textures/fonts.
+
+307 checks passed against actual linked functions, including three host budget
+limits, repeated live-font identity/content checks, release, failure handling,
+original flag dispatch/cache behavior and 64-bit-to-32-bit saturation. Compile
+and link passed with warnings treated as errors. Other production objects and
+the previously published Japanese matching baseline remain unchanged.
+
+Reproduce with local prerequisites and a fresh output path:
+PYTHON -B outputs/sonic-adventure/jp_port_tools/verify_native_texture_space.py --workspace WORKSPACE --upstream work/sonic-adventure/reshaped-sonic-adventure-review --baseline work/sonic-adventure/jp-native-texture-budget-v1 --output work/sonic-adventure/jp-native-texture-space-v3
+Exact commands, source/function hashes and DLL hash are in verification.json.
+The generated SDK source/object and resulting game-containing DLL remain private;
+only authored tools/provider/documentation are eligible for the next reviewed
+publication. This dependency produces no new visible scene or screenshot.
+Use Sol High for configuration integration; Luna Low suits routine docs.

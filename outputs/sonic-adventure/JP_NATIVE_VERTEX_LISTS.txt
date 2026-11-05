@@ -1,0 +1,46 @@
+Actual host vertex-list configuration from Ninja requests
+Overall project estimate: about 10%; goal active; full native game unfinished.
+
+native/jp_native_vertex_lists.c replaces queue_allocation.obj, retaining its
+single actual pool/cursor/frame owner. jp_vertex_lists_configure accepts the
+five original signed word-count selectors and returns effective counts/model
+and actual byte minima only after all real allocations succeed.
+
+Original selector precedence is retained: negative opaque selects opaque
+bypass and replaces op with 100; otherwise negative translucent or punch
+selects translucent bypass, tp=100 and pt=0. Punch words merge into translucent.
+Effective negative sizes and zero/overflowing totals are explicitly rejected.
+Each actual host queue minimum rounds bytes upward to 32-byte boundaries.
+Host list order is mapped explicitly from the Ninja argument order.
+Opaque bypass remains a checked growable host list. No hardware TA aliases or
+unused contiguous console allocation are created. The 88-word console layout
+overhead is an input-overflow constraint, not an unused host allocation.
+Existing larger pools remain reusable. This does not emulate console banks,
+latency models, fractional Kamui list partitioning or frame-buffer allocation.
+
+The existing transactional allocator enforces empty/inactive recording,
+guard checks and simultaneous old/new memory budgets. Failures preserve all
+old queues and the caller's result structure. Clear sticky errors to retry.
+No second persistent configuration state or duplicate texture owner is added.
+
+950 actual linked checks passed: original main/movie request, both negative
+selectors, 100 varied positive requests, real aligned native allocations,
+continued opaque growth, invalid/overflowing inputs, allocation-budget failure,
+output atomicity and owner initialization. Compile/link were warning-free with
+warnings treated as errors. Other production objects remain byte-identical.
+The linked owner also retains the previously qualified actual texture-space
+provider and unchanged original njCalcTexture object.
+
+Reproduce (fresh output path; replace PYTHON/WORKSPACE with local paths):
+PYTHON -B outputs/sonic-adventure/jp_port_tools/verify_native_vertex_lists.py --workspace WORKSPACE --baseline work/sonic-adventure/jp-native-texture-space-v3 --output work/sonic-adventure/jp-native-vertex-lists-v1
+Exact commands, source/object hashes and private DLL hash are recorded in the
+output verification.json. SDK/game-containing DLLs remain private.
+
+Next: connect the original njInitVertexBuffer scalar/configuration lifecycle,
+real Ninja blank wait, globals and texture-space refresh. kmSetSystemConfiguration
+and full system_boot_init are not integrated or verified by this milestone.
+The qualified queue mapper is the real allocation dependency for that work.
+Keep frame/presentation dependencies acyclic and preserve live movie/font
+textures. Japanese matching baseline remains separate and preserved. English,
+native gameplay and later platforms remain unfinished. This produces no new
+visible scene; use Sol High for lifecycle integration, Luna Low for routine docs.

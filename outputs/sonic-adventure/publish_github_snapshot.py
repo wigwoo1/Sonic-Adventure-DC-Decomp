@@ -198,6 +198,18 @@ real QPC/Win32 waits and close handling. Four original frame globals are supplie
 (60/79 presentation imports). Adding the frame source exposes 22 more genuine
 dependencies; the expanded graph has 43 missing services. No trace providers are
 linked into production. Real game render/flip integration remains open.
+Latest qualified vertex initialization: JP_NATIVE_VERTEX_LIFECYCLE_QUALIFICATION.txt.
+Goal active; overall about 10%. The native SDK entry now performs the actual
+Ninja blank wait, configures real queues and refreshes the original texture
+query/cache. 130 original Japanese machine entries match scalar/percentage bits.
+10,468 new qualification assertions include font/failure recovery and 570 real
+startup GPU frames; 25 prior integration assertions remain preserved. Four
+separate authored support libraries are added; all 2,963 earlier payloads remain
+byte-identical. Generic Kamui hardware configuration, supplied console buffers,
+full parent startup, gameplay, English and later ports remain unfinished. No
+playable EXE. Original SDK/game bodies, retail assets and captures stay private.
+Earlier notes retain their historical scope.
+
 Latest real native vertex-list allocation: JP_NATIVE_QUEUE_ALLOCATION.txt.
 Goal active; overall about 10%. Five existing renderer queues can be allocated
 together, preserving their previous buffers and submitted frames on failure.
@@ -473,6 +485,7 @@ Texture Off must disable sampling and use vertex/material colours.
 - [Current goal](outputs/sonic-adventure/JP_BASED_PORT_GOAL.txt)
 - [Integration order and limits](outputs/sonic-adventure/JP_NATIVE_PORT_PLAN.txt)
 - [Verified GCC baseline and native/localization evidence](outputs/sonic-adventure/JP_GCC_BASELINE.txt)
+- [Qualified native vertex initialization](outputs/sonic-adventure/JP_NATIVE_VERTEX_LIFECYCLE_QUALIFICATION.txt)
 - [Real native vertex-list allocation](outputs/sonic-adventure/JP_NATIVE_QUEUE_ALLOCATION.txt)
 - [Retired vblank handle reuse](outputs/sonic-adventure/JP_NATIVE_VBLANK_REARM.txt)
 - [Native logical vblank chains](outputs/sonic-adventure/JP_NATIVE_VBLANK_CHAIN.txt)
