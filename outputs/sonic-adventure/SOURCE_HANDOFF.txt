@@ -1,3 +1,14 @@
+Latest recorder/input update: JP_NATIVE_RECORDER_INPUT.txt. Genuine original
+recording_update and complete pad_scan now link with owned native recording
+storage, actual atomic file saves, playback and the original QUIT-state effect.
+168,353 fresh checks pass, including 931 original machine-code calls and 389
+complete pad scans. Startup/task rendering remains verified. Frame-wait input
+polling is still diagnostic; the owned-window HWND, exit lifecycle and full
+logo_step remain next. Two authored recording support artifacts are added;
+game-containing DLLs stay private. Earlier notes retain historical scope.
+Japanese source baselines verified; overall about 10%; native gameplay, English
+integration and later platforms unfinished. Goal active.
+
 Latest input update: JP_NATIVE_INPUT.txt. Real Windows keyboard/XInput
 sampling and the original Japanese analog/button/quit helpers are qualified.
 163,594 checks pass, including 1,104 original helper calls and retained native

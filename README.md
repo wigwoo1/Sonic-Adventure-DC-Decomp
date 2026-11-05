@@ -104,6 +104,15 @@ real QPC/Win32 waits and close handling. Four original frame globals are supplie
 (60/79 presentation imports). Adding the frame source exposes 22 more genuine
 dependencies; the expanded graph has 43 missing services. No trace providers are
 linked into production. Real game render/flip integration remains open.
+The genuine original recorder and complete pad_scan now link with bounded
+native storage, actual atomic recording saves/playback and the original QUIT
+state effect. 168,353 fresh checks pass, including 931 original machine-code
+calls and 389 complete pad scans. Eight startup/task GPU images and Presents
+remain verified. Frame-wait input polling is still diagnostic; owned-window
+HWND integration, exit lifecycle and the full logo loop remain next. Two authored
+recording support artifacts are added; game-containing DLLs stay private.
+Earlier snapshot notes retain their historical verification scope.
+
 A real Windows keyboard/XInput provider and original Japanese analog, button
 repeat and quit helpers now pass 163,594 checks, including 1,104 complete original
 helper calls and preserved startup/task rendering. The full pad source compiles
@@ -199,6 +208,7 @@ Texture Off must disable sampling and use vertex/material colours.
 - [Current goal](outputs/sonic-adventure/JP_BASED_PORT_GOAL.txt)
 - [Integration order and limits](outputs/sonic-adventure/JP_NATIVE_PORT_PLAN.txt)
 - [Verified GCC baseline and native/localization evidence](outputs/sonic-adventure/JP_GCC_BASELINE.txt)
+- [Genuine recorder, native storage and complete pad scan](outputs/sonic-adventure/JP_NATIVE_RECORDER_INPUT.txt)
 - [Windows input, original pad helpers and remaining recorder dependency](outputs/sonic-adventure/JP_NATIVE_INPUT.txt)
 - [Genuine native task execution, recording and shared clock](outputs/sonic-adventure/JP_NATIVE_TASK_PRESENTATION.txt)
 - [Shared native frame counters and original rendering/pacing behavior](outputs/sonic-adventure/JP_NATIVE_SHARED_FRAME_STATE.txt)

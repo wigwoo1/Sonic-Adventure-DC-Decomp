@@ -1,0 +1,107 @@
+Sonic Adventure Japanese native recorder and complete input scan
+
+Overall project estimate: about 10% of weighted milestones, rounded; not code
+coverage. Japanese matching and GCC source baselines are verified. Native PC
+gameplay, English integration and later platforms remain unfinished. Goal active.
+There is no playable native game executable.
+
+Verified change
+
+The complete original recording_update and pad_scan now link into the private
+native frame runtime. They use the existing input, RZ math, camera, heap, task,
+clock and renderer owners. No dummy recorder or forced unresolved link is used.
+The old helper-only build, all prior source/proofs and retail inputs are retained.
+
+The authored recording boundary replaces fixed Dreamcast addresses with one
+typed native sample array. The original 12-byte little-endian sample layout is
+asserted at compile time. Recording retains its inclusive limit, six filenames,
+sentinel and historical double cursor increment. Playback supports the original
+inclusive 0x180000-byte limit plus its last 12-byte sample, but can read only the
+bytes actually loaded. Malformed/truncated/no-sentinel recordings are rejected.
+Whole samples after an aligned sentinel are preserved; the original recorder
+still ends on the first sentinel. Invalid cursors stop native playback, report a
+sticky error and request QUIT rather than reading unrelated process memory.
+
+Native saves write and flush a temporary file in a configured existing Unicode
+directory, then replace the selected recording atomically. Failure preserves an
+existing file and removes the temporary. Only the original recorder's six export
+names are accepted. This is a recorder-specific replacement, not an implementation
+of every debug host_save_file caller. The original ignores the save return, so
+the host must inspect jp_recording_status. An outstanding error prevents further
+buffer operations until explicitly cleared. Debug output uses OutputDebugStringW
+and maps the cursor back to its original guest address; no 64-bit pointer truncation.
+
+Original get_character and set_character_number bodies use one character_current
+field. The original stage_end body is compiled as a local constant-QUIT inline
+specialization for the recorder's sole call argument. Its real stage_end_kind=6
+effect is retained and compared against original execution. No clear-event stub
+exists: that unneeded branch is removed by constant propagation, confirmed in
+LLVM output. The rest of the stage engine is not integrated. Later stage work
+must adopt this same state owner rather than introduce another end/character field.
+set_character_number is the original number-only setter; the full character
+resource/lives/chao transition set_character is still unported.
+
+Fresh verification
+
+142,168 storage/file checks: every original record/play cursor slot, owned
+allocation limits, loaded bounds, malformed data, all six actual saved files,
+maximum-sized save, disk playback, replacement, sharing-violation preservation,
+Unicode paths, thread ownership and debug cursor mapping.
+
+17,794 Japanese machine-code comparisons/checks across 931 original calls,
+including 389 complete pad_scan calls. Tests cover record/stop/DONE, all eight
+character branches, maximum recording, playback button edges, physical Start
+preservation, original QUIT storage, port compaction, player enable masks,
+all eight game pad records, analog/repeat arrays, recording order and playback
+through the complete scan. Actual native files are compared to the original
+save request bytes. The original recorder, get_character, stage_end(QUIT),
+pad_scan and analog dependencies execute; only three platform boundaries are
+hooked in the original CPU reference: peripheral lookup, dev-host file save
+and debug print. Native safety repairs are checked separately from unsafe
+original behavior. Controlled input is not proof of physical button events.
+
+8,266 preserved startup checks and 125 task/presentation integration checks
+pass on the relinked runtime: eight real GPU images, 2,457,600 compared pixels
+and eight successful Presents. Total fresh checks: 168,353.
+
+Remaining integration
+
+The presenter's frame-wait peripheral service is still a diagnostic trace.
+It must call the real input owner, using a validated HWND supplied by the actual
+window owner. Do not cast an opaque jp_window pointer to HWND. Native exit
+lifecycle and the full original logo_step/boot path remain unverified. Full
+split-frame control, scene/event handling, audio and gameplay remain open.
+
+Use either the standalone authored recording DLL or the integrated frame DLL,
+never both as independent recording owners in the same game process. The same
+restriction applies to standalone versus integrated input providers.
+
+Reproduction (PowerShell from the workspace; use fresh output directories)
+
+$py = 'C:\Users\wigwo\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe'
+$cc = 'C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\VC\Tools\Llvm\x64\bin\clang.exe'
+$up = 'work/sonic-adventure/reshaped-sonic-adventure-review'
+& $py -B outputs/sonic-adventure/jp_port_tools/build_native_recording_storage.py --workspace . --upstream $up --compiler $cc --output work/sonic-adventure/my-recording-storage
+& $py -B outputs/sonic-adventure/jp_port_tools/verify_native_recording_storage.py --workspace . --build work/sonic-adventure/my-recording-storage --output work/sonic-adventure/my-recording-storage-check
+& $py -B outputs/sonic-adventure/jp_port_tools/build_native_recorder_input.py --workspace . --upstream $up --baseline work/sonic-adventure/jp-native-pad-helpers-v5 --storage work/sonic-adventure/my-recording-storage --compiler $cc --output work/sonic-adventure/my-recorder-input
+& $py -B outputs/sonic-adventure/jp_port_tools/verify_native_recorder_input.py --workspace . --upstream $up --build work/sonic-adventure/my-recorder-input --binary work/sonic-adventure/jp-ninja-math-reference/1ST_READ.BIN --numeric-dll work/sonic-adventure/build/sh4_vector_numeric.dll --output work/sonic-adventure/my-recorder-input-check
+
+Pinned upstream: reshaped/sonic-adventure at
+25a3d3154dbe657325e97dbe8c5291086f6af5c0. Original Japanese binary and prior
+qualified private builds are required for integrated/original-code checks.
+Read JP_NATIVE_INPUT.txt for their prerequisite build workflow. Public evidence
+is in analysis/jp_native_recorder_*.json. The standalone storage test uses only
+synthetic input and actual Windows files; it does not require retail data.
+
+Publication
+
+The new authored recording DLL/import library are incomplete research support
+artifacts, not a playable port. Original-game-containing diagnostic DLLs,
+generated source/metadata, disc files and assets remain private. Upstream game
+source remains a pinned external dependency; no redistribution license is
+invented. Historical archives/source/proofs are preserved, and release archives
+remain bound to their exact source manifest and checksum file.
+
+Next work: real frame-wait peripheral polling, borrowed owned-window HWND,
+native exit lifecycle and execution of the complete original logo_step.
+Recommended model: Sol High for this platform integration.
