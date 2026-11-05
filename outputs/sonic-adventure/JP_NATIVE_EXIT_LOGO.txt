@@ -1,0 +1,93 @@
+Native system exit and complete original Japanese logo loop
+
+Overall estimate: about 10% of weighted milestones, rounded; not code coverage.
+Japanese matching/GCC source baselines remain verified. Native gameplay,
+English integration, enhancements and later platforms remain unfinished.
+There is no playable native game or standalone launcher in this release.
+Development is paused at the user's request. The daily publisher reviewed
+already completed results; it did not resume development or run new tests.
+
+What is qualified
+
+The unchanged original logo_step now links with actual native sbExitSystem and
+syBtExit replacements. The complete original logo_start, drawing, input scan,
+task stepping, fade schedule, texture release and movie/advertisement return
+paths execute with the existing native owners. Game source remains pinned to
+reshaped/sonic-adventure at 25a3d3154dbe657325e97dbe8c5291086f6af5c0.
+It is an external dependency and is not copied into the public source tree.
+
+The native exit service accepts shutdown authority for initialized owners on
+their creating game thread. It drains captured presentation work before closing
+input, recording and vsync services, destroying real tasks, releasing asset
+views, resetting queues, retiring frame/texture/render storage, stopping the
+clock and closing the actual window/device. The fourteen resource flags describe
+owners initialized by the caller; this service is not a complete game bootstrap.
+Unselected owners remain caller-owned. Supplied opaque handles must be valid.
+
+Cleanup preserves a failing/remaining owner for explicit recovery and does not
+close completed owners twice. Wrong-thread and reentrant calls are rejected.
+A bound exit is terminal; restarting the whole game inside the same process is
+not qualified. The Dreamcast boot-menu exit maps to a non-returning Windows
+process exit: zero only after successful cleanup, otherwise a nonzero code.
+No empty hardware-finish stubs are introduced to satisfy the logo link.
+
+Existing verification reviewed for publication
+
+The saved, source-bound report passes 3,601 checks in eight child-process cases.
+Three complete 191-call original logo runs cover demo_next 0, 6 and 1. Each
+draws/presents 190 frames: 570 actual GPU images and Presents in total, with
+175,104,000 pixels compared. Every frame matches the independent supplied-JP
+texture/fade oracle exactly on the tested device. This is not a comparison with
+captured Dreamcast framebuffer pixels or a gameplay performance qualification.
+
+Additional cases exercise actual cleanup with an owned GPU frame/job and a
+retained decoded asset view, the original controller-combination quit path,
+quit with outstanding rendering ownership, partial-bootstrap failure/recovery,
+foreign-thread/reentrant rejection and unbound exit. Seven child processes exit
+with code 0; the deliberately unbound case exits with code 66. Real task
+destructors execute, known native allocations retire, the heap arena resets,
+the HWND is destroyed, and repeat cleanup does not destroy resources again.
+The native imported lifecycle signatures also passed 24 compile-time checks.
+
+The original logo function body is unchanged. Only the recorder header's
+demo_next declaration receives a DLL import annotation so every module uses the
+existing frame owner. No input/clock/camera/task/heap/renderer owner is duplicated.
+Tests supply controlled input samples through the real provider. Physical
+focused keyboard/controller events are not verified by these cases.
+
+Limits
+
+The full boot_init, main game loop and split-frame controller are not executed
+by this qualification. Audio/loader/overlay diagnostic traces remain. Movie
+and advertisement return values are checked, but playback and menu transitions
+are not implemented here. Source-baseline completeness does not prove native
+gameplay, English localization, 60/120/240 FPS, 8K gameplay or later ports.
+The build report retains its compile-time behavior-unverified fields; consult
+the separate runtime verification report for the completed execution evidence.
+
+Reproduction (PowerShell from the workspace, fresh output directories)
+
+$py = 'C:\Users\wigwo\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe'
+$cc = 'C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\VC\Tools\Llvm\x64\bin\clang.exe'
+& $py -B outputs/sonic-adventure/jp_port_tools/build_native_exit_logo.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --baseline work/sonic-adventure/jp-native-window-input-v3 --startup work/sonic-adventure/jp-native-window-input-startup-v1 --compiler $cc --output work/sonic-adventure/my-exit-logo
+& $py -B outputs/sonic-adventure/jp_port_tools/verify_native_exit_logo.py --workspace . --build work/sonic-adventure/my-exit-logo --inputs work/sonic-adventure/jp-native-pvm-inputs-v1 --asset-root 'work/sonic-adventure/jp-native-asset-fixtures-v1/資産' --output work/sonic-adventure/my-exit-logo-check
+
+Prior qualified private builds and locally supplied Japanese inputs are required.
+See JP_NATIVE_WINDOW_INPUT.txt and JP_NATIVE_RECORDER_INPUT.txt for prerequisites.
+The verifier deliberately exits its child processes, not Codex or its parent.
+Read analysis/jp_native_exit_logo_build.json, verification.json and package.json
+(all filenames have the jp_native_exit_logo_ prefix) for exact hashes and scope.
+
+Publication
+
+Only the authored native-exit DLL/import library are added to the historical
+research archive. They require the privately built native runtime dependencies;
+they are incomplete support components, not a playable port. The original-game
+logo/frame/presenter DLLs, generated game source/metadata, retail inputs/assets,
+toolchains, caches and credentials remain excluded. Old source/proof files and
+all historical artifacts remain preserved. No new redistribution license is
+assigned to upstream game code. Source manifests and release checksums bind the
+published snapshot to its precise artifacts.
+
+Recommended model upon an explicit resume: Sol High for broader boot/frame and
+scene integration. The daily publication does not resume the paused goal.

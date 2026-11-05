@@ -1,3 +1,13 @@
+Latest exit/logo publication: JP_NATIVE_EXIT_LOGO.txt. Existing source-bound
+results were reviewed by the daily publisher while development remains paused.
+The complete original logo loop and real native system exit pass 3,601 checks:
+three full 191-call runs, 570 GPU images/Presents and actual child-process exit
+paths. No new development builds/tests were run for this daily review. Two
+authored exit support artifacts are added; game-containing DLLs stay private.
+Full boot/main-loop/gameplay, English and later platforms remain unfinished.
+Japanese source baselines verified; overall about 10%. Earlier notes retain
+their historical scope. Development remains paused at the user's request.
+
 Latest window/input update: JP_NATIVE_WINDOW_INPUT.txt. The renderer exports
 a validated borrowed HWND; original frame waits now poll the actual shared
 input provider and return on input failures. 9,564 fresh checks pass, including
