@@ -1,3 +1,14 @@
+Latest visible GPU fog update: JP_NATIVE_GPU_FOG.txt. Goal active. Actual
+D3D11 table/vertex/Mode-2 fog uses captured frame registers and unscaled depth.
+3,852 new checks compare 319 fog images; renderer/window/job and boot/logo/exit
+regressions pass, with 730,491 fresh assertions including pixel comparisons.
+Texture Off still has zero sampled texture/sampler bindings. The actual shared
+frame/game owner is unchanged. All 2,953 earlier public payloads are retained
+plus one authored GPU support library (2,954 total). Complete game DLLs/retail
+assets/manual/screenshots stay private. Native floating policy; exact console
+precision/timing and full gameplay remain unverified. Overall about 10%. Earlier
+notes preserve historical scope.
+
 Latest boot-fog update: JP_NATIVE_BOOT_FOG.txt. Goal active. Seven real SDK
 fog routines now use the existing native context/video-register owner. Two
 diagnostic-only fog setters are replaced by actual setters with passive events.

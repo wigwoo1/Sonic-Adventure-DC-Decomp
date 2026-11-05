@@ -1,0 +1,154 @@
+Native GPU fog rendering
+
+Overall estimate: about 10% of the complete project, weighted milestones.
+Goal active. Japanese matching/GCC source baselines are verified. Full native
+gameplay, English, enhancements and later platforms remain unfinished. There
+is no playable executable. This update is an incomplete research component.
+
+What changed
+
+The authored D3D11 shader now consumes the actual submitted frame's captured
+fog registers. Table mode, per-vertex mode, no-fog mode and table Mode 2 have
+rendered pixel tests. The original unscaled reciprocal-depth value has its
+own vertex attribute; depth-buffer normalization does not change fog depth.
+Density decoding handles the signed exponent without overflowing intermediate
+float values. Each table word's two coefficient bytes supply interpolation.
+Per-vertex fog uses offset alpha when the offset flag is present; ordinary fog
+preserves alpha, while Mode 2 emits fog color and the lookup coefficient.
+
+The primary hardware reference is Sega's Dreamcast/Dev.Box System Architecture,
+section 3.4.8, printed pages 122-123. The complete pages and table diagram were
+read locally from the privately downloaded PDF, SHA256:
+4e610bd91cce908737d724f1cb181de65a9820171a7cdf33069143d4ccc39835.
+Reference mirror: https://github.com/luckyseoul/dreamcast-docs/blob/main/files/official/DreamcastDevBoxSystemArchitecture.pdf
+The PDF, extracted pages and page images are not published in this project.
+No emulator shader bodies are copied.
+
+Table data lives in a constant buffer, not a sampled texture. Texture Off has
+zero shader texture/sampler bindings and does not decode/upload/sample encoded
+textures. Vertex/material colors, offset colors and scene fog remain usable.
+Frame production still requires real owned resources; the setting does not
+permit unsafe/unowned addresses. An owned but undecodable texture payload
+renders with Off and is correctly rejected with textures On.
+
+The same shader/core serves synchronous readback, direct swapchain rendering
+and measured asynchronous jobs. Fog constants are uploaded from immutable
+captured state before a job returns. Later live-state changes or source-frame
+retirement cannot change that submitted result. Public API layouts remain
+unchanged. All compiled game/SDK/frame-owner bytes remain unchanged.
+
+Limits
+
+This is the project's native floating interpolation/RGBA8 policy. Shader
+arithmetic and conversion do not establish exact Dreamcast fixed-point fog
+precision, dithering, alpha-test edge ordering or hardware timing. Tested
+pixel differences from the independent native oracle are at most one RGBA8
+channel value, within the declared tolerance of two. Existing geometry limits,
+explicit flat-color choices and presorted translucency remain in force.
+Secondary accumulation buffers, full-system boot, real overlay/audio/card
+integration and complete gameplay still need work. Unbound APIs reject fog
+without captured state instead of inventing register values.
+
+The old CPU fog source and old renderer/test reports retain their historical
+scope/flags. The new GPU fog verification is the authoritative evidence for
+visible fog; older frozen regression reports may still say fog is unimplemented
+because those tests exercise only their original no-fog domains. The frame-view
+projection retains earlier CPU-owner fields; current GPU behavior is described
+by the new top-level build and GPU fog verification, not those inherited flags.
+
+Verification
+
+3,852 new fog checks compare 319 actual GPU images (171,712 pixels) with a
+separate arithmetic, screen-space CPU oracle. Every one of the 128 table cells
+is tested at its boundary and midpoint, with independently specified high/low
+coefficient bytes. Density extremes, zero and far/near clamps, perspective,
+flat/Gouraud colors, texturing/Off, offset color, fog-before-blending, Mode 2,
+immutable state and exact-budget/output-preservation boundaries are covered.
+Actual original SDK generation/setters feed the window tests. Direct native
+backbuffers match the oracle-checked image exactly; an actual completed GPU
+job still matches after its source frame is released. Three Presents succeed.
+Two PNGs are actual window backbuffers of synthetic rendering tests, not game
+scenes, generated mockups or proof of gameplay. They may be shared in chat.
+
+Fresh frozen regressions, using the actual new GPU DLL through a metadata-only
+fixture projection (no native function/body replacements):
+- Original GPU/material/depth/blend/Off suite: 491,158 checks, 62 images.
+- Extended layouts/formats/retention suite: 121,451 checks, 38 images.
+- Original stateful window suite: 103,700 checks.
+- Direct comparisons for those suites: 1,033 + 613 + 191 checks.
+- Actual GPU job lifecycle/timing suite: 4,205 checks.
+- Window/state failure boundaries: 42 checks.
+- Original save-default/reset/CRC regression: 591 checks, 29 original calls.
+- Boot/logo/exit regression: 3,655 checks, six actual boot_init calls,
+  570 actual GPU images/Presents and 175,104,000 compared pixels.
+Total fresh feature/regression assertions: 730,491, including per-pixel checks.
+These counts are bounded test coverage, not recovered routine counts.
+The 8K empty-target/readback/direct-window capability regression passes; this
+does not establish playable 8K gameplay or performance at that resolution.
+
+A separate repeated boot-capture case has 1,185 checks and 190 frames. Three
+fresh real logo screenshots remain private because they derive from retail
+assets. Their bytes match the earlier verified captures. Existing full-save,
+disk and CPU-fog qualifications are retained: their shared frame DLL is byte-
+for-byte unchanged. They are not counted as newly rerun full-state tests here.
+
+Reproduce locally
+
+Use Python 3, qualified Windows Clang/SDK and the pinned external game-source
+dependency chain through jp-native-boot-fog-v3. Retail Japanese binary/logo
+fixtures are required only for game-dependent regressions/captures. Choose
+fresh work/ output folders. Set PY and CLANG to your executable paths.
+
+& $PY -B outputs/sonic-adventure/jp_port_tools/build_native_gpu_fog.py --workspace . --baseline work/sonic-adventure/jp-native-boot-fog-v3 --compiler $CLANG --output work/sonic-adventure/jp-native-gpu-fog-v1
+& $PY -B outputs/sonic-adventure/jp_port_tools/verify_native_gpu_fog.py --workspace . --build work/sonic-adventure/jp-native-gpu-fog-v1 --output work/sonic-adventure/jp-native-gpu-fog-check-v4
+
+For frozen GPU suites, create a fresh metadata-only view selecting the actual
+GPU DLL instead of the game/logo DLL in the top-level report. In Python:
+
+import json, hashlib
+from pathlib import Path
+build = Path('work/sonic-adventure/jp-native-gpu-fog-v1').resolve()
+report = build / 'build_verification.json'
+b = json.loads(report.read_bytes())
+view = build / 'gpu_view'
+view.mkdir()
+x = dict(b, DLL=b['GPU_DLL'], DLL_sha256=b['GPU_DLL_sha256'], fixture_projection_only=True, native_functions_replaced=False, parent_build_report_sha256=hashlib.sha256(report.read_bytes()).hexdigest())
+(view / 'build_verification.json').write_text(json.dumps(x, indent=2)+'\n')
+
+Run the primary suite before the extended suite, in the same regression output
+folder. The existing direct wrapper initializes the actual video owner needed
+by newer frame capture; the pre-stateful raw verifier alone does not do so.
+
+& $PY -B outputs/sonic-adventure/jp_port_tools/verify_native_direct_window.py --workspace . --build work/sonic-adventure/jp-native-gpu-fog-v1/gpu_view --output work/sonic-adventure/jp-native-gpu-fog-render-regressions-v1 --suite gpu
+& $PY -B outputs/sonic-adventure/jp_port_tools/verify_native_direct_window.py --workspace . --build work/sonic-adventure/jp-native-gpu-fog-v1/gpu_view --output work/sonic-adventure/jp-native-gpu-fog-render-regressions-v1 --suite gpu_extended
+& $PY -B outputs/sonic-adventure/jp_port_tools/verify_native_direct_window.py --workspace . --build work/sonic-adventure/jp-native-gpu-fog-v1/gpu_view --output work/sonic-adventure/jp-native-gpu-fog-stateful-regressions-v1 --suite stateful
+& $PY -B outputs/sonic-adventure/jp_port_tools/verify_native_gpu_jobs.py --workspace . --build work/sonic-adventure/jp-native-gpu-fog-v1/gpu_view --report work/sonic-adventure/jp-native-gpu-fog-v1/gpu-job-regression.json
+& $PY -B outputs/sonic-adventure/jp_port_tools/verify_native_video_window_failures.py --workspace . --build work/sonic-adventure/jp-native-gpu-fog-v1/gpu_view --report work/sonic-adventure/jp-native-gpu-fog-v1/window-failure-regression.json
+
+Run the prior boot guide's save-default and boot-entry commands with the new
+GPU-fog build, new report paths and a fresh boot-check folder. The capture tool
+then takes that build, its save proof and the new pixel_difference.dll. Public
+analysis evidence contains the exact paths, hashes and commands used here.
+
+& $PY -B outputs/sonic-adventure/jp_port_tools/package_native_gpu_fog.py --workspace . --build work/sonic-adventure/jp-native-gpu-fog-v1 --verification work/sonic-adventure/jp-native-gpu-fog-check-v4 --regressions work/sonic-adventure/jp-native-gpu-fog-render-regressions-v1 --compiler $CLANG --output work/sonic-adventure/jp-native-gpu-fog-support-v2
+
+Publication and next dependency
+
+jp_native_gpu_fog_support.lib contains exactly one qualified authored GPU
+object. It is verified member-for-member and contains no external game/SDK
+bodies or retail assets. It requires the actual frame/register owner and the
+listed authored packet/texel/background support and Windows system libraries.
+Use this object instead of another GPU implementation of the same APIs when
+linking; it is not a standalone game. Complete game-containing DLLs and the
+private qualification runtime remain outside the public archive.
+
+All 2,953 earlier public payloads are preserved; this support library adds one,
+for 2,954 archived research artifacts. The archive is tied to the exact new
+public source manifest with checksums. Original source/proof hashes are kept.
+
+Next: continue display_reset_full's real dependencies, beginning with the
+assembly perspective helper and related display-state initialization. Fog
+rendering is no longer the blanket state rejection it was. Full system boot,
+main-loop, menu/card, audio and stage integration remain separate work.
+Sol High remains appropriate for that integration; Luna Low is suitable for
+routine documentation/publication checks after qualification.
