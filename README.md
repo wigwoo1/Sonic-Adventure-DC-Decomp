@@ -1,3 +1,12 @@
+Latest filesystem milestone: the original native GDFS now reads the Japanese
+disc through real native I/O. Startup, directories, handles, reads, streams,
+completion/error callbacks, cancellation and shutdown pass 792 checks, including
+325 complete unhooked original handle calls. The full native parent/gameplay is
+unfinished. Overall estimate remains approximately 10%.
+
+- [Filesystem qualification](outputs/sonic-adventure/JP_NATIVE_GDFS.txt)
+- [Planned Chao VMU emulator and desktop widget](outputs/sonic-adventure/JP_VMU_EMULATOR_PLAN.txt)
+
 # Sonic Adventure Japanese-source native-port research
 
 Work in progress using the complete matching Japanese Dreamcast HDR-0001 v1.007

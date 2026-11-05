@@ -1,0 +1,112 @@
+Native original GDFS over the real Japanese disc-data reader
+Qualified 2026-11-05. Whole project approximately 10%; goal active.
+
+What now works
+The original SDK filesystem software now runs as compiled Windows code over an
+authored GD_DCF interface backed by actual read-only native file I/O. It starts
+the virtual drive, reads the primary volume and path table, loads directories,
+opens finite file handles, reads/seeks/streams real game files, reports errors,
+dispatches completion callbacks, cancels requests, reinitializes and shuts down.
+This is a private research library, not a playable game or a new game screen.
+
+Evidence
+Current build: work/sonic-adventure/jp-native-gdfs-v7/build_verification.json.
+Runtime proof: work/sonic-adventure/jp-native-gdfs-check-v3/verification.json.
+Parent import audit: work/sonic-adventure/jp-native-gdfs-sbinit-audit-v2/
+dependency_inventory.json. Public copies are in analysis/jp_native_gdfs_*.json.
+792 assertions passed, including 325 complete unhooked original SH-4 calls to
+seven handle routines. Those instruction comparisons cover construction,
+seek/tell/EOF and file metadata; they are not an instruction oracle for the
+complete drive, whole parent bootstrap or gameplay.
+
+The native original parser loads 248 root and 1,863 SONICADV entries. Complete
+ADV00.PRS and SET0001S.BIN reads match independent raw-track extraction, including
+sector padding, in CPU, DMA-mode and unaligned blocking paths. A full program
+range read matches the preserved 6,783,232-byte 1ST_READ.BIN SHA256:
+e038db9029bc0ea8ffdb8ec8fc2e0690d1c324f5f7179f3dc58f56574b1aeeaf.
+The original 1,185,760,800-byte track remains unchanged:
+4ac0e256cf91520f794d7f831c193847b16397da3bde5c890e04e5330499c76c.
+
+Real asynchronous tests use the existing priority-80 original vblank handler
+and shared QPC/wait owner. Streaming copies cross three-sector I/O chunks with
+32-byte and larger transfers. Twelve actual user callbacks were observed:
+read, transfer and error callbacks preserve full-width arguments and the main
+thread. Callback requeue, close/reopen, real cancellation, pending reinit and
+shutdown are tested. A private small ISO/raw fixture boots through original
+GDFS and then causes a real invalid-sector-header read error; both original
+global and per-handle error callbacks report it without publishing payload.
+No successful dummy GD firmware, DMA interrupt or overlay service is installed.
+
+Native adaptations
+- Derive work and callback arena sizes from native sizeof/offsetof. Native
+  handles are 120 bytes here; original serialized directory entries remain
+  44 bytes with a 16-byte table header. Guard-page allocations retain real
+  pointers above 4 GiB. Legacy console work buffers are not dereferenced.
+- Bind the original library interface directly to its compiled table. Omit
+  console overlay descriptors and the nonexistent physical DMA chain. Keep
+  original software state transitions and the real priority-80 vblank entry.
+- Replace truncated pointer casts, bound directory records and total directory
+  work, and validate the volume/path table before original initialization.
+- Replace firmware settling spins and IRQ-only waits with actual monotonic
+  progress deadlines and native I/O cancellation. Retain unfinished resources
+  when cleanup fails. The local disk did not exercise a slow OS-I/O timeout;
+  that branch is reviewed, not claimed as runtime observed.
+- Clamp large public sector requests at EOF before original signed additions.
+  Actual INT32_MAX read-count regressions pass without overrun or wrong data.
+- Dispatch transfer callbacks after actual copies and original state updates.
+  CPU reads do not invent DMA callbacks. Closing/recycling a handle suppresses
+  a stale pending transfer callback. Callback delivery does not reproduce the
+  Dreamcast's exact physical interrupt timing.
+- Stage directory loads so failed or undersized loads preserve prior tables.
+  Preserve original handle capacity, case-insensitive lookup and sector rules.
+
+Caller contract
+Configure the local track first; initialize the real shared clock/wait service
+before GDFS startup. The original library expects first FAD 45150. Supported
+tracks are raw Mode1/2352 and cooked/2048. Chunk and deadline values are bounded.
+The single creating thread owns handles and service calls. Do not independently
+request, replace or close the underlying native media while GDFS owns it.
+SDK read buffers need sector-rounded capacity; asynchronous DMA and streaming
+entry points retain 32-byte alignment rules. Keep destination storage alive
+until completion or successful stop/close/reinit/shutdown. Callbacks may query
+and queue nonblocking I/O. Recursive server calls do nothing; blocking I/O and
+lifecycle changes are rejected when they could reenter callback processing.
+
+Unsupported services remain explicit
+CD-DA, TOC and subcode/audio support are unfinished and do not return fake
+success. A mounted data image has no physical tray/seek timing. KallistiOS's
+published drive-state definitions informed the virtual-data-medium statuses;
+no KallistiOS implementation was copied:
+https://raw.githubusercontent.com/KallistiOS/KallistiOS/master/kernel/arch/dreamcast/include/dc/syscalls.h
+
+Reproduce (from the workspace, using Python and the local pinned upstream)
+python -B outputs/sonic-adventure/jp_port_tools/build_native_gdfs.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --baseline work/sonic-adventure/jp-native-peripheral-startup-v3 --media work/sonic-adventure/jp-native-gd-media-v1 --output work/sonic-adventure/NEW-GDFS-BUILD
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_gdfs.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --build work/sonic-adventure/NEW-GDFS-BUILD --binary work/sonic-adventure/jp-ninja-math-reference/1ST_READ.BIN --track "FULL LOCAL PATH TO track03.bin" --output work/sonic-adventure/NEW-GDFS-CHECK
+Use fresh output directories; preserved build and proof directories are never
+overwritten. See JP_NATIVE_GD_MEDIA.txt for the prerequisite transport build.
+The verifier reads local retail inputs but does not publish or modify them.
+
+What remains next
+The standalone GDFS provider supplies gdFsInit/gdFsChangeDir to the compile-only
+sbInitSystem import audit: 13 imports now have five unavailable providers rather
+than seven. This does not link or execute that unsafe console-address probe.
+The five remaining names are _builtin_set_imask, syHwInit, cache_ram_init,
+_BSG_END and syHwInit2. Build a real native parent coordinator using the actual
+heap/device/input/RTC/GDFS owners and native configuration; console pointers,
+interrupt masks and hardware writes must not enter PC execution.
+
+Integrate GDFS cleanup authority into the qualified native exit graph before
+parent execution. Close/drain GDFS before RTC, device quiescence or shared wait
+shutdown; all consumers must finish before the final SDK heap. Preserve partial
+failure rollback and one-owner/token rules. No new graphical build was run for
+this filesystem-only change. Previous qualified boot/renderer DLLs are unchanged.
+
+Distribution and full scope
+Authored adapters, builder, verifier and evidence are public-eligible. Combined
+GDFS DLLs/objects and generated upstream source stay private under the existing
+upstream redistribution policy. Retail tracks, programs and fixture data stay
+private. Preserve original source/proofs, hashes and failed build attempts.
+The complete PC game, English, FPS/display/HD settings, real Chao VMU emulator
+and desktop widget, Android, stereoscopic 3DS and demake stretch goals remain
+unfinished. Use Sol High/selected Sol Extra High for the next platform task;
+Luna Low is sufficient for routine documentation only.

@@ -1,0 +1,88 @@
+Latest qualified native VMU filesystem: JP_NATIVE_VMU_FILESYSTEM.txt.
+Goal active; overall about 10%. Complete original VMS software now uses
+real native fibers and disk-backed card I/O. 225 filesystem checks pass,
+with independent serialized FAT/payload checks and actual failed-write
+recovery. Native stack/FPU/nested-server tests also pass. Game card_init,
+whole-operation crash recovery and Chao emulator/widget remain unfinished.
+Earlier notes retain historical scope and their original proof files.
+
+Original backup containers and real native virtual-card block storage
+Whole-project estimate: approximately 10%; goal active. Storage foundations,
+not a complete card implementation or a working Chao VMU minigame emulator.
+
+Original container layer
+The complete pinned sdk/shinobi/vmsutil.c module now compiles privately with
+buMakeBackupFileImage, buCalcBackupFileSize, buAnalyzeBackupFileImage and buCalcCRC.
+It keeps original function text and enables the upstream GCC array-bound repair
+after parsing the SDK's hardware declarations in native-compatible header mode.
+Authored jp_native_backup_image.c adds byte-span/size/alias guards, prevents the
+original null-save-data copy bug, and parses via scratch storage so the caller's
+image can truly be read-only. Analysis retains original CRC-error semantics:
+the parsed header is filled on CRC mismatch; borrowed pointers refer to the
+original input, not the temporary copy. Respect the input's mutability when
+using those borrowed views. Illegal/truncated images preserve the output header.
+The wrapper bounds an image by the SDK's maximum supported 1MB card size; the
+initial physical-card owner below supports the game's standard 128KB target.
+
+335 assertions passed with 51 complete original-machine-code calls and no
+game/SDK function hooks. Every icon count and visual layout, all CRC byte values,
+padding, comment/name bytes, 64-bit pointer relocation, CRC mismatch, truncation,
+malformed sizes and overlap rejection are covered. An independent CRC/envelope
+oracle matches every serialized byte. Original memcpy/memset/CRC bodies run.
+Actual default Japanese save records occupy the original ten-block envelope:
+128-byte header, two 512-byte icons and 3968 bytes of data including the three
+records and their remaining padding. A real read-only OS mapping proves analysis
+never temporarily writes its CRC into the caller's input. Test icons are generated.
+
+Real native media owner
+jp_native_vmu_store.c creates/opens eight separate 128KB card images, two slots
+per controller port, VMU_A1.VMU through VMU_D2.VMU. Each holds 256 512-byte blocks.
+Creation is explicit, starts unformatted and never replaces an existing card.
+Open validates exact size; no missing-card or successful-write result is invented.
+The owner uses native Windows headers, not the Dreamcast SDK's partial CRT
+headers. Its compile recipe deliberately isolates those include paths.
+The existing SONICADV_JP.SAV format is separate and remains untouched.
+
+The owner retains an exclusive .lock sidecar while a card is attached. Cooperating
+game/widget processes must follow this protocol; closing releases authority for
+the next owner. A block write stages the complete image, flushes a fresh temporary,
+then atomically replaces the prior image before committing the in-memory view.
+Failed replacement leaves the previous disk/cache bytes intact and cleans its
+temporary. Pre-existing external image edits are detected before replacement;
+this does not prevent rename races from uncooperative third-party applications.
+This is atomic block persistence, not an atomic multi-block filesystem/Chao transfer.
+Whole-transfer checkpoints/backups remain required by JP_VMU_EMULATOR_PLAN.txt.
+One creating thread owns operations. Errors are sticky until clear_error;
+snapshot/close/shutdown remain available for inspection and cleanup. Future SDK
+bridges must map captured errors per drive and handle retries explicitly.
+
+71 actual filesystem assertions pass: all eight cards, block 0/17/255, all file
+bytes, caller canaries, invalid ranges, wrong-thread rejection, existing-card
+protection, native read locks forcing failed replacement, retry, process handoff,
+external edits, truncation, cleanup and preservation of a separate save-file
+sentinel. A real second process is denied the active card and reads persisted
+progress after handoff. Only fresh workspace test files were used, not user saves.
+Both modules compile/link with warnings as errors. Total assertions: 406.
+
+Scope and next work
+The block owner is not yet connected to original vmsio/vmsphys/vmscmd/vmsapi or
+card_init. Reuse the original filesystem/software command behavior, adapting
+Maple/SH-4/fiber boundaries and native-width pointers. Do not replace buInit,
+buStat or file operations with dummy success. The verified native record/save
+logic remains reusable; do not confuse its raw file with a VMU filesystem image.
+The built-in VMU execution core, Chao transfer/raising/return and desktop widget
+are still planned features. No new graphical scene was rendered by these tests.
+Japanese matching/GCC baselines and all earlier research/proofs are preserved.
+Full gameplay, English and later-platform work remain unfinished.
+
+Reproduce with fresh outputs (absolute local PYTHON/WORKSPACE paths):
+PYTHON -B outputs/sonic-adventure/jp_port_tools/build_native_backup_image.py --workspace WORKSPACE --upstream work/sonic-adventure/reshaped-sonic-adventure-review --baseline work/sonic-adventure/jp-native-game-text-startup-build-v1 --output work/sonic-adventure/jp-native-backup-image-v2
+PYTHON -B outputs/sonic-adventure/jp_port_tools/verify_native_backup_image.py --workspace WORKSPACE --upstream work/sonic-adventure/reshaped-sonic-adventure-review --build work/sonic-adventure/jp-native-backup-image-v2 --binary work/sonic-adventure/jp-ninja-math-reference/1ST_READ.BIN --game-build work/sonic-adventure/jp-native-game-text-startup-build-v1 --output work/sonic-adventure/jp-native-backup-image-check-v1
+PYTHON -B outputs/sonic-adventure/jp_port_tools/verify_native_vmu_store.py --workspace WORKSPACE --baseline work/sonic-adventure/jp-native-backup-image-v2 --output work/sonic-adventure/jp-native-vmu-store-v3
+Reports record exact commands, hashes and test directories. Pinned upstream:
+25a3d3154dbe657325e97dbe8c5291086f6af5c0. Original container source/objects and the
+SDK-containing DLL stay private. Authored storage source/tools/proofs can be
+reviewed for publication; the standalone host-only store binary contains no
+retail source/assets. Do not publish test VMU images or retail minigame/firmware.
+Sol High/selected Sol Extra High suits filesystem/device integration; Luna Low
+is suitable for routine documentation.

@@ -1,0 +1,146 @@
+SDK peripheral startup over the actual PC input and VMU attachment owners
+Whole-project estimate: approximately 10%; goal active.
+Status: VERIFIED INTEGRATION COMPONENT. Full system startup, audio and gameplay,
+English, enhancements, VMU Chao program/widget and later platforms remain
+unfinished. Matching Japanese source completion is a separate milestone.
+
+What changed
+The missing pdInitPeripheral SDK entry now initializes the existing native
+keyboard/XInput or explicitly selected sample provider. No second input singleton
+or duplicated controller backend was added. The native coordinator configures
+the actual borrowed HWND/flags/provider before calling the original signature.
+The old receive/send pointers describe Dreamcast Maple DMA transport. Native
+code never reads, writes or retains them; PC services are actually acquired.
+The SDK entry is void, so callers must check jp_input_bootstrap_status before
+using input or continuing startup. Missing configuration, bad window, unavailable
+service and duplicate initialization cannot become successful startup.
+
+All 24 SDK ports now have stable distinct native records: four controller roots
+and their expansion positions. SDK reset initializes fields and the original
+"(no device)" name using active or negative logic. Logic 0 and 1 are supported;
+other values explicitly fail. Actual polling preserves positive/negative edge
+semantics and separate physical history so game demo/recorder overlays cannot
+fabricate input transitions. The direct native initialize API retains its
+qualified pre-poll sentinels and positive-logic behavior. New SDK error lookup
+reports a real unavailable/failed owner, not a fabricated successful device.
+This is an authored native SDK replacement. Original pdmain initialization is
+an independent instruction oracle, not another compiled Kaede hardware backend.
+Raw keyboard devices, light guns, vibration and other Maple commands are not
+implemented by this controller/VMU bootstrap result.
+
+VMU attachment metadata
+An optional metadata provider projects actual storage/LCD/timer descriptions
+into the SDK expansion records. The virtual-card bridge reads the existing real
+VMU store and qualified LCD/Kaede metadata owner; it does not invent another
+card image or storage writer. VMU store/LCD initialization can follow input
+initialization. Before those owners are ready, no card is advertised. Each poll
+then observes actual insertions/removals at ports A1/A2 through D1/D2. Cards are
+advertised according to the existing LCD owner's enabled/attached endpoints.
+The bridge copies the 120-byte metadata record instead of aliasing distinct
+SDK structure types. Storage, LCD and timer are the supported expansion types.
+Controller samples and all metadata are validated/staged before committing
+records. A late metadata failure or unsupported type leaves the last committed
+records intact and exposes an error. Input shutdown leaves VMU/LCD owners alive
+for their separate cleanup. Borrowed metadata callbacks must remain valid until
+input shutdown; shutdown also cancels pending configuration, preventing stale
+callbacks/window handles from leaking into later initialization.
+
+Ownership
+One creating game thread owns pending configuration and live input. Foreign
+calls cannot steal pending callbacks or close the owner; recursive poll/shutdown
+from either controller or metadata readers fails. Original SDK exit closes the
+real input owner and clears borrowed configuration. General native exit already
+selects this same input owner. It continues to remove RTC before device/wait
+shutdown and free the SDK heap after consumer destruction. The new input work
+does not create another final-close authority for those services.
+
+Verification
+The existing standalone input verifier passes unchanged: 150352 checks, covering
+all 65536 XInput button masks, all signed-axis values, 1024 controlled four-pad
+updates, errors/thread/reentrancy guards, keyboard mapping and actual Windows
+keyboard/XInput service smoke tests. It compiles the same input object linked
+into the private full graph. This does not establish physical keypress/gamepad
+event coverage; no keys were injected and no attached gamepad was assumed.
+
+The new focused SDK bootstrap verifier passes 2566 checks. It compiles a real
+peer against unmodified original SDK declarations. Ninety-eight complete original
+machine calls execute without function hooks, including both original
+pdInitPeripheral software paths and all 24 record/error lookups. The original
+clear_peripheral body executes 48 times. Every initialized field and name matches
+with pointer relocation. The console DMA branch is deliberately not executed
+in that original oracle. Actual PC resource acquisition is tested separately.
+Controlled source updates exercise both button polarities, stable records,
+failure atomicity, callback ownership and shutdown cancellation.
+
+Eight real fresh 128KB VMU images are created/opened with actual exclusive locks.
+SDK metadata discovers each correct slot; removing B2 changes precisely B2.
+All image hashes remain identical after metadata polling. Input shutdown does
+not close the independent card/LCD owners. These are fresh test cards, not user
+saves. This verifies attachment discovery, not the unfinished Chao transfer/
+VMU CPU/minigame/widget feature. JP_VMU_EMULATOR_PLAN.txt remains authoritative.
+
+Original recorder/pad_scan regression passes unchanged: 17794 checks, 931
+original machine calls including 389 complete pad_scan calls, real native
+recording files and original analog math. Its explicit platform hooks are
+peripheral lookup, developer-host save and debug print. No original game
+dependencies are hooked. VMU LCD regression passes 1733 checks with 58 complete
+original calls and real frame-driven endpoints; save regression passes 591
+checks with 29 original calls. These are the exact existing scopes, not claims
+of full stage/gameplay or VMU program execution.
+
+verify_native_peripheral_startup.py selects actual pdInitPeripheral inside the
+qualified SDK-heap/device/RTC/original reset/boot/logo/final-exit composition.
+Six SDK input initializations are verified, using controlled samples through
+the real input owner and an HWND borrowed from the actual native device. The
+startup suite has no attached VMUs; actual eight-card discovery is qualified by
+the separate focused suite. It passes 7337 checks and 570 actual GPU images/
+Presents, with 175104000 independently compared pixels. The native capture still
+shows the same SEGA splash; this milestone does not add new gameplay visuals.
+This remains a Python test composition of real native factories and original
+game bodies, not complete compiled sbInitSystem/main system_boot_init.
+Total assertions across these six final suites: 180373. Earlier repeated
+development builds and tests are not included in this total.
+
+Builds and evidence
+Selected full graph: work/sonic-adventure/jp-native-peripheral-startup-v3.
+Selected authored input library: work/sonic-adventure/jp-native-peripheral-input-v4.
+build_native_peripheral_startup.py replaces only the authored input object and
+adds the authored VMU metadata bridge to the existing shared frame library.
+Every original game/SDK object is preserved byte-for-byte. Other qualified
+GPU/device/RTC/heap/exit/present/logo libraries are reused by exact hash.
+All selected builds and the real SDK C peer compile/link warning-free.
+
+The initial compile caught an export declaration ordering issue; declaring
+exports before the external SDK declarations fixed it without suppressing the
+warning. Later revisions qualify expansion old-state updates and explicit
+cancellation of borrowed pending configuration. Original sources, prior builds,
+proofs and authored source versions remain preserved. Test bookkeeping repairs
+fixed a callback/path variable collision and the wrapper hash emitted from the
+frozen leaf namespace. The final full suite reruns with exact wrapper provenance.
+The compile-only audit now explicitly supplies the game's src include root when
+the first SDK compilation recipe in a composed graph is SDK-only.
+
+Public scoped evidence: analysis/jp_native_peripheral_*.json.
+APIs: native/jp_native_input.h and native/jp_native_peripheral_cards.h.
+Reproduction scripts accept --help and fresh output paths beneath
+work/sonic-adventure; run Python with -B from the workspace root. Exact commands,
+source/artifact hashes and unchanged original object evidence are recorded.
+The standalone authored input library contains no original game/SDK bodies or
+retail assets. Combined frame/game SDK libraries and generated original C stay
+private. New source/evidence await the next reviewed daily GitHub snapshot.
+No upload or playable release is claimed by this local qualification.
+
+Next system bootstrap work
+The unexecuted original sbInitSystem probe still has thirteen imports; seven
+remain unavailable: _builtin_set_imask, syHwInit, cache_ram_init, _BSG_END,
+syHwInit2, gdFsInit and gdFsChangeDir. The real pdInitPeripheral now resolves
+from the single shared frame/input owner. This is one initializer's dependency
+frontier, not the whole game's remaining routine count. The probe retains
+unsafe console addresses/alignment and is never linked or executed.
+Next recover actual GDFS/filesystem initialization and the native parent
+coordinator, adapting console-only platform/cache/interrupt assumptions rather
+than adding successful hardware no-ops. Retain one timing owner, explicit
+startup error propagation, RTC-before-wait shutdown, input-before-window
+shutdown and consumers-before-final-SDK-heap-release order.
+Use selected Sol High/Extra High for this integration; Luna Low for routine
+documentation. Keep the full project goal active.

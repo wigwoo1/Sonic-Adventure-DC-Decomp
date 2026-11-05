@@ -11,13 +11,20 @@
 _Static_assert(sizeof(Uint32)==4 && sizeof(Sint16)==2,"original peripheral scalar widths");
 typedef DWORD (WINAPI *get_state_fn)(DWORD,XINPUT_STATE *);
 static struct {
-    PDS_PERIPHERAL pads[4],empty;
+    PDS_PERIPHERAL pads[4],expansions[24],empty;
     uint32_t previous_buttons[4];
     PDS_PERIPHERALINFO descriptions[4];
+    PDS_PERIPHERALINFO expansion_descriptions[24];
     struct jp_input_info info;
     jp_input_source source;void *context;HWND window;DWORD owner;
-    HMODULE module;get_state_fn get_state;uint32_t flags;int initialized,busy;
+    HMODULE module;get_state_fn get_state;uint32_t flags,logic;int initialized,busy;
+    jp_input_metadata_source metadata;void *metadata_context;
 } input;
+static struct {
+    void *window,*context,*metadata_context;uint32_t flags;DWORD owner;
+    jp_input_source source;jp_input_metadata_source metadata;int configured,status;
+} bootstrap;
+static const char no_device[]="(no device)";
 static int ready(void)
 {if(!input.initialized)return JP_INPUT_NOT_INITIALIZED;if(input.owner!=GetCurrentThreadId())return JP_INPUT_THREAD;return (int)input.info.status;}
 static int fail(int code){input.info.status=(uint32_t)code;return code;}
@@ -75,15 +82,22 @@ static int windows_source(void *context,struct jp_input_sample samples[4])
     }
     return 1;
 }
-int jp_input_initialize(void *window,uint32_t flags,jp_input_source source,void *context)
+static int validate(void *window,uint32_t flags,jp_input_source source,void *context)
 {
-    if(input.initialized)return input.owner==GetCurrentThreadId()?JP_INPUT_STATE:JP_INPUT_THREAD;
     if(flags&~3u || (!source && !flags) || (!source && context))return JP_INPUT_ARGUMENT;
     HWND hwnd=(HWND)window;
     if(!source && ((flags&JP_INPUT_KEYBOARD) || hwnd)){
         DWORD process=0;if(!hwnd||!IsWindow(hwnd))return JP_INPUT_ARGUMENT;
         GetWindowThreadProcessId(hwnd,&process);if(process!=GetCurrentProcessId())return JP_INPUT_ARGUMENT;
     }
+    return 0;
+}
+static int initialize(void *window,uint32_t flags,jp_input_source source,void *context,uint32_t logic,int sdk)
+{
+    if(input.initialized)return input.owner==GetCurrentThreadId()?JP_INPUT_STATE:JP_INPUT_THREAD;
+    if(bootstrap.owner && bootstrap.owner!=GetCurrentThreadId())return JP_INPUT_THREAD;
+    int code=validate(window,flags,source,context);if(code)return code;
+    HWND hwnd=(HWND)window;
     HMODULE module=NULL;get_state_fn get_state=NULL;
     if(!source && (flags&JP_INPUT_CONTROLLERS)){
         const wchar_t *names[]={L"xinput1_4.dll",L"xinput9_1_0.dll"};
@@ -94,19 +108,64 @@ int jp_input_initialize(void *window,uint32_t flags,jp_input_source source,void 
         if(!get_state)return JP_INPUT_UNAVAILABLE;
     }
     memset(&input,0,sizeof input);input.owner=GetCurrentThreadId();input.window=hwnd;input.flags=flags;input.module=module;input.get_state=get_state;
+    input.logic=logic;input.metadata=bootstrap.metadata;input.metadata_context=bootstrap.metadata_context;
     input.source=source?source:windows_source;input.context=context;input.initialized=1;input.info.source_kind=source?1:2;input.info.xinput_available=get_state!=NULL;input.info.record_bytes=sizeof(PDS_PERIPHERAL);
     for(unsigned i=0;i<4;i++){
         input.descriptions[i].type=PDD_DEVTYPE_CONTROLLER;input.descriptions[i].is_root=1;
         const char *name="Native Windows input";memcpy(input.descriptions[i].product_name,name,strlen(name)+1);
         input.pads[i].off=(Uint32)-1;input.pads[i].l=input.pads[i].r=0x8000;input.pads[i].x2=input.pads[i].y2=-32768;
     }
+    /* Original software reset semantics for all 24 SDK ports. Console Kaede
+     * bus startup is replaced by actual host acquisition above, not called as
+     * an emulated hardware success. Legacy native initialization retains its
+     * established pre-poll sentinels for compatibility. */
+    if(sdk)for(unsigned port=0;port<24;port++){
+        PDS_PERIPHERAL *p=port%6?&input.expansions[port]:&input.pads[port/6];
+        memset(p,0,sizeof *p);p->name=(char *)no_device;
+        if(logic){p->on=p->press=p->release=(Uint32)-1;}else p->off=(Uint32)-1;
+    }
     return JP_INPUT_OK;
+}
+int jp_input_initialize(void *window,uint32_t flags,jp_input_source source,void *context)
+{return initialize(window,flags,source,context,0,0);}
+static int configure_access(void)
+{
+    if(input.initialized)return input.owner==GetCurrentThreadId()?JP_INPUT_STATE:JP_INPUT_THREAD;
+    if(bootstrap.owner && bootstrap.owner!=GetCurrentThreadId())return JP_INPUT_THREAD;
+    return 0;
+}
+int jp_input_configure(void *window,uint32_t flags,jp_input_source source,void *context)
+{
+    int rc=configure_access();if(rc)return rc;
+    rc=validate(window,flags,source,context);bootstrap.status=rc;if(rc)return rc;
+    bootstrap.window=window;bootstrap.flags=flags;bootstrap.source=source;bootstrap.context=context;
+    bootstrap.configured=1;bootstrap.owner=GetCurrentThreadId();return 0;
+}
+int jp_input_configure_expansions(jp_input_metadata_source source,void *context)
+{
+    int rc=configure_access();if(rc)return rc;
+    if(!source&&context)return JP_INPUT_ARGUMENT;
+    bootstrap.metadata=source;bootstrap.metadata_context=context;bootstrap.owner=GetCurrentThreadId();return 0;
+}
+int jp_input_bootstrap_status(void)
+{return bootstrap.owner && bootstrap.owner!=GetCurrentThreadId()?JP_INPUT_THREAD:bootstrap.status;}
+void pdInitPeripheral(Sint32 logic,void *recvbuf,void *sendbuf)
+{
+    (void)recvbuf;(void)sendbuf;
+    int rc=configure_access();if(rc){if(rc!=JP_INPUT_THREAD)bootstrap.status=rc;return;}
+    if(!bootstrap.configured){bootstrap.status=JP_INPUT_STATE;return;}
+    if(logic!=0 && logic!=1){bootstrap.status=JP_INPUT_ARGUMENT;return;}
+    bootstrap.status=initialize(bootstrap.window,bootstrap.flags,bootstrap.source,bootstrap.context,(uint32_t)logic,1);
 }
 int jp_input_shutdown(void)
 {
-    if(!input.initialized)return JP_INPUT_OK;
+    if(!input.initialized){
+        if(bootstrap.owner && bootstrap.owner!=GetCurrentThreadId())return JP_INPUT_THREAD;
+        memset(&bootstrap,0,sizeof bootstrap);return JP_INPUT_OK;
+    }
     if(input.owner!=GetCurrentThreadId())return JP_INPUT_THREAD;if(input.busy)return JP_INPUT_REENTRANT;
-    if(input.module)FreeLibrary(input.module);memset(&input,0,sizeof input);return JP_INPUT_OK;
+    if(input.module)FreeLibrary(input.module);memset(&input,0,sizeof input);
+    memset(&bootstrap,0,sizeof bootstrap);return JP_INPUT_OK;
 }
 int jp_input_status(void){return ready();}
 void jp_input_clear_error(void){if(input.initialized && input.owner==GetCurrentThreadId() && !input.busy)input.info.status=JP_INPUT_OK;}
@@ -121,16 +180,35 @@ int jp_input_poll(void)
         struct jp_input_sample *s=&samples[i];
         if(s->connected>1 || (s->connected && ((s->buttons&~allowed)||s->x1< -128||s->x1>127||s->y1< -128||s->y1>127||s->x2< -128||s->x2>127||s->y2< -128||s->y2>127||s->left>255||s->right>255)))return fail(JP_INPUT_ARGUMENT);
     }
+    PDS_PERIPHERALINFO metadata[24]={{0}};
+    if(input.metadata){
+        input.busy=1;
+        for(unsigned port=0;port<24;port++)if(port%6){
+            int result=input.metadata(input.metadata_context,port,&metadata[port],sizeof metadata[port]);
+            if(result<0){input.busy=0;return fail(JP_INPUT_SOURCE);}
+            if(!result)memset(&metadata[port],0,sizeof metadata[port]);
+            else if(result!=1 || !metadata[port].type || (metadata[port].type&~(PDD_DEVTYPE_STORAGE|PDD_DEVTYPE_LCD|PDD_DEVTYPE_TIMER)) || port%6>2){input.busy=0;return fail(JP_INPUT_ARGUMENT);}
+            metadata[port].product_name[31]=0;
+        }
+        input.busy=0;
+    }
     uint32_t connected=0;
     for(unsigned i=0;i<4;i++){
         struct jp_input_sample *s=&samples[i];PDS_PERIPHERAL *out=&input.pads[i];uint32_t old=input.previous_buttons[i],on=s->connected?s->buttons:0;input.previous_buttons[i]=on;
-        out->old=old;out->on=on;out->off=~on;out->press=on&~old;out->release=old&~on;
+        out->old=input.logic?~old:old;out->on=input.logic?~on:on;out->off=~out->on;
+        out->press=input.logic?~(on&~old):on&~old;out->release=input.logic?~(old&~on):old&~on;
         out->support=s->connected?(PDD_DEV_CONTROLLER|PDD_DEV_SUPPORT_AX2|PDD_DEV_SUPPORT_AY2):0;out->id=s->connected?PDD_DEV_CONTROLLER:0;
         out->info=s->connected?&input.descriptions[i]:NULL;out->name=s->connected?input.descriptions[i].product_name:NULL;
         out->x1=s->connected?(Sint16)s->x1:0;out->y1=s->connected?(Sint16)s->y1:0;
         out->x2=s->connected?(Sint16)s->x2:-32768;out->y2=s->connected?(Sint16)s->y2:-32768;
         out->l=s->connected?(Uint16)s->left:0x8000;out->r=s->connected?(Uint16)s->right:0x8000;
         if(s->connected)connected|=1u<<i;
+    }
+    memcpy(input.expansion_descriptions,metadata,sizeof metadata);
+    for(unsigned port=0;port<24;port++)if(port%6){
+        PDS_PERIPHERAL *out=&input.expansions[port];PDS_PERIPHERALINFO *desc=&input.expansion_descriptions[port];
+        out->old=out->on;
+        out->info=desc->type?desc:NULL;out->name=desc->type?desc->product_name:(char *)no_device;
     }
     input.info.connected_mask=connected;input.info.polls++;return JP_INPUT_OK;
 }
@@ -141,10 +219,12 @@ const PDS_PERIPHERAL *pdGetPeripheral(Uint32 port)
     if(ready())return &input.empty;
     if(port==PDD_PORT_A0)return &input.pads[0];if(port==PDD_PORT_B0)return &input.pads[1];
     if(port==PDD_PORT_C0)return &input.pads[2];if(port==PDD_PORT_D0)return &input.pads[3];
-    if(port<24)return &input.empty;fail(JP_INPUT_ARGUMENT);return &input.empty;
+    if(port<24)return &input.expansions[port];fail(JP_INPUT_ARGUMENT);return &input.empty;
 }
 const NJS_PERIPHERAL *njGetPeripheral(Uint32 port){return pdGetPeripheral(port);}
 const PDS_PERIPHERALINFO *pdGetPeripheralInfo(Uint32 port){return pdGetPeripheral(port)->info;}
+Sint32 pdGetPeripheralError(Uint32 port)
+{if(ready())return (Sint32)PDD_ERR_GENERIC;if(port>=24){fail(JP_INPUT_ARGUMENT);return (Sint32)PDD_ERR_GENERIC;}return PDD_ERR_OK;}
 void pdExecPeripheralServer(void){(void)jp_input_poll();}
 void pdExitPeripheral(void){(void)jp_input_shutdown();}
 int jp_input_snapshot(struct jp_input_info *out)

@@ -1,0 +1,129 @@
+Latest native display/startup state: JP_NATIVE_DISPLAY_STARTUP.txt.
+Goal active; overall about 10%. Original cable decoding now reads an
+actual Windows display profile; three original main globals have one
+shared owner. 15 display/state checks and LCD/save/startup regressions
+pass, with 570 actual startup Presents. Only sbInitSystem and
+sound_system_init remain in the parent immediate export gap. Ninja
+global init compiles; four actual providers still need recovery.
+Full gameplay/audio, English, VMU program/widget and later ports remain
+unfinished. Earlier notes retain historical scope and original proofs.
+
+Original VMU LCD initialization, drawing and SDK writes on native endpoints
+Whole-project estimate: approximately 10%; goal active.
+Status: VERIFIED COMPONENT. The Japanese source baseline is complete; native
+gameplay, English localization, VMU minigame/widget and later ports remain open.
+
+Reused original code
+Five original initialization/state/probe functions from src/vmu/screen.c and
+the complete 15-function src/vmu/draw.c now compile into the shared frame owner.
+All those game function bodies remain unchanged. The original vmu state and
+four typed screens are retained; only their actual native pointer alignment
+changes (1600-byte host screen versus 1596-byte guest, 16-byte animation frame).
+The full SDK lcd.c/lcdvms.c C modules and pure kdDevGetFD/kdDevGetLCDInfo helpers
+also compile unchanged. The four SH-4 lcdasm packers have native C replacements.
+Original source/header/assembly hashes are checked against the pinned Git
+commit 25a3d3154dbe657325e97dbe8c5291086f6af5c0 and preserved after the build.
+
+Actual native device behavior
+Eight independently owned LCD endpoints follow enabled and actually attached
+cards in the qualified VMU store. The first-socket screens A1/B1/C1/D1 map to
+their proper Maple ports, while the SDK also supports second sockets A2..D2.
+Original LCD readiness and orientation code consumes real native-owned virtual
+device descriptions. No VMU is reported before the store/LCD owner is set up.
+The original game's vmu_init probes these endpoints rather than fake callbacks.
+
+A write copies all 192 input bytes into the endpoint's pending command. The
+source may disappear when the original game returns from vmu_write. A second
+write is busy until the original frame_vsync services that command and commits
+the actual LCD buffer. Removal clears displayed pixels and discards the pending
+packet before reattachment, so the tested removal sequence cannot show a prior
+card's image. Pending commands must be drained before LCD shutdown. Calls stay
+on the actual card owner's thread. LCD writes never modify VMU image files.
+
+The hardware boundary supplies only the Kaede device-description/LCD-write
+operations required here. Unsupported block commands fail. The original VMU
+function bits identify its type; optional timer operations are not advertised
+in its timer descriptor and have no implementation here. This is not a full
+Maple driver, physical-controller driver, VMU firmware or VMU CPU emulator.
+Future input/Maple work must extend this shared owner, not define duplicate
+kdGetDeviceInfo/kdSetBlockWrite implementations.
+
+Packing semantics preserved
+The original game's packer lights any nonzero pixel byte. The SDK's assembly
+blitters light only bit 3. Both rules are preserved. All four flip directions
+and the default flag path match complete original Japanese instructions plus
+an independent pixel/bit oracle. The game rotates its LCD image half a turn for
+the original flipped-connector direction; readiness and orientation follow the
+original SDK's actual descriptor interpretation and 16-entry orientation table.
+
+Qualification evidence
+1733 assertions pass, with 58 complete original-machine calls and no function
+hooks. Original vmu_init, all its clear/probe/SDK/Maple memory dependencies,
+16 connector combinations, four game screens, all blitter flip variants,
+clipped shifts and pixelation execute and compare against native results.
+The complete draw module is compiled; puzzle/tally/animation edge behavior is
+not exhaustively qualified merely by those focused comparisons.
+The reference seeds actual Maple description records in RAM; the original
+pointer/table lookup instructions execute. It does not simulate a physical
+Dreamcast boot or replace a game/SDK call with a host success callback.
+
+Native endpoint checks include eight queued images, real busy behavior, copied
+source lifetime, next-frame commit, pending shutdown rejection, removal/reopen,
+invalid read sizes, wrong-thread rejection and unchanged disk hashes for every
+fresh card. An actual original Chao picture from the hash-verified user binary
+is drawn with original game functions, packed/written by those functions and
+committed by frame_vsync. Every LCD bit matches its independent expected image.
+The generated .inc for this artwork is absent from the review checkout; the
+test therefore reads the matching binary's known local data, not a replacement.
+
+Private committed-buffer preview:
+work/sonic-adventure/jp-native-vmu-lcd-check-v2/original-chao-lcd-buffer.png
+It visualizes actual committed 48x32 LCD bits at 8x pixel scale. It is an LCD
+buffer readback, not a native-window screenshot or the running Chao VMU game.
+The original retail-derived picture and capture stay private.
+
+Rebuilt-owner regressions also pass: 225 original card lifecycle/frame/storage
+checks; 591 save/CRC checks against 29 original machine calls; 16 real GPU/text
+checks; and 7726 startup checks with 570 GPU images/Presents and 175104000
+compared pixels. Total component/regression assertions: 10291. The startup
+suite still exercises the scoped boot/reset/logo/exit chain, not full main.
+
+Remaining scope
+vmu_init now resolves in the actual native frame DLL. Six parent-startup symbols
+remain absent: cable_mode, dat_8c78b4d8, dat_8c78b4dc, sbInitSystem,
+sound_system_init and syCblCheckCable. This export frontier is not a count of
+all dependencies still required for complete gameplay. vmu_frame_update's
+whole game/player/Chao/puzzle state machine is not linked by this init slice.
+
+The original main initializes VMU screens before card_init. A genuine native
+startup coordinator must configure/open local card media and initialize the
+LCD owner before that probe, then retain the actual original initialization
+order. Setup does not silently create or format user cards. Drain/shut down
+LCD service before its store owner; complete parent lifecycle integration is
+still required. Close/reopen notifications that are not serviced between the
+two actions need stronger per-card generation/handoff tracking before widget
+support. Whole Chao/save transfers still require checkpoints and recovery.
+
+The built-in Chao VMU execution core, original garden export/raise/import and
+desktop widget remain required planned work in JP_VMU_EMULATOR_PLAN.txt. This
+display of a Chao picture does not execute that VMU program or raise a Chao.
+See JP_NATIVE_CARD_LIFECYCLE.txt and JP_NATIVE_VMU_FILESYSTEM.txt for preserved
+card/transaction scope and original SDK limitations.
+
+Reproduction and distribution
+build_native_vmu_lcd.py takes workspace, pinned upstream, the qualified card
+build and a fresh output directory. verify_native_vmu_lcd.py takes that build,
+the original local binary, GPU dependency and fresh test output. The startup
+projection workflow composes those owners with the preserved startup chain;
+the reports record exact commands, hashes, comparisons and capture provenance.
+Public authored code: native/jp_native_lcd.*, native/jp_native_vmu_state.h,
+jp_port_tools/build_native_vmu_lcd*.py and verify_native_vmu_lcd.py.
+Proof copies: analysis/jp_native_vmu_lcd_*.json. Original generated game/SDK
+source, combined DLLs, card images, input assets and captures stay private.
+Pending changes await the next reviewed daily GitHub snapshot.
+
+Next: native display/cable selection and real startup coordination around
+system_boot_init/sbInitSystem, reusing qualified window/GPU/input/asset/storage
+owners and host buffers. Do not invent successful audio/disc/hardware calls
+to make parent startup appear complete. Keep Sol High/selected Sol Extra High;
+Luna Low is suitable for routine documentation. Do not pause the goal.

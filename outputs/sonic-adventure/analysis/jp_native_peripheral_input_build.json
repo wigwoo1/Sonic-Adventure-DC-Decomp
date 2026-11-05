@@ -1,0 +1,77 @@
+{
+  "status": "authored_native_Windows_input_and_original_peripheral_ABI_compiled_behavior_unverified",
+  "commands": [
+    {
+      "command": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\18\\BuildTools\\VC\\Tools\\Llvm\\x64\\bin\\clang.exe",
+        "--target=x86_64-pc-windows-msvc",
+        "-std=c17",
+        "-O2",
+        "-ffp-contract=off",
+        "-ffreestanding",
+        "-fno-builtin",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-Wno-unknown-pragmas",
+        "-include",
+        "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\native\\jp_host_types.h",
+        "-IC:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\native",
+        "-IC:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\work\\sonic-adventure\\reshaped-sonic-adventure-review\\sdk\\include",
+        "-c",
+        "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\native\\jp_native_input.c",
+        "-o",
+        "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\work\\sonic-adventure\\jp-native-peripheral-input-v4\\input.obj"
+      ],
+      "exit_code": 0,
+      "diagnostic_bytes": 0,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\18\\BuildTools\\VC\\Tools\\Llvm\\x64\\bin\\clang.exe",
+        "--target=x86_64-pc-windows-msvc",
+        "-shared",
+        "-fuse-ld=lld",
+        "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\work\\sonic-adventure\\jp-native-peripheral-input-v4\\input.obj",
+        "-Wl,/export:njGetPeripheral",
+        "-Wl,/export:pdGetPeripheral",
+        "-Wl,/export:pdGetPeripheralInfo",
+        "-Wl,/export:pdExecPeripheralServer",
+        "-Wl,/export:pdExitPeripheral",
+        "-Wl,user32.lib",
+        "-Wl,kernel32.lib",
+        "-o",
+        "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\work\\sonic-adventure\\jp-native-peripheral-input-v4\\jp_native_input.dll"
+      ],
+      "exit_code": 0,
+      "diagnostic_bytes": 0,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "exit_code": 0,
+  "diagnostic_bytes": 0,
+  "DLL": "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\work\\sonic-adventure\\jp-native-peripheral-input-v4\\jp_native_input.dll",
+  "DLL_sha256": "e185da3dfe66c24c17a74e97c1d65e446291ef76a8d6be2826956062b80317ce",
+  "object_sha256": "1798fbb8f1cf51f199c82cb21708b16e8495f06edf0dcd5be1458645ae5aa067",
+  "compiler_sha256": "4b0a905d901d2dd9f0fd034c9c4b91ae9e1fd9ab29dc3a29b022b044e8b7ba44",
+  "authored_source_sha256": {
+    "outputs/sonic-adventure/native/jp_native_input.c": "cf3c52e972b2ec6eed2b75f792a8940936232bc0a8a212beead823dd55cc4cac",
+    "outputs/sonic-adventure/native/jp_native_input.h": "4fc718885788b877656b2927d6dd12f13e9e5f67f6cb0eb76e065093597ac88a",
+    "outputs/sonic-adventure/native/jp_host_types.h": "c46fa3f855a24c3bad1fe84d8810ede94618d7cd4560d86c300d3a403f8dbd2e",
+    "outputs/sonic-adventure/jp_port_tools/build_native_input_backend.py": "6d688d6218bbe441a0640644247424986ae2c7df58d03249675b4c81d21a6ccd"
+  },
+  "external_header_sha256": {
+    "sdk/include/ninja.h": "6de0da2d753fd2908112a2e5328e8e37902e7d9001efed88ef1c7e7733b4d5be",
+    "sdk/include/shinobi.h": "3496cd978f9b7b21305c87747c1b24353424217ca04899740688a2b7bc77f13b",
+    "sdk/include/sg_xpt.h": "7d2cc86a1f4cedb4cddb77beba5ed7888d386f91c72b5f7e6a42337e6cd30892",
+    "sdk/include/njtypes.h": "352284340c6c8a1a030cd58cd5afb4945d861a0d1a30e487892e963a9ca19799"
+  },
+  "original_game_or_SDK_bodies_linked": false,
+  "retail_assets_embedded": false,
+  "artifact_publishable": true,
+  "physical_controller_verified": false,
+  "original_pad_scan_linked": false,
+  "playable": false,
+  "overall_completion_percent": 10
+}

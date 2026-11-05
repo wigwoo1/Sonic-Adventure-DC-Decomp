@@ -1,3 +1,158 @@
+Latest qualified original native filesystem: JP_NATIVE_GDFS.txt.
+Goal active; overall approximately 10%. The original GDFS now uses actual native
+read-only I/O for startup, directories, handles, reads, streams, callbacks,
+cancellation, reinit and shutdown. 792 checks and 325 complete unhooked original
+handle calls pass; real file/program hashes match. Five parent imports remain
+unavailable, down from seven; the full native parent is not executed. Combined
+SDK/game libraries and retail inputs remain private. No new gameplay visuals.
+Earlier notes retain historical scope and preserved source/proof hashes.
+
+Latest native GD data transport/ISO directory: JP_NATIVE_GD_MEDIA.txt.
+Goal active; overall about 10%. Actual read-only overlapped track I/O now feeds
+nine unchanged original GDFS directory bodies. 8860 checks and2143 unhooked
+complete original machine calls pass. Native code reads all248 root/1863
+SONICADV entries and three complete game files. Recovered1ST_READ.BIN exactly
+matches the6783232-byte Japanese oracle; original1.18GB data track hash is
+unchanged. The source publisher now includes three reviewed authored.inc files.
+Full GD_DCF/GDFS init/handle/server and parent startup integration remain next;
+the previous qualified peripheral/RTC boot graph remains unchanged. No new
+gameplay visuals, full gameplay/audio or VMU program/widget are claimed.
+Earlier notes retain historical scope and preserved original proofs.
+
+Latest SDK peripheral/bootstrap: JP_NATIVE_PERIPHERAL_STARTUP.txt.
+Goal active; overall about 10%. Real pdInitPeripheral now configures the one
+PC input owner, matches original active/negative reset at all24 SDK ports,
+and discovers actual shared VMU card/LCD attachments. 150352 input, 2566
+bootstrap, 17794 recorder/pad, 1733 LCD, 591 save and 7337 full startup caller
+checks pass (180373 total). Eight fresh real card images preserve their hashes;
+six SDK input starts lead into570 actual GPU startup frames. The initializer's
+export frontier now has seven unavailable providers. Whole sbInitSystem/main
+bootstrap, audio, gameplay and VMU Chao program/widget remain unfinished.
+Earlier notes retain historical scope and preserved original proofs.
+
+Latest actual PC RTC/native shutdown: JP_NATIVE_RTC.txt.
+Goal active; overall about 10%. Original RTC calendar/server algorithms now
+read Windows civil time and feed the original card timestamp caller. Bounded
+polling repairs the original second-rollover hang; actual original-chain RTC
+callbacks are removed before device/wait shutdown. 2707 clock, 64 RTC-exit,
+79 heap-exit, 121 device-exit, 591 save, 7319 integrated startup and 7756 classic
+startup checks pass (18637 total). Clock/calendar qualification includes 390
+complete original machine calls; each startup path presents 570 real frames.
+The initializer's export frontier is now eight unavailable imports. Complete
+sbInitSystem/main bootstrap, audio, gameplay and VMU program/widget remain
+unfinished. Earlier notes retain historical scope and preserved original proofs.
+
+Latest SDK heap startup/final exit: JP_NATIVE_SDK_HEAP_EXIT.txt.
+Goal active; overall about 10%. A real full1MiB SDK arena now precedes
+Ninja setup in the qualified boot caller and closes after all selected
+consumers. Original task destruction invokes a native C consumer which
+validates/frees SDK data before arena release. 79 ownership, 9808 allocator,
+121 device, 591 save, 7281 integrated startup and 7756 classic startup
+checks pass (25636 total). Each startup path presents 570 real frames.
+Full sbInitSystem/main bootstrap, audio and gameplay remain unfinished.
+Earlier notes retain historical scope and preserved original proofs.
+
+Latest original SDK heap: JP_NATIVE_SDK_HEAP.txt.
+Goal active; overall about 10%. Real bounded native SDK arenas and original
+allocation/free/stat/calloc algorithms pass 9808 checks, including 826
+complete unhooked original machine calls, actual SDK C caller/guard-page
+checks and four concurrent native clients. Original init overrun and unsafe
+realloc are repaired. Heap is not yet connected to general startup/exit;
+sbInitSystem export frontier now has nine unavailable imports. Existing
+graphics/boot artifacts remain unchanged. Full gameplay/audio remain unfinished.
+Earlier notes retain historical scope and preserved original proofs.
+
+Latest native device-owned boot/exit: JP_NATIVE_DEVICE_EXIT.txt.
+Goal active; overall about 10%. Original reset/boot/logo now runs through
+actual Ninja-owned graphics/timing creation and one delegated exit authority.
+121 ownership, 215 device, 591 save, 7215 integrated startup and 7756 classic
+startup checks pass (15898 total). Each startup mode presents 570 real
+frames. Callback-free staged drain, external-owner recovery and native
+process exit codes are verified. Surrounding sbInitSystem, audio and full
+gameplay remain unfinished; recover actual heap/input/time/filesystem next.
+Earlier notes retain historical scope and preserved original proofs.
+
+Latest native Ninja device/display: JP_NATIVE_DEVICE_INIT.txt.
+Goal active; overall about 10%. Complete adapted Ninja initialization now
+creates real GPU/window/video/timing/presenter resources. 215 device checks,
+1842 cadence checks, 112 callback checks, 591 save checks and 7756 startup
+regressions pass (10516 total). New device tests present 10 actual text
+frames; the separate preserved startup regression presents 570 frames.
+All 31 Ninja-init imports have providers. Surrounding sbInitSystem and
+exit-authority integration, audio and full gameplay remain unfinished.
+Earlier notes retain historical scope and preserved original proofs.
+
+Latest native Ninja callbacks: JP_NATIVE_DEVICE_CALLBACKS.txt.
+Goal active; overall about 10%. Real vertex-completion/fatal delivery and
+original Ninja flag handlers pass 112 checks with 18 original machine calls.
+Save/startup regressions pass 591 and 7756 checks, including 570 actual
+startup Presents. Device-init unavailable exports fall from 20 to 14.
+Actual device/display creation, full gameplay and audio remain unfinished.
+Earlier notes retain historical scope and preserved original proofs.
+
+Latest complete Ninja global/light init: JP_NATIVE_NINJA_GLOBAL_INIT.txt.
+Goal active; overall about 10%. Entire original global/light bodies now
+use real single-owner typed state and guarded native startup: 133 focused
+checks, 591 save checks, 16 GPU/text checks and 7756 startup checks pass,
+with six full global initializations and 570 actual startup Presents.
+Original light instructions match in eight complete calls. Full Ninja
+device/system init and audio remain unfinished; the next device import
+inventory is recorded without executing its unadapted MMIO code.
+Earlier notes retain historical scope and original proof files.
+
+Latest native display/startup state: JP_NATIVE_DISPLAY_STARTUP.txt.
+Goal active; overall about 10%. Original cable decoding now reads an
+actual Windows display profile; three original main globals have one
+shared owner. 15 display/state checks and LCD/save/startup regressions
+pass, with 570 actual startup Presents. Only sbInitSystem and
+sound_system_init remain in the parent immediate export gap. Ninja
+global init compiles; four actual providers still need recovery.
+Full gameplay/audio, English, VMU program/widget and later ports remain
+unfinished. Earlier notes retain historical scope and original proofs.
+
+Latest native VMU LCD integration: JP_NATIVE_VMU_LCD.txt.
+Goal active; overall about 10%. Original LCD init/draw/SDK stack and actual
+queued native LCD endpoints pass 1733 checks with 58 complete original
+machine calls. Card/save/GPU/startup regressions pass: 10291 combined
+checks and 570 actual startup Presents. A Chao LCD buffer preview is
+private test output; no VMU minigame or desktop widget is running.
+vmu_init now resolves; six parent-startup symbols remain unavailable.
+Earlier notes retain historical scope and their original proof files.
+
+Latest original game card lifecycle: JP_NATIVE_CARD_LIFECYCLE.txt.
+Goal active; overall about 10%. Original card initialization/callbacks now
+use actual filesystem storage and real frame_vsync delivery: 225 card
+checks, 591 original save regressions, 16 GPU/text checks and 7726 startup
+checks pass (570 actual presented frames). card_init now resolves in the
+parent startup frontier; seven symbols remain unavailable. Full gameplay,
+VMU minigame/widget, English and later platforms remain unfinished.
+Earlier notes retain historical scope and their original proof files.
+
+Latest qualified native VMU filesystem: JP_NATIVE_VMU_FILESYSTEM.txt.
+Goal active; overall about 10%. Complete original VMS software now uses
+real native fibers and disk-backed card I/O. 225 filesystem checks pass,
+with independent serialized FAT/payload checks and actual failed-write
+recovery. Native stack/FPU/nested-server tests also pass. Game card_init,
+whole-operation crash recovery and Chao emulator/widget remain unfinished.
+Earlier notes retain historical scope and their original proof files.
+
+Latest VMU storage foundations: JP_NATIVE_VMU_STORAGE.txt.
+Goal active; overall about 10%. Original backup image/CRC helpers and real
+128KB virtual-card block persistence pass 406 assertions, including 51 original
+machine calls, all eight slots, atomic-write recovery and real process handoff.
+Original filesystem/card callbacks and the planned Chao VMU emulator/widget
+remain unfinished. Existing raw saves and all historical baselines are intact.
+Earlier notes retain historical scope.
+
+Latest qualified game debug text: JP_NATIVE_GAME_TEXT.txt.
+Goal active; overall about 10%. All 13 original debug-text functions now use
+the real shared font/queue/formatter. 40,577 checks passed, including 438
+original text entries, independent italic glyph/Texture Off pixels and 570
+startup GPU frames after real vertex/font/game style initialization. Private
+text captures are diagnostic scenes, not gameplay. Five parent functions and
+three data symbols remain unavailable; full startup/gameplay, localization
+and later ports remain unfinished. Earlier notes retain historical scope.
+
 Latest qualified vertex initialization: JP_NATIVE_VERTEX_LIFECYCLE_QUALIFICATION.txt.
 Goal active; overall about 10%. The native SDK entry now performs the actual
 Ninja blank wait, configures real queues and refreshes the original texture

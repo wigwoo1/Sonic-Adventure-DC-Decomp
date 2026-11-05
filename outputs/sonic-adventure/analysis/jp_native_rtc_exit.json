@@ -1,0 +1,145 @@
+{
+  "status": "actual_RTC_terminal_authority_rollback_before_wait_shutdown_and_native_exits_verified",
+  "checks": 64,
+  "cases": {
+    "tokens": {
+      "checks": 10,
+      "check_labels": [
+        "actual PC clock and original-chain wait initialized",
+        "actual PC RTC has one live native callback",
+        "real initialized RTC issues a full-width terminal claim",
+        "duplicate/wrong full-width tokens cannot steal ownership",
+        "ordinary lifecycle cannot close/reinitialize delegated RTC",
+        "uncommitted token cancels without stranding actual callback ownership",
+        "cancelled RTC token is never recycled",
+        "same committed token closes once and remains terminal",
+        "creator restriction persists after final close",
+        "separately owned wait remains closeable"
+      ],
+      "observed_process_exit_code": 0
+    },
+    "rtc_only": {
+      "checks": 6,
+      "check_labels": [
+        "actual PC clock and original-chain wait initialized",
+        "actual PC RTC has one live native callback",
+        "general exit claims real RTC and blocks independent close",
+        "native general exit really retires RTC before selected wait/heap owners",
+        "completed RTC authority cannot close twice",
+        "unselected actual wait survives RTC-only cleanup"
+      ],
+      "completed_resources": 65536,
+      "observed_process_exit_code": 0
+    },
+    "with_wait_heap": {
+      "checks": 8,
+      "check_labels": [
+        "actual PC clock and original-chain wait initialized",
+        "actual PC RTC has one live native callback",
+        "real heap included in ordered native exit",
+        "general exit claims real RTC and blocks independent close",
+        "native general exit really retires RTC before selected wait/heap owners",
+        "completed RTC authority cannot close twice",
+        "selected actual wait is closed only after RTC",
+        "final SDK heap remains terminal under its actual exit authority"
+      ],
+      "completed_resources": 98312,
+      "observed_process_exit_code": 0
+    },
+    "rtc_cold": {
+      "checks": 2,
+      "check_labels": [
+        "actual native SDK heap",
+        "missing RTC rejects binding and cancels the already claimed real heap"
+      ],
+      "observed_process_exit_code": 0
+    },
+    "rtc_claimed": {
+      "checks": 8,
+      "check_labels": [
+        "actual PC clock and original-chain wait initialized",
+        "actual PC RTC has one live native callback",
+        "actual SDK arena before attempted combined claims",
+        "existing independent RTC exit claim",
+        "later real owner rejects combined binding without accepting exit state",
+        "failed combined bind cancels real heap claim",
+        "pre-existing RTC claim remains with its actual owner",
+        "rolled-back RTC and wait close normally"
+      ],
+      "observed_process_exit_code": 0
+    },
+    "device_cold": {
+      "checks": 6,
+      "check_labels": [
+        "actual PC clock and original-chain wait initialized",
+        "actual PC RTC has one live native callback",
+        "actual SDK arena before attempted combined claims",
+        "later real owner rejects combined binding without accepting exit state",
+        "failed combined bind cancels real heap claim",
+        "rolled-back RTC and wait close normally"
+      ],
+      "observed_process_exit_code": 0
+    },
+    "retry": {
+      "checks": 9,
+      "check_labels": [
+        "actual PC clock and original-chain wait initialized",
+        "actual PC RTC has one live native callback",
+        "general exit claims real RTC and blocks independent close",
+        "capture actual native callback identity",
+        "missing actual handler fails RTC close before touching remaining wait",
+        "recover actual native callback at original still-owned handle",
+        "native general exit really retires RTC before selected wait/heap owners",
+        "completed RTC authority cannot close twice",
+        "selected actual wait is closed only after RTC"
+      ],
+      "completed_resources": 65544,
+      "observed_process_exit_code": 0
+    },
+    "foreign": {
+      "checks": 7,
+      "check_labels": [
+        "actual PC clock and original-chain wait initialized",
+        "actual PC RTC has one live native callback",
+        "general exit claims real RTC and blocks independent close",
+        "foreign cleanup cannot retire game-thread clock",
+        "native general exit really retires RTC before selected wait/heap owners",
+        "completed RTC authority cannot close twice",
+        "unselected actual wait survives RTC-only cleanup"
+      ],
+      "completed_resources": 65536,
+      "observed_process_exit_code": 0
+    },
+    "immediate_exit": {
+      "checks": 3,
+      "check_labels": [
+        "actual PC clock and original-chain wait initialized",
+        "actual PC RTC has one live native callback",
+        "general exit claims real RTC and blocks independent close"
+      ],
+      "actual_native_exit": true,
+      "observed_process_exit_code": 0
+    },
+    "failure_exit": {
+      "checks": 5,
+      "check_labels": [
+        "actual PC clock and original-chain wait initialized",
+        "actual PC RTC has one live native callback",
+        "general exit claims real RTC and blocks independent close",
+        "capture actual native callback identity",
+        "missing actual handler fails RTC close before touching remaining wait"
+      ],
+      "actual_native_exit": true,
+      "failed_resource": 65536,
+      "observed_process_exit_code": 70
+    }
+  },
+  "native_services_or_original_bodies_replaced": false,
+  "actual_process_exit_codes": [
+    0,
+    70
+  ],
+  "build_verification_sha256": "1f0439d74927abea4d27d495b0e1191713ae52a88e607cc043ef37b2fe476984",
+  "verifier_sha256": "3a04c502cf142c3a6bafa1a62a99658bc8a5e6a2999b64f50e6672257bb29a90",
+  "overall_completion_percent": 10
+}

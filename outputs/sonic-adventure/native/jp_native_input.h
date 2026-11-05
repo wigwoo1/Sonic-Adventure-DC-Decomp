@@ -14,11 +14,32 @@ enum jp_input_flags {JP_INPUT_KEYBOARD=1,JP_INPUT_CONTROLLERS=2};
 struct jp_input_sample {uint32_t connected,buttons;int32_t x1,y1,x2,y2;uint32_t left,right;};
 struct jp_input_xinput {uint16_t buttons;uint8_t left,right;int16_t lx,ly,rx,ry;};
 typedef int (*jp_input_source)(void *,struct jp_input_sample samples[4]);
+/* Non-root device metadata in the original PDS_PERIPHERALINFO byte layout.
+ * Return 1=present, 0=absent, negative=failure. Copy into the caller buffer;
+ * never retain it. Only storage/LCD/timer expansion types are accepted here.
+ * Provider/context must outlive input use. NULL/NULL disables expansion input.
+ */
+typedef int (*jp_input_metadata_source)(void *,uint32_t port,void *,size_t);
 struct jp_input_info {
     uint64_t polls;
     uint32_t status,source_kind,focused,connected_mask,xinput_available,os_error,record_bytes;
 };
 JP_INPUT_API int jp_input_initialize(void *window,uint32_t flags,jp_input_source source,void *context);
+/* Configure before original pdInitPeripheral(logic,recv,send). This entry
+ * starts the same real Windows/explicit source owner. The old console DMA
+ * addresses are ABI arguments only: they are never read, written or retained.
+ * Logic 0=active, 1=negative. Query bootstrap_status after the SDK's void entry.
+ * Pending configuration is creator-thread owned and revalidated at init.
+ * Shutdown also cancels/clears pending borrowed callbacks and window handles;
+ * configure again before another SDK initialization.
+ */
+JP_INPUT_API int jp_input_configure(void *,uint32_t,jp_input_source,void *);
+JP_INPUT_API int jp_input_configure_expansions(jp_input_metadata_source,void *);
+JP_INPUT_API int jp_input_bootstrap_status(void);
+/* Exact Windows SDK scalar ABI. Declare exports before the external SDK
+ * redeclares these functions, so Clang inherits the DLL attribute correctly. */
+JP_INPUT_API void pdInitPeripheral(long logic,void *recvbuf,void *sendbuf);
+JP_INPUT_API long pdGetPeripheralError(unsigned long port);
 JP_INPUT_API int jp_input_shutdown(void);
 JP_INPUT_API int jp_input_poll(void);
 JP_INPUT_API int jp_input_status(void);

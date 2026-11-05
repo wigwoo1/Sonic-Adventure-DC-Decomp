@@ -1,0 +1,185 @@
+{
+  "status": "real_SDK_heap_terminal_exit_authority_atomic_bind_rollback_and_original_task_consumer_verified",
+  "checks": 79,
+  "cases": {
+    "tokens": {
+      "checks": 12,
+      "check_labels": [
+        "cold heap cannot issue an exit token",
+        "actual guarded SDK heap",
+        "claim output cannot alias arena/header or be NULL",
+        "real terminal authority claim with a live consumer",
+        "duplicate/full-width wrong tokens preserve ownership/output",
+        "ordinary lifecycle cannot replace a delegated heap",
+        "uncommitted claim cancels and normal close again reports actual live owner",
+        "cancelled claim permits real ordinary teardown/reinitialization",
+        "cancelled token is never recycled",
+        "first final-close attempt commits authority and retains live pointer for retry",
+        "same token completes once and remains terminal after actual release",
+        "creator-thread restriction persists after delegated heap release"
+      ],
+      "token_cancel_retry_terminal_guards": true,
+      "observed_process_exit_code": 0
+    },
+    "heap_only": {
+      "checks": 9,
+      "check_labels": [
+        "real full one-MiB SDK usable heap with safe alignment headroom",
+        "actual outside consumer remains live",
+        "one SDK heap exit authority accepted",
+        "rebinding and independent arena close reject after claim",
+        "real live SDK allocation blocks only final heap close",
+        "failed final close preserves arena and remaining allocation",
+        "outside consumer retires for genuine final-close retry",
+        "actual exit closes heap after all selected consumers",
+        "completed delegated heap is terminal and cannot close twice"
+      ],
+      "actual_heap_exit": true,
+      "completed_resources": 32768,
+      "actual_native_task_destructor": false,
+      "observed_process_exit_code": 0
+    },
+    "rollback": {
+      "checks": 6,
+      "check_labels": [
+        "real full one-MiB SDK usable heap with safe alignment headroom",
+        "missing device rolls back actual heap claim without binding exit",
+        "heap remains reusable after rejected combined bind",
+        "actual native graphics prerequisites",
+        "actual native graphics device",
+        "same exit can subsequently claim and close both genuine owners"
+      ],
+      "rolled_back_then_successful_combined_bind": true,
+      "observed_process_exit_code": 0
+    },
+    "heap_cold": {
+      "checks": 4,
+      "check_labels": [
+        "actual native graphics prerequisites",
+        "actual native graphics device",
+        "missing heap rejects combined bind before claiming device",
+        "failed heap precondition leaves native device independently closable"
+      ],
+      "no_partial_device_claim": true,
+      "observed_process_exit_code": 0
+    },
+    "heap_claimed": {
+      "checks": 6,
+      "check_labels": [
+        "actual native graphics prerequisites",
+        "actual native graphics device",
+        "real full one-MiB SDK usable heap with safe alignment headroom",
+        "external heap authority exists before bind",
+        "already claimed heap cannot partially capture another device",
+        "original external heap authority remains valid"
+      ],
+      "existing_heap_claim_preserved": true,
+      "observed_process_exit_code": 0
+    },
+    "device_claimed": {
+      "checks": 6,
+      "check_labels": [
+        "actual native graphics prerequisites",
+        "actual native graphics device",
+        "real full one-MiB SDK usable heap with safe alignment headroom",
+        "external device authority exists before bind",
+        "later rejected device claim cancels uncommitted heap claim",
+        "original device token remains valid after rolled-back heap bind"
+      ],
+      "actual_heap_claim_rollback": true,
+      "observed_process_exit_code": 0
+    },
+    "task_consumer": {
+      "checks": 8,
+      "check_labels": [
+        "real full one-MiB SDK usable heap with safe alignment headroom",
+        "native C consumer holds an actual SDK allocation",
+        "original game task created",
+        "one SDK heap exit authority accepted",
+        "rebinding and independent arena close reject after claim",
+        "actual exit closes heap after all selected consumers",
+        "actual original task destruction invokes native C SDK destructor exactly once",
+        "completed delegated heap is terminal and cannot close twice"
+      ],
+      "actual_heap_exit": true,
+      "completed_resources": 32784,
+      "actual_native_task_destructor": true,
+      "observed_process_exit_code": 0
+    },
+    "task_leak": {
+      "checks": 13,
+      "check_labels": [
+        "real full one-MiB SDK usable heap with safe alignment headroom",
+        "native C consumer holds an actual SDK allocation",
+        "original game task created",
+        "actual outside consumer remains live",
+        "one SDK heap exit authority accepted",
+        "rebinding and independent arena close reject after claim",
+        "real live SDK allocation blocks only final heap close",
+        "failed final close preserves arena and remaining allocation",
+        "original task destructor freed its allocation exactly once before heap retirement",
+        "outside consumer retires for genuine final-close retry",
+        "actual exit closes heap after all selected consumers",
+        "actual original task destruction invokes native C SDK destructor exactly once",
+        "completed delegated heap is terminal and cannot close twice"
+      ],
+      "actual_heap_exit": true,
+      "completed_resources": 32784,
+      "actual_native_task_destructor": true,
+      "observed_process_exit_code": 0
+    },
+    "foreign": {
+      "checks": 6,
+      "check_labels": [
+        "real full one-MiB SDK usable heap with safe alignment headroom",
+        "one SDK heap exit authority accepted",
+        "rebinding and independent arena close reject after claim",
+        "foreign cleanup cannot close the heap",
+        "actual exit closes heap after all selected consumers",
+        "completed delegated heap is terminal and cannot close twice"
+      ],
+      "actual_heap_exit": true,
+      "completed_resources": 32768,
+      "actual_native_task_destructor": false,
+      "observed_process_exit_code": 0
+    },
+    "immediate_exit": {
+      "checks": 3,
+      "check_labels": [
+        "real full one-MiB SDK usable heap with safe alignment headroom",
+        "one SDK heap exit authority accepted",
+        "rebinding and independent arena close reject after claim"
+      ],
+      "actual_syBtExit_entered": true,
+      "observed_process_exit_code": 0
+    },
+    "failure_exit": {
+      "checks": 6,
+      "check_labels": [
+        "real full one-MiB SDK usable heap with safe alignment headroom",
+        "actual outside consumer remains live",
+        "one SDK heap exit authority accepted",
+        "rebinding and independent arena close reject after claim",
+        "real live SDK allocation blocks only final heap close",
+        "failed final close preserves arena and remaining allocation"
+      ],
+      "actual_syBtExit_entered": true,
+      "expected_failure_exit_code": 70,
+      "observed_process_exit_code": 70
+    }
+  },
+  "actual_SDK_arenas_and_allocation_used": true,
+  "original_task_destroy_all_invokes_native_C_destructor": true,
+  "failed_later_device_claim_rolls_back_heap_claim": true,
+  "live_pointer_retry_and_destructor_once_verified": true,
+  "full_width_token_thread_and_terminal_owner_guards": true,
+  "actual_native_success_and_failure_exit_codes": [
+    0,
+    70
+  ],
+  "original_game_or_SDK_function_bodies_replaced": false,
+  "build_report_sha256": "4aeff709d8030b689e0f3b6798e08654439358a8419e8cb27919eea529244f07",
+  "verifier_sha256": "383bfe37fcf05eaf5c7007de19c9e7297c86a5383a733e152cd85b217c221636",
+  "whole_system_boot_or_gameplay_verified": false,
+  "overall_completion_percent": 10
+}

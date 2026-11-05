@@ -1,0 +1,218 @@
+{
+  "status": "real_device_single_exit_authority_quiesce_retry_and_process_termination_verified",
+  "checks": 121,
+  "cases": {
+    "tokens": {
+      "checks": 13,
+      "check_labels": [
+        "actual borrowed graphics owners",
+        "actual native device initialization",
+        "real GPU/window handles",
+        "null token output cannot claim resources",
+        "actual quiescent authority claim",
+        "duplicate claim preserves output",
+        "wrong full-width token cannot change native ownership",
+        "ordinary APIs cannot replace delegated authority",
+        "quiesce drains presenter and stops timing but retains final device owners",
+        "window/video/clock remain valid until dependent cleanup",
+        "same authority completes real native window/GPU/timing shutdown",
+        "completed delegation is terminal and idempotent",
+        "creator-thread authority persists after completed shutdown"
+      ],
+      "token_issued": true,
+      "completed_resources": 16384,
+      "observed_process_exit_code": 0
+    },
+    "complete": {
+      "checks": 11,
+      "check_labels": [
+        "actual borrowed graphics owners",
+        "actual native device initialization",
+        "real GPU/window handles",
+        "duplicate raw GPU/device authority rejected atomically",
+        "duplicate wait/device authority rejected atomically",
+        "one device cleanup authority accepted",
+        "rebinding and independent device close rejected after transfer",
+        "one terminal exit authority completes actual device shutdown",
+        "actual native window and all device timing/video services closed",
+        "repeat exit cannot close delegated resources twice",
+        "independently borrowed graphics owners remain caller-owned and drainable"
+      ],
+      "completed_resources": 16384,
+      "actual_device_exit": true,
+      "observed_process_exit_code": 0
+    },
+    "pending": {
+      "checks": 14,
+      "check_labels": [
+        "actual borrowed graphics owners",
+        "actual native device initialization",
+        "real GPU/window handles",
+        "duplicate raw GPU/device authority rejected atomically",
+        "duplicate wait/device authority rejected atomically",
+        "one device cleanup authority accepted",
+        "rebinding and independent device close rejected after transfer",
+        "actual original game/Ninja text geometry",
+        "real pending GPU work before exit",
+        "one terminal exit authority completes actual device shutdown",
+        "actual native window and all device timing/video services closed",
+        "pending shutdown drains real GPU without dispatching game EOR callbacks",
+        "repeat exit cannot close delegated resources twice",
+        "independently borrowed graphics owners remain caller-owned and drainable"
+      ],
+      "completed_resources": 16384,
+      "actual_device_exit": true,
+      "observed_process_exit_code": 0
+    },
+    "external_frame": {
+      "checks": 16,
+      "check_labels": [
+        "actual borrowed graphics owners",
+        "actual native device initialization",
+        "real GPU/window handles",
+        "duplicate raw GPU/device authority rejected atomically",
+        "duplicate wait/device authority rejected atomically",
+        "one device cleanup authority accepted",
+        "rebinding and independent device close rejected after transfer",
+        "actual original game/Ninja text geometry",
+        "actual retained frame outside the presenter",
+        "actual external owner prevents final device shutdown without losing cleanup authority",
+        "failed final drain retains native window/GPU/video/clock",
+        "actual external frame released for retry",
+        "one terminal exit authority completes actual device shutdown",
+        "actual native window and all device timing/video services closed",
+        "repeat exit cannot close delegated resources twice",
+        "independently borrowed graphics owners remain caller-owned and drainable"
+      ],
+      "completed_resources": 16384,
+      "actual_device_exit": true,
+      "observed_process_exit_code": 0
+    },
+    "external_gpu_job": {
+      "checks": 18,
+      "check_labels": [
+        "actual borrowed graphics owners",
+        "actual native device initialization",
+        "real GPU/window handles",
+        "duplicate raw GPU/device authority rejected atomically",
+        "duplicate wait/device authority rejected atomically",
+        "one device cleanup authority accepted",
+        "rebinding and independent device close rejected after transfer",
+        "actual original game/Ninja text geometry",
+        "actual retained frame outside the presenter",
+        "actual independent GPU job retains its own payload",
+        "independent job survives original CPU frame retirement",
+        "actual external owner prevents final device shutdown without losing cleanup authority",
+        "failed final drain retains native window/GPU/video/clock",
+        "actual independent GPU completion observed and ownership released for retry",
+        "one terminal exit authority completes actual device shutdown",
+        "actual native window and all device timing/video services closed",
+        "repeat exit cannot close delegated resources twice",
+        "independently borrowed graphics owners remain caller-owned and drainable"
+      ],
+      "completed_resources": 16384,
+      "actual_device_exit": true,
+      "observed_process_exit_code": 0
+    },
+    "foreign": {
+      "checks": 12,
+      "check_labels": [
+        "actual borrowed graphics owners",
+        "actual native device initialization",
+        "real GPU/window handles",
+        "duplicate raw GPU/device authority rejected atomically",
+        "duplicate wait/device authority rejected atomically",
+        "one device cleanup authority accepted",
+        "rebinding and independent device close rejected after transfer",
+        "foreign thread cannot invoke either cleanup authority",
+        "one terminal exit authority completes actual device shutdown",
+        "actual native window and all device timing/video services closed",
+        "repeat exit cannot close delegated resources twice",
+        "independently borrowed graphics owners remain caller-owned and drainable"
+      ],
+      "completed_resources": 16384,
+      "actual_device_exit": true,
+      "observed_process_exit_code": 0
+    },
+    "partial_adoption": {
+      "checks": 17,
+      "check_labels": [
+        "actual borrowed graphics owners",
+        "actual native device initialization",
+        "real GPU/window handles",
+        "duplicate raw GPU/device authority rejected atomically",
+        "duplicate wait/device authority rejected atomically",
+        "actual original game/Ninja text geometry",
+        "actual retained frame before partial normal shutdown",
+        "ordinary partial drain retains real dependent owners before exit quiesces timing",
+        "one device cleanup authority accepted",
+        "rebinding and independent device close rejected after transfer",
+        "actual external owner prevents final device shutdown without losing cleanup authority",
+        "failed final drain retains native window/GPU/video/clock",
+        "actual external frame released for retry",
+        "one terminal exit authority completes actual device shutdown",
+        "actual native window and all device timing/video services closed",
+        "repeat exit cannot close delegated resources twice",
+        "independently borrowed graphics owners remain caller-owned and drainable"
+      ],
+      "completed_resources": 16384,
+      "actual_device_exit": true,
+      "observed_process_exit_code": 0
+    },
+    "cold_reject": {
+      "checks": 2,
+      "check_labels": [
+        "cold device cannot issue a cleanup token",
+        "unavailable device rejection leaves exit unbound and no fabricated resources"
+      ],
+      "cold_device_rejected": true,
+      "observed_process_exit_code": 0
+    },
+    "immediate_exit": {
+      "checks": 7,
+      "check_labels": [
+        "actual borrowed graphics owners",
+        "actual native device initialization",
+        "real GPU/window handles",
+        "duplicate raw GPU/device authority rejected atomically",
+        "duplicate wait/device authority rejected atomically",
+        "one device cleanup authority accepted",
+        "rebinding and independent device close rejected after transfer"
+      ],
+      "actual_syBtExit_entered": true,
+      "observed_process_exit_code": 0
+    },
+    "failure_exit": {
+      "checks": 11,
+      "check_labels": [
+        "actual borrowed graphics owners",
+        "actual native device initialization",
+        "real GPU/window handles",
+        "duplicate raw GPU/device authority rejected atomically",
+        "duplicate wait/device authority rejected atomically",
+        "one device cleanup authority accepted",
+        "rebinding and independent device close rejected after transfer",
+        "actual original game/Ninja text geometry",
+        "actual retained frame outside the presenter",
+        "actual external owner prevents final device shutdown without losing cleanup authority",
+        "failed final drain retains native window/GPU/video/clock"
+      ],
+      "actual_syBtExit_entered": true,
+      "retained_frame": 1,
+      "expected_failure_exit_code": 70,
+      "observed_process_exit_code": 70
+    }
+  },
+  "real_native_devices_used": true,
+  "wrong_owner_thread_and_token_rejected": true,
+  "ordinary_shutdown_blocked_after_claim": true,
+  "real_pending_GPU_drain_without_game_callbacks": true,
+  "external_frame_and_GPU_job_retirement_required": true,
+  "actual_partial_drain_adoption": true,
+  "actual_native_process_exit_codes_verified": true,
+  "original_game_or_SDK_functions_replaced": false,
+  "build_report_sha256": "de7b7d13aadaef6e6115ea2d417881a4343cb8bcdf0a3d61eea7c71aa9c1141b",
+  "verifier_sha256": "2a548dc73064d8760171889133b0f8bf849909eee80c4ce6d37b5ea72de86e35",
+  "full_system_boot_or_gameplay_verified": false,
+  "overall_completion_percent": 10
+}

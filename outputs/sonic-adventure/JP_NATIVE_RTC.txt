@@ -1,0 +1,130 @@
+Original RTC calendar, actual PC date and ordered native shutdown
+Whole-project estimate: approximately 10%; goal active.
+Status: VERIFIED INTEGRATION COMPONENT. Full system startup, audio, gameplay,
+English, display/HD settings, VMU minigame/widget and later platforms remain
+unfinished. The complete matching Japanese source baseline is a separate result.
+
+What changed
+The native RTC service now uses Windows local civil time, expressed in the
+original unsigned 32-bit seconds since 1950. It is independent of the paused
+game timer and logical frame rate. The actual original vblank chain calls a
+correctly typed native thunk at original priority 92. Original calendar/date
+ordering, weekday/moon calculations, cached/direct/full-read selection and
+two-reading filtering are compiled unchanged from pinned sg_syrtc.c. Ten
+original function bodies are reused. The unchanged original card_get_time
+caller, compiled with original SDK declarations, consumes this actual service.
+
+The console's force-read loop could hang forever after the count changed past
+its initial reading. The native boundary instead requires four equal successful
+readings, adopting a fresh baseline after changes, within sixteen total attempts.
+Persistent failure or an unstable provider returns an explicit error and keeps
+the prior cached count/output. Transient failure can recover after four reliable
+readings. There are no AICA/G2 register reads or successful register-write stubs.
+
+syRtcSetDate applies a real session-local offset to the clock seen by the game.
+The offset continues to advance with host time; the OS clock is never changed.
+The offset currently resets on shutdown. Persistent user clock preferences,
+timezone selection and any offline Chao behavior require separate integration;
+they are not implied by this service. Original 32-bit range ends during 2086;
+dates outside it, invalid calendar fields, NULL and overlapping conversion
+outputs reject without wrapping or corrupting caller data. The original SDK's
+calendar/moon semantics are preserved inside this supported count range.
+Console-address logging mode is explicitly unsupported, rather than accepting
+a truncated 32-bit address on a 64-bit host. DIRECT=1 and FULL_READ=2 work.
+
+Lifecycle and exit
+The real clock/wait owner is initialized first. RTC initialization must then
+succeed before callers use timestamps. No callback capacity, missing timing
+owner and provider failure cannot masquerade as successful initialization.
+Source callers that ignore an RTC error are not proof of safe full startup;
+the remaining native parent coordinator must propagate service failures.
+One game thread owns lifecycle and reads. Recursive provider mutation and
+foreign-thread calls reject. The chain record's original 0x80000000 active bit
+is retained; priority comparisons mask that bit. Callback identity is checked
+before deletion so a recycled handle cannot delete somebody else's callback.
+
+The general native exit service now selects RTC=65536, delegating final-close
+authority with a creator-thread 64-bit token. It removes RTC before device
+quiescence or a separately owned wait service closes the callback pool. Tokens
+cannot be stolen by truncated/wrong values or reused after cancellation.
+Ordinary close/init/configure reject after delegation. Cancellation is allowed
+until first final-close attempt. Committed retries use the same token; an
+unexpectedly removed callback fails and preserves later owners for recovery.
+Failed later RTC/device claims cancel earlier uncommitted heap/RTC claims.
+Unexpected cancellation failure retains real cleanup authority in exit state.
+Existing masks ALL=16383, WITH_DEVICE=18422 and WITH_DEVICE_SDK_HEAP=51190 retain
+their meanings. New WITH_DEVICE_SDK_HEAP_RTC=116726 adds RTC. Classic native
+ownership tests still execute unchanged. No same-process game restart is claimed.
+
+Verification
+verify_native_rtc.py passes 2707 assertions, including 390 complete original
+machine-code calls without function hooks. Original CountToDate, DateToCount,
+CompareDate and the full cached GetDate/card_get_time instruction path execute
+against the preserved Japanese binary. An independent civil calendar checks
+dates, boundaries, leap days and random counts. Original SDK C declarations
+agree on 10-byte SYS_RTC_DATE and 8-byte BUS_TIME. Original derived fields and
+caller canaries match. Original sources and image hashes are preserved.
+
+Actual native tests exhaust the original 255-handler pool; check callback
+priority before/after game callbacks; exercise cached/direct/full reads,
+transient and permanent failures, unstable seconds, virtual clock setting,
+thread/reentrancy rejection and preservation of failed outputs. Actual clock
+readers are used both with controlled source fixtures and with Windows/QPC.
+Two elapsed seconds remain two RTC seconds at logical rates 60/120/240 even
+while the game timer is paused. This tests clock-domain independence, not the
+unfinished user-selectable rendering FPS settings.
+
+verify_native_rtc_exit.py passes 64 assertions across ten fresh native
+processes: real ownership/cancellation/terminal tokens, partial-bootstrap
+rollback, ordered RTC/wait/SDK-heap cleanup, recoverable missing handler,
+foreign-thread rejection and actual non-returning success/failure exits 0/70.
+Existing heap-exit and device-exit verifiers pass unchanged: 79 and 121 checks.
+Save/CRC regression passes 591 checks against 29 original-machine calls.
+
+verify_native_rtc_startup.py composes real SDK heap, native Ninja/device,
+Windows RTC, original main buffers/vertex/font, display reset, boot_init,
+logo and delegated exit. It passes 7319 checks: six PC RTC creations, real
+logical callbacks through original boot, original task C destructors freeing
+SDK allocations, 570 actual GPU images/Presents and 175104000 pixel comparisons.
+The fresh backbuffer capture still shows the SEGA splash. It is a real native
+startup screenshot, not new stage/gameplay progress. This remains a Python
+caller composition of real native factories and game bodies; full sbInitSystem,
+main system_boot_init, GDFS/audio/root gameplay dispatch are not yet executed.
+Classic startup compatibility passes 7756 checks and another 570 actual GPU
+images/Presents. Total assertions across the seven suites: 18637. This count
+does not include the earlier unchanged allocator suite or repeated v2 checks.
+
+Current build and reproduction
+Qualified graph: work/sonic-adventure/jp-native-rtc-exit-v1.
+RTC-only build: work/sonic-adventure/jp-native-rtc-v3.
+build_native_rtc.py derives original source privately, compiles native ownership
+and an original SDK/card timestamp client. build_native_rtc_exit.py preserves
+qualified graphics/device/heap libraries by hash and rebuilds exit/logo imports.
+Build attempts use -Wall -Wextra -Werror and are warning-free. The first focused
+v1 test identified the chain active bit; old sources/builds/failure notes are
+preserved. v2 qualified the corrected component; v3 adds terminal exit authority.
+
+Run these Python scripts with -B and their --help arguments, using the workspace
+root, pinned upstream, selected build and fresh work/sonic-adventure output
+directories. Exact commands and hashes are in analysis/jp_native_rtc_*.json.
+API: native/jp_native_rtc.h. Original source remains the pinned external
+reshaped/sonic-adventure revision 25a3d3154dbe657325e97dbe8c5291086f6af5c0.
+
+Remaining bootstrap work
+The compile-only original sbInitSystem probe has thirteen imports; eight remain
+unavailable after adding the actual RTC provider: _builtin_set_imask, syHwInit,
+cache_ram_init, _BSG_END, syHwInit2, pdInitPeripheral, gdFsInit, gdFsChangeDir.
+This is one initializer's export frontier, not the whole game's remaining
+routine count. The probe retains unsafe console addresses/alignment and is
+never linked or executed. Do not use it as the native parent unchanged.
+Next qualify real platform/peripheral/filesystem dependencies and the native
+coordinator's creation/rollback/error propagation. Existing device owns timing;
+do not initialize a second QPC/wait owner in hardware adapters. Preserve the
+actual SDK arena -> device -> RTC -> consumers creation order, RTC-before-wait
+shutdown and consumers-before-final-heap-release order.
+
+Original generated source, combined SDK/game DLLs, retail programs/assets and
+captures remain private. Authored code, tools and scoped evidence await the next
+reviewed daily publication. This task does not claim a new upload/playable release.
+Use selected Sol High/Extra High for remaining system/input/filesystem work.
+Luna Low is appropriate for documentation only. Keep the full goal active.

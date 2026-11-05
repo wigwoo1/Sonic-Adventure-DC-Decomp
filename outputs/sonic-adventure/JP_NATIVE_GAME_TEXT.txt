@@ -1,0 +1,80 @@
+Original game debug-text family on the native renderer
+Whole-project estimate: approximately 10%; goal active. No playable PC game yet.
+
+What changed
+All 13 original src/draw/text.c functions now compile into the existing native
+frame module: style init/exit, size/colour setters, normal/front glyph routines,
+string/front-string, decimal/binary/hex/fixed-float and variadic printing.
+The function bodies remain a pinned external input, generated/adapted privately.
+Public builder tools record original function hashes and boundary adaptations.
+The unchanged original init reads the actual font header from DEBUG_CONTEXT 4.
+Drawing uses the real existing direct translucent queue, font/resource owner
+and original SHC formatter already adapted to native varargs and bounded I/O.
+There is no second font allocator, queue, formatter or rendering-only fake state.
+
+Native boundaries
+SH-4 store-queue/QACR addresses and pointer truncation become a bounded staging
+transaction through the existing print transport. Original glyph geometry and
+formatting bodies still write the packets. Coordinate products use the qualified
+RZ/int16 wrapping helper; pen advances preserve original signed-word wrapping.
+All glyph arithmetic is within exactly representable dyadic/integer ranges and
+the resulting defined packet words match the original machine instructions.
+Padding words undefined by the console source are deterministically zero.
+The original signed-character behavior, italic geometry, 0-to-O substitution,
+foreground depth, size/colour state and frame_step suppression are preserved.
+Suppressed calls skip argument access, including invalid pointers/formats.
+Invalid native lengths/digit shifts and original fixed-float buffer-underwrite
+domains are rejected by existing checked boundaries instead of corrupting memory.
+
+Verification
+32,220 packet/state/format assertions passed across 438 complete original entry
+calls. All 13 original bodies and original formatter dependencies execute in the
+qualified SH-4 reference; no original game/format function is hooked. All 255
+non-NUL character byte values, normal/front geometry, zero/large sizes, signed
+coordinate wrap, integers, floats and mixed native varargs are covered.
+24 additional checks prove exact game/SDK/game packet concatenation, independent
+style state, formatting rejection, suppression and recovery through one owner.
+16 GPU/window/lifetime assertions independently verify 327,680 textured/Texture
+Off pixels and an actual 163,840-pixel native backbuffer. Texture Off renders
+vertex-coloured quads with zero texture and sampler bindings. A submitted frame
+survives the actual SDK font release; the final frame release frees its payload.
+591 original Japanese save-default/layout/CRC assertions pass on the new build.
+7,726 original startup/logo/EOR/exit checks pass with six actual vertex-buffer,
+original default-font and game style initialization sequences, 570 GPU frames
+and Presents and independent comparison of 175,104,000 logo pixels.
+Total: 40,577 assertions; 573 GPU images. Compile/link passed with warnings as
+errors. Every pre-existing production frame object remains byte-identical.
+
+The startup oracle now expects only the actual SDK font after logo textures are
+released. The previous logo-only caller initialized no font and expected zero
+surfaces at that point. The system-exit oracle still requires zero surfaces and
+all native owners drained. This adapts the Python caller/expected state, not
+native function bodies. Context initialization also installs a white background;
+the text scene explicitly selects black before its independent pixel comparison.
+
+Screenshots and scope
+Actual private captures include native-original-game-debug-text.png and the
+Texture Off image under work/sonic-adventure/jp-native-game-text-gpu-v3. These
+are diagnostic text scenes, not menus or gameplay, and use retail-derived font
+pixels. They may be shared in chat but must not be uploaded to GitHub.
+This source is the game's debug/diagnostic text family, not all menu/subtitle
+fonts or English localization. Full system_boot_init, audio, card/VMU services,
+native gameplay, localization and later platforms remain unfinished. The
+matching Japanese/GCC baseline and historical USA source/proofs/builds are intact.
+
+Reproduction (replace PYTHON/WORKSPACE with absolute local paths)
+Use a fresh output directory/report for each command. Prerequisite recipes keep
+exact retained object paths; see earlier baseline guides to build them locally.
+PYTHON -B outputs/sonic-adventure/jp_port_tools/build_native_game_text.py --workspace WORKSPACE --upstream work/sonic-adventure/reshaped-sonic-adventure-review --baseline work/sonic-adventure/jp-native-vertex-lifecycle-startup-build-v1 --output work/sonic-adventure/jp-native-game-text-v2
+PYTHON -B outputs/sonic-adventure/jp_port_tools/verify_native_game_text.py --workspace WORKSPACE --upstream work/sonic-adventure/reshaped-sonic-adventure-review --build work/sonic-adventure/jp-native-game-text-v2 --binary work/sonic-adventure/jp-ninja-math-reference/1ST_READ.BIN --font-input work/sonic-adventure/jp-native-built-in-font-atlas-v1 --output work/sonic-adventure/jp-native-game-text-check-v1
+PYTHON -B outputs/sonic-adventure/jp_port_tools/verify_native_game_text_gpu.py --workspace WORKSPACE --build work/sonic-adventure/jp-native-game-text-v2 --gpu work/sonic-adventure/jp-native-queue-allocation-v1/jp_native_window_input.dll --font-input work/sonic-adventure/jp-native-built-in-font-atlas-v1 --output work/sonic-adventure/jp-native-game-text-gpu-v3
+PYTHON -B outputs/sonic-adventure/jp_port_tools/verify_native_game_text_interleave.py --workspace WORKSPACE --build work/sonic-adventure/jp-native-game-text-v2 --output work/sonic-adventure/jp-native-game-text-interleave-v1
+PYTHON -B outputs/sonic-adventure/jp_port_tools/build_native_game_text_startup.py --workspace WORKSPACE --baseline work/sonic-adventure/jp-native-vertex-lifecycle-startup-build-v1 --game-text work/sonic-adventure/jp-native-game-text-v2 --packet-proof work/sonic-adventure/jp-native-game-text-check-v1 --gpu-proof work/sonic-adventure/jp-native-game-text-gpu-v3 --interleave-proof work/sonic-adventure/jp-native-game-text-interleave-v1 --output work/sonic-adventure/jp-native-game-text-startup-build-v1
+PYTHON -B outputs/sonic-adventure/jp_port_tools/verify_native_boot_saves.py --workspace WORKSPACE --upstream work/sonic-adventure/reshaped-sonic-adventure-review --build work/sonic-adventure/jp-native-game-text-startup-build-v1 --binary work/sonic-adventure/jp-ninja-math-reference/1ST_READ.BIN --report work/sonic-adventure/jp-native-game-text-startup-build-v1/save-verification.json
+PYTHON -B outputs/sonic-adventure/jp_port_tools/verify_native_game_text_startup.py --workspace WORKSPACE --build work/sonic-adventure/jp-native-game-text-startup-build-v1 --inputs work/sonic-adventure/jp-native-pvm-inputs-v1 --asset-root work/sonic-adventure/jp-native-asset-fixtures-v1/資産 --save-proof work/sonic-adventure/jp-native-game-text-startup-build-v1/save-verification.json --output work/sonic-adventure/jp-native-game-text-startup-check-v2
+Pinned upstream: 25a3d3154dbe657325e97dbe8c5291086f6af5c0. Generated game source,
+objects and game-containing DLLs remain private. Authored tools, documentation
+and verification evidence are eligible for the next reviewed public snapshot.
+No new game-containing public build is created. Existing archive bytes remain
+preserved. Keep Sol High or the selected Sol Extra High for remaining startup
+and device-service work; Luna Low is suitable for routine documentation.

@@ -1,0 +1,120 @@
+Original SDK heap algorithms with bounded native ownership
+Whole-project estimate: approximately 10%; goal active.
+Status: VERIFIED COMPONENT. Full system bootstrap, audio, playable gameplay,
+English, enhancements, VMU minigame/widget and later platforms remain unfinished.
+
+Actual allocator recovery
+The pinned Shinobi syMalloc.c allocation/free/statistics/calloc algorithms now
+run behind a real native arena owner. syMallocInit, syMallocStat, syMalloc,
+syFree and the original malloc/free/calloc bodies are generated privately.
+Initialization changes its one pointer-truncating alignment cast to uintptr_t.
+Free uses five explicit uintptr_t comparisons for its circular address order,
+avoiding relational comparisons between unrelated native objects. The other
+selected bodies keep their statements unchanged; symbol names are private.
+The SDK's 32-byte units remain 32 bytes. The native header is 16 bytes because
+its next pointer is 64-bit, while Uint32 counts remain four bytes. No game-save
+or retail serialized layout is widened.
+
+The owner supports caller-supplied writable spans and actual VirtualAlloc-backed
+storage, from 64 bytes to 64MiB. Both use the first 32-byte boundary strictly
+after the supplied start. Usable bytes subtract this prefix and round down.
+Owned spans end at an inaccessible reserved guard page and have another guard
+before the committed region. An independent native table tracks each live
+allocation and requested/capacity sizes. The original free list and this table
+must partition every unit without overlap or gaps. Invalid pointers, double
+free, size arithmetic overflow, output aliases and malformed links/headers
+reject before unsafe traversal. Valid output records must be outside the arena.
+
+The original init counts the whole supplied size after skipping alignment,
+which could extend 32 bytes past its caller's allocation. Native init instead
+passes only the bounded usable extent to the original body. To preserve an
+original full 1MiB usable heap, the future bootstrap can request 1MiB+32 bytes
+of real backing; that capacity and safe boundary are explicitly tested.
+It must not pass the original console MEMORY_END-derived address to this API.
+
+A real native SRW lock covers allocation, free, statistics and lifetime state.
+Source get_imask/set_imask bookkeeping is private inside that lock. No global
+console interrupt primitive is provided or claimed. Allocation/free/stat can
+serve other threads; initialization/shutdown belong to the creating thread.
+Native CRT, existing task arenas and texture/frame allocators remain separate.
+This DLL exports no native malloc/free/realloc/calloc interposition symbols.
+Other original SDK modules must bind their allocations deliberately with typed
+per-module adapters when integrated, rather than replacing unrelated CRT calls.
+
+Native repairs and lifecycle
+The unsafe original realloc body is not compiled or executed. Native resizing
+keeps an allocation in place when capacity permits; growth allocates first,
+copies the old requested prefix, then frees the old block. Failure preserves
+the old pointer/data. NULL acts as allocation; a non-NULL size-zero resize frees.
+Original calloc word-rounded clearing stays within the actual rounded capacity;
+multiplication and allocation-size overflow are checked before entering it.
+
+syMallocFinish now invokes real native shutdown rather than the console's empty
+finish body. Outstanding allocations prevent teardown and preserve the owner
+for a retry after release. A borrowed span stays owned by its caller; owned
+VirtualAlloc storage and native tracking records are released on completed
+shutdown. Header corruption is terminal until safe no-live-allocation teardown.
+A corrupted heap with live ownership is retained and reports failure rather
+than silently discarding pointers. The deliberate final corruption test leaves
+that test arena to its terminating process; normal cases release their arenas.
+
+Verification
+9808 checks pass. A real independently compiled C client uses the original SDK
+header declarations and import library for all five SDK entry points. All 32
+borrowed starting alignments preserve every unused prefix/tail byte and both
+surrounding canaries. Actual pointers above 4GiB pass through the SDK ABI.
+Native VirtualQuery confirms the real RW committed arena, inaccessible guards
+and release of the reservation after its last allocation.
+
+826 complete original Japanese machine-code calls execute without function
+hooks. They include initialization, statistics, allocation, free and calloc,
+and reach all seven selected original entries/dependencies. A deterministic
+400-operation trace compares native/original allocation offsets, real exhaustion,
+coalescing, free-byte/largest-block accounting and every live payload byte.
+The reference receives the same effective usable size with alignment headroom;
+it does not reproduce the original out-of-bounds init allowance. Original SR
+mask and stack restoration are checked. Unsafe original realloc is never run.
+
+Separate native checks cover repaired shrink/growth, failure preservation,
+zero-sized requests, overflow, foreign/interior pointers, double free, output
+aliasing, live-owner teardown refusal and malformed link/header rejection.
+Four real concurrent native clients complete 480 allocation/free iterations and
+160 growing resizes, preserve their data and recover a completely coalesced
+arena. The DLL builds with zero compiler/linker diagnostics.
+
+Integration frontier
+This allocator is a qualified standalone dependency, not yet installed into
+the game's general bootstrap/exit lifecycle. Existing qualified graphics and
+device-owned boot libraries are unchanged. Their exact bytes/hashes remain
+preserved; unrelated startup suites were not rerun for this standalone addition.
+The current sbInitSystem export inventory includes the new heap DLL explicitly:
+13 imports, now nine unavailable. syMallocInit is available. Remaining imports:
+_builtin_set_imask, syHwInit, cache_ram_init, _BSG_END, syHwInit2,
+pdInitPeripheral, syRtcInit, gdFsInit and gdFsChangeDir. This is one bootstrap's
+dependency frontier, not the number of routines left in the whole game.
+The unchanged console bootstrap probe still contains unsafe addresses and is
+never linked/executed. Availability does not prove the parent calls the heap.
+
+Next connect actual SDK heap creation and final teardown to one startup/exit
+owner, then recover the remaining hardware/input/time/filesystem bootstrap.
+Preserve the current delegated graphics-device cleanup order. Do not globally
+replace CRT allocators or invent successful cache/interrupt/GDFS/audio stubs.
+The original cache RAM init/restore/end entries really return immediately;
+verify those instructions separately before adapting that genuine behavior.
+
+Reproduction, source and distribution
+build_native_sdk_heap.py consumes pinned upstream source plus the current
+qualified bootstrap inventory and checks existing linked definitions. It builds
+the original selected bodies, authored arena owner and structural validator.
+verify_native_sdk_heap.py runs the original-machine/native tests and compiles
+its independent SDK client and Windows page-query helper. The bootstrap auditor
+accepts optional --sdk-heap to include this actual independent provider.
+Use fresh output directories. Both passing qualification attempts are retained;
+the second adds the explicit 1MiB usable-capacity/headroom check.
+Exact commands, original/current source hashes and proof copies are in analysis/
+jp_native_sdk_heap_*.json. Public API: native/jp_native_sdk_heap.h. Original
+generated SDK code and the combined allocator DLL stay private. Authored code,
+integration tools and evidence await the next reviewed daily GitHub snapshot;
+this task does not claim an upload or a new playable build.
+Keep Sol High/selected Sol Extra High for bootstrap/lifetime/I/O integration.
+Luna Low is suitable for routine documentation. Keep the goal active.

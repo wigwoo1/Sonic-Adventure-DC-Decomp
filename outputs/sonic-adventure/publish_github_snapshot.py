@@ -18,7 +18,7 @@ import zipfile
 
 OWNER = 'wigwoo1'
 REPO = 'Sonic-Adventure-DC-Decomp'
-TEXT = {'.c', '.h', '.py', '.ps1', '.java', '.json', '.tsv', '.txt', '.md',
+TEXT = {'.c', '.h', '.inc', '.py', '.ps1', '.java', '.json', '.tsv', '.txt', '.md',
         '.gradle', '.properties', '.manifest', '.xml', '.yml', '.yaml'}
 SKIP = {'__pycache__', '.git', '.gradle', 'build', 'dist', 'work', 'node_modules'}
 SECRET = re.compile(rb'(?:gh[pousr]_[A-Za-z0-9]{30,}|github_pat_[A-Za-z0-9_]{50,}|'
@@ -65,6 +65,38 @@ def select_files(workspace):
     assert selected and any(rel.as_posix().endswith('source/sa_draw_angle_curve.c')
                             for _, rel, _ in selected)
     return selected, dict(excluded)
+
+
+def qualified_native_builds(workspace):
+    """Only explicitly qualified authored libraries; never combined SDK/game DLLs."""
+    packages = (
+        ('jp_native_peripheral_public_input_package.json',
+         'public_artifacts_contain_original_game_or_Sega_SDK_bodies',
+         'public_artifacts_contain_retail_assets'),
+        ('jp_native_gd_media_public_package.json',
+         'original_game_or_SDK_bodies_packaged', 'retail_data_packaged'),
+    )
+    builds = []
+    for name, bodies, assets in packages:
+        path = workspace/'outputs/sonic-adventure/analysis'/name
+        if not path.exists():
+            continue
+        package = json.loads(path.read_bytes())
+        assert package['artifact_publishable'] and not package[bodies] and not package[assets]
+        assert package['playable'] is False
+        for field in ('authored_source_sha256', 'verification_files_sha256'):
+            for local, expected in package[field].items():
+                source = (workspace/local).resolve()
+                assert source.is_relative_to(workspace) and digest(source.read_bytes()) == expected, local
+        for local, evidence in package['public_artifacts'].items():
+            source = Path(local).resolve()
+            assert source.is_relative_to(workspace/'work/sonic-adventure')
+            assert source.suffix.lower() in {'.dll', '.lib'}
+            raw = source.read_bytes()
+            assert len(raw) == evidence['bytes'] and digest(raw) == evidence['sha256'], local
+            assert raw.startswith(b'!<arch>') if source.suffix.lower() == '.lib' else raw.startswith(b'MZ')
+            builds.append((source, source.relative_to(workspace).as_posix(), raw))
+    return builds
 
 
 def prepare(workspace):
@@ -574,7 +606,8 @@ license is assigned; existing third-party notices remain with their components.
                 raw = path.read_bytes()
                 assert raw.startswith(b'MZ') if path.suffix.lower() != '.lib' else raw.startswith(b'!<arch>')
                 builds.append((path, path.relative_to(workspace).as_posix(), raw))
-    assert builds
+    builds.extend(qualified_native_builds(workspace))
+    assert builds and len({rel for _, rel, _ in builds}) == len(builds)
     build_manifest = dict(playable_game=False, kind='Existing Windows research DLLs and import libraries',
                           files=[dict(path=rel, bytes=len(raw), sha256=digest(raw)) for _,rel,raw in builds],
                           source_manifest_sha256=digest((destination/'PUBLICATION_MANIFEST.json').read_bytes()))

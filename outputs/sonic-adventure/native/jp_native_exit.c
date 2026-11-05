@@ -2,6 +2,12 @@
 #include <windows.h>
 #include <string.h>
 #include "jp_native_exit.h"
+#define JP_DEVICE_API __declspec(dllimport)
+#include "jp_native_device.h"
+#define JP_SDK_HEAP_API __declspec(dllimport)
+#include "jp_native_sdk_heap.h"
+#define JP_RTC_API __declspec(dllimport)
+#include "jp_native_rtc.h"
 /* Explicit imports avoid exporting another copy of the shared native owners.
  * The build workflow independently checks these signatures against headers. */
 #define IMPORT_INT(n) __declspec(dllimport) int n(void)
@@ -24,22 +30,49 @@ __declspec(dllimport) unsigned jp_textures_live_surfaces(void);
 __declspec(dllimport) size_t jp_textures_allocated_bytes(void);
 static struct {
     struct jp_exit_info info;struct jp_gpu *gpu;struct jp_window *window;
-    DWORD owner;int bound,busy;
+    DWORD owner;int bound,busy;uint64_t device_token,heap_token,rtc_token;
 } state;
 static int owner(void)
 {return !state.bound?JP_EXIT_NOT_BOUND:state.owner!=GetCurrentThreadId()?JP_EXIT_THREAD:JP_EXIT_OK;}
 int jp_exit_status(void){int e=owner();return e?e:(int)state.info.status;}
 int jp_exit_snapshot(struct jp_exit_info *out)
 {int e=owner();if(e)return e;if(!out)return JP_EXIT_ARGUMENT;*out=state.info;return JP_EXIT_OK;}
+static int rollback_claims(uint64_t heap_token,uint64_t rtc_token,int rejection)
+{
+    unsigned retained=0,failed_resource=0;int error=0;
+    if(rtc_token){int rc=jp_rtc_exit_cancel(rtc_token);if(rc){retained|=JP_EXIT_RTC;failed_resource=JP_EXIT_RTC;error=rc;}else rtc_token=0;}
+    if(heap_token){int rc=jp_sdk_heap_exit_cancel(heap_token);if(rc){retained|=JP_EXIT_SDK_HEAP;if(!error){failed_resource=JP_EXIT_SDK_HEAP;error=rc;}}else heap_token=0;}
+    if(!retained)return rejection;
+    /* Unexpected cancellation failure must not lose real cleanup authority. */
+    memset(&state,0,sizeof state);state.bound=1;state.owner=GetCurrentThreadId();
+    state.heap_token=heap_token;state.rtc_token=rtc_token;state.info.remaining=retained;
+    state.info.failed_resource=failed_resource;state.info.status=JP_EXIT_SERVICE;state.info.native_error=(uint32_t)error;
+    return JP_EXIT_SERVICE;
+}
 int jp_exit_bind(const struct jp_exit_config *cfg)
 {
     if(state.bound)return state.owner==GetCurrentThreadId()?JP_EXIT_ALREADY_BOUND:JP_EXIT_THREAD;
-    if(!cfg||cfg->bytes!=sizeof *cfg||!cfg->resources||(cfg->resources&~JP_EXIT_ALL)||
+    if(!cfg||cfg->bytes!=sizeof *cfg||!cfg->resources||(cfg->resources&~JP_EXIT_SUPPORTED)||
        (!!cfg->gpu!=!!(cfg->resources&JP_EXIT_GPU))||
        (!!cfg->window!=!!(cfg->resources&JP_EXIT_WINDOW)))return JP_EXIT_ARGUMENT;
     if(cfg->window && !jp_window_native_handle(cfg->window))return JP_EXIT_ARGUMENT;
+    if((cfg->resources&JP_EXIT_DEVICE) && (cfg->resources&(JP_EXIT_PRESENT|JP_EXIT_WAIT|JP_EXIT_CLOCK|JP_EXIT_WINDOW|JP_EXIT_GPU)))return JP_EXIT_ARGUMENT;
+    uint64_t token=0,heap_token=0,rtc_token=0;
+    if(cfg->resources&JP_EXIT_SDK_HEAP){
+        int rc=jp_sdk_heap_exit_claim(&heap_token);if(rc)return rc==JP_SDK_HEAP_THREAD?JP_EXIT_THREAD:JP_EXIT_SDK_HEAP_STATE;
+    }
+    if(cfg->resources&JP_EXIT_RTC){
+        int rc=jp_rtc_exit_claim(&rtc_token);
+        if(rc)return rollback_claims(heap_token,0,rc==JP_RTC_THREAD?JP_EXIT_THREAD:JP_EXIT_RTC_STATE);
+    }
+    if(cfg->resources&JP_EXIT_DEVICE){
+        int rc=jp_device_exit_claim(&token);
+        if(rc){
+            return rollback_claims(heap_token,rtc_token,rc==JP_DEVICE_THREAD?JP_EXIT_THREAD:JP_EXIT_DEVICE_STATE);
+        }
+    }
     memset(&state,0,sizeof state);state.bound=1;state.owner=GetCurrentThreadId();
-    state.gpu=cfg->gpu;state.window=cfg->window;state.info.remaining=cfg->resources;return JP_EXIT_OK;
+    state.gpu=cfg->gpu;state.window=cfg->window;state.info.remaining=cfg->resources;state.device_token=token;state.heap_token=heap_token;state.rtc_token=rtc_token;return JP_EXIT_OK;
 }
 static int failed(unsigned resource,int code)
 {
@@ -55,6 +88,12 @@ int jp_exit_cleanup(void)
     /* Drain captured GPU work before releasing any producers/resources. This
      * service does not dispatch EOR callbacks while shutting down. */
 #define CLOSE_INT(bit,call) do {if(state.info.remaining&(bit)){int rc=(call);if(rc)return failed((bit),rc);complete(bit);}} while(0)
+    /* The actual RTC handler must leave the chain before device quiescence
+     * closes its wait owner. No late callback may reach a retired clock. */
+    CLOSE_INT(JP_EXIT_RTC,jp_rtc_exit_finish(state.rtc_token));
+    if(state.info.remaining&JP_EXIT_DEVICE){
+        int rc=jp_device_exit_quiesce(state.device_token);if(rc)return failed(JP_EXIT_DEVICE,rc);
+    }
     CLOSE_INT(JP_EXIT_PRESENT,jp_present_shutdown());
     CLOSE_INT(JP_EXIT_INPUT,jp_input_shutdown());
     CLOSE_INT(JP_EXIT_RECORDING,jp_recording_shutdown());
@@ -80,12 +119,14 @@ int jp_exit_cleanup(void)
         complete(JP_EXIT_TEXTURES);
     }
     if(state.info.remaining&JP_EXIT_QUEUE){jp_queue_shutdown();complete(JP_EXIT_QUEUE);}
+    CLOSE_INT(JP_EXIT_DEVICE,jp_device_exit_finish(state.device_token));
     if(state.info.remaining&JP_EXIT_CLOCK){jp_clock_shutdown();complete(JP_EXIT_CLOCK);}
     if(state.info.remaining&JP_EXIT_WINDOW){jp_window_close(state.window);state.window=NULL;complete(JP_EXIT_WINDOW);}
     if(state.info.remaining&JP_EXIT_GPU){
         if(jp_gpu_jobs_live(state.gpu))return failed(JP_EXIT_GPU,1);
         jp_gpu_close(state.gpu);state.gpu=NULL;complete(JP_EXIT_GPU);
     }
+    CLOSE_INT(JP_EXIT_SDK_HEAP,jp_sdk_heap_exit_finish(state.heap_token));
 #undef CLOSE_INT
     state.busy=0;return JP_EXIT_OK;
 }

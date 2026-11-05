@@ -1,0 +1,78 @@
+Built-in VMU emulator, Chao game and optional desktop LCD widget
+User-requested project scope; added 2026-11-05.
+Status: PLANNED, not implemented or runtime verified.
+Whole-project estimate remains approximately 10%; goal active. The verified
+Japanese source baseline is separate from unfinished native gameplay and this
+new emulator feature. English localization and later platforms remain unfinished.
+
+Required user experience
+1. At the Chao Garden's VMU station, transfer a Chao to a virtual VMU using the
+   game's original transfer and save-data behavior.
+2. Open an integrated VMU view and play the actual Chao VMU minigame to raise it.
+   This requires execution of the original minigame, not a scripted replacement
+   that merely changes Chao statistics or displays the main game's VMU graphics.
+3. Return the Chao to the garden with the changes the minigame actually saved.
+4. Optionally move the same VMU session into a small desktop LCD widget. It can
+   remain playable when the main PC game is closed and transfer the Chao back
+   when the game is reopened. Provide sensible keyboard/controller controls,
+   adjustable pixel scaling, an optional always-on-top mode and audio controls.
+
+Implementation order
+A. Finish trustworthy VMU storage foundations first: original backup containers,
+   checksums, filesystem/card state and actual disk-backed storage. Preserve
+   existing verified raw save records as a separate format; do not treat them
+   as VMU images. No silent conversion or replacement of existing save files.
+B. Recover and verify the Chao Garden's original export/import path and required
+   minigame/program data. Source review begins with modules/al_main/vms.c and
+   its Chao/card dependencies in the pinned upstream source. Validate Japanese
+   and USA/localized variants before mixing programs, identities or save data.
+C. Implement or integrate a portable VMU execution core with the instructions,
+   memory, display, controls, timing, persistence and other devices needed by
+   the actual minigame. Assess reusable code for compatibility, provenance and
+   licensing before choosing it. Keep core emulation separate from window/UI
+   code so later platforms can reuse it. Main-game FPS must not change VMU speed.
+D. Connect the core to the same virtual-card state used by the original garden
+   transfer routines. Add the in-game VMU screen and controls, including clear
+   input focus so VMU controls do not unintentionally control the main game.
+   Prove the complete export/play/save/import loop before calling it supported.
+E. Add the optional desktop widget/companion using the same core and card state.
+   A compact native LCD window is an acceptable first widget implementation.
+   It should work independently of the main game process. Do not create a second,
+   unsynchronized copy of the Chao or its card just to run the widget.
+F. Qualify cross-process ownership, reopen/restart behavior, interrupted writes
+   and return-to-game recovery. Carry the shared core to Android/3DS when those
+   ports are ready; adapt the presentation/input without changing save semantics.
+   The desktop widget itself is a PC feature, not a requirement for console shells.
+
+Save ownership and transfer integrity
+Exactly one writer owns an active virtual card/session. Use explicit handoff
+between the game and widget, with a clean emulated storage checkpoint before
+either side reads or writes. Do not snapshot halfway through an emulated write.
+Preserve the original Chao identity and relevant updated fields, along with the
+original metadata/checksums. Use staged writes, backups and recoverable transfer
+state so crashes or closing either application cannot silently lose a Chao or
+leave both sides believing they own independent live copies. Do not invent
+offline raising or stat changes outside what the original minigame supports.
+
+Acceptance evidence required
+- Real original minigame boots and accepts controls in the integrated emulator.
+- A Chao exported from an actual native garden reaches the minigame correctly.
+- Playing/raising and saving changes its real data; importing returns that same
+  Chao with expected changes and valid game/card data.
+- The widget uses the same session, remains playable with the main game closed,
+  persists progress and hands it back after reopening the game.
+- Concurrent access is prevented; interrupted transfer, card removal, process
+  exit and corrupted/truncated data preserve a recoverable prior state.
+- Emulation timing stays correct across 60/120/240 FPS and widget resizing.
+- Region/program compatibility is tested, not inferred from matching filenames.
+- Share screenshots from the real tested emulator/widget when available, with
+  clear labels distinguishing tests from playable full-game progress.
+
+Distribution and documentation
+Provide original integration code, build instructions, notices and reproducible
+checks. Required retail VMU programs, firmware, icons and other assets are loaded
+or extracted locally from user-owned inputs and excluded from public releases.
+Do not claim a complete emulator from a working card codec, LCD renderer or UI.
+See JP_BASED_PORT_GOAL.txt and JP_NATIVE_PORT_PLAN.txt for the full project scope.
+Use Sol High/selected Sol Extra High for emulation and storage integration;
+Luna Low is suitable for routine plan/documentation upkeep.

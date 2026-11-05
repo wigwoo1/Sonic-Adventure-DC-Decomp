@@ -1,0 +1,140 @@
+Native data-track transport and original GDFS directory software
+Whole-project estimate: approximately 10%; goal active.
+Status: VERIFIED COMPONENT. Complete GDFS startup/drive interface, system
+bootstrap, audio, gameplay, English, enhancements, VMU Chao program/widget and
+later platforms remain unfinished. Matching source completion is separate.
+
+What changed
+The original GDFS directory software now reads the user's actual Japanese
+Dreamcast data track through a real native file-backed sector transport. This
+keeps the original ISO9660 record parsing, directory loading and filename search
+code available for the native port. It does not execute SH-4 game instructions
+at runtime. The transport is authored host C; the original directory C is built
+privately from the pinned external source for qualification.
+
+The host transport opens the supplied track read-only, against concurrent
+writers, with actual Windows overlapped I/O and an owned completion event.
+Requests use explicit frame addresses (track LBA+150) and declared sector-count
+limits. One creating game thread owns one request at a time. Cooked 2048 and
+Mode1 raw 2352 data sectors are supported; raw data yields contiguous 2048-byte
+payloads after validating every header. The real Japanese track demonstrates
+extended minute bytes A0 and C2 beyond minute 99; these remain valid. There is
+no audio-track, Mode2, ECC correction, physical seek timing or CD-DA support in
+this data transport component.
+
+Requests own both raw I/O staging and decoded output buffers. No partial raw
+request becomes a visible decoded view. Invalid bounds, an unsupported sector
+format or a bad later header fail the request without publishing partial data.
+A view's lifetime ends at explicit release/close. Pending OS write buffers
+cannot be replaced or freed. Foreign-thread mutation/close rejects without
+changing ownership or caller output. Read waits and cancellation/drain waits
+accept 0..60000ms; timeout retains resources for retry. Close cancels/drains first,
+then releases buffers and actual file/event handles. A failed handle close
+retains the remaining handle for retry rather than dropping its ownership.
+
+Original software reused
+Nine complete function bodies are compiled unchanged: name_upper, gdFsMemcpy,
+name_same, name_same_any_case, name_sid, read_dirrec, gdFsGetDirEnt,
+gdFsSearchName and gdFsCreateDirhn. Their serialized directory entries remain
+44 bytes, with a 16-byte directory header. The upstream GCC initialization of
+dr is enabled in gdFsGetDirEnt. Full original game/SDK input files remain pinned
+at commit 25a3d3154dbe657325e97dbe8c5291086f6af5c0 and hash-verified.
+
+The private qualification fixture validates record geometry/name bounds before
+entering the original parser and stages a directory before returning it to a
+caller. It bounds directory reads and reports actual I/O failure and original
+DIROVER results. Its gdFsReadW adapter is DIRECTORY-ONLY: it validates each
+sector as a directory and is not a general production GDFS replacement. Do not
+install that fixture globally: PVDs, path tables and ordinary game payloads
+require different validation. The production native transport accepts ordinary
+sector data; future GDFS integration must retain appropriate bounds at each
+original parser's own boundary.
+
+Verification
+verify_native_gd_media.py passes 8860 assertions. It exercises real cooked/raw
+file I/O, multi-sector reads, ranges/overflow, stable full-width output views,
+pending-buffer protection, cancellation/drain, creator-thread restrictions,
+overlapping outputs, concurrent-writer exclusion and malformed raw headers.
+It creates only fresh local fixture files and opens the user's disc read-only.
+Zero-time read/cancel observations in the final run both completed immediately;
+the timeout return branch was not observed on this fast local storage. The
+code's timeout-retention behavior remains reviewed, rather than claimed as an
+observed slow-I/O result. No fake OS completion or delay source was substituted.
+
+The actual Japanese data track is 1185760800 bytes: 504150 raw 2352 sectors starting
+at FAD45150. Its PVD, first/last sectors, minute99/100 boundary and random spans
+match independent direct-file extraction. Full SHA256 before/after native reads:
+4ac0e256cf91520f794d7f831c193847b16397da3bde5c890e04e5330499c76c.
+GDI SHA256: c38c5ad9f9b0c2bc984040fd9f0ce9baf1a5592310936fddce1cd969b2828a68.
+Neither input is changed or copied into public artifacts.
+
+The original directory loader reads all 248 root entries and 1863 SONICADV entries
+from actual native sector requests (six root sectors and 45 SONICADV sectors).
+Every extent, size, flag, search ID and
+filename matches an independent ISO9660 reader. Exact and case-insensitive
+native searches cover every entry. The original binary executes 2143 complete
+calls without function hooks: 2111 original record parses and 32 full searches.
+Parser fields and surrounding canaries match after pointer relocation. Directory
+overflow and malformed-record tests preserve caller data. The source bodies
+and original image hash remain unchanged; no original function is replaced in
+that instruction oracle.
+
+Three distinct complete game files, including the original 1ST_READ.BIN and an
+actual PRS asset, are recovered through native transport and compared against
+independent extraction. Native 1ST_READ.BIN is 6783232 bytes and exactly matches
+the preserved instruction-reference image:
+e038db9029bc0ea8ffdb8ec8fc2e0690d1c324f5f7179f3dc58f56574b1aeeaf.
+The other selected filenames, sizes and hashes are in the verification JSON.
+This proves data retrieval, not execution of the full program or a new gameplay
+screenshot. Rendering/startup component libraries were not changed by this work.
+
+Builds and reproduction
+Authored transport: work/sonic-adventure/jp-native-gd-media-v1.
+Private original ISO probe: work/sonic-adventure/jp-native-gd-iso-probe-v2.
+Final proof: work/sonic-adventure/jp-native-gd-media-check-v3/verification.json.
+Build/native API: jp_port_tools/build_native_gd_media.py and
+native/jp_native_gd_media.h. Original directory probe:
+jp_port_tools/build_native_gd_iso_probe.py and gd_iso_fixture.inc.
+Use Python -B, the workspace, pinned upstream, original Japanese binary and the
+user's GDI path. All output directories must be fresh beneath work/sonic-adventure.
+Exact commands, source/artifact hashes and results: analysis/jp_native_gd_media_*.json.
+
+Both selected libraries compile/link warning-free. The initial private fixture
+used memchr, which the minimal SDK string header does not declare; a bounded
+local string scan fixed that authored diagnostic helper. Original code was not
+changed. A missing verifier import was fixed, then reporting captured directory
+sector counts before the intentional overflow probe and selected distinct file
+payloads. Prior source/proof/build versions are preserved. These were focused
+build/test bookkeeping fixes; no unresolved functional blocker remains here.
+
+Distribution
+Only the authored asset-free transport DLL/import library is eligible for a
+reviewed public research build. The combined original ISO probe DLL/generated
+original C, GDI/track data, recovered game binaries/assets and retail captures
+remain private. The public transport contains no original game/SDK bodies or
+retail data. The publisher now also selects authored .inc source files: the new
+ISO fixture and existing card/heap observers. All three were reviewed as
+authored code; a scoped selector check retains the work/cache/binary exclusions.
+Source-matched artifacts and scoped evidence await the next reviewed
+daily GitHub snapshot. No publication or playable port is claimed by this task.
+
+Next work
+Keep work/sonic-adventure/jp-native-peripheral-startup-v3 as the current qualified
+boot graph. The new transport/probe are independent components, not yet imported
+by that graph. Next implement a real native GD_DCF adapter and wire the original
+GDFS initializer, handle/read/seek/server and appropriate interface dispatch to
+it. Reuse the actual transport for real requests/completion/cancellation. Retain
+the bounded parser checks with the correct data type at each call site.
+
+Original GDFS_WORK/handle sizes contain native pointers; console GDFS_WORK_SIZE
+constants are unsafe on 64-bit hosts. Allocate from actual native sizeof/offsetof,
+validate pointer-bearing fields/casts and preserve serialized scalar widths.
+The overlay LIF/hardware DMA/interrupt paths require deliberate native adaptation;
+do not satisfy them with successful no-ops. Actual native vblank timing already
+has one owner. Future GDFS cleanup must precede RTC/device/wait shutdown and
+final SDK heap retirement, with explicit recovery after partial bootstrap.
+The old original sbInitSystem probe is still never linked/executed. Its last
+qualified thirteen-import inventory still has seven unavailable providers;
+this component has not yet supplied gdFsInit/gdFsChangeDir exports. Full system
+bootstrap, audio and gameplay remain unfinished. Keep the complete goal active.
+Use selected Sol High/Extra High for GDFS/platform integration; Luna Low for docs.

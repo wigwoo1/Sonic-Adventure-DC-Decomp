@@ -1,0 +1,119 @@
+Native device-owned boot and one terminal exit authority
+Whole-project estimate: approximately 10%; goal active.
+Status: VERIFIED INTEGRATION COMPONENT. Full main system bootstrap, audio,
+playable PC gameplay, English, enhancements, VMU program/widget and later
+platforms remain unfinished. Source-baseline completion is separate.
+
+What changed
+The new native Ninja device now participates in actual original boot/reset/logo
+tests. GPU/window/video/clock/wait/presenter creation comes from the complete
+adapted njInitSystem path, rather than separate Python setup calls. Original
+main texture/vertex/shape buffers, real vertex lifecycle, default font and game
+text style are prepared afterward. Actual display_reset_full and boot_init run,
+followed by all original logo steps and native non-returning process exits.
+The test caller selects real entries; no game/SDK/native function is replaced.
+Audio/overlay traces that remain in the old scoped harness are still traces;
+this does not execute the entire main system_boot_init or sbInitSystem.
+
+The general exit service delegates shutdown of device-owned resources instead
+of also owning their borrowed GPU/window handles. A native 64-bit token records
+one terminal authority transfer on the creating thread. Rejected binds leave
+the device unclaimed and the exit service unbound. After claim, ordinary device
+shutdown/configure/initialize cannot close or replace those resources.
+Wrong tokens, including mismatches in the high 32 bits, and foreign threads are
+rejected without changing ownership. Creator-thread restrictions persist after
+delegated shutdown completes; no same-process restart is implied.
+
+Cleanup has two stages. The device first drains pending presentation without
+game callbacks and stops its logical wait service. Window/GPU/video/clock stay
+alive while the exit service closes input/recording, destroys tasks, releases
+assets and retires frame/queue/texture/render storage. The device then finishes
+its remaining cleanup. External retained frames or GPU jobs prevent completion
+and preserve the remaining native owners for a genuine retry. Successfully
+closed owners are never closed twice. Original task destructors run once and
+cannot recursively enter exit cleanup.
+
+Existing exit structures and classic JP_EXIT_ALL=16383 retain their ABI and
+meaning. JP_EXIT_DEVICE=16384 selects the delegated device. It cannot be combined
+with independently owned PRESENT/WAIT/CLOCK/WINDOW/GPU bits or raw GPU/window
+handles. JP_EXIT_WITH_DEVICE=18422 selects the device and other classic owners;
+its config supplies NULL GPU/window pointers. Both the new path and previous
+classic mode pass complete original-logo regression suites.
+
+Verification
+The focused ownership suite passes 121 checks in ten fresh processes. It uses
+actual native device initialization, original game/Ninja text, pending GPU work
+and independently retained frames/jobs. It covers authority validation, normal
+cleanup, pending drain without EOR game callbacks, external-owner recovery,
+foreign threads, adoption of a real partial ordinary drain, unavailable-device
+rejection and repeated cleanup. Ordinary partial shutdown retains wait too
+(resource mask 31); delegated quiesce then stops it (mask 29). An initial test
+incorrectly expected 29 before quiesce; it was corrected to the existing native
+sequence. The failed attempt and logs remain preserved.
+Actual syBtExit terminates with 0 after cleanup and 70 after a real unresolved
+external-frame failure. These are observed child-process exit codes, not a
+simulated return from the non-returning native function.
+
+The new device-owned boot suite passes 7215 checks. Six fresh native device
+initializations create all graphics/timing owners. The actual main buffers,
+vertex/font/text setup, original display reset and boot_init execute. Three
+complete 191-step logo runs produce 570 actual GPU images/Presents and compare
+175104000 pixels against the independent logo/fog/fade oracle. The remaining
+cases exercise cleanup, original quit and pending-GPU quit, plus classic partial
+and unbound exit failures. New device delegation is checked in all six complete
+startup cases; explicit post-cleanup native device state is checked in all four
+cases that return before the final non-returning process exit. Real original
+Ninja EOR is composed with the passive pixel observer for the 570 images.
+
+Classic startup remains verified by 7756 checks and another 570 actual images/
+Presents with its original setup and classic exit mask. Standalone device
+regression adds 215 checks, including ten complete original frame-control
+machine calls without hooks. Save/CRC regression adds 591 checks against 29
+original calls. This milestone totals 15898 focused/regression assertions.
+The unchanged frame/presenter/GPU/vertex DLL bytes are reused with exact hashes;
+the actual device host and exit owners are rebuilt warning-free. Previous
+proofs and old source versions remain preserved.
+
+The new native boot capture is the actual window backbuffer. Its SEGA image is
+visually unchanged from earlier qualified captures; it now comes through the
+resource-owning Ninja initializer and delegated cleanup test. It is not a stage
+or playable-game screenshot. Test images and retail-derived assets stay private.
+
+Next bootstrap frontier
+The current Ninja initializer inventory still resolves all 31 imports. The
+surrounding original sbInitSystem probe still has 13 imports and ten unavailable:
+_builtin_set_imask, syHwInit, cache_ram_init, _BSG_END, syMallocInit, syHwInit2,
+pdInitPeripheral, syRtcInit, gdFsInit and gdFsChangeDir. These are this one
+bootstrap's dependencies, not the total number of game routines left.
+Relevant original sources are src/system/sbinit.c, src/system/cache.src,
+sdk/shinobi/syhw.c, syMalloc.c, pdmain.c, sg_syrtc.c, gdfs.c and gdfshn.c.
+Recover actual host memory/input/time/filesystem startup and failure cleanup.
+The original console heap address and pointer-truncating alignment are unsafe
+on the host. The SDK heap source also documents a 32-byte end overrun; allocate/
+bound a real host arena and qualify its native pointer-width behavior.
+
+Inspect cache.src before treating every missing cache name as hardware work:
+cache_ram_init/restore/end really return at once in the original executable,
+and the following RAM-mode code is unreachable. An independently verified port
+of that genuine behavior differs from inventing a successful hardware stub.
+Other cache/interrupt/hardware paths need actual host adaptation. Do not execute
+the unchanged compile-only console bootstrap probe or add fake filesystem/audio
+success providers. All overall project requirements remain in scope.
+
+Reproduction and distribution
+build_native_device_exit.py rebuilds the actual device/exit and relinks the
+original logo while reusing qualified shared libraries. It preserves prior
+sources and objects. verify_native_device_exit.py tests authority and recovery;
+verify_native_device_exit_startup.py derives only the existing Python caller
+setup/cleanup selection and uses the original whole-image oracle and native
+process exits. The old Ninja-global startup verifier runs unchanged for classic
+compatibility. Both dependency auditors select an actual SDK compile recipe
+from mixed build metadata; the first command can now be a host-only compilation.
+All compile-only unsafe probes remain private and unexecuted.
+Exact commands, source and artifact hashes, and proof copies are in analysis/
+jp_native_device_exit_*.json. APIs: native/jp_native_device.h and
+native/jp_native_exit.h. Combined SDK/game artifacts, generated original source,
+retail inputs and screenshots stay private. Authored changes and evidence await
+the next reviewed daily GitHub snapshot; no upload is claimed by this task.
+Keep Sol High/selected Sol Extra High for system bootstrap and memory/I/O work.
+Luna Low is appropriate for routine documentation. Keep the goal active.

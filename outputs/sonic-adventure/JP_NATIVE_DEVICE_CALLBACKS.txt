@@ -1,0 +1,97 @@
+Native Ninja vertex-completion and fatal-error callbacks
+Whole-project estimate: approximately 10%; goal active.
+Status: VERIFIED COMPONENT. Full native device/system creation, gameplay,
+audio, English, the VMU minigame/widget and later platforms remain unfinished.
+
+What changed
+The actual presenter now provides kmSetEndOfVertexCallback and
+kmfSetFatalErrorCallback alongside its existing EOR callback. All three use
+the same typed kmiDeviceExtension record already shared with the SDK video
+setters. There is still one real clock owner and no circular DLL dependency.
+The complete original njSetEOVflag body and original volatile 32-bit EOV/error
+state now have single owners in the frame DLL. The original njSetERRflag body
+only adapts its encoded error argument through uintptr_t and Uint32 before
+the original signed Int assignment. This argument is an error number, not a
+pointer to a native object. Ordinary callback arguments retain full host width.
+Builders inspect every existing linked object for duplicate definitions.
+
+EOV is delivered after the actual captured vertex lists have been copied into
+an owned GPU submission. It does not mean the GPU has finished drawing. The
+existing EOR callback follows observed GPU completion. Both run on the creating
+game thread; repeated polls cannot redeliver either event for the same work.
+A rejected GPU submission does not report successful vertex completion.
+
+The first terminal presentation failure latches status before calling its
+fatal handler. A flip timeout retains original code KMI_FATAL_FLIP_TIMEOUT (4).
+Other native failures use 0x10000 + jp_present_error, keeping them distinct
+from original console hardware errors. Repeated failed calls preserve the
+first failure and do not repeatedly dispatch the callback. The original Ninja
+error flag receives the actual code. It is not used to conceal a failed frame.
+
+Callbacks may inspect snapshots, but cannot submit/present, change handlers,
+or shut down the owner recursively. Foreign threads cannot change handlers.
+Removing a handler is supported. With no fatal handler the native port keeps
+an observable terminal error rather than entering the console's infinite halt
+loop. This is an intentional host behavior, not a console IRQ implementation.
+The application must still check failure status and stop the failed iteration.
+
+Shutdown drains outstanding real GPU/frame ownership without calling game
+callbacks. All three handlers are cleared at completed shutdown and fresh
+initialization so a later owner cannot call stale pointers. Failed drains keep
+their ownership and allow a subsequent drain attempt. Callback objects and
+arguments remain caller-owned until removal or completed shutdown.
+
+Verification
+The focused suite passes 112 checks. Eighteen complete original Japanese SH-4
+calls cover both Ninja callbacks without function hooks, including signed error
+bits. Actual native tests use original game debug-text/font calls and real GPU
+jobs/windows. They cover EOV-before-EOR order, unchanged 64-bit arguments, real
+GPU rejection, timeout code 4, first-error delivery, recursive/foreign-thread
+rejection, handler removal, pending shutdown and fresh-owner callback lifetime.
+Five successful GPU text submissions occur; three are actually presented. The
+timeout phase uses controlled logical time with real GPU work and real window
+message service; native GPU execution is never simulated by a success stub.
+
+The preserved startup chain passes 7756 checks with six complete original
+Ninja global/light initializations, 570 real GPU images/Presents and 175104000
+compared pixels. Save/CRC regression adds 591 checks against 29 original calls.
+Total focused/regression assertions: 8459. These are scoped startup/component
+tests, not evidence of a complete main system_boot_init or playable game.
+The fresh SEGA boot capture comes from the real native window backbuffer;
+its visible content is unchanged from the previous qualified boot capture.
+
+Remaining device work
+The compile-only njInitSystem audit still has 31 imports. Unavailable exports
+fall from 20 to 14: five functions and nine data objects. The missing functions
+are kmInitDevice, kmSetDisplayMode, kmSetWaitVsyncCount, njSetVideoMode and
+waitVsync. One missing data export, _nj_vertex_buffer_, already exists locally
+in the linked vertex_lists.obj and must be reused/exported, not duplicated.
+The remaining data covers actual mode/framebuffer/configuration state.
+These counts describe this initializer's dependency frontier, not all game
+routines or an estimate of how many routines remain in the whole project.
+
+Next implement the real resource-owning Kamui device/display path using the
+qualified GPU/window/wait/video services. Keep cross-module ownership acyclic,
+provide genuine timing/configuration behavior, and propagate failures with
+partial-initialization cleanup. Do not link or execute the unadapted MMIO audit
+object. The full parent still needs sbInitSystem and sound_system_init, each
+with further dependencies. No successful no-op hardware/audio functions were
+introduced by this milestone.
+
+Reproduction and preservation
+Use build_native_device_callbacks.py with the pinned source, previous qualified
+startup chain and preserved-source manifest. verify_native_device_callbacks.py
+performs the instruction/GPU/lifecycle checks. project_native_startup_owner.py
+composes the actual owners with existing startup; it now permits explicitly
+recorded source replacements only when the previous source is preserved with
+the exact old hash and the new source matches the selected owner. No baseline
+proof or object is overwritten. verify_native_ninja_global_startup.py runs the
+existing complete startup regression; audit_native_ninja_device_init.py records
+the current unresolved imports without executing its hardware code.
+Exact commands, source hashes and proof hashes are in analysis/
+jp_native_device_callbacks_*.json. Public APIs remain in native/
+jp_native_present.h. The actual linked SDK/game DLLs, generated original source,
+retail assets and screenshots stay private. Authored changes and evidence await
+the next reviewed daily GitHub snapshot; this document does not claim upload.
+Keep Sol High/selected Sol Extra High for device and platform integration.
+Luna Low is suitable for routine documentation. Keep the goal active.

@@ -1,0 +1,123 @@
+Latest original game card lifecycle: JP_NATIVE_CARD_LIFECYCLE.txt.
+Goal active; overall about 10%. Original card initialization/callbacks now
+use actual filesystem storage and real frame_vsync delivery: 225 card
+checks, 591 original save regressions, 16 GPU/text checks and 7726 startup
+checks pass (570 actual presented frames). card_init now resolves in the
+parent startup frontier; seven symbols remain unavailable. Full gameplay,
+VMU minigame/widget, English and later platforms remain unfinished.
+Earlier notes retain historical scope and their original proof files.
+
+Original VMU filesystem running on native Windows storage
+Whole-project estimate: approximately 10%; goal active.
+Status: VERIFIED COMPONENT. Full native gameplay and Chao/VMU emulation remain
+unfinished. The Japanese source baseline is complete; native gameplay, English
+localization and later platforms are separate unfinished milestones.
+
+What changed
+The complete pinned vmsphys.c, vms_rw.c, vmscmd.c, vmsapi.c and vmsfib.c modules
+now compile and link privately on Windows x64. They provide the real original
+FAT, directory, format, file, executable-file, command and callback behavior.
+Our adapter replaces Maple block access with the already qualified disk-backed
+card owner. No substituted filesystem, immediate-success save or fake mount is
+used. All original checkout files are checked against the pinned Git commit
+before building and their hashes are checked again afterward.
+
+Only native command argument slots and pointer casts become pointer-sized.
+On-disk words, file contents and the callback's scalar parameter remain their
+original widths. Original upstream GCC explicit-return and directory-loop
+repairs are enabled after hardware headers have been parsed without SH-4 asm.
+The original debug formatter calls a bounded host CRT formatter, using the
+compiler's native varargs convention instead of the SHC stack convention.
+
+The native scheduler uses actual Windows fibers and owned native stacks. The
+original 4KB SH-4 stack arrays are retained as metadata and never used as unsafe
+native stacks. A sleep resumes through the real server; each yield restarts the
+scan at slot zero, preserving the original restored-register scheduling order.
+Native stack locals and per-fiber floating-point state survive switching.
+Capacity/index bounds and actual live-fiber counts replace the original
+unbounded slot search and missing count increment. Returning from an entry ends
+that fiber safely. Indefinite sleeps require wakeup; tick comparisons handle
+wraparound rather than using the original finite NEVER sentinel.
+
+Native buInit checks actual setup failures before reporting success. There is
+no host Maple interrupt chain: buExecServer services the real original server
+on the owner thread, and busy buStat polling also pumps one genuine pass so the
+original game's save busy-waits can finish. Reentrant callback status queries
+do not resume the same server recursively. buDisableServer means manual host
+service, which is already the mode used by the game's frame_vsync/card callback
+policy. A busy buExit leaves service enabled, unlike the original SH-4 path;
+an idle exit frees every native fiber and restores the thread's conversion state.
+
+Actual verification
+225 filesystem assertions passed using eight fresh, private 128KB test images:
+- Real eight-drive initialization, mount and progress/completion callbacks.
+- Mounting blank media does not silently format or alter a single image byte.
+- Original formatting; independent serialized root, BCD date and volume checks.
+- Ten-block saves with original verify/readback, loading, partial loading,
+  overwriting, real free-space accounting, renaming and directory enumeration.
+- File-handle write/read/close, with handles and buffers actually above 4GB.
+- Independent directory/FAT walks and exact persisted payload comparisons.
+- Executable file at consecutive blocks 0..2 and real partial executable rewrite.
+- Every byte of the original full-card read matches the persisted image.
+- Full/unformatted card errors preserve previous disk contents.
+- A real Windows file handle denies atomic replacement after staging; original
+  retry/error callbacks report failure and the complete prior disk survives.
+  Remounting after releasing the handle recovers the prior files.
+- Original missing-file behavior, clean exit/reinitialization, detach/remount,
+  callback thread ownership, eight-drive work-buffer canaries and raw-save-file
+  preservation. Only test cards were used; no user save was opened or modified.
+
+A separate compiled native C fixture passes with zero failures. Its independent
+expected trace contains 11 events over 10 real context switches and 10 server
+passes. It exercises zero/one/multiple-tick and indefinite sleeps, wakeup,
+return/end, kill, eight-server exhaustion, capacity/index guards, nested distinct
+servers, persistent stack locals, distinct SSE rounding modes, unchanged SH-4
+stack arrays, cleanup and restoration of the original thread/fiber state.
+
+Earlier backup-container and block-owner evidence remains intact: 406 checks,
+including 51 original machine entries for the container functions. Those machine
+comparisons are not claims of instruction-level equivalence for this entire
+filesystem. This milestone runs compiled original SDK software on actual native
+I/O and qualifies the stated scenarios, rather than executing the whole game.
+
+Known scope and remaining work
+The initial virtual device has fixed standard 128KB geometry: 256 blocks of
+512 bytes, root 255, FAT 254, directory 253 downward for 13 blocks, 200 user
+blocks and a 128-block executable area. General imported cards, relocated bad
+block layouts and malicious/corrupt-image handling are not fully qualified.
+For an independent primary-source cross-check of root/FAT/directory conventions:
+https://github.com/KallistiOS/KallistiOS/blob/master/kernel/arch/dreamcast/fs/vmufs.c
+No KallistiOS implementation is copied into this adapter.
+
+Per-block replacement is durable and atomic; a multi-block filesystem operation
+is not a crash-safe transaction. Original SDK routines retain quirks, including
+some ignored metadata-write errors. The tested first-format-write failure is
+not proof of recovery from every interruption point. Shared game/widget transfer
+checkpoints, backups, card identity/change notifications and whole-operation
+recovery are still required before supporting live Chao handoff. See
+JP_VMU_EMULATOR_PLAN.txt. Raw SONICADV_JP.SAV records remain a separate format.
+
+The game-level card_init, card_complete and card_progress have not yet been
+linked to this library. Existing rendering/startup tests have not been relinked
+to it; the prior parent-startup frontier remains authoritative. There is no
+playable EXE or new gameplay screenshot from these data-only tests. The actual
+VMU execution core, original Chao export/raise/import and desktop widget remain
+planned. See JP_NATIVE_VMU_STORAGE.txt for the preceding storage milestone.
+
+Reproduce (use fresh output names; previously verified files are never replaced):
+PYTHON -B outputs/sonic-adventure/jp_port_tools/build_native_vmu_fs.py --workspace WORKSPACE --upstream work/sonic-adventure/reshaped-sonic-adventure-review --baseline work/sonic-adventure/jp-native-backup-image-v2 --store work/sonic-adventure/jp-native-vmu-store-v3 --output work/sonic-adventure/NEW-FS-BUILD
+PYTHON -B outputs/sonic-adventure/jp_port_tools/verify_native_vmu_fs.py --workspace WORKSPACE --build work/sonic-adventure/NEW-FS-BUILD --output work/sonic-adventure/NEW-FS-CHECK
+PYTHON -B outputs/sonic-adventure/jp_port_tools/verify_native_fibers.py --workspace WORKSPACE --build work/sonic-adventure/NEW-FS-BUILD --output work/sonic-adventure/NEW-FIBER-CHECK
+
+Reviewed source/tools and proof copies are under native/, jp_port_tools/ and
+analysis/jp_native_vmu_filesystem_*.json. Generated original SDK source, objects,
+the linked SDK-containing DLL, all test images and C fixture builds stay private.
+Historical proof/source bytes are preserved. Authored adapters can be reviewed
+for the next daily GitHub snapshot; this document does not claim that pending
+changes have already been published.
+
+Next task: connect the original game's card_init/complete/progress lifecycle
+using this actual library, preserve the single save_drive/save state owner,
+and replace any earlier diagnostic backup-server provider in frame_vsync.
+Keep Sol High/selected Sol Extra High for that integration; Luna Low is suitable
+for routine documentation. Do not pause the goal.

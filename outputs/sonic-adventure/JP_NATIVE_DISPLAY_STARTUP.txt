@@ -1,0 +1,119 @@
+Latest complete Ninja global/light init: JP_NATIVE_NINJA_GLOBAL_INIT.txt.
+Goal active; overall about 10%. Entire original global/light bodies now
+use real single-owner typed state and guarded native startup: 133 focused
+checks, 591 save checks, 16 GPU/text checks and 7756 startup checks pass,
+with six full global initializations and 570 actual startup Presents.
+Original light instructions match in eight complete calls. Full Ninja
+device/system init and audio remain unfinished; the next device import
+inventory is recorded without executing its unadapted MMIO code.
+Earlier notes retain historical scope and original proof files.
+
+Native display selection, original startup globals and Ninja init frontier
+Whole-project estimate: approximately 10%; goal active.
+Status: VERIFIED DISPLAY/STATE COMPONENT. Full native startup/gameplay, audio,
+English, Chao VMU execution/widget and later platforms remain unfinished.
+
+What changed
+The original syCblCheckCable body now compiles unchanged into the shared frame
+owner. Its lower-level Dreamcast hardware-pin read is replaced with a real
+Windows current-display query. Successful PC queries choose the original
+progressive VGA-compatible path; this does not identify the physical cable
+connected to the user's monitor. An unavailable query returns the SDK reserved
+profile rather than inventing a connected display. Future native startup must
+check actual resource initialization; a decoded profile alone proves no GPU.
+
+jp_display_query returns current physical pixel dimensions, pixel depth,
+display flags and a driver-reported refresh value, with explicit validity when
+the latter is more than one. It never changes the desktop mode. This value is
+not measured game/render timing or proof of 60/120/240 FPS support. Physical
+monitor dimensions are separate from original game logical dimensions and
+future selectable render resolution/aspect ratio.
+Primary Windows API reference:
+https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-enumdisplaysettingsw
+
+The three actual original main.c definitions, cable_mode, dat_8c78b4d8 and
+dat_8c78b4dc, are restored once in the shared frame DLL. Their original four-byte
+types are preserved. The builder checks that no previous linked object defines
+them, checks pinned source against Git, and exports genuine data imports.
+No sbInitSystem or sound initializer placeholder is added.
+
+Verification
+15 display/state checks pass. A real Windows query fills only the declared
+output span, preserving both canaries; invalid spans leave all bytes unchanged.
+The actual SDK decoder consumes the real host profile. Four complete original
+Japanese cable-reader/decoder calls match it while unrelated register bits vary.
+The executor supplies only the explicit MMIO word; no original function, branch
+or instruction is hooked/replaced. These are instruction comparisons, not
+physical Dreamcast cable detection.
+
+A separately compiled real peer DLL imports all three startup variables as
+data. Writes from either side are visible on the other, proving one owner;
+display detection leaves unrelated main state alone. Initial values match the
+original zeroed startup data. Both the original source bytes and earlier
+qualified object bytes are preserved. The host query uses Windows headers only,
+so partial Dreamcast CRT headers cannot shadow its system declarations.
+
+Rebuilt-owner regressions pass: 1733 VMU LCD checks with 58 original calls;
+591 save/default/CRC checks with 29 original calls; and 7726 startup checks,
+including 570 actual GPU images/Presents and 175104000 compared pixels.
+Total focused/new-owner regression assertions: 10065. These counts are evidence
+for the scoped components, not routine coverage or whole-project percentages.
+The parent system_boot_init function is still not executed in its entirety.
+
+Next actual dependency, compiled and audited
+The complete original njInitGlobal function compiles privately to a native
+object with zero diagnostics. It enables the upstream GCC 16-plus-32-float
+boundary repair, keeping the function text unchanged. The current DLL provider
+audit resolves its normal existing data/functions and identifies four missing
+game/SDK providers:
+  _nj_cnk_easy_multilight_buffer_       16-Float source block
+  _nj_cnk_easy_multilight_buffer_dst_   32-Float destination block
+  _nj_motion_callback_                 native function pointer
+  njLightSystemInit                    original lighting initialization
+
+The additional _fltused object import is a compiler/runtime marker. A genuine
+tiny DLL link proves the normal Windows CRT supplies it without defining a
+replacement. It is not missing game state. njInitGlobal has not yet been linked
+or runtime qualified; this audit does not pretend that Ninja startup works.
+
+Port njLightSystemInit from its complete original C source. Its material,
+control and queue objects also need their actual typed storage checked against
+the current linked owners. njGlobal.c reserves the lighting blocks in assembly;
+use header types and 32-byte alignment instead of copying raw 32-bit pointer
+layouts into native records. The light control has pointer-bearing members,
+whereas the light queue stores integer indices. Recover single owners and test
+original semantics, including which fields initialization intentionally leaves.
+
+The complete global initializer imports data from both frame and presentation
+owners. Prefer the existing higher SDK lifecycle module or an equivalent acyclic
+composition, with real DLL data imports; do not duplicate those globals or add a
+circular frame/presentation dependency. The original vsync handle reset must be
+coordinated with the native wait/callback owner's fresh, quiescent startup state.
+
+Current parent export frontier
+Only sbInitSystem and sound_system_init remain absent from system_boot_init's
+immediate imported symbol list. That does not mean only two routines remain in
+the game. Their bodies contain additional real initialization dependencies.
+sbInitSystem still assumes console heap addresses, cache/interrupt setup,
+Ninja/Kamui hardware, peripherals, RTC and GD filesystem. Native equivalents
+must initialize actual existing providers, report real failures and unwind
+partial ownership. Sound must perform actual audio work. No successful no-op
+hardware/audio/disc functions are an acceptable completion claim.
+
+Workflows and distribution
+build_native_display_startup.py links the new native query, original decoder
+and startup data with all retained frame objects. verify_native_display_startup
+checks that exact artifact. project_native_startup_owner.py is a reusable
+projection helper for qualified frame/presentation owners, replacing the need
+for a new near-identical projection script at every subsequent milestone.
+It checks current source/object/DLL hashes and an actual owner qualification.
+audit_native_ninja_system_init.py records the compiled original function and
+current provider inventory. Reports contain exact commands and hashes.
+
+Proofs: analysis/jp_native_display_startup_*.json. Original/combined SDK/game
+DLLs and generated source remain private; authored tools/query code and evidence
+can enter the next reviewed daily GitHub snapshot. Earlier sources, builds and
+proofs are preserved. Keep the complete VMU emulator/widget scope in
+JP_VMU_EMULATOR_PLAN.txt and all earlier platform/localization goals intact.
+Keep Sol High/selected Sol Extra High for Ninja/platform initialization; Luna
+Low is suitable for routine documentation. Keep the goal active.

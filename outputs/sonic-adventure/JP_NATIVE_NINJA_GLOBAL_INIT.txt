@@ -1,0 +1,112 @@
+Complete original Ninja global and lighting initialization on native owners
+Whole-project estimate: approximately 10%; goal active.
+Status: VERIFIED COMPONENT. The complete PC game, audio, English, VMU program/
+widget and later platforms remain unfinished. Japanese source-baseline evidence
+is separate from actual native behavior.
+
+What changed
+The entire njInitGlobal body and the complete njLightSystemInit source now run
+with the real shared frame/queue/context/video state. All existing imports
+resolved in the current frame owner on reinspection; no new higher layer or
+circular DLL dependency was necessary. Earlier handoff suggestions about split
+owners were superseded by this actual symbol inventory.
+
+Six missing original objects now have one typed owner: the 16-Float easy-light
+source, 32-Float destination, light material, light control, light queue and
+motion callback. The five assembly-reserved light blocks keep 32-byte alignment.
+The material is 52 bytes; native control is 264 because it contains 32 pointers;
+the queue remains 132 because its entries are integer indices. The callback is
+a native pointer. Original scalar and serialized widths are not widened.
+The builder checks existing linked definitions before introducing any object.
+
+The original global body is unchanged except for its private entry name. Its
+upstream GCC repair writes 16 source and 32 destination Floats explicitly,
+instead of overrunning a 16-Float object. The subsequent integer marker 3 keeps
+its exact bits in the destination's first word. The original light body is
+unchanged. Source/header bytes are checked against pinned commit
+25a3d3154dbe657325e97dbe8c5291086f6af5c0 and remain untouched.
+
+A native entry guard validates ready video/queue/frame owners and rejects
+active producers, recorded work or submitted frames before writing global state.
+Logical dimensions come from the actual native video snapshot. The guard selects
+the real initial context slot, which the existing context guards require, then
+runs the complete original initializer. The original context headers, render
+defaults, clipping, counters, light state, sprite setup and culling operations
+execute through actual providers. The SDK void entry reports failure through
+jp_ninja_global_status; it does not manufacture successful initialization.
+
+One game thread and fresh/quiescent startup are preconditions. Native wait/vsync
+callbacks belong to their existing owner; callers keep them quiescent during
+this setup. The original opaque vsync_handle reset does not by itself unregister
+a host callback. The full native device/system coordinator must preserve that
+lifecycle and error handling before this can serve general system re-entry.
+
+Focused verification
+133 checks pass. Eight complete original Japanese njLightSystemInit calls run
+without hooks. Every material byte and integer queue word matches the native
+output. Both guest and host control records preserve all light slots and reset
+only count, including preservation of native padding. Independent material
+defaults match too. Native types, actual alignment and initial state guards are
+checked directly.
+
+The complete global entry is tested on actual 320x240, 640x480, 1280x720 and
+641x479 logical video canvases. Independent checks cover all 48 easy-light words,
+the integer marker, centers/distance, clip rectangle, aspects, near/far limits,
+render counters/control/callback reset, all six original contexts and their
+SDK-generated header bits, context color modes/current slot, and the culling
+value captured by the real video owner. Earlier test code incorrectly assumed
+eight contexts; the actual header and queue both specify six, and the verifier
+now uses that authoritative count.
+
+A real open producer and an actual submitted game-text frame both prevent
+destructive reinitialization while preserving original state. Releasing their
+actual ownership allows recovery. No game or SDK function is replaced in these
+tests. The full global entry is not claimed instruction-for-instruction matched
+against the entire original hardware stack; its light dependency has the stated
+original-machine comparison, and its complete native behavior has the stated
+independent/state/integration evidence.
+
+Full startup regression now selects this complete real native entry in its
+Python caller, replacing the earlier partial context-default helper there.
+No compiled native function body/callback is patched. Six complete global and
+lighting initializations occur before vertex/font/game-style setup and before
+native wait callback registration. The original boot/reset/logo/exit suite passes
+7756 checks, with 570 GPU images/Presents and 175104000 compared pixels. Save/CRC
+regressions pass 591 checks against 29 original calls; GPU/text checks pass 16.
+Total component/regression assertions: 8496. This is still the scoped startup
+chain, not the complete main system_boot_init or a playable game.
+
+Next device-initialization frontier
+The complete original njInitSystem also compiles privately with zero diagnostics
+and its original body intact, enabling the upstream invalid-frame-format repair.
+Its object is never linked or executed on the PC: console video MMIO accesses
+remain. The actual DLL export inventory has 31 imports, with 20 unavailable
+exports: nine functions and eleven data objects. One of those data objects,
+_nj_vertex_buffer_, already exists in the current frame link in vertex_lists.obj;
+reuse it rather than defining a second buffer descriptor. See the exact audit
+for the remaining callbacks, mode/framebuffer records and Kamui device/display
+providers. The full parent export gap remains sbInitSystem and sound_system_init;
+those contain further real dependencies, not merely two final routines.
+
+Next bring up the actual native njInitSystem/Kamui device/display path using the
+existing real GPU/window/wait/video owners. Replace console sync/register loops
+with real native scheduling/state. Add actual display setup, callback registration
+and owned framebuffer metadata; propagate failures and unwind partial setup.
+Do not link the unadapted MMIO object or fill missing device/audio functions with
+successful no-ops. Inspect all linked definitions before adding SDK state.
+
+Reproduction and distribution
+build_native_ninja_global.py consumes the pinned source and qualified display
+frame baseline. verify_native_ninja_global.py exercises actual state and guards.
+project_native_startup_owner.py composes it with preserved startup artifacts;
+verify_native_ninja_global_startup.py runs the real complete initializer in that
+caller. audit_native_ninja_device_init.py records the next compiled dependency
+frontier without executing hardware code. Use fresh outputs; reports contain
+exact commands and source/proof/artifact hashes.
+Public adapter API: native/jp_native_ninja_global.h.
+Proof copies: analysis/jp_native_ninja_global_*.json.
+Generated original sources, combined SDK/game DLLs, input assets and captures
+stay private. Earlier sources/proofs/builds remain preserved. Authored code,
+tools and evidence await the next reviewed daily GitHub snapshot.
+Keep Sol High/selected Sol Extra High for device/platform integration; Luna Low
+is suitable for routine documentation. Keep the goal active.

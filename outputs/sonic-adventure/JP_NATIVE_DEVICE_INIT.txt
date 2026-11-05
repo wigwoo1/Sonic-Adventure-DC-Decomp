@@ -1,0 +1,145 @@
+Native Ninja device/display initialization and presentation cadence
+Whole-project estimate: approximately 10%; goal active.
+Status: VERIFIED COMPONENT. Complete playable PC gameplay, audio, English,
+VMU program/widget, enhancements and later platforms remain unfinished.
+
+Actual device startup
+The complete njInitSystem control flow now runs through native providers. Its
+original typed configuration, screen/mode assignments, callback registration
+and full global initializer are retained. Console video MMIO/sync loops are
+replaced with bounded waits on the actual native logical clock/message pump.
+Provider failures stop initialization and are observable through
+jp_device_status instead of allowing the original void call to continue.
+Source adaptations are recorded explicitly; this is not a byte-matching native
+copy of the console hardware procedure.
+
+The new device owner creates a real D3D GPU, DXGI window/swapchain, SDK-backed
+video state, native performance clock, logical wait service and presenter.
+The first timing boundary occurs before GPU creation, as Ninja's sequence
+requires; message service becomes window-aware when the real window exists.
+NTSC/VGA use 60000/1001 logical ticks and PAL uses 50. These are native logical
+timing domains, not measured physical scanout or console interlaced IRQ timing.
+The logical canvas and actual window render dimensions are separate.
+
+Ready, empty queue/frame/texture/render-state owners are prepared by the caller.
+They remain caller-owned. Device setup rejects other live video, clock, wait
+or presentation owners rather than overwriting them. Live device re-entry and
+foreign-thread access cannot replace existing native handles. Borrowed GPU/
+window handles are exposed for actual game rendering, and remain owned by the
+device service until completed shutdown.
+
+Eight missing original mode/framebuffer objects have one typed frame owner.
+The existing _nj_vertex_buffer_ descriptor is exported and reused, not copied.
+The original SystemConfig object stays in its existing vertex-lifecycle owner.
+The device module imports all state through the native data-import ABI; its
+LLVM transform changes linkage only, preserving field types and accesses.
+All modules share the same actual clock and kmiDeviceExtension record, with no
+circular DLL dependency. Builders inspect existing definitions before adding
+state and preserve every existing object.
+
+The complete original kmiFBControl and store_frame bodies calculate native
+SDK framebuffer metadata. Their fields are checked against original SH-4 code.
+The original configuration points to both actual typed surface descriptors.
+Real native rendering uses the owned DXGI buffers. Original legacy VRAM surface
+allocation/pSurface addressing is not implemented by this stage, and zero
+legacy descriptors do not pretend to expose CPU-mapped swapchain pixels.
+RGB565/RGB555/ARGB1555/RGB888/ARGB8888 metadata paths are tested; rendering
+continues in the established native RGBA8 backend. Console framebuffer colour
+quantization/dithering fidelity is not claimed. Console anti-alias modes are
+explicitly rejected until their actual rendering behavior is supported.
+Display sizes are bounded by the existing backend limit of 8192, but this
+milestone does not qualify full-game 8K or high-FPS performance.
+
+Ownership and cleanup
+Partial setup and runtime errors are reported explicitly. The owner drains
+pending presenter work before closing window/GPU/video/wait/clock services.
+An externally retained frame/job prevents completed shutdown; ownership stays
+available for a retry after that caller releases its work. Completed shutdown
+is idempotent. Existing queue, texture and frame storage is not destroyed by
+the device owner. Device status also surfaces terminal presenter, timing and
+video failures after initialization.
+
+The existing general exit service must be adapted before combining its cleanup
+authority with this new device owner in full sbInitSystem. Do not pass the new
+borrowed GPU/window handles to the old jp_exit_bind as independently owned
+resources: that would create duplicate cleanup authority. Integrate one device
+cleanup operation or an explicit, verified ownership transfer first.
+
+Presentation count
+kmSetWaitVsyncCount now changes actual native presentation scheduling. It
+retains the unfinished current countdown and changes its reload count, as the
+original contract requires. A ready picture waits for the first eligible
+future logical boundary. The countdown advances in constant time even for
+large elapsed intervals. Counts below 1 are rejected without altering phase;
+the maximum signed count is handled without integer overflow. Default count 1
+retains the previously qualified next-boundary behavior. This is progressive
+native scheduling, not a full emulation of the console's interlaced slot IRQs.
+
+Verification evidence
+215 device checks pass, with 12 real native device initializations. Ten complete
+original kmiFBControl calls execute without hooks and match all 26 selected
+typed framebuffer fields. An i686 SDK-layout object supplies guest offsets;
+a read-only x64 peer reads the actual shared native record. No game/SDK body
+is replaced by these peers. Whole native configuration bytes, pointer owners,
+untouched padding, original flags and logical screen values are checked.
+
+Ten mode/format cases each initialize the actual device, then run the real
+vertex lifecycle, font setup and original game debug-text calls. Ten real GPU
+images and Presents succeed, including 640x480 and 800x600 rendering. Actual
+WM_QUIT delivery interrupts pre-GPU startup and permits clean recovery. A
+retained real external frame blocks shutdown and permits a genuine retry.
+An actual insufficient GPU budget produces a late failure, which is surfaced
+by the device and drained safely. No fake failure/success provider is used.
+
+1842 cadence checks compare 256 count changes against an independently stepped
+countdown oracle, including the signed maximum and invalid counts. Five real
+GPU submissions/Presents reach exactly the independently predicted boundary.
+Their logical clock is controlled for deterministic phase verification; GPU
+work and window service remain real. Callback regressions pass 112 checks.
+Save regression passes 591 checks against 29 original calls. The preserved
+boot/reset/logo/exit suite passes 7756 checks with 570 real GPU images/Presents
+and 175104000 compared pixels. Total component/regression assertions: 10516.
+
+The large boot suite exercises the updated frame/presenter owners through its
+existing setup. It does not yet replace that setup with the new resource-owning
+device entry. Actual new device initialization is proved separately by the
+215-check suite. Neither suite runs complete main system_boot_init or gameplay.
+The new screenshot is a real native window with original game/Ninja diagnostic
+text after full device initialization; it is not a stage or gameplay screenshot.
+
+Next bootstrap frontier
+The unchanged compile-only njInitSystem probe still has 31 imports, now with
+zero unavailable exports when the actual new device module is included.
+This does not mean the entire game is linked or finished.
+The surrounding original sbInitSystem probe has 13 imports and 10 unavailable:
+_builtin_set_imask, syHwInit, cache_ram_init, _BSG_END, syMallocInit, syHwInit2,
+pdInitPeripheral, syRtcInit, gdFsInit and gdFsChangeDir. The unadapted probe
+still contains a console heap address and pointer-truncating alignment, so it
+is never linked or executed. Its known pointer-cast diagnostics are suppressed
+only to inventory that unsafe original source; production code must adapt it.
+Reuse actual host memory/input/time/assets services, recover the coherent
+bootstrap/exit lifecycle and verify real file behavior. Do not implement
+successful no-op hardware, cache, filesystem or audio substitutes.
+Full parent startup and sound_system_init remain unfinished.
+
+Reproduction and preservation
+build_native_device_init.py consumes the pinned upstream revision and qualified
+callback/startup baseline. verify_native_device_init.py and
+verify_native_present_cadence.py qualify actual behavior. The reusable startup
+projector composes updated frame/presenter owners; existing original-save and
+Ninja-global startup verifiers run unchanged. audit_native_ninja_device_init.py
+accepts the matching optional --device build for actual export inventory;
+audit_native_sbinit.py records the next original bootstrap imports.
+Use fresh output directories. First build failed on a missing Shinobi include;
+the next reached the linker and exposed an incomplete data-import transform
+and an existing unexported queue guard. Both were fixed from exact diagnostics.
+The first linked build then passed a real startup smoke check; final build
+adds runtime error propagation and passed all qualification above. Failed
+attempts, earlier source versions, objects and proofs remain preserved.
+Exact commands, source hashes and proof copies are in analysis/
+jp_native_device_init_*.json. APIs: native/jp_native_device.h and
+native/jp_native_present.h. Generated upstream code, combined DLLs, retail
+inputs, test images and captures stay private. Authored code and evidence await
+the next reviewed daily GitHub snapshot; no upload is claimed here.
+Keep Sol High/selected Sol Extra High for system bootstrap/exit integration.
+Luna Low remains suitable for routine documentation. Keep the goal active.

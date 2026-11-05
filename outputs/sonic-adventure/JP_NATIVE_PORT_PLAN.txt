@@ -97,6 +97,21 @@ text and page timing come from generated disc-data includes, so port the typed
 text/timing data and fonts/UI alongside the source, with verified USA mappings.
 No English localization has been implemented by these inventories.
 
+4a. Integrate actual VMU emulation and Chao round trips.
+
+The user added a built-in VMU emulator and an optional desktop LCD widget.
+Build on the real backup-file/card-storage work now underway. Once native
+Chao Garden transfer and virtual-card access are usable, run the actual VMU
+Chao minigame, raise the transferred Chao and return its updated data to the
+garden. Use one portable emulation core and persistent card state for the
+in-game view and an optional small desktop widget that can run with the main
+game closed. Require exclusive storage ownership and safe, recoverable handoff.
+Qualify the integrated round trip before adding the independent widget shell;
+then test widget-to-game handoff and restart/crash recovery. Keep required retail
+programs/firmware/assets as local user inputs. See JP_VMU_EMULATOR_PLAN.txt.
+This is planned scope, not an implemented or working emulator. Existing VMU LCD
+drawing, native save records or a simulated Chao-stat screen do not prove it.
+
 5. Complete presentation features and later platforms.
 
 After end-to-end native behavior is established, separate game logic timing from
@@ -114,3 +129,15 @@ For a beginner: consult the passing verification reports and each terminal
 result. A compile-only probe, proposed mapping or queued job is explicitly not a
 playable game. Keep Sol High for this integration work; Luna Low is suitable for
 routine documentation and publication after a snapshot has been reviewed.
+
+Latest filesystem qualification (2026-11-05)
+Latest qualified original native filesystem: JP_NATIVE_GDFS.txt.
+Goal active; overall approximately 10%. The original GDFS now uses actual native
+read-only I/O for startup, directories, handles, reads, streams, callbacks,
+cancellation, reinit and shutdown. 792 checks and 325 complete unhooked original
+handle calls pass; real file/program hashes match. Five parent imports remain
+unavailable, down from seven; the full native parent is not executed. Combined
+SDK/game libraries and retail inputs remain private. No new gameplay visuals.
+Earlier notes retain historical scope and preserved source/proof hashes.
+
+See analysis/jp_native_gdfs_package.json and JP_NATIVE_GDFS.txt.

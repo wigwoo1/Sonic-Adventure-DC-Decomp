@@ -1,0 +1,118 @@
+SDK heap before native Ninja startup and final cleanup after consumers
+Whole-project estimate: approximately 10%; goal active.
+Status: VERIFIED INTEGRATION COMPONENT. Full sbInitSystem/main bootstrap,
+audio, playable gameplay, English, enhancements, VMU program/widget and later
+platforms remain unfinished. Matching-source completion is separate.
+
+What changed
+The actual SDK heap is now included in the qualified startup/exit composition.
+The test caller creates 1MiB+32 of real backing before the complete native Ninja
+initializer, preserving an original full 1MiB usable arena with safe alignment.
+Original main buffers/vertex/font/text setup, display reset, boot_init and logo
+continue through their actual providers. A real C test consumer holds 256 SDK
+bytes across the original boot/logo and validates/frees them when the original
+task-destruction loop invokes its native C destructor. This is a controlled
+test task, not a claim that all game/SDK allocations are already routed here.
+
+The general exit service claims the SDK heap once and closes it after all other
+selected consumers and device resources. It drains/quiesces the graphics device
+first, destroys tasks and releases their assets, finishes device/window/GPU
+cleanup, then finalizes the SDK arena. SDK allocation/free/stat remain usable
+while consumers retire. Ordinary syMallocFinish/native shutdown cannot close a
+delegated arena. Outstanding SDK allocations preserve the arena and its exit
+authority for a retry, without rerunning completed task destructors.
+
+A 64-bit creator-thread token records terminal heap cleanup authority. Wrong
+full-width tokens, duplicate claims and foreign lifecycle calls are rejected.
+An uncommitted heap claim can be cancelled before its first finish attempt;
+cancelled tokens are never recycled. A failed later device claim cancels the
+heap claim, so a rejected exit bind does not strand either owner. If rollback
+itself unexpectedly fails, the exit service retains the actual heap token as
+recoverable cleanup state rather than forgetting ownership. Normal rollback
+paths are exercised with genuine missing/already-claimed native devices.
+The token and creator-thread restriction persist after completed final close;
+ordinary reinitialization does not imply a same-process game restart.
+
+Existing exit structures and classic masks remain compatible: ALL=16383 and
+WITH_DEVICE=18422 keep their meanings. SDK_HEAP=32768 adds the SDK owner.
+WITH_DEVICE_SDK_HEAP=51190 selects it with the delegated device and other classic
+owners, using NULL raw GPU/window handles. Native CRT, task, texture/frame and
+GPU allocators remain separate. No global malloc/free/realloc/calloc override
+was introduced. Other original SDK modules still need deliberate typed scoped
+allocation bindings when they are integrated.
+
+Verification
+79 focused checks pass across eleven fresh processes. They cover full-width
+tokens, claim cancellation/reissue, terminal and foreign-thread restrictions,
+heap-only close, failed combined-bind rollback, unavailable/already-claimed
+heap/device rejection, actual original task destruction with a native C SDK
+consumer, retained external allocation recovery and exactly-once destruction.
+Actual syBtExit process termination returns 0 after success and 70 after an
+unresolved live SDK allocation; these are observed process exit codes.
+
+The new integrated suite passes 7281 checks. Six actual SDK arenas are created
+before six native Ninja devices. The original source boot/reset/logo path runs
+three complete 191-step logo loops with 570 real GPU images/Presents and
+175104000 whole-image pixel comparisons. All six complete startup/exit cases
+exercise an SDK allocation, and the actual original task-destruction loop calls
+its C consumer destructor once before arena finalization. The C destructor then
+notifies the existing passive Python exit observer, retaining its task/input/
+wait/reentrancy checks. Native game/SDK function bodies are not replaced.
+Each destructor observes a still-live, completely coalesced SDK arena after
+freeing its allocation. Normal return cases explicitly observe the closed arena;
+quit/pending-quit cases verify the real successful non-returning process exit.
+
+Allocator regression passes 9808 checks with 826 complete original machine-code
+calls without hooks, original/native topology/payload comparisons, all starting
+alignments, real guard/release queries and concurrent clients. Existing device
+ownership tests pass 121 checks. Save/CRC regression passes 591 checks against
+29 original calls. Classic startup remains compatible with 7756 checks and a
+further 570 real images/Presents. Total assertions in this milestone: 25636.
+Both startup modes preserve the independently checked original logo/fog/fade
+images. The fresh native boot capture has unchanged SEGA content; it is not a
+stage or playable-game screenshot.
+
+The original allocator algorithm object and qualified graphics/device libraries
+are reused with exact hashes. The SDK arena owner, exit service and original
+logo import link are rebuilt warning-free. The first build attempt stopped
+before compilation because old manifests used mixed Windows/forward-slash
+source keys. Canonicalizing those keys resolved the manifest check; no original
+source or prior proof was overwritten. Both qualified standalone allocator and
+earlier device-owned boot remain preserved.
+
+Scope and next bootstrap work
+This is an integration of actual native factories and cleanup through the
+existing Python test caller. It does not yet execute the complete original
+sbInitSystem or main system_boot_init. Hardware/input/RTC/GDFS bootstrap and
+sound remain required. The original console-address bootstrap probe is still
+never linked/executed. Its 13-import frontier has nine unavailable exports:
+_builtin_set_imask, syHwInit, cache_ram_init, _BSG_END, syHwInit2,
+pdInitPeripheral, syRtcInit, gdFsInit and gdFsChangeDir. These are this one
+bootstrap's dependencies, not the whole game's remaining routine count.
+
+Next replace the remaining console-only bootstrap assumptions with real host
+platform/input/time/file behavior and put the verified creation/rollback order
+into the native parent coordinator. The heap must use actual bounded backing,
+not MEMORY_END/_BSG_END addresses. Preserve one final-close authority and the
+current consumer-before-arena cleanup. Do not invent successful hardware,
+cache, filesystem or audio substitutes. cache.src's three RAM-mode entries
+really return immediately; verify original instructions before porting that
+specific genuine behavior. Android/3DS and presentation enhancements remain
+later full-project work, not completed by these memory tests.
+
+Reproduction and distribution
+build_native_sdk_heap_exit.py composes the qualified graphics/device and SDK
+heap builds, rebuilds actual owners, relinks original logo imports and compiles
+an authored SDK-header C consumer fixture. heap_view retains the existing
+allocator verification workflow. verify_native_sdk_heap_exit.py qualifies
+ownership/recovery; verify_native_sdk_heap_startup.py derives only the existing
+Python caller and its test-task destructor selection. Existing allocator,
+device, save and classic startup verifiers run unchanged. Fresh directories,
+exact commands/source hashes/artifact hashes are recorded in analysis/
+jp_native_sdk_heap_exit_*.json. APIs: native/jp_native_sdk_heap.h and
+native/jp_native_exit.h.
+Original generated SDK/game sources, combined DLLs, retail inputs and captures
+stay private. Authored changes and evidence await the next reviewed daily
+GitHub snapshot; no upload or playable release is claimed by this task.
+Keep Sol High/selected Sol Extra High for remaining bootstrap and I/O work.
+Luna Low is suitable for routine documentation. Keep the goal active.

@@ -1,0 +1,123 @@
+Latest native VMU LCD integration: JP_NATIVE_VMU_LCD.txt.
+Goal active; overall about 10%. Original LCD init/draw/SDK stack and actual
+queued native LCD endpoints pass 1733 checks with 58 complete original
+machine calls. Card/save/GPU/startup regressions pass: 10291 combined
+checks and 570 actual startup Presents. A Chao LCD buffer preview is
+private test output; no VMU minigame or desktop widget is running.
+vmu_init now resolves; six parent-startup symbols remain unavailable.
+Earlier notes retain historical scope and their original proof files.
+
+Original game card initialization and callbacks on actual native VMU storage
+Whole-project estimate: approximately 10%; goal active.
+Status: VERIFIED COMPONENT. Full system startup/gameplay, English localization,
+Chao VMU emulation/widget and later platforms remain unfinished.
+
+What is now connected
+The original card_init, card_init_done, card_complete, card_progress,
+card_finish and card_notice_busy bodies compile unchanged into the shared native
+frame/state DLL. Original typed card_drives, the notice state and the exact
+7712-byte one-drive card_library_work are retained in that module. They use the
+real previously qualified VMS filesystem, native fibers and disk-backed owner.
+The source/header bytes are checked against the pinned upstream Git commit
+25a3d3154dbe657325e97dbe8c5291086f6af5c0; original files are not rewritten.
+
+The symbol inventory corrected an earlier handoff assumption: save_slot already
+had a single owner in retained_boot.obj, but save_drive was not yet linked.
+The new module reuses save_slot and introduces the original save_drive,
+save_disabled and card_saving definitions once. No parallel save/card state is
+created. The authored observer only reads the actual original private objects.
+
+The presentation build's diagnostic buExecServer definition is removed. Its
+unchanged original frame_vsync body now calls the actual original filesystem
+server in the shared frame DLL. The previous passive event trace remains after
+the real call; it cannot create a mount, progress callback or completed save.
+The new frame and presentation owners retain their existing DLL basenames and
+all unrelated qualified objects, so the preserved startup/exit chain can use
+them together. Earlier libraries and their source/proof hashes remain intact.
+
+Actual card qualification
+225 integration checks passed using fresh private cards, with every possible
+selected save_drive from 0 through 7:
+- Original card_init resets its records, saving indicator and notice state.
+- Exactly one native drive fiber and the original one-card work buffer are
+  used; the other seven game card records remain cleared.
+- The original init callback installs the original complete/progress callbacks.
+  No test callback replaces a game or SDK function.
+- 647 actual frame_vsync calls drive mounting, formatting, saves, loads,
+  remounting and removal. Status observation does not pump work in this path.
+  The trace confirms each frame's actual card service precedes its existing
+  loader observer. Original progress reaches 32 while real operations run.
+- An unformatted card is present without valid disk info; no automatic format.
+  Formatting refreshes disk info; only the original mount branch sets info_read.
+- All three actual default Japanese save records are created by save_reset_all,
+  packaged by the original backup helpers into a ten-block SONICADV_SYS file,
+  written with original verification, loaded and analyzed with the original CRC.
+  save_check_all accepts all three loaded records. Generated test icons are used.
+- An independent directory/FAT walk recovers every persisted backup-file byte.
+- A real Windows file handle denies replacement. The actual error reaches the
+  game's original card_complete record and the prior disk image survives.
+  A successful remount clears the original error and restores valid disk info.
+- Original card_finish waits for actual SDK completion via native buStat
+  delivery and disables notices; no synthetic frame or success is injected.
+- Actual removal clears the original complete typed card record; reinsertion
+  reloads persistent disk info. The independent raw save-record sentinel stays
+  unchanged. No user save was read or changed.
+
+Regressions on the rebuilt owners
+591 save-default/record/CRC checks pass against 29 original Japanese machine
+calls, with original dependencies executing and no hooks. This confirms the
+existing save-slot owner remains compatible after card integration.
+16 GPU/text checks pass, including independent italic-glyph pixels, a real
+native window/Present, font lifetime and Texture Off with zero sampled textures.
+The complete existing startup suite passes 7726 checks: six original boot/reset
+entries, three complete 191-step logo runs, 570 GPU images/Presents and
+175104000 compared pixels, with actual vertex/font/game-style initialization,
+Ninja blank/EOR delivery and real exit cleanup. It is still a scoped startup
+chain, not a successful execution of the entire main system_boot function.
+Total new integration/regression assertions: 8558.
+
+Fresh private native-window backbuffer capture:
+work/sonic-adventure/jp-native-card-startup-check-v1/movie0/native-reset-boot-logo.png
+SHA256: 9b28f7b43d8786cfee116fc34b39ed33ff44fb8ed93a0f62b21477b4902d2071
+This is the actual boot-logo regression scene after rebuilding the owners,
+not new gameplay or a running VMU minigame. Retail-derived captures stay private.
+
+Scope and next dependency
+The current actual DLL export audit resolves card_init in the frame owner.
+Seven parent-startup symbols remain unavailable: cable_mode, dat_8c78b4d8,
+dat_8c78b4dc, sbInitSystem, sound_system_init, syCblCheckCable and vmu_init.
+The three data symbols and four functions are a link frontier, not a complete
+count of everything still required for a playable game.
+
+Next recover the coherent original VMU LCD initialization/screen/device family
+around src/vmu/screen.c, vmu_clear and screens_probe. Implement actual host
+display/device state and reuse qualified input/card providers where appropriate.
+LCD initialization is distinct from executing the actual Chao VMU program; the
+portable execution core, Chao export/raise/import, desktop widget and safe shared
+session handoff remain required by JP_VMU_EMULATOR_PLAN.txt.
+
+Original card_init returns void and ignores a failing buInit. Without an actual
+configured storage owner, the backend remains uninitialized; the native parent
+startup must validate real setup and must not infer success from card_init's
+return. Unsupported/corrupt imported cards, original ignored metadata-write
+errors and whole-operation crash recovery remain the limitations recorded in
+JP_NATIVE_VMU_FILESYSTEM.txt. Do not use these research tests as a user-save
+migration tool. The original game-level save UI/write/read helper family has
+not all been ported merely by testing the underlying record/container round trip.
+
+Reproduction
+Read build_native_card_lifecycle.py for its explicit required baseline inputs.
+It compiles the private original card slice, relinks the frame owner with the
+qualified filesystem objects, and rebuilds the presentation module with real
+backup service. verify_native_card_lifecycle.py exercises that exact pair with
+fresh test cards. build_native_card_startup.py projects it into the preserved
+startup chain for the existing save/text/startup verifiers. Use fresh output
+directories; reports contain exact commands and source/proof/artifact hashes.
+Proof copies: analysis/jp_native_card_lifecycle_*.json.
+Native public observer declarations: native/jp_native_card_state.h.
+
+Original game/SDK source, combined DLLs, inputs, card images and captures remain
+private. Authored integration source, tools and evidence can enter the next
+reviewed daily GitHub snapshot; no pending publication is claimed complete.
+Keep Sol High/selected Sol Extra High for VMU/platform integration. Luna Low is
+suitable for routine documentation. Keep the goal active.
