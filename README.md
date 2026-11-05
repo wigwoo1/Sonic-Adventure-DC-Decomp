@@ -104,6 +104,17 @@ real QPC/Win32 waits and close handling. Four original frame globals are supplie
 (60/79 presentation imports). Adding the frame source exposes 22 more genuine
 dependencies; the expanded graph has 43 missing services. No trace providers are
 linked into production. Real game render/flip integration remains open.
+Latest genuine native text printing: JP_NATIVE_PRINTING.txt.
+Goal active; overall about 10%. Original shared print state, font initialization,
+character/string and decimal/binary/hex callers now produce verified native text.
+Exact original packets, renderer metadata and mixed ordinary SDK draws pass.
+652,134 fresh feature/regression checks include 570 existing boot/logo frames.
+Float/variadic formatting, full system boot/display reset and gameplay remain
+unfinished. Two actual text screenshots stay private for sharing in chat.
+All 2,957 prior public binaries are preserved plus one two-object authored
+queue/print transport library, 2,958 total. Font assets/game DLLs stay private;
+there is no playable executable. Earlier notes retain historical scope.
+
 Latest original game randomness/direct SDK surfaces: JP_NATIVE_RANDOM_DIRECT_SURFACES.txt.
 Goal active; overall about 10%. Genuine rand/srand/state and array_shuffle now
 share the actual native runtime and match whole original-code execution. A
@@ -298,6 +309,7 @@ Texture Off must disable sampling and use vertex/material colours.
 - [Current goal](outputs/sonic-adventure/JP_BASED_PORT_GOAL.txt)
 - [Integration order and limits](outputs/sonic-adventure/JP_NATIVE_PORT_PLAN.txt)
 - [Verified GCC baseline and native/localization evidence](outputs/sonic-adventure/JP_GCC_BASELINE.txt)
+- [Genuine native text printing](outputs/sonic-adventure/JP_NATIVE_PRINTING.txt)
 - [Original game randomness and direct SDK surfaces](outputs/sonic-adventure/JP_NATIVE_RANDOM_DIRECT_SURFACES.txt)
 - [Genuine native texture initialization](outputs/sonic-adventure/JP_NATIVE_TEXTURE_INITIALIZATION.txt)
 - [Native perspective and display setup](outputs/sonic-adventure/JP_NATIVE_DISPLAY_SETUP.txt)

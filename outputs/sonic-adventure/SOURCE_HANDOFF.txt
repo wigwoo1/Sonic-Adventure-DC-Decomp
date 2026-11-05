@@ -1,3 +1,14 @@
+Latest genuine native text printing: JP_NATIVE_PRINTING.txt.
+Goal active; overall about 10%. Original shared print state, font initialization,
+character/string and decimal/binary/hex callers now produce verified native text.
+Exact original packets, renderer metadata and mixed ordinary SDK draws pass.
+652,134 fresh feature/regression checks include 570 existing boot/logo frames.
+Float/variadic formatting, full system boot/display reset and gameplay remain
+unfinished. Two actual text screenshots stay private for sharing in chat.
+All 2,957 prior public binaries are preserved plus one two-object authored
+queue/print transport library, 2,958 total. Font assets/game DLLs stay private;
+there is no playable executable. Earlier notes retain historical scope.
+
 Latest original game randomness/direct SDK surfaces: JP_NATIVE_RANDOM_DIRECT_SURFACES.txt.
 Goal active; overall about 10%. Genuine rand/srand/state and array_shuffle now
 share the actual native runtime and match whole original-code execution. A

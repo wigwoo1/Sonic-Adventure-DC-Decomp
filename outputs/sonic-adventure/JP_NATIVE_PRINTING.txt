@@ -1,0 +1,109 @@
+Genuine native Ninja text printing - incomplete research milestone
+
+Overall project estimate: about 10%. Goal active. This is native debug text,
+not a playable game or completed system boot. Japanese matching source/GCC
+baselines retain their separate qualification; localization, enhancements and
+later platforms remain unfinished.
+
+The pinned external SDK supplies the actual shared font, Float print_size,
+colour, header and glyph state, njInitPrint/njExitPrint, njPrintSize/Color,
+njCharacter, njPrintC and decimal/binary/hexadecimal callers. Their bodies are
+adapted locally by build_native_print.py. No SDK bodies or font pixels are
+included in the public authored support library. njPrintF and the variadic
+njPrint formatter remain unimplemented: their original fixed buffers and
+negative-padding bug need separate bounded native policies and qualification.
+
+Transport and preserved state
+
+The authored direct queue replaces the previous frame queue, including its
+unchanged implementation in the same translation unit. There is one queue,
+texture owner and frame recorder. The original backwards glyph writes target
+a bounded temporary packet instead of SH4 MMIO/store queues. Each print copies
+its exact four header words and vertex blocks into the translucent list and
+uses existing frame texture retention. Padding the SDK leaves undefined is
+deterministically zero. Only the translucent descriptor advances. Selected
+Ninja context, cached parameter words/cursor offsets, bank cache, unrelated
+contexts and other descriptors remain unchanged. The original current-texture
+sentinel is -2. Queue reserve respects the newest descriptor while preserving
+the cached cursor offset, so existing producers can reserve before njGetkmPointer.
+
+Native allocation/copy services accept square power-of-two 8..1024 fonts,
+twiddled ARGB1555, RGB565 or ARGB4444. The actual font uses the direct slot
+qualified in the previous milestone and survives njInitTexture record resets.
+All source-defined font metadata/header fields and exact payload bytes match
+original describe/create/load calls for all 24 supported dimension/format pairs.
+This does not implement the general Kamui allocator or every font format.
+
+Coordinate multiplication preserves fixed single RZ/DN1 value semantics,
+FTRC truncation and signed 16-bit coordinate/pen wrapping. This is not a model
+of FPSCR flags/traps or new physical-console measurements. Shared print size
+feeds the genuine glyph geometry; it is not an isolated placeholder setter.
+
+Native bounds: C strings must be valid and terminate within 32,767 characters;
+decimal digits are 0..32,766, binary 0..32, hexadecimal 0..8. Unsupported inputs
+reject before writing queue/font/context state. Callers supply valid pointers
+and complete custom-font payloads. Allocation/queue errors are exposed through
+jp_print_status and the existing owner status functions. One game thread owns
+the print state. A bare njCharacter outside a print transaction is rejected.
+
+Verification on jp-native-print-v7
+
+- 24,937 feature checks; 298 complete original entry calls; 54,180 defined
+  packet words across 7,779 blocks match the original Japanese executable.
+  Printing, character, strlen and context processing have no function hooks.
+  During guest initialization only kmiTXalloc and kmiCopyToFrameBuffer are
+  explicit allocator/VRAM-copy services (25 calls each). Their actual console
+  allocator, VRAM bus, cache timing and interrupts are not emulated.
+- 8,282 independent coordinate/pen cases include inexact products near signed
+  limits; whole print cases include all non-NUL character codes, zero/large
+  size, signed decimals including INT_MIN, binary/hex digits and pen wrapping.
+- Two actual native-window captures show the original glyph grid and a readable
+  C/D/B/H text test scene. All 155,648 compared glyph/scene pixels match an
+  independent original-font decoder/placement oracle. Four GPU image checks
+  include retained glyph rendering after njExitPrint and Texture Off with zero
+  sampled texture/sampler bindings, uploads and texel decoding.
+- 124 interleaving checks cover 48 alternating print/ordinary SDK batches and
+  repeated queue growth, preserving every earlier packet. This catches the
+  old-cursor reservation bug found and fixed during integration.
+- Frozen frame retention: 8,572 checks, 193 submissions and 128 real parent draws.
+- Frozen primary/extended GPU: 491,158 + 121,451 checks, 100 images; actual
+  backbuffer comparisons add 1,033 + 613 checks, including an empty 8K target.
+- Original save defaults/CRC: 591 checks, 29 original calls.
+- Existing genuine boot_init/logo/exit: 3,655 checks, 570 actual GPU images and
+  Presents. This is the qualified boot_init/logo path, not full system_boot_init.
+
+Total fresh feature/regression checks: 652,134. These are assertions/comparisons,
+not routine counts or whole-project coverage. Older qualifications remain
+attached to their original retained sources/builds; they were not all rerun.
+
+Reproduce locally with Windows Clang/SDK and the previous standalone-texture-v2
+baseline. Use Python 3, set PY and CLANG to executable paths, and choose fresh
+output folders so preserved builds/proofs are not overwritten. Upstream stays
+at commit 25a3d3154dbe657325e97dbe8c5291086f6af5c0. The prior authentic-font tool
+prepares the private include from the user's matching Japanese executable.
+
+& $PY -B outputs/sonic-adventure/jp_port_tools/build_native_print.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --baseline work/sonic-adventure/jp-native-standalone-texture-v2 --compiler $CLANG --font-input work/sonic-adventure/jp-native-built-in-font-atlas-v1 --output work/sonic-adventure/jp-native-print-v7
+& $PY -B outputs/sonic-adventure/jp_port_tools/verify_native_print.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --build work/sonic-adventure/jp-native-print-v7 --binary work/sonic-adventure/jp-ninja-math-reference/1ST_READ.BIN --font-input work/sonic-adventure/jp-native-built-in-font-atlas-v1 --output work/sonic-adventure/jp-native-print-check-v10
+& $PY -B outputs/sonic-adventure/jp_port_tools/verify_native_print_interleave.py --workspace . --build work/sonic-adventure/jp-native-print-v7 --report work/sonic-adventure/jp-native-print-v7/interleave-verification.json
+& $PY -B outputs/sonic-adventure/jp_port_tools/prepare_native_runtime_views.py --workspace . --build work/sonic-adventure/jp-native-print-v7 --asset-metadata work/sonic-adventure/jp-native-asset-heartbeat-build-v1/build_verification.json
+& $PY -B outputs/sonic-adventure/jp_port_tools/package_native_print.py --workspace . --build work/sonic-adventure/jp-native-print-v7 --verification work/sonic-adventure/jp-native-print-check-v10 --compiler $CLANG --output work/sonic-adventure/jp-native-print-support-v1
+
+Use existing frozen GPU/frame/save/boot commands with these metadata views and
+fresh output paths. Primary GPU precedes extended in the same output folder.
+Published analysis records exact command/source/runtime hashes and results.
+The support library contains exactly two authored objects. Replace the old
+queue object; do not link duplicate owners. It depends on external SDK print
+code/font data and the existing native owners/numeric services. It is an
+incomplete research component with no playable executable.
+
+Retail-derived font includes/data objects and screenshots stay private and may
+be shared in chat. Original matching proof/source hashes, all historical USA
+research and all 2,957 previous public binary payloads are preserved. The new
+authored support library makes 2,958 archived artifacts. Failed development
+builds and the pre-reservation-fix v6 source snapshot remain local evidence.
+
+Next: qualify the remaining float/variadic formatting on its valid domain with
+bounded native error policies, then bind genuine main-owned matrix/screen/view/
+texture/fog state and qualify display_reset_full and full system_boot_init.
+Audio/loader/overlays/card integration and gameplay remain unfinished. Sol High
+is appropriate; Luna Low is sufficient for routine documentation/publication.
