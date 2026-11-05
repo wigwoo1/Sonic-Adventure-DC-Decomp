@@ -1,3 +1,14 @@
+Latest retired vblank handle correction: JP_NATIVE_VBLANK_REARM.txt.
+Goal active; overall about 10%. A final lifecycle probe found that an unrelated
+callback reusing a retired Ninja slot could block a fresh blank arm request.
+The corrected boundary checks handler identity. 107,132 fresh assertions pass,
+including the seven-check regression, all original chain/timing cases and 570
+actual GPU/logo/EOR frames. Original SDK, shared frame/GPU and other native
+presentation objects remain unchanged. All 2,961 previous archive payloads
+remain byte-identical plus one corrected authored library, 2,962 total. Earlier
+research snapshots stay in history. Full system startup/gameplay, English and
+later ports remain unfinished; no playable EXE. Earlier notes are historical.
+
 Latest native logical vblank chains: JP_NATIVE_VBLANK_CHAIN.txt.
 Goal active; overall about 10%. Original priority-list algorithms and complete
 Ninja blank/EOR callbacks now use the existing native clock and one wait owner.

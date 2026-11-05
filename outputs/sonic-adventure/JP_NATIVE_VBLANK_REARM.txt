@@ -1,0 +1,64 @@
+Corrected retired vblank handle reuse - verified follow-up
+
+Whole-project estimate: about 10%; goal active. The Japanese matching baseline
+is preserved; native full startup/gameplay, English and later ports remain
+unfinished. No playable executable. See JP_NATIVE_VBLANK_CHAIN.txt for the
+original chain/timing qualification and its explicit remaining platform scope.
+
+A final lifecycle probe found a valid repeat-initialization failure. Ninja's
+blank callback retires after end-of-render. Its old numeric slot can then be
+assigned to an unrelated callback. The first native arming guard checked only
+whether that numeric slot was occupied, so it wrongly rejected a fresh blank
+handler. The captured pre-fix probe returned 1 where success 0 was required.
+
+The corrected boundary checks the actual registered function before declaring
+njBlank still active. The unrelated handler survives, the new genuine blank
+handler runs, and it retires normally on the following logical tick. Existing
+active-njBlank duplicate rejection remains intact. Original SDK list/Ninja
+objects, the shared frame/GPU DLLs and other presentation objects stay unchanged.
+The authored owner is extended in one translation unit; no duplicate clock,
+pool, state owner or scheduler is introduced. Earlier source/proofs are retained.
+
+Validation
+
+- 79,103 chain/lifetime checks: the original 79,096-check suite plus seven
+  regression checks for retirement, slot reuse, successful rearming and
+  preservation of the unrelated callback. The original 679 entry-call and
+  eight original njBlank callback comparisons still pass.
+- 6,851 frozen abstract wait checks and 12,873 frozen clock checks pass again
+  on the corrected DLL. Rational timing, rebasing and error boundaries remain.
+- 591 original save/reset/checksum checks pass on the corrected build.
+- 7,714 real startup/logo/GPU-EOR/exit checks pass, including 570 GPU frames
+  and Presents, 570 genuine Ninja EOR calls and 175,104,000 logo pixels.
+
+Total fresh assertions: 107,132; logo pixels are reported separately. These are
+bounded assertions, not routine counts or a measured project percentage.
+The same guest platform/synthetic callback services and unsupported physical
+IRQ/CPU/DMA/hblank domains described in the prior guide remain explicit.
+Full system_boot_init and njInitVertexBuffer have not executed.
+
+Reproduce
+
+Use Python/Clang on Windows, the previous vblank-chain-v3 recipe and its private
+SDK object. Use fresh output directories. Set PY/CLANG to local executables.
+
+& $PY -B outputs/sonic-adventure/jp_port_tools/build_native_vblank_rearm.py --workspace . --baseline work/sonic-adventure/jp-native-vblank-chain-v3 --compiler $CLANG --output work/sonic-adventure/jp-native-vblank-chain-v4
+& $PY -B outputs/sonic-adventure/jp_port_tools/verify_native_vblank_rearm.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --build work/sonic-adventure/jp-native-vblank-chain-v4 --binary work/sonic-adventure/jp-ninja-math-reference/1ST_READ.BIN --output work/sonic-adventure/jp-native-vblank-chain-check-v4
+
+Run the prior guide's clock/wait/save/startup verifiers against this build with
+fresh outputs. Package the corrected authored owner with
+package_native_vblank_rearm.py. Exact inputs, commands, hashes, module availability
+and runtime evidence are recorded in the corresponding analysis reports.
+
+All 2,961 earlier public archive payloads remain byte-identical. One corrected
+authored support library is added, 2,962 research artifacts total. Its member
+contains no original SDK/game bodies or retail pixels. Original game-containing
+DLLs, font/asset inputs and actual screenshots remain private. Captures can be
+shared in chat. The prior research snapshot remains in history; this follow-up
+is the current qualification. No remote history or assets were removed.
+
+Next: real native vertex-list allocation/system configuration, using the
+qualified callback chain and existing frame/GPU owners. Ten parent function/data
+exports remain unavailable across the current modules; this is not the number
+of remaining game routines. Continue with Sol High; Luna Low is suitable for
+routine documentation. Keep the goal active.

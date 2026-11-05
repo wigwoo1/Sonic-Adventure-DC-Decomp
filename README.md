@@ -104,6 +104,17 @@ real QPC/Win32 waits and close handling. Four original frame globals are supplie
 (60/79 presentation imports). Adding the frame source exposes 22 more genuine
 dependencies; the expanded graph has 43 missing services. No trace providers are
 linked into production. Real game render/flip integration remains open.
+Latest retired vblank handle correction: JP_NATIVE_VBLANK_REARM.txt.
+Goal active; overall about 10%. A final lifecycle probe found that an unrelated
+callback reusing a retired Ninja slot could block a fresh blank arm request.
+The corrected boundary checks handler identity. 107,132 fresh assertions pass,
+including the seven-check regression, all original chain/timing cases and 570
+actual GPU/logo/EOR frames. Original SDK, shared frame/GPU and other native
+presentation objects remain unchanged. All 2,961 previous archive payloads
+remain byte-identical plus one corrected authored library, 2,962 total. Earlier
+research snapshots stay in history. Full system startup/gameplay, English and
+later ports remain unfinished; no playable EXE. Earlier notes are historical.
+
 Latest native logical vblank chains: JP_NATIVE_VBLANK_CHAIN.txt.
 Goal active; overall about 10%. Original priority-list algorithms and complete
 Ninja blank/EOR callbacks now use the existing native clock and one wait owner.
@@ -357,6 +368,7 @@ Texture Off must disable sampling and use vertex/material colours.
 - [Current goal](outputs/sonic-adventure/JP_BASED_PORT_GOAL.txt)
 - [Integration order and limits](outputs/sonic-adventure/JP_NATIVE_PORT_PLAN.txt)
 - [Verified GCC baseline and native/localization evidence](outputs/sonic-adventure/JP_GCC_BASELINE.txt)
+- [Retired vblank handle reuse](outputs/sonic-adventure/JP_NATIVE_VBLANK_REARM.txt)
 - [Native logical vblank chains](outputs/sonic-adventure/JP_NATIVE_VBLANK_CHAIN.txt)
 - [Original native boot buffers](outputs/sonic-adventure/JP_NATIVE_BOOT_BUFFERS.txt)
 - [Complete native main display reset](outputs/sonic-adventure/JP_NATIVE_MAIN_DISPLAY_RESET.txt)
