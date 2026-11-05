@@ -1,0 +1,125 @@
+Actual ARM sound-driver execution and game-bank audio on native Windows
+Whole-project estimate: approximately 10%; goal active.
+Status: VERIFIED PRIVATE PROBE; full original SDK/game audio integration open.
+
+Concrete result
+The original 33,376-byte MASARU ARM program executes on a pinned reusable ARM7/
+AICA core. With actual EMERALDCOAST.MLT bank data and SDK-format note commands,
+it generates 88,200 stereo frames of nonzero signed16 audio. The actual driver
+changes its command-list status from waiting to ready; there are no instruction
+hooks, scripted statistics or replacement note synthesizer. Converted PCM is
+delivered to the previously qualified real Windows render client in a queried
+muted session, with an independent float-packet hash and actual clock drain.
+No microphone/loopback capture or system-volume changes are involved.
+
+Scope of qualification
+Final build: work/sonic-adventure/jp-aica-core-probe-v10 (2 MiB RAM).
+Larger-RAM control: work/sonic-adventure/jp-aica-core-probe-v9 (8 MiB).
+Final verification: work/sonic-adventure/jp-aica-driver-check-v7.
+Three fresh-process cases pass 1,010 assertions. Each executes 44,100 silent boot
+frames, 88,200 note frames and 44,100 post-note-off frames. Both 441-frame packets
+and varied 3..8191-frame packets give identical note/tail PCM, complete final
+2 MiB RAM images and ARM register snapshots. The two RAM sizes use the same
+ordering fixes; the larger control is not an unmodified hardware oracle.
+Independent authored ARM load/store instructions also verify 2 MiB mirroring.
+State, ARM pointers and callbacks remain native-width, with surrounding canaries.
+
+The real Windows output consumes all 88,200 generated frames with no drop or
+duplicate and matches the expected copied/normalized PCM hash. The sender may
+overwrite its float buffer as soon as submission returns. This reuses the actual
+owned native audio worker and its safe drain/close; no new output stub is used.
+Playback through physical speakers and console waveform accuracy are unmeasured.
+
+Input/output fingerprints
+Driver ARM SHA256:
+114bf06bda4e03e01fae8c089294fec3dda02a064a317dbb7311aa2eff8c62fc
+EMERALDCOAST.MLT SHA256:
+362a8b1077e403bf864acbbf756a854e9299f25f9111a5ad26a2add634c25792
+Two-second note PCM SHA256:
+3985b5c0f41626c675f5bab798d36501c735177f1314915bde69172bdd61e538
+Post-note-off PCM SHA256:
+b4aa5bda608a4217e7ee5d5158140269c2f64b10b53ac98feb79a14f7524b823
+Final 2 MiB RAM SHA256:
+c9ffc786e299b62409d3836eb4f987f5aca3202737da06bce716fccb5447d384
+
+Resolved ordering defect
+An initial check found identical output audio but packet-dependent DSP work RAM.
+The original ARM registers and total executed cycles already agreed. Simply
+ordering ARM RAM stores before pending AICA processing did not fully resolve it.
+A second focused change also advances AICA DSP state when effects are inaudible
+and flushes pending samples before effect-send/pan changes. With all three rules,
+complete RAM and output now agree across packet sizes. DSP processing remains
+enabled. Checks were not changed to ignore the differing RAM region.
+
+The generated native copies implement:
+- Two MiB allocation, upload/access masks and Yamaha sample-memory size, with
+  mirroring in the core's existing ARM RAM window. The pinned game SDK declares
+  SD_SND_MEM_SIZE=0x200000. A larger-RAM control isolates this adaptation.
+- ARM RAM-store callbacks that synchronize and flush before modifying shared RAM.
+  Instruction fetch and ARM RAM reads retain the external core's direct maps.
+- AICA DSP advancement independent of audible effect sends/output availability,
+  and a flush before effect-routing changes.
+Broader read coherence, register behavior and timing still need qualification.
+
+Earlier failed runs, generated sources and source snapshots are preserved. One
+test incorrectly assumed the post-note-off output must be exactly zero; actual
+output retains values up to 4/32768 at the end of the measured tail. The final
+test compares the entire tail against the control and reports that residue.
+Acknowledgement alone is not presented as envelope or physical-hardware proof.
+
+Reused source, provenance and build limitations
+External core: https://github.com/kode54/Highly_Theoretical
+Pinned revision: 2998a4bf550949cd2daee249e725a64462cf15e0
+Its source and GPL-3.0 license are available at that pinned upstream repository.
+Both downloaded/review and canonical native checkouts remain local. The first
+Windows checkout converted license line endings; the provenance guard rejected
+it before compilation. A new canonical checkout preserves the Git blob bytes.
+The external checkout is unchanged; all adaptations are generated privately.
+
+Three external C units and an authored API fixture compile/link on Windows x64.
+The fixture and link produce zero diagnostics. The external units retain 17
+warnings about unused members/functions and signed comparisons; these logs are
+preserved and not described as warning-free. An initial link requested arm_setreg,
+which the external header declares but source explicitly leaves unimplemented;
+the probe no longer requests that unused export and provides no fake implementation.
+
+The inherited interpreter policy is 128 cycles per 44.1 kHz frame. Physical ARM
+cycle timing has not been qualified; do not infer it from the sample rate or
+successful commands. The reference/control both use this policy. Physical
+waveforms, all banks/voices, PCM streams and full DSP behavior remain open work.
+This is a sound-hardware probe within the native-port effort, not game emulation
+in place of compiling the game's recovered source.
+
+Next work
+Create an owned native sound-core interface and connect the actual original SDK
+work, descriptors, command queues, transfers and sound_system_init. Preserve
+32-bit sound-memory offsets while using full native host pointers. Qualify the
+original repeated sdDrvInit descriptor reuse against reference instructions;
+do not reinterpret sdMemBlkDestroy as freeing a heap allocation. Extend actual
+ordered exit for audio owners, then execute the higher original bootstrap.
+Do not add success-only G2/DMA/reset/MIDI/sound initialization replacements.
+
+Reproduce from the workspace root with fresh output directories:
+git -c core.autocrlf=false clone https://github.com/kode54/Highly_Theoretical.git work/sonic-adventure/NEW_CORE
+git -C work/sonic-adventure/NEW_CORE checkout 2998a4bf550949cd2daee249e725a64462cf15e0
+python -B outputs/sonic-adventure/jp_port_tools/build_aica_core_probe.py --workspace . --core work/sonic-adventure/NEW_CORE --compiler "PATH_TO_CLANG" --ram-mib 8 --output work/sonic-adventure/NEW_CONTROL
+python -B outputs/sonic-adventure/jp_port_tools/build_aica_core_probe.py --workspace . --core work/sonic-adventure/NEW_CORE --compiler "PATH_TO_CLANG" --output work/sonic-adventure/NEW_PROBE
+python -B outputs/sonic-adventure/jp_port_tools/verify_aica_core_driver.py --workspace . --core work/sonic-adventure/NEW_CORE --baseline work/sonic-adventure/NEW_CONTROL --build work/sonic-adventure/NEW_PROBE --audit work/sonic-adventure/jp-native-sound-init-audit-v2 --audio work/sonic-adventure/jp-native-audio-v5 --output work/sonic-adventure/NEW_CHECK
+The saved sound audit supplies exact local disc/driver references. Retail inputs
+must be provided locally; the output check needs a real Windows render endpoint.
+
+Distribution and visible progress
+Public additions are authored reproduction/adaptation tools and metadata. The
+external GPL core sources are pinned by URL and hashes. Its experimental combined
+DLLs, generated external code, full RAM dumps, driver/bank inputs and PCM/WAV stay
+private in work; no new core binary is added to the public artifact selector.
+The previously qualified ten authored support files remain selected unchanged.
+New source/evidence are eligible for the next reviewed daily snapshot.
+
+A verified local WAV preview of the actual generated game-bank note is available
+under work/sonic-adventure/jp-aica-driver-check-v6/actual-game-bank-note.wav.
+It is generated output, not a recording of the user's sound. No graphical build
+changed or ran during this milestone, so there is no new game screenshot.
+Full gameplay, English, 60/120/240FPS/8K/HD settings, VMU minigame/widget and later
+platforms remain unfinished. Keep Sol High/selected Sol Extra High for SDK/audio
+integration; Luna Low is suitable for routine documentation.

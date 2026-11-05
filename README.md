@@ -1,3 +1,12 @@
+Latest sound integration: the original Japanese SDK now downloads all 112
+audited bank files and produces the played MIDI commands itself. 8,959 checks
+pass, including complete sound-memory comparisons and actual Windows audio
+delivery. Overall project estimate remains approximately 10%; the goal is
+active and the full native game remains unfinished.
+
+- [Latest bank and MIDI verification](outputs/sonic-adventure/JP_NATIVE_SD_COMMANDS.txt)
+- [Current project progress](outputs/sonic-adventure/README.md)
+
 Latest filesystem milestone: the original native GDFS now reads the Japanese
 disc through real native I/O. Startup, directories, handles, reads, streams,
 completion/error callbacks, cancellation and shutdown pass 792 checks, including

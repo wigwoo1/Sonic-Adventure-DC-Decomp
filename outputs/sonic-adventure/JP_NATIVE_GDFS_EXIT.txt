@@ -1,0 +1,102 @@
+Latest compiled core startup: JP_NATIVE_SYSTEM_BOOTSTRAP.txt. The following
+notes retain the earlier Python-composed core qualification scope.
+
+Owned original GDFS in the native startup/exit graph
+Qualified 2026-11-05. Whole project approximately 10%; goal remains active.
+
+Current evidence
+Full composed graph: work/sonic-adventure/jp-native-gdfs-exit-v2.
+Native original filesystem: work/sonic-adventure/jp-native-gdfs-v8.
+Lifecycle tests: work/sonic-adventure/jp-native-gdfs-exit-check-v1.
+Graphical startup tests: work/sonic-adventure/jp-native-gdfs-startup-check-v1.
+Public proof copies and hashes: analysis/jp_native_gdfs_exit_*.json.
+See JP_NATIVE_GDFS.txt for the underlying real-media/read/stream qualification.
+
+What changed
+The real filesystem can now transfer terminal shutdown authority to the native
+exit service. File operations remain usable after a claim, while independent
+configure/init/reinit/shutdown cannot steal that authority. Full-width tokens
+never recycle. An uncommitted claim can be cancelled; once cleanup begins, the
+same token retains authority across retries and a successful finish is terminal.
+Final shutdown drains or cancels pending native I/O, suppresses late callbacks,
+retires the original filesystem handler and releases its real file/arenas.
+
+The general exit service now closes GDFS before RTC, device quiescence or an
+individually selected WAIT. It closes the final SDK heap after all selected
+consumers. Rejected later claims roll back earlier GDFS/RTC/heap claims without
+closing those caller-owned services. Unexpected rollback failures retain cleanup
+authority instead of silently forgetting a live owner. Existing public struct
+sizes and resource-mask meanings remain unchanged.
+
+New resource bit: JP_EXIT_GDFS=131072. JP_EXIT_SUPPORTED=262143.
+JP_EXIT_ALL stays 16383; the old device/heap/RTC mask stays 116726.
+The device/heap/RTC/GDFS composition uses 247798. An old RTC-only mask does not
+implicitly take filesystem ownership. A caller closing a shared wait must first
+close or delegate every service that needs it; unselected owners remain its job.
+
+Verification scope
+Five native suites passed 9,000 checks in this qualification cycle:
+- 132 actual GDFS lifecycle/exit checks across 13 fresh-process cases: tokens,
+  cold/already-claimed owners, device-claim rejection, pending file reads,
+  callback/foreign-thread rejection, retry and native process exit codes 0/70.
+- 64 existing RTC exit checks, unchanged, against the new composed graph.
+- 792 existing original-GDFS component checks, with 325 complete unhooked
+  original handle calls, actual read-only media, full file hashes, streaming,
+  callbacks, malformed-sector errors, cancellation and shutdown.
+- 591 existing save-default/CRC checks, with 29 complete unhooked original
+  calls, against the exact new graph metadata.
+- 7,421 graphical boot/logo/exit checks. Six original GDFS startups read the
+  actual Japanese directories and SET0001S.BIN. Six actual ADV00.PRS streams
+  remain pending for shutdown. Original task destruction observes GDFS already
+  closed, including native quit with a pending GPU job. Three complete original
+  logo runs produce 570 real GPU images/Presents and 175,104,000 compared pixels.
+
+Failure tests use real service states. Removing/restoring the actual GDFS
+handler proves cleanup retry while RTC/wait remain live. Cleanup entered from
+the real wait dispatch closes GDFS/RTC, observes the real busy-wait rejection,
+then retries only the remaining wait/heap. A real file-read callback rejects
+reentrant cleanup without losing ownership. No native service or original game
+function is replaced by a successful test stub. Controlled controller samples
+and passive pixel observers retain the previous startup suite's explicit scope.
+
+The fresh capture is movie0/native-reset-boot-logo.png beneath the graphical
+proof directory. It is an actual Windows backbuffer showing the SEGA splash,
+not gameplay. Its bytes match the previous independently verified splash.
+This milestone changes lifecycle integration, not the visible game content.
+Retail-derived captures remain local and are excluded from source/release packs.
+
+Reproduce from the workspace (fresh output/report paths are required)
+python -B outputs/sonic-adventure/jp_port_tools/build_native_gdfs.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --baseline work/sonic-adventure/jp-native-peripheral-startup-v3 --media work/sonic-adventure/jp-native-gd-media-v1 --output work/sonic-adventure/NEW-GDFS
+python -B outputs/sonic-adventure/jp_port_tools/build_native_gdfs_exit.py --workspace . --baseline work/sonic-adventure/jp-native-peripheral-startup-v3 --gdfs work/sonic-adventure/NEW-GDFS --preserved work/sonic-adventure/jp-native-gdfs-exit-source-v1 --output work/sonic-adventure/NEW-GDFS-EXIT
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_gdfs_exit.py --workspace . --build work/sonic-adventure/NEW-GDFS-EXIT --track "FULL LOCAL PATH TO track03.bin" --output work/sonic-adventure/NEW-GDFS-EXIT-CHECK
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_boot_saves.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --build work/sonic-adventure/NEW-GDFS-EXIT --binary work/sonic-adventure/jp-ninja-math-reference/1ST_READ.BIN --report work/sonic-adventure/NEW-GDFS-EXIT/save-verification.json
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_gdfs_startup.py --workspace . --build work/sonic-adventure/NEW-GDFS-EXIT --inputs work/sonic-adventure/jp-native-pvm-inputs-v1 --asset-root work/sonic-adventure/jp-native-pvm-inputs-v1/SONICADV --save-proof work/sonic-adventure/NEW-GDFS-EXIT/save-verification.json --track "FULL LOCAL PATH TO track03.bin" --output work/sonic-adventure/NEW-GDFS-STARTUP-CHECK
+Preserved baseline source versions are local verification inputs; do not rewrite
+them or old build/proof directories. Retail media/program/asset inputs stay local.
+
+Publishing maintenance
+The normal publisher now streams assets through native curl. This addresses the
+observed Python bulk HTTPS write failure on the 292MB archive. Credentials stay
+in stdin/memory, never command-line arguments or files. Sixteen loopback checks
+verify real text/binary transfers with spaces in paths, content hashes, HTTP
+failure handling and rejection of a header newline. They use a synthetic token
+and make no GitHub changes. That local suite does not test GitHub/TLS; the prior
+successful full native-curl recovery supplies the actual GitHub transport proof.
+The publisher retains its remote size/digest checks and ordinary Git history.
+No remote upload record is deleted automatically.
+
+What remains
+The complete native sbInitSystem/main system_boot_init coordinator is next.
+The original sbInitSystem import probe remains compile-only and unsafe to run:
+it still contains console heap addresses and truncating alignment. Its remaining
+five provider names are _builtin_set_imask, syHwInit, cache_ram_init, _BSG_END and
+syHwInit2. Replace those platform assumptions with actual native configuration
+and the already qualified heap/device/input/RTC/GDFS ordering and rollback.
+The new startup tests are still a Python caller composing real native services
+and original boot/logo bodies; they do not prove the compiled full parent,
+audio, stage gameplay, localization, settings or later platforms.
+
+Preserve the full scope: English PC gameplay, 60/120/240 FPS, 8K/display/HD/SUPIR
+settings, actual Chao VMU emulator/widget, Android, stereoscopic 3DS and final
+demake stretch goals. Sol High/selected Sol Extra High remains appropriate for
+the native parent integration; Luna Low is suitable for routine documentation.

@@ -1,7 +1,9 @@
 #ifndef JP_NATIVE_EXIT_H
 #define JP_NATIVE_EXIT_H
 #include <stdint.h>
+#ifndef JP_EXIT_API
 #define JP_EXIT_API __declspec(dllexport)
+#endif
 struct jp_gpu;struct jp_window;
 enum jp_exit_resource {
     JP_EXIT_PRESENT=1,JP_EXIT_INPUT=2,JP_EXIT_RECORDING=4,JP_EXIT_WAIT=8,
@@ -9,12 +11,14 @@ enum jp_exit_resource {
     JP_EXIT_MEMORY=256,JP_EXIT_TEXTURES=512,JP_EXIT_RENDER_STATE=1024,
     JP_EXIT_CLOCK=2048,JP_EXIT_WINDOW=4096,JP_EXIT_GPU=8192,
     JP_EXIT_ALL=16383,JP_EXIT_DEVICE=16384,JP_EXIT_SDK_HEAP=32768,
-    JP_EXIT_RTC=65536,JP_EXIT_SUPPORTED=131071,JP_EXIT_WITH_DEVICE=18422,
-    JP_EXIT_WITH_DEVICE_SDK_HEAP=51190,JP_EXIT_WITH_DEVICE_SDK_HEAP_RTC=116726
+    JP_EXIT_RTC=65536,JP_EXIT_GDFS=131072,JP_EXIT_SUPPORTED=262143,JP_EXIT_WITH_DEVICE=18422,
+    JP_EXIT_WITH_DEVICE_SDK_HEAP=51190,JP_EXIT_WITH_DEVICE_SDK_HEAP_RTC=116726,
+    JP_EXIT_WITH_DEVICE_SDK_HEAP_RTC_GDFS=247798,
+    JP_EXIT_BOOTSTRAP=262144 /* observation only; not accepted by bind */
 };
 enum jp_exit_error {JP_EXIT_OK,JP_EXIT_ARGUMENT,JP_EXIT_NOT_BOUND,
     JP_EXIT_THREAD,JP_EXIT_REENTRANT,JP_EXIT_ALREADY_BOUND,JP_EXIT_SERVICE,
-    JP_EXIT_DEVICE_STATE,JP_EXIT_SDK_HEAP_STATE,JP_EXIT_RTC_STATE};
+    JP_EXIT_DEVICE_STATE,JP_EXIT_SDK_HEAP_STATE,JP_EXIT_RTC_STATE,JP_EXIT_GDFS_STATE};
 struct jp_exit_config {uint32_t bytes,resources;struct jp_gpu *gpu;struct jp_window *window;};
 struct jp_exit_info {uint64_t cleanup_calls;uint32_t remaining,completed,status,failed_resource,native_error;};
 /* Bind once, on the game thread, after the selected owners are initialized.
@@ -35,7 +39,20 @@ struct jp_exit_info {uint64_t cleanup_calls;uint32_t remaining,completed,status,
 /* RTC claims the actual clock callback and closes it before device quiescence
  * or a separately selected WAIT. A later rejected claim cancels earlier
  * uncommitted claims. Existing masks retain their existing meanings. */
+/* GDFS claims the actual filesystem owner and drains/cancels pending I/O before
+ * RTC, device quiescence or WAIT. Later rejected claims roll it back. Final
+ * cleanup retains authority until native I/O, callbacks and media are retired.
+ * Legacy masks never implicitly select this new owner. */
 JP_EXIT_API int jp_exit_bind(const struct jp_exit_config *);
+/* A compiled bootstrap may register its real cleanup before final binding.
+ * This temporary owner keeps early sbExitSystem/syBtExit functional. It may be
+ * cancelled before cleanup starts, or replaced by a successful final bind
+ * covering every declared resource. No callback runs during registration/bind.
+ * Bootstrap cleanup is terminal, creator-thread owned and safe to retry.
+ */
+typedef int (*jp_exit_bootstrap_cleanup)(void *);
+JP_EXIT_API int jp_exit_prepare_bootstrap(uint32_t resources,jp_exit_bootstrap_cleanup,void *);
+JP_EXIT_API int jp_exit_cancel_bootstrap(jp_exit_bootstrap_cleanup,void *);
 /* Safe to retry after an actual native service failure. Successfully closed
  * owners are never closed twice; the failing/remaining owners stay owned. */
 JP_EXIT_API int jp_exit_cleanup(void);

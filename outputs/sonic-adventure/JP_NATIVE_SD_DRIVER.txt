@@ -1,0 +1,112 @@
+Original Japanese sound SDK: native transfers and repeated driver initialization
+Qualified 2026-11-05. Overall estimate approximately 10%; goal active.
+
+What now works in this component
+The pinned Japanese SDK's real sdLibInit/sdSysWrkInit create their work, primary
+command descriptor, 64-entry block pool, transfer queue and native DMA channel.
+No fixture seeds sdgWrkPtr or supplies a successful dummy sound initializer.
+The actual native work is 1,176 bytes; its original 0x58c-byte default allocation
+already has enough space for 32-byte alignment. Only pointer arithmetic/masks
+need widening. Native block descriptors remain 48 bytes; original guest records
+are 32 bytes. Driver headers remain 32 bytes and primary wire commands 16 bytes.
+
+The authored G2 transport borrows the already qualified AICA owner. CPU copies
+support 1/2/4-byte units and fixed/increasing/decreasing addresses. Register
+access supports one aligned 32-bit SDK access per call, including actual ARM
+reset control. It copies real sound RAM, retaining full host pointers/context.
+Unsupported accesses return errors. It does not emulate SH-4 DMA cycle timing.
+
+Native DMA copies the data at trigger and posts completion for explicit service
+on the creator thread. Busy clears and the actual transport end counter advances
+before the callback. The original SDK handler then marks its block finished,
+adds one to its own end count, calls its callback, clears its current-transfer
+pointer, adds its second end count and starts the next queued transfer. The
+double SDK end count is original behavior, not a transport counter mistake.
+The host callback gate uses a real critical section; it does not export fake
+SH-4 status-register operations. Restoring the gate does not dispatch callbacks
+inside an original SDK epilogue. The synchronous wait services real completions.
+
+The complete original sdDrvInit path executes twice, in both CPU and DMA modes.
+It fills the actual 2 MiB with SEGA, uploads the exact MASARU ARM program, releases
+reset and executes it. A bounded 44,100-frame initialization window and a real
+ready-byte check replace the console's empty desktop spin. The second call is
+made after releasing the outer descriptor, as in the original game sequence.
+It really reuses that released slot as its internal program descriptor. The
+full driver/table layout, readiness, callbacks, copies and pool counts pass.
+This exercises the complete native SDK loader, not the still unfinished higher
+game sound_init_driver or sound_system_init entries.
+
+Verification
+- 297 transport checks in three fresh processes: independent per-unit memory
+  model across all 27 width/address-mode combinations in both directions,
+  complete RAM windows and caller canaries, actual ARM reset/program execution,
+  DMA copies in both directions, queued/reentrant callbacks, guarded completion,
+  foreign-thread rejection, explicit unsupported inputs and borrowed-core lifetime.
+- 481 SDK checks in six fresh processes: actual constructor, full RAM clear,
+  CPU transfers, original queued/synchronous DMA, four complete driver-loader
+  calls, descriptor release/reallocation alias, real driver playback regressions,
+  independent two-boot control and failed-copy callback suppression.
+- Total: 778 checks. This total is separate from prior sound-owner/pool proofs.
+- Both SDK modes produce exactly the previously qualified 88,200-frame note and
+  44,100-frame note-off PCM. Their complete final 2 MiB RAM also matches an
+  independent two-boot sequence that directly resets/uploads the borrowed core.
+- The first attempted comparison incorrectly required restarted-chip RAM to
+  equal a cold single-boot chip. The measured 45,928 differing bytes all lie in
+  the actual bank's effects-work allocation (0x1d6000, 65,600 bytes). CPU reset
+  preserves chip/DSP state. All bytes outside that allocation match the cold
+  baseline, and all bytes including that allocation match the repeated control.
+  Note/tail PCM still matches the cold baseline. The original failed report is
+  retained; no state difference was discarded or hidden with a comparison mask.
+- Authored C and the adapted SDK bundle compile/link without diagnostics under
+  warnings-as-errors. Original SDK unused-parameter warnings alone are disabled.
+  Thirty-one of forty-two function bodies in thirty-eight SDK modules are
+  unchanged. Adaptation metadata identifies every changed byte range/function.
+- Earlier AICA/pool/probe binaries, source/proofs and fifteen prior native DLLs
+  retain their hashes. The public support selector still selects the same ten
+  previously qualified authored files. Combined SDK/core DLLs remain private.
+
+Source and reproduction
+Pinned upstream: reshaped/sonic-adventure
+25a3d3154dbe657325e97dbe8c5291086f6af5c0.
+Portable core: kode54/Highly_Theoretical
+2998a4bf550949cd2daee249e725a64462cf15e0, GPL-3.0.
+Their originals are preserved. Builds check original bytes against Git objects;
+all generated external code, original SDK/game code and retail inputs stay local.
+
+Author-authored implementation: native/jp_native_g2_audio.c and .h.
+Build tools: jp_port_tools/build_native_g2_audio.py,
+build_native_sd_driver.py. Adaptations: sd_g2_adapter.inc and
+sd_driver_observation.inc. Checks: verify_native_g2_audio.py and
+verify_native_sd_driver.py. Packaging: package_native_sd_driver.py.
+All tools take --workspace and new --output paths beneath work/sonic-adventure.
+The two builders also take --compiler (native x64 Clang); the G2 builder takes
+--aica (qualified jp-native-aica-v3). The SDK builder takes --upstream and --g2.
+The G2 verifier takes --build. The SDK verifier takes --upstream, --build,
+--audit (jp-native-sound-init-audit-v2), --probe_check (jp-aica-driver-check-v7).
+Use each script's --help for the exact arguments; preserve older output folders.
+Current builds: work/sonic-adventure/jp-native-g2-audio-v3 and
+jp-native-sd-driver-v3. Current checks: jp-native-g2-audio-check-v3 and
+jp-native-sd-driver-check-v3. Public metadata mirrors are in analysis.
+
+Remaining work and practical limits
+Bank loading and host/MIDI commands in this regression still come from the
+diagnostic harness. Integrate original SDK command/bank producers and the real
+game sound_init_driver with owned native staging next. Async original sdSysServer
+must service the new transport at an explicit safe point. Then connect streams,
+actual game sound initialization and global early/final audio exit ownership.
+On a failed raw SDK transfer, old bookkeeping can remain PROGRESS; the future
+native sound owner must quarantine/roll back that state rather than resume it.
+DMA spans currently require exact 32-byte alignment. Expansion DMA channels,
+interrupt triggers, partial-register transfers and arbitrary hardware APIs are
+explicitly unsupported. Close the transport before closing/reopening its borrowed
+core. Allocation/free failure injection and complete game-owner recovery are not
+qualified by these tests. Physical console waveform/cycle accuracy is unproven;
+the inherited core policy still uses 128 interpreter cycles per 44,100 Hz frame.
+No new graphical build was tested, so there is no new gameplay screenshot. These
+offline driver checks do not requalify speaker audibility or full-game audio.
+
+For a beginner: read analysis/jp_native_sd_driver.json for passing cases and
+JP_NATIVE_PORT_PLAN.txt for the next work. There is no playable executable yet.
+Keep Sol High/selected Sol Extra High for bank/command/owner integration; routine
+documentation can use Luna Low. Full English PC gameplay, VMU Chao emulation and
+desktop widget, display/texture options, Android, stereo 3DS and demakes remain.

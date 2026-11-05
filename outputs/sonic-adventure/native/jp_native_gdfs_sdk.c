@@ -23,10 +23,12 @@ static struct {
     struct jp_gdfs_info info;uint32_t thread,first,raw,chunk,timeout;
     int owns_media,api_depth,callback_depth,in_directory,closing;
     unsigned directory_budget;long mask;
+    uint64_t exit_token;int exit_started;
     struct jp_gdfs_allocation work,dir,callbacks;
     struct callback_record *records;GDFS_ERRFUNC global_error;void *global_arg;
     struct directory_record *directories;
 } fs;
+static uint64_t next_exit_token=1;
 enum {CMD_NONE,CMD_INIT,CMD_READ,CMD_STREAM,CMD_SEEK};
 static struct {
     int kind,done,aborting,error,media_live,transfer_active,dma;
@@ -341,6 +343,7 @@ static int preflight(void)
 int jp_gdfs_configure(const wchar_t *path,uint32_t first,uint32_t raw,uint32_t chunk,uint32_t timeout)
 {
     int rc=access(0);if(rc)return rc;if(fs.api_depth||fs.callback_depth)return JP_GDFS_REENTRANT;
+    if(fs.exit_token)return result(JP_GDFS_STATE,GDD_ERR_INIT);
     if(fs.info.phase>JP_GDFS_CONFIGURED)return JP_GDFS_STATE;
     if(first!=45150||(raw!=2048&&raw!=2352)||!chunk||chunk>65536||!timeout||timeout>60000)return JP_GDFS_ARGUMENT;
     rc=jp_gdfs_host_path(path);if(rc)return rc;fs.thread=jp_gdfs_host_thread();fs.first=first;fs.raw=raw;fs.chunk=chunk;fs.timeout=timeout;
@@ -349,6 +352,7 @@ int jp_gdfs_configure(const wchar_t *path,uint32_t first,uint32_t raw,uint32_t c
 static int initialize(uint32_t handles,uint32_t entries)
 {
     int rc=access(0);if(rc)return rc;if(fs.api_depth||fs.callback_depth)return JP_GDFS_REENTRANT;
+    if(fs.exit_token)return result(JP_GDFS_STATE,GDD_ERR_INIT);
     if(fs.info.phase!=JP_GDFS_CONFIGURED)return result(JP_GDFS_STATE,GDD_ERR_INIT);
     if(!handles||handles>1024||!entries||entries>8192)return result(JP_GDFS_ARGUMENT,GDD_ERR_INIT);
     fs.info.phase=JP_GDFS_STARTING;fs.info.max_handles=handles;fs.info.max_entries=entries;
@@ -380,7 +384,7 @@ int jp_gdfs_snapshot(struct jp_gdfs_info *out)
         fs.info.dir_entries=(uint32_t)gd_wk->curdir->dir_num;}
     fs.info.vblank=jp_gdfs_source_chain_handle();fs.info.pending=command.kind!=0;*out=fs.info;return 0;
 }
-int jp_gdfs_shutdown(void)
+static int shutdown_owned(void)
 {
     int rc=access(0);if(rc)return rc;if(fs.api_depth||fs.callback_depth)return JP_GDFS_REENTRANT;
     if(fs.info.phase<JP_GDFS_STARTING){free_directories();return 0;}fs.closing=1;
@@ -393,6 +397,40 @@ int jp_gdfs_shutdown(void)
     fs.records=NULL;free_directories();fs.closing=0;fs.info.phase=JP_GDFS_CONFIGURED;fs.info.work=fs.info.dir=0;fs.info.live_handles=fs.info.dir_entries=fs.info.pending=fs.info.vblank=0;
     return result(0,0);
 }
+int jp_gdfs_shutdown(void)
+{
+    int rc=access(0);if(rc)return rc;
+    if(fs.api_depth||fs.callback_depth)return JP_GDFS_REENTRANT;
+    if(fs.exit_token)return result(JP_GDFS_STATE,GDD_ERR_INIT);
+    return shutdown_owned();
+}
+int jp_gdfs_exit_claim(uint64_t *token)
+{
+    int rc=access(1);if(rc)return rc;
+    if(fs.api_depth||fs.callback_depth)return JP_GDFS_REENTRANT;
+    if(!token||!output_valid(token,sizeof *token))return result(JP_GDFS_ARGUMENT,GDD_ERR_INIT);
+    if(fs.exit_token||fs.closing||!next_exit_token)return result(JP_GDFS_STATE,GDD_ERR_INIT);
+    if(!linked())return result(JP_GDFS_CHAIN,GDD_ERR_INIT);
+    fs.exit_token=next_exit_token++;fs.exit_started=0;*token=fs.exit_token;
+    return result(0,0);
+}
+static int exit_access(uint64_t token)
+{
+    int rc=access(0);if(rc)return rc;
+    if(fs.api_depth||fs.callback_depth)return JP_GDFS_REENTRANT;
+    return !token||token!=fs.exit_token?JP_GDFS_STATE:0;
+}
+int jp_gdfs_exit_cancel(uint64_t token)
+{
+    int rc=exit_access(token);if(rc)return rc;
+    if(fs.exit_started)return result(JP_GDFS_STATE,GDD_ERR_INIT);
+    fs.exit_token=0;return result(0,0);
+}
+int jp_gdfs_exit_finish(uint64_t token)
+{
+    int rc=exit_access(token);if(rc)return rc;
+    fs.exit_started=1;return shutdown_owned();
+}
 static int begin(void)
 {int rc=access(1);if(rc)return rc;if(fs.closing)return JP_GDFS_STATE;if(!linked())return JP_GDFS_CHAIN;fs.api_depth++;return 0;}
 static void end(void){fs.api_depth--;}
@@ -402,7 +440,7 @@ long gdFsInit(long handles,void *legacy_work,long entries,void *legacy_dir)
 void gdFsFinish(void){(void)jp_gdfs_shutdown();}
 long gdFsReinit(void)
 {
-    if(begin())return GDD_ERR_INIT;if(fs.callback_depth||fs.api_depth>1){end();return GDD_ERR_BUSY;}
+    if(begin())return GDD_ERR_INIT;if(fs.exit_token||fs.callback_depth||fs.api_depth>1){end();return GDD_ERR_BUSY;}
     if(drain()){end();return GDD_ERR_TOUT;}
     fs.in_directory=1;long rc=SRC(gdFsReinit)();fs.in_directory=0;fs.info.phase=rc?JP_GDFS_FAILED:JP_GDFS_READY;
     result(rc?JP_GDFS_SOURCE:0,rc);end();return rc;

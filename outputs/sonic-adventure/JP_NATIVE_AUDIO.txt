@@ -1,0 +1,119 @@
+Native Windows PCM output and original sound-initialization dependency audit
+Whole-project estimate: approximately 10%; goal active.
+Status: VERIFIED OUTPUT COMPONENT. Original game audio remains unfinished.
+
+What now works
+The authored jp_native_audio.c opens a real Windows WASAPI shared stereo float32
+render stream at 44100 or 48000 Hz. A separate native worker owns its COM/device
+interfaces and consumes copied PCM independently of game drawing. A bounded
+ring retains sample order across wrap; finite samples are gain-scaled and clipped
+to [-1,1]. Empty input produces silence. Queue overflow rejects the whole new
+packet; a timed-out drain does not discard accepted data. Explicit software
+discard leaves already scheduled device packets scheduled.
+
+Configuration is copied, not borrowed. Exactly one creating thread owns the API;
+ownership is checked under the same lock as state changes. Foreign calls cannot
+steal the stream or modify snapshot output. Closing signals and joins the actual
+worker before releasing COM, events and sample storage. A bounded timeout keeps
+ownership for a retry; the worker is never forcibly terminated. Ordinary close
+permits a new independent session. Windows 10/11 desktop is the current target;
+other host audio backends and old Windows versions are not qualified here.
+
+Drain uses the real stream clock and a conservative target from the final packet
+submission plus device-buffer capacity and reported maximum stream latency.
+Cumulative submitted-frame counts alone are not used to locate the final packet
+after a worker underrun. The public native ABI is a 32-byte configuration and
+144-byte diagnostic snapshot, checked in compiled C and independently in Python.
+
+Verification
+Qualified build: work/sonic-adventure/jp-native-audio-v5.
+Qualification: work/sonic-adventure/jp-native-audio-check-v2/verification.json.
+Seven fresh-process cases pass. The three PCM cases each consume 50,793 frames,
+covering 48 kHz gain 1, 44.1 kHz gain 0.5, and 48 kHz gain 0. Independent byte
+hashes and clipping counts match the user PCM handed to the actual render client.
+Tests overwrite caller buffers immediately after submission, wrap the ring,
+exercise invalid input/foreign callers/overflow/discard, and check clock progress.
+A bounded real OS suspension/resumption of this test's worker forces a stall;
+no audio API is called while that worker could be suspended holding its lock.
+Five actual one-millisecond opens and zero-time closes time out, then successfully
+join the same retained workers. A simultaneous-open case acquires only one owner.
+
+The final run records 568 checks, including repeated bounded progress/snapshot
+observations. This is a test-run assertion count, not a count of recovered game
+functions or distinct features. All tests use a unique, nonpersistent muted
+audio session and query its actual muted state. No endpoint volume is changed;
+there is no user-audio capture or loopback recording. Speaker audibility and
+post-mixer waveforms are not measured. No new graphical build was tested, so
+there is no new game screenshot for this audio-only component.
+
+Initial build failure and preserved evidence
+The first C object compiled warning-free but its link lacked six MIDL UUIDs.
+The current C unit defines their exact identities from the installed Windows SDK;
+SDK header hashes/identities and the failed link log are preserved. Review also
+fixed the initial incorrect successful-open return, serialized initial ownership
+and prevented a closing opening-worker from publishing READY again. Historical
+audio-v1/v2/v3/v4 build folders, smoke results, earlier verification and source
+snapshots remain private and unchanged. Current sources compile/link with
+-Wall -Wextra -Werror and zero diagnostic bytes.
+
+Actual game sound dependency
+The exact higher system_boot_init still lacks sound_system_init. This output
+DLL exports only its seven jp_audio_* transport functions; no sound-driver, MIDI,
+G2, ARM reset or sound_system_init success replacement was added. The qualified
+System/frame/GDFS/RTC/render libraries retain their prior binary hashes.
+
+The new audit checks pinned original source and reads the actual Japanese disc
+through the qualified native reader and original ISO directory parser. Independent
+raw-sector reads agree. It profiles 54 functions reachable through discovered
+literal calls and all 112 SMLT bank-file headers. Indirect callbacks and external
+hardware/configuration providers remain explicit dependencies, not a closed graph.
+Retail allocation-only bank entries legitimately use negative data-size/offset
+sentinels: the original SDK downloads only positive sizes. The first audit's
+overly strict assertion and its source are preserved; the corrected audit follows
+that original condition and bounds every positive payload span/allocation.
+
+The JP MASARU.DRV is 33,408 bytes: a 32-byte SDRV v1.1 header followed by a
+33,376-byte ARM program. Its complete bytes equal the user's USA driver:
+file SHA256 5ab700a241e5d5e164c104a76555b35002a6a84370aea17bf8c34d713cdc2cb9
+ARM SHA256  114bf06bda4e03e01fae8c089294fec3dda02a064a317dbb7311aa2eff8c62fc
+Both copies and their original disc/source/proof hashes remain preserved.
+These hashes and bank metadata are public evidence; driver/program/bank bytes
+stay private local inputs. The driver has not been executed by this milestone.
+
+Next integration milestone
+Qualify an actual ARM7/AICA sound-memory/register and execution provider, adapt
+the original sound SDK command/work/driver path with full-width host handles,
+and deliver its real output to this transport. Replace fixed WORK_AREA staging
+with an owned buffer. Preserve the original initialization ordering and qualify
+its repeated sdDrvInit call before changing descriptor reuse: sdMemBlkDestroy
+clears a pool slot's used flag rather than freeing its storage; a later internal
+allocation may alias that descriptor. Source review alone is not execution proof.
+Use actual driver progress instead of treating an empty console delay as readiness.
+Then verify real MIDI effects, bank changes, streams and ordered audio shutdown
+before linking/executing the complete higher bootstrap. Music/voices, English
+audio mappings and gameplay are still unfinished. No third-party emulator core
+has been selected, merged or packaged in this component.
+
+Reproduce from the workspace root, substituting the local Python/Clang paths:
+python -B outputs/sonic-adventure/jp_port_tools/build_native_audio.py --workspace . --compiler "PATH_TO_CLANG" --output work/sonic-adventure/NEW_AUDIO_BUILD
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_audio.py --workspace . --build work/sonic-adventure/NEW_AUDIO_BUILD --output work/sonic-adventure/NEW_AUDIO_CHECK
+Use fresh output directories. Tests require an available real Windows render
+endpoint. Missing/invalid devices report actual failure; no mock endpoint is used.
+The dependency audit also needs the pinned checkout, qualified media/ISO build
+metadata, media check and local Japanese disc path recorded by that check.
+
+Public artifacts and scope
+Two authored transport artifacts, DLL and import library, are eligible for the
+next reviewed daily snapshot with source/proof hashes. They contain one authored
+audio object plus normal host runtime support, with only Windows system imports.
+Combined original SDK/game DLLs, all retail inputs, tools and caches stay private.
+These remain incomplete research support libraries, not a playable game build.
+See analysis/jp_native_audio_public_package.json for source/artifact evidence.
+
+Primary API references used for implementation review
+https://learn.microsoft.com/en-us/windows/win32/coreaudio/rendering-a-stream
+https://learn.microsoft.com/en-us/windows/win32/api/audioclient/nf-audioclient-iaudioclient-initialize
+https://learn.microsoft.com/en-us/windows/win32/api/audioclient/nf-audioclient-iaudioclock-getposition
+https://learn.microsoft.com/en-us/windows/win32/api/audioclient/nf-audioclient-iaudioclient-getstreamlatency
+Keep Sol High/selected Sol Extra High for ARM/AICA and original SDK integration.
+Luna Low is suitable for routine documentation and reviewed publishing upkeep.

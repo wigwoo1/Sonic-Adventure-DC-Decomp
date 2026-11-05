@@ -1,0 +1,81 @@
+Owned native sound core: ARM reset, physical RAM/register access and PCM output
+Whole-project estimate: approximately 10%; goal active.
+Status: VERIFIED COMPONENT. Original game/SDK sound initialization remains open.
+
+New boundary
+jp_native_aica.c owns a guarded native emulation state and, when explicitly
+requested, a real 44.1 kHz Windows audio worker. Configuration is copied. One
+creating thread owns operations; foreign callers cannot access or close it.
+Native pointers stay full width. Sound RAM is exactly 2 MiB and API bounds do
+not silently wrap. Original sound-memory offsets remain 32-bit values.
+The ABI is a 32-byte options record and 104-byte diagnostic snapshot.
+
+The API supports copied/unaligned RAM access, chip register access, CPU reset,
+offline signed16 stereo rendering and actual device pumping/draining. Offline
+mode is explicit and cannot claim device delivery. The core begins with the ARM
+held in reset; rendering while held advances AICA/DSP/timers without running CPU
+instructions. CPU reset preserves RAM and sound-chip state, while a full close/
+open creates a fresh context. The inherited128cycles/sample interpreter policy
+and wider core/hardware behavior are still provisional.
+
+Pump checks actual output queue capacity before executing the core. A queue-full
+result leaves emulated time unchanged. A core/device failure is explicit; failed
+rendering does not copy a partial PCM buffer to the caller. Close cancels queued
+audio through the actual audio-worker join. A bounded timeout retains both core
+and output resources until the same close is retried. Explicit drain is separate.
+Pre-existing audio sessions are rejected and never adopted or closed by this owner.
+This local owner has not yet been added to the game's global System/Exit registry.
+
+Reset defect found and corrected
+The first held/released CPU test failed: a pending chip interrupt diverted the
+CPU before its initial program ran. The pinned external arm_clear_state selected
+Supervisor mode but left IRQ/FIQ masks clear. An authored helper within the private
+ARM translation unit now applies both masks after the original reset routine;
+constructor and later CPU-reset paths use it. Original external function bodies
+and the qualified earlier probe remain preserved. The current context can advance
+chip timers while held, then run from its reset vector despite pending interrupts.
+
+Primary reset reference: ARM7TDMI Technical Reference Manual, section2.10 Reset.
+https://documentation-service.arm.com/static/5e8e1323fd977155116a3129
+The specified reset state uses Supervisor mode with IRQ and FIQ masked. This
+specific correction does not establish complete ARM instruction/cycle conformance.
+
+Qualification
+Build: work/sonic-adventure/jp-native-aica-v3.
+Check: work/sonic-adventure/jp-native-aica-check-v1/verification.json.
+362 checks pass in six fresh processes: basic RAM/register/reset ownership,
+actual game-driver regression, real output, pre-existing output protection,
+actual constructor timeout/rollback, and actual unsupported-instruction failure.
+Tests query the real committed high-address state and its reserved guard pages,
+then confirm the reservation is freed. Both rollback-complete and retained-owner
+paths are observed across five actual one-millisecond constructor timeouts.
+
+The exact original MASARU ARM program and EMERALDCOAST bank still produce the same
+88,200-frame note, complete 44,100-frame tail and final 2 MiB RAM hashes as the
+earlier qualified probe. Commands are still supplied by the diagnostic harness;
+the game's original sound_system_init has not been compiled/connected by this step.
+Actual Windows output is tested with a queried muted session; no global volume
+change, capture or physical-speaker audibility measurement is performed.
+
+Authored owner code compiles with -Wall -Wextra -Werror and zero diagnostics.
+The two rebuilt external units retain ten existing unused-item warnings; the
+copied qualified Yamaha object had seven existing warnings at its original build.
+No warnings are described as a warning-free complete external core.
+The first builder path lookup stopped before compilation; it was corrected to
+resolve the existing relative artifact-manifest paths. Failed build/smoke folders
+and superseded source remain intact.
+
+Reproduce with the previously qualified external core and PCM output present:
+python -B outputs/sonic-adventure/jp_port_tools/build_native_aica.py --workspace . --core work/sonic-adventure/highly-theoretical-native-v1 --baseline work/sonic-adventure/jp-aica-core-probe-v10 --audio work/sonic-adventure/jp-native-audio-v5 --output work/sonic-adventure/NEW_OWNED_AICA
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_aica.py --workspace . --build work/sonic-adventure/NEW_OWNED_AICA --audit work/sonic-adventure/jp-native-sound-init-audit-v2 --probe_check work/sonic-adventure/jp-aica-driver-check-v7 --output work/sonic-adventure/NEW_OWNED_AICA_CHECK
+Use fresh output directories. Local retail inputs and a real Windows output
+endpoint are required for the game-data and device cases respectively.
+
+Next connect the original sound SDK work/descriptor/command and real transfer
+paths to this owner. Preserve safe callback ordering and add actual audio resources
+to global ordered cleanup before executing the higher original game bootstrap.
+See JP_NATIVE_SD_MEMORY.txt for the newly verified pool/alias behavior.
+The combined external-core libraries and all retail inputs/output remain private;
+authored adapters, reproduction tools and metadata are public-eligible. No new
+gameplay image was tested or captured in this component-only audio milestone.
+Keep Sol High/selected Sol Extra High for the remaining original SDK integration.

@@ -1,0 +1,115 @@
+{
+  "status": "owned_native_AICA_CPU_RAM_register_and_real_output_boundary_linked_unverified",
+  "commands": [
+    {
+      "command": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\18\\BuildTools\\VC\\Tools\\Llvm\\x64\\bin\\clang.exe",
+        "--target=x86_64-pc-windows-msvc",
+        "-std=c17",
+        "-O2",
+        "-Wall",
+        "-Wextra",
+        "-DEMU_COMPILE",
+        "-DEMU_LITTLE_ENDIAN",
+        "-DWIN32=1",
+        "-IC:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\work\\sonic-adventure\\highly-theoretical-native-v1\\Core",
+        "-IC:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\native",
+        "-c",
+        "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\work\\sonic-adventure\\jp-native-aica-v3\\external_dcsound_owned.c",
+        "-o",
+        "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\work\\sonic-adventure\\jp-native-aica-v3\\dcsound.obj"
+      ],
+      "exit_code": 0,
+      "diagnostic_bytes": 2322
+    },
+    {
+      "command": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\18\\BuildTools\\VC\\Tools\\Llvm\\x64\\bin\\clang.exe",
+        "--target=x86_64-pc-windows-msvc",
+        "-std=c17",
+        "-O2",
+        "-Wall",
+        "-Wextra",
+        "-DEMU_COMPILE",
+        "-DEMU_LITTLE_ENDIAN",
+        "-DWIN32=1",
+        "-IC:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\work\\sonic-adventure\\highly-theoretical-native-v1\\Core",
+        "-IC:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\native",
+        "-c",
+        "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\work\\sonic-adventure\\jp-native-aica-v3\\external_arm_reset.c",
+        "-o",
+        "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\work\\sonic-adventure\\jp-native-aica-v3\\arm.obj"
+      ],
+      "exit_code": 0,
+      "diagnostic_bytes": 901
+    },
+    {
+      "command": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\18\\BuildTools\\VC\\Tools\\Llvm\\x64\\bin\\clang.exe",
+        "--target=x86_64-pc-windows-msvc",
+        "-std=c17",
+        "-O2",
+        "-Wall",
+        "-Wextra",
+        "-DEMU_COMPILE",
+        "-DEMU_LITTLE_ENDIAN",
+        "-DWIN32=1",
+        "-IC:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\work\\sonic-adventure\\highly-theoretical-native-v1\\Core",
+        "-IC:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\native",
+        "-Werror",
+        "-c",
+        "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\outputs\\sonic-adventure\\native\\jp_native_aica.c",
+        "-o",
+        "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\work\\sonic-adventure\\jp-native-aica-v3\\aica.obj"
+      ],
+      "exit_code": 0,
+      "diagnostic_bytes": 0
+    },
+    {
+      "command": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\18\\BuildTools\\VC\\Tools\\Llvm\\x64\\bin\\clang.exe",
+        "--target=x86_64-pc-windows-msvc",
+        "-shared",
+        "-fuse-ld=lld",
+        "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\work\\sonic-adventure\\jp-native-aica-v3\\arm.obj",
+        "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\work\\sonic-adventure\\jp-native-aica-v3\\yam.obj",
+        "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\work\\sonic-adventure\\jp-native-aica-v3\\dcsound.obj",
+        "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\work\\sonic-adventure\\jp-native-aica-v3\\aica.obj",
+        "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\work\\sonic-adventure\\jp-native-aica-v3\\jp_native_audio.lib",
+        "-Wl,kernel32.lib",
+        "-o",
+        "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\work\\sonic-adventure\\jp-native-aica-v3\\jp_native_aica.dll"
+      ],
+      "exit_code": 0,
+      "diagnostic_bytes": 0
+    }
+  ],
+  "DLL": "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\work\\sonic-adventure\\jp-native-aica-v3\\jp_native_aica.dll",
+  "DLL_sha256": "d27a56aa2e3019cb94ee0ba345290156bc615095d123343b212c8a2c3a8c85cc",
+  "audio_DLL": "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\work\\sonic-adventure\\jp-native-aica-v3\\jp_native_audio.dll",
+  "audio_DLL_sha256": "ed198abf6f2403fb26a6c20227703bd8f42abe2a4fb62e53dd650ac2fe39751f",
+  "authored_source_sha256": {
+    "outputs/sonic-adventure/native/jp_native_aica.c": "3b7614d695c59ed95ade2ea4a38e4ca9618ef8d04fbe8bdc6c36c4411e11a4be",
+    "outputs/sonic-adventure/native/jp_native_aica.h": "1586cc9cfdd2c59a0ee4bab0012d8b9a58b2a2d8f1e4084884b06f75b4b29427",
+    "outputs/sonic-adventure/jp_port_tools/aica_reset_boundary.inc": "ea0fae0079ff3d80936d912003f28b2eccf73f086a12e4f170962e6dab99406a",
+    "outputs/sonic-adventure/jp_port_tools/aica_arm_reset_boundary.inc": "a6a7bcd2fa8f3ac7d549e60c161b0416d48698054f3140fca0a896d14623577b",
+    "outputs/sonic-adventure/jp_port_tools/build_native_aica.py": "6b0aa7f56beb460bee367c475a3d1298cd336f94058cf3fef8627f2afc068eb4"
+  },
+  "baseline_build_sha256": "01da166c6f3eb8c40b2e2699258bc93530a23968eecfe3da14dd06338e760f09",
+  "audio_build_sha256": "e48d28c3b3b6db726d21b0973414c5ea656326ed8371165b6a830c1fa4b5c246",
+  "generated_DCSOUND_sha256": "5c5945e56a5f64cfb2fc17bde777202997b3905eed931315c47f3caa39b98c5b",
+  "generated_ARM_sha256": "063bcdf6e9b713b693bf62ad2a135d502cd32b995c10430380676d3b6f8c6f61",
+  "copied_core_objects_sha256": {
+    "yam.obj": "4f3f46d859d0f1c7e9159c68834a11afed08c8b978dfb9837b0f23a2940e23bc"
+  },
+  "ARM_reset_masks_IRQ_and_FIQ": true,
+  "core_revision": "2998a4bf550949cd2daee249e725a64462cf15e0",
+  "core_license": "GPL-3.0",
+  "core_RAM_bytes": 2097152,
+  "original_SDK_or_game_bodies_linked": false,
+  "original_sound_system_initialized": false,
+  "retail_assets_embedded": false,
+  "artifact_publishable": false,
+  "playable": false,
+  "overall_completion_percent": 10
+}

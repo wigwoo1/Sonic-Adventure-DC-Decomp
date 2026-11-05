@@ -1,3 +1,85 @@
+Latest original bank/MIDI/command integration: JP_NATIVE_SD_COMMANDS.txt.
+Goal active; overall approximately 10%. Original SDK producers now download all
+112 audited Japanese MLT files (711 positive payloads), construct actual played
+MIDI/stereo/effect packets and service real asynchronous native completions.
+8,959 checks pass in seven fresh processes, including all 2,048 MIDI port/status
+combinations, full 256-entry ring/backpressure and original half-batch behavior.
+Both CPU/DMA playback paths match exact prior note/tail PCM and complete sound
+RAM. The same SDK pipeline delivers 88,200 nonzero frames to real muted Windows
+output with the independent expected float packet hash. No synthetic driver
+acknowledgement or harness-built played bank/command upload is used.
+Higher game sound initialization, streaming and global audio exit remain open.
+Fifteen prior DLLs and ten public support selections retain their hashes; new
+combined SDK/core binaries and retail-derived sound/RAM remain private. There
+is no playable executable or new graphical test. Earlier entries retain scope.
+
+Latest original SDK sound-driver integration: JP_NATIVE_SD_DRIVER.txt.
+Goal active; overall approximately 10%. The real original sdLibInit constructor,
+CPU/DMA transfers and repeated sdDrvInit now execute against the native AICA
+owner. 778 checks pass across nine fresh processes. Both original upload paths
+match exact prior note/tail PCM and the complete RAM of an independent two-boot
+control. The 1,176-byte native work fits the original default allocation; all
+host pointers remain native width while sound offsets/wire layouts remain32bit.
+The actual released outer descriptor is reused during the second driver load.
+Fifteen earlier DLL hashes and all ten public support selections are preserved.
+Original bank/MIDI producers, game sound_init_driver/sound_system_init and global
+audio exit remain unfinished. No playable game or new graphical test is claimed.
+Earlier entries below retain the scope of their dated proofs.
+
+Latest owned sound-core and original SDK pool: JP_NATIVE_AICA_OWNER.txt and
+JP_NATIVE_SD_MEMORY.txt. Goal active; overall approximately 10%. A compiled
+native owner now provides guarded sound RAM, real reset/held-chip behavior,
+PCM output and bounded cleanup/rollback. The original SDK descriptor family
+uses native pointers and preserves pool release/reuse semantics. 763 checks
+pass, including74 complete unhooked Japanese calls and exact real-driver
+PCM/full-RAM regressions. The additional109 checks deliver all88,200 real
+game-bank note frames through the owned core pump to actual muted Windows
+output; see analysis/jp_native_aica_output_delivery.json. Fifteen prior native
+DLL hashes remain unchanged.
+Actual sound_system_init, transfers/command bootstrap and global audio exit
+integration remain next. These are components, not full game startup/audio.
+
+Latest actual sound-driver probe: JP_AICA_DRIVER_PROBE.txt.
+Goal active; overall approximately 10%. The actual MASARU ARM driver and a real
+Japanese stage bank now generate audio through a pinned reusable ARM/AICA core.
+1,010 fresh-process assertions pass, including packet-independent complete RAM,
+ARM registers and note/tail PCM after targeted ordering fixes. All 88,200 note
+frames reach the real muted Windows output. Fifteen existing native DLLs remain
+unchanged. This is a private probe with harness-supplied SDK wire commands;
+original sound_system_init, physical fidelity and full game audio remain open.
+External core code/binaries, retail inputs and generated audio stay private;
+authored reproduction tools and metadata are eligible for daily publication.
+
+Latest native PCM output: JP_NATIVE_AUDIO.txt.
+Goal active; overall approximately 10%. An authored real WASAPI worker passes
+seven fresh-process cases (568 checks), including 44.1/48 kHz PCM byte order,
+gain/clipping, queue overflow, real worker stalls, bounded close and restart.
+Tests use a queried muted session; game audio and speaker audibility are not
+verified. The JP/USA driver bytes match and 112 JP bank headers are audited.
+The exact higher bootstrap still lacks sound_system_init. Fourteen existing
+native library hashes are unchanged. Two authored audio support artifacts are
+qualified for the next daily snapshot. No playable game or new visual is claimed.
+
+Latest compiled native core: JP_NATIVE_SYSTEM_BOOTSTRAP.txt.
+Goal active; overall approximately10%. sbInitSystem now creates actual native
+heap/device/input/RTC/GDFS owners in compiled C, checks failures, rolls back and
+supports early/final exit. 8,220 runtime checks pass, including six compiled
+core startups and570 actual GPU frames/Presents. The exact higher main bootstrap
+compiles with shared native data imports and stops linking on sound_system_init.
+It is not yet executed; audio and gameplay remain unfinished. Four qualified
+authored support artifacts are queued for the next reviewed daily snapshot.
+Earlier notes retain their original scope and preserved proof/source versions.
+
+Latest owned filesystem/startup qualification: JP_NATIVE_GDFS_EXIT.txt.
+Goal active; overall approximately 10%. Native GDFS now delegates terminal
+cleanup before RTC, device/wait and final SDK heap. 9,000 native checks pass,
+including 570 real GPU images/Presents, actual game-file reads and pending
+stream cancellation across six original boot/logo/exit compositions. A fresh
+SEGA splash capture remains local. The publisher now streams large assets
+through native curl; 16 real loopback transport checks pass. The compiled full
+native parent remains next; five original console-specific imports remain in
+the unsafe, unexecuted parent probe. Earlier source/proofs retain their scope.
+
 Latest qualified original native filesystem: JP_NATIVE_GDFS.txt.
 Goal active; overall approximately 10%. The original GDFS now uses actual native
 read-only I/O for startup, directories, handles, reads, streams, callbacks,

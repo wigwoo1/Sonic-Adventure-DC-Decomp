@@ -1,0 +1,241 @@
+{
+  "status": "actual_GDFS_terminal_authority_rollback_pending_IO_and_ordered_native_exit_verified",
+  "checks": 132,
+  "cases": {
+    "tokens": {
+      "checks": 13,
+      "check_labels": [
+        "actual shared PC QPC/vblank owner",
+        "real original GDFS initialized with one handler and one-sector I/O chunks",
+        "actual full game directory loaded",
+        "real filesystem claims only a separate full-width output",
+        "duplicate and wrong full-width claims preserve actual authority",
+        "ordinary lifecycle cannot steal delegated filesystem",
+        "actual game file handle opened",
+        "actual file I/O remains usable under uncommitted exit claim",
+        "uncommitted token cancels and ordinary owner can restart",
+        "cancelled filesystem token never recycled",
+        "committed cleanup closes once and remains terminal",
+        "creator thread restriction persists after final cleanup",
+        "caller-owned shared wait survives filesystem-only close"
+      ],
+      "observed_process_exit_code": 0
+    },
+    "gdfs_only": {
+      "checks": 10,
+      "check_labels": [
+        "actual shared PC QPC/vblank owner",
+        "real original GDFS initialized with one handler and one-sector I/O chunks",
+        "actual full game directory loaded",
+        "native general exit takes one filesystem shutdown claim",
+        "actual game file handle opened",
+        "actual chunked native file request remains owned before cleanup",
+        "actual ordered cleanup drains I/O, retires handlers and releases owner arenas",
+        "terminal delegated filesystem cannot be closed twice",
+        "detached caller buffer remains stable and receives no late completion callback",
+        "unselected real wait remains owned by caller"
+      ],
+      "completed_resources": 131072,
+      "pending_read_cancelled": true,
+      "observed_process_exit_code": 0
+    },
+    "with_wait_heap_RTC": {
+      "checks": 11,
+      "check_labels": [
+        "actual shared PC QPC/vblank owner",
+        "real original GDFS initialized with one handler and one-sector I/O chunks",
+        "actual full game directory loaded",
+        "actual SDK heap and second RTC handler",
+        "native general exit takes one filesystem shutdown claim",
+        "actual game file handle opened",
+        "actual chunked native file request remains owned before cleanup",
+        "actual ordered cleanup drains I/O, retires handlers and releases owner arenas",
+        "terminal delegated filesystem cannot be closed twice",
+        "detached caller buffer remains stable and receives no late completion callback",
+        "actual RTC/wait retired before final SDK heap"
+      ],
+      "completed_resources": 229384,
+      "pending_read_cancelled": true,
+      "observed_process_exit_code": 0
+    },
+    "gdfs_cold": {
+      "checks": 4,
+      "check_labels": [
+        "actual shared PC QPC/vblank owner",
+        "actual heap and RTC before cold GDFS rejection",
+        "cold filesystem rejects binding without accepting exit state",
+        "all earlier real claims rolled back after GDFS rejection"
+      ],
+      "observed_process_exit_code": 0
+    },
+    "gdfs_claimed": {
+      "checks": 8,
+      "check_labels": [
+        "actual shared PC QPC/vblank owner",
+        "real original GDFS initialized with one handler and one-sector I/O chunks",
+        "actual full game directory loaded",
+        "real earlier heap/RTC owners",
+        "independent existing filesystem claim",
+        "later claim rejects without retiring current real owners",
+        "prior independent claim remains untouched",
+        "GDFS/RTC/heap rollback leaves ordinary lifecycle authority intact"
+      ],
+      "observed_process_exit_code": 0
+    },
+    "device_cold": {
+      "checks": 6,
+      "check_labels": [
+        "actual shared PC QPC/vblank owner",
+        "real original GDFS initialized with one handler and one-sector I/O chunks",
+        "actual full game directory loaded",
+        "real earlier heap/RTC owners",
+        "later claim rejects without retiring current real owners",
+        "GDFS/RTC/heap rollback leaves ordinary lifecycle authority intact"
+      ],
+      "observed_process_exit_code": 0
+    },
+    "retry_chain": {
+      "checks": 15,
+      "check_labels": [
+        "actual shared PC QPC/vblank owner",
+        "real original GDFS initialized with one handler and one-sector I/O chunks",
+        "actual full game directory loaded",
+        "actual SDK heap and second RTC handler",
+        "native general exit takes one filesystem shutdown claim",
+        "actual game file handle opened",
+        "actual chunked native file request remains owned before cleanup",
+        "capture actual filesystem callback identity",
+        "missing real filesystem chain rejects before retiring any later owner",
+        "RTC/wait still live and cancelled read dispatches no late completion",
+        "restore original still-owned filesystem handler",
+        "actual ordered cleanup drains I/O, retires handlers and releases owner arenas",
+        "terminal delegated filesystem cannot be closed twice",
+        "detached caller buffer remains stable and receives no late completion callback",
+        "actual RTC/wait retired before final SDK heap"
+      ],
+      "completed_resources": 229384,
+      "pending_read_cancelled": true,
+      "observed_process_exit_code": 0
+    },
+    "retry_wait": {
+      "checks": 14,
+      "check_labels": [
+        "actual shared PC QPC/vblank owner",
+        "real original GDFS initialized with one handler and one-sector I/O chunks",
+        "actual full game directory loaded",
+        "actual SDK heap and second RTC handler",
+        "native general exit takes one filesystem shutdown claim",
+        "actual game file handle opened",
+        "actual chunked native file request remains owned before cleanup",
+        "actual shared chain callback for real busy-wait shutdown rejection",
+        "cleanup entered from actual running wait service",
+        "successful filesystem/RTC cleanup retained while busy wait remains owned",
+        "actual ordered cleanup drains I/O, retires handlers and releases owner arenas",
+        "terminal delegated filesystem cannot be closed twice",
+        "detached caller buffer remains stable and receives no late completion callback",
+        "actual RTC/wait retired before final SDK heap"
+      ],
+      "completed_resources": 229384,
+      "pending_read_cancelled": true,
+      "observed_process_exit_code": 0
+    },
+    "callback_retry": {
+      "checks": 15,
+      "check_labels": [
+        "actual shared PC QPC/vblank owner",
+        "real original GDFS initialized with one handler and one-sector I/O chunks",
+        "actual full game directory loaded",
+        "actual SDK heap and second RTC handler",
+        "native general exit takes one filesystem shutdown claim",
+        "actual game file handle opened",
+        "actual chunked native file request remains owned before cleanup",
+        "real pending request cancelled before callback-reentrancy case",
+        "actual game file handle opened",
+        "actual callback read accepted after delegated claim",
+        "callback reentrancy rejects cleanup without losing or retiring owners",
+        "actual ordered cleanup drains I/O, retires handlers and releases owner arenas",
+        "terminal delegated filesystem cannot be closed twice",
+        "detached caller buffer remains stable and receives no late completion callback",
+        "actual RTC/wait retired before final SDK heap"
+      ],
+      "completed_resources": 229384,
+      "pending_read_cancelled": true,
+      "observed_process_exit_code": 0
+    },
+    "foreign": {
+      "checks": 11,
+      "check_labels": [
+        "actual shared PC QPC/vblank owner",
+        "real original GDFS initialized with one handler and one-sector I/O chunks",
+        "actual full game directory loaded",
+        "native general exit takes one filesystem shutdown claim",
+        "actual game file handle opened",
+        "actual chunked native file request remains owned before cleanup",
+        "foreign cleanup cannot cancel main-thread native I/O",
+        "actual ordered cleanup drains I/O, retires handlers and releases owner arenas",
+        "terminal delegated filesystem cannot be closed twice",
+        "detached caller buffer remains stable and receives no late completion callback",
+        "unselected real wait remains owned by caller"
+      ],
+      "completed_resources": 131072,
+      "pending_read_cancelled": true,
+      "observed_process_exit_code": 0
+    },
+    "legacy_mask": {
+      "checks": 8,
+      "check_labels": [
+        "actual shared PC QPC/vblank owner",
+        "real original GDFS initialized with one handler and one-sector I/O chunks",
+        "actual full game directory loaded",
+        "actual RTC for old resource mask",
+        "legacy RTC-only mask never implicitly claims or closes GDFS",
+        "actual game file handle opened",
+        "unselected original filesystem still performs real I/O",
+        "caller closes unselected filesystem before its shared wait"
+      ],
+      "observed_process_exit_code": 0
+    },
+    "immediate_exit": {
+      "checks": 7,
+      "check_labels": [
+        "actual shared PC QPC/vblank owner",
+        "real original GDFS initialized with one handler and one-sector I/O chunks",
+        "actual full game directory loaded",
+        "actual SDK heap and second RTC handler",
+        "native general exit takes one filesystem shutdown claim",
+        "actual game file handle opened",
+        "actual chunked native file request remains owned before cleanup"
+      ],
+      "actual_native_exit": true,
+      "pending_real_GDFS_read": true,
+      "observed_process_exit_code": 0
+    },
+    "failure_exit": {
+      "checks": 10,
+      "check_labels": [
+        "actual shared PC QPC/vblank owner",
+        "real original GDFS initialized with one handler and one-sector I/O chunks",
+        "actual full game directory loaded",
+        "actual SDK heap and second RTC handler",
+        "native general exit takes one filesystem shutdown claim",
+        "actual game file handle opened",
+        "actual chunked native file request remains owned before cleanup",
+        "capture actual filesystem callback identity",
+        "missing real filesystem chain rejects before retiring any later owner",
+        "RTC/wait still live and cancelled read dispatches no late completion"
+      ],
+      "actual_native_exit": true,
+      "failed_resource": 131072,
+      "observed_process_exit_code": 70
+    }
+  },
+  "native_services_or_original_bodies_replaced": false,
+  "actual_process_exit_codes": [
+    0,
+    70
+  ],
+  "build_verification_sha256": "0e291a7f44bfeaa5a2cacc703d8fe7097ab0fecdaa2879d1b3603410581acb45",
+  "verifier_sha256": "30c3c6aca48dac0f3dbbd1b7c9c55a8a565aadaffe7f49ea3cb96451e61f77d3",
+  "full_system_bootstrap_audio_or_gameplay_verified": false,
+  "overall_completion_percent": 10
+}

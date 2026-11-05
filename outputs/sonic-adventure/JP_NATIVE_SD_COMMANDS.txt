@@ -1,0 +1,116 @@
+Original Japanese sound banks, MIDI producers and native async servicing
+Qualified 2026-11-05. Overall approximately 10%; goal remains active.
+
+This milestone
+The real SDK now downloads the complete audited Japanese MLT bank set and
+produces stereo/effect/MIDI commands through its own secondary ring, primary
+packer, transfer descriptor and actual completion callback. The actual ARM
+driver consumes the lists, generates matching PCM and acknowledges them itself.
+These tests no longer copy bank payloads or construct the played command packets
+in a diagnostic harness. An independent harness still supplies the API requests
+and predicts expected bytes; original game sound_system_init remains unfinished.
+
+The build extends JP_NATIVE_SD_DRIVER.txt with25 original SDK modules containing
+26 functions,16 with byte-identical bodies. Together with its baseline it uses
+63 original modules and68 original functions. Combined binaries remain private.
+The earlier driver/G2/core/pool/source/proofs and15 prior native DLLs retain their
+hashes. This is original-source integration, not another retail decompilation.
+
+Verification:8,959 named checks in seven fresh processes
+- CPU and DMA playback: actual original SDK constructor and repeated driver
+  loader, real MLT download, original MIDI port/variadic pack/send, original
+  stereo/effects producers, original list packing/flush and real ARM execution.
+  All11 initial16-byte commands plus padding match an independent byte oracle.
+  Whole note and note-off PCM and final2MiB RAM match the previous qualified
+  harness-driven reference, including its repeated-chip-reset state.
+- Actual Windows output: the same original SDK pipeline delivers88,200 nonzero
+  note frames through the owned AICA pump and real queried muted WASAPI session.
+  Actual submitted/consumed counts agree; no drops; float packet hash
+  17774991803589956011 equals the independent previously qualified note. This is
+  generated/device-submitted audio, not a microphone or speaker recording.
+- Complete Japanese bank corpus:112 actual MLT files,711 positive payloads.
+  Independently parsed32-byte records match the earlier native-disc audit.
+  After every original loader call, all2MiB of actual sound RAM match an
+  independent allocation-map/payload byte oracle. Host bank metadata agrees with
+  disc records and temporary descriptors/callbacks drain without transport errors.
+  The corpus covers SMSB,SMPB,SFPW,SFPB,SFOB; other types need their own evidence.
+- Ring behavior:256 real host commands,257th rejected without overwrite, exact
+  primary wire bytes including retained unused padding parameters, busy-driver
+  backpressure, actual ARM ACKs and all pending flags cleared. Original batch
+  sizes are32,32,32,32,32,32,32,16,8,4,2,1,1. The even-count half-batch quirk is
+  preserved. No ACK/status byte is manually cleared to let these tests pass.
+- MIDI packing:all2,048 combinations of eight actual ports and256 status values,
+  one/two variadic data arguments, all four packed bytes, full port capacity and
+  slot reuse. The source SDK defines SDD_MIDI_MONO_PRES as0xa0; its actual argument
+  classification is preserved. The first independent oracle assumed0xd0 and
+  failed; the diagnostic/source evidence and corrected tests are retained.
+- Malformed MLT bounds/count/offset/size/number/descriptor cases are rejected
+  before allocation or transfer; complete real RAM and pool ownership survive.
+
+Native adaptations and ownership
+The qualified previous SDK generated source is an immutable hashed input. New
+adaptations make driver-bank locations numeric32-bit offsets with offsetof,
+retain native-width host pointers and propagate actual bus/copy/status failures.
+The MIDI variadic function's fixed status argument uses native int in its private
+header/definition, avoiding C17 va_start on a promoted narrow argument. Its four
+wire bytes and data argument rules are tested; other game scalar widths remain
+unchanged. An unused matching-only BSS placeholder is omitted from this native
+unit. SOURCE macros are scoped between combined translation units.
+
+The real sdSysServer services posted native completions before and after its
+original work, at explicit creator-thread safe points. The original SDK gets
+its DMA counters before the second service; a subsequent call refreshes them.
+Its documented trigger-getter bug still returns the end count. An initial queue
+test incorrectly required those observations to remain stale; the corrected
+test separately checks unchanged queue state and actual refreshed counters.
+
+jp_sd_download_multi validates complete input spans, record counts, allocations,
+payload lengths and alignment before invoking original sdMultiUnitDownload. It
+supports negative/no-payload records without treating them as downloads. Its
+preflight operates on a proposed local bank table and does not alter live state.
+This does not establish rollback after a real mid-transfer device/core failure;
+the higher native sound owner still needs to quarantine failed original SDK
+bookkeeping and order global cleanup. Raw original SDK exports retain trusted
+caller assumptions. A live borrowed AICA core cannot be replaced by the caller.
+
+Builds have no diagnostics with warnings-as-errors; original unused-parameter
+warnings alone are disabled. Earlier failed test expectations and all build/
+verification variants remain under work/sonic-adventure. No older source/proof
+files or hashes were replaced to make this qualification pass.
+
+Reproduction and reading the evidence
+Build:jp_port_tools/build_native_sd_commands.py --workspace WORKSPACE
+--upstream PINNED_JP_SOURCE --baseline QUALIFIED_SD_DRIVER_BUILD
+--compiler NATIVE_X64_CLANG --output NEW_PRIVATE_BUILD.
+Verify:jp_port_tools/verify_native_sd_commands.py --workspace WORKSPACE
+--upstream PINNED_JP_SOURCE --build NEW_PRIVATE_BUILD
+--audit SOUND_INIT_AUDIT --probe_check AICA_DRIVER_CHECK
+--driver_check SD_DRIVER_CHECK --output NEW_PRIVATE_CHECK.
+Use the scripts' --help and preserve existing output folders.
+Current baseline is work/sonic-adventure/jp-native-sd-driver-v3. Build is
+jp-native-sd-commands-v1; checks are jp-native-sd-commands-check-v3. Audit is
+jp-native-sound-init-audit-v2, probe reference jp-aica-driver-check-v7 and driver
+reference jp-native-sd-driver-check-v3. Package tool:package_native_sd_commands.py.
+Public metadata:analysis/jp_native_sd_commands_build.json,
+jp_native_sd_commands.json and jp_native_sd_commands_package.json.
+
+Original SDK/game source remains at external pin
+25a3d3154dbe657325e97dbe8c5291086f6af5c0, reshaped/sonic-adventure.
+The private portable core remains kode54/Highly_Theoretical at
+2998a4bf550949cd2daee249e725a64462cf15e0, GPL-3.0. Reproduction tools, authored
+boundaries and metadata can be published; original SDK/game/generated external
+code, combined libraries and retail banks/driver/audio/RAM are excluded.
+
+Next integrate actual owned aligned file staging in game sound_init_driver,
+original game initialization and stream/effect/music paths, native owner failure
+handling and ordered global early/final audio exit. Then execute the complete
+higher main bootstrap. Physical waveform/cycle accuracy remains unproven; the
+core's inherited128 cycles/sample policy is provisional. A verified bank loader
+does not establish every sequence/voice/stream or all game audio works.
+
+For a beginner:open the analysis verification for passing case summaries or play
+the local generated SDK note preview. No new graphics were tested this turn;
+there is no new game screenshot or playable executable. The full English PC,
+VMU Chao emulator/widget, FPS/display/texture options, Android/stereo3DS and
+demake scope remain. Keep Sol High/selected Sol Extra High for the next owner/
+game-loader integration. Luna Low is suitable for routine documentation.

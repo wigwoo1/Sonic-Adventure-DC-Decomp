@@ -1,0 +1,119 @@
+Compiled native core bootstrap from the Japanese source order
+Qualified 2026-11-05. Whole project approximately 10%; goal remains active.
+
+What changed
+The real sbInitSystem entry now runs compiled native C. It creates the actual
+guarded 1MiB SDK heap, native Ninja/device/window, configured keyboard/controller
+or explicit sample source, RTC and original GDFS. It checks each result, keeps
+the original eight bounded filesystem attempts, and checks the SONICADV directory
+change. The original void SDK entry returns on success; failure unwinds owned
+services and exits with a nonzero code instead of continuing into broken startup.
+
+The factory copies native settings and the full disc-track path. Callback/context
+providers remain borrowed until cleanup. It refuses preexisting core owners and
+foreign/reentrant lifecycle changes. It borrows already initialized empty native
+render queue/frame/texture prerequisites; their creation is not claimed as part
+of this core function. The higher-level main initializer remains unfinished.
+
+Original platform assumptions and native replacements
+The original sbInitSystem uses a last-megabyte console address derived from
+_BSG_END, 32-bit buffer alignment, SH interrupt masks, hardware-register/DMA,
+cache/store-queue/timer initialization and a console peripheral bus. The native
+factory allocates actual pointer-sized memory, reuses the qualified PC device's
+GPU/window/QPC/logical frame service, and configures real native input and media.
+No successful syHwInit, syHwInit2, _BSG_END or SH interrupt-mask stub is exported.
+
+The original cache_ram_init, cache_ram_restore and cache_ram_end entries really
+begin RTS/NOP and return immediately. Twenty-four complete unhooked instruction
+calls verify their unchanged registers/SR and return address. Their unreachable
+hardware code is not executed on PC. Source hashes for main.c, sbinit.c, cache.src
+and SDK syhw.c remain pinned to upstream25a3d3154dbe657325e97dbe8c5291086f6af5c0.
+
+Actual resource ownership and early exit
+Core resource mask:245762 (SDK heap, device, input, RTC and GDFS).
+After successful initialization, a real native cleanup callback handles early
+sbExitSystem/syBtExit before the main caller has finished creating its remaining
+services. Its observation bit is JP_EXIT_BOOTSTRAP=262144; regular bind cannot
+accept that bit. This temporary registration invokes no synthetic initialization
+and is creator-thread owned. Ordinary pre-handoff shutdown cancels it and permits
+restart. Actual early exit becomes terminal and safely retries retained resources.
+
+Final handoff goes through jp_system_bind_exit with a mask covering every owned
+core service plus the caller's explicitly acquired additional owners. Successful
+handoff removes the temporary registration and gives the existing native exit
+service the terminal tokens. Full tested composition uses247798. Legacy masks
+and public exit struct sizes retain their meanings. GDFS closes before RTC,
+input before window/device, and the final SDK heap after selected consumers.
+
+Failure qualification found and fixed a real rollback issue: a failed RTC
+constructor can have no callback to shut down. Cleanup now inspects actual RTC
+state and clears its borrowed provider, instead of interpreting an uninitialized
+clock's shutdown error as a still-live callback. A missing live handler still
+fails explicitly and retains ownership; that case is not silently bypassed.
+
+Builds and evidence
+Current graph: work/sonic-adventure/jp-native-system-v3.
+Native factory tests: work/sonic-adventure/jp-native-system-check-v3.
+Original boot/logo integration: work/sonic-adventure/jp-native-system-startup-check-v1.
+Higher parent inspection: work/sonic-adventure/jp-native-system-parent-audit-v4.
+Public copies and hashes: analysis/jp_native_system_*.json.
+
+Five runtime suites passed8,220 checks:
+- 152 native factory checks across16 fresh-process cases. Real SDK entry,
+  copied settings/path, restart, actual Windows input, malformed/missing disc,
+  bad clock/input providers, wrong directory, preexisting heap, foreign/reentrant
+  calls, early cleanup/retry, final handoff and actual process exits0/70/73.
+- 132 existing GDFS exit checks, unchanged, against the new graph.
+- 64 existing RTC exit checks, unchanged, against the new graph.
+- 591 original save-default/CRC checks, with29 complete unhooked original calls.
+- 7,281 original reset/boot/logo/exit checks. Six calls to the compiled native
+  sbInitSystem create the core services; Python no longer creates those five
+  services. Three complete original logo runs produce570 real GPU images/Presents
+  and175,104,000 independently compared pixels. Six real pending filesystem
+  streams cancel during final exit, including quit with a pending GPU job.
+
+The graphical test caller still supplies borrowed render prerequisites, explicit
+controller samples, main render/font prelude, extracted logo input root and
+passive image observers. These remain stated test/platform boundaries. The
+compiled complete main initializer, sound and stage gameplay are not verified.
+The fresh native backbuffer capture shows the same SEGA splash, not new gameplay.
+Retail-derived captures and extracted original source remain private.
+
+The exact original higher system_boot_init body now compiles warning-free with
+explicit imports of the existing shared data owners. Its attempted link fails
+on exactly sound_system_init. The original function body is unchanged; there is
+no duplicate imported cable/buffer/peripheral state, no stubbed sound initializer,
+and no execution of this unqualified whole parent. This is one missing dependency
+at this parent frontier, not one routine left in the entire game.
+
+Next dependency
+Start with src/sound/sound.c:sound_system_init. Its initial calls are
+sound_init_driver, midi_open_ports, sound_set_space, sound_reset and midi_reset_all,
+followed by real queue/global initialization. Recover their SDK/driver/file and
+output dependencies using actual native audio support. Do not install success
+no-ops to make main's link pass. Later game_init and the main loop have further
+audio/streaming/overlay/gameplay dependencies beyond this constructor.
+
+Reproduce from the workspace (fresh output/report paths)
+python -B outputs/sonic-adventure/jp_port_tools/build_native_system.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --baseline work/sonic-adventure/jp-native-gdfs-exit-v2 --preserved work/sonic-adventure/jp-native-system-source-v1 --output work/sonic-adventure/NEW-SYSTEM
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_system.py --workspace . --build work/sonic-adventure/NEW-SYSTEM --track "FULL LOCAL PATH TO track03.bin" --bad-directory-track work/sonic-adventure/jp-native-gdfs-check-v3/bad-file-raw.bin --output work/sonic-adventure/NEW-SYSTEM-CHECK
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_boot_saves.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --build work/sonic-adventure/NEW-SYSTEM --binary work/sonic-adventure/jp-ninja-math-reference/1ST_READ.BIN --report work/sonic-adventure/NEW-SYSTEM/save-verification.json
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_system_startup.py --workspace . --build work/sonic-adventure/NEW-SYSTEM --inputs work/sonic-adventure/jp-native-pvm-inputs-v1 --asset-root work/sonic-adventure/jp-native-pvm-inputs-v1/SONICADV --save-proof work/sonic-adventure/NEW-SYSTEM/save-verification.json --track "FULL LOCAL PATH TO track03.bin" --output work/sonic-adventure/NEW-SYSTEM-STARTUP
+python -B outputs/sonic-adventure/jp_port_tools/audit_native_system_parent.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --build work/sonic-adventure/NEW-SYSTEM --binary work/sonic-adventure/jp-ninja-math-reference/1ST_READ.BIN --output work/sonic-adventure/NEW-SYSTEM-PARENT-AUDIT
+Preserved baseline sources, SDK/game inputs and malformed-volume fixture are
+local dependencies. Do not overwrite old build/proof directories or user saves.
+
+Publication
+Authored system and exit support DLLs/import libraries are source-matched,
+incomplete research artifacts. Each links exactly one authored object and imports
+the original runtime dynamically; combined game/SDK DLLs and retail data stay
+private. A public support archive alone cannot launch the game. The publisher's
+explicit approved-package list includes these qualified support libraries.
+Its current native-curl upload path passes16 real loopback transport checks.
+Changes are queued for the next reviewed daily snapshot; previous releases and
+the earlier failed remote upload record remain preserved.
+
+The Japanese source baseline is complete. Native gameplay, English, FPS/display/
+HD/SUPIR settings, actual Chao VMU minigame/widget, Android, stereoscopic3DS and
+demake stretch goals remain unfinished. Keep Sol High/selected Sol Extra High for
+sound integration; Luna Low is suitable for routine documentation only.

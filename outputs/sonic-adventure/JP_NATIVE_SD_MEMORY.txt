@@ -1,0 +1,74 @@
+Original sound SDK memory-block pool on native pointers
+Whole-project estimate: approximately 10%; goal active.
+Status: VERIFIED POOL COMPONENT. Full sound SDK/driver initialization is open.
+
+What is recovered
+Thirteen pinned original SDK modules compile/link privately with fourteen original
+function bodies unchanged. They include block-table initialization, allocation,
+release, parameters/status/source/callback setters, completion and error/debug
+support. A diagnostic fixture seeds an actual typed work record and 64-slot pool;
+it does not export sdLibInit, sdDrvInit, sound_system_init or G2/DMA success helpers.
+The production SDK bootstrap and its fixed-address/pointer alignment still need
+adaptation. A test fixture creating work is not their replacement implementation.
+
+Native-only layout adaptation
+The public opaque SDS_MEM_BLK buffer is32bytes on Dreamcast, while the actual
+pointer-containing native sd_memblk is48bytes. A private header overlay provides
+the corresponding pointer-aligned span. Every original record field and function
+body remains unchanged; serialized command packets and sound offsets are not
+widened. Native size_t uses the existing host adapter. GCC varargs are enabled
+only after SDK hardware declarations have been parsed without SH-4 assembly.
+The SDK's legacy vsprintf declaration links to the actual installed Microsoft
+legacy_stdio_definitions compatibility library; no formatter-success stub is used.
+
+All native source compiles/links with -Wall -Wextra -Werror and zero diagnostics.
+The first compile correctly rejected SH-4 inline assembly because GCC was enabled
+too early; the second compiled but exposed the real legacy CRT link dependency.
+Both failure logs and their earlier source versions are retained. Original checkout
+source/header hashes match pinned revision25a3d3154dbe657325e97dbe8c5291086f6af5c0.
+
+Qualification
+Build: work/sonic-adventure/jp-native-sd-memory-v3.
+Check: work/sonic-adventure/jp-native-sd-memory-check-v1/verification.json.
+292 checks pass against74 complete original Japanese instruction calls, with no
+game/SDK function hooks. A separate32-bit layout probe supplies field offsets;
+actual original initialization writes agree with them. The original work layout
+is1140bytes and descriptor32bytes; the native descriptor is48bytes. The test's
+native pool and callback context really reside above4GiB.
+
+Checks cover all64 allocations, real exhaustion/null output/error API identity,
+native/guest stride differences, complete initialized field values, high source
+and context pointers, original sync-completion behavior, release, double release
+and actual slot reuse. A real native callback receives its untruncated context.
+Debug support is compiled; its full formatted-print behavior is not qualified
+by these pool-focused comparisons, which use the original disabled-debug mode.
+
+Driver-loader alias result
+sdMemBlkDestroy marks a pool slot unused and decrements the live count. It retains
+the data pointer, size, callback/context, status and other descriptor fields.
+The original completion/setter routines can still access that released slot.
+The next allocation selects that same slot and resets its fields at reallocation.
+All these behaviors match complete original instructions and actual native C.
+
+This explains the alias in sound_init_driver's final sdDrvInit(block) after
+sdMemBlkDestroy(block). The retained descriptor initially still names the driver
+header; an internal allocation can subsequently reuse the same slot. It must not
+be ported as a heap free followed by a dereference. Complete repeated sdDrvInit,
+its actual transfers and callback ordering have not yet been executed through
+the original SDK; the pool result proves these primitives, not the entire loader.
+
+Reproduce from the workspace root with local compiler and Japanese reference:
+python -B outputs/sonic-adventure/jp_port_tools/build_native_sd_memory.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --compiler "PATH_TO_CLANG" --output work/sonic-adventure/NEW_SD_POOL
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_sd_memory.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --build work/sonic-adventure/NEW_SD_POOL --binary work/sonic-adventure/jp-ninja-math-reference/1ST_READ.BIN --output work/sonic-adventure/NEW_SD_POOL_CHECK
+Use fresh output directories. The original Japanese binary/source are local
+inputs. Native combined SDK code, private generated source and reference binary
+remain excluded from public releases. Authored tools and metadata are eligible
+for daily publication. Existing qualified source and proof hashes are preserved.
+
+Next integrate the original work constructor, real G2 sound-memory/register
+transfers and completion scheduling with JP_NATIVE_AICA_OWNER.txt. Keep host
+pointers full width and sound offsets32bit. Inspect original DMA state changes
+before deciding when native completion callbacks may run; do not report success
+before actual copies. Then qualify real repeated driver init, original MIDI and
+bank/stream commands and global exit ownership before running the game parent.
+Full gameplay, localization and the remaining project scope are unchanged.

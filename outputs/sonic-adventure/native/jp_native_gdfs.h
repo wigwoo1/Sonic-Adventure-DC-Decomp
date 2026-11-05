@@ -42,4 +42,13 @@ JP_GDFS_API int jp_gdfs_initialize(uint32_t handles,uint32_t directory_entries);
 JP_GDFS_API int jp_gdfs_shutdown(void);
 JP_GDFS_API int jp_gdfs_status(void);
 JP_GDFS_API int jp_gdfs_snapshot(struct jp_gdfs_info *);
+/* Delegate terminal lifecycle authority to the native exit owner. Ordinary
+ * configure/init/reinit/shutdown reject while delegated; file I/O remains
+ * usable until final close begins. Cancel only an uncommitted claim. Finish
+ * retains the same token across failure/retry and cannot permit a restart.
+ * Tokens never recycle and these APIs never dispatch a user callback.
+ */
+JP_GDFS_API int jp_gdfs_exit_claim(uint64_t *);
+JP_GDFS_API int jp_gdfs_exit_cancel(uint64_t);
+JP_GDFS_API int jp_gdfs_exit_finish(uint64_t);
 #endif

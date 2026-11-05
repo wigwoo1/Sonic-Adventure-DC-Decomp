@@ -10,6 +10,7 @@ import json
 import os
 from pathlib import Path
 import re
+import shutil
 import subprocess
 import urllib.error
 import urllib.parse
@@ -75,6 +76,12 @@ def qualified_native_builds(workspace):
          'public_artifacts_contain_retail_assets'),
         ('jp_native_gd_media_public_package.json',
          'original_game_or_SDK_bodies_packaged', 'retail_data_packaged'),
+        ('jp_native_system_public_package.json',
+         'public_artifacts_contain_original_game_or_Sega_SDK_bodies',
+         'public_artifacts_contain_retail_assets'),
+        ('jp_native_audio_public_package.json',
+         'public_artifacts_contain_original_game_or_Sega_SDK_bodies',
+         'public_artifacts_contain_retail_assets'),
     )
     builds = []
     for name, bodies, assets in packages:
@@ -647,6 +654,33 @@ def credential():
     return values['password']
 
 
+def stream_asset(url, path, token):
+    """Use curl's file streaming; keep the credential in stdin and memory only."""
+    curl = shutil.which('curl.exe' if os.name == 'nt' else 'curl')
+    if not curl:
+        raise RuntimeError('Native curl is required to stream release assets')
+    def quoted(value):
+        if any(c in value for c in '\r\n\0'):
+            raise ValueError('Invalid native upload configuration value')
+        return '"'+value.replace('\\', '\\\\').replace('"', '\\"')+'"'
+    config = '\n'.join([
+        'url = '+quoted(url), 'request = "POST"',
+        'upload-file = '+quoted(Path(path).resolve().as_posix()),
+        'header = '+quoted('Authorization: Bearer '+token),
+        'header = "Accept: application/vnd.github+json"',
+        'header = "Content-Type: application/octet-stream"',
+        'header = "Expect:"', 'user-agent = "sonic-adventure-publisher"',
+        'connect-timeout = 30', 'max-time = 1800', 'http1.1',
+        'fail-with-body', 'silent', 'show-error',
+    ])+'\n'
+    run = subprocess.run([curl, '--config', '-'], input=config.encode('utf-8'),
+                         stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    if run.returncode:
+        detail = run.stderr.decode('utf-8', errors='replace').replace(token, '[redacted]')
+        raise RuntimeError('Native asset upload failed (curl '+str(run.returncode)+'): '+detail[-600:])
+    return json.loads(run.stdout)
+
+
 def publish(destination, archive, checksums):
     token = credential()
 
@@ -704,7 +738,10 @@ def publish(destination, archive, checksums):
         if path.name in existing:
             assert existing[path.name]['size']==path.stat().st_size, 'Existing immutable release asset differs'
             continue
-        uploaded = request(release['upload_url'].split('{')[0]+'?name='+urllib.parse.quote(path.name),path.read_bytes(),method='POST',binary=True)
+        url = release['upload_url'].split('{')[0]+'?name='+urllib.parse.quote(path.name)
+        assert urllib.parse.urlparse(url).hostname == 'uploads.github.com'
+        print('Streaming release asset: '+path.name, flush=True)
+        uploaded = stream_asset(url, path, token)
         assert uploaded['state']=='uploaded' and uploaded['size']==path.stat().st_size
     assets = request(route+'/releases/'+str(release['id'])+'/assets')
     for path in (archive, checksums):
