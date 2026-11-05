@@ -1,0 +1,124 @@
+Original vblank chains on the native logical clock - verified milestone
+
+Whole-project estimate: about 10%; goal active. The matching Japanese source
+baseline is preserved. This advances native startup synchronization; the full
+game, English localization and later ports remain unfinished. No playable EXE.
+
+Implementation
+
+The existing presentation module now runs the original Shinobi priority-list
+algorithms on its existing native rational clock. There are 255 usable handler
+slots, original lowest-free handle allocation, ascending priorities, and newest
+first at equal priority. Native njSetVSyncFunction uses the same list, at the
+original priority 88. Removing/reinstalling it retains the existing phase-anchor
+behavior, while engine chain registrations do not reanchor the clock.
+
+Original list insertion, unlinking, pool initialization and traversal bodies
+are retained privately. Their console interrupt-registration blocks are replaced
+by a native logical-vblank callback source, and interrupt-mask access becomes a
+serialized host context. Original source files stay unchanged. Registration
+supports the actual logical vblank event 0x900; CPU, DMA and horizontal-blank
+sources fail explicitly until native sources exist. Registrations affect later
+pumped logical ticks; no worker thread or physical interrupt runs game code.
+
+Self-deletion and deletion of a pending handler retain original behavior.
+Adding handlers or resetting the list from inside a callback is rejected to
+prevent reuse of an active traversal node. Invalid handles, null callbacks,
+full pools, foreign-thread mutation and missing/closed/failed wait sources fail
+explicitly. Native callback and argument lifetimes belong to the caller.
+
+There remains one clock and one wait owner. The frozen rational deadline,
+catch-up, predicate-wait and message-service bodies remain in that owner.
+Snapshot callbacks count dispatch entries, not the sum of all chain handlers.
+The shared frame/texture/queue/scratch DLL and GPU DLL remain byte-identical.
+Only the authored wait-owner object is replaced; other presentation objects
+stay unchanged. Dependent exit and logo modules relink against it.
+
+Complete original njBlank and njSetEORflag bodies now share the real Ninja
+counter/flags. A startup adapter arms njBlank and waits through the existing
+native clock. GPU completion can call the genuine end-of-render flag setter;
+njBlank then retires itself on its next logical tick. Callback signatures use
+an authored typed thunk for the no-argument game callback, avoiding the original
+SDK's mismatched function-pointer call while retaining priority/list behavior.
+
+Verification actually performed
+
+- Chain/Ninja suite: 79,096 checks and 679 whole original entry calls. Original
+  dependencies entered include eight njBlank calls and four njSetEORflag calls.
+  All 255 pool slots, overflow, handle reuse, randomized priorities/deletions,
+  equal-priority ordering, high native pointers/arguments and 1,853 synthetic
+  native callback invocations are checked. Native node state and callback order
+  agree with original machine code. Self-removal, pending-handler removal,
+  thread/reentrancy/error boundaries and integer counter wrap pass.
+- Original guest list/Ninja bodies are not hooked. Guest platform callback
+  registration is an explicit service, and synthetic guest user callbacks are
+  fixtures. These tests do not emulate physical console interrupt delivery.
+- Frozen abstract wait groups: 6,851 checks of rational deadlines at five rates,
+  catch-up bounds, phase rebasing, predicates, paused timer independence,
+  reentrancy, foreign threads and clock/host errors. The later old diagnostic
+  frame-fixture groups are not selected or claimed by this wrapper.
+- Frozen complete clock suite on the exact new presentation DLL: 12,873 checks,
+  including the independent wall/timer domains and actual Windows QPC.
+- Original save defaults/reset/checksum suite: 591 checks, 29 original calls.
+- Existing actual buffer/reset/boot/logo/exit suite with Ninja blank and GPU
+  completion connected: 7,714 checks, three whole 191-step logo runs, 570 real
+  GPU images/Presents and 175,104,000 independently checked logo pixels.
+  All 570 actual GPU completions call the genuine Ninja end-of-render setter.
+  In every run the blank counter advances once more, then remains stopped;
+  the game frame callback remains registered. The passive image observer runs
+  after the real Ninja callback. Cleanup, quit with pending GPU ownership,
+  partial/unbound failure and actual process exits also pass.
+
+Total fresh assertions: 107,125. Pixel comparisons are reported separately.
+These are bounded checks, not routine counts or whole-project coverage. No
+native game/SDK/render function is replaced by a test. Original sources,
+matching proof, earlier builds and verification reports remain intact.
+
+Scope and next work
+
+This qualifies a real dependency of njInitVertexBuffer, not that entire routine
+or full system_boot_init. Native queue allocation/system configuration, platform
+startup, audio, VMU/card, text-style setup, loader/overlay and gameplay still
+need work. Physical IRQ timing, CPU/DMA/hblank sources and complete hardware
+startup are not established. English content and later platforms are pending.
+
+The module audit corrects the earlier frames-only inventory: frame_pacing_init
+already exists in the presentation DLL. A higher-level startup module must
+import both frames and presentation, preserving their dependency direction.
+Ten original parent function/data names are not currently exported anywhere:
+cable_mode, card_init, dat_8c78b4d8, dat_8c78b4dc, njInitVertexBuffer,
+sbInitSystem, sound_system_init, syCblCheckCable, text_style_init and vmu_init.
+This is parent-level availability evidence, not ten remaining game routines,
+nor proof that everything behind those names is implemented.
+
+Reproduce locally
+
+Use Windows Python 3, Clang/Windows SDK and the prior boot-buffers-v3 link recipe.
+Keep upstream external source pinned at
+25a3d3154dbe657325e97dbe8c5291086f6af5c0. Set PY/CLANG to local executables;
+run from the workspace and choose fresh output directories for reruns.
+
+& $PY -B outputs/sonic-adventure/jp_port_tools/build_native_vblank_chain.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --baseline work/sonic-adventure/jp-native-boot-buffers-v3 --compiler $CLANG --output work/sonic-adventure/jp-native-vblank-chain-v3
+& $PY -B outputs/sonic-adventure/jp_port_tools/verify_native_vblank_chain.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --build work/sonic-adventure/jp-native-vblank-chain-v3 --binary work/sonic-adventure/jp-ninja-math-reference/1ST_READ.BIN --output work/sonic-adventure/jp-native-vblank-chain-check-v2
+& $PY -B outputs/sonic-adventure/jp_port_tools/verify_native_vblank_wait.py --workspace . --build work/sonic-adventure/jp-native-vblank-chain-v3/frame_view --report work/sonic-adventure/jp-native-vblank-chain-v3/wait-regression-v2.json
+& $PY -B outputs/sonic-adventure/jp_port_tools/verify_native_frame_wait_clock.py --workspace . --build work/sonic-adventure/jp-native-vblank-chain-v3/frame_view --output work/sonic-adventure/jp-native-vblank-chain-clock-check-v2
+
+Run the prior save verifier with this build and a fresh report, then run
+verify_native_vblank_startup.py with the real local logo inputs and that save
+proof. Use audit_native_system_boot_modules.py for the module/export inventory,
+and package_native_vblank_chain.py for the authored support library. Published
+analysis records exact commands, sources, module hashes, test bounds and image
+hashes. Retail inputs and original source/includes remain private dependencies.
+
+Publication
+
+All 2,960 previous archive payloads remain byte-identical, plus one authored
+vblank/wait support library: 2,961 research artifacts. The new library has one
+authored member and depends on the private original SDK chain/Ninja object; it
+contains none of those original bodies. Game-containing DLLs, retail pixels and
+actual screenshots stay private. Screenshots may be shared in chat. The release
+is incomplete research material and cannot launch the game.
+
+Continue with Sol High for the native vertex-list allocation/configuration path.
+Luna Low is appropriate for routine documentation after qualification. Keep the
+goal active.

@@ -198,6 +198,18 @@ real QPC/Win32 waits and close handling. Four original frame globals are supplie
 (60/79 presentation imports). Adding the frame source exposes 22 more genuine
 dependencies; the expanded graph has 43 missing services. No trace providers are
 linked into production. Real game render/flip integration remains open.
+Latest native logical vblank chains: JP_NATIVE_VBLANK_CHAIN.txt.
+Goal active; overall about 10%. Original priority-list algorithms and complete
+Ninja blank/EOR callbacks now use the existing native clock and one wait owner.
+107,125 fresh assertions include 679 original entry calls, clock/wait checks,
+and 570 actual startup/logo GPU completions retiring the original blank handler.
+Shared frame and GPU DLLs remain byte-identical. All 2,960 prior public payloads
+remain plus one authored wait-boundary library, 2,961 total. Original SDK/game
+objects and actual screenshots stay private. The prior frames-only inventory
+missed the existing presentation frame-pacing export; ten parent function/data
+exports remain unavailable across modules. Full system startup and gameplay
+remain unfinished; no playable EXE. Earlier notes retain historical scope.
+
 Latest original boot buffers: JP_NATIVE_BOOT_BUFFERS.txt.
 Goal active; overall about 10%. The actual main-owned texture/vertex and shape
 buffers now bind through complete original SDK setters and an extended single
@@ -439,6 +451,7 @@ Texture Off must disable sampling and use vertex/material colours.
 - [Current goal](outputs/sonic-adventure/JP_BASED_PORT_GOAL.txt)
 - [Integration order and limits](outputs/sonic-adventure/JP_NATIVE_PORT_PLAN.txt)
 - [Verified GCC baseline and native/localization evidence](outputs/sonic-adventure/JP_GCC_BASELINE.txt)
+- [Native logical vblank chains](outputs/sonic-adventure/JP_NATIVE_VBLANK_CHAIN.txt)
 - [Original native boot buffers](outputs/sonic-adventure/JP_NATIVE_BOOT_BUFFERS.txt)
 - [Complete native main display reset](outputs/sonic-adventure/JP_NATIVE_MAIN_DISPLAY_RESET.txt)
 - [Original float and variadic formatting](outputs/sonic-adventure/JP_NATIVE_PRINT_FORMATTING.txt)

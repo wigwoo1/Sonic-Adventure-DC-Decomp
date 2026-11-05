@@ -1,3 +1,15 @@
+Latest native logical vblank chains: JP_NATIVE_VBLANK_CHAIN.txt.
+Goal active; overall about 10%. Original priority-list algorithms and complete
+Ninja blank/EOR callbacks now use the existing native clock and one wait owner.
+107,125 fresh assertions include 679 original entry calls, clock/wait checks,
+and 570 actual startup/logo GPU completions retiring the original blank handler.
+Shared frame and GPU DLLs remain byte-identical. All 2,960 prior public payloads
+remain plus one authored wait-boundary library, 2,961 total. Original SDK/game
+objects and actual screenshots stay private. The prior frames-only inventory
+missed the existing presentation frame-pacing export; ten parent function/data
+exports remain unavailable across modules. Full system startup and gameplay
+remain unfinished; no playable EXE. Earlier notes retain historical scope.
+
 Latest original boot buffers: JP_NATIVE_BOOT_BUFFERS.txt.
 Goal active; overall about 10%. The actual main-owned texture/vertex and shape
 buffers now bind through complete original SDK setters and an extended single
