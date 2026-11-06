@@ -1,3 +1,15 @@
+Latest qualified sound placement callbacks: JP_NATIVE_SOUND_PLACEMENT.txt.
+Overall approximately 10% of weighted project milestones; goal active.
+Both original sound_fx_zone_step and sound_orbit_step now run with their real
+placement/tree dependencies. All 68 functions in the original sound module are
+retained; this is not a count of completed routines across the whole game.
+3,472 new checks cover behavior, actual marker rendering/safe rejection and
+512 SH-4 composite-rotation comparisons. 39,862 sound regression checks rerun.
+Combined reported qualified scopes: 939,584. Original source/proofs preserved.
+Full gameplay, complete editor/placement manager and later ports remain.
+See analysis/jp_native_sound_placement_package.json for exact evidence/hashes.
+Earlier milestone notes remain unchanged below.
+
 Latest qualified original effects/bank scope: JP_NATIVE_EFFECTS.txt.
 Overall approximately 10% of weighted project milestones; goal active.
 51 additional original sound functions and six stage helpers now link in the

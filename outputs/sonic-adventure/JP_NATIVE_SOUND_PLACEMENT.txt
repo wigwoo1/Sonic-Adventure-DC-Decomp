@@ -1,0 +1,98 @@
+Original sound placement callbacks - scoped native qualification, 2026-11-06
+
+Overall project estimate: approximately 10% of weighted milestones.
+This completes the two remaining callback integrations in src/sound/sound.c.
+All 68 original functions from that module are now retained in the native sound
+graph. This is a module inventory, not a count of completed game routines or
+proof that every original sound behavior is fully qualified.
+
+What changed
+
+Recovered sound_fx_zone_step and sound_orbit_step from pinned Japanese source
+25a3d3154dbe657325e97dbe8c5291086f6af5c0. The existing 66 sound bodies remain
+byte-for-byte unchanged. Orbit identity uses intptr_t instead of the original
+32-bit int cast, preserving a complete Windows task pointer.
+
+Recovered original in_range, placement_try_leave_by, placement_try_leave,
+placement_editing, draw_nodes and draw_tree. The editor membership body uses
+its original storage declarations and default one-slot state. Only an explicit
+fixture accessor selects that slot; the complete editor and manager are future
+work. Placement fixtures use the real imported camera/player/task owner.
+
+The original marker model, material, meshsets, indices, points, normals, bounds
+and object transforms are used. Original matching includes are preserved beside
+adapted private copies. Clang requires braces around material color unions.
+SHC decimal float constants round toward zero; exact hexadecimal literals make
+Clang retain those values. All vector/material/index/bounds/transform values
+are checked against the supplied Japanese executable, with pointer relocation
+handled through typed native structures. No retail data is in this guide/tools.
+
+draw_tree now reserves the actual marker's bounded command/vertex envelope
+through existing jp_model_preflight and jp_model_reserve before drawing it.
+The raw original writer otherwise receives a null vertex cursor after queue
+bounds rejection and crashes. The native diagnostic recorded queue BOUNDS,
+an attempted write at address 0x18 and frames_DLL offset 0x12d3e. The fix uses
+the existing renderer owner. It introduces no alternate renderer or fake task.
+Reservation failure skips drawing; the original caller still restores its
+matrix stack and visibility material state. Generic tree callers remain
+responsible for reserving their own bounds; they are outside this scope.
+
+Composite njRotateXYZ and njRotateZXY apply the existing qualified axis calls
+in the order documented by original SDK assembly. Tests execute the original
+retail SH-4 instructions, including both register banks, implicit current
+matrix and explicit memory destinations. All 512 sampled finite calls match
+matrix bits exactly and preserve surrounding memory and native stack state.
+This is not an exhaustive float-class or every-tree-branch qualification.
+
+Verification
+
+New scope: 3,472 checks (35 callback behavior, 94 rendering/lifetime/rejection,
+3,343 original marker/composite-rotation checks). Each of four actual GPU
+captures emits 12,224 packet bytes and 180 triangles. Tests also deliberately
+reduce actual vertex scratch capacity below the marker's 92 points: all four
+branches reject safely, write no packets and balance matrix/material state.
+Captured PNGs are diagnostic editor markers against a plain background; stage
+lighting, full gameplay and a playable PC build are not demonstrated.
+
+The unchanged effects verifier reruns all eleven cases on this new graph:
+39,862 checks for real CPU/DMA banks, request queues, simultaneous streams and
+effects, voice handoff, stage banks and memory ownership. Regression reruns
+are recorded separately, not added again to the prior distinct scoped count.
+Combined reported qualified scopes: 939,584; this count is not game completion.
+
+The audit checks all 68 retained sound functions, original new bodies plus
+explicit native adaptations, unique shared state and 56 unchanged baseline
+binary/object files. Existing authored source/proofs and their hashes remain.
+
+Reproduction
+
+Use jp_port_tools/build_native_sound_placement.py with --workspace, --upstream,
+--baseline (the qualified effects build), --matching_includes (the preserved
+matching collision/collision generated include folder) and a NEW --output
+under work/sonic-adventure. Consult JP_NATIVE_EFFECTS.txt for its prerequisites.
+Clang and the matching Japanese inputs must be supplied locally.
+
+Run verify_native_sound_placement.py and verify_native_sound_marker.py with
+--workspace, --build, --track (the local JP track03.bin) and NEW --output paths.
+Run verify_native_sound_placement_data.py with --workspace, --upstream, --build,
+--binary (local JP 1ST_READ.BIN) and NEW --output. Run audit_native_sound_placement.py
+with --workspace, --upstream, --baseline, --build and NEW --output. Rerun the
+unchanged verify_native_effects.py against the new graph before packaging.
+package_native_sound_placement.py binds all reports to the same build hash.
+
+Public publication
+
+Tools, documentation and hash-bound JSON evidence are publishable. Matching
+retail includes, combined upstream SDK/game binaries and captured images remain
+local. Public prereleases contain source-matched incomplete research artifacts
+under the existing policy, with no playable EXE. See GITHUB_PUBLISHING.txt.
+
+Remaining work
+
+Full main/stage execution, object placement manager, complete editor and generic
+tree caller budgets remain unqualified. Earlier spatial float scope limits,
+forced mid-bank device failures and standalone positive bank variants remain.
+English localization, all gameplay, frame-rate/resolution/texture settings,
+VMU Chao emulator/widget, Android and stereoscopic 3DS work remain planned.
+Luna Low is suitable for routine documentation/status checks at this milestone;
+use Sol High for the next native gameplay or renderer integration.

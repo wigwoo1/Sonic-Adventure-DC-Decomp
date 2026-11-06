@@ -1,3 +1,20 @@
+Latest qualified sound placement callbacks: both original sound_fx_zone_step
+and sound_orbit_step now run with real placement/tree/render dependencies.
+All 68 functions from the original sound module are retained; this is not
+whole-game completion. 3,472 new scoped checks and 39,862 sound regression
+checks pass, including actual editor-marker GPU captures, bounded rejection,
+original marker values and 512 original SH-4 composite-rotation comparisons.
+Overall approximately 10%; full gameplay and later ports remain unfinished.
+
+- [Callback scope and reproduction](outputs/sonic-adventure/JP_NATIVE_SOUND_PLACEMENT.txt)
+- [Qualification and hashes](outputs/sonic-adventure/analysis/jp_native_sound_placement_package.json)
+- [Planned VMU Chao emulator/widget](outputs/sonic-adventure/JP_VMU_EMULATOR_PLAN.txt)
+
+Source and JSON evidence are public. Combined original SDK/game binaries,
+retail inputs and marker captures remain private. The source-matched prerelease
+contains 2,977 unchanged incomplete research build payloads, no playable EXE.
+Earlier milestone notes are preserved below.
+
 Latest verified original effects queue and owned bank loading: 51 additional
 original sound functions and six original stage helpers are integrated with the
 same MIDI/QSound/stream/native owner. 39,862 checks cover all112 real bank files,
