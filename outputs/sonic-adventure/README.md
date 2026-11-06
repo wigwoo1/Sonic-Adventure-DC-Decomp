@@ -1,3 +1,43 @@
+Latest qualified complete original game_init: JP_NATIVE_GAME_INIT.txt.
+Overall approximately 10% of weighted milestones; goal active.
+The original full initializer now executes on the real native parent graph,
+including two real frame presentations, owned audio, queue, History and the
+original loader callback. 530 checks in 19 cases and 968 lifecycle regression
+checks passed; source/import audit preserves all 24 earlier proof packages.
+Combined reported scoped checks: 945463; these overlap and are not routine counts.
+Next follow the actual boot/mode transition toward the logo and main loop.
+Gameplay, English/settings and later ports remain unfinished; no playable EXE.
+This frozen scope and the two preceding queue scopes are ready for reviewed
+GitHub publication; publication receipts are tracked separately.
+See analysis/jp_native_game_init_package.json for qualification and hashes.
+Earlier milestone notes remain unchanged below.
+
+Latest qualified System/Exit file-read queue: JP_NATIVE_READ_QUEUE_EXIT.txt.
+Overall approximately 10% of weighted milestones; goal active.
+The same existing System registration now owns the actual original read queue
+through ordinary restart, early exit and final Exit. Card callbacks drain first;
+queue work retires before history, sound and GDFS/RTC. Real missing-handler close
+failure retains buffers/handle/lease for retry; later history-save failure does
+not re-close the queue. 968 new checks and 1232 regressions passed. Combined
+reported qualified scopes: 944933. Complete game_init is next; gameplay,
+English/settings and later ports remain unfinished. No playable PC build exists.
+This frozen scope is pending the next reviewed daily GitHub snapshot.
+See analysis/jp_native_read_queue_exit_package.json for scoped proof and hashes.
+Earlier milestone notes remain unchanged below.
+
+Latest qualified native background file-read queue: JP_NATIVE_READ_QUEUE.txt.
+Overall approximately 10% of weighted milestones; goal active.
+The complete original five-function loader queue now runs over actual native
+GDFS with checked buffer bounds, real disc bytes and retained cancellation
+ownership. 479 new checks and 1545 regression checks passed. Three original
+function bodies, seventeen prior DLLs and all earlier proofs are preserved.
+Combined reported qualified scopes: 943965. System/Exit queue ownership and
+complete game_init remain next; gameplay, English/settings and later ports are
+unfinished. No playable PC executable exists. This frozen scope is pending the
+next reviewed daily GitHub snapshot; publication is tracked separately.
+See analysis/jp_native_read_queue_package.json for scoped proof and hashes.
+Earlier milestone notes remain unchanged below.
+
 Final-review follow-up: JP_NATIVE_HISTORY_ADOPTION_GUARD.txt.
 Overall approximately 10%; goal active. An explicit handoff now rejects history
 already claimed by another caller before changing System resources. The real

@@ -1,0 +1,138 @@
+Complete original game_init on the native lifecycle
+Scoped qualification, 2026-11-06; overall approximately 10%; goal active.
+
+Status: VERIFIED within this initialization/cleanup scope. The complete original
+game_init now executes; game_mode_step, the main game loop and gameplay do not.
+There is still no playable PC executable. Japanese matching/GCC baselines remain
+preserved. English localization, settings and later platforms remain unfinished.
+
+What runs
+
+The actual pinned Japanese src/main.c initializer keeps its successful call order:
+Sofdec preinitialization, original higher system_boot_init, two genuine frame_wait
+calls, original boot-mode assignment, ADXT vsync configuration and initialization,
+the original background read queue, History, original loader flag initialization,
+and real GDFS error callback registration. Seven explicit failure checks return
+before later stages when an adapted native dependency fails. The successful body
+otherwise matches the original bytes; there are no successful stand-in callees.
+
+The same qualified native System/MainBoot, audio, GPU, frame clock, card, print,
+GDFS, RTC, input and History providers are reused. The caller first configures
+System/MainBoot and initializes the existing borrowed frame/render/VMU owners,
+using their previous guides. jp_game_init_configure copies the History paths and
+settings. jp_game_initialize runs the original initializer and returns a checked
+result. jp_game_init_shutdown releases its construction scope and closes through
+the actual existing MainBoot/System ownership graph. Failed cleanup retains the
+parent ownership so a real close can be retried. Final Exit remains terminal.
+
+The exported original game_init(void) ABI returns only after successful startup.
+On checked failure it attempts actual cleanup and exits with 64 plus the error
+code. Underlying original fatal sbInitSystem paths still terminate nonzero;
+the typed wrapper does not turn every fatal SDK error into a recoverable return.
+
+Constructor safety
+
+The existing System instance holds one higher-constructor token and its existing
+bootstrap guard. Twelve System mutation/cleanup/bind entry points reject nested
+calls while the scope is held. The token permits only its checked queue/History
+starts; the actual System busy guard also protects callbacks inside those starts.
+MainBoot checks the same System activity before card cleanup can begin. Ordinary
+sound-clock data service remains usable while the two real frame waits run.
+The original bootstrap callback and sound-clock activity bodies are unchanged.
+No second System instance, cleanup registration, timer or audio output is added.
+
+Original data and audio
+
+The complete original sdk/sofdec/mwsfdini.c is compiled unchanged. Its retained
+2048-word array and original assignments select the full-width native stack end.
+Writable configuration definitions come from the original GCC syhw.c definitions.
+This is configuration storage: Windows still owns its interrupt handling. Console
+syHwInit is not compiled, and movie playback or an active Windows interrupt stack
+has not been verified.
+
+There is one exported original game_mode and loader_error_flag pair, with their
+original four-byte widths. The original loader_note_error body is unchanged and
+shares that flag. Its native callback is registered through actual GDFS. A genuine
+bad-sector read reports -19, which the original correctly ignores for tray/disc
+change state. Direct -23/-33 code tests verify those original conditions, without
+claiming actual console tray hardware was exercised.
+
+Audio initialization uses the real cold SDK pools, then the existing checked RNA,
+ADXSTM, ADXF and ADXT owners. The same adapted original ADXT_Init executes once.
+Existing Sound teardown already retires partial/complete nested initialization.
+Calling raw ADXT_Init alone would bypass those native ownership records; this
+initializer deliberately uses the actual typed owners. A real ADXT/RNA/joint
+player also constructs and retires successfully after complete initialization.
+
+Verification
+
+Ten compile/link commands passed with warnings as errors and no diagnostics.
+530 checks passed across 19 fresh processes. They cover the normal initializer,
+cold prerequisites, copied path options, restart, nested/foreign calls, real file
+payloads and persistence, actual GDFS error callback, failed-close retry, malformed
+and mismatched History inputs, missing real sound driver, an actual held G2 gate,
+WM_CLOSE during a frame wait, early/final Exit, a post-init audio player and the
+original ABI's successful/failed process termination. Successful exit returned 0;
+the malformed-profile original ABI test returned 73. The parent independently
+checked persistence or unchanged profiles after each process ended.
+
+Two real native presentations complete, and the genuine logical clock progresses.
+The parent's sound initialization already runs that clock; the first wait inherits
+its current countdown phase. The verification does not force a fixed tick delta
+or replace the production clock. These are initialization frames, not gameplay.
+No new game screen or playable content is claimed by this background milestone.
+
+The unchanged read-queue/System/Exit verifier passed 968 checks across 21 further
+fresh processes on the new graph. Actual pending-read close failure preserves the
+handle, queue, lease and parents; restoring the genuine GDFS handler permits retry.
+This tests a missing native service, not a forced OS cancellation timeout.
+
+The source/import audit verified the seven checked-return adaptations, unchanged
+original callback/Sofdec source, original MainBoot initializer/object, single
+bootstrap registration, 12 System guards and MainBoot preflight. It checked all
+23 actual DLL import graphs for cycles, 17 unchanged prior provider DLLs plus
+three unchanged support/client DLLs, 34 unchanged copied objects, the separately
+copied unchanged original MainBoot object and all 24 earlier frozen packages.
+Only System/MainBoot authored owners and the new original/native initializer
+objects are newly linked. The new module is never imported by its lower owners.
+
+945463 cumulative reported scoped checks overlap. They are not routine counts,
+gameplay coverage or the whole project's completion percentage.
+
+Reproduce locally
+
+Run from C:\Users\wigwo\Documents\Codex\2026-10-03\de using project Python,
+the pinned upstream, earlier qualified private baselines and your own Japanese
+v1.007 track03.bin. Choose fresh output directories to preserve prior evidence.
+These example paths identify this qualification's already retained outputs.
+
+python -B outputs/sonic-adventure/jp_port_tools/build_native_game_init.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --baseline work/sonic-adventure/jp-native-read-queue-exit-v1 --output work/sonic-adventure/jp-native-game-init-v4
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_game_init.py --workspace . --build work/sonic-adventure/jp-native-game-init-v4 --track "PATH_TO_LOCAL_JP_TRACK03.BIN" --output work/sonic-adventure/jp-native-game-init-check-v4
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_read_queue_exit.py --workspace . --build work/sonic-adventure/jp-native-game-init-v4 --track "PATH_TO_LOCAL_JP_TRACK03.BIN" --output work/sonic-adventure/jp-native-game-init-queue-exit-regression-v1
+python -B outputs/sonic-adventure/jp_port_tools/qualify_native_game_init.py --stage audit --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --baseline work/sonic-adventure/jp-native-read-queue-exit-v1 --build work/sonic-adventure/jp-native-game-init-v4 --output work/sonic-adventure/jp-native-game-init-audit-v1
+python -B outputs/sonic-adventure/jp_port_tools/qualify_native_game_init.py --stage package --workspace . --build work/sonic-adventure/jp-native-game-init-v4 --check work/sonic-adventure/jp-native-game-init-check-v4 --regression work/sonic-adventure/jp-native-game-init-queue-exit-regression-v1 --audit work/sonic-adventure/jp-native-game-init-audit-v1 --output work/sonic-adventure/jp-native-game-init-package-v1
+
+Proof: outputs/sonic-adventure/analysis/jp_native_game_init_package.json.
+Private build: work/sonic-adventure/jp-native-game-init-v4.
+The snapshot ABI is 176 bytes; options are the existing History options ABI.
+
+Limits and next work
+
+Next follow the original GAME_MODE_BOOT branch through boot_new_game, boot_init,
+the original LOGO transition and boot_finish, then logo_step. Resolve their real
+dependencies and overlay ownership before executing the complete mode/main loop.
+Never call Dreamcast fixed module addresses as native function pointers. Original
+unbounded read_queue_add stays unexported; native callers need checked capacity.
+Actual OS cancellation timeout, token exhaustion and unexpected failed rollback
+cancellation remain unqualified. Full menus, stages, game rendering and movie
+playback remain incomplete. Screenshots will accompany actual visual progress.
+
+Authored adapters/tools, this guide and JSON evidence may be public. Original
+game/SDK source bodies, combined diagnostic DLLs, disc inputs, profiles, captures
+and private sparse-sector fixtures remain private. Public research build payloads
+are unchanged; source-matched archive/publication is tracked separately. Original
+source and all earlier proof hashes are preserved.
+
+Recommended next model: Sol High for the next original boot/mode integration.
+The difficult initializer work is verified; Sol Very High/Max is not necessary
+for routine proof/documentation review, which Luna Low can handle. Goal active.

@@ -1,0 +1,108 @@
+Native original background file-read queue
+Scoped qualification, 2026-11-06; overall approximately 10%; goal active.
+
+Status: VERIFIED for the scope below. Full game_init and gameplay have not
+executed. The Japanese matching/GCC source baselines remain preserved; this is
+not a playable PC build. English, settings and later-platform work remain.
+
+What changed
+
+The original loader's complete five-function queue runs against the actual
+native GDFS and local Japanese v1.007 disc data. It retains the original fixed
+16 slots, one selected read/file handle, lowest-waiting-slot scheduling and
+original add/initialize/selected-slot bodies. There is one actual queue and one
+actual GDFS handle pool. Three original function bodies are unchanged; serve
+and cancel are explicitly adapted for native failure and ownership rules.
+
+Native enqueue requires each destination's real capacity. It checks a bounded
+filename, 32-byte alignment, sector-rounded capacity, address overflow and
+overlap with other live destinations. A read's actual size and frame address
+are checked again when it starts, so a changed directory entry cannot silently
+redirect the queued work. Diagnostic snapshots cannot overwrite a live buffer.
+The caller keeps a destination alive until its slot is FREE or cancel succeeds.
+Names must identify files in the current GDFS directory, with no path separators.
+
+The original serve algorithm defers while another GDFS client has work. All
+pending read/seek/busy states retain the selected slot. Completed byte counts
+must match the actual sector-rounded file size before its handle/slot retire.
+An actual open, metadata, request or media error is reported instead of causing
+the original unbounded reopen loop. The failed slot and any real open handle
+remain live until checked cancellation succeeds. Cancellation closes/drains the
+actual read before marking slots FREE; a rejected close cannot release buffers.
+Even the short-lived metadata-probe handle remains owned if its close fails.
+
+The same GDFS owner has a nonterminal client lease and stamps only queue-owned
+opens in its existing handle records. Other sound/file clients remain usable.
+Independent mutation, close and callback replacement of a stamped handle are
+rejected. Authority is suspended inside real GDFS callbacks. GDFS cannot shut
+down, reinitialize or commit terminal finish while the queue lease remains;
+rejected terminal finish can still cancel its uncommitted claim. Queue shutdown
+first cancels its own work, then releases this lease. It does not own System,
+RTC, frame service or any caller destination, and installs no user callback.
+
+Verification
+
+Five compile/link commands passed without diagnostics, using warnings as errors.
+479 checks passed across 11 fresh processes: actual files and independent raw
+sector oracles, all 16 slots/full capacity, mixed files and lowest-slot reuse,
+pending cancellation, handle/callback protection, real callback reentry,
+foreign threads, changed actual directory metadata, malformed raw-sector I/O,
+same-process restart and zero-length completion without a destination buffer.
+Destination canaries and exact sector-rounded bytes are checked. A real private
+sparse track fixture retains the original ISO metadata/selected file data and
+corrupts one sector header; no simulated successful read provider is substituted.
+The real frame-clock service advances the original GDFS timed error recovery.
+
+Unchanged verifiers passed 792 GDFS checks (including 325 original SH-4 reference
+calls) and the 753-check history/System/Exit suite on this changed GDFS graph.
+These regressions do not initialize the new queue; the 479 new checks cover its
+client lease and buffer behavior. Actual PE imports are acyclic; the queue
+imports GDFS, and GDFS does not import the queue. Seventeen prior DLLs, copied
+prior objects and all 22 prior qualification packages remain byte-identical.
+
+943965 cumulative reported scoped checks overlap. They are not a count of
+decompiled routines, gameplay coverage or the project's completion percentage.
+
+Reproduce locally
+
+Run from C:\Users\wigwo\Documents\Codex\2026-10-03\de with the project Python,
+preserved preceding baselines, and your own Japanese HDR-0001 v1.007 track03.bin.
+Use fresh output directories; earlier source and proofs are never overwritten.
+
+python -B outputs/sonic-adventure/jp_port_tools/build_native_read_queue.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --baseline work/sonic-adventure/jp-native-history-adoption-guard-v1 --output work/sonic-adventure/jp-native-read-queue-v7
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_read_queue.py --workspace . --build work/sonic-adventure/jp-native-read-queue-v7 --track "PATH_TO_LOCAL_JP_TRACK03.BIN" --output work/sonic-adventure/jp-native-read-queue-check-v4
+python -B outputs/sonic-adventure/jp_port_tools/qualify_native_read_queue.py --stage gdfs-view --workspace . --build work/sonic-adventure/jp-native-read-queue-v7 --output work/sonic-adventure/jp-native-read-queue-GDFS-regression-build-v2
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_gdfs.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --build work/sonic-adventure/jp-native-read-queue-GDFS-regression-build-v2 --binary work/sonic-adventure/jp-ninja-math-reference/1ST_READ.BIN --track "PATH_TO_LOCAL_JP_TRACK03.BIN" --output work/sonic-adventure/jp-native-read-queue-GDFS-regression-v1
+python -B outputs/sonic-adventure/jp_port_tools/qualify_native_history_adoption_guard.py --stage check --workspace . --baseline work/sonic-adventure/jp-native-history-exit-v3 --build work/sonic-adventure/jp-native-read-queue-v7 --track "PATH_TO_LOCAL_JP_TRACK03.BIN" --output work/sonic-adventure/jp-native-read-queue-history-regression-v1
+python -B outputs/sonic-adventure/jp_port_tools/qualify_native_read_queue.py --stage audit --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --baseline work/sonic-adventure/jp-native-history-adoption-guard-v1 --build work/sonic-adventure/jp-native-read-queue-v7 --output work/sonic-adventure/jp-native-read-queue-audit-v3
+python -B outputs/sonic-adventure/jp_port_tools/qualify_native_read_queue.py --stage package --workspace . --build work/sonic-adventure/jp-native-read-queue-v7 --check work/sonic-adventure/jp-native-read-queue-check-v4 --gdfs work/sonic-adventure/jp-native-read-queue-GDFS-regression-v1 --gdfs-view work/sonic-adventure/jp-native-read-queue-GDFS-regression-build-v2 --history work/sonic-adventure/jp-native-read-queue-history-regression-v1 --audit work/sonic-adventure/jp-native-read-queue-audit-v3 --output work/sonic-adventure/jp-native-read-queue-package-v1
+
+Proof: outputs/sonic-adventure/analysis/jp_native_read_queue_package.json.
+Private native build: work/sonic-adventure/jp-native-read-queue-v7.
+The package binds the actual DLLs, source changes, verifier hashes and results.
+
+Limits and next milestone
+
+The caller currently closes the queue before System/global Exit. GDFS rejects
+early independent destruction while the queue lives, but System/Exit does not
+yet own the queue's terminal lifecycle. Add that to the existing registration
+before integrating the complete original game_init. Preserve one queue and
+actual GDFS lease; drain its work before closing GDFS, RTC and caller buffers.
+
+An actual OS cancellation timeout was not forced by these tests. The source
+audit checks retention order, and real callback/thread rejection and pending
+cancellation are exercised; these do not prove that timeout branch. Raw legacy
+read_queue_add has no capacity argument and is not exported. Future original
+callers need a checked native buffer contract; silently trusting that raw entry
+point would reintroduce the original overflow risk. The typed API runs the
+original add algorithm after validating the native contract.
+
+Authored adapters/tools, guide and JSON evidence may be public. Original game
+source bodies, combined diagnostic DLLs, disc inputs, sparse retail-data fixtures,
+profiles and captures remain private. Public research build payloads are unchanged.
+This work produced no gameplay screen. Newly frozen source/proofs are ready for
+the next reviewed daily GitHub snapshot; publication is tracked separately.
+
+Recommended next model: Sol High for System/Exit queue ownership and complete
+game_init integration. Luna Low is suitable for routine proof/documentation review.
+Keep the goal active.

@@ -1,0 +1,119 @@
+Original read queue owned by the existing System and Exit lifecycle
+Scoped qualification, 2026-11-06; overall approximately 10%; goal active.
+
+Status: VERIFIED within the scope below. Full game_init and gameplay remain
+unfinished; there is no playable PC executable. The Japanese matching/GCC source
+baselines remain preserved. Localization, settings and later platforms remain.
+
+What changed
+
+System can start the actual original background file-read queue and attach its
+cleanup authority to the existing bootstrap registration. Explicit guarded adopt
+can also hand off an initialized, unclaimed queue. Automatic startup preserves
+an existing independent owner; explicit adoption rejects another claimant before
+changing System resources. No second bootstrap callback/registration is created.
+The earlier original five-function queue object and native GDFS DLL are unchanged.
+
+The same queue owner now carries a monotonic terminal token. Data operations
+continue while delegated, including after final Exit binding. Once close begins,
+application mutation, replacement and independent shutdown are rejected. A failed
+close retains the exact original slots, caller destinations, selected file handle,
+native GDFS client lease and lifecycle token. The authority can retry the genuine
+close. Terminal finish cannot cancel or restart; a completed ordinary close may
+release its nonterminal claim after the whole ordinary System shutdown succeeds.
+
+The new explicit mask bit JP_EXIT_READ_QUEUE is 8388608. Existing masks retain
+their meanings. Final binding requires the queue bit/token and transfers the
+same earlier token only after every other final claim succeeds. A tested later
+device-claim rejection preserves the real bootstrap and queue authority.
+
+Both ordinary/early System cleanup and final Exit drain CARD first, then the
+READ_QUEUE, then HISTORY, SOUND, GDFS and RTC before remaining device/heap owners.
+Actual card callbacks can still enqueue file work and record history while they
+drain. Callback attempts to finish the queue are rejected using real card
+activity. Queue/GDFS callback activity is checked before irreversible terminal
+flags or cleanup counters change. No separate imitation callback counter is used.
+The bootstrap callback's original body remains unchanged.
+
+Real failure and retry
+
+The tests temporarily remove the genuine GDFS vblank handler while a real file
+read is pending. The actual checked file close fails, leaving the original slot,
+destination, handle and GDFS lease live. History, sound, RTC and GDFS ownership
+remain available. Restoring the same original callback/argument/priority at its
+expected native handler ID allows the real full cleanup to retry and succeed.
+The original allocator fills any needed lower holes without dispatch; temporary
+handlers are removed immediately. No successful file-read/close substitute or
+original-function hook is installed. This failure is a missing native service;
+it does not claim to force an OS cancellation timeout.
+
+A separate real Windows sharing denial causes history persistence to fail after
+the queue has already closed. The old complete profile remains unchanged, and
+the queue is not closed twice on retry. Another case makes ordinary shutdown
+stop at that history failure, then succeeds through global terminal cleanup;
+the already closed queue's existing token becomes terminal safely. Caller buffers
+remain live until actual queue close succeeds, and the retired reader cannot
+write them afterward.
+
+Verification
+
+Six compile/link commands passed without diagnostics, with warnings as errors.
+968 checks passed across 21 fresh processes: ordinary parent restart, early/final
+cleanup, real pending read cancellation, close failure/retry, callbacks and thread
+rejection, independent and already claimed owners, outer constructor guards,
+failed construction, omitted mask, late device rejection, post-bind real reads,
+later history failure, ordinary-to-global cleanup and actual process termination.
+Successful real process exit returned 0; failed queue close returned 70. The
+parent independently checked the saved/unchanged profile after each process ended.
+
+The unchanged original queue verifier passed 479 checks on this graph, including
+independent real-sector payload comparisons, all 16 slots, mixed-file slot reuse,
+zero-length reads, malformed-sector I/O, canaries and ownership protection. The
+753-check history/System/Exit verifier also passed. Those regressions exercise
+standalone queue behavior or earlier history ownership separately; the 968 new
+checks cover the combined System-owned queue lifecycle.
+
+The audit checked all actual PE imports for cycles, 16 unchanged prior DLLs,
+31 unchanged copied objects and all 23 earlier qualification packages. Queue
+imports only lower GDFS/Frames providers; it never imports System/Exit/MainBoot.
+Only the authored queue, System and Exit owner objects are rebuilt. The original
+queue object, GDFS implementation, original high-level constructor, history and
+audio providers remain unchanged.
+
+944933 cumulative reported scoped checks overlap. They are not routine counts,
+gameplay coverage or the whole project's completion percentage.
+
+Reproduce locally
+
+Run from C:\Users\wigwo\Documents\Codex\2026-10-03\de with project Python,
+the preceding qualified baselines and your own Japanese v1.007 track03.bin.
+Choose fresh output directories to preserve earlier source/build/proof evidence.
+
+python -B outputs/sonic-adventure/jp_port_tools/build_native_read_queue_exit.py --workspace . --baseline work/sonic-adventure/jp-native-read-queue-v7 --output work/sonic-adventure/jp-native-read-queue-exit-v1
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_read_queue_exit.py --workspace . --build work/sonic-adventure/jp-native-read-queue-exit-v1 --track "PATH_TO_LOCAL_JP_TRACK03.BIN" --output work/sonic-adventure/jp-native-read-queue-exit-check-v2
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_read_queue.py --workspace . --build work/sonic-adventure/jp-native-read-queue-exit-v1 --track "PATH_TO_LOCAL_JP_TRACK03.BIN" --output work/sonic-adventure/jp-native-read-queue-exit-queue-regression-v1
+python -B outputs/sonic-adventure/jp_port_tools/qualify_native_history_adoption_guard.py --stage check --workspace . --baseline work/sonic-adventure/jp-native-history-exit-v3 --build work/sonic-adventure/jp-native-read-queue-exit-v1 --track "PATH_TO_LOCAL_JP_TRACK03.BIN" --output work/sonic-adventure/jp-native-read-queue-exit-history-regression-v1
+python -B outputs/sonic-adventure/jp_port_tools/qualify_native_read_queue_exit.py --stage audit --workspace . --baseline work/sonic-adventure/jp-native-read-queue-v7 --build work/sonic-adventure/jp-native-read-queue-exit-v1 --output work/sonic-adventure/jp-native-read-queue-exit-audit-v1
+python -B outputs/sonic-adventure/jp_port_tools/qualify_native_read_queue_exit.py --stage package --workspace . --build work/sonic-adventure/jp-native-read-queue-exit-v1 --check work/sonic-adventure/jp-native-read-queue-exit-check-v2 --queue work/sonic-adventure/jp-native-read-queue-exit-queue-regression-v1 --history work/sonic-adventure/jp-native-read-queue-exit-history-regression-v1 --audit work/sonic-adventure/jp-native-read-queue-exit-audit-v1 --output work/sonic-adventure/jp-native-read-queue-exit-package-v1
+
+Proof: outputs/sonic-adventure/analysis/jp_native_read_queue_exit_package.json.
+Private native build: work/sonic-adventure/jp-native-read-queue-exit-v1.
+
+Limits and next work
+
+The complete original higher bootstrap followed by System-owned queue/history
+runs here; full game_init has not executed. It still needs checked higher adapters
+for read_queue_init/history_init, actual Sofdec preinitialization data, single
+shared game_mode/loader_error_flag and the original loader_note_error callback.
+Original unbounded read_queue_add remains unexported; future callers require
+the native checked buffer contract. Exhausted token counters, unexpected failed
+rollback cancellation and actual OS cancellation timeout are not qualified.
+
+Authored adapters/tools, guide and JSON proof may be public. Original game/SDK
+source bodies, combined diagnostic DLLs, local disc inputs, profiles and captures
+remain private. Public research payloads are unchanged. This background-system
+milestone produced no gameplay screen. Newly frozen source/proofs are ready for
+the next reviewed daily GitHub snapshot; publication is tracked separately.
+
+Recommended next model: Sol High for the complete original game_init integration.
+Luna Low can handle routine frozen-proof/documentation review. Goal remains active.

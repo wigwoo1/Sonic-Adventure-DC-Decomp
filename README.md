@@ -1,3 +1,25 @@
+Latest qualified complete original game_init: the original higher initializer
+now executes with the actual native parent graph, two real frame presentations,
+owned audio, background read queue, History and original loader callback.
+530 checks across 19 cases and 968 lifecycle regression checks passed. The source
+audit preserves all 24 earlier qualification packages and unchanged providers.
+This snapshot also publishes the two preceding queue qualifications.
+
+Overall approximately 10%; the boot/logo mode transition and main game loop are
+next. Gameplay, English/settings and later platforms remain unfinished. There is
+no playable PC executable, and the two initialization frames are not gameplay.
+
+- [Full initializer scope and reproduction](outputs/sonic-adventure/JP_NATIVE_GAME_INIT.txt)
+- [Qualification and immutable hashes](outputs/sonic-adventure/analysis/jp_native_game_init_package.json)
+- [Original native file queue](outputs/sonic-adventure/JP_NATIVE_READ_QUEUE.txt)
+- [System/Exit queue lifecycle](outputs/sonic-adventure/JP_NATIVE_READ_QUEUE_EXIT.txt)
+- [VMU Chao emulator/widget plan](outputs/sonic-adventure/JP_VMU_EMULATOR_PLAN.txt)
+
+Authored adapters/tools and JSON proofs are public. Original SDK/game source and
+combined diagnostic binaries, retail assets, profiles and private fixtures stay
+private. The source-matched prerelease contains 2977 unchanged incomplete research
+payloads. Earlier milestone notes remain unchanged below.
+
 Latest qualified native history/System/Exit integration: the same System
 registration owns history through ordinary restart, early exit and final Exit.
 Pending VMU saves drain first; failed history commits retain live work, profile
