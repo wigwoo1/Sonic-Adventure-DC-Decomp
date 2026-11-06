@@ -1,3 +1,18 @@
+Latest verified real Japanese title-music pipeline: native asynchronous GDFS
+feeds the unchanged title prefix through original SJD/RNA/SDK/AICA.9,159 new
+checks cover88,192 stereo source frames, ten sound-ring wraps, every decoded
+sample and full ring bytes. All90,112 firmware output frames and the final
+2MiB sound RAM match across CPU/DMA.452,846 current scoped checks pass.
+Overall estimate remains approximately10%; goal active. Full-song, live timed
+retail audio, ADXT/AFS scheduling and playable gameplay remain unfinished.
+
+- [Retail music pipeline evidence and next steps](outputs/sonic-adventure/JP_NATIVE_RETAIL_RNA.txt)
+- [Exact current verification package](outputs/sonic-adventure/analysis/jp_native_retail_rna_package.json)
+
+Public archives remain incomplete research artifacts, with2,977 unchanged build
+payloads bound to this source manifest. Retail music/WAV captures and combined
+SDK/game binaries stay private. No new graphical scene was tested.
+
 Latest verified RNA/mwSnd audio infrastructure:5,436 new checks cover the
 original middleware's real CPU/DMA copies, full AICA ring contents, shared clock,
 callback ownership and pending-transfer cleanup. Every authored-stream PCM byte

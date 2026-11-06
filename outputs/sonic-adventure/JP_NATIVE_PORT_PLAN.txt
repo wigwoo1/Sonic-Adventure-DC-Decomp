@@ -1,3 +1,19 @@
+Latest verified native Japanese title-music pipeline: JP_NATIVE_RETAIL_RNA.txt.
+Goal active; overall approximately10% of weighted milestones. Original native
+GDFS now reads an unaltered retail TITLE.ADX prefix asynchronously in the same
+System owner. Actual SJMEM/SJD/ADXB/ADXPD/RNA/SDK/AICA produce88,192 stereo
+music frames across ten sound-ring wraps. Every decoded sample/full ring byte
+matches an independent step-aware oracle. All90,112 firmware output frames and
+the complete final2MiB sound RAM agree across CPU and DMA.9,159 new checks
+pass;452,846 current scoped checks remain bound to the unchanged native build.
+The real header and original longer song length remain intact. Explicit prefix
+stop and ordered cleanup are verified; full-song/ADXT/AFS/gameplay integration
+and live timed retail output remain pending. No new graphical scene was tested.
+Next integrate complete original ADXSTM file-ring streaming and then ADXF/ADXT
+with native owned work buffers and the existing sound/System lifecycle. All
+prior source/proof hashes and public build payloads are preserved. Retail
+music/WAV captures and combined SDK/game binaries remain private.
+
 Latest verified native RNA/mwSnd middleware: JP_NATIVE_RNA.txt.
 Goal active; overall approximately10% of weighted milestones. Five genuine
 original middleware modules now share the actual sound owner, frame clock,

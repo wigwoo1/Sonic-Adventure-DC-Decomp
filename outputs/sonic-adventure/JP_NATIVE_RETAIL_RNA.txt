@@ -1,0 +1,105 @@
+Japanese title music through native GDFS, decoder and sound middleware
+
+Status: VERIFIED for the bounded retail prefix described here. Overall project
+estimate remains approximately 10% of weighted milestones; goal active. There
+is no playable native game. Japanese matching-source completion remains separate
+from native gameplay, English integration, rendering controls and later ports.
+
+What changed
+The existing native audio graph now has direct integration evidence using the
+actual supplied Japanese TITLE.ADX. Its original GDFS implementation opens the
+retail file, issues a nonblocking sector read, services actual native I/O, runs
+its original completion callback and closes the handle. Every returned byte
+agrees with an independent read-only ISO parser. No alternate media owner or
+file-read stub provides the decoder's input in this qualification.
+
+That native input flows through original SJMEM, ADXSJD, ADXB/ADXPD, contiguous
+stereo output joints, RNA/mwSnd, original SDK PCM ports and actual MASARU sound
+firmware. This extends the earlier separately qualified decoder and authored-
+waveform RNA tests to one real music pipeline. Existing DLL bytes are unchanged;
+this milestone adds integration tests, an independent oracle and evidence.
+
+The original header is 36 bytes long and declares 2,540,372 stereo frames at
+44100Hz. The test supplies its unmodified first 99,252 bytes: the header plus
+99,216 compressed bytes for 88,192 frames, just under two seconds. It neither
+rewrites the song's length nor appends an invented end marker. The memory joint
+exposes only that exact prefix after the actual sector-rounded file read.
+The decoder remains in its original DECODE state at the longer song's prefix
+boundary. Explicit stop/destroy retires it; no full-song completion is claimed.
+
+Build and verification
+The current private build remains work/sonic-adventure/jp-native-rna-v6, SHA256
+9d306f70d9aa7982b7e7b20d56b541abac5f2e20025fb0718b02d33651211fad
+for build_verification.json. The prior nine compiler/linker steps and all
+443,687 current RNA/PCM/decoder/math/QSound/clock/output regression checks remain
+bound to precisely those unchanged source and binary bytes. No new compiled
+production code was changed, so those suites were not redundantly rerun here.
+
+The new native-filesystem retail integration passes 9,159 checks in two fresh
+processes: 4,579 CPU and 4,580 DMA. Combined current scoped total: 452,846.
+- Actual original GDFS reads 49 sectors, or 100,352 bytes, through its existing
+  native media adapter. File metadata, all returned bytes, full-width callback
+  context, read counters and release of requests/handles are checked. Native
+  CPU/DMA file-transfer modes are explicit; this is not physical console DMA.
+- All 345 actual decoder steps are checked using an independent step-aware
+  ADX recurrence. It models exact binary32 multiply/fused multiply-add rounding
+  and the original 16-bit history conversion at step boundaries. Constants from
+  the unchanged retail header are independently established as 7334 and -3283.
+- Every held source PCM sample and every byte of both 16KiB AICA rings agree
+  with that model, including previously untouched bytes and ten ring wraps.
+- Actual firmware renders 90,112 stereo output frames including startup/drain
+  timing around the prefix. Output is nonzero. Every mixed PCM byte and the
+  complete final 2MiB sound RAM agree across CPU and DMA runs. The DMA run uses
+  actual transfers; CPU uses none. No driver acknowledgement is fabricated.
+- No middleware/decoder error callback fires. Input bytes and guards remain
+  unchanged. Decoder retirement precedes RNA retirement; borrowed chunks return
+  while SDK/G2 remain live. Input/output joints retire before the actual System
+  disposes its underlying filesystem, sound and device owners.
+
+An earlier fixture-fed run passed 9,125 checks before native filesystem input
+was added. Its proof and exact verifier bytes remain privately preserved; it is
+not added again to the current total. The qualified native GDFS run supersedes
+that narrower input route. Both real title pipelines produce identical output.
+
+Private playback sample and limitations
+The local native-JP-title-SJD-RNA-AICA-demo.wav is actual mixed firmware output
+from the bounded title segment. It stays private with the retail source, sound
+RAM and PCM captures. No new graphical scene was tested, so no new screenshot
+is available. The sample can be played locally; this particular deterministic
+test renders offline rather than running a live Windows audio worker. Earlier
+authored-stream RNA and output qualifications cover the shared timed worker.
+
+This is not yet the full ADXT/ADXF/ADXSTM game music/voice scheduler. The test
+requests a finite title prefix and provides memory input to SJD after its native
+file read. Continuous file-ring refill, full-song completion/looping, archive
+voice selection, track switching, cancellation during playback and real timed
+retail streaming still require verification through the complete game frontend.
+
+Next production milestone
+Integrate the complete original ADXSTM file-stream module into the same native
+sound/System ownership graph, then connect genuine ADXF/ADXT frontend modules.
+Do not create a second sound clock, output client or shadow game sound state.
+Keep all original pointer-bearing records native-width, guard exhausted-pool
+rollback, and retire pending file reads before destroying their borrowed joints.
+Higher ADXT initialization currently resets shared pools and can register its
+own vblank callback: adapt this to the existing owner rather than duplicating
+service. ADXT_Create and ADXF's original scratch alignment also truncate host
+pointers and require explicit uintptr_t conversions. ADXT/ADXSTM failure paths
+need balanced locking, complete rollback and retained cleanup authority.
+
+How to check
+Open analysis/jp_native_retail_rna_package.json and
+analysis/jp_native_retail_rna_runtime.json for exact source/proof hashes, all
+assertions, per-step counts and audio/RAM digests. Run
+jp_port_tools/verify_native_retail_rna.py --help for local reproduction paths.
+Its default --input-source gdfs_async uses the real native filesystem. The
+optional fixture input remains explicitly labelled as narrower test input.
+Use a new private output directory and provide the qualified native build and
+your Japanese track. The pinned external source and all required original data
+remain local; retail assets and combined SDK/game binaries are not published.
+
+Public archives remain incomplete research artifacts. Their 2,977 previously
+selected binary payloads are unchanged; only the source binding is refreshed.
+The PC/English/FPS/8K/HD/vertex-colour Off/Chao VMU-widget/Android/stereo3DS and
+final N64/PS1 stretch scope remains intact. Recommended next model: Sol High
+for ADXSTM/ADXT ownership integration; Luna Low is suitable for documentation.
