@@ -1,3 +1,21 @@
+Latest qualified drawing controls and task animation: JP_NATIVE_DRAW_CONTROLS.txt.
+Overall approximately 10% of weighted milestones; goal active. Eight original
+attribute/control helpers now use the existing renderer globals and preserve
+the original single-slot save semantics. 4,104 complete original JP SH-4 calls
+match native state. Original task scheduling drives nine actual animation GPU
+frames; the task destructor releases diagnostic-owned model/action/texture
+references after retained GPU/frame retirement. All nine captures equal the
+earlier direct-action images exactly, including the verified texture-Off mode.
+8,588 new scoped checks and 530 selected initializer regressions passed.
+All prior Frame objects, 23 other DLLs and 34 earlier packages retain hashes.
+Cumulative 1,072,453 scoped assertions overlap; they are not routine counts or
+measured whole-game coverage. Owning callbacks are diagnostic fixtures, not the
+original Sonic callback or production automatic task/render lease service.
+No playable PC executable. Full player/main-loop/gameplay, English, settings,
+enhancements, VMU Chao emulator/widget and later platforms remain unfinished.
+Sol High suits the next integration; Luna Low suits documentation.
+Earlier milestone notes are preserved below.
+
 Latest qualified original Sonic keyed animation: JP_NATIVE_ACTION_RUNTIME.txt.
 Overall approximately 10% of weighted milestones; goal active. Native execution
 now samples the genuine 33-frame Sonic updraft action. Fourteen complete original

@@ -1,3 +1,28 @@
+Latest qualified original draw controls and task-driven animation.
+Eight original attribute/control helpers now use the same renderer state,
+preserving single-slot save behavior. 4,104 complete original Japanese SH-4
+calls match native execution. The original task scheduler drives nine actual
+animation GPU/window frames; a diagnostic task destructor releases retained
+model/action/texture references after GPU/frame retirement. All nine images
+equal the earlier direct-animation captures. Texture Off remains verified.
+
+8,588 new scoped assertions and 530 selected initializer regressions passed.
+All previous Frame objects, 23 other DLLs and 34 earlier qualification packages
+retain their hashes. Totals overlap; they are not recovered-routine counts or
+measured whole-game coverage. Overall approximately 10%; goal active.
+
+Task-owning callbacks are diagnostic fixtures, not the original Sonic player
+callback or a production automatic lease service. No playable PC executable.
+Full player/gameplay/main loop, English, enhancements and later ports remain
+unfinished. Retail captures and combined original game/SDK modules stay private.
+
+- [Scope and reproduction](outputs/sonic-adventure/JP_NATIVE_DRAW_CONTROLS.txt)
+- [Qualification and hashes](outputs/sonic-adventure/analysis/jp_native_draw_controls_package.json)
+- [Earlier original action interpreter](outputs/sonic-adventure/JP_NATIVE_ACTION_RUNTIME.txt)
+
+The source-matched prerelease contains 2,977 unchanged incomplete research
+payloads. Earlier milestone notes remain unchanged below.
+
 Latest qualified original Sonic keyed animation.
 Native execution now renders sampled poses from the genuine 33-frame Sonic
 updraft action. Fourteen complete original JP SH-4 calls match all 16 raw words

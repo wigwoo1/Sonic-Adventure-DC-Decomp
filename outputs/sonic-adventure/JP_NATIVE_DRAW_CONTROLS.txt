@@ -1,0 +1,60 @@
+Original drawing controls and task-scheduled animation qualification
+
+Overall estimate: about 10% of weighted milestones. Goal active. No playable PC
+game exists yet. Matching Japanese source and native-port progress are distinct.
+
+Eight original src/system/util.c functions are selected verbatim from pinned
+external upstream 25a3d3154dbe657325e97dbe8c5291086f6af5c0:
+draw_attr_save/restore/set/clear and draw_control_save/restore/set/clear.
+The three original private saved words are selected verbatim. Their save
+behavior is one slot; repeated saves overwrite that slot, rather than nesting.
+They operate on the existing actual Ninja attribute/control globals in Frames.
+No second renderer, control state, matrix state or resource owner is introduced.
+
+Two warning-free compile/link commands add one object and eight exports.
+All prior Frame objects and 23 other DLLs retain their hashes; actual PE imports
+remain acyclic. All 34 earlier qualification packages retain source/proof hashes.
+8,208 checks compare 4,104 complete original Japanese SH-4 executions against
+native state, mixing saves/restores/sets/clears and zero, all-one, single-bit and
+random masks. All three live renderer state words and original stack return
+are checked after each call. This is instruction-model comparison, not console
+hardware capture validation.
+
+The actual original task scheduler/present_draw now drives nine real Sonic
+animation GPU frames. An owning diagnostic callback invokes original draw_action;
+the genuine task_destroy invokes a diagnostic destructor that releases actual
+model/action/texture consumers after GPU jobs and retained frames retire.
+380 full-parent/task/renderer/window/cleanup checks pass. All nine captured RGBA
+images equal the previously qualified direct-animation images exactly. The final
+texture-Off image retains vertex/material colours without texture bindings,
+sampler bindings or texture uploads. Ten real window Presents complete.
+530 selected complete original initializer regressions also pass.
+
+There are 8,588 newly qualified scoped assertions, including the 380 task checks;
+the latter are counted once on this build. Totals overlap prior scopes and do
+not measure recovered routine counts, independent game scenarios or completion.
+
+Limits: task-owning callbacks are a diagnostic fixture. They are not the original
+Sonic player callback or a production automatic task/render lease service. This
+test explicitly performs the original stage-entry heap_init/task_init pair in
+a fresh process. TASK_LEVEL_FIRST is 8; task creation's 7 means TASK_UNLINKED.
+Full stage entry, split-frame controller, main loop, player FSM, gameplay,
+English/settings/enhancements, VMU Chao emulator/widget and later ports remain
+unfinished. The preview sample duration is not a measured game frame rate.
+
+Reproduce with Python -B, fresh private outputs, pinned external source and local
+JP retail inputs, following JP_NATIVE_ACTION_RUNTIME.txt prerequisites:
+1. build_native_draw_controls.py --workspace --upstream --baseline (qualified
+   action-runtime build) --output.
+2. verify_native_draw_controls.py --workspace --upstream --build --binary --output.
+3. verify_native_action_tasks.py --workspace --build --inputs (character texture
+   input directory) --track (JP track03.bin) --output.
+4. verify_native_game_init.py --workspace --build --track --output.
+5. qualify_native_draw_controls.py --stage audit --workspace --build --baseline
+   --upstream --output; then --stage package --workspace --build --controls
+   --task --init --audit --output, passing the corresponding proof directories.
+
+Publish authored derivation/verifier tools, this guide and JSON evidence only.
+Original game/SDK C, generated source, retail assets/captures and combined DLLs
+stay private. Public research archives remain incomplete and unplayable.
+Sol High suits further native integration; Luna Low suits routine documentation.
