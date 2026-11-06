@@ -1,3 +1,30 @@
+Latest qualified original Sonic keyed animation.
+Native execution now renders sampled poses from the genuine 33-frame Sonic
+updraft action. Fourteen complete original JP SH-4 calls match all 16 raw words
+of every visible model matrix, including fractional keyframes. Nine actual
+GPU/window captures show motion; a tenth Present verifies textures Off using
+vertex/material colours with no texture/sampler bindings or uploads.
+
+5,821 new scoped checks and 6,032 selected regressions passed. All 38 original
+action functions are retained with intended GCC repair and RZ adaptation.
+Every prior Frame object, 23 other DLLs and 33 earlier qualification packages
+retain their hashes. Totals overlap; they are not recovered-routine counts or
+measured whole-game coverage. The capture preview is not a measured FPS result.
+
+Overall approximately 10%; no playable PC executable. The diagnostic retains
+model/action/texture views explicitly and sets camera/light/preflight state.
+Automatic task/render ownership, full player task, GAME_MODE_BOOT, main loop,
+gameplay and settings UI remain unfinished, with English and later platforms.
+
+- [Original animation scope and reproduction](outputs/sonic-adventure/JP_NATIVE_ACTION_RUNTIME.txt)
+- [Immutable qualification and hashes](outputs/sonic-adventure/analysis/jp_native_action_runtime_package.json)
+- [Earlier static model rendering](outputs/sonic-adventure/JP_NATIVE_CHARACTER_TREE.txt)
+
+Authored adapters/tools and JSON evidence are public. Original game/SDK/data C,
+combined modules, retail inputs and captures remain private. The source-matched
+prerelease contains 2,977 unchanged incomplete research payloads.
+Earlier milestone notes remain unchanged below.
+
 Latest qualified genuine static Sonic model rendering.
 The native test now renders the original73-node,28-model Sonic tree using
 real textures and a palette loaded through original native read-queue/GDFS.

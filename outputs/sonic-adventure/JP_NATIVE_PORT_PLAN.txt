@@ -1,3 +1,22 @@
+Latest qualified original Sonic keyed animation: JP_NATIVE_ACTION_RUNTIME.txt.
+Overall approximately 10% of weighted milestones; goal active. Native execution
+now samples the genuine 33-frame Sonic updraft action. Fourteen complete original
+JP SH-4 action calls agree with all 16 raw words of every visible model matrix,
+including a fractional keyframe. Nine actual native GPU/window captures show
+different poses; a tenth Present confirms texture-Off vertex/material colours.
+The lossless capture preview is diagnostic, not a measured game-FPS result.
+5,821 new scoped checks and 6,032 selected regressions passed. The original
+action's 38 functions are retained with intended GCC repair and RZ adaptation.
+Prior Frame objects, 23 other DLLs and 33 earlier qualifications retain hashes.
+1,063,865 cumulative scoped checks overlap; they are not recovered-routine counts
+or measured whole-game coverage. No playable PC executable. This action has
+explicit preflight, camera, lighting and retained model/action/texture views.
+Automatic task/render lifetimes, full player task and main loop/gameplay remain
+unfinished. English, enhancements/settings, VMU Chao emulator/widget and later
+platforms remain planned. Sol High suits the next integration; Luna Low suits
+routine documentation. No goal pause is required.
+Earlier milestone notes are preserved below.
+
 Latest qualified static Sonic model rendering: JP_NATIVE_CHARACTER_TREE.txt.
 Overall approximately 10% of weighted milestones; goal active. The native test
 now renders the genuine original Sonic tree with real retail textures and a

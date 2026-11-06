@@ -1,0 +1,108 @@
+Original Sonic keyed action animation - scoped native qualification
+
+Whole-project estimate: about 10% of weighted milestones. Goal active.
+The native diagnostic now renders sampled poses from the original Japanese
+Sonic updraft action. This is progress from the earlier static model. The
+complete player task, controls, stages and main game loop remain unfinished;
+there is no playable PC executable. No 60/120/240 FPS measurement is claimed.
+
+What changed
+The original src/draw/action.c is adapted from pinned external upstream
+25a3d3154dbe657325e97dbe8c5291086f6af5c0. All 38 source functions are retained.
+Only intended GCC body branches are selected after the existing native SDK
+declarations. This preserves the upstream GCC repair that uses object angles
+for NJD_EVAL_SKIP. The unsafe matching-build unset-angle branch is not used.
+The frozen Clang AST transformer rewrites 55 scalar operations/comparisons
+through the existing SH-4 RZ value services. The generated LLVM contains no
+remaining fadd, fsub, fmul, fdiv or fcmp operations in this action unit.
+
+Two authored combined rotation adapters call the already qualified single-axis
+rotations in the original order. Float FIPR-self and FSRRA ABI adapters reuse
+the existing third-party SH-4 numerical model with its existing notice. They
+do not implement a second matrix owner or substitute host sqrt/dot arithmetic.
+Seven previously missing motion/shape globals are selected verbatim from the
+original njGlobal.c. Existing motion callback and shape-buffer providers remain
+unique. The same Frames, Motion, Assets, Character, System and GPU owners are
+used; the added objects introduce no duplicate data pack, renderer or task.
+
+What was verified
+  Seven warning-free compile/link/LLVM commands across two fresh build stages.
+  5,377 dependency checks: 960 complete original combined-rotation executions
+  across both register banks, current/external/saved matrix cases, zero axes,
+  wrapped angles and finite boundary inputs; plus 1,536 raw Float ABI cases
+  for FIPR-self/FSRRA including NaN, infinity and denormals. These use the
+  qualified instruction/numeric model, not measurements of a console chip.
+  76 pose checks: 14 complete original JP SH-4 draw_action calls, seven samples
+  at frames 0,1,4,8.5,16,24,32 across both register banks. Every one of the 28
+  visible model matrices matches all 16 raw words of native execution exactly.
+  The action is the actual sonic_updraft_action, 33 frames with POS/ANG keys,
+  and the genuine canonical Sonic tree. No original game-function hooks are
+  installed. A passive instruction trace and passive native callback observe
+  matrices. Actual original njGetkmPointer/njSetkmPointer execute. The real
+  frame-step policy skips rasterization for this independent pose comparison.
+  368 full-parent/GPU checks: nine real 512x512 Win32 backbuffers at frames
+  0,4,8.5,12,16,20,24,28,32, followed by the final same mesh with textures Off.
+  Ten actual Presents complete. Real original textures and the PL_10B palette
+  loaded by original read-queue/GDFS are used. The preview is a lossless APNG
+  assembled from those captures, with every decoded RGBA frame verified.
+  Its 100 ms per sample is a viewing choice, not game timing or measured FPS.
+  6,032 selected regressions: 2,189 original character-switch/Chao/lifetime,
+  3,049 retail texture-pixel, 530 full original initializer, and 264 static
+  Sonic tree checks. All 418 tested texture images and 711,168 pixels agree
+  with the independent oracle. Prior static rendering continues to work.
+  Every prior Frame object, 23 other DLLs and 33 earlier qualification packages
+  retain their hashes. The actual PE import graph remains acyclic.
+
+5,821 new scoped checks bring the overlapping cumulative total to 1,063,865.
+These are assertions, not recovered-routine counts, independent gameplay
+scenarios or measured whole-game completion. Passing one real action does not
+qualify every motion, shape morph, blend, callback policy or other character.
+
+Lifetime and rendering scope
+The test executes the complete original initializer and actual native child
+providers. It explicitly retains the genuine model view, Sonic action view and
+extra texture consumer through GPU jobs and captured-frame retirement. Live
+consumers prevent character changes and parent shutdown. Cleanup succeeds after
+retirement. All 2,793 canonical model records and 1,627 Sonic motion records
+remain unchanged. Whole-tree model preflight, conservative packet reservation,
+texture pinning, light setup and camera fitting are explicit diagnostic work.
+Camera fitting uses original frame-skip policy to observe poses, then restores
+the actual inherited logical clock state before visible drawing.
+
+Texture Off uses the same captured geometry and vertex/material colours.
+The real backend binds no textures or samplers and uploads no texture data.
+The in-game settings UI and persistence remain unfinished. Automatic task/render
+view acquisition and release are next. Full player task/FSM/main loop, all
+gameplay, English, enhanced FPS/resolution/HD menus, SUPIR workflow, VMU Chao
+emulator/widget and later platforms remain unfinished. Sol High is appropriate
+for the next ownership/integration work; Luna Low suits routine documentation.
+
+Reproduction
+Use Python with -B and fresh private output directories. Follow the prerequisites
+in JP_NATIVE_CHARACTER_TREE.txt. Supply the pinned external source, original JP
+track03.bin/1ST_READ.BIN, the existing qualified SH-4 numeric DLL and prepared
+original model/motion/character texture inputs locally. Public archives contain
+authored adapters, derivation tools and JSON proofs, plus incomplete historical
+research payloads. They omit original game/SDK source, combined DLLs, retail
+inputs, decoded data and captures; there is no standalone playable build.
+
+1. Run jp_port_tools/build_native_action_runtime.py --stage dependencies with
+   --workspace, --upstream, --baseline (qualified character-tree build), --output.
+2. Run the same builder --stage action with the dependency build as --baseline.
+3. Run verify_native_action_dependencies.py with --workspace, --upstream,
+   --build (dependency build), --binary, --numeric-dll and --output.
+4. Run verify_native_action_poses.py with --workspace, --upstream, --build
+   (action build), --binary, --motion-inputs, --numeric-dll and --output.
+5. Run verify_native_action_frames.py with --workspace, --build (action build),
+   --inputs (character textures), --track and --output. The private result
+   includes nine actual captures, texture-Off capture and lossless APNG.
+6. Run the frozen character-switch, texture-pixel, game-init and static-tree
+   verifiers against the action build with their normal local prerequisites.
+7. Run qualify_native_action_runtime.py --stage audit with --workspace, --build,
+   --dependencies, --baseline (character tree), --upstream and --output.
+8. Run its --stage package with --workspace, --build, --dependencies, --math,
+   --poses, --frames, --switch, --pixels, --init, --tree, --audit and --output.
+   The evidence directories must match the same current build/tool hashes.
+
+Never overwrite a prior qualified source, proof, capture or private build.
+Retail captures can be shared privately in chat but are excluded from GitHub.
