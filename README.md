@@ -1,3 +1,23 @@
+Latest verified original game music/voice task:24 source-defined functions,
+including19 original exports, now run through the real game task scheduler and
+existing native sound owner.42,706 new checks verify requests, simultaneous
+complete retail music/voice playback, independent decoded samples, byte-identical
+CPU/DMA firmware PCM and full sound RAM, natural interlude return, allocation
+rollback and cleanup after task-heap reset.564,316 current scoped checks pass.
+Overall estimate remains approximately10%; goal active.
+
+- [Game stream scope, reproduction and remaining work](outputs/sonic-adventure/JP_NATIVE_GAME_STREAM.txt)
+- [Exact current qualification](outputs/sonic-adventure/analysis/jp_native_game_stream_package.json)
+
+Original fixed work addresses are replaced by native owned storage, and the
+actual decoder error flag is shared within the same linked module. Real looping
+music and wider game audio/gameplay remain unfinished. No new scene was tested.
+Retail captures/assets and combined SDK/game binaries stay private. Public
+archives are source-matched incomplete research artifacts with2,977 unchanged
+build payloads and no playable EXE.
+
+Earlier snapshot scope notes are retained below.
+
 Latest verified original ADXT music/voice player:54 original source functions
 and the original timer helper now link into the same native sound/System owner.
 40,404 new checks verify complete unmodified Japanese voice and music playback,

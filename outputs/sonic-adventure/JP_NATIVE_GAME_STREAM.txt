@@ -1,0 +1,119 @@
+Original game music/voice task in the native sound system
+
+Status: VERIFIED for the selected game-task/audio scopes below. Overall project
+estimate remains approximately10% of weighted milestones; goal active. This is
+not a playable native game. The preserved Japanese matching/GCC baseline remains
+separate from native gameplay, English integration, settings and later platforms.
+
+What now runs
+The complete pinned src/sound/stream.c now compiles and links in the same native
+module as the real ADXT players and ADX decoder. All24 source-defined functions
+are retained, including19 exported game entry points. The original task scheduler
+runs stream initialization/steps and actual child tasks for interludes. It uses
+the same actual decoder error flag as the decoder, without a data stub or copy.
+
+The original fixed music/voice work at0x0cca8000 has been replaced by the existing
+native ADXT owner's guarded allocations. Their original184516/55428-byte sizes
+remain; no fixed-address memory is touched. The voice table uses existing owned
+ADXF partition storage. Initialization borrows an already initialized original
+game heap/task pool and active ADXT/ADXF owners; it never resets any shared heap,
+task pool, audio pool or lower owner. A pending task owns an immediate destructor
+so deletion before its first step cannot leave a stale pointer to a reused slot.
+
+The native factory schedules initialization. Its snapshot reports pending until
+the caller's normal actual task pass initializes both players/table. Requests
+require ready. The existing game-frame scheduler runs the stream task; the audio
+service never steps unrelated game tasks. The original SERVER_FREQ20 expectation
+is changed to the already qualified native60Hz ADXT service, which advances from
+actual AICA frames. Display FPS does not drive audio. No new clock, task scheduler,
+audio device, output worker or independent unmixed sound client is introduced.
+
+Ownership and failure behaviour
+Both real players must be constructed. Failure of the second player retires the
+first, returns the task slot and releases the owned voice table/work. Existing
+unrelated sound ports and tasks remain alive. Native APIs reject invalid music/
+voice IDs before changing pending state. The original last-request-wins, saved
+music, restart, pending-request stop semantics, mute/unmute and GCC event-skip
+behaviour remain. Interlude child allocation is checked; failure preserves the
+previous pending request instead of dereferencing a NULL task work pointer.
+
+Partition0 must be free before initialization and is reserved while the game
+owner is active. Native partition load/add/unload cannot replace that live table.
+Raw SDK/game entry points remain internal and require valid creator-thread and
+ownership contracts; native wrappers provide thread/busy/gate checks.
+
+Cleanup closes the original game task/children and its actual players/table
+before ADXT/ADXF/ADXSTM/RNA and the lower sound/core/filesystem owners. A failed
+or gated destructor clears its retiring task pointer but retains unfinished
+audio handles and buffers. Later sound/System cleanup retries those resources
+even after the original task pool has been destroyed and its heap reset. This
+matches the existing exit order without dangling task pointers or fabricated
+read/DMA completions. The stream's error callback is restored after its own
+resources retire, without resetting unrelated callback registrations.
+
+Current verification
+The current eight fresh-process cases pass42,706 checks. They cover actual task
+pool scheduling and reuse, unrelated live tasks,19 original exports, native work
+ownership,110 original music names, request bounds/replacement/reset, restart,
+saved music, mute/unmute, event skip and callback restoration. A controlled flag
+fixture verifies that the real stream task clears the exact decoder-module flag.
+The object/link audit finds one original flag definition in the actual linked
+decoder object and its address inside the loaded native sound module.
+
+The real4096-slot task pool is exhausted and recovered. A failed interlude child
+allocation and a real second-player port-allocation failure roll back correctly.
+The latter preserves three unrelated live renderers. Gated pending-read cleanup
+also survives external task destruction followed by actual game heap reset;
+the existing delegated System sound owner then retires all retained resources.
+
+Complete original FISHMISS.ADX music and EVENT_ADX.AFS voice0 play simultaneously:
+214913 stereo samples/channel at44100Hz and37975 mono samples at22050Hz. Each
+decoded sample is compared with the independent integer or step-aware binary32
+recurrence. Both original players reach PLAYEND and exact declared sample times.
+CPU/DMA runs produce identical218368 frames of mixed original ARM-firmware PCM
+and identical full2MiB sound RAM. They observe597 simultaneous-playing snapshots;
+the DMA run starts711 actual transfers, and the CPU run starts none. These are
+host-core results, not new physical Dreamcast timing measurements.
+
+A natural complete interlude retires its actual child and resumes the original
+base music request through the real task scheduler. A separate automatic timed
+run completes simultaneous music/voice playback through the existing native wait
+and single muted output worker. The full earlier audio regression set is rerun
+against this DLL graph; exact counts/hashes are in the current package JSON.
+
+Reproduce/check
+Use jp_port_tools/build_native_game_stream.py with --workspace, --upstream,
+--baseline (the qualified ADXT build) and a fresh private --output directory.
+It compiles the complete adapted stream, native owner and a read-only archive
+count bridge, then links the actual existing SDK objects and frame/task imports.
+Original upstream files and previous generated builds remain unchanged.
+
+Run jp_port_tools/verify_native_game_stream.py with --workspace, --build, --track
+and fresh --output. The Japanese disc/firmware must be supplied locally. The
+fixture creates the real original task heap/pool as its caller, then invokes the
+actual normal task scheduler. It is not a replacement stream/task implementation.
+audit_native_game_stream.py additionally takes --upstream and verifies original
+body preservation, link objects, data identity and unchanged lower DLLs.
+Private native-JP-game-music-and-voice.wav captures contain actual mixed output;
+they can be played locally and are excluded from public archives. No new gameplay
+screenshot is claimed for this audio/game-task milestone.
+
+Remaining work
+Qualify real looping music and the original EOS-seek/decoder-trap path, including
+stop/restart and buffer pressure around loop boundaries. Other tracks/voices,
+recovery, arbitrary raw memory/ACX input and full-game sound effects remain
+unfinished. The tested base track is requested again after the interlude; its
+entire long playback is not claimed. Game-wide rendering, assets/overlays,
+startup/gameplay, English integration, settings and later platforms still need
+completion and integration. None of these scoped tests proves a playable port.
+
+Provenance/publication
+Pin:25a3d3154dbe657325e97dbe8c5291086f6af5c0. Matching Japanese and GCC files,
+USA research and all older qualified authored source/proof hashes are preserved.
+External game/SDK source, combined binaries, retail data and audio captures stay
+private. Public authored source/workflows/documentation and exact proof hashes
+are published with source-matched incomplete research archives. Their historical
+build payloads are unchanged; no playable EXE is included.
+
+Next model: Sol High for original looping/audio/game integration. Luna Low is
+suitable for routine documentation once integration work is complete.

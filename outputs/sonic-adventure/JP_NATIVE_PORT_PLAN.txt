@@ -1,3 +1,21 @@
+Latest verified original game music/voice task: JP_NATIVE_GAME_STREAM.txt.
+Goal active; overall approximately10% of weighted milestones. The complete
+original stream.c retains24 source-defined functions and19 original exports in
+the actual game task scheduler and native sound owner.42,706 new checks verify
+requests, simultaneous full retail music/voice playback, independent decoded
+samples, identical CPU/DMA mixed firmware PCM and full sound RAM, natural
+interlude return, allocation rollback and cleanup after task-heap reset.
+564,316 current scoped checks pass. Original fixed work addresses are replaced
+by owned native buffers and the real decoder error flag is shared in the same
+module. The actual game task/children are used; unrelated tasks/pools are not
+reset. Native60Hz ADXT audio service and the single output worker are reused.
+Next qualify actual looping music through the decoder trap and EOS-seek/refill
+path, then continue full game sound integration. Full gameplay, English,
+graphics/settings and later-platform ports remain unfinished. Prior authored
+source/proof hashes and public build payload bytes are preserved. Retail
+captures/assets and combined SDK/game binaries remain private; public archives
+are source-matched incomplete research artifacts with no playable EXE.
+
 Latest verified original ADXT music and voice player: JP_NATIVE_ADXT.txt.
 Goal active; overall approximately10% of weighted milestones. Four complete
 original modules retain54 source-defined functions, plus the original timer
