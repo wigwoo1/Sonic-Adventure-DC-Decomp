@@ -1,0 +1,126 @@
+Original native PCM stream ports and MIDI status (2026-11-05 local)
+
+Status: VERIFIED for the scoped native/driver tests below. Overall project
+estimate remains approximately10% of weighted milestones; goal active. The
+Japanese matching source/build baseline is verified. Native gameplay, English
+integration and later platforms remain unfinished; no playable PC executable.
+
+What changed
+The actual shared sound SDK/game module now includes all25 original sdPstm
+PCM-port functions and11 original MIDI status readers from upstream pin
+25a3d3154dbe657325e97dbe8c5291086f6af5c0. The MIDI readers are a genuine
+dependency: sdPstmGetStat's original error trap names sdMidiGetStat. The full
+function and its dependencies are recovered, preserving that identity.
+
+Original port allocation, channel routing, base volume, rate-table play,
+pitch/pan/volume/effects commands, stop, close and driver status reads now link
+to the existing SDK work, memory-transfer and command queues. There is no new
+sound core, replacement command builder or second independent output client.
+Raw SDK calls remain internal interfaces for a live creator-thread owner and
+valid handles/buffers. This work does not yet install a validated ADXT game
+stream owner or RNA music scheduler.
+
+Native adaptations and provenance
+- Driver status addresses remain32-bit sound-RAM offsets. Explicit offsetof
+  arithmetic replaces pointer-shaped calculations that truncate host pointers.
+  Port pointers retain64 bits; stream records remain44 bytes and the wire
+  status/channel layouts retain their original sizes.
+- The original byte-before-varargs OpenPort entry uses the Win64 compiler's
+  native variable-argument builtin. A diagnostic exception is confined to this
+  entry. Actual mono/stereo calls, channel arguments, allocation and pointers
+  are checked against the Japanese instructions' different calling convention.
+  This qualification is for Windows, not a claim of Android/3DS ABI support.
+- Signed integer wrap is defined for the generated SDK translation unit.
+- Upstream GCC's two repairs are selected: mono right-pan uses an initialized
+  channel value, and StopAll stops at the four actual PCM ports. These are
+  explicitly tested native extensions; the original undefined stack value and
+  out-of-bounds StopAll writes are not presented as equivalent behavior.
+- An unreferenced four-byte matching-data object required by the MIDI source
+  is extracted locally from the supplied, SHA256-checked Japanese binary.
+  The bytes and all combined SDK/game binaries remain private. Reproduction
+  keeps the complete original source as a pinned external dependency.
+
+Current build and verification
+Private build: work/sonic-adventure/jp-native-pstm-v4. Its two new compiler/
+linker steps pass without diagnostics. It exports36 real SDK functions;
+export counts are not a whole-game decompilation or completion percentage.
+
+22,957 new checks pass in five fresh processes:
+-22,638 contract checks include4,227 complete original Japanese entry calls.
+  These cover24 PCM routines, all11 MIDI status readers and the shared queue
+  initializer. StopAll is tested as the bounded GCC extension. All256 signed
+  volume/pan/direct/FX byte values really enqueue/apply, all12 supported rates,
+  pitch/priority/format limits, actual four-port allocation, full native pointer
+  identities, all256 real queue entries and retained parameter bytes agree.
+  Status reads cover four PCM ports and eight MIDI ports, complete output and
+  padding/guard bytes, channel pan transforms, and the original error identity.
+- The original status readers execute their complete original G2 CPU-read
+  dependency chain. Their test fixture provides separate2MiB AICA RAM, idle
+  DMA registers and an empty FIFO; no original routine is hooked. This static
+  bus fixture is not a physical hardware timing or firmware execution claim.
+- Independent producer batches explicitly initialize queue input state on both
+  sides. The original sd2ndHostCmdInitList clears entries/cursors but does not
+  reset second_num. The harness resets that count as a test input, then requires
+  valid setters to return success. This is not a production reset API, command
+  cancellation or simulated driver acknowledgement. Fuzz commands never reach
+  actual firmware; driver tests use separate clean processes.
+-74 raw-reference,94 CPU-transfer and95 DMA-transfer checks run the actual
+  supplied MASARU firmware with authored stereo ring samples. Six independently
+  specified pan/play/volume/pitch/stop commands produce26,460 frames. Every PCM
+  byte and the entire2MiB final driver RAM match between raw protocol and both
+  original SDK transfer modes. PCM is nonzero. The actual ARM clears the waiting
+  flag; no harness writes a fake acknowledgement.
+-56 timed-output checks execute those ports in the existing shared native
+  clock/AICA/WASAPI graph. This run observed21,655 actual stream sample frames,
+  22,387 output frames submitted and21,606 consumed before cleanup. The one
+  output session is muted; speaker acoustics are not tested. System's actual
+  ownership token performs global shutdown, leaving no sound resources. A raw
+  direct shutdown is intentionally rejected while System owns the delegation.
+
+Current scoped total:438,234 checks. In addition to the new22,957 above:
+-63,993 stream-joint and2,981 original streaming-decoder regressions.
+-31,714 ADX core and293,998 sound-math regressions.
+-18,472 QSound and3,304 timed-driver/owner regressions.
+-60 retail codec checks covering108,680 Japanese music/voice frames.
+-755 actual Windows-output checks covering88,200 verified retail-decoder frames.
+Some timing/queue-observation counts vary across runs. These totals refer to
+the exact archived reports, not a target to reproduce by padding assertions.
+Existing graphics, save and older full owner/exit proofs remain preserved, not
+counted as new runs. The new combined sound DLL stays private. Prior frame,
+System, Exit, device, filesystem, AICA, G2 and authored PCM libraries retain
+their bytes, as do all ten already qualified public support artifacts.
+
+Retail codec regressions and the new authored PCM-port tests are separate:
+the higher-level game music/voice frontend is not yet feeding these ports.
+The generated test waveforms are not a new Sonic gameplay/music recording.
+No new graphical scene was tested, so this milestone has no new screenshot.
+
+Remaining work
+The source/export inventory for mw_sdcs.c now finds25 real SDK services in
+the current module. Its remaining export is syTmrGetCount; the existing native
+jp_clock_wall_counts already supplies the same781250Hz time domain and should
+be adapted with explicit lifetime/error/wrap semantics. Do not add a second
+unrelated clock. Then adapt the actual mwSnd/RNA buffer, transfer, playback,
+time, callback and teardown lifecycle in this same owner.
+
+The original game stream task still compiles with12 genuine ADXT/ADXF services
+remaining, plus correct sharing of the already implemented adxpd_internal_error.
+Real ADXT/ADXF/ADXSTM/GDFS/AFS lookup and owned music/voice work buffers must
+replace fixed0x0cca8000, then looping, time, volume and ordered shutdown must
+be verified end to end. Do not open an independent unmixed production WASAPI
+client. Full sound-queue/game-state/main/gameplay integration remains unfinished.
+
+How to check
+Open analysis/jp_native_pstm_package.json and its exact source/proof hashes.
+To reproduce, supply the pinned upstream source, prior qualified streaming-
+decoder baseline, Japanese1ST_READ.BIN, track03.bin and local compiler/runtime.
+Run jp_port_tools/build_native_pstm.py --help for its required local paths,
+then verify_native_pstm.py --help and use new output directories. The package
+also identifies all current regression commands, reports and limitations.
+Original retail binaries, extracted data, firmware RAM/PCM captures, toolchain
+bundles and credentials are excluded from public source and releases.
+
+Recommended next model: Sol High / selected Sol Extra High for actual RNA,
+ADXT and file/stream ownership integration. Luna Low is suitable for routine
+documentation. Full English PC60/120/240FPS8K/SUPIR/vertex-colour Off, Chao VMU
+emulator/widget, Android/stereo3DS and final N64/PS1 stretch scope is preserved.

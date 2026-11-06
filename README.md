@@ -1,3 +1,17 @@
+Latest verified native PCM ports: all25 original stream-port functions and11
+MIDI status readers now link in the actual shared sound owner.22,957 new checks
+include4,227 complete original entry calls. Real firmware produces26,460 authored
+PCM frames; all audio bytes and full2MiB RAM match independent raw commands in
+CPU/DMA modes. Existing timed WASAPI output and System cleanup are verified.
+438,234 current scoped checks pass. RNA/ADXT/file integration and gameplay remain
+unfinished. Overall estimate remains approximately10%; goal active.
+
+- [Native PCM evidence and remaining work](outputs/sonic-adventure/JP_NATIVE_PSTM.txt)
+- [Exact current verification package](outputs/sonic-adventure/analysis/jp_native_pstm_package.json)
+
+Public builds remain incomplete research artifacts. Retail assets, combined
+original SDK/game binaries and driver/PCM captures stay private.
+
 Latest verified streaming prerequisites: original native SJ buffers and
 SJD->ADXB->ADXPD streaming now pass66,974 scoped checks and5,626 complete
 Japanese instruction entry calls. Fragmented input, output backpressure, sample

@@ -1,3 +1,22 @@
+Latest verified native PCM ports: JP_NATIVE_PSTM.txt.
+Goal active; overall approximately10% of weighted milestones. All25 original
+PCM-port functions and11 MIDI status readers now link in the actual shared
+sound SDK/game owner.22,957 new checks include4,227 complete original entry
+calls. Authored stereo samples produce26,460 real-firmware PCM frames; every
+PCM byte and all2MiB final driver RAM match an independent raw-command oracle
+in CPU and DMA modes. The same existing timed WASAPI owner plays PCM and
+actual System delegation retires all sound resources.438,234 current scoped
+checks pass with buffer/decoder/math/QSound/clock/retail-codec/output regressions.
+This is native audio infrastructure, not live game music streaming or gameplay.
+Next connect the actual RNA/mwSnd and ADXT/file/archive lifecycle. mwSnd now
+finds25 real SDK exports; syTmrGetCount still needs the existing shared clock.
+The game still needs12 genuine ADXT/ADXF services plus correct shared error-
+flag binding and native owned work buffers. Earlier source/proof hashes and
+ten public support artifacts are preserved. Combined SDK/game binaries and
+all retail inputs/data/captures remain private. Japanese matching-baseline
+verification remains separate from unfinished native gameplay, English, FPS8K,
+SUPIR/vertex-Off, Chao VMU/widget and later-platform work.
+
 Latest verified audio streaming prerequisites: JP_NATIVE_ADX_STREAM_DECODER.txt.
 Goal active; overall approximately 10% of weighted milestones. The original
 native SJ ring/memory joints and actual SJD->ADXB->ADXPD pipeline now pass
