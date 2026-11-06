@@ -1,3 +1,45 @@
+Final-review follow-up: JP_NATIVE_HISTORY_ADOPTION_GUARD.txt.
+Overall approximately 10%; goal active. An explicit handoff now rejects history
+already claimed by another caller before changing System resources. The real
+20-case suite passed 753 checks (7 additional, 746 repeated). Seventeen other
+native DLLs, all prior sources and proofs remain unchanged. Combined reported
+qualified scopes: 943486. Full game_init/gameplay and a playable PC build remain
+unfinished. See analysis/jp_native_history_adoption_guard_package.json.
+Earlier milestone notes remain unchanged below.
+
+Latest qualified native history/System/Exit integration: JP_NATIVE_HISTORY_EXIT.txt.
+Overall approximately 10% of weighted milestones; goal active.
+The existing System registration now owns history through ordinary restart,
+early exit and final Exit. Real pending VMU saves drain before history retires;
+failed profile replacement retains live history and core services for retry.
+746 new lifecycle checks and 2398 regression checks passed. Combined reported
+qualified scopes: 943479. Full game_init, gameplay, English/settings and later
+ports remain unfinished. No playable PC executable exists.
+See analysis/jp_native_history_exit_package.json for scoped proof and hashes.
+Earlier milestone notes remain unchanged below.
+
+Latest qualified native play history: JP_NATIVE_HISTORY.txt.
+Overall approximately 10% of weighted milestones; goal active.
+Original UF/game history now executes against owned native refresh work, real
+RTC/input/VMU providers and actual Japanese disc metadata. Whole native history
+transactions preserve prior profiles on denied commits and retain live work for
+retry. 922 checks and 739 flash regression checks passed. Combined reported
+qualified scopes: 942733. Full game_init/global history exit handoff, gameplay,
+English/settings and later ports remain unfinished. No playable PC build exists.
+See analysis/jp_native_history_package.json for exact scoped evidence/hashes.
+Earlier milestone notes remain unchanged below.
+
+Latest qualified native flash prerequisite: JP_NATIVE_FLASH_MANAGER.txt.
+Overall approximately 10% of weighted milestones; goal active.
+The original complete FM packet manager and CRC now execute against real native
+profile storage. 739 checks cover independent wire-format/CRC oracles, persistence,
+full-log compaction, actual OS write/erase denial, locking and borrowed buffers.
+Sixteen prior native DLLs and eighteen qualification packages are preserved.
+Combined reported qualified scopes: 941811. Full play-history integration and
+complete game_init remain unfinished; no playable PC executable is available.
+See analysis/jp_native_flash_manager_package.json for exact scoped proof/hashes.
+Earlier milestone notes remain unchanged below.
+
 Latest qualified native bootstrap card/font lifetimes: JP_NATIVE_BOOT_LIFETIMES.txt.
 Overall approximately 10% of weighted milestones; goal active.
 The existing System registration now owns actual card/font claims, ordinary

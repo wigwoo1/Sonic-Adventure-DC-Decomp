@@ -1,3 +1,27 @@
+Latest qualified native history/System/Exit integration: the same System
+registration owns history through ordinary restart, early exit and final Exit.
+Pending VMU saves drain first; failed history commits retain live work, profile
+ownership and required services for recovery/retry. A final-review guard also
+rejects an already claimed handoff before changing System resources.
+
+The final 20-case suite passed 753 checks. Earlier history/flash/bootstrap
+regressions passed 2398 checks on the preceding graph; the guard changes only
+System preflight, with all 17 other libraries and System imports unchanged.
+This snapshot also includes the preceding flash/history qualifications.
+Overall approximately 10%; full game_init/gameplay and a playable PC build remain.
+
+- [Latest handoff guard and proof](outputs/sonic-adventure/JP_NATIVE_HISTORY_ADOPTION_GUARD.txt)
+- [History/System/Exit scope and reproduction](outputs/sonic-adventure/JP_NATIVE_HISTORY_EXIT.txt)
+- [Latest qualification and hashes](outputs/sonic-adventure/analysis/jp_native_history_adoption_guard_package.json)
+- [Native history](outputs/sonic-adventure/JP_NATIVE_HISTORY.txt)
+- [Native flash](outputs/sonic-adventure/JP_NATIVE_FLASH_MANAGER.txt)
+- [Planned VMU Chao emulator/widget](outputs/sonic-adventure/JP_VMU_EMULATOR_PLAN.txt)
+
+Authored adapters/tools and JSON proofs are public. Combined original SDK/game
+binaries, retail inputs, profiles and captures remain private. This source-matched
+prerelease has 2977 unchanged incomplete research payloads and no playable EXE.
+Earlier milestone notes are preserved below.
+
 Latest qualified native bootstrap card/font lifetimes: the existing System
 registration now owns real card/font claims, restart and early/final Exit.
 737 lifecycle checks and 4707 regression checks pass, including real save

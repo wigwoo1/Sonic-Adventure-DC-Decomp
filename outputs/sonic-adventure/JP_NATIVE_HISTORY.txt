@@ -1,0 +1,119 @@
+Native original play history over owned transactional flash
+Scoped qualification, 2026-11-06; whole project approximately 10%.
+
+Status: the exercised history lifecycle is VERIFIED. Full game_init and its
+global System/Exit history handoff remain unfinished. This is not a playable
+native PC port. Matching/GCC source baselines remain preserved; localization,
+full gameplay, settings and later-platform goals remain incomplete.
+
+What now executes
+
+The original UF library, game history.c, disc-identity parser, Ninja word-copy
+routine and character table link with the actual existing FM/CRC, RTC and
+peripheral providers. An owned native service runs the original history
+constructor, save, read and character counters. It allocates real refresh work
+instead of dereferencing WORK_AREA. The original game's own static work1/work2
+and counter table remain single instances. RTC/input/VMU remain borrowed owners.
+
+The boot identity is parsed by the original algorithm from an actual local
+Japanese track header copied into owned memory. No boot ROM address is touched.
+Only an actually newly created native profile can be initialized: shared flags
+and a 240-byte title record use the real original parity, FM packet writes and
+CRC. Existing malformed/unknown profiles are rejected without autoformatting.
+A new profile starts with StartCount=1. Per-launch BIOS accounting is not yet
+implemented; reopening preserves that field. This component does not import
+console BIOS/factory dumps or user save files.
+
+Explicit adaptations
+
+- ufGetUserState's address parameter and declaration use intptr_t. The actual
+  original word-copy runs against a high native address, with canaries checked.
+- The old flash helper loop stored a Boolean and could report success when the
+  server failed. It now checks the actual completion status. Ignored failed
+  initialization, clock, packet, flag and refresh-status calls are propagated.
+- UF expects an empty type-zero description for an unplugged expansion socket.
+  The native bridge derives that absence from the actual input record's
+  id=0/info=NULL; attached controller/VMU metadata remains the genuine provider.
+- RTC startup checks actual initialized state. Successful RTC reads return
+  nonnegative mode bits, which are preserved rather than misread as failures.
+- The original history read reinitializes UF from disk. The native boundary
+  first saves dirty live history so that read cannot discard pending data.
+  Failed reads/checkpoints preserve caller output arrays.
+
+The audit identifies all 51 original functions in this closure: 32 bodies are
+unchanged and 19 have explicit native pointer/error adaptations. Original UF
+quirks outside these changes remain, including character-count wrap and the
+safe-refresh success errno. Unused title-delete/network/auto-save APIs remain
+linked but have not been qualified as application features. No successful SDK
+producer, clock, filesystem or peripheral result is fabricated by the tests.
+
+Native transactions and failure ownership
+
+The actual flash owner gains a monotonically increasing history capability.
+Legacy FM mutation/finish, raw mutation and profile close cannot detach its live
+UF work. Authorization surrounds each individual FM call and is released before
+any RTC callback. History reentry and foreign-thread calls fail before mutation.
+The dependency direction is History -> Flash/Frames/RTC; Flash imports only
+Windows libraries and neither module imports System/Exit/MainBoot.
+
+Each save, read checkpoint and original safe refresh stages the real FM
+program/erase operations against an owned image. At commit, the previous disk
+image is revalidated, then the complete staged image is flushed and atomically
+replaced. Only successful commits retire rollback media and publish committed
+write counters. A failed commit restores the entire prior image and closes the
+discarded FM cache. UF/live work, dirty data and the profile capability remain
+owned for explicit recovery/retry. Empty read transactions do not rewrite disk.
+The immutable earlier flash qualification describes per-primitive atomicity;
+this extension additionally makes these history operations whole transactions.
+
+Shutdown flushes dirty history before releasing its original cache, capability,
+profile lock and native work. A failed save/shutdown leaves those obligations
+intact. The caller must keep RTC/input alive, correct the underlying condition,
+call recovery, then retry. Existing global Exit does not yet own this new
+service: close history before the caller's System/RTC/input teardown.
+
+Evidence
+
+922 checks in 14 fresh processes passed: normal history, restart, actual denied
+save/shutdown/read checkpoint, real RTC failure, callback reentry, foreign
+thread, existing unformatted profile, bad disc identity, complete original safe
+refresh and its denied commit, dirty-read checkpoint, and Windows wall clock.
+739 unchanged flash-manager regression checks also pass on the extended owner.
+
+Independent raw-image decoding verifies product/title CRC, shared-flag parity,
+real controller/VMU lists and masks, save/load counts, all 32 application bytes,
+and 65 minutes across an hour boundary. Whole-image hashes verify rollback under
+real Windows sharing denial. The complete original refresh traverses spare and
+history partitions, preserves every live record, and writes its exact final
+SEGA_FH01_OK status. Actual locks can be reacquired after cleanup.
+
+The audit verifies 16 unchanged prior DLLs, both unchanged original FM/CRC
+objects, 19 prior qualification packages, actual PE imports and one actual UF
+record/game-counter owner. Combined reported qualified scopes: 942733. Tests
+are not routine counts, gameplay coverage or a completion-percentage measure.
+All tests use fresh disposable profiles/VMU images; user saves are untouched.
+
+Private build: work/sonic-adventure/jp-native-history-v11
+Runtime: work/sonic-adventure/jp-native-history-check-v4
+Flash regression: work/sonic-adventure/jp-native-history-flash-regression-v2
+Audit: work/sonic-adventure/jp-native-history-audit-v1
+Public proof: analysis/jp_native_history_*.json
+
+Reproduce with pinned upstream, prior qualified flash build, host compiler and
+matching Japanese data track (each command below is one PowerShell line):
+python -B outputs/sonic-adventure/jp_port_tools/build_native_history.py
+  --workspace WORKSPACE --upstream PINNED_UPSTREAM --baseline QUALIFIED_FLASH
+  --output FRESH_BUILD
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_history.py
+  --workspace WORKSPACE --build FRESH_BUILD --track TRACK03 --output FRESH_CHECK
+
+Use fresh output paths. Previous qualified source, evidence and builds remain
+unchanged. Authored adapters, tools and JSON evidence are eligible for daily
+reviewed publication. Combined original game/SDK DLLs, generated original source,
+track data and profile images remain private. Public support build payloads are
+unchanged incomplete research artifacts, with no playable executable.
+
+Next: qualify terminal history ownership with the existing System registration
+and global Exit, then integrate the remaining Sofdec/loader/main dependencies
+into the complete game_init. Sol High is suitable. Luna is suitable for routine
+documentation from frozen proof. Goal active.

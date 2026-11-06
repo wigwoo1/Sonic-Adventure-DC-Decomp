@@ -1,0 +1,57 @@
+Guard an explicit History handoff that already has another claimant
+Scoped qualification, 2026-11-06; overall approximately 10%; goal active.
+
+Status: VERIFIED within this scope. No playable PC executable or full game_init
+has been demonstrated. Japanese matching/GCC baselines remain preserved;
+gameplay, localization, settings and later platforms remain unfinished.
+
+Final review of the preceding History/System/Exit qualification identified a
+specific rejected-handoff edge case. If a caller explicitly adopted history
+while another claim was live, the claim acquisition failed but System had
+already set its local resource bit. A focused real-constructor test reproduced
+that failure in a fresh private process before the correction.
+
+The derived System owner now checks the actual history claim before changing
+its own resource state. A preexisting token or terminal owner returns the normal
+state error. The original claimant, System snapshot and outer constructor guard
+remain unchanged; the guard can still be released normally. No other provider
+or original source body changed. This does not implement implicit transfer of
+another caller's token. A valid explicit handoff remains guarded and unclaimed.
+
+Verification: both compile/link commands passed with warnings as errors and no
+diagnostics. The full 20-case real History/System/Exit suite passed 753 checks:
+7 additional checks plus all 746 prior checks. The independently checked VMU
+payload, history profile, callbacks, ordinary restart and real process exit
+cases remain covered. All 17 other prior DLLs and copied prior objects are
+byte-identical. Actual System PE imports are unchanged, preserving the audited
+acyclic graph. All 21 prior qualification packages and hashes remain intact.
+The earlier 2398 history/flash/bootstrap regression checks remain bound to the
+preceding graph; they were not rerun for this System-only preflight correction.
+
+The cumulative 943486 reported scoped checks overlap and do not measure game
+coverage, routine counts or whole-project completion. Previous sources, builds
+and proofs remain unchanged. This extension has its own package and evidence.
+
+Reproduce from C:\Users\wigwo\Documents\Codex\2026-10-03\de, with local Python,
+the preceding qualified baseline and your own Japanese v1.007 track03.bin.
+Always choose fresh output directories to preserve existing evidence.
+
+python -B outputs/sonic-adventure/jp_port_tools/qualify_native_history_adoption_guard.py --stage diagnose --workspace . --baseline work/sonic-adventure/jp-native-history-exit-v3 --track "PATH_TO_LOCAL_JP_TRACK03.BIN" --output work/sonic-adventure/jp-native-history-adoption-diagnosis-v1
+python -B outputs/sonic-adventure/jp_port_tools/qualify_native_history_adoption_guard.py --stage build --workspace . --baseline work/sonic-adventure/jp-native-history-exit-v3 --output work/sonic-adventure/jp-native-history-adoption-guard-v1
+python -B outputs/sonic-adventure/jp_port_tools/qualify_native_history_adoption_guard.py --stage check --workspace . --baseline work/sonic-adventure/jp-native-history-exit-v3 --build work/sonic-adventure/jp-native-history-adoption-guard-v1 --track "PATH_TO_LOCAL_JP_TRACK03.BIN" --output work/sonic-adventure/jp-native-history-adoption-guard-check-v1
+python -B outputs/sonic-adventure/jp_port_tools/qualify_native_history_adoption_guard.py --stage package --workspace . --baseline work/sonic-adventure/jp-native-history-exit-v3 --build work/sonic-adventure/jp-native-history-adoption-guard-v1 --check work/sonic-adventure/jp-native-history-adoption-guard-check-v1 --output work/sonic-adventure/jp-native-history-adoption-guard-package-v1
+
+The tool derives a private verifier from the frozen previous verifier and records
+both hashes; it never edits that earlier tool. The diagnose stage succeeds only
+when the precise baseline rejection failure is reproduced. The check stage must
+pass all 20 processes on the corrected build. The package stage independently
+checks the preflight order, unchanged DLLs/objects/imports and all prior hashes.
+
+Proof: outputs/sonic-adventure/analysis/jp_native_history_adoption_guard_package.json.
+Private build: work/sonic-adventure/jp-native-history-adoption-guard-v1.
+Authored tools/documentation and JSON evidence may be public. Combined SDK/game
+DLLs, local profiles, disc inputs and captures remain private. Public research
+payloads are unchanged; source-matched archives remain incomplete and unplayable.
+
+Next: Sol High for complete game_init and its remaining movie/loader/history
+dependencies. Routine frozen-proof/documentation review can use Luna Low.

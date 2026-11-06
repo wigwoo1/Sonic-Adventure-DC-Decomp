@@ -1,0 +1,118 @@
+Native flash manager prerequisite for original play history
+Scoped qualification, 2026-11-06. Whole project approximately 10%.
+
+Status: native persistent flash and original FM/CRC VERIFIED in the stated
+scope. Full UF play history and game_init have not run. This is an incomplete
+research component, not a playable PC port. The Japanese matching/GCC baselines
+remain preserved; localization, gameplay, settings and later ports remain.
+
+What is real
+
+The complete pinned sdk/shinobi/fm.c and fmcrc.c translation-unit bytes are
+preserved inside private generated source. The nine public FM entry algorithms
+and original CRC table/routine execute with their actual single cache/request
+owner. Private name macros permit bounded native guards around those entries.
+The SDK headers load before the original GCC map-byte branch is enabled, so
+the x64 compiler does not accidentally select SH-4 inline assembly. No boot-ROM
+syscall assembly is compiled or falsely reported as functional native code.
+
+Four authored native flash calls replace only the hardware/storage boundary:
+partition information, byte reads, programming and containing-sector erase.
+A new profile may explicitly create an all-erased 128KiB SONIC_FLASH.DAT in
+an existing directory. It contains no imported BIOS, factory identity or retail
+save data. Existing files are never automatically reformatted. Factory-region
+programming/erase is refused. Programming clears bits; erase restores ones.
+
+Partition geometry references (facts only; no emulator implementation copied):
+https://github.com/KallistiOS/KallistiOS/blob/master/kernel/arch/dreamcast/include/dc/flashrom.h
+https://github.com/flyinghead/flycast/blob/master/core/hw/flashrom/flashrom.h
+The five partitions retain their 8/8/16/32/64KiB sizes and normal raw offsets.
+
+Persistence and ownership
+
+The creator thread owns the profile and original manager. An exclusive real
+Windows sidecar handle prevents a second process taking the same profile.
+Each primitive reloads the image, checks for out-of-band changes, writes a
+temporary whole image, flushes it, and replaces the target with write-through.
+Only after success does committed in-memory media change. Actual OS failure
+and counters remain visible. Failed temporary outputs are removed; original
+profiles are preserved. Close/reopen releases and reacquires the actual lock.
+
+The caller supplies sufficiently sized/aligned original FM work and request
+buffers. They stay borrowed through completion or explicit fmMngFinish.
+Native close and conflicting init/format/refresh reject a pending request.
+Direct raw mutation cannot bypass a live original manager. Wrong-thread calls
+preserve real state and diagnostic output buffers. Original fmMngFinish keeps
+its explicit cancellation semantics: after the erase phase it can leave the
+sector erased. This is tested and is not called successful persistence.
+
+Atomicity is per native primitive, not a transaction around a complete original
+packet write, format or safe-refresh sequence. The original FM algorithm can
+change its working cache before an I/O failure. After correcting an OS error,
+the caller must clear the native error and reload/reinitialize the real cache
+from disk before treating its contents as persisted truth. The UF safe-refresh
+and complete application shutdown ownership still require later integration.
+
+Verification
+
+739 direct assertions passed in 11 fresh subprocess cases. Separate child
+checks also prove cross-process lock rejection and reopening persisted packets.
+No user save file or retail flash dump was used.
+
+- Original table CRC matches an independent CRC implementation for 513 input
+  lengths. An independent raw-image decoder validates headers, maps, latest
+  packet selection, full payloads and CRCs.
+- All partition geometries/capacities and work-buffer bounds; factory
+  protection; one-to-zero programming; whole-sector erase; argument bounds.
+- Request exclusion, live borrowed buffer use on first service, explicit
+  pre-service cancellation and original protected-format behavior.
+- A full 510-record history log runs the actual append/erase/store phases and
+  compacts to two latest packets. Reopening reconstructs the original cache.
+- Corrupt CRC/out-of-range records are ignored during cache load; corruption
+  of the actual working cache reports the original read CRC error.
+- Real Windows denial of replacement produces original write/erase errors.
+  The entire prior image and committed media counters remain unchanged. A
+  corrected condition permits real reload/retry and a verified disk commit.
+- External image changes, foreign thread access, invalid existing profile
+  size, actual lock release and explicit cancellation after erase.
+
+The audit proves the unchanged original translation-unit bytes, guarded export
+names, one actual static FM owner, Windows-only DLL imports, 16 unchanged prior
+native DLL hashes and 18 preserved prior qualification packages. It also compiles
+the complete original game_init body as a private dependency probe. That probe
+does not link or execute unresolved services. Combined reported qualified scopes
+are 941811; test totals are not routine counts or gameplay completion.
+
+Current private build: work/sonic-adventure/jp-native-flash-manager-v2
+Checks: work/sonic-adventure/jp-native-flash-manager-check-v2
+Audit: work/sonic-adventure/jp-native-flash-manager-audit-v2
+Public evidence: analysis/jp_native_flash_manager_*.json
+
+Reproduce (each command is one PowerShell line, with actual absolute paths):
+python -B outputs/sonic-adventure/jp_port_tools/build_native_flash_manager.py
+  --workspace WORKSPACE --upstream PINNED_UPSTREAM --baseline QUALIFIED_BOOT
+  --output FRESH_BUILD
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_flash_manager.py
+  --workspace WORKSPACE --build FRESH_BUILD --output FRESH_CHECK
+
+Never reuse an existing output directory. The prior qualified bootstrap and
+all source/proof hashes remain intact. Generated game/SDK source, combined DLL,
+profile images and temporary captures remain private. Authored adapters/tools
+and JSON evidence are eligible for the daily reviewed public snapshot. Existing
+public research build payloads remain unchanged and incomplete.
+
+Next required integration
+
+The full parent's missing services include history_init, read_queue_init,
+loader_note_error, main-owned mode/error data and Sofdec platform preinit.
+Real frame_wait, ADXT setup and GDFS error registration providers already exist.
+The history closure additionally needs native boot identity, actual peripheral
+and RTC providers, owned work buffers and proper failure propagation. The
+original ufGetUserState(Sint32) treats a 32-bit integer as an address and must
+receive an explicit native-width ABI adaptation before running on x64. The
+original fhFmReadExec/fhFmWriteExec also discard server failure by comparing a
+Boolean loop result with the error status; that must be addressed when bridging
+UF history, not hidden behind a successful stub.
+
+Sol High is suitable for that integration. Luna is suitable for routine
+documentation/reporting from frozen evidence. Goal active; full port incomplete.

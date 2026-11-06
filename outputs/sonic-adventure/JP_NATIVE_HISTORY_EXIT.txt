@@ -1,0 +1,97 @@
+Native history integrated with the existing System and Exit owners
+Scoped qualification, 2026-11-06; whole project approximately 10%.
+
+Status: VERIFIED within the scope below. No playable PC executable, full
+game_init or gameplay has been demonstrated. Matching and GCC Japanese source
+baselines remain preserved. Localization, full gameplay, settings, VMU Chao
+emulation and later platforms remain unfinished.
+
+What changed
+
+The same System instance can now start the actual native history provider and
+attach its cleanup authority to the existing bootstrap registration. An explicit
+guarded handoff also supports an independently initialized provider. Automatic
+startup rejects an existing independent owner without altering it. Failed
+constructors that retained real resources remain covered by System cleanup.
+There is one actual UF record, flash manager/cache, history work allocation and
+System registration. The old bootstrap callback body is unchanged.
+
+Ordinary parent shutdown, early global exit and final delegated Exit all drain
+the real card service first, then save/close history before sound, GDFS, RTC and
+input are retired. Card completion may still record history while it drains.
+Cleanup called from an active card or RTC callback is rejected before terminal
+flags or cleanup counters change. The history provider queries the actual card
+claim/activity; it does not create a substitute callback-activity counter.
+
+JP_EXIT_HISTORY is a new explicit bit (4194304); older mask values are preserved.
+Final binding requires this bit and transfers the existing history token only
+after the other claims succeed. The tested late device-claim rejection retains
+the earlier bootstrap registration and its history token. Successful ordinary
+shutdown releases a finished nonterminal claim and can restart the complete
+original parent in the same process. Terminal shutdown cannot restart/cancel.
+
+The final history save accounts for elapsed play time even if an earlier
+explicit save cleared its dirty flag. A real Windows sharing denial prevents
+atomic profile replacement in the tests. The old complete profile remains
+unchanged; native UF work, profile ownership, token and needed RTC/audio/GDFS
+services remain alive for recovery and retry. Successful retry releases them.
+VMU media and LCD remain caller-owned. No user profile is imported or reformatted.
+
+Verification
+
+Six compile/link commands passed with -Wall -Wextra -Werror and no diagnostics.
+The new verifier passed 746 checks in 20 fresh processes: ordinary restart,
+early/final exit, denied replacement/retry, callback and thread rejection,
+partial/corrected construction, guarded adoption, late bind rejection, pending
+card completion and elapsed time after explicit save. Actual process termination
+returned 0 on success and 70 on denied final persistence. The parent independently
+checked the resulting disk images after both processes ended.
+
+The pending card case independently decodes the actual VMU directory/FAT and
+checks every byte of the ten-block save, then independently decodes the flash
+title record including the save/load counts and elapsed minutes.
+
+Unchanged verifiers passed 922 history, 739 flash and 737 card/font/bootstrap
+regression checks (2398 total) against this graph. Auditing checked all actual
+PE imports for cycles, all 20 prior qualification packages, 15 unchanged prior
+DLLs and 17 copied prior objects. Only the authored History/System/Exit owner
+objects are rebuilt; the original UF/flash algorithms and their objects remain.
+The cumulative 943479 checks describe overlapping qualified scopes, not game
+coverage or a count of decompiled routines. They do not establish full gameplay.
+
+Reproduce locally
+
+Run from C:\Users\wigwo\Documents\Codex\2026-10-03\de using the project's
+Python runtime. Supply the Japanese HDR-0001 v1.007 track03.bin locally. Build
+the earlier baselines in their guides first. Use a fresh output directory for
+each command; existing evidence is never overwritten by these tools.
+
+python -B outputs/sonic-adventure/jp_port_tools/build_native_history_exit.py --workspace . --baseline work/sonic-adventure/jp-native-history-v11 --output work/sonic-adventure/jp-native-history-exit-v3
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_history_exit.py --workspace . --build work/sonic-adventure/jp-native-history-exit-v3 --track "PATH_TO_LOCAL_JP_TRACK03.BIN" --output work/sonic-adventure/jp-native-history-exit-check-v2
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_history.py --workspace . --build work/sonic-adventure/jp-native-history-exit-v3 --track "PATH_TO_LOCAL_JP_TRACK03.BIN" --output work/sonic-adventure/jp-native-history-exit-history-regression-v1
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_flash_manager.py --workspace . --build work/sonic-adventure/jp-native-history-exit-v3 --output work/sonic-adventure/jp-native-history-exit-flash-regression-v1
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_boot_exit.py --workspace . --build work/sonic-adventure/jp-native-history-exit-v3 --track "PATH_TO_LOCAL_JP_TRACK03.BIN" --output work/sonic-adventure/jp-native-history-exit-boot-regression-v1
+python -B outputs/sonic-adventure/jp_port_tools/audit_native_history_exit.py --workspace . --baseline work/sonic-adventure/jp-native-history-v11 --build work/sonic-adventure/jp-native-history-exit-v3 --output work/sonic-adventure/jp-native-history-exit-audit-v1
+python -B outputs/sonic-adventure/jp_port_tools/package_native_history_exit.py --workspace . --build work/sonic-adventure/jp-native-history-exit-v3 --check work/sonic-adventure/jp-native-history-exit-check-v2 --history work/sonic-adventure/jp-native-history-exit-history-regression-v1 --flash work/sonic-adventure/jp-native-history-exit-flash-regression-v1 --boot work/sonic-adventure/jp-native-history-exit-boot-regression-v1 --audit work/sonic-adventure/jp-native-history-exit-audit-v1 --output work/sonic-adventure/jp-native-history-exit-package-v1
+
+Proof: outputs/sonic-adventure/analysis/jp_native_history_exit_package.json.
+Private native build: work/sonic-adventure/jp-native-history-exit-v3.
+The frozen proof binds exact sources, build metadata and all verifier hashes.
+
+Limits and next task
+
+This runs the complete original higher bootstrap followed by real System-owned
+history, not the complete original game_init or its full gameplay loop. The
+higher game_init history adapter and movie/read-queue/loader dependencies remain
+to integrate. Per-launch BIOS history accounting, exhausted claim counters and
+unexpected rollback-cancellation failure are not qualified by this milestone.
+
+Authored adapters/tools and JSON proofs may be published. Original game/SDK
+translation units, combined diagnostic DLLs, local disc inputs, profiles and
+captures remain private. Public research payloads are unchanged; any release
+archive is source-matched and labeled incomplete, with no playable executable.
+These background lifecycle tests produced no gameplay screenshot.
+
+Recommended next model: Sol High for the higher game_init integration. Routine
+proof review and documentation can use Luna Low after integration is stable.
+The goal remains active.
