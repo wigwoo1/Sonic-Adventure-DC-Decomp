@@ -1,0 +1,126 @@
+Complete higher native bootstrap - scoped qualification, 2026-11-06
+
+Whole project: approximately 10% of weighted milestones. The Japanese matching
+and GCC source baselines remain preserved; English, full gameplay, settings and
+later platforms remain unfinished. This is not a playable PC build.
+
+What now runs
+
+The complete main.c:system_boot_init constructor from pinned upstream
+25a3d3154dbe657325e97dbe8c5291086f6af5c0 now links and executes with native owners.
+It performs real core System startup, frame pacing, owned timed game sound,
+texture/vertex setup, original font/text, shape/display reset, VMU probing,
+asynchronous card initialization and all four peripheral bindings in original
+successful order. Python supplies legitimate host configuration and borrowed
+empty render/media prerequisites; it does not replace those constructor calls.
+
+The native sound_system_init adapter calls jp_system_start_sound_clock, retaining
+the existing System, sound, firmware, output and elapsed-time clock owners. It
+copies driver name/settings/clock options; supplied clock callbacks are borrowed.
+Original game source and matching inputs remain unchanged. The privately compiled
+parent has ONE explicit checked return immediately after its real sound call.
+This native adaptation is hashed separately from the pinned original body.
+The public void entry terminates nonzero after a failed initialization; the
+integer entry exposes the real failure and cleanup/retry route.
+
+Why an explicit check
+
+The initial nonlocal-jump draft failed in native Windows stack unwinding. The
+SDK's SH-4 setjmp header was incompatible with Windows; host CRT isolation fixed
+that header mismatch but nonlocal unwinding still failed. That approach was
+stopped under the user's debugging rule. The checked-return adaptation uses no
+setjmp/longjmp. Both failed builds and proof logs remain private and preserved.
+JP_NATIVE_MAIN_BOOT_DRAFT.txt retains the historical unqualified notes.
+
+Ownership and failure behavior
+
+The caller configures the existing System owner, creates empty queue/frame/
+texture/render prerequisites, registers the actual original 256KB main buffer,
+and supplies real VMU store/LCD owners. Borrowed callbacks and these owners must
+outlive use. A preexisting ready System, card backend or live texture is rejected
+before entering the original parent. No foreign owner is silently adopted.
+
+Cleanup authority over System begins only after the original sbInitSystem has
+succeeded. A rejected parent does not close an unrelated System. Acquired
+authority remains until successful cleanup and prevents reconfiguration while
+cleanup is unfinished. Local shutdown drains actual card fibers with buExit/
+buExecServer before closing sound and core System. It then retires the original
+font surface. A sticky texture error that blocks the void njExitPrint call is
+detected by actual live-surface counts: cleanup returns an error and retains its
+font obligation until the caller corrects the error and retries. It never claims
+that an unfreed surface retired.
+
+Original display reset expands texture-table metadata from the caller's initial
+32 entries to2048. Font retirement is therefore checked as an actual32768-byte
+payload/live-surface decrease, not by assuming total metadata bytes never change.
+VMU .lock sidecar files intentionally persist. Exclusive OS handles provide the
+lock; successful image reopening proves release. User save images are not used.
+
+Verification and scope
+
+751 new checks passed:
+-458 checks in12 fresh cases: normal and production-void success; same-process
+ restart; missing driver; failed-to-successful retry; clock rejection; late
+ render and real texture-table-budget failure; missing store; foreign thread;
+ callback reentry into all3 APIs; production fatal startup exits72.
+-293 checks in3 fresh ownership cases: already initialized card backend, an
+ independent READY System with a usable real GDFS handle, and a live texture.
+ Existing card/clock/filesystem/fiber/device/heap/media/render state, counters,
+ actual descriptors and payloads survive both rejected init and wrapper cleanup.
+ Original owners remain usable and perform their own successful cleanup.
+
+The normal constructor's snapshots show actual timed firmware service/render
+calls during the original vertex wait. Shared main scratch, shape, matrix,
+peripheral and random state match the expected original initialization. An
+actual original-font diagnostic capture is rendered through System's existing
+GPU. It shows text on a plain background, not gameplay.
+
+The unchanged sound-placement verifier passes35 regression checks. The audit
+proves the precise source adaptation, host CRT include isolation, imported shared
+data without duplicate definitions,59 unchanged prior binary/object hashes and
+16 preserved qualification packages. Combined distinct reported scopes total
+940335; test counts are not routine counts or a completion percentage.
+
+Current private build: work/sonic-adventure/jp-native-main-boot-v7.
+Runtime: work/sonic-adventure/jp-native-main-boot-check-v6.
+Ownership: work/sonic-adventure/jp-native-main-boot-ownership-check-v3.
+Audit: work/sonic-adventure/jp-native-main-boot-audit-v1.
+Public evidence: analysis/jp_native_main_boot_*.json.
+
+Remaining integration
+
+Terminal global Exit has not acquired the new card backend/store/LCD lifetime.
+Do not bind terminal Exit for this full-parent configuration until that ownership
+integration exists. The verified path uses explicit local cleanup followed by
+caller retirement of borrowed store/LCD/render owners. Next integrate ordered
+early/final card cleanup with the existing System/Exit registration, preserving
+retry authority and avoiding a second global owner.
+
+Complete game_init still needs genuine history/flash, queued reads, loader-error
+and Sofdec dependencies. The presenter retains a diagnostic stage getter; bind
+it to the single actual stage owner before qualifying gameplay. Placement/world/
+camera/player/event/collision modules, English, FPS/resolution/texture controls,
+Chao VMU emulator/widget and later platforms remain part of the unchanged goal.
+
+Reproduce with new output paths under work/sonic-adventure
+
+Run jp_port_tools/build_native_main_boot.py with --workspace, --upstream,
+--baseline (the qualified sound-placement build) and --output. Run
+verify_native_main_boot.py and verify_native_main_boot_ownership.py with
+--workspace, --build, --track (local Japanese track03.bin) and --output.
+Run audit_native_main_boot_parent.py with --workspace, --upstream, --baseline,
+--build and --output. Run the unchanged verify_native_sound_placement.py against
+the same build. package_native_main_boot.py binds all reports and source hashes.
+Existing qualified prerequisites and toolchain paths are local dependencies.
+
+Publication and model use
+
+Only authored adapters/tools, documentation and JSON evidence are published.
+Combined original SDK/game DLLs, game source bodies, retail data and captures
+remain private. Prereleases remain source-matched incomplete research artifacts
+with no playable EXE. Original source/proof files and hashes are preserved.
+
+Use the selected Sol model for the next ownership integration. Future escalation
+order is Sol High, Sol Very High, Sol Max, then Astra Low or higher. If already
+using a higher confirmed Sol level, do not request a downgrade merely to visit
+an untried earlier level. Luna Low suits routine documentation/status work.

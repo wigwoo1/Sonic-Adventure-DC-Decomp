@@ -1,3 +1,15 @@
+Latest qualified complete higher bootstrap: JP_NATIVE_MAIN_BOOT.txt.
+Overall approximately 10% of weighted project milestones; goal active.
+The original high-level initializer now executes with native sound, rendering,
+VMU/card and peripheral providers, with one explicit sound-failure return guard.
+751 new checks cover startup/retry/reentry/late cleanup and preservation of
+preexisting System/card/texture owners.35 prior sound checks also rerun.
+Combined reported qualified scopes:940335.59 prior binary/object hashes and
+16 qualification packages remain intact. Terminal global card cleanup is next;
+full game_init, gameplay, English/settings and later ports remain unfinished.
+See analysis/jp_native_main_boot_package.json for exact evidence and hashes.
+Earlier milestone notes remain unchanged below.
+
 Latest qualified sound placement callbacks: JP_NATIVE_SOUND_PLACEMENT.txt.
 Overall approximately 10% of weighted project milestones; goal active.
 Both original sound_fx_zone_step and sound_orbit_step now run with their real

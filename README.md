@@ -1,3 +1,20 @@
+Latest qualified complete higher native bootstrap: original successful
+constructor order now executes with System-owned timed sound, rendering,
+VMU/card and peripheral providers. One explicit checked sound-error return
+replaces unsafe nonlocal unwinding. 751 new startup/retry/cleanup/ownership
+checks and 35 existing sound checks pass; previous provider bytes stay intact.
+Overall approximately 10%; full gameplay and later ports remain unfinished.
+Terminal global card-exit ownership is the next integration milestone.
+
+- [Bootstrap scope and reproduction](outputs/sonic-adventure/JP_NATIVE_MAIN_BOOT.txt)
+- [Qualification and hashes](outputs/sonic-adventure/analysis/jp_native_main_boot_package.json)
+- [Planned VMU Chao emulator/widget](outputs/sonic-adventure/JP_VMU_EMULATOR_PLAN.txt)
+
+Source and JSON evidence are public. Combined original SDK/game binaries,
+retail inputs and captures remain private. The source-matched prerelease has
+2,977 unchanged incomplete research build payloads and no playable EXE.
+Earlier milestone notes are preserved below.
+
 Latest qualified sound placement callbacks: both original sound_fx_zone_step
 and sound_orbit_step now run with real placement/tree/render dependencies.
 All 68 functions from the original sound module are retained; this is not

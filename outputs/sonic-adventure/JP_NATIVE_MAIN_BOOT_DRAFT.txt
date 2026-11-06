@@ -1,0 +1,92 @@
+Historical draft notes retained below. The failed unwind approach has been
+replaced by an explicit native checked return. The current scoped qualification
+is JP_NATIVE_MAIN_BOOT.txt and analysis/jp_native_main_boot_package.json.
+Overall approximately 10%; goal active. These older notes are not current status.
+
+Complete higher bootstrap integration - UNQUALIFIED DRAFT, 2026-11-06
+
+Overall project estimate remains approximately 10% of weighted milestones.
+The previously qualified sound-placement package and published release remain
+the authoritative verified baseline. This draft is not a playable game and is
+not ready for publication as a verified native initializer.
+
+Concrete progress
+
+The complete original main.c:system_boot_init body is retained from pinned
+upstream25a3d3154dbe657325e97dbe8c5291086f6af5c0 and now links warning-free with
+the existing native providers. No original source file was changed.
+The new sound_system_init bridge calls actual jp_system_start_sound_clock;
+it never bypasses System ownership by calling the renamed raw game initializer.
+Host sound/clock settings and the driver name are copied before entering the
+original constructor. Actual rendering, frame pacing, font/text, shape, display
+reset, VMU and card constructors execute in original order inside native C.
+
+Latest private build: work/sonic-adventure/jp-native-main-boot-v4.
+Latest partial suite: work/sonic-adventure/jp-native-main-boot-check-v2.
+Normal construction passed49 checks. Same-process construction/restart passed
+55 checks. These two fresh-process cases complete three full original parent
+calls in total. They use real Japanese sound firmware, Windows PCM/output,
+System/GDFS, shared frame/matrix owners, VMU image/fibers and original font
+drawing through System's actual GPU. Captures are bootstrap diagnostics only.
+The clock snapshots show real service/render calls during the constructor.
+
+Failure qualification is incomplete
+
+The suite stops at missing_driver. Its current native exception is0xc0000028
+(Windows invalid stack/unwind), so the remaining five declared cases were NOT
+run and there is no completed verification.json or qualification package.
+
+First native error-path attempt used the SH-4 SDK's setjmp.h (jmp_buf38 ints),
+which is incompatible with Windows. It failed with0xc00000ff. The next focused
+approach isolated the authored owner from SDK include paths and used host CRT
+headers. Normal cases still pass, but error unwinding now fails with0xc0000028.
+Both attempts and their logs are preserved. Stop this debugging path under the
+user's two-focused-attempt rule; do not repeat speculative build attempts.
+
+Suggested next model task
+
+Consider replacing nonlocal unwinding with an explicit native failure check
+immediately after the real sound call in the private adapted parent. Document
+and hash that precise native adaptation instead of claiming an unchanged body.
+Keep the actual original sound operation and full successful call order. The
+public void entry must fail nonzero instead of falling through after an error.
+Do not execute a third focused approach without the requested model switch or
+the user's explicit authorization to continue the current model.
+
+Independent review found two ownership fixes needed before qualification:
+- Reject an already initialized card backend before entering the original
+  constructor. card_init ignores buInit(BUSY), so postchecks alone can silently
+  adopt a preexisting backend and later destroy it during cleanup.
+- Track whether this parent actually acquired System. Cleanup must not call
+  jp_system_shutdown on an unrelated already-ready System after rejecting it.
+  Test both conflicts while proving the prior owners/fibers remain unchanged.
+
+Remaining meaningful tests include failure-to-success retry, later card/render
+failures, repeated READY calls, configure/shutdown callback reentry, successful
+production void entry, and original font surface/byte retirement before the
+borrowed texture owner shuts down. The native VMU .lock FILE intentionally
+persists; exclusive OS handles establish ownership. Actual image reopening,
+not deleting/checking absence of that file, proves release.
+
+Ownership boundary
+
+The caller supplies empty queue/frame/texture/render owners, registers the
+original main texture buffer, and supplies real VMU store/LCD owners. The parent
+creates the real asynchronous card backend. The draft local shutdown drains
+actual buExit work, then closes sound/System before borrowed owners retire.
+Terminal global Exit has not yet acquired this new card backend; do not bind
+terminal Exit for this full-parent configuration until that integration exists.
+No full game_init, main loop, stage gameplay, English or later ports are verified.
+The presenter's existing diagnostic stage getter also needs replacement by the
+single actual stage owner before claiming stage-runtime integration.
+
+User model order for future debugging: Sol High, Sol Very High, Sol Max, then
+Astra Low or higher. Sol Max was last confirmed; Sol Very High remains untried
+in that requested sequence. The goal remains active while model input is pending.
+
+Draft build command (use a NEW private output; do not overwrite proofs)
+python -B outputs/sonic-adventure/jp_port_tools/build_native_main_boot.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --baseline work/sonic-adventure/jp-native-sound-placement-v4 --output work/sonic-adventure/NEW-MAIN-BOOT
+
+The current verifier is expected to fail on missing_driver. Its declared cases
+are test plans until their authoritative results exist. Keep the previous
+qualified build/source/proof hashes intact throughout further work.
