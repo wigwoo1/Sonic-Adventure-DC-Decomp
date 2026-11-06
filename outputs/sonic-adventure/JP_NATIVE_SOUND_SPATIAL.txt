@@ -1,0 +1,113 @@
+Original spatial sound placement and its live matrix (2026-11-05 local date)
+
+Status: VERIFIED for the numerical/source contracts below, not full game audio.
+Overall completion remains approximately 10%; goal active. The matching Japanese
+source baseline is complete. Native gameplay, English, display/texture options,
+actual Chao VMU emulation/widget and later platforms remain unfinished.
+
+What changed
+The native sound graph now supplies matrix_calc_point and njUnitVector, and
+links the original Japanese qsound_place against them. The point transform
+reuses the already qualified njCalcPoint(NULL,point,point) path in the actual
+frame DLL. It includes translation and uses that DLL's one live Ninja matrix;
+there is no separate sound matrix or copy of the renderer's matrix owner.
+
+Vector normalization follows the original FIPR/FSRRA/multiply sequence and
+returns squared length times reciprocal square root, as the shipped routine
+does. It preserves original zero/nonfinite outcomes rather than inventing a
+fallback direction. The existing pinned numerical model and frame DLL scalar
+providers supply the fixed toward-zero/DN1 value policy. This is value
+compatibility, not a new hardware measurement or FPSCR/register emulator.
+
+The original qsound_place copies the shared sound slot position, transforms it,
+sets Y to zero, normalizes, then converts the horizontal coordinate to a QSound
+position. Only its host-sensitive arithmetic is adapted: explicit RZ add/mul
+replace native default rounding, and defined FTRC plus unsigned shift semantics
+replace undefined C conversion/overflow cases. Its source and adaptations are
+hashed separately. The same real slot table remains owned by the sound module.
+Fixture entry points only write/read test input and call the actual function;
+they do not supply an invented camera, player, request queue or stream service.
+
+Verified exact build: work/sonic-adventure/jp-native-sound-spatial-v2
+Four compile/link steps passed with warnings treated as errors and no output.
+55,295 new spatial checks passed, including 4,600 complete original Japanese
+SH-4 entry calls in both floating register banks, without function hooks:
+- 1,632 njUnitVector calls cover signed zeros, subnormals, extrema, infinities,
+  NaNs, random bit patterns and ordinary vectors. Exact output and former-length
+  result bits match; a thin native caller preserves NaN bits across Python FFI.
+- 1,024 matrix_calc_point calls compare complete vector/guard memory and verify
+  that the active matrix, deferred matrix storage and owner metadata are intact.
+- 1,944 original qsound_place calls execute their real nested matrix/normalizer
+  instructions too. Tests cover all 38 native slots, cardinal positions,
+  translated matrices, channel boundaries and exceptional inputs. Original and
+  native slot positions remain unchanged, because the function uses a copy.
+- Additional independent exact integer geometry, axis lengths, cardinal
+  placement and scalar integer/dyadic comparisons supplement the original
+  instruction comparisons. Guard pages verify exactly 12 vector bytes are
+  accessed. Actual imported function addresses identify the existing frame
+  matrix/arithmetic providers, with high native pointers preserved.
+
+FIPR/FTRV/FSRRA use the same previously pinned numerical approximation model in
+the native adapter and instruction service. Therefore their opcode comparisons
+prove call/control-flow/value integration relative to that model, rather than
+independently proving its hardware accuracy. The independent geometry/scalar
+cases provide additional evidence, not a substitute hardware claim.
+
+Current regressions and limits
+The previous QSound byte/owner/actual firmware tests, elapsed-time audio tests,
+sound owner and early/final exit tests, original save checks and startup GPU
+tests are rerun against this exact build. Their actual counts are in
+analysis/jp_native_sound_spatial_package.json; timed observation counts may vary
+between runs. Earlier System/frame and 79,103 original chain checks are retained
+for byte-identical modules and explicitly not counted as current reruns.
+The fresh startup image still shows the SEGA logo. No new gameplay or audible
+spatial-effect demonstration is claimed.
+
+The current full original sound module compiles, but its deliberately unexecuted
+link audit still reports 17 missing genuine providers and 21 unresolved symbols.
+Four unresolved symbols have existing data providers needing correct native
+import declarations: camera_work, event_skipping, frame_redrawing, pad_records.
+Missing providers: battle_rival, debug_page, draw_tree, edit_mode, marker_object,
+njCos, njSin, njSqrt, placement_editing, placement_try_leave, player_work,
+stage_get_stage_act, stream_mute, stream_request_music, stream_request_voice,
+stream_unmute, vector_length_squared. These are symbol dependencies, not a count
+of remaining game routines. Mere export presence does not prove data ABI or
+runtime compatibility. All native sound callers must share intptr_t ID types.
+Other whole-module arithmetic and runtime behavior remain unqualified. No dummy
+provider is added to make the link succeed. The full sound_send_queue, actual
+stream/music/voice playback, event timing, acoustic 3D behavior and higher main
+are still required. The failed audit link is expected evidence of this frontier.
+
+Reproduction
+Use bundled Python with -B from this workspace. Run build_native_sound_spatial.py
+with --workspace ., --upstream the pinned reshaped-sonic-adventure-review,
+--baseline work/sonic-adventure/jp-native-qsound-v5, and --output a NEW private
+work/sonic-adventure directory. Then run verify_native_sound_spatial.py with
+--workspace ., --upstream that checkout, --build the new directory, --binary
+the extracted matching Japanese 1ST_READ.BIN and --output a NEW test directory.
+The pinned work/sonic-adventure/build/sh4_vector_numeric.dll is required too.
+The verifier compiles a thin result-bit probe into its own private directory.
+Rerun the existing QSound, timing, owner, exit, save and startup suites, and
+audit_native_sound_after_spatial.py. package_native_sound_spatial.py binds their
+terminal reports and preserves the prior qualification. Never overwrite proofs.
+
+The first verifier stopped because its explicit vector instruction service had
+not been supplied; it was corrected to use the existing pinned service. The v1
+native build itself passed spatial/audio/exit tests, but omitted 29 inherited
+nested audit-source files, so the frozen save verifier could not inspect all
+inputs. The builder now copies every inherited generated input by its hash.
+v2 rebuilt cleanly and the current checks use it. Previous variants, the original
+v1 builder snapshot and logs are preserved; failed attempts are not relabeled.
+
+Distribution
+Only authored adapters/tools/docs and proof metadata are candidates for reviewed
+publication. The pinned external original game/SDK source, combined binaries,
+retail inputs, RAM/PCM and screenshots remain private. Ten approved authored
+support build artifacts are unchanged. This work awaits the next daily review;
+local verification is not evidence of a GitHub push.
+
+Next recover the remaining real sound math providers and repair native data
+imports, then integrate real stream/state providers and the complete queue.
+Keep Sol High/selected Sol Extra High for this engine work. Luna Low remains
+suitable for routine documentation. JP_VMU_EMULATOR_PLAN.txt retains the real
+Chao minigame, export/raise/return cycle and independent desktop LCD widget.

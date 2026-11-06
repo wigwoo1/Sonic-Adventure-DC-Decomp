@@ -1,0 +1,115 @@
+Original QSound command and copy-ownership family (2026-11-05 local date)
+
+Status: VERIFIED for the source family and command path described here.
+Overall project estimate remains approximately 10%; goal active. The matching
+Japanese source baseline is complete. Full native gameplay and English,
+display/texture settings, actual VMU Chao emulation/widget and later ports
+remain unfinished. This build is an incomplete, nonplayable research artifact.
+
+What changed
+The pinned Japanese SDK sdQsndSetPos now runs unchanged in the same actual
+Sound SDK/owner used by the qualified timed audio graph. Four original game
+functions are linked alongside it: sound_set_qsound, qsound_range, qsound_alloc
+and qsound_free. There is one original sound-slot table and one QSound owner
+table, rather than a second isolated imitation of the game state.
+
+The game wrapper is privately renamed and captures the actual SDK result that
+the original void wrapper ignored. The typed native entry jp_sound_set_qsound
+requires the existing ready creator-thread sound owner, reads exactly seven
+bytes, retains no caller pointer and preserves every position byte's original
+bits. A full secondary queue returns JP_SOUND_QUEUE (15) without quarantining
+the healthy owner. Invalid input, foreign access and calls after shutdown keep
+the established owner rules. There is no host-side position clamping.
+
+The copy-owner table stores uintptr_t on PC. Original ID+1 encoding uses
+unsigned native-width addition, preserving high pointer/ID bits and making
+wraparound defined. Supported-effect lookup, channel/copy selection and free
+behavior otherwise follow the original source. Original ID -1 still encodes
+the zero/free sentinel; that historical ambiguity is explicitly preserved.
+This does not qualify all other identity uses in the full sound module.
+
+Evidence
+The exact jp-native-qsound-v5 build passed four warning-free compiler/linker
+steps, including a real 32-bit compiler layout probe for the guest records.
+Its new verification passed 18,469 checks in eight fresh processes and executed
+3,292 complete original Japanese SH-4 functions without routine hooks.
+
+- All seven byte lanes cover all 256 raw values: 1,792 position patterns.
+  Entire actual 28-byte secondary records match both original instructions and
+  an independently constructed wire expectation. The real 256-entry capacity,
+  SDK error, no-init behavior and guard-page exact seven-byte read are checked.
+- Copy allocation/free and effect-range behavior match original instructions
+  for all 35 original effect rows, capacity exhaustion, unsupported effects,
+  release by an unowned slot and restart. Separate native-width cases verify
+  IDs with identical low 32 bits, high pointer contexts and signed extrema.
+- Three valid flagged position vectors pass through the real SDK using CPU
+  and DMA transport. The actual ARM driver consumes them and acknowledges the
+  request itself. Both paths match every byte of the independent raw producer's
+  complete 2 MiB final RAM and PCM output. The reference marks the doorbell
+  waiting; it never manufactures a completed acknowledgement.
+- That command run differs from the no-command control in 61 RAM bytes. The
+  test PCM is identical to the control: this proves protocol/driver processing,
+  not an audible spatial effect or an acoustic recording. Arbitrary exhaustive
+  byte patterns are examined in queued records, not sent to live firmware.
+- The existing timed System/native-wait path also consumes the actual position
+  command. All timed PCM, real output-pressure/recovery and fatal-cleanup cases
+  are rerun against this build. Their observation counts can vary with actual
+  output scheduling; qualification records the count from this run.
+
+The package also binds current exit, sound owner, System, frame sound, original
+save and graphical startup regressions. It preserves earlier qualified source
+and proof hashes. The original frame-chain DLL is byte-identical to the prior
+qualified graph, so its existing 79,103-check/679-original-call proof is retained
+as prior evidence, not described as a new test run. Fresh graphics are still
+the SEGA startup logo; there is no new gameplay screenshot or VMU emulator UI.
+
+Reproduction from the workspace
+Use the bundled Python executable with -B. Private inputs and the pinned
+upstream checkout are required; paths below are relative to this workspace.
+1. Run jp_port_tools/build_native_qsound.py with --workspace ., --upstream
+   work/sonic-adventure/reshaped-sonic-adventure-review, --baseline
+   work/sonic-adventure/jp-native-sound-clock-v5 and --output a NEW private
+   work/sonic-adventure directory. Do not overwrite qualified builds or proofs.
+2. Run jp_port_tools/prepare_native_qsound_exit_evidence.py with --workspace .,
+   --build that new directory and --prior-exit
+   work/sonic-adventure/jp-native-sound-exit-v3. It copies three exact historical
+   audit sources required by the frozen exit verifier; those files are not the
+   current compiled owner. The current owner is sound_owner_qsound.c. A missing
+   historical audit file is not a native DLL failure. Logs of the initial
+   empty exit-verification attempt remain preserved.
+3. Run verify_native_qsound.py with --workspace ., --upstream the pinned
+   checkout, --build the new directory, --binary the locally extracted matching
+   JP 1ST_READ.BIN, --track the full JP track03.bin path and --output a NEW
+   private verification directory. No retail input is downloaded or published.
+4. Rerun verify_native_sound_clock.py, verify_native_sound_exit.py,
+   verify_native_game_sound.py, verify_native_system.py,
+   verify_native_sound_dispatch.py, verify_native_boot_saves.py and then
+   verify_native_system_startup.py with their existing real dependency proofs.
+   Bind all terminal reports to that exact build using package_native_qsound.py.
+
+Build attempts v1/v2 stopped on separate compilation issues (an SDK NULL macro
+conflict and misleading loop indentation); corrected warning-free builds and
+their logs remain preserved. v3/v4 preceded added observation helpers. v5 is
+the build qualified here. Earlier reports are not relabeled as current proof.
+
+Remaining integration
+The full original sound_send_queue is still unavailable. Next recover genuine
+spatial math and state dependencies, including qsound_place, matrix_calc_point
+and njUnitVector, then actual player/camera/event and stream providers. Reuse
+verified native math where its original semantics match. No dummy stream,
+camera, player or success-only game services have been introduced. Event timing,
+real acoustic spatial behavior, music/voice streaming and full gameplay need
+their own end-to-end qualification.
+
+Public/private boundary
+New authored adapters, tools, documentation and proof metadata may be reviewed
+for publication. Original game/SDK source remains a pinned external dependency.
+Combined original/external-code DLLs, retail firmware/banks, RAM, PCM and startup
+captures stay private. The same ten previously approved authored support build
+artifacts are unchanged. New material awaits the next reviewed daily update;
+this local qualification alone does not mean it has been pushed to GitHub.
+
+See JP_VMU_EMULATOR_PLAN.txt for the full real Chao minigame/desktop widget
+requirement. Storage or LCD graphics alone do not satisfy VMU emulation.
+Keep Sol High/selected Sol Extra High for the next spatial/engine integration;
+Luna Low is suitable for routine plan and documentation updates.

@@ -1,3 +1,17 @@
+Latest verified audio progress: original native ADX decoding now produces real
+Japanese music and voice PCM. Six chunks (108,680 frames) match an independent
+sample recurrence and original instruction prefixes; the title sample's 88,200
+frames also pass real Windows output hashing, clock drain and worker cleanup.
+348,242 current scoped checks pass. Live game streaming and full PC gameplay
+remain unfinished. Overall project estimate remains approximately 10%; goal active.
+
+- [Native ADX evidence and remaining streaming work](outputs/sonic-adventure/JP_NATIVE_ADX.txt)
+- [Current project progress](outputs/sonic-adventure/README.md)
+- [VMU emulator and desktop widget plan](outputs/sonic-adventure/JP_VMU_EMULATOR_PLAN.txt)
+
+Retail audio samples, disc assets and combined original SDK/game binaries stay
+private. Released support libraries are incomplete research artifacts.
+
 Latest sound integration: the original Japanese SDK now downloads all 112
 audited bank files and produces the played MIDI commands itself. 8,959 checks
 pass, including complete sound-memory comparisons and actual Windows audio

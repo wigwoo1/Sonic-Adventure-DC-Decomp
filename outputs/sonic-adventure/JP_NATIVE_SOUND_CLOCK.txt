@@ -1,0 +1,150 @@
+Elapsed-time original firmware/PCM scheduling (2026-11-05 local date)
+
+Status: VERIFIED for the timed native sound service and lifetimes below.
+Whole-project estimate remains approximately 10%; goal active. The matching
+Japanese source baseline is complete. Full native gameplay/English, display and
+texture settings, actual VMU Chao emulator/widget and later ports are unfinished.
+
+What now runs
+The actual original ARM sound driver advances at44,100 sample frames per second
+of counted elapsed time, through the qualified AICA core and Windows output.
+It uses integer quotient/remainder accumulation, preserving fractional samples
+across calls. Caller/render cadence does not determine firmware speed. The two
+original driver boots occur before the new real-time anchor; their88,200 warmup
+frames are not charged again as real-time playback debt.
+
+The native message-wait function services an owned periodic callback before and
+after its real Windows wait, limiting a requested sleep to the active period
+(1..10ms). The existing game thread runs all SDK/ARM work; the WASAPI worker
+continues to own only copied PCM delivery. No worker calls game code. There is
+one wait, clock, SDK, core and sound owner. The original frame-wait/deadline and
+clock bodies remain preserved. An unbound optional periodic callback does not
+pretend to initialize or service audio.
+
+Production entry: jp_system_start_sound_clock(sound_options,clock_options).
+It starts the actual original game sound through the qualified compiled System
+and existing exit registration, then starts the timed service. A failed clock
+provider/startup rolls back sound and the borrowed core. An already-owned wait
+callback is rejected before audio acquisition. Older explicit-progress entries
+remain available for offline/reference clients; they are not the timed main
+entry. No false-success void sound_system_init or higher main entry is added.
+
+Clock options are56 bytes: size,quantum,max frames per tick,period, optional
+borrowed source/context/frequency and an activity guard/context. NULL source/
+context/frequency uses the actual shared native wall clock at781250 counts/sec.
+The explicit clock provider exists for deterministic arithmetic checks, not to
+replace the SDK/ARM/audio. System's timed entry supplies its real activity guard;
+callers leave those two fieldsNULL. The clock snapshot is136 bytes. Quantum is
+1..2048 frames; per-tick work is bounded by quantum..8192 frames. Rate is44100.
+
+Progress, output pressure and lifetime
+- Each tick accounts for all new elapsed time, then performs bounded real SDK
+  servicing and firmware/PCM work. A full actual PCM queue does not advance the
+  core; unrendered elapsed frames remain debt. A later tick recovers that same
+  debt after the real worker frees capacity, rather than dropping samples.
+- Explicit sound render/pump cannot double-advance firmware while timing owns
+  it. Snapshot/service operations retain their established creator-thread rules.
+- stop(0) samples newly elapsed time and rejects outstanding debt. stop(1) is an
+  explicit cancellation: it records unrendered cancelled frames, never reports
+  them rendered/played, and does not advance the core. Cleanup uses cancellation
+  before retiring callback/context, SDK, transport, output or core memory.
+- Borrowed source/activity contexts are cleared after unbind. Failed cleanup
+  retains unfinished real ownership for retry. Tokens never recycle; active
+  callbacks cannot recursively dispatch, replace or retire their own binding.
+- System/Exit activity guards prevent an actual sound callback from beginning
+  global shutdown while firmware work is live, both before and after final
+  binding. The original single System bootstrap registration remains authoritative.
+- Failed/backwards/overflowing clock sources stop the actual wait with its
+  terminal host error. The error is not reset to make cleanup appear healthy.
+  Once quiescent, still-owned vblank callbacks may be identified/removed for
+  teardown; new registrations remain rejected. GDFS/RTC can therefore verify
+  their exact callback identities before releasing storage after a fatal wait.
+  Foreign-thread or active-dispatch retirement remains rejected. Healthy chain
+  deletion/inspection still delegates to the unchanged qualified implementations.
+
+Verification of this exact v5 graph
+3,289 timing checks in19 fresh processes passed. Counts of actual queue-recovery
+observations may vary when rerun; the contracts and hashes are independently
+checked. This is not a routine-recovery count or a whole-game coverage measure.
+
+An independent explicit-progression reference starts actual original sound,
+reads/validates the real EMERALDCOAST.MLT through GDFS, downloads it through the
+SDK/G2, and produces a nonzero note through an actual game-owned MIDI port.
+Native firmware consumption, not synthetic ready bytes, establishes the anchor.
+The resulting44,100 signed16 stereo frames have SHA256
+6a88ae9e39ac697e58ba302320007216a7cd9a6f122b471c6ff7aa3a4160ae25.
+The float32/32768 stream FNV is18408266768705507137; final complete2MiB RAM SHA is
+1a9d86813d24ad76cd1b78bc7169cf0b802bda86c4d3a80249daead143378231.
+
+Controlled60/120/240 caller cadences and an irregular137-call prime-frequency
+case each deliver exactly44,100 frames for one counted second. Actual Windows
+PCM delivery is byte-for-byte equal to the independently rendered reference;
+all2MiB driver RAM matches too. A real4096-frame queue fills and later recovers
+the retained debt, reproducing that same complete note and RAM. No dummy queue,
+mock output client, invented firmware acknowledgement or manual status clear is
+used. Output is muted only through its unique temporary session, never globally.
+
+A separate default-clock case uses actual Windows message waits and original
+frame_wait_step/frame_vsync, delivers nonzero original bank/note audio and checks
+the integer sample target against the actual native wall counts. It ran for
+approximately2.063 counted seconds in this qualification. Controlled arithmetic
+cases do not stand in for this real-clock path. Output hashes observe actual
+samples handed to the render client, not an acoustic recording of speakers.
+
+Other cases cover source failure, backwards time, overflow, native-width source
+contexts, foreign access, callback reentry before/after final exit binding,
+restart, explicit debt cancellation, startup failure, retained cleanup retry and
+fatal clock failure with an actual pending asynchronous GDFS read. No completion
+can reach a retired read/clock context. The terminal wait stays failed while
+callback inspection/retirement permits ordered audio/GDFS/RTC/device cleanup.
+
+10,245 existing sound/System/global-exit/frame/save/boot checks rerun on the exact
+new manifest:652 exit,1471 sound owner,152 System,98 frame/note,591 save and7281
+boot/logo checks. They include29 complete unhooked original save calls,570 real
+GPU images/Presents and175,104,000 compared pixels. The fresh SEGA capture is
+unchanged. Graphics cases still have unbound sound; these separate checks are
+not combined full audiovisual gameplay.
+
+The existing full chain suite also passes79,103 checks, including679 original
+machine-code entry calls, priority/handle/self-deletion behavior and recycled
+Ninja-slot regression. It runs through an explicit presenter-role metadata view
+bound to the current graph hash; the main graph's DLL field denotes the logo
+module. Neither original graph metadata nor frozen verifiers are rewritten.
+Total scoped checks in this qualification:92,637. Counts include regressions.
+
+Preserved development evidence
+The first complete clock suite passed controlled pacing; a stronger test through
+the actual wait exposed GDFS cleanup rejecting every callback inspection after
+a terminal wait error. The new quiescent retirement wrapper fixes that real
+lifetime issue while preserving the sticky wait failure. The first retirement
+build omitted an inspection export; the loader check identified it and the
+public export was restored. One new async-read test initially expected0 instead
+of the SDK's actual accepted-sector count; the original qualified contract is
+256 for its256-sector request. All failed logs/generated variants remain local.
+Qualified original source/header/proof files are unchanged. Final eleven build
+steps have zero diagnostics. Source/proof hashes are never relabelled to pass.
+
+Reproduce (one complete command per PowerShell line; use fresh output folders):
+python -B outputs/sonic-adventure/jp_port_tools/build_native_sound_clock.py
+  --workspace . --baseline work/sonic-adventure/jp-native-sound-exit-v3
+  --output work/sonic-adventure/NEW-BUILD
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_sound_clock.py
+  --workspace . --build work/sonic-adventure/NEW-BUILD
+  --track FULL-PATH-TO-JP-track03.bin --output work/sonic-adventure/NEW-CHECK
+See analysis/jp_native_sound_clock_package.json for exact source/proof paths and
+hashes, including the read-only chain-verifier view and unchanged regressions.
+
+Remaining work
+This qualifies elapsed-time firmware scheduling, not complete audio/gameplay or
+Dreamcast physical-cycle fidelity. The AICA core's128cycles/sample policy is
+still provisional. Full game sound_send_queue, spatial/state/math providers,
+streams and settings still need source integration and qualification. Game-event
+timestamps, playback latency/underruns and long-load synchronization need full
+engine tests. Do not equate synthetic test notes/caller cadences with actual
+complete-game60/120/240 FPS support. The higher main bootstrap remains unexecuted.
+Retain the complete English PC/display/SUPIR vertex-Off/VMU Chao widget/Android/
+stereoscopic3DS/N64/PS1 scope. Keep Sol High/selected Sol Extra High for original
+queue and engine integration; Luna Low is suitable for routine documentation.
+Authored code/docs/proof metadata await next daily publication. Combined original
+SDK/game/core binaries, retail assets, generated PCM/RAM/WAV and screenshots stay
+private. The same ten qualified public support artifacts remain unchanged.

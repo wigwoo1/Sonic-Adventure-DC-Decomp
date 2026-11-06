@@ -1,0 +1,99 @@
+Sound math and shared camera/controller imports (2026-11-05 local date)
+
+Status: VERIFIED for these function/data-import contracts. Full game audio
+remains unfinished. Overall project estimate remains approximately 10%; goal
+active. Japanese matching source is complete; complete English PC gameplay,
+settings, actual VMU Chao emulation/widget and later platforms are still required.
+
+What changed
+The actual sound graph now provides njSin, njCos, njSqrt and
+vector_length_squared. Sine/cosine preserve the original low-16-bit angle and
+FSCA behavior. Vector length follows the original four-lane FIPR with a zero
+fourth component. Square root imports the existing frame DLL's integer square
+root provider and preserves the original signed-root behavior: negative normal
+values return -sqrt(-n). Signed zeros, DN subnormals, infinities and unordered
+NaN comparisons follow their original branches. Fixed RZ/DN1 value semantics
+do not emulate FPSCR side effects or establish new hardware measurements.
+
+Four private header declarations now explicitly import camera_work,
+event_skipping, frame_redrawing and pad_records from the existing frame DLL.
+Original declaration types are preserved. The game sound consumer uses those
+headers; no duplicate camera, flag or controller-record globals are defined.
+Relative GCC header includes are preserved by keeping the src/gcc directory
+relationship in the private overlay. Sound API identities retain the existing
+native intptr_t policy; all full-module callers must use the same native header.
+
+Exact qualified build: work/sonic-adventure/jp-native-sound-math-v1
+Five compile/link steps passed with warnings treated as errors and no diagnostics.
+293,998 new checks passed with 143,504 complete original Japanese entry calls:
+- Both sine and cosine cover every one of 65,536 phases with varying high words
+  and alternating original floating register banks. Original instructions run
+  without function hooks, including their EXTU.W angle truncation.
+- Signed square root covers class edges and random words in both banks, plus
+  an independent Python integer-isqrt/class oracle. The native caller retains
+  exact float return bits, including NaNs, across the Python interface.
+- Vector length covers random/class values in both banks and independent exact
+  integer geometry. The original scalar float argument/return convention is
+  translated to the native C ABI, not confused with an SH-4 register ABI.
+- Sound's four imported addresses equal the actual existing frame-owned data
+  addresses. Native task/peripheral layouts match the independently declared,
+  previously qualified Python types. Controlled fixtures cover all eight
+  controller records, arbitrary flag bits and high native camera pointers;
+  every test input is restored. These fixtures do not prove physical controls,
+  a running camera/player producer or full gameplay.
+
+The pinned FIPR/FSCA instruction approximation is shared by native adapters and
+the instruction oracle. Its hardware accuracy is not independently remeasured
+here. Independent geometry and integer-isqrt tests supplement that model-based
+instruction comparison. The existing model's notices and pinned hashes remain.
+
+Regressions and actual link frontier
+55,295 spatial checks, 18,469 original QSound/owner/actual-driver checks and
+3,284 elapsed-time audio checks also passed on this exact build: 371,046 current
+checks total. Timed observation counts can vary; this run is bound by its hashes.
+No lifetime, save, graphics or frame-owner code changed. Earlier owner/exit/save/
+System/frame/startup/chain proofs remain preserved and are not counted as new
+runs. There is no new graphical scene from this internal audio change.
+
+The complete original sound module still compiles. Its deliberate, unexecuted
+link audit improved from 21 unresolved symbols to 13. The four math providers
+and four data-import bindings are resolved; there are no existing-export binding
+errors. The remaining genuine providers are battle_rival, debug_page, draw_tree,
+edit_mode, marker_object, placement_editing, placement_try_leave, player_work,
+stage_get_stage_act, stream_mute, stream_request_music, stream_request_voice and
+stream_unmute. These are symbol dependencies, not a count of remaining routines.
+The full object remains unlinked/unexecuted; its other arithmetic is not yet
+qualified. Export/data address checks do not prove complete game-state behavior.
+
+Next larger integration step
+Use the original src/sound/stream.c and sdk/sofdec ADX implementation. The source
+checkout contains adx_xpnd.c (decoder/expander), adx_tlk.c and adx_tlk2.c (ADXT
+frontend), plus file/joint/output modules. Preserve the original stream task and
+request semantics, replace STREAM_WORK=0x0cca8000 with owned native storage,
+and connect actual GDFS, decoder, audio output and ordered cleanup. Validate
+real music and voice PCM and archive selection before calling streams supported.
+Do not add success-only ADXT/stream functions to force the sound queue to link.
+Genuine stage/player/editor state and the complete sound_send_queue/higher main
+remain required too. Existing source/proofs may help with those dependencies.
+
+Reproduction
+Use bundled Python with -B. Run build_native_sound_math.py with --workspace .,
+--upstream the pinned reshaped-sonic-adventure-review, --baseline
+work/sonic-adventure/jp-native-sound-spatial-v2 and --output a NEW private build
+directory. Run verify_native_sound_math.py with --workspace ., --upstream that
+checkout, --build the new directory, --binary the matching Japanese 1ST_READ.BIN
+and --output a NEW private verification directory. The pinned numerical model
+DLL in work/sonic-adventure/build is required. The verifier compiles a thin
+float-result-bit probe. Rerun verify_native_sound_spatial.py,
+verify_native_qsound.py and verify_native_sound_clock.py against that build;
+then audit_native_sound_after_math.py and package_native_sound_math.py.
+Never overwrite qualified builds, original inputs or proofs.
+
+Only authored adapters/tools/docs and proof metadata await reviewed publication.
+Original game/SDK source stays a pinned external dependency. Combined binaries,
+retail data, ROMs, firmware, PCM/RAM and screenshots remain private. The same ten
+approved authored support build artifacts are unchanged. Local qualification
+does not mean new changes were pushed to GitHub; they await the daily review.
+Keep Sol High/selected Sol Extra High for real ADX/stream/lifecycle integration.
+Luna Low remains sufficient for routine documentation. JP_VMU_EMULATOR_PLAN.txt
+retains the actual Chao minigame and independent desktop LCD widget requirement.

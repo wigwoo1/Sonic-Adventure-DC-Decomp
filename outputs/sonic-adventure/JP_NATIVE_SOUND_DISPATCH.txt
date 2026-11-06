@@ -1,0 +1,103 @@
+Native frame sound dispatch and whole game sound-module audit
+Qualified 2026-11-05. Overall approximately 10%; goal active.
+
+What changed
+The original compiled frame_vsync and frame_wait_step now reach an owner-bound
+sound dispatcher. Their former diagnostic sdSysServer/sound_send_queue functions
+record their passive trace event and forward to actual registered callbacks.
+An unbound SDK service returns SDE_ERR_NO_INIT; an absent game request producer
+is explicitly unavailable. It no longer reports successful diagnostic sound work.
+The genuine original frame bodies and all graphics providers are preserved.
+
+The authored dispatcher lives in the same private presenter module as those
+frame functions. It borrows callbacks/context from the creating sound owner;
+it does not create another SDK, emulator, clock or game state. One binding has
+a nonrecycled token. A live callback cannot replace, recursively dispatch or
+retire its own binding. Foreign-thread operations fail without touching outputs.
+After unbind, real later vertical ticks cannot call the retired SDK/context.
+Callback failures propagate to the SDK-facing result and observable native state.
+
+Verification: 7,970 checks
+- 98 checks in two fresh processes test token/context lifetime, reentrancy,
+  replacement, foreign-thread rejection, optional queue availability and actual
+  frame -> SDK execution. The integrated case starts the real compiled system
+  owner, reads MASARU.DRV and EMERALDCOAST.MLT through original GDFS into guarded,
+  sector-rounded aligned buffers, executes both original driver initializations,
+  then downloads the bank through the actual SDK.
+- Real clock/vblank delivery runs original frame_wait_step/frame_vsync. A test
+  request client invokes original SDK MIDI/stereo/effect producers, and the bound
+  server performs real copies/completions. All 88,200 note frames, 44,100 tail
+  frames and final 2 MiB RAM match the independently qualified driver reference.
+  No manually cleared status byte or invented driver acknowledgement is used.
+- 591 save regressions include 29 complete unhooked Japanese instruction calls.
+  The prerequisite proof was rerun against this exact new build manifest; an
+  initial attempt correctly rejected the older build's differently bound proof.
+- 7,281 reset/boot/logo/exit regressions pass with the new presenter. Six compiled
+  system starts, 570 real GPU images/Presents and 175,104,000 compared pixels
+  retain the previous behavior. The fresh actual SEGA backbuffer capture has
+  SHA256 9b28f7b43d8786cfee116fc34b39ed33ff44fb8ed93a0f62b21477b4902d2071.
+  These graphics cases exercise the unbound sound boundary; the separate sound
+  case exercises bound SDK dispatch. They are not a full-game audiovisual test.
+
+The two trace-facing functions are now exported as forwarding interfaces. The
+first client test found they were previously internal; its evidence is retained.
+The initial builder also encountered a compact one-line fixture definition that
+the multiline function extractor could not parse. The replacement now verifies
+the exact original line before changing it. All previous versions remain local.
+The authored helper and adapted presenter compile/link without diagnostics.
+
+Whole game sound source audit
+The entire pinned src/sound/sound.c now compiles privately, rather than only a
+handwritten initializer. Console SDK declarations are parsed before selecting
+the original GCC game guards, including repaired success returns. Native sound
+identity fields, API id parameters and the task-pointer cast use intptr_t;
+other game scalars remain 32-bit. All native callers must use the same private
+header overlay. This compile-only adaptation is not a runtime ID/numerics proof.
+
+The object has 62 external references. A name-level provider inventory finds
+23 absent providers. The actual complete link fails on 27 symbols: four existing
+data exports additionally require proper native DLL import declarations. These
+different counts describe different questions. Settings, stage/spatial helpers,
+QSound and stream requests remain real dependencies; no dummy providers are
+added. The object and its fixed-address WORK_AREA paths are not executed. The
+three settings imports on initialization are syCfgInit, syCfgGetSoundMode and
+syCfgExit; port them to real native configuration before running that path.
+
+Source and reproduction
+Authored boundary: native/jp_native_sound_dispatch.c and .h.
+Build: jp_port_tools/build_native_sound_dispatch.py --workspace WORKSPACE
+--baseline QUALIFIED_SYSTEM_BUILD --sdk QUALIFIED_SD_COMMANDS_BUILD
+--output NEW_PRIVATE_BUILD.
+Check: verify_native_sound_dispatch.py --workspace WORKSPACE --build NEW_BUILD
+--audit SOUND_INIT_AUDIT --probe_check AICA_PROBE_CHECK
+--driver_check SD_DRIVER_CHECK --output NEW_CHECK.
+Audit: audit_native_game_sound.py --workspace WORKSPACE --upstream PINNED_SOURCE
+--system NEW_BUILD --sdk QUALIFIED_SD_COMMANDS_BUILD --output NEW_AUDIT.
+For save/startup commands use JP_NATIVE_SYSTEM_BOOTSTRAP.txt, rerunning the save
+prerequisite against NEW_BUILD before its startup suite. Do not relabel old proofs.
+
+Current build: work/sonic-adventure/jp-native-sound-dispatch-v4.
+Current component checks: jp-native-sound-dispatch-check-v2.
+Current graphics checks: jp-native-sound-dispatch-startup-check-v1.
+Current module audit: jp-game-sound-module-audit-v2.
+Public evidence mirrors: analysis/jp_native_sound_dispatch*.json and
+analysis/jp_native_game_sound_module_audit.json. Original source stays at pin
+25a3d3154dbe657325e97dbe8c5291086f6af5c0, reshaped/sonic-adventure.
+No original SDK/game source or combined diagnostic libraries are published here.
+
+Remaining work
+The request producer and sound-resource cleanup in the new integration test are
+test-client owned. The actual game sound constructor/request queue, production
+staging owner, native settings, sustained audio timing and global early/final
+audio exit remain unfinished. In particular, do not bind the dispatcher's own
+sdSysServer forwarder as its service callback: bind the actual SDK implementation
+through an explicit uniquely named adapter to avoid recursion/library ambiguity.
+Quiesce/unbind before retiring that actual owner's buffers, SDK, G2 or AICA.
+
+Next implement the owned game sound initialization and native settings/staging,
+resolve native DLL data imports and real remaining providers, and integrate
+ordered audio cleanup before executing the higher main bootstrap. Preserve the
+entire game scope, including English, display/texture options, VMU Chao emulator
+and widget, Android, stereo 3DS and demakes. Physical audio timing/waveform
+accuracy remains unproven; there is no playable game. Keep Sol High/selected Sol
+Extra High for the next architecture work; Luna Low is suitable for routine docs.

@@ -1,0 +1,124 @@
+Native sound under compiled System and global exit (2026-11-05 local date)
+
+Status: VERIFIED for actual audio/core ownership, ordinary restart, early/final
+cleanup, rollback and retry below. Whole-project estimate remains approximately
+10%; goal active. Matching Japanese source is complete; native gameplay,
+English, settings, VMU Chao emulation/widget and later platforms are unfinished.
+
+The actual compiled System can now start the original game's verified sound
+initialization with jp_system_start_sound. It uses the real GDFS/SDK/ARM/AICA/
+Windows PCM owners qualified in JP_NATIVE_GAME_SOUND.txt. There is no sound
+success stub and no second game, SDK, emulator or bootstrap-cleanup instance.
+
+Shutdown authority
+- Sound issues a monotonically increasing token to the creator thread. Ordinary
+  sound configure/init/shutdown cannot replace or retire a claimed owner. Real
+  service/render/pump remain usable until delegated cleanup starts.
+- System reserves the sound bit in its existing bootstrap registration BEFORE
+  sound startup, then attaches its actual token after the original startup
+  succeeds. A partially failed startup cannot lose that cleanup obligation or
+  be omitted from a final resource mask.
+- Ordinary System shutdown unbinds sound callbacks, finishes actual G2/SDK/
+  AICA/output work and releases driver staging before GDFS, RTC, input, device/
+  wait and finally the SDK heap. The closed sound claim remains held until all
+  borrowed core cleanup and bootstrap cancellation succeed. It then releases
+  for a real same-process System and original sound restart.
+- Early exit uses that SAME System bootstrap callback, commits terminal sound
+  authority and closes in the same order. Final bind transfers the same token
+  with the core owners; it does not try to claim sound twice. Failed validation
+  or a later device claim rolls back newly acquired claims without cancelling
+  the bootstrap's existing sound authority. A new independent sound claim is
+  cancelled if a later final claim fails.
+- A failed sound close stops before any borrowed filesystem/clock/device/heap
+  cleanup. Failed or partial cleanup keeps its token and unfinished allocations
+  for a creator-thread retry. Terminal exit cannot restart or cancel sound.
+  If ordinary audio close succeeded but filesystem close later failed, a later
+  early exit commits the already closed sound claim without closing it twice.
+- A guard on the exact existing bootstrap registration rejects nested global
+  cleanup/bind before it can mark terminal exit started. This preserves normal
+  bootstrap cancellation/restart when a real completion callback reenters exit
+  during local System shutdown. Final cleanup likewise rejects recursion.
+
+Existing API layouts and every legacy resource mask remain unchanged.
+JP_EXIT_SOUND is the explicit new bit524288. The observation-only bootstrap
+bit262144 is still rejected as a bind resource. CORE245762 and full247798 retain
+their original meanings. With sound they become770050 and772086 respectively.
+Including sound is explicit; legacy graphics-only callers do not implicitly
+initialize/claim audio. Native sound options56/info104 and System options96/
+info64 stay unchanged. Additional sound claim info is32 bytes.
+
+Verification: 10,245 checks on the exact sound-exit-v3 build manifest
+- 652 new lifecycle checks in20 fresh processes execute actual original sound
+  startup under compiled System, ordinary restart, native input failure,
+  refusal to adopt pre-existing sound, early/final success, real G2 cleanup
+  failure/retry, omission of sound from a final mask, late claim rejection,
+  partial filesystem cleanup, foreign access and actual callback reentry.
+- Real unfinished Ninja vertex recording makes the last device claim reject.
+  Both existing bootstrap sound and newly acquired sound claims retain/cancel
+  the correct authority. Discarding the actual recording permits a real retry.
+- A real deleted GDFS vblank handler makes filesystem cleanup fail AFTER sound
+  has closed. Restoring that exact handler permits early terminal retry while
+  preserving the original single sound shutdown count.
+- Actual original asynchronous SDK transfer completion attempts recursive
+  System/global/sound teardown. All reject safely; ordinary shutdown remains
+  cancellable and final cleanup does not poison the successful outer status.
+- One integrated final case starts the actual muted Windows output worker,
+  submits4,410 firmware PCM frames and confirms the worker has joined when
+  sound/core cleanup completes. The endpoint volume is never changed.
+- Original ABI sbExitSystem performs real cleanup. Actual syBtExit processes
+  exit0 after successful cleanup and70 for an actual retained audio cleanup
+  failure. Before exit, the failure case proves GDFS/RTC/device/wait/heap remain
+  live and sound resources remain owned; it does not label that cleanup success.
+- 1,471 original game-sound owner checks,152 compiled System checks,98 real
+  frame/note checks and591 save checks/29 unhooked original instruction calls
+  rerun unchanged. Complete note/tail PCM and2MiB RAM retain prior behavior.
+- 7,281 compiled System/reset/boot/logo checks include570 actual GPU images/
+  Presents and175,104,000 compared pixels. The fresh actual SEGA capture is
+  unchanged. Those graphics cases have unbound sound; separate sound cases do
+  not prove full combined audiovisual gameplay.
+
+Source/evidence preservation
+Original qualified owner C/header files, all original source/proofs and prior
+DLLs stay byte-identical. New authored .inc/.h files extend those exact owners
+in private generated translation units through build_native_sound_exit.py.
+Only the private sound, System and Exit DLLs change. The same ten qualified
+public authored support artifacts remain unchanged. Combined game/SDK/core
+binaries, retail driver/banks, PCM/RAM and screenshots remain private.
+
+The first preparation assumed an unused jp_native_audio.lib was present. That
+dependency is only a runtime DLL here, so the builder copies the real DLL and
+links through the qualified AICA import library. Preparation failure is retained.
+The first late-claim test assumed a device-cancel API; the existing device claim
+is terminal. The test now uses real reversible unfinished vertex recording,
+without changing that already qualified device API or inserting a fake failure.
+Intermediate sources/logs remain private. All final compilations have zero
+diagnostics. No old source/proof hash is rewritten to make a test pass.
+
+Read analysis/jp_native_sound_exit_package.json for source/proof hashes.
+analysis/jp_native_sound_exit_build.json binds the exact generated variants.
+analysis/jp_native_sound_exit.json contains the twenty new process cases.
+Other _owner/_system/_frame/_saves/_startup mirrors record regressions.
+native/jp_native_sound_exit.h/.inc implement sound lifecycle claims.
+native/jp_native_exit_sound.h/.inc extend the same global bootstrap authority.
+native/jp_native_system_sound.h/.inc integrate original sound startup/cleanup.
+
+Reproduce from the workspace (enter each complete command on one PowerShell
+line; use a fresh unused private output directory and locally owned JP track):
+python -B outputs/sonic-adventure/jp_port_tools/build_native_sound_exit.py
+  --workspace . --baseline work/sonic-adventure/jp-native-game-sound-v3
+  --output work/sonic-adventure/NEW-BUILD
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_sound_exit.py
+  --workspace . --build work/sonic-adventure/NEW-BUILD
+  --track FULL-PATH-TO-JP-track03.bin --output work/sonic-adventure/NEW-CHECK
+The package records exact regression inputs and proof paths as well.
+
+Next: sustained native sound timing, independent of game/render FPS. A real PCM
+worker exists, but firmware still advances only through explicit render/pump;
+SDK service alone does not advance it. Preserve creator-thread callback rules,
+real elapsed-time debt and queue-full behavior. The provisional ARM128cycles/
+frame policy still needs fidelity qualification. Continue full original game
+request queue/spatial/stream/loading/settings work and higher main integration;
+no fake-success void sound_system_init export is added by this milestone.
+Keep Sol High/selected Sol Extra High for timing/engine integration. Luna Low
+is suitable for routine documentation. Authored source/docs/proof metadata await
+the next reviewed daily publication; this is incomplete, unplayable research.

@@ -1,0 +1,132 @@
+Owned native original game sound startup (2026-11-05 local date)
+
+Status: VERIFIED for the initialization closure and local ownership described
+below. Whole-project estimate remains approximately 10%; goal active. The
+Japanese matching source milestone is complete. Full native gameplay, English,
+display/texture features, VMU Chao emulator/widget and later ports are unfinished.
+
+What changed
+The actual sound_system_init closure now runs under a compiled native owner.
+It executes ten original game functions: sound_system_init, sound_init_driver,
+midi_open_ports, sound_set_space, sound_reset, sound_set_fx_01, sound_set_fx_23,
+qsound_reset, midi_reset_all and midi_reset. Their single real global state is
+compiled beside the previously qualified real SDK, not copied into separate
+per-function test states. The full sound.c remains the intended implementation;
+this linked closure does not replace its unavailable gameplay/stream providers.
+
+The owner borrows the real initialized System/GDFS/wait services. It creates
+the actual AICA/output owner and G2 transport, then executes the game's original
+driver path and MIDI initialization. MASARU.DRV is opened and read through actual
+GDFS. Its 33,408 bytes occupy 34,816 bytes of sector-rounded, page-aligned native
+staging with no-access guard reservations. The original fixed WORK_AREA address
+is never dereferenced. Header type, version and payload bounds/alignment are
+validated before the SDK can read the ARM program. Staging stays live through
+transport/SDK retirement because released original descriptors retain pointers.
+
+The successful original order is preserved: SDK init, DMA mode, outer descriptor,
+first actual driver boot, descriptor release, second actual driver boot using
+the original released-slot alias, then the real frame/vsync callback. The actual
+ARM driver runs 88,200 boot frames; eight real MIDI ports open, the native copied
+stereo/mono mode is read, effects/QSound/slots reset, and 32 MIDI controller-reset
+commands are produced. All 39 actual queued commands are independently checked
+including every parameter/padding byte and the pending marker. The FX levels
+follow the actual driver's debug56 fine-level behavior, giving80 for outputs0/1.
+
+The native syCfg session owns copied settings and borrows the original work
+buffer until exit. It validates a real session header/generation, supports an
+unaligned char buffer, returns the configured mode and applies explicit mode
+changes to its session. It never touches console flash/low RAM. This is not a
+persistent settings-file implementation; that integration remains required.
+Native synchronous config retries are bounded and actual failures propagate.
+
+Void original startup helpers now stop on real dependency/SDK errors rather
+than proceeding with invalid handles or reporting a ready owner. Failure tracks
+its original cause separately from any failed cleanup. Shutdown first unbinds
+the actual frame callback, drains real G2 completions, closes G2, retires SDK
+state, joins/closes actual AICA/output and finally releases staging. A failed
+step retains unfinished resources for a same-thread retry. Cleanup never takes
+over a pre-existing core or callback binding. Reentry and foreign-thread calls
+cannot replace/retire a live owner or alter query output buffers.
+
+The frame dispatcher binds a uniquely named bridge to the actual source-local
+SDK server. It does not call the presenter's identically named forwarding thunk
+recursively. The full original sound_send_queue is still unavailable and no
+dummy queue is bound; real frame calls report that limitation explicitly.
+
+Verification: 9,441 checks on the exact v3 build manifest
+- 1,471 owner checks, eleven fresh processes: native configuration lifetime,
+  stereo startup, mono-to-stereo restart, missing/oversized/wrong driver input,
+  refusal to adopt a pre-existing core or dispatcher, real G2 cleanup failure
+  with retained state and successful retry, actual completion-callback reentry
+  rejection, and an actual muted Windows PCM session.
+- Original frame_wait_step/frame_vsync call the compiled owner without a Python
+  sound-service callback. Real SDK copies and ARM execution consume all startup
+  commands. No synthetic ready/status byte or firmware acknowledgement is used.
+- Windows VirtualQuery confirms the high native committed staging and no-access
+  guards, then confirms the reservation is actually free after shutdown.
+  A real full PCM queue preserves firmware time and owner health for retry.
+- 98 existing frame/SDK checks still match complete 88,200-note/44,100-tail PCM
+  and all 2 MiB driver RAM against independent prior evidence. That test's note
+  requests remain an explicit test client, not the full original game queue.
+- 591 save regressions include29 complete unhooked original instruction calls.
+- 7,281 compiled System/reset/boot/logo/exit checks include570 GPU images and
+  Presents,175,104,000 compared pixels and six compiled System starts. The fresh
+  actual SEGA capture is unchanged. Graphics cases have unbound sound; the sound
+  owner cases are separate. This is not combined full audiovisual gameplay.
+
+Preserved evidence
+The first owner compile caught an unconditional JP_CLOCK_API definition in a
+shared header. The owner imports the public jp_wait_status declaration without
+changing that already qualified header; v2 and final v3 compile/link cleanly.
+The first packet test used the old coarse FX-level expectation; the known retail
+driver version and original SDK threshold establish the fine-level expectation.
+An initial regression command named a nonexistent old probe directory. Rerunning
+with the actual independently verified jp-aica-driver-check-v7 succeeds. Failed
+logs/intermediate sources remain private; no prior proof/hash is overwritten.
+
+Current evidence and source
+analysis/jp_native_game_sound_package.json binds source and proof hashes.
+analysis/jp_native_game_sound_build.json records the build and adaptations.
+analysis/jp_native_game_sound.json records the eleven owner cases.
+analysis/jp_native_game_sound_frame.json records the note/frame regression.
+analysis/jp_native_game_sound_saves.json and _startup.json record regressions.
+native/jp_native_game_sound.c/.h provide authored ownership and configuration.
+jp_port_tools/build_native_game_sound.py derives private original game/SDK C.
+jp_port_tools/game_sound_owner_bridge.inc observes/retires actual shared state.
+jp_port_tools/verify_native_game_sound.py runs the original startup/owner cases.
+
+Reproduce from the workspace with the normal Python runtime (substitute a new
+unused private output directory each run; provide the locally owned JP track):
+python -B outputs/sonic-adventure/jp_port_tools/build_native_game_sound.py
+  --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review
+  --baseline work/sonic-adventure/jp-native-sound-dispatch-v4
+  --sdk work/sonic-adventure/jp-native-sd-commands-v1
+  --output work/sonic-adventure/NEW-BUILD
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_game_sound.py
+  --workspace . --build work/sonic-adventure/NEW-BUILD
+  --track FULL-PATH-TO-JP-track03.bin --output work/sonic-adventure/NEW-CHECK
+These multiline examples describe arguments; enter each complete command on one
+PowerShell line. See the package's exact input/proof paths for all regressions.
+
+Remaining work and model
+Integrate actual audio ownership into the existing System/global early/final
+exit path before GDFS/RTC/device/wait/heap shutdown. Do not steal the System's
+single bootstrap-cleanup registration or export a falsely successful void parent
+initializer. Qualify timeout/retry and startup rollback across those owners.
+Then add sustained native audio progression independent of render/game FPS;
+explicit service/render/pump is not a real-time production scheduler. Pump has
+an explicit temporary queue-full result that does not advance firmware time.
+The ARM128cycles/frame policy remains provisional hardware timing.
+Continue the complete original game request queue, bank/stage loads, spatial
+effects, streams, actual settings persistence and higher main bootstrap. Full
+sound IDs/callers must use a consistent native identity representation; the
+constructor does not prove the runtime queue's pointer/float semantics. The last
+whole-module unresolved-import audit predates these real settings providers;
+do not report its old27 as a newly measured current count.
+
+Keep Sol High/selected Sol Extra High for lifecycle/timing integration. Luna Low
+is suitable for routine documentation. Original game/SDK/core combined binaries,
+driver/banks, PCM, RAM and screenshots remain private. The ten qualified authored
+support artifacts are unchanged; new authored source/docs/proof metadata await
+the next reviewed daily publication. This is incomplete research, not a playable
+PC game, VMU emulator or finished English/later-platform port.

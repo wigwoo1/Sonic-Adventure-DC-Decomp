@@ -1,0 +1,117 @@
+Native original ADX decoding and real Japanese audio (2026-11-05 local date)
+
+Status: VERIFIED for the decoder/expander and output tests below. Live game
+music/voice streaming remains unfinished. Overall completion stays approximately
+10%; goal active. The complete matching Japanese source baseline is distinct
+from the unfinished English PC game, settings, VMU emulator/widget and later ports.
+
+What now runs
+The native sound graph includes the original ADX header readers, integer mono
+and stereo block decoders, floating stereo decoder, quantizer tables and all
+eight expander records. Original SDK source stays in private generated files.
+An authored coefficient adapter executes the original single-precision formula,
+runtime cosine reduction/series and RZ/DN1 scalar semantics using existing frame
+math and preserved integer FLOAT/FTRC helpers. Default500Hz/44100Hz coefficients
+are7334 and-3283. Valid audio-rate/cutoff coefficient values are verified; broader
+libm errno/trap semantics are not claimed by this value adapter.
+
+Native pointer fields retain64 bits. The original52-byte guest expander becomes
+72 bytes on PC. There is one actual pool, not a fake handle table. Raw SDK entry
+points remain internal, caller-owned interfaces; the future stream owner must
+validate formats/buffer lengths and control their lifetimes before calling them.
+This milestone does not install a public game stream owner or background ADXT
+service. No success-only ADXT or stream functions have been added.
+
+The integer decoder keeps signed-nibble prediction,16-bit clipping,32-bit wrap
+and the original end-marker behavior. The floating stereo decoder keeps its
+unclamped floating history and original FMUL followed by two FMAC operations.
+FLOAT/FTRC, unsigned shifts and byte swaps avoid undefined host C behavior.
+Odd stereo block counts, early-return history and the expander's actual internal
+error flag retain their original behavior; these are not silently corrected.
+
+Exact build and verification
+work/sonic-adventure/jp-native-adx-v3 passed nine compiler/linker steps without
+diagnostics.31,714 core checks compare complete original Japanese instructions
+without routine hooks, including the real cosine/remainder/polynomial chain:
+- Three header readers: sizes, marks, loop status, endian fields and all output
+  guard bytes. Header test bit depths are nonzero, as required by the raw API.
+- Mono/integer stereo/floating stereo: scales, counts, arbitrary histories,
+  end markers, odd counts and every packed byte value. An independent mono
+  recurrence covers every one of8,192 legal gains and both clipping directions.
+- All eight actual expanders: capacity, configuration, getters, rejected entry
+  while pending, start/server/stop/reset/destroy, and the real odd-block error.
+  Original and native fields/pointers and every PCM/history guard byte agree.
+
+Real media evidence reads the supplied Japanese track without modifying it.
+The complete track SHA256 remains
+4ac0e256cf91520f794d7f831c193847b16397da3bde5c890e04e5330499c76c.
+TITLE.ADX contributes88,200 stereo frames. ECOAST1.ADX, CHAO.ADX and three
+single-channel EVENT_ADX.AFS entries contribute4,096 frames each:108,680 frames
+total. Every decoded sample matches an independent exact recurrence. For each
+asset, complete original coefficient and decoder-prefix calls also match native
+PCM and history. Native ADXPD_ExecServer performs the actual decoding.
+
+The Japanese voice archive contains2,088 entries. The source's VOICE_FILES2148
+is a capacity, not its actual file count. Regional archive identities and English
+voice bindings still require separate validation. Only the selected three voice
+entries are qualified here; this does not prove all assets/formats/loop playback.
+
+A private two-second WAV contains the actual native-decoded Japanese title
+prefix. A separate test converts those same16-bit samples exactly to float32
+and feeds88,200 frames to the existing real WASAPI client. The actual worker's
+complete consumed-source hash matches; all frames pass its actual clock and
+latency drain, and its worker joins on close. Only that unique temporary audio
+session is muted. No endpoint volume is changed and no sound is recorded.
+This proves delivery to the render client, not an acoustic speaker recording.
+
+Current math, QSound/real ARM driver and elapsed-time audio regressions also
+pass. The exact current count is in analysis/jp_native_adx_package.json;
+queue-pressure observation counts can vary. Older unchanged graphics/save/
+ownership/spatial proofs remain preserved and are not counted as new runs.
+FIPR/FSCA approximations share the existing pinned model with their opcode
+oracle; no new independent hardware validation of that model is claimed.
+
+Remaining integration
+The original stream task compiles in an unexecuted audit. Its link still needs
+12 genuine frontend APIs: ADXF_LoadPartition; ADXT_Create, Destroy, EntryErrFunc,
+GetStat, GetTime, SetAutoRcvr, SetOutVol, SetSvrFreq, StartAfs, StartFname and Stop.
+The audit also reports adxpd_internal_error: that state already exists in this
+decoder module and must be colocated with the stream task or imported properly,
+rather than duplicated. The actual stream constructor remains unexecuted because
+it still contains fixed STREAM_WORK0x0cca8000. Replace that with owned storage.
+
+Next port the real ADXT/SJ/ADXF frontend and RNA/PCM transport into the existing
+AICA/output ownership graph. Preserve original request/task behavior, real GDFS
+and archive lookup, looping, volume, timestamps, callback guards and ordered
+shutdown. Music and effects must share the production output path; a second
+independent output client is not the planned game integration. The standalone
+output test above is a qualification client, not that completed integration.
+The full sound module's other stage/player/editor providers, complete original
+sound_send_queue and higher main/gameplay remain required too.
+
+Reproduction and preservation
+Run build_native_adx.py using bundled Python with-B, --workspace ., --upstream
+the pinned reshaped-sonic-adventure-review, --baseline
+work/sonic-adventure/jp-native-sound-math-v1 and --output a NEW private build.
+Run verify_native_adx.py with matching Japanese1ST_READ.BIN, then
+verify_native_adx_media.py with its core proof and the supplied track03.bin.
+verify_native_adx_output.py uses that media proof and WAV. Rerun the sound math,
+QSound and sound clock suites. audit_native_adx_stream.py records the remaining
+frontend frontier; package_native_adx.py binds terminal proofs to one build.
+The private ISO/AFS reader supplies independent test fixtures, not production I/O.
+
+v1 compiled but review found one host-rounded multiply; v2 explicitly uses the
+existing RZ multiplier and safe header swaps. v3 adds internal-error readback.
+All variants and original v1 source snapshots remain. Test harness fixes convert
+bytearrays before ctypes copies and accept archive counts up to the source's
+capacity. The first stream audit needed the original GCC port declarations and
+a targeted warning exception for an original matching-only unused task local.
+These are preserved attempts, not qualified earlier versions.
+
+Only authored tools/adapters/docs and proof metadata can enter reviewed public
+snapshots. Original game/SDK source, combined binaries, retail headers/payloads,
+decoded PCM/WAVs and screenshots remain private. Ten approved authored support
+build artifacts remain unchanged. Reviewed publication is tracked separately.
+Keep Sol High/selected Sol Extra High for ADXT/RNA/GDFS/audio lifetime integration;
+Luna Low is suitable for routine docs. JP_VMU_EMULATOR_PLAN.txt retains actual
+Chao minigame execution, export/raise/return and the independent desktop widget.

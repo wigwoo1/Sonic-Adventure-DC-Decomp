@@ -1,3 +1,152 @@
+Latest native ADX decoder and Japanese audio: JP_NATIVE_ADX.txt.
+Goal active; overall approximately 10%. Original header/mono/stereo/expander
+modules now run on native pointers with original coefficient and numeric values.
+31,714 core checks pass, including complete original math/decoder/pool calls.
+Six real Japanese music/voice chunks total108,680 frames; every sample matches
+an independent recurrence and their prefixes match original instructions.
+The actual native decoder produced a private2-second title WAV. Its88,200 frames
+also pass the real WASAPI client hash/clock/drain and worker cleanup in an isolated
+session-muted test. This is not live game streaming or a playable game.
+Current math/QSound/timed-driver regressions bring this build to348,242 checks.
+The real voice archive has2,088 files; the source's2,148 is its capacity.
+The original stream task compiles but still needs12 genuine ADXT/ADXF APIs,
+shared access to the already implemented error flag, owned work buffers and
+RNA/PCM integration in the existing AICA/output graph. No dummy frontend added.
+Prior source/proofs and ten public support artifacts preserve their hashes.
+Reviewed publication is tracked separately; combined SDK/game binaries and retail
+PCM/WAV/input data remain private. Public support builds are incomplete research.
+Full English PC/FPS8K/SUPIR/vertex-Off, actual Chao VMU emulator/widget and later
+platform scope remains in JP_BASED_PORT_GOAL.txt and JP_VMU_EMULATOR_PLAN.txt.
+
+Latest sound math and real shared-state imports: JP_NATIVE_SOUND_MATH.txt.
+Goal active; overall approximately 10%. The native graph now provides original
+sine/cosine/signed-square-root/vector-length contracts and imports existing
+camera_work/event_skipping/frame_redrawing/pad_records storage. No shadow
+camera/controller globals or success-only stream methods were added.
+293,998 new checks pass, including143,504 complete original entry calls and
+all65,536 sine/cosine phases with high-word truncation. Independent integer
+geometry/isqrt and cross-DLL native pointer/layout checks supplement the shared
+numerical model. Spatial/QSound/timing regressions bring this build to371,046
+current checks. Earlier ownership/save/graphics proofs remain preserved, not
+counted as new runs; internal audio work adds no new graphical scene.
+Full sound-module compilation passes; its deliberate unexecuted link audit is
+down from21 to13 unresolved genuine providers, with no import-binding errors.
+The original ADX decoder/expander/frontend source exists in sdk/sofdec. Next
+recover real music/voice decoding and native streaming ownership rather than
+add dummy stream providers. Genuine remaining game-state modules, the complete
+queue and higher main/gameplay remain required. The full PC port is unfinished.
+Prior source/proofs and ten public support artifacts preserve their hashes.
+New authored source/docs/metadata await reviewed daily GitHub publication.
+Full English PC/FPS8K/SUPIR/vertex-Off, actual Chao VMU emulator/widget and later
+platform scope remains in JP_BASED_PORT_GOAL.txt and JP_VMU_EMULATOR_PLAN.txt.
+
+Latest original spatial sound placement: JP_NATIVE_SOUND_SPATIAL.txt.
+Goal active; overall approximately 10%. Original qsound_place now uses real
+matrix_calc_point/njUnitVector providers in the same sound graph. Point transforms
+import the existing frame DLL's one live matrix; normalization and placement
+retain the original toward-zero numerical and exceptional-value behavior.
+55,295 new checks pass, including4,600 complete original SH-4 calls and their
+real nested dependencies, independent exact geometry and guard-page checks.
+Current QSound/timing/owner/exit/save/startup regressions yield87,053 scoped
+checks total with570 actual GPU images/Presents. The shared vector approximation
+model is not independently revalidated against hardware by these comparisons.
+The fresh image is still the SEGA logo; full gameplay and acoustic3D are unproven.
+The full original sound module compiles but its unexecuted audit still has17
+missing provider names and4 existing data-import bindings to repair (21 unresolved
+symbols). Next recover real vector length/sine/cosine/square-root providers,
+repair shared native data imports, then actual streams/state and the complete
+sound queue. No dummy camera/player/stream services were introduced.
+Prior qualified source/proofs and ten public support artifacts preserve hashes.
+New authored source/docs/proof metadata await reviewed daily publication.
+Full English PC/FPS8K/SUPIR/vertex-Off, actual Chao VMU emulator/widget and later
+platform scope remains required; see JP_BASED_PORT_GOAL.txt and JP_VMU_EMULATOR_PLAN.txt.
+
+Latest original QSound producer and copy-ownership family: JP_NATIVE_QSOUND.txt.
+Goal active; overall approximately 10%. Five actual Japanese source functions
+are linked in the qualified timed sound graph. SDK position bytes and original
+copy allocation/free behavior are preserved with native-width PC identities.
+18,469 new checks execute 3,292 complete original SH-4 calls without hooks.
+CPU/DMA command paths match the independent producer's full RAM/PCM through the
+real ARM driver, which supplies its own acknowledgements. These checks do not
+demonstrate audible spatial effects. Current timing/exit/owner/System/frame/save
+and startup regressions bring this build to 31,998 scoped checks, including
+570 actual GPU frames/Presents. Earlier 79,103-chain-check evidence is retained
+for the byte-identical presenter; it was not rerun for this family.
+Full game queue, spatial placement, streams and higher gameplay remain unfinished.
+Prior source/proofs and the ten public support build artifacts preserve hashes.
+New authored source/documentation/metadata await reviewed daily publication.
+The requested actual Chao VMU emulator, round-trip transfer and independent
+desktop LCD widget remain in JP_VMU_EMULATOR_PLAN.txt; they are not implemented.
+
+Latest elapsed-time firmware/PCM scheduling: JP_NATIVE_SOUND_CLOCK.txt.
+Goal active; overall approximately 10%. The actual original sound driver now
+advances from counted elapsed time through the native wait service, independently
+of caller/render cadence. Integer fractional samples and real output pressure
+retain debt; recovered output matches complete independently rendered note/RAM.
+3,289 new timing checks in19 fresh processes pass, including controlled60/120/240
+cadences, prime-frequency fractions, full-queue recovery, real QPC/window/frame
+waits with nonzero original audio, guarded callbacks, restart and fatal clock
+failure with a pending GDFS read. Terminal waits remain failed while their exact
+owned callbacks can retire safely; no clock reset masks the failure.
+10,245 graph regressions and79,103 original chain checks also pass:92,637 scoped
+checks total, including570 real GPU frames/Presents and29 original save calls.
+The actual SEGA capture is unchanged. Full game queue/spatial/streams, physical
+cycle fidelity, full-engine latency/synchronization and higher main remain
+unfinished. A driver test note and retail-derived screenshots stay local.
+Prior source/proofs and ten public support artifacts preserve their hashes.
+New authored code/docs/proof metadata await the next reviewed daily publication.
+Earlier entries retain their original scope; the entire requested project stands.
+
+Latest integrated sound/System/global shutdown: JP_NATIVE_SOUND_EXIT.txt.
+Goal active; overall approximately 10%. The actual compiled System now starts
+the original game sound owner and extends its existing early-exit registration.
+Ordinary shutdown permits real restart; early/final exit is terminal. Audio
+retires before GDFS/RTC/device/wait/heap. Failed cleanup retains its real token
+and unfinished resources for retry. A callback guard prevents nested exit from
+accidentally making ordinary shutdown terminal or losing restart authority.
+10,245 checks pass, including652 new checks in20 fresh processes, original
+sound/frame/note/save/System regressions and570 actual GPU images/Presents.
+Actual Windows PCM worker close and process exit0/70 paths are verified. The
+fresh SEGA startup image is unchanged; separate tests do not prove gameplay.
+Next qualify sustained firmware/audio timing independent of game/render FPS,
+then continue original queue/spatial/stream and higher main integration.
+Prior source/proofs and ten public support artifacts stay byte-identical.
+New authored source/docs/proof metadata await next reviewed daily publication;
+combined original binaries/retail assets remain private. Earlier entries below
+retain their historical scope. Full native/English/VMU/later-platform goals stand.
+
+Latest original game sound startup: JP_NATIVE_GAME_SOUND.txt.
+Goal active; overall approximately 10%. A compiled native owner now executes
+ten original game sound initialization functions with actual GDFS driver reads,
+guarded native loading memory, real stereo/mono configuration, both original
+driver boots, eight MIDI ports and39 independently checked startup commands.
+9,441 checks pass, including1,471 ownership checks in eleven fresh processes,
+actual Windows PCM/queue backpressure, real original frame callbacks, complete
+prior note/tail/RAM regressions,29 original save calls and570 GPU images/Presents.
+Startup failure rolls back; failed cleanup retains resources for safe retry.
+Next integrate global audio shutdown before shared System/GDFS/wait teardown
+and sustained audio timing. The full original game request queue, streams and
+higher main remain unfinished. The fresh SEGA image is unchanged; separate
+graphics/sound tests do not prove full audiovisual gameplay. Source/docs/proof
+metadata await the next daily review; combined original binaries stay private.
+Earlier entries below retain their historical scope and preserved evidence.
+
+Latest native frame sound integration: JP_NATIVE_SOUND_DISPATCH.txt.
+Goal active; overall approximately 10%. Original frame/vblank/step functions now
+dispatch through an actual sound-owner binding into the real SDK server. An
+unbound service reports no-init; it no longer returns diagnostic success.
+7,970 checks pass, including real GDFS driver/bank reads, full note/tail/RAM
+comparisons, creator-thread callback retirement,29 original save calls and570
+actual GPU images/Presents. The fresh SEGA startup capture remains pixel-identical.
+The actual game sound constructor/request queue and global audio ownership are
+unfinished; the request client and sound cleanup in this test are caller-owned.
+The entire game sound source compiles privately with native IDs and upstream
+GCC guards. Its actual full link still lacks27 symbols (23 absent provider names
+and four existing data exports needing DLL import declarations). No dummy
+settings, spatial/stream or init providers are added. Prior binaries/proofs and
+the same ten public support files retain their hashes. New source/evidence is
+queued for the next daily snapshot; no new playable build is claimed.
+
 Latest original bank/MIDI/command integration: JP_NATIVE_SD_COMMANDS.txt.
 Goal active; overall approximately 10%. Original SDK producers now download all
 112 audited Japanese MLT files (711 positive payloads), construct actual played
