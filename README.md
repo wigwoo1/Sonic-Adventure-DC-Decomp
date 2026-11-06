@@ -1,3 +1,18 @@
+Latest qualified native bootstrap card/font lifetimes: the existing System
+registration now owns real card/font claims, restart and early/final Exit.
+737 lifecycle checks and 4707 regression checks pass, including real save
+denial, bounded timeout/retry, sticky font failure and callback reentry.
+Overall approximately 10%; no playable PC executable or full gameplay yet.
+
+- [Scope and reproduction](outputs/sonic-adventure/JP_NATIVE_BOOT_LIFETIMES.txt)
+- [Qualification and hashes](outputs/sonic-adventure/analysis/jp_native_boot_lifetimes_package.json)
+- [Planned VMU Chao emulator/widget](outputs/sonic-adventure/JP_VMU_EMULATOR_PLAN.txt)
+
+Source and JSON evidence are public. Combined original SDK/game binaries,
+retail inputs and captures remain private. The source-matched prerelease has
+2,977 unchanged incomplete research build payloads and no playable EXE.
+Earlier milestone notes are preserved below.
+
 Latest qualified complete higher native bootstrap: original successful
 constructor order now executes with System-owned timed sound, rendering,
 VMU/card and peripheral providers. One explicit checked sound-error return

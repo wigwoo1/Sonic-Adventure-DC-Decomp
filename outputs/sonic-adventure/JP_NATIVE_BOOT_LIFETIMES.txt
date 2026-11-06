@@ -1,0 +1,112 @@
+Native main bootstrap: card/font lifetime and global exit qualification
+2026-11-06; whole project approximately 10% of weighted milestones.
+
+Status: scoped native lifecycle VERIFIED. This is an incomplete research
+integration, with no playable PC executable. Japanese source matching and GCC
+baselines remain preserved. Full gameplay, English localization, settings,
+Android, stereoscopic 3DS and VMU mini-game emulation remain unfinished.
+
+What changed
+
+The existing System bootstrap owner now acquires real card and original-font
+cleanup claims after the complete original system_boot_init constructor. It
+uses the SAME existing early-exit callback; there is no second registration.
+MainBoot delegates those resources to System instead of keeping parallel
+shutdown authority. The dependency direction remains MainBoot -> System ->
+Exit -> Frames. Exit does not import MainBoot or System; Frames imports only
+Windows system libraries. Earlier qualified source and proof hashes are intact.
+
+Claims identify actual providers in Frames. Card claims inspect genuine card
+work and native fiber state; font claims inspect the original print parameter,
+descriptor and real texture payload. No replacement game state or successful
+initializer is fabricated. Tokens increase across ordinary restart, belong to
+their creator thread, and cannot be cancelled after terminal shutdown begins.
+Independent legacy destruction/replacement is rejected while a claim owns a
+provider. Reentry from active card callbacks/fibers and print packets is checked
+BEFORE global exit counters, terminal flags or bootstrap.started are changed.
+
+Ordinary/early System cleanup drains card, timed sound, GDFS, RTC, input and
+device, then retires the font and SDK heap. Final Exit adopts the same card/font
+tokens after its other claims succeed. It drains card before sound/core,
+quiesces the device, retires captured frame storage, and closes font before
+whole textures and the SDK heap. Legacy resource masks keep their meanings;
+CARD=1048576 and PRINT=2097152 must be explicitly covered by final binding.
+Rejected masks and later device claims preserve the original bootstrap owner.
+
+Timeout and failure behavior
+
+Actual queued saves are serviced through original buExecServer/fibers. A short
+lower-level deadline preserves the claim and dependent core resources. A real
+Windows file-sharing denial also reaches the global deadline: the original SDK
+keeps retrying/scanning free blocks, so cleanup must retain ownership. Tests
+keep the denial in place until the actual original completion reports failure,
+then retry cleanup. The entire previous VMU image stays byte-identical. No
+successful save is manufactured. A failing sticky font release similarly
+retains the font and dependent SDK heap until the caller corrects the error.
+The font observer reads actual state without clearing a sticky texture error.
+
+VMU store and LCD endpoints are borrowed, not silently adopted by System/Exit.
+They remain caller-owned until explicitly closed, and their real image locks
+can then be reacquired. Tests use fresh disposable images, never user saves.
+An early exit cannot close a device while a caller-owned captured frame is
+live: it reports the real block, retains the font obligation and leaves captured
+font bytes readable until the caller releases that frame and retries. Final
+exit intentionally ends selected frame-storage lifetimes before font teardown.
+
+Verification
+
+737 checks in 15 fresh subprocess cases cover ordinary restart, early and final
+exit, incomplete masks, late claim rejection, a real ten-block pending save,
+bounded timeout/retry, actual denied writes, sticky font failure/retry, card
+callback and print-packet reentry, wrong-thread access, retained captures and
+production process exits. Independent FAT/directory walking verifies all ten
+saved blocks and exact payload bytes. Actual successful syBtExit exits 0;
+actual failed cleanup exits 70. Native fiber counts and Windows thread/fiber
+conversion are checked after cleanup.
+
+4707 selected regression checks passed on this new graph:
+- 458 complete-constructor checks, including missing driver, corrected retry,
+  late render/texture failure, real font GPU capture and fatal startup exit 72.
+- 293 unchanged foreign-owner preservation checks.
+- 652 unchanged sound ownership/early/final exit checks.
+- 3269 elapsed-time firmware/PCM/wait/backpressure checks (timing-dependent
+  assertion counts can vary; the actual report is authoritative).
+- 35 unchanged original sound-placement behavior checks.
+
+The audit verifies 144 unchanged reused Frame objects, five deliberate provider
+replacements plus one new lifetime object, 55 unchanged prior copied artifacts,
+17 preserved qualification packages, actual PE imports, cleanup order, shared
+data imports and the unchanged pinned upstream source/original parent object.
+Combined reported qualified scopes: 941072. Checks are not routine counts or
+an estimate of how much gameplay works. No new gameplay is claimed here.
+
+Build and evidence
+
+Private build: work/sonic-adventure/jp-native-boot-exit-v4
+Private provider baseline: work/sonic-adventure/jp-native-boot-lifetimes-v7
+Runtime: work/sonic-adventure/jp-native-boot-exit-check-v7
+Constructor regression: work/sonic-adventure/jp-native-boot-exit-parent-regression-v4
+Audit: work/sonic-adventure/jp-native-boot-exit-audit-v2
+Public proof: analysis/jp_native_boot_lifetimes_*.json
+
+Reproduce with a locally supplied pinned upstream tree, preserved qualified
+baseline build, matching Japanese retail track and the documented host compiler:
+
+python -B outputs/sonic-adventure/jp_port_tools/build_native_boot_lifetimes.py
+  --workspace WORKSPACE --baseline BASELINE --output FRESH_PROVIDERS
+python -B outputs/sonic-adventure/jp_port_tools/build_native_boot_exit.py
+  --workspace WORKSPACE --baseline FRESH_PROVIDERS --output FRESH_BUILD
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_boot_exit.py
+  --workspace WORKSPACE --build FRESH_BUILD --track TRACK03 --output FRESH_CHECK
+
+Each command above is one line when entered in PowerShell. Use different empty
+output paths; builders/verifiers reject existing directories. The public source
+contains authored adapters/tools and proof hashes. External original source,
+retail assets, generated combined game/SDK DLLs, test images, captures and
+toolchain bundles stay private. Published support builds are incomplete research
+artifacts, not this private combined DLL graph and not a playable port.
+
+Model guidance: Sol High is appropriate for the next native game-initialization
+integration. Luna is suitable for routine documentation/reporting against frozen
+evidence. Escalate upward through Sol levels only for demonstrated difficulty;
+never request a downgrade merely to fill an escalation sequence. Goal active.

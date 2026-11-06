@@ -1,3 +1,15 @@
+Latest qualified native bootstrap card/font lifetimes: JP_NATIVE_BOOT_LIFETIMES.txt.
+Overall approximately 10% of weighted milestones; goal active.
+The existing System registration now owns actual card/font claims, ordinary
+restart, early exit and final Exit handoff. Real pending saves, denied writes,
+sticky font errors and callback reentry retain cleanup authority until resolved.
+737 lifecycle checks and 4707 regression checks pass. Combined reported qualified
+scopes: 941072; test counts are not routine counts or a completion percentage.
+Original source/proofs are preserved; combined SDK/game DLLs and assets stay
+private. Full game_init, gameplay, English/settings and later ports remain.
+See analysis/jp_native_boot_lifetimes_package.json for scoped proof/hashes.
+Earlier milestone notes remain unchanged below.
+
 Latest qualified complete higher bootstrap: JP_NATIVE_MAIN_BOOT.txt.
 Overall approximately 10% of weighted project milestones; goal active.
 The original high-level initializer now executes with native sound, rendering,
