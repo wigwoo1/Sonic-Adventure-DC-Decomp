@@ -1,0 +1,114 @@
+Original ADXT native music and voice player
+
+Status: VERIFIED for the scoped runtime evidence below. Overall project estimate
+remains approximately10% of weighted milestones; goal active. The preserved
+Japanese matching build is a source baseline. Native gameplay, English content,
+graphics/settings and later-platform ports remain unfinished.
+
+The four complete pinned modules adx_inis.c, adx_tlk.c, adx_tlk2.c and adx_tsvr.c
+now compile and link into the existing native sound module. All54 source-defined
+functions are retained, plus the original syTmrDiffCount from sh4tmr.c. This
+supplies the eleven ADXT function dependencies previously missing from the
+original game's stream task. Its remaining data import and fixed-address work
+setup still need integration before that task can run safely.
+
+One lifetime and clock
+The actual eight ADXT records remain the player registry. Native APIs allocate
+guarded,32-byte-aligned music/voice work, and free it only after the actual player
+has retired. Initialization preserves live lower file streams, renderers, joints
+and error callbacks. It neither reinitializes shared pools nor registers another
+vblank callback. Explicit parent shutdown rejects an active ADXT owner. Global
+shutdown retires ADXT first, followed by ADXF, ADXSTM, RNA, SDK/G2/AICA and GDFS.
+Rejected cancellation/cleanup retains its player/work for creator-thread retry.
+An ADXT-owned error callback is restored to the previous callback after cleanup;
+a subsequent external registration is preserved.
+
+The existing AICA frame counter schedules one complete original ADXT server step
+per735 frames at44100Hz, or60 logical steps per second. Polls without new audio
+time do not accelerate it. Each SDK service catches up at most eight steps and
+retains outstanding work. While ADXT is active, its complete original server
+replaces the individual automatic lower servers, avoiding duplicate execution.
+The existing sound clock/output worker remains the only real-time output owner.
+Rendering at60/120/240FPS is separate from this audio cadence; whole-game FPS
+behaviour is not established by these audio tests.
+
+Native repairs
+- Work alignment uses uintptr_t; invalid channels, undersized/overflowing work
+  and nonpositive server frequencies are guarded. Partial constructors reserve
+  the real slot and clean up nullable subcomponents without dereferencing NULL.
+- File/AFS/memory-start failures balance the original critical-section lock.
+  Failed archive lookups are checked before opening a range. Stops drain actual
+  deferred SDK transfers before interrupt-masked cleanup and preserve a lower
+  stream when cancellation/close fails. No transfer or ARM acknowledgement is
+  fabricated.
+- Preparation uses actual renderer room rather than the original constant-zero
+  ADXRNA_GetNumRoom stub. Finished short streams can begin once data is ready.
+- A finite decoded tail is padded once through the actual output joints to the
+  renderer's16-sample transfer unit. At most15 zero samples are appended. Retail
+  headers/sample totals remain unchanged; final ADXT_GetTime returns that total.
+- Original RNA wrap mirrors are four-byte synchronous CPU writes through the
+  existing real SDK/G2 path. They no longer report short streaming-DMA warnings
+  or silently change the global transfer mode. Actual streaming blocks retain
+  the selected CPU/DMA mode, bounds/alignment checks and completion mechanism.
+
+Verification
+The current seven fresh-process ADXT cases pass40,404 checks. They cover native
+ownership and ABI, all three partial joint-allocation failures, real hardware
+port exhaustion/rollback, preservation of unrelated live lower records, timer
+wrap/random cases, thread/reentrancy guards, audio-frame cadence, pending-read
+global cleanup, callback restoration and clean restart.
+
+Complete unmodified Japanese EVENT_ADX.AFS clip0 plays37975 mono samples at
+22050Hz. Complete FISHMISS.ADX plays214913 stereo samples per channel at44100Hz.
+Every decoded sample is compared with an independent integer or original-step
+binary32 recurrence. Actual RNA source chunks and final PCM/padding are checked
+in actual sound RAM. All mixed ARM-firmware PCM bytes agree between separate
+CPU and DMA runs. Real DMA runs start111 and597 transfers respectively. The
+declared streams reach the original PLAYEND state and exact final sample time.
+An automatic native-wait run verifies complete voice playback using the same
+existing muted output worker. Timed snapshots compare retained ring data;
+intermediate bytes already overwritten between snapshots are covered by the
+separate exhaustive offline runs.
+
+Current earlier audio suites are rerun against the new DLL graph. The original
+RNA verifier is preserved; verify_native_rna_mirror.py changes its old intentional
+short-copy-error case to require clean valid22.05kHz mirrors. Its reentrancy test
+now delivers an explicit error-channel probe through a real queued SDK DMA
+completion while the native sound service owns its busy guard. This checks
+actual callback timing, context, copied bytes and rejected nested shutdown.
+The exact current counts and proof hashes are in analysis/jp_native_adxt_package.json.
+
+Reproduce locally
+Use build_native_adxt.py with --workspace, --upstream, --baseline, --inputs and
+--output. The baseline is the qualified ADXF build; inputs are the privately
+prepared genuine ADXT matching includes. The build uses the preserved compiler
+commands, including the RNA module's required include paths/warning adaptation.
+Use fresh private output directories. Run verify_native_adxt.py with --workspace,
+--build, --track and --output. The Japanese disc and firmware must be supplied
+locally. Public source contains the authored adapters/workflow and proof hashes;
+external game/SDK source, matching text includes, binaries and audio stay private.
+
+Remaining work
+The original game stream module still has fixed work at0x0cca8000 and a shared
+adxpd_internal_error data import. Its original SERVER_FREQ is20; adapt its
+expectation to the qualified native60Hz service when integrating it. Verify its
+actual music/voice task, simultaneous streams, requests, fades, stop/restart,
+interludes and resource failures. Loop callbacks, arbitrary memory/ACX inputs,
+all2088 voice clips and every music track are not qualified by this milestone.
+Raw memory starts retain the original trusted-buffer contract; they are not
+bounded public file APIs. Long playback, device changes and game-wide audio
+behaviour need further qualification. No new gameplay screenshot was produced
+by this audio-library task. Private WAV captures demonstrate actual supplied
+ARM-firmware output, and are excluded from public snapshots.
+
+Provenance/publication
+Upstream pin:25a3d3154dbe657325e97dbe8c5291086f6af5c0. Original source and
+Japanese matching/GCC files are unchanged. All older qualified authored source
+and proof hashes are preserved. Failed/intermediate private builds and diagnostic
+evidence are retained. Combined original game/SDK binaries are not published.
+Public build archives remain source-matched, incomplete research artifacts with
+no playable EXE. No retail disc, firmware, sample, texture, model or capture is
+included. The full native port is not complete.
+
+Next model: Sol High for actual game stream ownership/scheduling integration.
+Luna Low is suitable for routine documentation after this integration milestone.

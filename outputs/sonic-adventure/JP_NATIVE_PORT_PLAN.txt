@@ -1,3 +1,20 @@
+Latest verified original ADXT music and voice player: JP_NATIVE_ADXT.txt.
+Goal active; overall approximately10% of weighted milestones. Four complete
+original modules retain54 source-defined functions, plus the original timer
+helper, in the existing native sound/System owner.40,404 new checks verify full
+unmodified Japanese voice and music playback, independent decoded samples,
+actual sound RAM, identical CPU/DMA firmware output,60Hz audio-frame scheduling,
+partial creation rollback and global cleanup.521,637 current scoped checks pass.
+All eleven missing game-stream ADXT functions now resolve. The original game
+stream task still needs its shared error flag and fixed work addresses adapted;
+simultaneous streams, looping and native gameplay remain unfinished. Retail
+samples/captures and combined SDK/game binaries remain private. Public research
+archives retain2,977 unchanged payloads, newly bound to this source snapshot.
+All previous qualified authored source/proof hashes remain intact. Next integrate
+the actual original game music/voice task with native owned storage and verify
+its requests, transitions and lifecycle. The Japanese matching/GCC baseline is
+preserved; English integration, graphics/settings and later platforms remain.
+
 Latest verified original native AFS/archive layer: JP_NATIVE_ADXF.txt.
 Goal active; overall approximately10% of weighted milestones. Complete original
 ADXF now links20 exports in the same sound/System/GDFS/ADXSTM ownership graph.

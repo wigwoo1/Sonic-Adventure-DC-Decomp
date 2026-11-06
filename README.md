@@ -1,3 +1,22 @@
+Latest verified original ADXT music/voice player:54 original source functions
+and the original timer helper now link into the same native sound/System owner.
+40,404 new checks verify complete unmodified Japanese voice and music playback,
+independent decoded samples, actual sound RAM and byte-identical CPU/DMA mixed
+firmware output.521,637 current scoped checks pass. Overall estimate remains
+approximately10%; goal active.
+
+- [ADXT scope, reproduction and remaining work](outputs/sonic-adventure/JP_NATIVE_ADXT.txt)
+- [Exact current verification package](outputs/sonic-adventure/analysis/jp_native_adxt_package.json)
+
+All eleven original game-stream ADXT function dependencies are now resolved.
+The stream task still needs shared error data and fixed work addresses adapted;
+looping, simultaneous streams and native gameplay remain unfinished. No new
+scene was tested. Retail audio/captures and combined SDK/game binaries remain
+private. Public archives are source-matched incomplete research artifacts with
+2,977 unchanged build payloads and no playable EXE.
+
+Earlier snapshot scope notes are retained below.
+
 Latest verified original ADXF archive/file layer:20 original exports now use
 the existing sound/System/GDFS/ADXSTM owner.4,627 new checks verify every one
 of2,088 Japanese voice-file ranges and2,088 added-archive entries, complete
