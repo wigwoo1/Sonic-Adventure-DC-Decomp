@@ -1,0 +1,64 @@
+Superseded by the qualified component scope in JP_NATIVE_EFFECTS.txt.
+Current build v10 links; original draft/export notes below are preserved history.
+Overall approximately 10%; goal active; the full game remains unfinished.
+
+Original effects queue and bank-loading integration -- DRAFT, NOT QUALIFIED
+
+Whole-project estimate remains approximately 10%. Goal active.
+The preserved Japanese matching/GCC baseline is separate from native-port
+progress. English localization, complete gameplay and later ports are unfinished.
+
+New authored files:
+  native/jp_native_effects.h
+  native/jp_native_effects.inc
+  jp_port_tools/build_native_effects.py
+  jp_port_tools/effects_observation.inc
+
+The builder adapts pinned upstream source into a NEW private build directory.
+It adds the original request/slot queue and file-bank loading to the existing
+SDK/game sound translation unit, sharing its MIDI/QSound table and native owner.
+Original missing rival/player/debug/stage state definitions and six stage
+getter/setter helpers are selected from their real source files. Existing
+character state remains imported from the previously qualified frame module.
+The two placement/editor drawing callbacks are not yet integrated.
+
+frame_wait_step in src/system/frame.c invokes sound_send_queue. Queue update
+counts belong to that logical update path, not graphics FPS or the independent
+60 Hz ADXT server. Actual integration cadence is not yet runtime-qualified.
+
+Bank files are read through real GDFS into guarded, sector-rounded host memory.
+The existing bounded MLT validator feeds the original SDK downloader. Individual
+bank downloads use synchronous transfers; staging is retained if real transfers
+remain pending, and cleanup follows the existing G2/SDK lifetime. These changes
+are implemented in draft source but have not been exercised with retail banks.
+
+Observed build scope:
+  work/sonic-adventure/jp-native-effects-v5/effects_compile_attempt.json
+  - expanded SDK/game sound C compiled with no diagnostics
+  - expanded native owner C compiled with no diagnostics
+  - final DLL link FAILED: Clang split the DATA export suffix into another
+    linker argument, and the linker tried to open a file named DATA.
+No effects DLL is qualified, no native effects playback is verified, and no
+new playable build or new test count is claimed. Earlier qualified DLLs remain
+the operational baseline. The new source is not a completed effects feature.
+
+Two focused shared-data export approaches were attempted: declaration export
+attributes (rejected because earlier original headers declare plain externs),
+then linker exports (failed because Clang splits -Wl comma arguments).
+The current builder prepares -Xlinker followed by each complete export argument.
+That correction is saved for review; no further build was attempted after the
+two-approach limit. The next task is to inspect/approve those commands, link in
+a fresh directory, then test actual banks, queue timers, native IDs, priorities,
+spatial/QSound behavior, stream coexistence, failure paths and shared cleanup.
+
+Earlier draft-generation/path failures remain private as v1-v4 evidence.
+An inherited compile command briefly rewrote an older object's COFF timestamp.
+It changed no code/symbol/relocation bytes and was restored byte-for-byte from
+the preserved game-stream copy. The restoration receipt is:
+  work/sonic-adventure/jp-native-effects-v3/ancestor_object_restoration.json
+All future compiler/linker output paths are explicitly checked to remain in
+the newly created build directory. Original source/proof files were preserved.
+
+Keep generated upstream C, combined game/SDK binaries, retail driver/banks,
+captures and disc inputs private. Public research archives remain incomplete,
+unplayable artifacts. Do not describe this draft as a verified effects update.

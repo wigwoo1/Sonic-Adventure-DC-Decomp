@@ -1,3 +1,19 @@
+Latest qualified original effects/bank scope: JP_NATIVE_EFFECTS.txt.
+Overall approximately 10% of weighted project milestones; goal active.
+51 additional original sound functions and six stage helpers now link in the
+existing sound owner. 39,862 checks cover actual file-bank loading for all112
+MLTs/711 payloads, original request timers/native IDs/MIDI commands, frame-wait
+queue dispatch, real effects PCM, complete concurrent music/voice/effects,
+voice-queue handoff, stage-bank selection fixtures and memory/lifetime guards.
+7,232 independent inventory checks establish file/ring bounds. CPU/DMA audio and
+RAM agree.466,291 selected earlier checks were rerun on this graph; prior source
+and proof hashes remain preserved. Combined distinct reported scopes:936,112.
+The full native main/stage loop, remaining placement drawing callbacks, new
+spatial SH-4 bit comparisons, English and later platforms remain unfinished.
+Public archives contain2,977 unchanged research build payloads; combined SDK/game
+DLLs, retail assets and audio/RAM captures stay private. No playable EXE.
+Previous milestone notes are preserved below.
+
 Latest verified original retail loop path: JP_NATIVE_GAME_LOOPS.txt.
 Goal active; overall approximately10% of weighted milestones.323,947 new runtime
 checks verify repeated unmodified retail loops, original EOS seek and decoder

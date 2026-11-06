@@ -1,0 +1,110 @@
+Original game effects queue, real sound banks and shared streamed audio
+Qualified scope: 2026-11-06. Overall approximately 10%; goal active.
+
+The native effects/file-bank DLL links in five clean compiler/linker steps.
+It adds 51 original functions from pinned src/sound/sound.c and six original
+stage getter/setter helpers. 66 of that module's 68 functions are retained;
+the two placement/editor drawing callbacks remain outside this integration.
+The Japanese source/matching/GCC baseline remains preserved. This is native
+component integration using that source, not 51 newly decompiled routines.
+
+Verified: 39,862 checks in eleven fresh processes
+- All 112 real Japanese MLT files, 2,324 bank records and 711 payloads pass
+  through original game file-loading functions, real GDFS, original SDK bank
+  producers and actual native transfers. Every byte of all 2 MiB of sound RAM
+  is independently predicted after every file. CPU/DMA results agree. Every
+  successful load releases its owned aligned sector-rounded staging.
+- Original slot requests preserve native-width identities, first-update timing,
+  finite/held lifetimes, refresh and stop behavior. Actual generated MIDI packets
+  match independent byte expectations. Mute holds the original queue timer;
+  unmute resumes it. Split-frame redraw suppresses new allocations. Exact near/
+  far spatial endpoints and actual imported camera storage are exercised.
+- The real frame_wait_step dispatcher invokes the same original queue. Source
+  auditing also establishes main's final queue call and the intermediate waits
+  in action/field step loops: N ordinary logical steps yield N queue calls.
+  These are separate from the independent 60 Hz ADXT server. The full native
+  main/stage game loop and all rendered-frame cadence combinations are unproven.
+- Real effects produce nonzero ARM/AICA firmware PCM from the supplied banks.
+  Complete effects PCM and sound RAM agree across CPU/DMA. Full original music
+  and voice playback, with effects and real bank loads while both play, also
+  agree across CPU/DMA. No driver acknowledgements or PCM are synthesized by
+  the fixture. WAV files are private generated output, not speaker recordings.
+- The original effects queue's voice branch forwards effect 1275 to voice 594,
+  reaches the final real archive entry and rejects out-of-range requests without
+  replacing the prior request. It requires the actual ready game stream/archive.
+  Effects mute/unmute reaches both original stream renderers at their respective
+  original levels.
+- Original stage selection is exercised with explicit shared stage/character
+  fixtures for all six primary characters and the casino Sonic/Tails branch:
+  seven stage-bank calls and 21 actual owned file loads. This is not stage
+  gameplay. Existing character state stays in its real frame-module provider.
+- Both allocation orders are protected: an MLT cannot overlap actual owned PCM
+  rings, and a new stream ring cannot overlap loaded bank ranges. Real factory
+  refusal preserves pool ownership and the original two-level error callbacks.
+  Wrong-format individual program-bank input is rejected before a copy. Real
+  missing-file/type errors recover without leaked staging.
+
+Independent inventory: 7,232 checks
+All 59 literal MLT references in the original sound module are present. The
+largest file is 1,405,440 bytes, within the 2 MiB staging bound. The game's three
+stream channels (stereo music plus mono voice) and a fourth channel fit every
+retail bank allocation. Five channels conflict with 109 bank files; seven or
+eight conflict with all 112. Runtime checks use actual allocations dynamically.
+
+The one original sound-slot table, MIDI ports and QSound owners are shared with
+previously qualified initialization/spatial/stream functionality. Missing rival,
+player, debug and stage variables are their pinned original definitions, with
+one actual owner each. 15 earlier original sound bodies, 19 linked objects and
+parent frame/presentation/System/GDFS DLLs retain their corresponding bytes or
+source bodies. No second queue, output worker, task pool or clock is added.
+
+Native lifetime changes
+Guarded VirtualAlloc staging replaces WORK_AREA. The existing bounded MLT
+preflight checks every source/destination span before original downloads.
+Individual bank variants validate their format, allocation size and alignment.
+Synchronous transfer completion is observed through the actual SDK/G2 path.
+An unfinished bank transfer retains storage and quarantines the owner; a file
+whose cancellation/close is unfinished is retained for ordered cleanup. Callback
+outputs cannot alias retained staging. Forced mid-bank device/I/O failure has
+not been runtime-qualified; this retention/quarantine branch is implemented and
+audited, and underlying cancellation/lifetime regressions are rerun separately.
+
+Remaining scope
+Positive standalone shot/sequence/program file loads, all new spatial floating
+operations versus original SH-4 bit results, placement zone/orbit drawing hooks,
+full stage/gameplay, English integration and later platforms are unfinished.
+Original internal raw exports keep trusted caller/thread/lifetime contracts;
+applications should use the bounded jp_effects_* native API. Physical console
+cycle/waveform accuracy is not established. This is not a playable game.
+
+Reproduce (use --help; all output folders must be NEW)
+Build: jp_port_tools/build_native_effects.py --workspace WORKSPACE
+  --upstream PINNED_JP_SOURCE --baseline work/sonic-adventure/jp-native-game-stream-v2
+  --output NEW_PRIVATE_BUILD
+Tests: jp_port_tools/verify_native_effects.py --workspace WORKSPACE
+  --build NEW_PRIVATE_BUILD --track USER_JP_TRACK03 --output NEW_PRIVATE_CHECK
+Audit: jp_port_tools/audit_native_effects.py --workspace WORKSPACE
+  --upstream PINNED_JP_SOURCE --build NEW_PRIVATE_BUILD --output NEW_PRIVATE_AUDIT
+Inventory: jp_port_tools/inventory_native_effect_banks.py --workspace WORKSPACE
+  --upstream PINNED_JP_SOURCE --track USER_JP_TRACK03 --output NEW_PRIVATE_INVENTORY
+Current build: work/sonic-adventure/jp-native-effects-v10
+Current eleven-case check: work/sonic-adventure/jp-native-effects-check-v3
+Audit: jp-native-effects-link-audit-v2; inventory: jp-native-effect-banks-inventory-v1.
+Authoritative scope/hashes: analysis/jp_native_effects_package.json.
+
+Original upstream remains external at 25a3d3154dbe657325e97dbe8c5291086f6af5c0.
+Combined original game/SDK DLLs, generated upstream C, retail driver/banks/discs,
+RAM and WAV captures stay private. Public source/evidence and research archives
+remain incomplete, unplayable artifacts. Public build payloads are unchanged.
+
+Historical draft/path/export/test-fixture failures are preserved under work.
+The shared-data export correction uses one literal -Xlinker argument per DATA
+export; the inherited output paths are checked to remain inside each new build.
+Earlier original source/proof hashes are preserved. Routine documentation and
+publication checks suit Luna Low; further game/platform integration suits Sol High.
+
+Selected prior suites rerun on this graph: PCM/PSTM, QSound, shared clock, RNA,
+retail ADX/RNA, ADXT, game-stream and repeated loops: 466,291 checks.
+Earlier reported scopes total 889,018; adding only the 47,094 new effects and
+inventory checks yields 936,112 combined scoped checks. Rerun checks are not
+added a second time. These counts do not measure whole-game completeness.

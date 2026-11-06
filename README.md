@@ -1,3 +1,20 @@
+Latest verified original effects queue and owned bank loading: 51 additional
+original sound functions and six original stage helpers are integrated with the
+same MIDI/QSound/stream/native owner. 39,862 checks cover all112 real bank files,
+711 payloads, actual MIDI/ARM effects, complete concurrent music/voice/effects,
+voice handoff, stage-selection fixtures and dynamic sound-memory protection.
+7,232 inventory checks supplement466,291 rerun checks from earlier suites.
+Overall approximately10%; goal active. Full gameplay/English/later ports remain.
+
+- [Effects scope, reproduction and remaining work](outputs/sonic-adventure/JP_NATIVE_EFFECTS.txt)
+- [Exact qualification and hashes](outputs/sonic-adventure/analysis/jp_native_effects_package.json)
+- [Planned VMU Chao emulator/widget](outputs/sonic-adventure/JP_VMU_EMULATOR_PLAN.txt)
+
+Source and verification evidence are public; combined original SDK/game DLLs,
+retail inputs and audio/RAM captures stay private. Source-matched prereleases
+contain2,977 unchanged research build payloads and no playable EXE.
+Earlier milestone notes are preserved below.
+
 Latest verified original retail music loop path:323,947 new runtime checks
 cover repeated unmodified retail loops, genuine EOS seeks and decoder traps,
 continuous independent sample history, actual buffer-capacity limits, boundary
