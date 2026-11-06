@@ -1,3 +1,27 @@
+Latest qualified Assets and character-texture cleanup ownership.
+The same actual providers now join System/MainBoot/bootstrap/final Exit. Live
+texture users,decoded views,borrowed loader work and model/action consumers
+block cleanup before resource mutation. Partial-load recovery,restart,card
+callback order and retry after late History failure pass with native providers.
+The existing ASSETS bit32 and original classic Exit cleanup remain intact.
+
+1,411 new scoped checks and12,769 selected regressions passed. All418 character
+texture images and711,168 pixels still match.20 other DLLs and all30 earlier
+qualification packages retain their hashes. Totals overlap,not routine counts.
+
+Overall approximately10%;no playable PC executable. Original set_character,
+Chao reset,automatic task/render views,3D drawing/animation and gameplay remain
+unfinished,along with English,enhancements and later platforms.
+
+- [Cleanup scope and reproduction](outputs/sonic-adventure/JP_NATIVE_ASSET_CHARACTER_EXIT.txt)
+- [Immutable qualification and hashes](outputs/sonic-adventure/analysis/jp_native_asset_character_exit_package.json)
+- [Earlier genuine character texture scope](outputs/sonic-adventure/JP_NATIVE_CHARACTER_TEXTURES.txt)
+
+Authored adapters/tools and JSON evidence are public. Original game/SDK/data C,
+combined modules,retail inputs and screenshots remain private. The matched
+prerelease contains2,977 unchanged incomplete research payloads.
+Earlier milestone notes remain unchanged below.
+
 Latest qualified genuine character textures and VQ mip completion.
 All eight original texture character IDs use 17 real lists and 418 entries in
 the same native texture owner. Actual retail loads, reference sharing, partial

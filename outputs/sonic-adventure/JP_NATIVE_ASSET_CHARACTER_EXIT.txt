@@ -1,0 +1,108 @@
+Native Assets and character-texture shutdown ownership - qualified research
+
+Whole-project estimate:10% weighted milestones. Goal active. No playable EXE.
+This milestone connects existing providers to safe native cleanup. It does not
+add playable characters, a main loop, localization or a new game renderer.
+
+What now works
+The same System/MainBoot/bootstrap/final Exit graph can own the actual Assets
+provider and the existing character texture owner. It retains the original
+character_users array, texture lists, SDK cache, decoded buffers and PVM owner.
+There is no second texture registry, asset provider or bootstrap callback.
+
+System can start Assets with copied path/options, then start character textures.
+It can also adopt independently initialized providers while the caller holds
+the existing main-initialization guard. Existing claimed owners cannot be stolen.
+ASSETS keeps its existing bit32; character textures use bit33554432.
+
+Retirement checks every relevant dependency before changing cleanup state.
+Live character users, decoded file views, borrowed SDK source/destination work,
+and existing live motion/model views block cleanup without invalidating them.
+The caller must release those views/users. Zero-user owned partial texture
+loads can recover through the actual existing Asset/PVM/texture error paths.
+
+Cleanup order is Character -> Assets -> Motion -> Card -> Queue -> History ->
+Sound -> core. Actual card-save callbacks see child resources already retired,
+while required parents remain alive. Later History failure retains completed
+capabilities so retry can finish without closing the same resources twice.
+Ordinary complete shutdown releases capabilities for restart. Final Exit keeps
+terminal authority and rejects late consumers. A new lifetime rejects old tokens.
+
+The classic unclaimed Exit ASSETS cleanup block is unchanged. Its explicit
+legacy contract can unbind/release a borrowed decoded loader view after task
+destruction. The new claimed route requires explicit caller retirement first.
+The regression suite tests both contracts with real native providers.
+
+Public interfaces
+  native/jp_native_asset_exit.h       same Assets capability,64-byte snapshot
+  native/jp_native_character_exit.h   same Character capability,48-byte snapshot
+  native/jp_native_system_assets.h    System start/adopt entry points
+  native/jp_native_exit_assets.h      existing bootstrap attachment entry points
+The matching .inc files are appended to private derived provider translation
+units by build_native_asset_character_exit.py. Frozen original files are not
+edited. A tiny appended memory-owner query observes its actual SDK source,
+PVM destination and busy state; it does not unbind or replace them.
+
+Verification and limits
+  10 clean compile/link commands with warnings treated as errors.
+  1,411 new checks in19 isolated lifecycle cases.
+  12,769 selected regression checks:8,199 character owner,3,049 character pixels,
+  530 complete initializer,918 motion ownership,73 classic Exit checks.
+  All418 texture images and711,168 pixels still match the raw-PVM oracle.
+  Real process exits0(success),70(blocked cleanup),66(unbound classic Exit).
+  20 other DLLs and all but3 Frame link objects remain byte-for-byte unchanged.
+  Original character loops, memory/PVM body, classic ASSETS cleanup, syBtExit
+  and final-claim rollback bodies are preserved. Local DLL imports are acyclic.
+The cumulative1,049,191 checks overlap across packages and are not routine
+counts, independent scenarios, gameplay coverage or a completion measurement.
+
+Forced allocator failure, token exhaustion and forced failed-claim rollback
+are not qualified. Automatic render/task model/texture view acquisition,
+original set_character and Chao reset,3D animation/skinning,GAME_MODE_BOOT and
+gameplay remain unfinished. The screenshot is the same diagnostic texture grid
+as the previous milestone, not a newly rendered character or gameplay image.
+
+Reproduce on the same Windows workspace
+Supply the pinned external Japanese source/toolchain and private prerequisite
+builds described in JP_NATIVE_CHARACTER_TEXTURES.txt. Public release archives
+omit combined original-game/SDK DLLs and retail inputs; they are not standalone
+playable builds. Original JP assets are read locally, never distributed.
+
+Use Python with -B and fresh output directories for every command. The builder
+requires --workspace, --baseline(the qualified character-textures build), and
+--output. It verifies the baseline, derives only the required provider units,
+compiles/relinks four DLLs and records exact source/object/command hashes.
+
+Run jp_port_tools/verify_native_asset_character_exit.py with --workspace,
+--build,--inputs(the prepared character-texture inputs),--track(the supplied
+JP track03.bin),and --output. Run the frozen character owner/pixel,game_init and
+motion Exit verifiers against that same build using their documented inputs.
+
+Run jp_port_tools/qualify_native_asset_character_exit.py --stage legacy with
+--workspace,--build,--inputs(the earlier jp-native-pvm-inputs-v1 directory),
+and --output. This runs five original classic cleanup/process-exit cases. Only
+its Python manifest lookup is adapted for the current build; native code and
+all selected original assertions remain unchanged. The older570-image full
+logo-loop suite is not rerun by this scoped regression.
+
+Run --stage audit with --workspace,--build,--baseline and --output. Finally,
+--stage package also takes --check,--owner,--pixels,--init,--motion,--legacy
+and --audit verification directories. It verifies proof/source/build hashes,
+preserves the prior30 qualification packages and writes a new package.
+analysis/jp_native_asset_character_exit_package.json is the authoritative
+scoped record; the source build remains conservatively marked unverified until
+read together with its qualification package.
+
+Publication
+Only authored adapters, tools, this guide and verification JSON are selected.
+Original source remains pinned externally. Retail files, generated original
+data C, private combined DLLs, toolchains, profiles and captures stay private.
+Historical research binaries retain their hashes. A new source-matched archive
+may change because its source-manifest reference changes, even when every
+archived DLL/import-library payload is unchanged. All builds remain incomplete
+research artifacts, not a playable port.
+
+Next: integrate the original set_character and genuine Chao-reset state with
+the existing character_current/save/save_slot/lives and qualified owners, then
+qualify real model/action render consumers. Sol High is appropriate for this
+integration; Luna Low is sufficient for routine documentation. No pause needed.

@@ -1,3 +1,19 @@
+Latest qualified Assets and character cleanup: JP_NATIVE_ASSET_CHARACTER_EXIT.txt.
+Overall approximately10% of weighted milestones; goal active. The same actual
+Asset/character providers now join System/MainBoot/bootstrap/final Exit. Live
+character users, decoded views, loader work and model/action views block cleanup
+before resources change. Zero-user partial loads recover; ordinary restart,
+card-callback order and retry after late History failure are verified. The
+existing ASSETS bit32 and original classic cleanup contract remain intact.
+1411 new scoped checks and12769 selected regressions passed; all418 original
+texture images and711168 pixels still match.20 other DLLs and all30 earlier
+qualification packages retain their hashes.1049191 cumulative scoped checks
+overlap; they are not game-routine totals or measured gameplay coverage.
+No playable EXE. Next:original set_character/Chao reset and real model/action
+render consumers.English/settings,VMU Chao emulator/widget and later platforms
+remain unfinished. Sol High suits the next integration; no pause is required.
+Previous milestone notes are preserved below.
+
 Latest qualified genuine character textures: JP_NATIVE_CHARACTER_TEXTURES.txt.
 Overall approximately 10% of weighted milestones; goal active.
 All eight original character texture IDs use 17 genuine lists and 418 entries
