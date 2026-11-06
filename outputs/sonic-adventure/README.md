@@ -1,3 +1,23 @@
+Latest verified original native AFS/archive layer: JP_NATIVE_ADXF.txt.
+Goal active; overall approximately10% of weighted milestones. Complete original
+ADXF now links20 exports in the same sound/System/GDFS/ADXSTM ownership graph.
+4,627 new checks verify all2,088 Japanese voice ranges, all2,088 added-archive
+entries, four complete real voice-file reads, guarded owned partition work,
+failed-load rollback, replacement/unload, pool exhaustion and global cleanup.
+Open files retain copied ranges after table unload; unrelated lower streams
+survive archive initialization/shutdown. Automatic timed archive reading uses
+the existing elapsed-time sound service.481,167 current scoped checks pass.
+Original game stream code now resolves ADXF_LoadPartition. Eleven actual ADXT
+services remain, plus correct shared ADXPD error-flag binding. Next integrate
+the genuine ADXT initialization/talk/settings/server modules without resetting
+live pools or adding a second scheduler/output owner, then replace fixed game
+stream work with native owned music/voice buffers. Voice-file loading is now
+verified; audible ADXT voices, full-song/looping/gameplay integration remain
+unfinished. Prior source/proof hashes and public build bytes are preserved.
+Retail inputs/clip buffers and combined original SDK/game binaries stay private.
+No new graphical scene or voice recording was tested. The full PC/English/FPS8K/
+SUPIR/vertex-colour Off/Chao VMU-widget/Android/stereo3DS/stretch scope is intact.
+
 Latest verified original continuous file streaming: JP_NATIVE_ADXSTM.txt.
 Goal active; overall approximately10% of weighted milestones. The complete
 original ADXSTM module now shares the actual sound/System/GDFS owner and

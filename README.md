@@ -1,3 +1,19 @@
+Latest verified original ADXF archive/file layer:20 original exports now use
+the existing sound/System/GDFS/ADXSTM owner.4,627 new checks verify every one
+of2,088 Japanese voice-file ranges and2,088 added-archive entries, complete
+selected voice-file bytes, guarded owned tables, rollback, unload/read lifetime,
+real pool exhaustion, timed service and global teardown.481,167 current scoped
+checks pass. Overall estimate remains approximately10%; goal active.
+
+- [Archive/voice-file evidence and next work](outputs/sonic-adventure/JP_NATIVE_ADXF.txt)
+- [Exact current verification package](outputs/sonic-adventure/analysis/jp_native_adxf_package.json)
+
+Original game code now resolves ADXF_LoadPartition; eleven ADXT services remain.
+Voice-file loading is verified; audible ADXT voice/full-song/gameplay integration
+remains unfinished. No new scene or voice recording was tested. Public archives
+are incomplete research artifacts with2,977 unchanged payloads bound to this
+source. Retail assets/captures and combined SDK/game binaries remain private.
+
 Latest verified original ADXSTM continuous file streaming:28 original exports
 now share the actual sound/System/GDFS owner.23,752 new checks cover full title
 file bytes, constructor rollback, real cancellation rejection, callbacks,

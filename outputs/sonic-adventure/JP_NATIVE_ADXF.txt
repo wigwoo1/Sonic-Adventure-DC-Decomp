@@ -1,0 +1,125 @@
+Original ADXF native archive partitions and file reads
+
+Status: VERIFIED for the archive, file-byte and ownership scopes below. Overall
+project estimate remains approximately10% of weighted milestones; goal active.
+Japanese matching source/build completion remains separate from unfinished
+native PC gameplay, English integration, settings and later-platform ports.
+
+What changed
+The complete original sdk/sofdec/adx_fs.c now links into the existing native
+sound module with20 original ADXF exports. It uses the real ADXSTM/GDFS file
+layer for archive-header loading, file-range selection and asynchronous reads.
+It shares the same System, creator thread, sound lock and elapsed-time service.
+No second archive catalog, file pool, clock or audio output client exists.
+
+The original16 ADXF file records and256 partition roots remain authoritative.
+Native lifecycle APIs own guarded partition-work allocations and report their
+sizes. Loading/replacing/adding a partition uses the actual original parser;
+a rejected load restores the previous actual root and releases temporary work.
+Successful replacement retires its previous owned storage. Added archives retain
+their original next links and entry precedence. Unload detaches the real table
+and releases only native-owned storage. Already-open file handles contain copied
+frame addresses/sizes and can continue reading after table storage is freed.
+
+The parent archive owner prevents independent lower ADXSTM shutdown while active.
+Global sound shutdown closes actual ADXF reads/temporary joints first, detaches
+partition roots and frees owned work, then retires lower streams/RNA/G2 before
+System closes the borrowed filesystem. Unrelated lower streams are preserved
+by ADXF initialization and explicit ADXF shutdown. Raw SDK interfaces remain
+internal and require proper caller-owned buffer and lifecycle contracts.
+
+Native adaptations and provenance
+Source pin:25a3d3154dbe657325e97dbe8c5291086f6af5c0. Original source is preserved
+as a pinned external dependency; combined original SDK/game binaries stay private.
+- Both scratch-buffer alignments now use uintptr_t. Original partition next
+  links retain native pointers: the native header is24 bytes, entries8 bytes,
+  and file records56 bytes. File/frame/sector fields retain original32-bit sizes.
+- Actual cancellation/close rejection retains the lower stream and its owned
+  joint instead of clearing parent pointers or freeing borrowed storage. Native
+  shutdown retains unfinished ownership for retry; it never fabricates completion.
+- Negative/missing/out-of-range partition or clip queries reject without reading
+  through NULL or beyond a table. Missing added-archive fallback entries also
+  check the base table. Empty/bad AFS headers and table-width overflow reject.
+- Native partition capacities are1..65535. Invalid capacities reject before the
+  original zero-file path can write an entry into insufficient work. Actual
+  source errors preserve the old partition in the owned native API. The original
+  raw parser's borrowed-work interface remains an internal caller contract.
+- Buffer read counts clamp at EOF before size multiplication or joint creation.
+  EOF returns zero instead of starting a zero-sized request/retrying indefinitely.
+  Native waits yield to real I/O; fatal read errors terminate the retry loop.
+- Loaded partitions retain the original packed-file representation: first offset
+  plus successive rounded sizes. Independent inspection confirms all2,088 entries
+  of this Japanese voice archive satisfy that representation. Added partitions
+  use their original explicit per-file offsets. This is not a claim that every
+  unrelated AFS layout can be represented by the packed loaded-table format.
+
+Build and tests actually run
+Private build:work/sonic-adventure/jp-native-adxf-v1. Five compiler/linker steps
+pass without diagnostics. Build-only status says runtime_unverified; the separate
+runtime report qualifies the actual scopes here.20 exports is a link inventory,
+not20 individually instruction-matched routines or a whole-game percentage.
+
+4,627 new checks pass in six fresh processes:
+-2,154 archive checks load the real Japanese EVENT_ADX.AFS and compare every one
+  of its2,088 file ranges with an independent read-only disc parser. The archive
+  has75,655,168 bytes. Native pointer/header widths, owned storage, all temporary
+  file/request releases, negative/unloaded/out-of-range queries, real malformed/
+  nonexistent source rollback, successful replacement and unload are checked.
+-2,136 overlay checks load that archive as an added table and compare all2,088
+  explicit ranges. A controlled sparse fixture changes actual table entries in
+  memory, exercising override precedence and loaded-table fallback without any
+  filesystem/provider hook. The original entries are restored before retirement.
+  Rejected additions preserve the actual linked chain and allocation count.
+-57 pool/lifetime checks exhaust all16 real ADXF metadata slots, verify failed
+  archive-load allocation rollback, slot reuse, full native pointer widths and
+  foreign-thread rejection. A real unrelated lower stream exists before archive
+  initialization and survives both initialization and ADXF shutdown.
+-194 read checks load complete real voice clips0,1,2 and2087. All477,558 content
+  bytes plus padding (483,328 sector-rounded bytes) agree with independent original
+  disc input. Destination guards, oversized-count clamping, exact read counters,
+  EOF, rewind and re-read pass. The last open file completes its actual read after
+  the partition table is detached/freed, proving its copied metadata lifetime.
+-38 cleanup checks keep a real archive read and external input joint pending in
+  the delegated System graph. A held callback gate rejects close while preserving
+  records and guarded table storage. Actual global shutdown then retires the
+  archive before its lower streams/filesystem, leaving no live owned work.
+-48 timed checks read an actual voice file through native window waits and the
+  existing elapsed-time sound service, with no explicit archive service call.
+
+The current build also passes fresh regressions for PCM/MIDI ports, stream joints,
+SJD/ADX decoding, sound math, QSound, sound clock, RNA, actual retail codec/output,
+the finite GDFS title pipeline and continuous ADXSTM music streaming. Exact total
+and per-suite actual counts are in analysis/jp_native_adxf_package.json; timing/
+queue-observation counts vary. Old source and proof hashes remain preserved.
+Only the combined SDK/game sound DLL changes; the previously qualified frame,
+System/Exit/GDFS/AICA/G2/output libraries retain their bytes. Prior compiled
+ADXSTM code is extended only with record-readback bridges needed by its parent.
+
+How to check and remaining work
+Open analysis/jp_native_adxf_runtime.json for every assertion and selected voice
+file digest, and analysis/jp_native_adxf_package.json for exact current source,
+build and regression-proof hashes. build_native_adxf.py and verify_native_adxf.py
+accept --help; use new private output directories, the pinned external source,
+qualified ADXSTM baseline and your Japanese track. Owned partition APIs are
+jp_adxf_partition_load/add/unload; they return jp_sound_error codes and expose
+the original source result through the native snapshot.
+
+This verifies voice-file selection/loading, not audible ADXT voice playback.
+No new graphical scene or new voice recording was tested. Previously qualified
+streamed title-music playback remains a regression; no game screenshot is implied.
+
+The original game stream task now resolves ADXF_LoadPartition from this actual
+module. Eleven genuine ADXT services remain, plus correct sharing of the existing
+ADXPD error flag. Next integrate adx_inis.c, adx_tlk.c, adx_tlk2.c and adx_tsvr.c
+in the same service/lifecycle. Their initialization must not reset live shared
+pools/partitions or add a second scheduler/output owner. Adapt work alignment and
+constructor rollback, allocate native music/voice work instead of fixed console
+addresses, then verify real voice/music starts, full songs/loops, switching,
+recovery, timing and global teardown through the actual game frontend.
+
+Public archives remain incomplete, unplayable research artifacts. Their2,977
+selected build payloads are unchanged and receive a current source binding.
+Retail assets, clip buffers/captures, toolchains and combined SDK/game binaries
+stay private. PC/English/60/120/240FPS8K/SUPIR/vertex-colour Off, Chao VMU/widget,
+Android/stereo3DS and final N64/PS1 scope is retained. Recommended next model:
+Sol High for ADXT and lifecycle integration; Luna Low for routine documentation.
