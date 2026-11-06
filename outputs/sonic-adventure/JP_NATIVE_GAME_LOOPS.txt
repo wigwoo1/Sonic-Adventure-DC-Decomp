@@ -1,0 +1,104 @@
+Original retail music loops through the native game task
+
+Status: VERIFIED for the scoped loop/header evidence below. Overall project
+estimate remains approximately10% of weighted milestones; goal active. The
+Japanese matching/GCC source baseline is preserved. Native gameplay, English,
+graphics/settings and later-platform ports remain unfinished.
+
+This milestone qualifies the existing game/SDK implementation. No production
+C, original source, compiled object or DLL was changed or rebuilt. The exact
+qualified game-stream build and earlier source/proof/binary hashes are checked.
+New work consists of repeatable qualification, independent header inventory and
+documentation. It advances the real original music path, not a replacement
+loop player, shortened file or synthetic callback/seek.
+
+Actual loop playback
+The original game music task requests unmodified Japanese JINGLE_5.ADX. Its
+header declares1194791 samples/channel at44100Hz. The loop runs from sample
+136352 to1194788, with byte offsets153600 and1344372. Audio begins at byte204.
+The first natural loop is about27.1 seconds into the source; its repeating span
+is about24.0 seconds. These positions/header bytes are never rewritten.
+
+Four fresh-process runtime cases pass323,947 checks:
+- CPU and DMA paths each traverse two complete original decoder loops and then
+  continue decoding. Every reported output sample matches the independent
+  step-aware binary32 recurrence, including predictor history across loops.
+- The real file EOS callback seeks to sector75 before the decoder trap reaches
+  the loop end. The original callback addresses and full-width player contexts
+  remain installed. Offline snapshots check exact trap resets of source sample,
+  trap count and compressed offset; there are no substituted callbacks.
+- Actual output free capacity limits the original producer. The test observes
+  shortened/blocked producer steps with sufficient compressed input and checks
+  that output never exceeds the real available capacity. No producer chunks are
+  borrowed out of order, and no artificial queue or completion is used.
+- All captured mixed ARM-firmware PCM bytes and full2MiB sound RAM agree between
+  separate CPU and DMA runs. CPU starts no DMA; DMA retains real transfers across
+  loop boundaries. A bounded private WAV spans the actual first loop boundary.
+- A new request at the first natural boundary executes the real stop/start
+  path, resets the original loop/decoder counters, keeps the same actual task,
+  players and native work, and decodes a fresh independently verified prefix.
+- Automatic elapsed-time playback reaches a real loop using the existing native
+  wait, sound clock and single muted output worker. A wait may deliver several
+  audio steps, so timed snapshots validate consistent post-loop continuation;
+  exact callback-entry resets and every sample are covered offline. Independent
+  compressed-source cursors/sample modeling apply to the offline cases only.
+
+The original ADXB stereo pad-accounting quirk is retained and modeled explicitly.
+Its block counter counts both channels when compared with a per-channel limit.
+Some samples at the end of a step are uncounted and overwritten by the next step.
+The independent verifier follows the actual original step accounting and full
+decoded predictor history; it does not silently replace this with a different
+decoder or a modern decoder's output. Host-core equality is not a new physical
+Dreamcast timing measurement.
+
+Header inventory and remaining asset caveat
+A further755 checks compare native original header results with independent
+big-endian decoding for all109 standalone Japanese music files present in the
+disc.79 have loop metadata and30 do not. Every loop start is sector/block aligned,
+every loop range is within its declared samples/file, and byte offsets match the
+original interleaved stereo-block layout. This is metadata qualification; it
+does not claim runtime playback of all79 tracks.
+
+The game declares110 music IDs. NIGHTS_K.ADX appears in its enum/filename table
+but is absent from this pinned Japanese disc inventory. The named identifier was
+found only in that enum/table in pinned C sources; indirect numeric requests were
+not excluded. No substitute retail audio is created or silently supplied. Any
+later use/localization of that ID needs explicit asset/request verification.
+
+Verification scope and reproduction
+Use jp_port_tools/verify_native_game_loops.py with --workspace, --build, --track
+and fresh private --output. The build is the qualified native game-stream graph.
+It uses the actual original task scheduler, ADXT/SJD/ADXSTM/GDFS/RNA and supplied
+ARM firmware. The disc fixture is an independent read-only oracle, not production
+I/O. Provide the matching local Japanese input/firmware yourself; they are never
+included in public source or research archives.
+
+inventory_native_game_loops.py takes the same four arguments and produces only
+field metadata and hashes, without retail header/audio bytes. Existing reports
+remain immutable. The final runtime source was rerun for all four cases after
+correcting test observation issues. An earlier invalid producer-pressure fixture
+and an overly strict timed observation remain private diagnostic evidence. Only
+the confirmed stuck test process was terminated; production code was unchanged.
+
+The new runtime/inventory scope is324,702 checks. The earlier564,316 checks remain
+bound to the exact unchanged native graph and preserved source/proof hashes;
+they were not needlessly rerun. Combined qualified scopes total889,018 checks.
+Read analysis/jp_native_game_loops_package.json for exact hashes and scope.
+There is no new gameplay screenshot from this audio task. Private WAVs can be
+played locally; retail captures and combined game/SDK binaries are not published.
+
+Next work
+Integrate the original effects request/slot queue, sound_send_queue and actual
+bank loading with these existing stream/MIDI/QSound/native owners. Audit existing
+renamed providers and previously qualified selections before recovering anything
+again. Verify actual effect banks and mixed music/voice/effects without another
+queue or audio client. Wider loop tracks, failures, stages, game-wide audio and
+playable gameplay remain unfinished, along with English and later-platform work.
+
+Source pin:25a3d3154dbe657325e97dbe8c5291086f6af5c0. All previous authored
+source/proofs, matching/GCC and USA research are preserved. Public source contains
+authored integration/workflows/evidence. Archives remain source-matched incomplete
+research artifacts with unchanged historical build payloads and no playable EXE.
+
+Next model: Sol High for original effects-queue/bank integration. Luna Low is
+suitable for routine documentation after difficult integration work is complete.

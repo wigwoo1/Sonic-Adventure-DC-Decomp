@@ -1,3 +1,19 @@
+Latest verified original retail loop path: JP_NATIVE_GAME_LOOPS.txt.
+Goal active; overall approximately10% of weighted milestones.323,947 new runtime
+checks verify repeated unmodified retail loops, original EOS seek and decoder
+trap callbacks, continuous independent sample history, actual output-capacity
+limits, boundary restart and timed playback. All CPU/DMA mixed firmware PCM and
+full sound RAM agree.755 additional checks classify109 present music files,
+including79 looping headers.110 IDs are declared; NIGHTS_K.ADX is absent from
+this Japanese disc inventory. No substitute audio is introduced.
+No production C, object or DLL changed. Earlier564,316 scoped checks remain
+bound to unchanged hashes; combined qualified scopes total889,018. Next integrate
+the original effects request/slot queue, sound_send_queue and actual bank loading
+with existing stream/MIDI/QSound/native owners, auditing already qualified renamed
+providers first. Wider tracks, effects, English and native gameplay remain
+unfinished. Previous source/proof hashes and public build payloads are preserved;
+archives remain source-matched incomplete research artifacts with no playable EXE.
+
 Latest verified original game music/voice task: JP_NATIVE_GAME_STREAM.txt.
 Goal active; overall approximately10% of weighted milestones. The complete
 original stream.c retains24 source-defined functions and19 original exports in

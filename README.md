@@ -1,3 +1,25 @@
+Latest verified original retail music loop path:323,947 new runtime checks
+cover repeated unmodified retail loops, genuine EOS seeks and decoder traps,
+continuous independent sample history, actual buffer-capacity limits, boundary
+restart and timed playback. CPU/DMA mixed firmware PCM and full sound RAM agree.
+755 additional checks classify109 present music files, including79 looping
+headers. The game declares110 IDs; NIGHTS_K.ADX is absent from the disc inventory.
+
+No production source, object or DLL changed. Earlier564,316 scoped checks remain
+bound to unchanged hashes; combined qualified scopes total889,018 checks. Overall
+estimate remains approximately10%; goal active.
+
+- [Loop scope, reproduction and remaining work](outputs/sonic-adventure/JP_NATIVE_GAME_LOOPS.txt)
+- [Exact current qualification](outputs/sonic-adventure/analysis/jp_native_game_loops_package.json)
+
+The next production task is the original effects request/slot queue and actual
+bank loading in the existing stream/MIDI/QSound/native sound owner. Wider loop
+tracks and native gameplay remain unfinished. Retail data/captures and combined
+SDK/game binaries stay private. Public archives are source-matched incomplete
+research artifacts with2,977 unchanged build payloads and no playable EXE.
+
+Earlier snapshot scope notes are retained below.
+
 Latest verified original game music/voice task:24 source-defined functions,
 including19 original exports, now run through the real game task scheduler and
 existing native sound owner.42,706 new checks verify requests, simultaneous
