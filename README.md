@@ -1,3 +1,29 @@
+Latest qualified genuine character textures and VQ mip completion.
+All eight original texture character IDs use 17 real lists and 418 entries in
+the same native texture owner. Actual retail loads, reference sharing, partial
+recovery and restart pass. All 418 entries render to 711,168 independently
+decoded original pixels; one native test-window capture shows texture samples.
+The missing smallest VQ mip now has primary-backed format/bounds coverage.
+
+29,742 new scoped checks and 7,308 selected regressions passed. The real full
+initializer, model/action views, character textures, file I/O, History/audio and
+explicit consumer retirement coexist. Twenty-two other DLLs and every earlier
+source/proof hash remain preserved. Totals overlap and are not routine counts.
+
+Overall approximately 10%; there is no playable PC executable. Automatic
+character-texture cleanup authority, full character changes, 3D character
+drawing/animation and gameplay remain unfinished, along with English,
+enhancements and later platforms.
+
+- [Character texture scope and reproduction](outputs/sonic-adventure/JP_NATIVE_CHARACTER_TEXTURES.txt)
+- [Immutable qualification and hashes](outputs/sonic-adventure/analysis/jp_native_character_textures_package.json)
+- [Earlier System/Exit motion ownership](outputs/sonic-adventure/JP_NATIVE_MOTION_EXIT.txt)
+
+Authored adapters/tools and JSON evidence are public. Original game/SDK/data C,
+combined modules, retail inputs and screenshots remain private. The matched
+prerelease contains 2,977 unchanged incomplete research payloads.
+Earlier milestone notes remain unchanged below.
+
 Latest qualified motion ownership now joins the same System, MainBoot and Exit.
 Live consumer views safely block cleanup; final handoff, ordinary restart, real
 card callbacks and save-failure recovery pass. This snapshot also publishes the

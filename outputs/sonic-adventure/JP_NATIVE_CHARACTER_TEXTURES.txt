@@ -1,0 +1,137 @@
+Genuine native character textures and the smallest VQ mip level
+Scoped qualification, 2026-11-06; overall approximately 10%; goal active.
+
+Status: VERIFIED within this texture/data/reference/pixel scope. There is no
+playable PC executable. Japanese matching/GCC source baselines remain preserved.
+Full set_character, automatic character ownership in System/Exit, task/render
+view acquisition, 3D character drawing/animation, GAME_MODE_BOOT and gameplay
+remain unfinished. English, enhancements, VMU Chao emulator/widget and later
+platforms remain planned work.
+
+What changed
+
+Seventeen genuine original texture lists and their arrays now live in the SAME
+Frames module and use its existing texture/memory/PVM/PRS/file owners. They cover
+all eight original texture character IDs: Sonic, Eggman, Tails, Knuckles, Tikal,
+Amy, E-102 and Big. These are texture IDs; the checked motion selector separately
+accepts only its six original playable-character choices. No second texture
+registry or duplicate canonical motion/model data is introduced.
+
+Twelve preserved source units supply 34 data definitions. Their 418 texture
+entries, filename contents and initial scalar fields match the supplied Japanese
+executable or actual TIKAL_PROG.PRS image, with full-width native pointers.
+The original character_users table, per-character file/list tables and three
+load/release/release-all C bodies are retained. Guards around real dependency
+calls stop a failed load before the original logical-user increment.
+
+One source array, e102hit_textures, is declared const but its original list casts
+away const and the actual loader writes handles/attributes into it. Its native
+copy uses writable storage with the same initial values. The original source is
+unchanged. Other selected texture definitions are unchanged.
+
+The checked owner validates character ranges before indexing, enforces the
+creating thread and bounds the original signed-byte user count at127. A second
+logical user shares the existing bindings without another file load. Only the
+last normal release retires SDK references. release_all is an explicit operation
+retiring ALL character users; caller tasks/draw submissions must already be done.
+Shutdown requires users and partial work to have retired. The APIs borrow real
+initialized texture/video/memory and asset providers and do not close them.
+
+A missing second Sonic file and a real insufficient texture table both retain
+actual partial bindings/pending PVM references. Clear the reported native error,
+then recover explicitly; references are not silently abandoned. The repaired
+condition can then be retried. Foreign-thread and invalid-character/output calls
+reject without changing ownership or caller output.
+
+This owner must be closed BEFORE its borrowed providers/System are retired.
+Automatic System/Exit character-texture authority is not yet implemented. The
+full-parent test explicitly closes character users and their borrowed asset
+provider before releasing real model/action motion views and letting System close.
+Future texture/task/render consumers must maintain those real lifetime contracts.
+Exported raw definitions are diagnostics/shared-module data, not a bypass for
+unchecked mutation. Output buffers must be valid, writable and disjoint from
+owned storage. Keep the DLL and borrowed providers alive until users close.
+
+Rendering found the earlier decoder's explicitly deferred VQ1x1 mip gate. A
+new authored extension includes the frozen decoder unchanged and delegates every
+previously supported path to it. Only the smallest VQ mip adds new behavior:
+2049 encoded bytes are required, with byte2048 selecting a codebook vector and
+its bottom-right (texel3) colour supplying the1x1 value.
+
+Primary implementation reference, pinned for reproducibility:
+https://github.com/flyinghead/flycast/blob/7adbf3caef251b153e348df3f469a0f35878339d/core/rend/TexCache.cpp#L535
+The VQMipPoint table and both mip conversion branches establish this format
+contract. No Flycast code is included in production. The primary source's full
+bytes remain a private reference with a recorded SHA256. This is source-backed
+format verification, not a claim of comparison with captured Dreamcast pixels.
+
+The original SDK first reuses an already listed globalIndex before parsing a
+later payload. Real E-102 files exercise that rule: E102HIT entries can share an
+earlier effects texture even when the later archive's dimensions differ. The
+pixel oracle independently derives the effective first-loaded image from real
+file/chunk order. It does not replace these aliases with different textures.
+
+Build and verification
+
+Sixteen compile/link commands passed with warnings as errors and zero diagnostics.
+A GNU-quoted response file preserves the exact expanded link arguments beyond
+Windows' command-length limit. Existing Frame objects and four earlier GPU
+objects are retained; only the authored decoder object is replaced in GPU.
+Twenty-two other DLLs, the motion selector/data/owner and all prior proof hashes
+remain unchanged. Actual PE imports remain acyclic; GPU exports are preserved;
+unchecked original/private helper entry points are not exported.
+
+8,199 character checks cover original definitions, all eight real file loads,
+logical sharing, signed overflow, simultaneous characters, release-all, genuine
+partial-load recovery, foreign callers and ordinary restart.
+
+3,049 graphics checks render all418 actual list entries through retained native
+frames and D3D, comparing711,168 native-size pixels with an independent raw-PVM
+oracle. Observed formats include twiddled RGB1555/565/4444, original mip chains,
+VQ, mipmapped VQ and linear textures. Comparisons use opaque point filtering,
+neutral mip bias and the largest level. Full original mip chains are uploaded;
+these tests do not establish every filtering/alpha/LOD or hardware behavior.
+
+18,443 new VQ1 checks cover6,144 combinations of all original sides, all256
+codebook indices and three colour formats, exact read/write bounds, alias rejection
+and a real no-access guard page immediately after the required input. A read of
+the neighbouring index byte would fault. The frozen decoder regression passes
+5,860 checks after removing only the obsolete VQ1-UNSUPPORTED expectation.
+
+51 complete-parent checks use the actual original game_init, original Sonic
+motion/model/action views, real character file loads and two further actual
+presentations. Live views block parent cleanup. Explicit character retirement,
+subsequent real file I/O/History work and automatic System motion cleanup pass.
+The unchanged initializer and motion lifecycle suites add530 and918 regressions.
+
+Total new scoped checks:29,742. Selected regressions:7,308. Combined reported
+qualified scopes:1,047,780 overlapping checks, not counts of game routines or
+measured gameplay coverage. All29 previous frozen packages were validated.
+
+A private512x256 screenshot captures a real Win32 test window showing Sonic
+texture samples. It is read before Present discards the backbuffer and the same
+frame is actually presented. It is a texture-loader diagnostic, not gameplay or
+a rendered3D character. Retail-derived screenshots stay outside publication.
+
+Reproduce from the workspace in PowerShell (substitute Python/local input paths;
+use NEW output directories and preserve frozen baselines and attempts):
+
+python -B outputs/sonic-adventure/jp_port_tools/prepare_native_character_textures.py --workspace . --track "LOCAL-JP-DISC/track03.bin" --output work/sonic-adventure/NEW-character-inputs
+python -B outputs/sonic-adventure/jp_port_tools/build_native_character_textures.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --inputs work/sonic-adventure/NEW-character-inputs --baseline work/sonic-adventure/jp-native-motion-exit-v3 --output work/sonic-adventure/NEW-character-build
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_character_textures.py --workspace . --build work/sonic-adventure/NEW-character-build --inputs work/sonic-adventure/NEW-character-inputs --binary work/sonic-adventure/jp-ninja-math-reference/1ST_READ.BIN --output work/sonic-adventure/NEW-character-check
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_character_texture_pixels.py --workspace . --build work/sonic-adventure/NEW-character-build --inputs work/sonic-adventure/NEW-character-inputs --output work/sonic-adventure/NEW-character-pixels
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_vq1_mip.py --workspace . --build work/sonic-adventure/NEW-character-build --primary work/sonic-adventure/jp-native-vq1-primary-v1 --output work/sonic-adventure/NEW-vq1-check
+
+Preparation reads the preserved WSL sa-dc-source-review GCC checkout with its
+full original target/include flags; it does not change that checkout. The local
+Clang toolchain, private baseline objects and referenced sources must be present.
+The pinned primary-reference folder contains TexCache.cpp and primary.json; its
+source SHA256 is recorded in analysis/jp_native_character_textures_vq.json.
+
+Public evidence and authored code exclude original game/SDK bodies, generated
+texture C, retail PRS/executable/module files, combined DLLs, profiles, references
+and screenshots. Research prereleases remain incomplete and unplayable.
+Next integrate same-parent character-texture authority, original set_character
+and Chao reset state with actual shared save/lives fields, followed by genuine
+model/action consumers. Sol High suits this integration; Luna Low suits routine
+documentation. No goal pause is required.

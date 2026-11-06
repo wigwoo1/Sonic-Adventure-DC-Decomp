@@ -1,3 +1,25 @@
+Latest qualified genuine character textures: JP_NATIVE_CHARACTER_TEXTURES.txt.
+Overall approximately 10% of weighted milestones; goal active.
+All eight original character texture IDs use 17 genuine lists and 418 entries
+in the same native texture owner. Real file loads, reference sharing, partial
+recovery and restart pass. All 418 entries render to 711168 independently
+decoded source pixels. The formerly deferred VQ 1x1 mip now has primary-backed
+format/bounds checks and complete-chain GPU upload support. One actual test
+window shows Sonic texture samples; this is a diagnostic, not gameplay.
+29742 new scoped checks and 7308 selected regressions passed; 29 prior packages
+and 22 other DLLs remain preserved. Combined scopes: 1047780 overlapping checks,
+not game-routine totals or measured gameplay coverage. The actual full-parent
+test also passes real file/History/audio/cleanup after explicit consumer release.
+Next integrate automatic character-texture authority, original set_character
+and Chao reset state with existing shared save/lives fields, then actual model
+and action consumers. 3D character drawing, animation, BOOT and gameplay remain
+unfinished. Japanese source baselines stay preserved; English, settings and
+later ports remain incomplete. No playable native EXE exists.
+This verified scope is included in the reviewed GitHub snapshot; publication
+receipts are tracked separately. Original game/SDK/data C, combined DLLs, retail
+inputs and screenshots remain private. See analysis/jp_native_character_textures_package.json.
+Earlier milestone notes remain unchanged below.
+
 Latest qualified same-System motion ownership: JP_NATIVE_MOTION_EXIT.txt.
 Overall approximately 10% of weighted milestones; goal active.
 The same actual motion owner now joins existing System/MainBoot/bootstrap/final
