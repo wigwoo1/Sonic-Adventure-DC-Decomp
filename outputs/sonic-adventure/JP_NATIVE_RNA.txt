@@ -1,0 +1,119 @@
+Original RNA/mwSnd native audio middleware (2026-11-05 local)
+
+Status: VERIFIED for the scoped middleware tests below. Retail file streaming
+and the playable PC port remain unfinished. Overall project estimate remains
+approximately 10% of weighted milestones; the goal stays active.
+
+What changed
+The actual native sound owner now links five complete, pinned upstream modules:
+mw_sdbuf.c, mw_rnaer.c, mw_sdcs.c, mw_rna.c and adx_rnas.c. Their 116 middleware
+exports are available in the private combined SDK/game build. This export count
+does not mean 116 individually matched or newly decompiled game routines.
+Original Japanese source pin: 25a3d3154dbe657325e97dbe8c5291086f6af5c0.
+
+RNA's original chunk borrowing, sound buffers, PCM ports, transfer completion,
+playback and sample-position polling use the existing SDK/G2/AICA graph. Once
+initialized, RNA runs automatically in the existing native sound-clock service.
+There is one existing Windows output client. The audio worker does not execute
+game code. syTmrGetCount samples the shared 781250Hz native clock, retaining
+32-bit wrap behavior and exposing failed/backwards clock sources explicitly.
+
+Native ownership prevents service or teardown from foreign threads and rejects
+reentrant shutdown from middleware error callbacks. Shutdown first stops further
+input borrowing, drains actual queued DMA callbacks, stops/destroys the original
+renderers, drains final stop/reset commands, and retires the borrowed error
+callback. The underlying SDK, G2, firmware and output remain alive until then.
+An outer callback gate blocks cleanup while preserving the live resources for
+retry. Caller-owned joints and their buffers must outlive every renderer using
+them; the future ADXT owner still needs to enforce this across file streaming.
+
+Native adaptations and preserved evidence
+- A failed mwSndOpenPort allocation now frees buf[j] in its rollback loop.
+  The original used buf[i] after that loop's counter reached the channel count,
+  leaving the allocated buffer live and potentially selecting an invalid slot.
+- Both original RNA silence arrays are explicitly aligned to 32 bytes. A native
+  compiler otherwise placed them at 16-byte boundaries, which the real DMA
+  adapter correctly rejected during silence flushing. DMA validation remains.
+- Native pointers retain their full width. Existing compiler/GCC compatibility
+  repairs and the real G2 callback gate remain in use. Generated source records
+  identify the exact original modules and authored transformations.
+- Four genuine private data includes are regenerated with upstream data.py
+  --bodies from the supplied, hash-checked Japanese binary and preserved matching
+  listings/dependencies. They match the prior matching build byte for byte.
+  Placeholder --texts output is not used. Original listings, generated includes,
+  failed-attempt diagnostics and earlier source/proof hashes remain preserved.
+- The test fixture reads the actual 32-bit middleware port-count fields at their
+  correct width and explicitly selects CPU or DMA transfer mode. The bootstrap
+  defaults to DMA; naming a test CPU alone would not select that mode.
+
+Build and tests actually run
+Private current build: work/sonic-adventure/jp-native-rna-v6. All nine new compiler
+and linker steps pass without diagnostics. The build-only report's historical
+status ends in unverified; the separate runtime report qualifies the scopes here.
+
+5,436 new checks pass across nine fresh processes:
+- 20 shared-clock checks cover cold ownership, native 32-bit wrap, fractional
+  conversion, failed/backwards providers, frozen error state and explicit recovery.
+- 65 pool/ownership checks cover all four real mono ports, failed fifth allocation,
+  release/reuse, foreign callers, callback retirement and actual global shutdown.
+- 1,245 CPU and 1,246 DMA checks feed 24,576 authored stereo frames through actual
+  ring joints and RNA. An independent sample-order model checks held source chunks,
+  every byte of both 16KiB AICA rings including untouched bytes, and three wraps.
+  Real MASARU firmware renders 26,112 frames. Every output PCM byte and the entire
+  final 2MiB AICA RAM match across CPU and DMA modes; PCM is nonzero. CPU starts
+  no new DMA; DMA completes 207 actual transfers. There are no fake ARM ACKs.
+- 36 cleanup checks shut down the actual System graph with a pending DMA and
+  borrowed source chunk. A temporarily masked gate preserves state until released.
+- 2,380 callback checks use the original 22050Hz short-copy diagnostic/fallback
+  path. The borrowed 64-bit context survives, reentrant teardown is rejected, and
+  the complete authored stream still drains without leaking its buffers.
+- 146/149/149 timed checks at 60/120/240 window-wait cadences use automatic RNA
+  service and the one existing, muted Windows output session. Driver sample
+  positions advance independently of those cadences; System retires live RNA.
+  These are audio timing tests, not verified full-game FPS modes.
+
+The exact current scoped total is 443,687 checks, including existing suites
+rerun against this same build: PCM/MIDI 22,976; joints 63,993; streaming decoder
+2,981; ADX core 31,714; sound math 293,998; QSound 18,472; sound clock 3,304;
+retail codec 60; Windows output 753; plus RNA 5,436. Retail codec regressions
+cover 108,680 Japanese frames and output regressions cover 88,200 frames.
+Timing/queue observation counts can vary between runs; reports retain actual
+counts. Original frame/System/Exit/device/filesystem/AICA/G2/output DLL bytes
+and all prior qualification source/proof hashes remain preserved.
+
+The retail decoder tests and authored RNA tests are separate. A real Japanese
+SJD-to-RNA title prefix has not yet been verified. No new graphical scene was
+tested, so there is no new game screenshot for this audio milestone.
+
+Remaining work and next milestone
+First verify an unaltered Japanese TITLE.ADX prefix through actual SJMEM, SJD,
+ADXB/ADXPD, contiguous stereo output joints, RNA, SDK transfers and AICA, using
+an independent decoder/sample-order model. Stop at an explicitly stated prefix;
+do not rewrite the retail header or imply full-song completion.
+
+Then recover the genuine ADXT/ADXF/ADXSTM frontend and native music/voice buffer
+ownership, sharing the real error flag and the existing System sound owner.
+The game task still compiles with twelve missing ADXT/ADXF services. Fixed
+0x0cca8000 stream storage must become properly owned native memory. Real GDFS/
+AFS lookup, loop/time/volume behavior, cancellation and teardown require end-to-
+end verification. Full sound-queue, game-state, main and gameplay integration
+remain unfinished. English, FPS/render controls, SUPIR/HD textures, vertex-colour
+texture Off, Chao VMU emulator/widget and later platforms remain planned work.
+
+How to check and reproduce
+Open analysis/jp_native_rna_package.json for exact authored source/proof hashes
+and analysis/jp_native_rna_runtime.json for all nine cases and their assertions.
+Use prepare_native_rna_inputs.py --help, build_native_rna.py --help and
+verify_native_rna.py --help with new private output directories. Required local
+inputs include the pinned upstream source, preserved matching build/listings,
+qualified PCM baseline, supplied Japanese binary/track and Windows compiler.
+package_native_rna.py binds the current build and all fresh regression reports.
+
+The public research archive retains the same 2,977 previously selected build
+payloads, including ten qualified authored native support files. It is regenerated
+to bind the current source manifest. Combined SDK/game/RNA binaries, retail data,
+RAM/PCM captures, caches, toolchains and credentials stay private. There is no
+playable executable, new game recording or acoustic/speaker verification.
+
+Recommended next model: Sol High / selected Sol Extra High for actual streaming
+and ownership integration. Luna Low is suitable for routine documentation.

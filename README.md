@@ -1,3 +1,18 @@
+Latest verified RNA/mwSnd audio infrastructure:5,436 new checks cover the
+original middleware's real CPU/DMA copies, full AICA ring contents, shared clock,
+callback ownership and pending-transfer cleanup. Every authored-stream PCM byte
+and the full2MiB final firmware RAM agree across CPU and DMA.443,687 current
+scoped checks pass with fresh regressions. The Japanese SJD-to-RNA title prefix,
+ADXT/file frontend and playable native game remain unfinished. Overall estimate
+remains approximately10%; goal active. No new graphical scene was tested.
+
+- [RNA evidence, native adaptations and next steps](outputs/sonic-adventure/JP_NATIVE_RNA.txt)
+- [Exact current verification package](outputs/sonic-adventure/analysis/jp_native_rna_package.json)
+
+Release archives remain incomplete research artifacts with2,977 unchanged build
+payloads bound to the current source manifest. Combined SDK/game/RNA binaries,
+retail inputs and RAM/PCM captures stay private. There is no playable executable.
+
 Latest verified native PCM ports: all25 original stream-port functions and11
 MIDI status readers now link in the actual shared sound owner.22,957 new checks
 include4,227 complete original entry calls. Real firmware produces26,460 authored

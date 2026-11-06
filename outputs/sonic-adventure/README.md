@@ -1,3 +1,19 @@
+Latest verified native RNA/mwSnd middleware: JP_NATIVE_RNA.txt.
+Goal active; overall approximately10% of weighted milestones. Five genuine
+original middleware modules now share the actual sound owner, frame clock,
+SDK/G2/AICA and existing Windows output.5,436 new checks cover real CPU/DMA
+copies, complete ring bytes/sample order, pending-transfer cleanup, borrowed
+callbacks, actual four-port capacity and automatic service at60/120/240 wait
+cadences. Every authored-stream PCM byte and all2MiB final firmware RAM agree
+between CPU and DMA; no second output client or fake driver acknowledgement.
+443,687 current scoped checks pass, including fresh PCM/decoder/math/QSound/
+clock/retail-codec/output regressions. These are audio infrastructure tests.
+The actual Japanese SJD->RNA title prefix and full ADXT/GDFS/AFS/frontend
+integration remain pending. Native gameplay, English and later features remain
+unfinished. No new graphical scene was tested. Historical source/proof hashes
+and existing public support build bytes are preserved. Combined SDK/game/RNA
+binaries and all retail data/captures remain private; no playable PC executable.
+
 Latest verified native PCM ports: JP_NATIVE_PSTM.txt.
 Goal active; overall approximately10% of weighted milestones. All25 original
 PCM-port functions and11 MIDI status readers now link in the actual shared
