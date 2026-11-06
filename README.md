@@ -1,3 +1,19 @@
+Latest verified original ADXSTM continuous file streaming:28 original exports
+now share the actual sound/System/GDFS owner.23,752 new checks cover full title
+file bytes, constructor rollback, real cancellation rejection, callbacks,
+automatic refill and global cleanup. A small native file ring feeds actual
+SJD/RNA/SDK/AICA title music; every decoded sample/full ring is checked and all
+89,344 firmware output frames/full2MiB RAM match across CPU/DMA.476,582 current
+scoped checks pass. Overall estimate remains approximately10%; goal active.
+
+- [Continuous file streaming evidence and next steps](outputs/sonic-adventure/JP_NATIVE_ADXSTM.txt)
+- [Exact current verification package](outputs/sonic-adventure/analysis/jp_native_adxstm_package.json)
+
+Full-song/ADXF/ADXT/AFS scheduling, timed retail music and playable gameplay
+remain unfinished. Public archives are incomplete research artifacts containing
+2,977 unchanged build payloads bound to current source. Combined SDK/game
+binaries and all retail data/captures stay private. No new scene was tested.
+
 Latest verified real Japanese title-music pipeline: native asynchronous GDFS
 feeds the unchanged title prefix through original SJD/RNA/SDK/AICA.9,159 new
 checks cover88,192 stereo source frames, ten sound-ring wraps, every decoded

@@ -1,3 +1,24 @@
+Latest verified original continuous file streaming: JP_NATIVE_ADXSTM.txt.
+Goal active; overall approximately10% of weighted milestones. The complete
+original ADXSTM module now shares the actual sound/System/GDFS owner and
+elapsed-time service, with28 original stream exports and23,752 new checks.
+All2,857,986 title-file bytes plus sector padding agree with independent disc
+input. Real cancellation rejection preserves pending chunks; constructor
+rollback, actual callbacks, timed automatic refill and global cleanup pass.
+An8192-byte compressed file ring now feeds original SJD/RNA/SDK/AICA music
+continuously.88,192 stereo source frames and all89,344 mixed firmware output
+frames/full2MiB RAM match across CPU/DMA; decoded samples/rings are checked
+independently.476,582 current scoped checks pass against the final native build.
+The music test is offline and prefix-limited, with real input prebuffering and
+128-frame rendering to honor shorter decoder steps at input-ring boundaries.
+Full-song/ADXF/ADXT/AFS music/voice and timed retail/gameplay integration remain
+unfinished. Next recover the actual ADXF partition/file layer, then ADXT and
+native owned game stream buffers. No second clock/output owner was introduced.
+Original source/proof hashes and all public support build bytes are preserved.
+Retail music/captures and combined SDK/game binaries remain private. No new
+graphical scene was tested; the broader PC/English/settings/VMU/platform scope
+remains intact.
+
 Latest verified native Japanese title-music pipeline: JP_NATIVE_RETAIL_RNA.txt.
 Goal active; overall approximately10% of weighted milestones. Original native
 GDFS now reads an unaltered retail TITLE.ADX prefix asynchronously in the same

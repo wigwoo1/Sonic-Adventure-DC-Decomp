@@ -1,0 +1,130 @@
+Original ADXSTM continuous native file streams
+
+Status: VERIFIED for the scoped file, ownership and retail-prefix tests below.
+Overall project estimate remains approximately10% of weighted milestones; goal
+active. The Japanese matching source/build is preserved. Native gameplay,
+English integration, rendering controls and later platforms remain unfinished.
+
+What changed
+The entire original sdk/sofdec/adx_stms.c now links into the existing native
+sound module, with28 original stream exports. Original GDFS requests refill
+caller-owned ring joints repeatedly rather than requiring a preloaded song
+prefix. The original SJD/ADXB/ADXPD decoder and RNA/SDK/AICA path consume them.
+This uses the existing System, filesystem, sound lock, frame clock and audio
+worker. No second reader owner, clock, shadow file pool or output client exists.
+
+jp_adxstm_initialize/service/shutdown/snapshot enforce the creating sound thread
+and existing sound lifecycle. Active streams are serviced automatically by that
+owner's SDK/elapsed-time path. Global sound shutdown cancels and closes actual
+file requests before RNA, G2 or the borrowed System filesystem is disposed.
+Caller-owned input joints/buffers remain alive until successful retirement.
+Stop the caller's decoder first: original ADXSTM_Stop resets its input joint.
+Full ADXT ownership of those decoder/joint lifetimes is still a later step.
+
+Native adaptations and provenance
+Original source pin:25a3d3154dbe657325e97dbe8c5291086f6af5c0.
+- All three original exhausted-pool constructors now check ADXSTMF_Create's
+  result before writing through it, and close the real file/range on failure.
+- Stop checks the real GDFS cancellation result. Rejection retains the request,
+  its borrowed chunk and joint contents. Close retains its stream record when
+  Stop or the native file close cannot finish. The native owner reports failed
+  cleanup and preserves its original error for an explicit retry; it does not
+  repeatedly invoke a rejected lifecycle operation or dispose borrowed storage.
+- File metadata query storage is initialized instead of exposing undefined
+  stack bytes when lookup fails. The original ignored OpenFileRange offset
+  argument and other valid-call behavior remain unchanged.
+- Stream records retain native pointers (136-byte record in this build).
+  The adapter uses the exact private header from the verified native GDFS build:
+  its120-byte handle widens pointer-bearing fid/fad fields. The unadapted header
+  would produce112 bytes on Windows and locate its used flag incorrectly. A
+  compile-time assertion and recorded header hash enforce that shared layout.
+- Original pinned source and prior qualified adapters/proofs are unchanged.
+  Generated whole-source bodies, failed builds and diagnostic variants remain
+  private. The new build changes only the combined SDK/game sound library;
+  previously qualified frame/System/Exit/GDFS/AICA/G2/output libraries retain
+  their bytes. Original source is a pinned external dependency for reproduction.
+
+Build and tests actually run
+Private current build:work/sonic-adventure/jp-native-adxstm-v4. Its four new
+compiler/linker steps pass without diagnostics.28 exports is a link inventory,
+not28 individually matched game routines or a whole-game completion percentage.
+Build-only status still says runtime_unverified; separate runtime evidence below
+qualifies the scopes actually executed. Exact hashes and fresh regression totals
+are recorded in analysis/jp_native_adxstm_package.json.
+
+23,752 new checks pass across eight fresh processes:
+-55 pool checks exercise32 original stream slots using controlled, unstarted
+  records with NULL GDFS and a real ring. These do not perform dummy file I/O.
+  All three failed real filename/range constructors release their real handles.
+  Foreign native callers reject; a successful real open/close reuses the pool.
+  The current System filesystem has eight file handles and serializes reads;
+  this is not a claim that32 simultaneous physical reads are supported.
+-5,556 full-file checks compare all2,859,008 sector-rounded bytes of TITLE.ADX
+  to an independent read-only disc parser. Its actual content is2,857,986 bytes.
+  Irregular consumer chunks, mirrored wraps,404 pressure passes, exact EOS,
+  full-width callback context, original READEND and handle release are verified.
+-56 contention/cancellation checks confirm that original GDFS rejects a
+  competing read and ADXSTM returns that request's entire borrowed free chunk.
+  A controlled internal raw Stop call uses GDFS's actual foreign-thread guard
+  to reject cancellation. The accepted request and buffer remain intact; the
+  creator then closes them successfully. Public native APIs separately reject
+  foreign callers before mutation; raw SDK calls are internal interfaces.
+-33 global-cleanup checks use a real pending file read and borrowed chunk in
+  the delegated System graph. A held outer callback gate rejects close without
+  discarding state. Releasing it permits actual System global shutdown.
+-53 EOS/reentrancy checks retain the actual callback's64-bit context and reject
+  nested native teardown while the existing sound owner is servicing the stream.
+-8,864 CPU and8,865 DMA checks stream88,192 real stereo title-music frames
+  through an8192-byte file input ring, actual SJD decoder, RNA and sound firmware.
+  Every decoder sample and both complete AICA rings match an independent step-
+  aware recurrence, across ten sound-ring wraps. Actual firmware renders89,344
+  stereo output frames including playback/drain timing. All mixed PCM bytes
+  and the entire final2MiB sound RAM agree across CPU/DMA. CPU starts no sound
+  DMA; the DMA run performs1,091 transfers. Output is nonzero; no fake ACKs.
+-270 timed-file checks read131,072 original file bytes with no explicit file
+  service call: the existing native window wait/elapsed-time sound path refills
+  the ring. It shares the existing AICA and unique muted Windows output worker.
+  This timed test consumes compressed file bytes, not decoded live retail music.
+
+The music tests prebuffer the actual first input ring through ADXSTM before
+decoding. They use128-frame explicit offline render quanta. Decoder steps can
+be shorter at compressed-ring boundaries; assuming one decoder pass always
+produces256 samples caused an invalid test schedule to starve playback. The
+current test allows real output backpressure instead. This is a deterministic
+offline integration test, not the final elapsed-time ADXT music scheduler.
+The original retail header/longer song length remain unchanged. A decoder trap
+limits the tested prefix; no synthetic end marker or full-song completion is
+claimed. Input/decoder/file retirement precedes RNA drain and joint disposal.
+
+Current-build regressions cover the prior PCM/MIDI ports, ring joints, streaming
+decoder, ADX codec, sound math, QSound, elapsed-time sound clock, RNA, retail
+codec/output and finite native-GDFS retail pipeline. Exact actual counts are
+retained in the package, since timing/queue observations vary across runs.
+All prior qualified source/proof hashes remain preserved. These are fresh runs
+against the new combined sound DLL; unchanged graphics are not counted again.
+
+How to check and next work
+Open analysis/jp_native_adxstm_package.json and
+analysis/jp_native_adxstm_runtime.json. build_native_adxstm.py and
+verify_native_adxstm.py accept --help and require new private output directories,
+the pinned source, qualified RNA baseline and your Japanese disc track.
+The local native-JP-title-ADXSTM-SJD-RNA-AICA-demo.wav is actual firmware-mixed
+output from the bounded streamed segment. Retail data, audio/RAM captures and
+combined SDK/game binaries stay private. No new graphical scene was tested.
+
+Next integrate complete original ADXF file/archive partitions, then ADXT init,
+talk/settings and scheduler modules. ADXF scratch alignment and ADXT work-buffer
+alignment truncate host pointers and need uintptr_t adaptations. Native partition
+records must retain pointers while preserving original32-bit file/sector fields.
+Do not reset live shared pools or add another vblank/audio owner through raw
+ADXT_Init. Reconcile the full frontend's server ordering with the current shared
+service rather than running duplicate independent schedulers. Replace the game's
+fixed stream-work address with native owned music/voice buffers. Verify AFS voice
+selection, full songs/looping, track changes, recovery and timed retail playback.
+
+Public research archives retain2,977 existing binary payloads, including ten
+qualified authored support artifacts, with a refreshed current source binding.
+They remain incomplete and unplayable. PC/English/FPS8K/SUPIR/vertex-colour Off,
+Chao VMU emulator/widget, Android/stereo3DS and final N64/PS1 scope is preserved.
+Recommended next model:Sol High for ADXF/ADXT and lifecycle integration. Luna Low
+is suitable for routine documentation.
