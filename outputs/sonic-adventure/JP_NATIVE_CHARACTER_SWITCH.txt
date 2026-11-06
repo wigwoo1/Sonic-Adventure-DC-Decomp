@@ -1,0 +1,125 @@
+Original character switching and Chao reset - qualified native research
+
+Whole-project estimate: about 10% of weighted milestones. Goal active.
+The matching Japanese source baseline is preserved. There is no playable PC
+executable, main game loop or newly rendered 3D character in this milestone.
+
+What executes
+The complete original set_character function now executes against the existing
+shared character_current, saves, save_slot and lives. It releases the old game
+texture reference, saves old lives, selects genuine original motion data,
+loads genuine character textures, restores/clamps target lives, and executes
+the actual Chao reset. Ten original function bodies and ten Chao state
+definitions are retained. Original source files are not rewritten.
+
+The six playable character IDs are 0(Sonic),2(Tails),3(Knuckles),5(Amy),6(E102)
+and7(Big). Their save-life indices are 0 through5. Eggman and Tikal texture IDs
+are still supported by the earlier texture owner, but are not extra playable
+save slots. The new checked entry rejects those IDs and invalid save slots.
+
+The same Character owner retains one game texture reference. Additional task
+or renderer consumers may acquire their own references. They must retire before
+the character changes. Public release/release_all calls cannot steal the game's
+last reference. jp_character_switch_retire releases that game reference without
+invalidating other consumers. Existing System/Exit ownership remains in force.
+No duplicate save state, character global, motion pack or texture registry exists.
+
+A pure query in the same Motion owner checks whether the original selector can
+run before old textures or saved lives change. Old/target primary motion views
+block selection. Shared canonical-model views remain usable through a switch.
+The query neither allocates nor changes motion state. An operation barrier in
+the actual Character owner protects the original sequence from unrelated
+character calls and parent cleanup.
+
+Truthful partial failure and recovery
+The original routine changes character_current before texture loading finishes.
+Checked dependency macros stop its remaining statements on a real failure.
+Stage1 releases old textures, stage2 selects motions, stage3 loads textures,
+and stage4 means the original lives/Chao tail completed successfully.
+
+After a failed texture load, recover resumes the unfinished operation. It does
+not rerun the original prefix and save old lives into the new character's slot.
+The continuation is the exact original post-texture source tail. The caller
+must clear the reported Asset/Memory/Texture error and keep the original save
+slot/current-character identity intact. A changed identity is rejected.
+An unavailable file remains a real failure. Restoring the correct local PRS
+file permits retry. System can instead abandon a zero-user partial switch by
+recovering and retiring its actual owned child/providers during shutdown.
+
+The Chao reset uses genuine records, animal-icon state and carried pointer.
+The retail routine's second clear targets the records again rather than its
+file-data buffer; those file-data bytes stay unchanged. That original behavior,
+the duplicate record-type stores, icon padding and other untouched bytes are
+preserved. This does not implement Chao garden gameplay or the planned VMU game.
+
+Verified scope
+  Five clean compile/link commands, with warnings treated as errors.
+  2,189 new checks in seven isolated actual full-parent native cases.
+  All36 playable old/target character pairs on all three save slots:108 matrix
+  cases, plus setup transitions. All3,552 shared save bytes are compared.
+  Signed lives include negative values, zero,3,4,9 and127.
+  Six complete original Japanese SH-4 Chao-reset executions independently
+  confirm the native record/icon/file/carried bytes. The original compiler
+  inlines carried clearing; actual record and memset calls execute in the trace.
+  Real missing-file failure, repeated failed recovery, exact successful resume,
+  caller-identity rejection and actual abandoned-operation cleanup pass.
+  Foreign-thread output sentinels, actual retained consumers, restart and final
+  terminal Exit are checked. Original game_init preserves shared current
+  character on restart; the new Character lifetime clears operation metadata.
+  14,107 selected regressions:1,411 asset/character authority,8,199 character
+  textures,3,049 pixels,918 motion ownership and530 complete initializer checks.
+  All418 texture images and711,168 pixels still match their independent oracle.
+  22 other DLLs and all31 preceding qualification packages retain their hashes.
+
+The cumulative1,051,380 scoped checks overlap across packages. They are not
+routine counts, independent scenarios or measured whole-game completion.
+Original code, private derived code, object providers, imports/exports and all
+source/proof hashes are audited. The24-module local DLL graph is acyclic.
+
+What remains
+Automatic task/render model/texture acquisition, actual 3D character drawing,
+animation/skinning, GAME_MODE_BOOT, the main loop and gameplay remain unfinished.
+Forced allocator failure and exhausted motion-generation/token conditions are
+outside this scope. The real texture-file failure path is verified. Normal
+model/motion/texture consumers still require explicit reference retirement.
+English/settings, the VMU Chao emulator/widget and later platforms remain planned.
+The latest image is the same diagnostic texture grid, not new 3D game content.
+
+Reproduction
+Use Python with -B and fresh private output directories. Prerequisites are the
+pinned Japanese source, original local inputs and earlier qualified builds in
+JP_NATIVE_CHARACTER_TEXTURES.txt and JP_NATIVE_ASSET_CHARACTER_EXIT.txt. Public
+archives do not include combined game/SDK DLLs or retail data and cannot launch
+a game by themselves. Preserve all old inputs and proof hashes.
+
+1. Run jp_port_tools/build_native_character_switch.py with --workspace,
+   --upstream(the pinned source),--baseline(the qualified Asset/Character Exit
+   build),and --output. It derives private units and relinks only Frames/Motion.
+2. Run jp_port_tools/verify_native_character_switch.py with --workspace,--build,
+   --inputs(the prepared original character-texture inputs),--track(the JP
+   track03.bin),--binary(the verified original 1ST_READ.BIN),--upstream and
+   --output. It executes actual game/SDK/native providers; none are success stubs.
+3. Run the frozen asset-authority,character-texture,pixel,motion-exit and complete
+   initializer verifiers against the same new build using their documented inputs.
+4. Run jp_port_tools/qualify_native_character_switch.py --stage audit with
+   --workspace,--build,--upstream,--baseline and --output. Then --stage package
+   takes --check,--authority,--texture,--pixels,--motion,--init and --audit
+   verification directories in addition to --workspace,--build and --output.
+   analysis/jp_native_character_switch_package.json is the authoritative scope.
+
+The public native header is native/jp_native_character_switch.h. Its snapshot
+is64 bytes. The .inc adapters extend the same private Character/Motion owners.
+The original unchecked set_character and Chao-reset internals are not exported.
+Diagnostic Chao views and original simple carried/record getters are private
+research interfaces, not a finished garden API. Direct shared-state mutation
+during an active or partial operation is forbidden.
+
+Publication retains authored code/tools, this guide and JSON evidence. Original
+source remains pinned externally. Retail inputs, generated original data C,
+combined DLLs, toolchains, profiles and captures stay private. Historical
+research binaries keep their hashes; the new archive references the new source
+manifest and remains an incomplete research artifact, not a playable port.
+
+Next: bind genuine model/action render consumers to the existing view owners
+and qualify a real first 3D character draw, followed by animation. Sol High is
+appropriate; Luna Low is sufficient for routine documentation. Goal stays active.

@@ -1,3 +1,21 @@
+Latest qualified original character switching: JP_NATIVE_CHARACTER_SWITCH.txt.
+Overall approximately 10% of weighted milestones; goal active. The complete
+original set_character now uses existing shared saves/lives/current character,
+real motion selection, real character textures and genuine Chao reset. All36
+playable old/target pairs pass on all three save slots. Failed loading stops
+the remaining original steps; retry resumes the exact lives/Chao tail without
+corrupting target saved lives. Actual partial abandonment, restart, retained
+consumers and final Exit pass. Original Chao bytes match retail SH-4 execution.
+2189 new scoped checks and14107 selected regressions passed. All418 texture
+images and711168 pixels still match.22 other DLLs and31 prior qualification
+packages retain their hashes.1051380 cumulative checks overlap; they are not
+routine counts or measured gameplay coverage. No playable PC executable.
+Next: genuine model/action render consumers and the first3D character draw,
+then animation. Automatic task/render references, GAME_MODE_BOOT, the main loop,
+gameplay,English/settings,VMU Chao emulator/widget and later platforms remain
+unfinished. Sol High suits the next integration; no goal pause is required.
+Previous milestone notes are preserved below.
+
 Latest qualified Assets and character cleanup: JP_NATIVE_ASSET_CHARACTER_EXIT.txt.
 Overall approximately10% of weighted milestones; goal active. The same actual
 Asset/character providers now join System/MainBoot/bootstrap/final Exit. Live

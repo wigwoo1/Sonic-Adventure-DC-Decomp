@@ -1,3 +1,28 @@
+Latest qualified original character switching and genuine Chao reset.
+Complete original set_character now uses the same saves,lives,current character,
+real motion selection and genuine character textures. All36 playable old/target
+pairs pass on all three save slots. Actual Chao state matches original Japanese
+SH-4 execution. Failed loading stops the remaining original steps; recovery
+resumes the exact lives/Chao tail without corrupting target saved lives.
+
+2,189 new scoped checks and14,107 selected regressions passed. Retained consumers,
+partial abandonment,restart and final Exit are verified. All418 texture images
+and711,168 pixels still match.22 other DLLs and31 prior qualification packages
+retain their hashes. Cumulative totals overlap and are not routine counts.
+
+Overall approximately10%;no playable PC executable. Actual3D character drawing,
+animation,automatic task/render views,GAME_MODE_BOOT,the main loop and gameplay
+remain unfinished,along with English,enhancements and later platforms.
+
+- [Character-switch scope and reproduction](outputs/sonic-adventure/JP_NATIVE_CHARACTER_SWITCH.txt)
+- [Immutable qualification and hashes](outputs/sonic-adventure/analysis/jp_native_character_switch_package.json)
+- [Earlier Asset/Character cleanup](outputs/sonic-adventure/JP_NATIVE_ASSET_CHARACTER_EXIT.txt)
+
+Authored adapters/tools and JSON evidence are public. Original game/SDK/data C,
+combined modules,retail inputs and screenshots remain private. The matched
+prerelease contains2,977 unchanged incomplete research payloads.
+Earlier milestone notes remain unchanged below.
+
 Latest qualified Assets and character-texture cleanup ownership.
 The same actual providers now join System/MainBoot/bootstrap/final Exit. Live
 texture users,decoded views,borrowed loader work and model/action consumers
