@@ -1,3 +1,22 @@
+Latest qualified static Sonic model rendering: JP_NATIVE_CHARACTER_TREE.txt.
+Overall approximately 10% of weighted milestones; goal active. The native test
+now renders the genuine original Sonic tree with real retail textures and a
+palette loaded through the original native read queue.73 nodes and28 models
+emit1,001 real triangles. Two actual Win32 backbuffer captures show textured
+Sonic and the same mesh with texture sampling Off using vertex/material colours.
+Off binds no textures or samplers and uploads no texture data. The settings UI
+remains unfinished. This is a static rendering test,not gameplay or animation.
+6664 new scoped checks and5768 selected regressions passed,including1,280
+original SH-4 vector-scale calls. All prior Frame objects,23 other DLLs and32
+earlier qualification packages retain their hashes.1,058,044 cumulative scoped
+checks overlap; they are not routine counts or measured whole-game completion.
+No playable PC executable. Model/texture views are retained explicitly through
+GPU/frame retirement. Automatic task/render ownership and the original motion
+interpreter are next,followed by animation,main loop and gameplay. English,
+enhancements,VMU Chao emulator/widget and later platforms remain unfinished.
+Sol High suits the next integration; no goal pause is required.
+Previous milestone notes are preserved below.
+
 Latest qualified original character switching: JP_NATIVE_CHARACTER_SWITCH.txt.
 Overall approximately 10% of weighted milestones; goal active. The complete
 original set_character now uses existing shared saves/lives/current character,

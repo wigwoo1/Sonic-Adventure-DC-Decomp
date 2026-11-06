@@ -1,3 +1,29 @@
+Latest qualified genuine static Sonic model rendering.
+The native test now renders the original73-node,28-model Sonic tree using
+real textures and a palette loaded through original native read-queue/GDFS.
+Its actual retained packets contain1,001 triangles. Two real Win32 backbuffer
+captures show textured Sonic and the same mesh with texture sampling Off,
+using vertex/material colours and no texture/sampler bindings or uploads.
+
+6,664 new scoped checks and5,768 selected regressions passed,including1,280
+original SH-4 vector-scale calls. Every prior Frame object,23 other DLLs and32
+earlier qualification packages retain their hashes. Totals overlap,not routine
+counts or measured whole-game coverage. Retail captures remain private.
+
+Overall approximately10%;no playable PC executable. This is a static render
+with explicit camera/light/consumer setup. Animation,automatic task/render
+ownership,GAME_MODE_BOOT,main loop,gameplay and the settings UI remain unfinished,
+along with English,enhancements and later platforms.
+
+- [Static character-render scope and reproduction](outputs/sonic-adventure/JP_NATIVE_CHARACTER_TREE.txt)
+- [Immutable qualification and hashes](outputs/sonic-adventure/analysis/jp_native_character_tree_package.json)
+- [Earlier original character switching](outputs/sonic-adventure/JP_NATIVE_CHARACTER_SWITCH.txt)
+
+Authored adapters/tools and JSON evidence are public. Original game/SDK/data C,
+combined modules,retail inputs and screenshots remain private. The matched
+prerelease contains2,977 unchanged incomplete research payloads.
+Earlier milestone notes remain unchanged below.
+
 Latest qualified original character switching and genuine Chao reset.
 Complete original set_character now uses the same saves,lives,current character,
 real motion selection and genuine character textures. All36 playable old/target

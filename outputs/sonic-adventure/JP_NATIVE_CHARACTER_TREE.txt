@@ -1,0 +1,116 @@
+First genuine static Sonic model tree - qualified native rendering research
+
+Whole-project estimate: about 10% of weighted milestones. Goal active.
+The Japanese matching/GCC source baselines are preserved. A native test now
+renders the original Sonic character model with real textures and palette data.
+This remains an intermediate rendering milestone. No playable PC executable,
+animation, main game loop or gameplay is claimed.
+
+What changed
+The complete original draw_object helper is linked into the same Frames DLL.
+It traverses the original model hierarchy, applies its original transform order
+and invokes the already qualified complete model renderer. The missing njScaleV
+uses the existing njScale and the single actual current-matrix owner. Its three
+input scale components are loaded before any matrix write, preserving aliasing.
+No new renderer, matrix state, model pack, texture registry or GPU owner exists.
+
+The native test runs the complete original initializer, actual System-owned
+Motion/Assets/Character providers and the original set_character. It acquires
+the real canonical sonic_object view and an additional genuine texture user.
+Every model and mesh is preflighted using the verified compiled-data registry's
+actual array bounds before entering the unchecked original tree draw. The queue
+reserves the whole conservative tree envelope and retains the actual textures.
+The existing native GPU/device/window services render and present the result.
+
+The static Sonic tree has73 nodes and28 models. Its captured real packets have
+53 batches,1,425 vertices and1,001 triangles. All2,793 canonical model records
+stay byte-for-byte intact. The caller keeps real model and texture references
+alive until GPU jobs and the captured frame retire. Those consumers block a
+character change and parent shutdown. Actual cleanup succeeds after retirement.
+
+Real input data and capture
+Sonic's original PRS textures load through the existing actual Asset/Character
+providers. The original read queue and GDFS load JP PL_10B.BIN into a bounded,
+aligned buffer; the complete sector bytes match an independent raw-disc read.
+Those exact bytes fill the same renderer palette storage. The diagnostic uses
+palette2 and an explicitly selected light direction from the original default
+stage-light constants. It is not a recreation of a complete stage's lighting.
+
+A diagnostic square camera is fitted to the actual rest-pose bounds and turned
+to a three-quarter view. Both screenshots are real512x512 Win32/DXGI backbuffers,
+read before Present. No image is painted, generated or edited. Model and camera
+setup is explicit caller work; no player task or action animation executes yet.
+The earlier side-view attempt is preserved privately as separate evidence.
+
+Texture Off
+The same captured geometry is rendered again with the existing GPU texture
+option disabled. The actual report records zero texture bindings,zero sampler
+bindings and zero texture uploads. The result remains a visible shaded mesh
+using vertex/material colours. It does not become a blank or black surface.
+This qualifies the backend behavior on a real character,not an in-game settings
+menu. The planned resolution/HD/Off menu and its persistence remain unfinished.
+
+Verification
+  Three clean compile/link commands with warnings treated as errors.
+  6,400 vector-scale checks over1,280 complete original JP SH-4 calls:both
+  register banks,active and external matrices,three overlapping source cases,
+  signed zeros,denormals and finite range boundaries. All512 arena bytes and
+  complete active-matrix values are compared; saved stack/owner pointers survive.
+  The frozen scalar instruction executor cannot model NaN/infinity inputs,so
+  no new nonfinite machine-comparison claim is made. Null vector is outside the
+  original valid-input contract. The implementation reuses existing arithmetic.
+  264 actual full-parent/tree/palette/frame/GPU/window/cleanup checks.
+  Two real window Presents:textured Sonic and texture-Off vertex/material Sonic.
+  5,768 selected regressions:2,189 original character-switch,3,049 texture pixels,
+  and530 complete original initializer checks. All418 texture images and711,168
+  pixels still match their independent oracle.
+  All prior Frame objects and23 other DLLs retain their hashes. Only two objects
+  are added to Frame; its exports add draw_object and njScaleV. Imports remain
+  acyclic. All32 previous qualification packages remain intact.
+The cumulative1,058,044 scoped checks overlap; they are not routine counts,
+independent gameplay scenarios or measured whole-game completion.
+
+Limitations and next work
+The first real draw has manual preflight,camera,lighting and consumer lifetime
+setup. Automatic task/render view acquisition remains unfinished. Original
+draw_action,its SDK motion/shape state and FIPR helper need native integration
+before animation. The upstream GCC action path already repairs the matching
+build's unsafe unset angles under NJD_EVAL_SKIP; do not suppress that warning
+or run the unsafe matching-build branch on a PC. Bind the intended GCC path.
+GAME_MODE_BOOT,the main loop,all gameplay,English/settings,the VMU Chao emulator/
+widget and later platforms remain incomplete. No console capture comparison or
+complete stage/camera/light/gameplay equivalence is claimed.
+
+Reproduction
+Use Python with -B,fresh private output directories,and the prerequisites in
+JP_NATIVE_CHARACTER_SWITCH.txt. Original local JP track03.bin,1ST_READ.BIN and
+prepared character-texture inputs are required. Pinned upstream source remains
+external. Public research archives omit combined original-game/SDK modules and
+retail inputs; they are not a standalone playable build.
+
+1. Run jp_port_tools/build_native_character_tree.py with --workspace,--upstream,
+   --baseline(the qualified character-switch build) and --output.
+2. Run verify_native_scale_vector.py with --workspace,--upstream,--build,
+   --binary(the verified original JP executable),--numeric-dll(the qualified
+   sh4_vector_numeric.dll) and --output.
+3. Run verify_native_character_tree.py with --workspace,--build,--inputs(the
+   prepared original character-texture inputs),--track and --output. This uses
+   real native providers. Its Python caller enlarges the existing borrowed
+   texture/scratch capacities; it never replaces an original success function.
+4. Run the frozen character-switch,character-texture pixel and complete game
+   initializer verifiers against that same build using their documented inputs.
+5. Run qualify_native_character_tree.py --stage audit with --workspace,--build,
+   --upstream,--baseline and --output. Then --stage package takes --vector,
+   --tree,--switch,--pixels,--init and --audit proof directories plus --workspace,
+   --build and --output. analysis/jp_native_character_tree_package.json is the
+   authoritative scoped qualification; the build record alone is unverified.
+
+Publication contains authored scale support,derivation/testing/audit tools,this
+guide and JSON proofs. Original source/data C,combined DLLs,retail inputs,profiles,
+toolchains and screenshots remain private. Historical research payloads keep
+their hashes; a source-matched archive points to the new source manifest. All
+public builds remain incomplete research artifacts. The user can view local
+captures in the chat; that does not publish them as repository assets.
+
+Sol High is appropriate for native animation and render-lifetime integration.
+Luna Low is sufficient for routine documentation. No goal pause is required.
