@@ -1,0 +1,139 @@
+Original boot, HUD, progress, event and stage reset dependencies
+Scoped qualification, 2026-11-06; overall approximately 10%; goal active.
+
+Status: VERIFIED within this dependency scope. The full GAME_MODE_BOOT branch,
+character asset loading and gameplay remain unfinished. Japanese matching/GCC
+baselines are preserved; English, settings and later ports remain incomplete.
+There is no playable native executable. This background-state milestone adds
+no new rendered game screen; earlier genuine logo captures remain preserved.
+
+What changed
+
+Seventeen original functions now link into the existing shared frame/game owner:
+
+  boot_finish, menu_get_mode, menu_get_save
+  hud_reset, lives_reset, lives_count, play_time_reset, time_reset,
+  time_start, time_stop, play_time_get
+  progress_init, playable_set, event_init
+  stage_begin, stage_group, world_reset_gravity
+
+Sixteen bodies remain byte-for-byte unchanged. Existing save records, slot,
+character, rings, lives, play time and progress arrays retain their established
+owners. New state uses the actual original declarations. Six pointer fields
+widen explicitly to native pointers; the 18-byte menu and serialized/scalar
+records preserve their original widths. Original private fields stay private
+except the stage-end field explicitly shared with its existing recorder owner.
+Diagnostic field views expose real storage for verification, not duplicate data.
+These original functions retain their game-thread/caller-precondition contracts;
+this scope does not add a second System, heap, clock, frame or audio controller.
+
+The symbol audit found stage_end_kind already owned privately by the genuine
+recorder implementation. A fresh derived recorder source changes only that
+declaration from static to shared linkage. All recorder function bytes and other
+state declarations are unchanged. The new stage_begin and old recorder now use
+one field. Runtime checks observe stage reset through the existing recorder
+getter as well as the new state view. No recorder success substitute is added.
+
+The original progress_init first clears 96 bytes from a 16-byte scratch array,
+depending on the next array's placement in Dreamcast BSS. Later in the same
+function it clears all 512 bytes of that next array. The native version bounds
+the first clear to its actual 16-byte object; the later original clear remains.
+Complete post-call state matches the Japanese machine code. This avoids an
+out-of-bounds native C write without requiring adjacent global allocation.
+Intermediate store order across those two clears is not an observation API.
+
+boot_finish also needs fill_bytes, originally a short SH-4 assembly routine.
+The new native recovery writes value's low byte backward for positive counts.
+The original requires positive count: zero underflows and can overwrite below
+the destination. Native null/nonpositive requests are safe no-ops, an explicit
+repair outside that valid original contract. Positive calls still require a
+valid caller-owned destination of at least count bytes; there is no size-free
+promise that arbitrary pointers can be validated.
+
+Verification
+
+Five compile/link steps passed with warnings as errors and no diagnostics.
+The final graph changes only the shared frame DLL. All 22 other prior DLLs,
+149 linked frame objects, 42 copied root objects, and all 25 earlier frozen
+qualification packages are preserved. Three objects are linked for the new reset
+unit, native byte fill and recorder linkage adjustment. Actual COFF external AND
+private/static symbol definitions are inspected to detect hidden duplicate state.
+All 23 actual PE import graphs remain acyclic. No native floating arithmetic or
+conversion appears in the new original reset unit's LLVM output; constant float
+assignments retain their exact words.
+
+1,496 feature checks include 648 complete Japanese machine-code calls, with no
+original dependency hooks. Each of the 17 functions runs on 24 varied states.
+All 42 selected fields are compared after every call, including untouched state,
+all eight character numbers, stage boundary values, every save slot and signed
+life-count edges. Six pointer fields are seeded above 4 GB and compared with
+explicit widening, preserving null resets and unrelated nonnull references.
+Twenty-four ordered reset-family sequences match the original complete results.
+Original SHC inlines ring_reset in hud_reset; verification checks actual machine
+entry points and outputs rather than demanding an out-of-line ring call.
+
+120 positive fill cases compare complete buffers with the original assembly,
+including both neighboring canaries, counts 1 through 4096 at selected boundaries,
+and values whose low bytes differ from their full signed words. Native invalid
+count/null rejection is checked separately; the original invalid infinite write
+is deliberately not executed.
+
+45 further parent checks execute the reset family AFTER complete original
+game_init, preserve actual System/audio/queue/History ownership, load real JP
+file bytes through the genuine queue, record History and finish real cleanup.
+The frozen game-init Python worker is copied privately with added caller-side
+operations/checks. Native game/SDK functions and source bodies are not patched
+for this test. Eleven checks are additional to its established 34-check data
+case. The real original default-save producer and CRC validator also execute.
+
+The unchanged complete-game-init verifier passed 530 regression checks across
+all 19 fresh child processes on the final recorder-sharing graph. Successful
+original process exit remains 0; malformed-profile failure remains 73. Earlier
+v2 checks are retained separately, but only final v3 evidence is packaged here.
+
+New reported scope: 1,541 checks; selected regressions: 530. Combined reported
+qualified scopes: 947004. Counts overlap and are not routine totals, gameplay
+coverage or the whole-project completion percentage.
+
+Reproduce locally
+
+Use project Python and the pinned reshaped upstream revision
+25a3d3154dbe657325e97dbe8c5291086f6af5c0. Existing qualified private builds and
+your own matching Japanese inputs are prerequisites. Run from the workspace:
+C:\Users\wigwo\Documents\Codex\2026-10-03\de.
+Choose fresh output paths; the following identify this retained qualification.
+
+python -B outputs/sonic-adventure/jp_port_tools/build_native_boot_reset.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --baseline work/sonic-adventure/jp-native-game-init-v4 --output work/sonic-adventure/jp-native-boot-reset-v3
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_boot_reset.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --build work/sonic-adventure/jp-native-boot-reset-v3 --binary work/sonic-adventure/jp-ninja-math-reference/1ST_READ.BIN --output work/sonic-adventure/jp-native-boot-reset-check-v3
+python -B outputs/sonic-adventure/jp_port_tools/qualify_native_boot_reset.py --stage parent --workspace . --build work/sonic-adventure/jp-native-boot-reset-v3 --track "PATH_TO_LOCAL_JP_TRACK03.BIN" --output work/sonic-adventure/jp-native-boot-reset-parent-check-v3
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_game_init.py --workspace . --build work/sonic-adventure/jp-native-boot-reset-v3 --track "PATH_TO_LOCAL_JP_TRACK03.BIN" --output work/sonic-adventure/jp-native-boot-reset-game-init-regression-v2
+python -B outputs/sonic-adventure/jp_port_tools/qualify_native_boot_reset.py --stage audit --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --baseline work/sonic-adventure/jp-native-game-init-v4 --build work/sonic-adventure/jp-native-boot-reset-v3 --output work/sonic-adventure/jp-native-boot-reset-audit-v2
+python -B outputs/sonic-adventure/jp_port_tools/qualify_native_boot_reset.py --stage package --workspace . --build work/sonic-adventure/jp-native-boot-reset-v3 --check work/sonic-adventure/jp-native-boot-reset-check-v3 --parent work/sonic-adventure/jp-native-boot-reset-parent-check-v3 --regression work/sonic-adventure/jp-native-boot-reset-game-init-regression-v2 --audit work/sonic-adventure/jp-native-boot-reset-audit-v2 --output work/sonic-adventure/jp-native-boot-reset-package-v1
+
+Evidence: outputs/sonic-adventure/analysis/jp_native_boot_reset_package.json.
+Private final graph: work/sonic-adventure/jp-native-boot-reset-v3.
+
+Limits and next work
+
+These are real dependencies of boot_new_game and boot_finish, not an alternate
+implementation that skips the original boot branch. boot_new_game still calls
+set_character first. That requires genuine character texture ownership and
+loader_read_character_motions; the latter names fixed console MOTION_AREA.
+Recover a checked native motion/character-data owner and its real asset layout
+before executing the full BOOT branch. Do not pass fixed SH-4 addresses to Windows
+or treat serialized 32-bit model/motion pointers as native host pointers.
+
+Existing boot_init, full logo_step, save/reset and rendering qualifications are
+already available and should be reused. Complete game-mode/main-loop integration,
+movies, stages and gameplay remain unfinished. Token exhaustion, actual OS cancel
+timeout and unexpected rollback cancellation remain earlier unqualified cases.
+
+Authored native byte fill, build/test/audit tools, this guide and JSON proofs
+can be public. Original game/SDK bodies, combined diagnostic DLLs, retail inputs,
+profiles and captures stay private. Public research payloads are unchanged.
+This scope is ready for the next reviewed daily GitHub snapshot; the preceding
+initializer snapshot was already published today. Receipts are tracked separately.
+
+Recommended next model: Sol High for motion/character asset ownership and native
+boot integration. Luna Low is appropriate for routine frozen-proof/documentation
+review. No stronger model is required by the completed reset work. Goal active.

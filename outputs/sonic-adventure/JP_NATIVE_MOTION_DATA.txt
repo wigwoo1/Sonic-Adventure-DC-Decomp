@@ -1,0 +1,132 @@
+All seven Japanese motion banks as verified native data
+Scoped data qualification, 2026-11-06; overall approximately 10%; goal active.
+
+Status: VERIFIED within this data-conversion scope. Runtime character selection,
+motion evaluation/playback, the full BOOT branch and gameplay remain unfinished.
+The Japanese matching/GCC baselines remain preserved. English, enhancements and
+later platforms remain incomplete. There is no playable native executable.
+
+What changed
+
+The complete data of S_MOT, A_MOT, B_MOT, E_MOT, K_MOT, S_SBMOT and M_SBMOT now
+compiles and links into one Windows x64 diagnostic data module. These are the
+five ordinary character motion banks and two board banks; Sonic and Tails share
+S_MOT in the original loader. This is not a claim of seven playable characters.
+
+The preserved, verified GCC build already emits typed C initializers for those
+banks. Its structures and named pointer relationships are reused. Native C lays
+out actual eight-byte pointers rather than reinterpreting SH-4 pointer words.
+All bank-local symbols receive separate namespaces because their original load
+addresses overlap. The module contains 8,857 complete bank definitions and the
+2,793-definition transitive model-data closure needed by their nine model roots.
+All seven banks reference one canonical copy of each shared model root.
+
+Most model data comes from the original generated 1ST_READ content. Additional
+genuine model definitions come from Amy's, Big's and E-102's original texture/
+model sources and their generated data bodies. The input preparer reads the
+preserved WSL build and preprocesses those three sources using the full pinned
+GCC target/header configuration. It does not modify either baseline or build.
+No empty model or motion provider is used to complete the native link.
+
+The C emitter spells float constants for SHC's truncation toward zero. A native
+compiler's default rounding would change 32,303 of the 77,948 selected literals.
+The authored builder replaces each with an exact hexadecimal float literal for
+the original word. It preserves strings/comments and leaves integer/color words
+as integer data. Original pointer relationships and scalar values are retained.
+
+This module is a source-built native data pack, not a runtime decompressor or an
+implementation of loader_read_character_motions. Its registry helpers expose
+the actual compiled definitions for qualification. A checked game-facing owner,
+selection/reload behavior, lifetime protection and original consumer bindings
+are still required. Do not call the old loader against fixed MOTION_AREA merely
+because the data pack now links. It is not yet connected to System or Exit.
+
+Verification
+
+Ten compile/link steps passed without diagnostics, with warnings as errors.
+All 11,650 native definitions were inspected, including all seven full banks.
+Each native pointer-bearing record was serialized back to its original layout:
+native offsets/strides came from compiled offsetof/sizeof, pointer destinations
+were resolved through the actual owned native records, and scalar bytes were
+copied without numeric approximation. All 3,029,718 bytes of record payload
+matched the original Japanese records, including 11,650 non-null pointer
+relocations. Native padding/64-bit pointer bytes are not claimed to match a
+32-bit Dreamcast memory image. Original alignment gaps have no native record.
+
+The nine pointer-bearing layouts include objects, models, meshsets, motions,
+actions, two/three-factor motion data, texture names and texture lists. Leaf
+arrays retain their original widths. Pointers into native padding, unowned
+addresses or overlapping native records are rejected by verification. The
+original model reference is the supplied Japanese 1ST_READ.BIN with SHA256
+e038db9029bc0ea8ffdb8ec8fc2e0690d1c324f5f7179f3dc58f56574b1aeeaf.
+
+The verifier independently extracts all seven compressed PRS files from the
+supplied Japanese raw track. The existing bounded native PRS/asset owner decodes
+them, and each entire decoded file matches the generated reference bank. Its
+actual texture-owner prerequisite is initialized and retired, including for
+zero texture residents. No generated input file substitutes for that retail
+read/decode check. All extracted files stay in private work/ directories.
+
+Input preparation was rerun into a separate directory. All 24 copied generated
+files and six preprocessed-source/body-table files match byte-for-byte. The
+audit checks one definition for every canonical model root, all 17 data-registry
+exports, actual PE imports and all 26 earlier frozen qualification packages.
+The data module imports no existing game runtime DLL. Existing runtime sources,
+objects and all 23 DLLs remain on their qualified hashes; no game loop is replaced.
+
+46,684 scoped checks passed. Counts describe data/proof checks, not recovered
+game routines or gameplay coverage. Combined reported qualified scopes are
+993688, with overlap between earlier tests. Overall completion remains about 10%.
+No animation or new rendered game screen was produced by this data milestone.
+
+Reproduce locally
+
+Use project Python, Windows Clang and the preserved WSL distribution
+sa-dc-source-review. The checkout /root/sa-native-integration must already have
+the verified pinned GCC build; the matching build stays separate. Upstream is
+25a3d3154dbe657325e97dbe8c5291086f6af5c0. Supply your own matching JP disc inputs.
+Run from C:\Users\wigwo\Documents\Codex\2026-10-03\de.
+Choose fresh output directories. The paths below identify retained evidence.
+
+python -B outputs/sonic-adventure/jp_port_tools/prepare_native_motion_data.py --workspace . --output work/sonic-adventure/jp-native-motion-input-reproduction-v1
+python -B outputs/sonic-adventure/jp_port_tools/build_native_motion_data.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --inputs work/sonic-adventure/jp-native-motion-inputs-v1 --baseline work/sonic-adventure/jp-native-boot-reset-v3 --output work/sonic-adventure/jp-native-motion-data-v2
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_motion_data.py --workspace . --build work/sonic-adventure/jp-native-motion-data-v2 --inputs work/sonic-adventure/jp-native-motion-inputs-v1 --baseline work/sonic-adventure/jp-native-boot-reset-v3 --binary work/sonic-adventure/jp-ninja-math-reference/1ST_READ.BIN --track "PATH_TO_LOCAL_JP_TRACK03.BIN" --output work/sonic-adventure/jp-native-motion-data-check-v2
+python -B outputs/sonic-adventure/jp_port_tools/qualify_native_motion_data.py --stage audit --workspace . --build work/sonic-adventure/jp-native-motion-data-v2 --baseline work/sonic-adventure/jp-native-boot-reset-v3 --inputs work/sonic-adventure/jp-native-motion-inputs-v1 --reproduction work/sonic-adventure/jp-native-motion-input-reproduction-v1 --output work/sonic-adventure/jp-native-motion-data-audit-v1
+python -B outputs/sonic-adventure/jp_port_tools/qualify_native_motion_data.py --stage package --workspace . --build work/sonic-adventure/jp-native-motion-data-v2 --check work/sonic-adventure/jp-native-motion-data-check-v2 --audit work/sonic-adventure/jp-native-motion-data-audit-v1 --output work/sonic-adventure/jp-native-motion-data-package-v1
+
+For a fresh workflow, prepare the original inputs directory too, then point the
+builder/verifier/auditor at those fresh paths. The separate reproduction folder
+must remain separate to demonstrate repeatable preparation. Existing private
+baseline objects are prerequisites; this is not a standalone player installer.
+
+Proof: outputs/sonic-adventure/analysis/jp_native_motion_data_package.json.
+Private module: work/sonic-adventure/jp-native-motion-data-v2.
+
+Limits and next integration
+
+The original loader still needs its native adaptation. Reuse this complete pack
+to provide real selected-bank data and canonical full-width consumer bindings.
+Changing/reloading a bank must restore that bank's mutable default state, as the
+original disc load does. Shared 1ST_READ model state remains one separate owner;
+it must not be silently duplicated or reset on every motion selection. Hold
+views while tasks/rendering use them and reject retirement/reload while views
+remain live. Registry pointers currently last only while the DLL remains loaded;
+they are diagnostic views, not an established game-facing lifetime contract.
+
+Preserve the original valid character-to-file selection. Invalid-character
+handling must become a checked native failure instead of the original infinite
+loop. Genuine character texture ownership and VMU/card save reads are also still
+required before the full boot_new_game/GAME_MODE_BOOT branch can execute. Reuse
+the already qualified complete game_init, reset families, boot_init and logo.
+None of this proves native animation interpolation, skinned rendering, menus,
+stages, gameplay, English binding or the requested frame-rate/resolution options.
+
+Authored preparation/build/verification/audit tools, this guide and JSON proofs
+can be public. Generated model/motion C, PRS files, decoded banks, private data
+DLLs and other retail-derived payloads stay private. They are not selected for
+the public research archive. Existing public build payloads are unchanged.
+This scope and the preceding boot-reset scope are ready for the next reviewed
+daily GitHub snapshot; the initializer snapshot was already published today.
+
+Recommended next model: Sol High for checked motion selection/lifetimes and
+character binding. Luna Low is suitable for routine documentation. Goal active.

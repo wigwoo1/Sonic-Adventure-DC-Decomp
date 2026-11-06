@@ -1,3 +1,71 @@
+Latest qualified same-System motion ownership: JP_NATIVE_MOTION_EXIT.txt.
+Overall approximately 10% of weighted milestones; goal active.
+The same actual motion owner now joins existing System/MainBoot/bootstrap/final
+Exit cleanup. Live consumer views block retirement before parent mutation;
+ordinary restart, real card callbacks, save-failure retry and final handoff pass.
+918 new scoped checks and 70599 selected regression checks passed. Twenty core
+DLLs, nine data objects and the original selector object are unchanged. All 28
+earlier packages remain preserved. Combined scopes: 1018038 overlapping checks,
+not game-routine totals. Next integrate original set_character and genuine
+texture/action consumers with this same data owner and shared character state.
+Automatic task/render view acquisition, animation and gameplay remain unfinished.
+Japanese source baselines remain preserved; English, settings and later ports
+remain incomplete. No playable native EXE exists. Combined data DLL stays private.
+This milestone and the preceding boot-reset/data/selection scopes are included
+in the reviewed GitHub snapshot; final publication receipts are tracked separately.
+See analysis/jp_native_motion_exit_package.json for scoped proof and hashes.
+Earlier milestone notes remain unchanged below.
+
+Latest qualified native character-motion selection: JP_NATIVE_MOTION_STORE.txt.
+Overall approximately 10% of weighted milestones; goal active.
+The original valid character/file switch now restores actual native bank data.
+Live views prevent destructive reload/retirement; shared models and independent
+board areas retain their real state. All 11650 data records bind through the
+checked view API. 23432 scoped checks and 46684 data regression checks passed,
+including real complete-parent frames/file/History/cleanup. Combined reported
+scopes: 1017120, overlapping checks rather than game-routine totals.
+Next attach the same owner to System/Exit, then integrate real character texture
+and action consumers. Full set_character, animation and gameplay are unfinished.
+Japanese source baselines remain preserved; English, settings and later ports
+remain incomplete. No playable native EXE exists. Combined data DLL stays private.
+This scope joins boot-reset and native-data work for the next reviewed daily
+GitHub snapshot; the preceding initializer snapshot was already published today.
+See analysis/jp_native_motion_store_package.json for scoped proof and hashes.
+Earlier milestone notes remain unchanged below.
+
+Latest qualified all-bank native motion data: JP_NATIVE_MOTION_DATA.txt.
+Overall approximately 10% of weighted milestones; goal active.
+All seven original motion banks and their shared character models now compile
+into a Windows data module. 11650 data records and 3,029,718 original record
+bytes match, including full-width pointer relocation. These are data records,
+not game routine counts. Actual seven-file retail PRS decode comparisons pass.
+46684 scoped checks passed; 26 prior frozen packages remain preserved. Exact
+float literals avoid 32,303 rounding changes. Combined reported scopes: 993688.
+Next integrate checked bank selection/reload, view lifetimes and original
+character bindings. This does not yet execute character loading or animation.
+Gameplay, English, settings and later platforms remain unfinished; no playable
+native EXE exists. Native data C/DLLs and retail payloads stay private.
+This scope and boot-reset work are pending the next reviewed daily GitHub
+snapshot; the preceding initializer snapshot was already published today.
+See analysis/jp_native_motion_data_package.json for scoped proof and hashes.
+Earlier milestone notes remain unchanged below.
+
+Latest qualified boot-state reset dependencies: JP_NATIVE_BOOT_RESET.txt.
+Overall approximately 10% of weighted milestones; goal active.
+Seventeen original boot/HUD/progress/event/stage functions and native byte fill
+now run in the existing shared runtime. 648 complete Japanese machine calls
+match 42 native state fields; full-parent file/History/cleanup checks also pass.
+1541 new scoped checks and 530 initialization regressions passed. The existing
+recorder shares the same stage-end field; 25 earlier packages remain preserved.
+Combined reported scopes: 947004, overlapping checks rather than routine counts.
+The complete BOOT branch still needs real native character-motion/texture data
+ownership. Existing boot_init/logo/save work will be reused. Gameplay, English,
+settings and later ports remain unfinished; no playable native EXE exists.
+This frozen scope is pending the next reviewed daily GitHub snapshot. The
+preceding complete-initializer snapshot was already published today.
+See analysis/jp_native_boot_reset_package.json for scoped qualification/hashes.
+Earlier milestone notes remain unchanged below.
+
 Latest qualified complete original game_init: JP_NATIVE_GAME_INIT.txt.
 Overall approximately 10% of weighted milestones; goal active.
 The original full initializer now executes on the real native parent graph,

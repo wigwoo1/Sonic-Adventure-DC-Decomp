@@ -1,0 +1,104 @@
+Motion ownership in the existing System, MainBoot and Exit
+Scoped qualification, 2026-11-06; overall approximately 10%; goal active.
+
+Status: VERIFIED within this lifetime/cleanup scope. There is no playable PC
+executable. The original Japanese matching/GCC baselines remain preserved.
+Full set_character, automatic task/render/texture view acquisition, animation,
+GAME_MODE_BOOT, the main loop and gameplay remain unfinished. English, settings,
+VMU Chao emulator/widget and later platforms remain planned work.
+
+What changed
+
+The SAME qualified motion/model data owner now transfers cleanup authority to
+the existing System bootstrap callback and final Exit. There is no second motion
+pack, System instance or cleanup registration. An explicit new resource bit,
+JP_EXIT_MOTIONS (16777216), leaves previous masks unchanged. Final resource masks
+must include it whenever System owns motions.
+
+System starts motions only after the real parent is ready. An independent owner
+may instead be adopted under the existing main-initialization guard; preclaimed
+owners reject before parent mutation. Starting cannot steal an independent owner.
+An internally acquired guard is released on success or pre-acquisition failure;
+an outer caller's guard remains the caller's responsibility. Original game_init
+callbacks cannot start/adopt the owner while construction is in progress.
+
+One 32-byte capability snapshot tracks the exact token and terminal/closing/
+finished state in the actual motion owner. Adoption and final handoff permit live
+consumer views: transferring responsibility does not destroy their data. Strict
+retirement additionally requires zero live views. Independent shutdown/restart
+cannot bypass the delegated token. Creator-thread checks also survive a delegated
+close until ordinary cancellation or permanent terminal finalization.
+
+System, MainBoot, game_init and global Exit check active views BEFORE changing
+parent ownership, cleanup counters or irreversible bootstrap flags. A failed
+preflight leaves view bytes, card/audio/History/queue/GDFS parents and profile
+usable. Release the actual views and retry. This is explicit consumer retirement;
+future tasks, texture bindings and retained render jobs still must acquire/hold/
+release their own real views. Automatic acquisition by those users is not done.
+
+When motions are owned, ordinary MainBoot cleanup routes through the same System
+shutdown before its older card-first path. System/Exit retire motion data first,
+then drain card callbacks, then queue, History, sound and the remaining actual
+core. A card callback cannot create a late view between preflight and retirement.
+MainBoot clears only card/print flags actually owned by that System. The previous
+path without motion ownership retains its existing behavior.
+
+If later History persistence fails, the motion data may already be closed, but
+its exact ordinary capability remains retained along with the necessary real
+parents. Correct the save failure and retry; it is not closed twice. Complete
+ordinary cleanup cancels the token and allows a fresh original game_init session.
+Early/final global Exit instead makes the same capability terminal; cancellation
+and restart then reject. An ordinary partial close can also finish globally.
+
+Build and verification
+
+Eight C compile/link commands passed with warnings treated as errors and zero
+diagnostics. The existing original selector object and nine data objects are
+byte-for-byte unchanged. Twenty earlier core DLLs, the original higher initializer
+and existing bootstrap/rollback/process-exit function bodies remain unchanged.
+The actual Windows import graph is acyclic; the data owner imports no game DLL.
+New APIs reside in the same motion, System and Exit modules.
+
+918 new checks in 14 actual full-parent process cases passed: ordinary restart,
+early/final exit, live-view handoff and cleanup rejection, insufficient budget,
+independent/preclaimed adoption, retained outer guard, foreign threads, a late
+real renderer/device-claim conflict, actual Windows save sharing failure and
+recovery, ordinary-to-global retry, real pending VMU/card completion, constructor
+callbacks and actual process exits. syBtExit returns process status 0 on success
+and 70 when a live view prevents cleanup; the latter preserves the profile.
+
+70,599 selected regression checks passed on this build: 530 unchanged complete
+game_init checks, 23,385 owner checks, and 46,684 original-byte/retail-PRS checks.
+The motion regressions use a hashed view of the SAME new DLL. All 11,650 records,
+full-width relocations and seven real PRS files remain verified. These are data
+and behavior checks, not newly decompiled game-routine totals. Combined reported
+qualified scopes are 1,018,038 overlapping checks. All 28 prior packages/hashes
+were validated; previous source/proof files are preserved.
+
+Reproduce in PowerShell from the workspace (replace Python and local track paths;
+use NEW private output directories rather than overwriting frozen attempts):
+
+python -B outputs/sonic-adventure/jp_port_tools/build_native_motion_exit.py --workspace . --baseline work/sonic-adventure/jp-native-boot-reset-v3 --motion work/sonic-adventure/jp-native-motion-store-v2 --output work/sonic-adventure/NEW-motion-exit
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_motion_exit.py --workspace . --build work/sonic-adventure/NEW-motion-exit --track "LOCAL-JP-DISC/track03.bin" --output work/sonic-adventure/NEW-motion-exit-check
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_game_init.py --workspace . --build work/sonic-adventure/NEW-motion-exit --track "LOCAL-JP-DISC/track03.bin" --output work/sonic-adventure/NEW-game-init-regression
+python -B outputs/sonic-adventure/jp_port_tools/qualify_native_motion_exit.py --stage audit --workspace . --build work/sonic-adventure/NEW-motion-exit --core work/sonic-adventure/jp-native-boot-reset-v3 --motion work/sonic-adventure/jp-native-motion-store-v2 --output work/sonic-adventure/NEW-motion-exit-audit
+
+See JP_NATIVE_MOTION_STORE.txt and JP_NATIVE_MOTION_DATA.txt for the existing
+motion data preparation/owner checks; use NEW-motion-exit/motion_view as their
+build argument, the same original binary and the earlier private inputs/core.
+The public qualification JSON pins all source, proof and build hashes. Compiler
+paths and prerequisite private baselines must be present on a new machine.
+
+No screenshot of a new game scene exists for this scope: actual tests present
+initialization frames and exercise data lifetimes. Motion playback/rendering has
+not yet executed. Screenshots will accompany meaningful rendered game progress.
+Allocator failure, exhausted token counters and failed final-claim rollback are
+not forced. Raw registry exports remain diagnostic module-lifetime pointers;
+game-facing callers must use the checked view contract and keep the DLL loaded.
+
+Publication includes authored adapters/tools and JSON proof only. Original
+game/SDK source, generated model/motion C, combined DLLs, retail assets, profiles,
+captures and private fixtures stay private. Source-matched prereleases remain
+incomplete research artifacts. Next integrate original set_character and genuine
+texture/task consumers with this same owner and existing shared character state.
+Recommended model: Sol High for integration; Luna Low for routine documentation.

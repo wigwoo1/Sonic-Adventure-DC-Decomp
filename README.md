@@ -1,3 +1,28 @@
+Latest qualified motion ownership now joins the same System, MainBoot and Exit.
+Live consumer views safely block cleanup; final handoff, ordinary restart, real
+card callbacks and save-failure recovery pass. This snapshot also publishes the
+preceding boot-reset, seven-bank data and checked motion-selection scopes.
+
+918 new lifetime checks and 70,599 selected regressions passed. Across these
+four new scopes: 72,575 additional reported checks. Totals overlap and are not
+game-routine counts. Original selector/data objects and twenty core DLLs remain
+unchanged; all earlier source/proof hashes are preserved.
+
+Overall approximately 10%. There is no playable PC executable. Full character
+loading, automatic task/render view acquisition, animation and gameplay remain
+unfinished, along with English, enhancements and later platforms.
+
+- [Motion System/Exit scope and reproduction](outputs/sonic-adventure/JP_NATIVE_MOTION_EXIT.txt)
+- [Immutable qualification and hashes](outputs/sonic-adventure/analysis/jp_native_motion_exit_package.json)
+- [Original character-motion selection](outputs/sonic-adventure/JP_NATIVE_MOTION_STORE.txt)
+- [Native motion/model data](outputs/sonic-adventure/JP_NATIVE_MOTION_DATA.txt)
+- [Boot/HUD/progress reset](outputs/sonic-adventure/JP_NATIVE_BOOT_RESET.txt)
+
+Authored adapters/tools and JSON proof are public. Original game/SDK source,
+combined DLLs and retail data remain private. The source-matched prerelease has
+2,977 unchanged research payloads; it is an incomplete research artifact.
+Earlier milestone notes remain unchanged below.
+
 Latest qualified complete original game_init: the original higher initializer
 now executes with the actual native parent graph, two real frame presentations,
 owned audio, background read queue, History and original loader callback.

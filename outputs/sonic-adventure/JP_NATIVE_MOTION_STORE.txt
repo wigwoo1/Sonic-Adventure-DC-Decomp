@@ -1,0 +1,155 @@
+Checked native character-motion selection, reload and view lifetimes
+Scoped qualification, 2026-11-06; overall approximately 10%; goal active.
+
+Status: VERIFIED within this selector/data-lifetime scope. The original valid
+character switch now runs with actual native data restoration. Full set_character,
+automatic System/Exit ownership, renderer-job integration, animation playback
+and gameplay remain unfinished. Japanese matching/GCC baselines stay preserved;
+English, enhancements and later ports remain incomplete. No playable EXE exists.
+
+What changed
+
+The original loader_read_character_motions C body retains every valid case,
+filename and source-area argument. A private compile alias sends its load call
+to a real native default-restoration operation over the previously qualified
+seven-bank data pack. MOTION_AREA is checked as a source-area tag only: no fixed
+Dreamcast address is dereferenced, mapped or used as a Windows destination.
+
+The valid source choices are Sonic 0/Tails 2 -> S_MOT, Amy 5 -> A_MOT, Big 7 ->
+B_MOT, E-102 6 -> E_MOT and Knuckles 3 -> K_MOT. Only the original invalid-case
+infinite loop is changed, to a checked character error. Unsupported IDs include
+Eggman/Tikal in this specific loader; their other event/game data is a separate
+scope. The unchecked original void loader is not exported. Future set_character
+integration must use the checked result before continuing its own mutations.
+
+This selects motion data, not the game's character_current or texture owners.
+It uses the real source-built data verified against the supplied JP disc; it
+does not rerun Dreamcast PRS code or pretend a console read succeeded. Reload
+copies the target bank's genuine defaults into its actual native records,
+including pointers. All nine earlier data objects remain byte-for-byte intact.
+
+One creating game thread owns the controller. Initialization captures pristine
+defaults before any pack consumer may mutate them. The caller supplies a byte
+budget and a bounded lease capacity. Those limits cover the actual requested
+metadata, backup and lease allocations, beyond the already resident module data.
+The four-lease test requests exactly 3,881,458 bytes for 3,228,962 bytes of native
+record payload plus metadata/leases. These are allocation-request totals, not
+measurements of process working set or allocator overhead.
+
+Primary-bank selection restores the requested bank even when switching between
+Sonic and Tails, whose file is the same. A live view of the previous or target
+primary bank blocks the operation before any data is restored. Only one primary
+bank is available for new views. Inactive compiled records are not exposed by
+the game-facing API merely because their module addresses still exist.
+
+Shared 1ST_READ model data remains canonical and is not reset on bank selection.
+Its views remain usable across primary changes. The two board banks occupy
+independent original areas: each can be reset/acquired separately, while views
+of the ordinary bank or other board remain live. A board's own views block its
+reset. Per-bank generations preserve independent view identities.
+
+Acquire uses the original case-sensitive record name. The returned view has the
+actual native pointer, extent, bank/index/kind, generation and a unique token.
+Multiple views of one record share its data but have separate lifetime tokens.
+The caller keeps a view live through every task, texture binding and retained
+draw that uses it. Releasing a view invalidates that logical permission even
+though a static module address might remain readable. Raw registry exports are
+diagnostics and do not provide an alternative game-facing ownership contract.
+
+Shutdown rejects every live view. Once all views retire, it restores all eight
+groups (seven banks plus shared models) before freeing its own allocations.
+Fresh sessions use new generations and never reuse old lease tokens. Keep the
+data DLL loaded until the owner and all views close. Output structs must be
+valid writable caller buffers; outputs overlapping owned payload/storage are
+rejected. Windows memory protection is not replaced for arbitrary invalid pointers.
+
+Verification
+
+Three new compile/link steps passed without diagnostics, with warnings as errors.
+The nine qualified data objects are unchanged. The module retains its 17 data
+registry exports and adds seven checked APIs: initialize, select, reset_board,
+acquire, release, shutdown and snapshot. Private original/helper symbols are
+not exported. Actual PE imports contain no other game DLL, preserving a simple
+dependency direction for later System/Exit integration.
+
+23,385 owner checks passed. They cover exact/insufficient allocation budgets,
+all six valid source choices, unsupported IDs, same-bank reload, whole-bank
+mutation/restoration, persistent shared-model changes, independent board areas,
+view capacity, invalid/stale/duplicate tokens, bad names/outputs, owned-output
+overlap, foreign threads, shutdown retention and clean fresh-session restart.
+All 11,650 actual records were acquired by name through the checked API, compared
+with their real registry pointer/extent/kind, and released. These are record/view
+checks, not counts of newly recovered game routines.
+
+For all six valid choices, genuine supplied Japanese machine instructions were
+traced from the original selector to entry into loader_read_prs. The observed
+filename and area match native selection. That trace stops BEFORE disc I/O; it
+does not replace the dependency or claim that the complete original disc loader
+executed. The extracted original C valid switch fully executes on Windows and
+calls the actual native restore operation. Invalid original infinite loops are
+not run; the repaired native failures preserve data and selection state.
+
+47 full-parent checks start after complete original game_init. They acquire real
+Sonic action/model views, reject live-view reload/shutdown, present two further
+real native frames, retire an action and reload the same bank while its independent
+model view stays live, then explicitly close motion ownership before continuing.
+A real JP queued file read, original History producer and complete parent cleanup
+still pass. The added Python caller operations do not patch native game/SDK code.
+The frames advance while views are held; no motion rendering is claimed here.
+
+The unchanged data verifier passes another 46,684 regression checks against the
+new module, including full original record bytes, native pointer relocation and
+all seven supplied retail PRS files. All 27 earlier packages remain on their
+frozen source/proof hashes. Existing core runtime DLLs are not rebuilt by this
+scope; the full-parent test reuses their same actual instances.
+
+New reported scope: 23,432 checks. Combined reported qualified scopes: 1017120,
+with overlap. Counts are not whole-game coverage or a completion percentage.
+Forced allocator failure, exhausted 64-bit counters and callback reentrancy are
+not experimentally qualified. The implementation has no user callbacks in its
+restore path; foreign-thread protection was tested directly.
+
+Reproduce locally
+
+Run from C:\Users\wigwo\Documents\Codex\2026-10-03\de using project Python,
+Windows Clang, the pinned external JP source, prior qualified private builds and
+your own Japanese v1.007 inputs. Use fresh output directories; examples identify
+this retained final qualification. Keep the qualified data-preparation results
+described by JP_NATIVE_MOTION_DATA.txt.
+
+python -B outputs/sonic-adventure/jp_port_tools/build_native_motion_store.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --baseline work/sonic-adventure/jp-native-motion-data-v2 --output work/sonic-adventure/jp-native-motion-store-v2
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_motion_store.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --build work/sonic-adventure/jp-native-motion-store-v2 --binary work/sonic-adventure/jp-ninja-math-reference/1ST_READ.BIN --output work/sonic-adventure/jp-native-motion-store-check-v1
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_motion_data.py --workspace . --build work/sonic-adventure/jp-native-motion-store-v2 --inputs work/sonic-adventure/jp-native-motion-inputs-v1 --baseline work/sonic-adventure/jp-native-boot-reset-v3 --binary work/sonic-adventure/jp-ninja-math-reference/1ST_READ.BIN --track "PATH_TO_LOCAL_JP_TRACK03.BIN" --output work/sonic-adventure/jp-native-motion-store-data-regression-v1
+python -B outputs/sonic-adventure/jp_port_tools/qualify_native_motion_store.py --stage parent --workspace . --build work/sonic-adventure/jp-native-motion-store-v2 --core work/sonic-adventure/jp-native-boot-reset-v3 --track "PATH_TO_LOCAL_JP_TRACK03.BIN" --output work/sonic-adventure/jp-native-motion-store-parent-check-v2
+python -B outputs/sonic-adventure/jp_port_tools/qualify_native_motion_store.py --stage audit --workspace . --build work/sonic-adventure/jp-native-motion-store-v2 --baseline work/sonic-adventure/jp-native-motion-data-v2 --upstream work/sonic-adventure/reshaped-sonic-adventure-review --output work/sonic-adventure/jp-native-motion-store-audit-v2
+python -B outputs/sonic-adventure/jp_port_tools/qualify_native_motion_store.py --stage package --workspace . --build work/sonic-adventure/jp-native-motion-store-v2 --check work/sonic-adventure/jp-native-motion-store-check-v1 --regression work/sonic-adventure/jp-native-motion-store-data-regression-v1 --parent work/sonic-adventure/jp-native-motion-store-parent-check-v2 --audit work/sonic-adventure/jp-native-motion-store-audit-v2 --output work/sonic-adventure/jp-native-motion-store-package-v1
+
+Proof: outputs/sonic-adventure/analysis/jp_native_motion_store_package.json.
+Private provider: work/sonic-adventure/jp-native-motion-store-v2.
+
+Limits and next work
+
+The parent test explicitly closes the motion owner. Automatic System/Exit cleanup
+has not been attached. Actual task/render-job view retention, texture-binding
+ownership and original character action-table consumers still need integration.
+Do not release a view while those consumers retain a pointer. The controller
+cannot infer an unregistered external pointer or texture binding from its bytes.
+
+Next connect this existing owner to System/Exit, then adapt original set_character
+and character texture lifetimes with checked failures. Preserve the original
+single character/progress state. Reuse the qualified bank data and original
+selector; do not create another copy of the model graph or another motion owner.
+The complete BOOT branch still requires genuine character textures and VMU/card
+save-read integration. Native interpolation, skinned drawing, menus, stages,
+gameplay, localization and later platforms remain unfinished.
+
+Authored owner/header, build/test/audit tools, guide and JSON evidence can be
+public. The combined DLL includes original model/motion data and stays private,
+along with generated game source, retail files, profiles and captures. Public
+research build payloads are unchanged. This scope joins the two preceding frozen
+scopes for the next reviewed daily GitHub snapshot; the initializer snapshot
+was already published today. No new gameplay image was produced by these tests.
+
+Recommended next model: Sol High for lifecycle/character integration. Luna Low
+is suitable for routine documentation. No stronger model is required by this
+completed selector task. Goal active.
