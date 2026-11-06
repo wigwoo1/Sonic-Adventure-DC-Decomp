@@ -1,0 +1,222 @@
+{
+  "status": "original_native_joint_and_SJD_ADXB_ADXPD_stream_decoder_prerequisites_verified_full_frontend_unfinished",
+  "runtime_checks": 415263,
+  "checks_by_scope": {
+    "joints": 63993,
+    "decoder": 2981,
+    "core": 31714,
+    "math": 293998,
+    "qsound": 18469,
+    "clock": 3294,
+    "media": 60,
+    "audio": 754
+  },
+  "new_complete_original_entry_calls": 5626,
+  "streaming_synthetic_frames": 1864,
+  "streaming_synthetic_channel_samples": 3146,
+  "retail_codec_regression_frames": 108680,
+  "actual_output_regression_frames": 88200,
+  "authored_source_sha256": {
+    "outputs/sonic-adventure/jp_port_tools/build_native_adx_joints.py": "a691d30f04681b04408bb14daba952e11da8454dfc4781b7c8b3b6ce2f7a04ca",
+    "outputs/sonic-adventure/jp_port_tools/verify_native_adx_joints.py": "af6ed82569989314611bc6bc1b48bc8dcd45dfb52b09ab0b13aefaf60fc49daa",
+    "outputs/sonic-adventure/jp_port_tools/build_native_adx_stream_decoder.py": "488e494a0828f2d68655131056677b8b61be913f4d24ffdf04086c33ec56d74d",
+    "outputs/sonic-adventure/jp_port_tools/verify_native_adx_stream_decoder.py": "c2dd876b03f36e9bd4d0010ac2ff32979a8f9023c3117908de4f9631e2c98fc7",
+    "outputs/sonic-adventure/jp_port_tools/package_native_adx_stream_decoder.py": "04c7154bae22c04291a9acae59e1058b5b75792bf8a2d8f8c9643394e3fb9126",
+    "outputs/sonic-adventure/JP_NATIVE_ADX_STREAM_DECODER.txt": "70f093dd2964f87bf7bed60a76fafdef3a777e388f3dcb5840ce5014613c29c5"
+  },
+  "proof_files_sha256": {
+    "work/sonic-adventure/jp-native-adx-stream-decoder-v3/build_verification.json": "6df12f64c9c88df9dec4c2a790a7c519a97a9ae6d98fb75c803e38d158987bfe",
+    "work/sonic-adventure/jp-native-adx-stream-joints-check-v1/verification.json": "0c9723f52bbd565c6f2afa4f61bc14135b05704da32fedc09518f1a21bd7e32d",
+    "work/sonic-adventure/jp-native-adx-stream-decoder-check-v4/verification.json": "8d75dcb034747c0ee680df005408bcda308b741e64e3b1c8a0e8806ccb8cb532",
+    "work/sonic-adventure/jp-native-adx-stream-core-check-v1/verification.json": "39c356d46cd28df7e318b2e0066a44d47c1b3f51631b6a59dc05558a1418a4d4",
+    "work/sonic-adventure/jp-native-adx-stream-math-check-v1/verification.json": "4648f8554ea128b40d7bdeeef726eeaa02da1a6b07591552393fc4d901e476f3",
+    "work/sonic-adventure/jp-native-adx-stream-qsound-check-v1/verification.json": "dd45895aef2d3e060b299f7166d8e1899eac87cf6de038cd51f617c494cbf67f",
+    "work/sonic-adventure/jp-native-adx-stream-clock-check-v1/verification.json": "95a4f0209fca49f507e3cec2e2336b85cfb118d63a174a689abbe17425d33463",
+    "work/sonic-adventure/jp-native-adx-stream-media-check-v1/verification.json": "ff19ca094ce008611b428ccf52fca1cc6efb359473e49a841ba5e4195b4d77f5",
+    "work/sonic-adventure/jp-native-adx-stream-output-check-v1/verification.json": "bcdc5f10d8f9a77d7ef2325e5f613a19d9b3382049ccdfae9789cadf11c0a192",
+    "work/sonic-adventure/jp-native-adx-stream-frontend-audit-v1/dependency_inventory.json": "d60abcddf5defbce828f6a45338596f0f4a92b4db7c3aa7d77f38439147a97fe"
+  },
+  "prior_qualifications_preserved": {
+    "jp_native_adx_package.json": {
+      "path": "outputs/sonic-adventure/analysis/jp_native_adx_package.json",
+      "sha256": "4fc7de5d3025187cda227a8700e0cbcbfab82b1ba30744ad773b6ac8619042d6"
+    },
+    "jp_native_sound_math_package.json": {
+      "path": "outputs/sonic-adventure/analysis/jp_native_sound_math_package.json",
+      "sha256": "999718b47c0702c5186d9e3bdab45c9f7e1d109eef61d10192e1d0eab8cdb234"
+    },
+    "jp_native_sound_spatial_package.json": {
+      "path": "outputs/sonic-adventure/analysis/jp_native_sound_spatial_package.json",
+      "sha256": "31c09a8ad1e3c463cbda25f2190870d58e61916aa45b03619b8790ff136aca74"
+    },
+    "jp_native_qsound_package.json": {
+      "path": "outputs/sonic-adventure/analysis/jp_native_qsound_package.json",
+      "sha256": "e3c7a3eac100f26a9a7d81ca40b339272c2544e4312a7ad7eb1da05f4e2548e1"
+    },
+    "jp_native_sound_clock_package.json": {
+      "path": "outputs/sonic-adventure/analysis/jp_native_sound_clock_package.json",
+      "sha256": "e61d7dcb46ca2c8ce86f2bec3b856e0fe2f85882d112baf2b02b45243f1d3923"
+    }
+  },
+  "all_prior_qualified_source_and_proof_hashes_preserved": true,
+  "original_source_adaptations": {
+    "sdk/sofdec/adx_bsc.c": [
+      "Define byte swapping with unsigned shifts, including signed input halfwords."
+    ],
+    "sdk/sofdec/adx_sjd.c": [
+      "Register get-writer only after actual ADXB allocation succeeds; failed creation returns NULL without a null-address write.",
+      "Preserve the original four-byte Destroy prefix clear; native pointers are eight bytes.",
+      "Define byte swapping with unsigned shifts, including signed input halfwords."
+    ]
+  },
+  "original_source_bodies_adapted": true,
+  "legacy_build_original_source_bodies_changed_flag_applies_only_to_joint_stage": true,
+  "unchanged_prior_DLLs": {
+    "DLL": {
+      "current": "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\work\\sonic-adventure\\jp-native-adx-stream-decoder-v3\\jp_native_logo_start.dll",
+      "sha256": "71ef75e428480cda81e7bb2a7a281ccf3416cf107254343b04df8c71d8583c3b"
+    },
+    "frames_DLL": {
+      "current": "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\work\\sonic-adventure\\jp-native-adx-stream-decoder-v3\\jp_native_frames.dll",
+      "sha256": "17820e5b7206542e0d5f221dade462de9246244307980143e3ea4c0e3e3d1468"
+    },
+    "GPU_DLL": {
+      "current": "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\work\\sonic-adventure\\jp-native-adx-stream-decoder-v3\\jp_native_window_input.dll",
+      "sha256": "c4ba8192a4699003fc1163e867c4eab64791f9d16f0ee915002a24a6c06068dc"
+    },
+    "present_DLL": {
+      "current": "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\work\\sonic-adventure\\jp-native-adx-stream-decoder-v3\\jp_native_present.dll",
+      "sha256": "882b8cf799d0122b64fc7b3e7400e77bcd6f06fac96907968f2073b8ed9508cc"
+    },
+    "authored_exit_DLL": {
+      "current": "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\work\\sonic-adventure\\jp-native-adx-stream-decoder-v3\\jp_native_exit.dll",
+      "sha256": "46137043fff5a08c4b967269df71e086ea67f254c04b59d30607c504839a4225"
+    },
+    "vertex_lifecycle_DLL": {
+      "current": "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\work\\sonic-adventure\\jp-native-adx-stream-decoder-v3\\jp_native_vertex_lifecycle.dll",
+      "sha256": "77e7d684f5851d4ec3a85a1edb4d686459e03ff40e5dcfd6ce443acf5f25e1c3"
+    },
+    "device_DLL": {
+      "current": "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\work\\sonic-adventure\\jp-native-adx-stream-decoder-v3\\jp_native_device.dll",
+      "sha256": "035060eeb1ac4d1a16dfc7ce738bb86b2a2926e8dc8cf32382064da0dfb70c75"
+    },
+    "SDK_heap_DLL": {
+      "current": "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\work\\sonic-adventure\\jp-native-adx-stream-decoder-v3\\jp_native_sdk_heap.dll",
+      "sha256": "b043a0fa03310a3fc1fc346923a73a9e5c68820f5e361375d10e3bce06085744"
+    },
+    "fixture_DLL": {
+      "current": "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\work\\sonic-adventure\\jp-native-adx-stream-decoder-v3\\sdk_heap_exit_fixture.dll",
+      "sha256": "15147d6a4998a18890c2426fe6f25a6054eb652e285960ee62326021fab26510"
+    },
+    "RTC_DLL": {
+      "current": "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\work\\sonic-adventure\\jp-native-adx-stream-decoder-v3\\jp_native_rtc.dll",
+      "sha256": "984c9356af14dc642c6a0dbc417643a744fb6480b6cac70d4c76482f13d2af40"
+    },
+    "client_DLL": {
+      "current": "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\work\\sonic-adventure\\jp-native-adx-stream-decoder-v3\\rtc_sdk_client.dll",
+      "sha256": "d57cd95a0a696e2a7b4501aa2f499fe90c65f64d86188aeddd8b8179de74ae5c"
+    },
+    "GDFS_DLL": {
+      "current": "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\work\\sonic-adventure\\jp-native-adx-stream-decoder-v3\\jp_native_gdfs.dll",
+      "sha256": "aba878bda9f80a85cc93aa8c0a657bcad5f05bf915b0dd2187f4b120e56396ac"
+    },
+    "media_DLL": {
+      "current": "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\work\\sonic-adventure\\jp-native-adx-stream-decoder-v3\\jp_native_gd_media.dll",
+      "sha256": "4f342de735c6ec4ab7f7eaf470c66f585c6ea13af6571cc82bad415002759e26"
+    },
+    "System_DLL": {
+      "current": "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\work\\sonic-adventure\\jp-native-adx-stream-decoder-v3\\jp_native_system.dll",
+      "sha256": "2cb12ca7a1bc0261ef442ae0e96b5044c0c3f15284b05f407e26714e598863af"
+    },
+    "jp_native_g2_audio.dll": {
+      "current": "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\work\\sonic-adventure\\jp-native-adx-stream-decoder-v3\\jp_native_g2_audio.dll",
+      "sha256": "f00e2a9cd513f4945a7423e023b597fce0dedb3addf542af5f61538b79c081d7"
+    },
+    "jp_native_aica.dll": {
+      "current": "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\work\\sonic-adventure\\jp-native-adx-stream-decoder-v3\\jp_native_aica.dll",
+      "sha256": "d27a56aa2e3019cb94ee0ba345290156bc615095d123343b212c8a2c3a8c85cc"
+    },
+    "jp_native_audio.dll": {
+      "current": "C:\\Users\\wigwo\\Documents\\Codex\\2026-10-03\\de\\work\\sonic-adventure\\jp-native-adx-stream-decoder-v3\\jp_native_audio.dll",
+      "sha256": "ed198abf6f2403fb26a6c20227703bd8f42abe2a4fb62e53dd650ac2fe39751f"
+    }
+  },
+  "public_support_artifacts": [
+    {
+      "path": "work/sonic-adventure/jp-native-peripheral-input-v4/jp_native_input.dll",
+      "bytes": 118784,
+      "sha256": "e185da3dfe66c24c17a74e97c1d65e446291ef76a8d6be2826956062b80317ce"
+    },
+    {
+      "path": "work/sonic-adventure/jp-native-peripheral-input-v4/jp_native_input.lib",
+      "bytes": 6048,
+      "sha256": "5097bfe0fe873b734016054a779813ba25a33a46d6bb8f271faf0104b1efb9ed"
+    },
+    {
+      "path": "work/sonic-adventure/jp-native-gd-media-v1/jp_native_gd_media.dll",
+      "bytes": 114176,
+      "sha256": "4f342de735c6ec4ab7f7eaf470c66f585c6ea13af6571cc82bad415002759e26"
+    },
+    {
+      "path": "work/sonic-adventure/jp-native-gd-media-v1/jp_native_gd_media.lib",
+      "bytes": 3578,
+      "sha256": "163b693fc9a7056939e8746697acd5d49baebab625f8d6ae576ea766410e705e"
+    },
+    {
+      "path": "work/sonic-adventure/jp-native-system-v3/jp_native_system.dll",
+      "bytes": 181248,
+      "sha256": "e242d8cd200cd778a25bd475874372fe4f783b5fec493b46cb610b240f053d2b"
+    },
+    {
+      "path": "work/sonic-adventure/jp-native-system-v3/jp_native_system.lib",
+      "bytes": 2872,
+      "sha256": "5c26baeb2c96b8ec1d589a7399f0874d12d8f6226a83acf91b4d5e723ef52009"
+    },
+    {
+      "path": "work/sonic-adventure/jp-native-system-v3/jp_native_exit.dll",
+      "bytes": 115200,
+      "sha256": "b9c40b023a935a490426f693389e89b6e715a02c48482d23df0c593652b19ce2"
+    },
+    {
+      "path": "work/sonic-adventure/jp-native-system-v3/jp_native_exit.lib",
+      "bytes": 2992,
+      "sha256": "9776bd1a177a407a0ed53aa47179c5cbb696c304339011a8c014c4f544ad3e30"
+    },
+    {
+      "path": "work/sonic-adventure/jp-native-audio-v5/jp_native_audio.dll",
+      "bytes": 116736,
+      "sha256": "ed198abf6f2403fb26a6c20227703bd8f42abe2a4fb62e53dd650ac2fe39751f"
+    },
+    {
+      "path": "work/sonic-adventure/jp-native-audio-v5/jp_native_audio.lib",
+      "bytes": 2800,
+      "sha256": "5dd6e9f4aa803846e7e5858c8a3ae35f0c83bc81e826c612df029eac8e8d5820"
+    }
+  ],
+  "public_support_artifact_count": 10,
+  "full_frontend_missing_services": [
+    "ADXF_LoadPartition",
+    "ADXT_Create",
+    "ADXT_Destroy",
+    "ADXT_EntryErrFunc",
+    "ADXT_GetStat",
+    "ADXT_GetTime",
+    "ADXT_SetAutoRcvr",
+    "ADXT_SetOutVol",
+    "ADXT_SetSvrFreq",
+    "ADXT_StartAfs",
+    "ADXT_StartFname",
+    "ADXT_Stop"
+  ],
+  "implemented_error_flag_requires_colocation_or_data_import": true,
+  "full_ADXT_GDFS_RNA_PCM_game_streaming_verified": false,
+  "WAV_or_SPSD_playback_qualified": false,
+  "malformed_media_or_raw_pointer_safety_qualified": false,
+  "physical_console_interrupt_timing_qualified": false,
+  "combined_original_SDK_game_binaries_or_retail_assets_publishable": false,
+  "earlier_graphics_save_full_owner_exit_proofs_retained_not_rerun": true,
+  "publication_pending_review": true,
+  "goal_active": true,
+  "playable": false,
+  "overall_completion_percent": 10
+}

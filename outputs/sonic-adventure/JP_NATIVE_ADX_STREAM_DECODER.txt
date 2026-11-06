@@ -1,0 +1,116 @@
+Original native stream buffers and streaming decoder (2026-11-05 local)
+
+Status: VERIFIED within the scope below. Overall project estimate: approximately
+10% of weighted milestones; goal active. The matching Japanese source/build
+baseline is verified. Native gameplay, English localization and later ports
+remain unfinished. There is no playable native game executable.
+
+What changed
+The sound graph now includes the original ring-buffer and finite-memory stream
+joints, chunk splitter/wrapper, nested ADX critical sections, basic decoder,
+streaming decoder, SPSD header helper and error reporter. These are genuine SDK
+modules from pinned upstream 25a3d3154dbe657325e97dbe8c5291086f6af5c0.
+The original SDK source stays an external dependency. Private generated sources
+and combined SDK/game binaries are not selected for public releases.
+
+Original ADXSJD_ExecServer now runs ADXB and ADXPD against actual stream-joint
+function tables and buffers. This replaces no frontend with a fake success.
+The same native G2 callback gate already used by sound SDK transport adapts the
+original interrupt-mask calls. There is no second output client or duplicate
+stream-buffer pool. These raw internal SDK APIs require a live creator-thread
+audio owner and correctly sized caller-owned buffers. They are not public,
+validated game-facing interfaces for arbitrary pointers or malformed media.
+
+Native adaptations
+- Keep all joint/chunk/vtable/callback pointers at 64 bits. Guest/native byte
+  sizes: ring records48/72, memory records36/64, chunks8/16, SJD records144/200.
+- Preserve the original SJD destructor's four-byte record-prefix clear. Using
+  native sizeof(pointer) would instead clear eight bytes. The original stale
+  fields remain stale after release; the actual used flag frees the slot.
+- Register the SJD write callback after successful subordinate ADXB creation.
+  The original registers through NULL on allocation failure. Native failure now
+  returns NULL safely, releases the basic-decoder slot, and supports retry.
+- Use unsigned halfword byte swaps. Select compiler-native variable arguments
+  for the actual error reporter instead of SHC's four-byte stack walking.
+- Select upstream GCC's initialized SPSD invalid-code locals. Invalid SPSD
+  formats and WAV/SPSD playback are not qualified by the ADX tests below.
+
+The original excessive-unlock behavior is observed, not silently repaired:
+ADXCRS depth can reach -1 and stop masking until ADXCRS_Init. The eventual ADXT
+owner must balance failure-path locks; original frontend double-unlock paths
+cannot simply be exposed to game callers. No physical SH-4 interrupt timing
+or new console hardware measurement is claimed by the host callback gate.
+
+Exact build and checks
+Current private build: work/sonic-adventure/jp-native-adx-stream-decoder-v3.
+The joint stage passed two warning-free compiler/linker steps. The decoder
+stage passed five. They add40 joint/critical-section exports and99 decoder/
+helper exports. An export count is not a count of individually qualified game
+routines: WAV/SPSD branches and many helpers are only compiled at this stage.
+
+Current scoped checks total415,263:
+- Stream joints:63,993 checks;4,752 complete original Japanese entry calls.
+  Both32-slot pools, actual native vtables and pointers, independent FIFO data,
+  mirror/wrap bytes, partial returns, split aliases, error callback order,
+  nested masks and cleanup match original instructions. A real64-byte AICA DMA
+  copy and one actual queued completion prove dispatch waits for outer unlock.
+- Streaming decoder:2,981 checks;874 complete original entry calls. Twelve
+  synthetic mono/stereo cases use finite-memory or incrementally filled ring
+  input. Every produced sample matches an independent recurrence with original
+  per-step history quantization. Full original server calls also match all
+  stream counters, entire input/output buffers and guards, and trap callbacks.
+  Cases include50 fragmented feeds,14 explicit output-backpressure passes,
+  four mirrored output crossings, truncated final blocks and trap rearming.
+  Together they deliver1,864 frames /3,146 channel samples. Real eight-slot
+  native SJD capacity, subordinate allocation failure/retry and native error
+  formatting/context above4GB are checked. No original function hooks are used.
+- Existing ADX core:31,714 checks; original headers, coefficients, blocks and
+  expander pool. Existing sound math:293,998 checks. QSound:18,469 checks.
+  Actual timed sound/firmware/output:3,294 checks. Some timing observation
+  counts vary across runs; these totals refer to the archived exact reports.
+- Real retail decoder regression:60 checks, six supplied-JP music/voice chunks,
+  108,680 frames matched against independent PCM and original prefixes. These
+  exercise the existing codec/expander, not the new SJD file frontend.
+- Real Windows output regression:754 checks,88,200 verified title PCM frames,
+  exact ordered source hash, actual device clock/drain and worker cleanup in
+  an isolated session-muted qualification client. This is not game music mixed
+  with effects. The private WAV/PCM remains excluded from GitHub and releases.
+
+Earlier renderer, save, startup, full owner/exit and graphics proofs remain
+preserved. They are not counted as new test runs. A source/proof hash package
+records exact current inputs and preserved historical evidence. Only the
+combined sound SDK/game DLL changed; prior frame/System/Exit/device/GDFS/AICA/
+G2/authored PCM libraries retain their bytes. Ten already qualified public
+support artifacts and historical research builds retain their selection.
+
+Remaining integration
+The original game stream task still compiles but its deliberate, unexecuted
+link audit requires12 real frontend services: ADXF_LoadPartition plus ADXT
+Create/Destroy/EntryErrFunc/GetStat/GetTime/SetAutoRcvr/SetOutVol/SetSvrFreq/
+StartAfs/StartFname/Stop. The thirteenth symbol, adxpd_internal_error, already
+exists as actual local SDK state and needs colocation or correct data import.
+This work recovers prerequisites below those APIs; it does not satisfy them.
+
+Next adapt the actual ADXT/TLK task lifecycle, ADXSTM/ADXF/GDFS/AFS ownership
+and original RNA output. sdk/sofdec/mw_sdcs.c provides mwSnd ports; it allocates
+actual SDK PSTM banks and memory blocks. Its PCM producers must feed the same
+existing AICA/output owner as effects. Preserve looping, time, volume, callbacks
+and ordered shutdown. Replace the game's fixed0x0cca8000 work address with
+owned music/voice buffers (184516/55428 bytes, with native alignment checked).
+Do not open an independent unmixed WASAPI client as production music output.
+
+How to check
+Open analysis/jp_native_adx_stream_decoder_package.json and the source/proof
+reports it names. The package binds each file by SHA256. Rebuild from the same
+external upstream and prior ADX baseline using jp_port_tools/build_native_adx_
+joints.py, then build_native_adx_stream_decoder.py. Each builder's --help lists
+required local paths; use new output directories to preserve prior proofs.
+Run verify_native_adx_joints.py and verify_native_adx_stream_decoder.py against
+the resulting build and supplied Japanese 1ST_READ.BIN. Original retail inputs,
+toolchain downloads and prior qualified dependencies must be provided locally.
+No additional screenshot is available: this is internal audio integration.
+
+Recommended next model: keep Sol High / selected Sol Extra High for the real
+ADXT/RNA/file/PCM owner integration. Luna Low is suitable for routine docs.
+The full English PC/FPS8K/SUPIR/vertex-colour Off, Chao VMU emulator/widget,
+Android/stereoscopic3DS and final N64/PS1 stretch scope remains unchanged.

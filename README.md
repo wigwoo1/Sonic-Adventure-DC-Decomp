@@ -1,3 +1,17 @@
+Latest verified streaming prerequisites: original native SJ buffers and
+SJD->ADXB->ADXPD streaming now pass66,974 scoped checks and5,626 complete
+Japanese instruction entry calls. Fragmented input, output backpressure, sample
+counts, traps, native pointers and actual DMA callback gating are verified.
+415,263 current checks pass with audio regressions. Full ADXT/file/RNA/PCM game
+integration remains unfinished; there is no playable native game yet.
+Overall project estimate remains approximately10%; goal active.
+
+- [Current streaming decoder proof and next work](outputs/sonic-adventure/JP_NATIVE_ADX_STREAM_DECODER.txt)
+- [Exact current verification package](outputs/sonic-adventure/analysis/jp_native_adx_stream_decoder_package.json)
+
+Retail audio, disc assets and combined original SDK/game binaries remain private.
+Public builds are incomplete research artifacts. Previous evidence is preserved.
+
 Latest verified audio progress: original native ADX decoding now produces real
 Japanese music and voice PCM. Six chunks (108,680 frames) match an independent
 sample recurrence and original instruction prefixes; the title sample's 88,200

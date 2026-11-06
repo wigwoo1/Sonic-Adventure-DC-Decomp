@@ -1,3 +1,20 @@
+Latest verified audio streaming prerequisites: JP_NATIVE_ADX_STREAM_DECODER.txt.
+Goal active; overall approximately 10% of weighted milestones. The original
+native SJ ring/memory joints and actual SJD->ADXB->ADXPD pipeline now pass
+66,974 new scoped checks, including5,626 complete original Japanese entry calls.
+Partial input, actual output backpressure, mirrored wraps, sample totals, traps,
+real nested DMA-completion gating, native pointers and failed-creation reuse
+are verified. The same build passes415,263 current checks with ADX/math/QSound/
+timed-driver/real-retail-codec/Windows-output regressions. These are audio
+prerequisites: the game still needs12 actual ADXT/ADXF frontend services and
+correct shared error-state binding, owned work buffers, real GDFS/AFS and RNA/
+PCM integration in the existing AICA/output owner. No playable PC game yet.
+WAV/SPSD playback and malformed-media safety are not qualified. Original source,
+prior proof hashes, ten public support artifacts and full project scope remain
+preserved; combined SDK/game binaries and all retail PCM/assets stay private.
+The verified matching-source baseline is separate from native gameplay,
+English localization, FPS8K/SUPIR/vertex-Off, VMU/widget and later-platform work.
+
 Latest native ADX decoder and Japanese audio: JP_NATIVE_ADX.txt.
 Goal active; overall approximately 10%. Original header/mono/stereo/expander
 modules now run on native pointers with original coefficient and numeric values.
