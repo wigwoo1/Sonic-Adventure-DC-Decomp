@@ -1,0 +1,20 @@
+Original pair filtering in the native Emerald Coast sphere pass
+
+The stationary ring pass now uses the original collision_ignores
+function before the sphere worker. The dispatch gate also rejects
+disabled shapes and leaves non-sphere pairs to their own workers.
+The stage still supplies a player sphere snapshot with the existing
+collector API. Using the live player record will require ownership
+for reciprocal hit references across task retirement.
+
+Run build_native_emerald_sphere_filter.py using the pinned checkout
+and qualified post-task ring pass build. In a fresh Windows process,
+load the generated Frame DLL and call jp_collision_sphere_filter_check,
+jp_collision_spheres_check, and jp_collision_lists_check. All three
+returned zero. The filter fixture exercises both directions of the
+ignore policy, disabled shapes, and an unsupported shape type.
+
+Run verify_native_emerald_projection_profile.py with the same local
+geometry, character and disc inputs for the scene regression. The
+combined DLL and generated game source remain private. Overall project
+completion is about 10 percent.

@@ -1,0 +1,17 @@
+Original sphere worker in the Emerald Coast ring path
+
+The native Emerald Coast diagnostic now calls the original sphere worker
+to test stationary ring contacts during stage updates. The collector uses
+the existing world-space sphere snapshot and a persistent collision record
+that can survive the ring's deferred pickup tick. Its back-link to the ring
+is cleared immediately because a ring task can retire independently.
+
+Run build_native_emerald_ring_sphere.py with the qualified collision spheres
+build, then run verify_native_emerald_projection_profile.py with the new
+build and the same local geometry, character and disc inputs. The run passed
+848 checks, confirmed the original worker executed, preserved the pickup,
+jump and landing audio event order and matched all eight prior captures.
+
+Full list-based collision dispatch, the original full ring callback and
+mesh updates remain open. Overall completion is about 10 percent. The
+combined Windows diagnostic and retail captures stay local.

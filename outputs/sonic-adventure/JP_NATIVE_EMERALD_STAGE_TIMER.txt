@@ -1,0 +1,29 @@
+Original stage timer reads on Windows
+
+The Emerald Coast Windows build links the pinned original timer_mark,
+timer_lap, timer_elapsed, and timer_elapsed_and_mark functions. Their
+hardware counter reads use the existing native Timer 1 service. The
+build covers those four reads and their shared mark. A caller must
+initialize the native clock and set the mark before reading a lap.
+The original timer_start and render-completion callback are separate.
+
+Run build_native_emerald_stage_timer.py against the pinned checkout
+and verified projection build, then verify_native_emerald_stage_timer.py
+against the resulting build. The controlled Windows clock passed nine
+exact float checks for elapsed time, mark updates, pause, resume, and
+the original unsigned difference across a counter reload. The Emerald
+Coast scene regression passed 844 checks and all eight captures matched.
+
+Run audit_native_emerald_stage_step.py on the new build to compile the
+original stage_run_step body and inspect direct COFF object providers.
+The audit finds timer_mark and timer_lap in the new object. It also
+identifies the remaining imports to investigate, including collision,
+particles, event state, thread scheduling, and the gameplay clock.
+The audit checks object definitions, so a name on its list can still
+have a provider in an archive or import library. The original stage
+step has been compiled. Linking and running it remain open.
+
+Overall project completion is about 10 percent. The Japanese source
+baseline is verified. Native gameplay is partial, and localization
+and later platforms remain unfinished. Generated upstream code,
+diagnostic DLLs and captures remain private.

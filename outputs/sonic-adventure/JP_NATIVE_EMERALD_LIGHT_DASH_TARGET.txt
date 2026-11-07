@@ -1,0 +1,153 @@
+Light Dash target selection on Windows
+
+The native build links the target-selection part of the pinned Sonic
+Light Dash routine to the retained stage ring lists. It uses the
+original cone and nearest-distance rules. The unsigned angle adapter
+uses the existing SH-4 numerical helpers and clamps dot-product
+overshoot before acos. Exact original angle-boundary parity remains
+unverified. The stage diagnostic does not activate Light Dash.
+
+Run build_native_emerald_light_dash_target.py against the qualified
+ring reach v2 build. In a fresh Windows process, initialize the Ninja
+matrix stack and call jp_light_dash_target_check. A zero return
+confirms nearest forward target, stable ties, rear-target rejection,
+and player-list separation. The Emerald Coast scene regression
+passed 862 checks and matched all eight previous captures.
+
+Movement toward the target, the roll fallback and the Sonic mode
+transition are separate dependencies. Overall completion remains
+about 10 percent.
+
+The current builder also links the original steering branch after target
+selection. It reuses the native atan2 adapter to calculate heading. The
+fixture verifies forward speed, both original speed limits, dash-step
+extension, and leaving speed alone when no forward target exists.
+The scene regression passed 847 checks and reproduced all eight captures.
+The rolling fallback, mode transition and live controller activation
+remain open. The previous selector-only proof records its own hashes.
+
+The roll build now runs the original rolling acceleration and shared
+speed integration when the selected player's nearby-ring list is
+empty. It preserves the no-steering branch for a nonempty list with
+no forward target. The focused test checks airborne roll acceleration
+and rejection of a grounded call without a contact record. The Windows
+scene passed 935 regression checks. Controller activation and the live
+Light Dash mode transition remain open.
+
+The release build links the ring-dash branch of the original transition.
+The focused fixture uses the actual pad record and checks held input,
+release, animation, timer, initial speed, guard flags and one-shot
+behavior. It also checks that Ancient Light defers to its separate
+attack path, which still needs integration. The sound calls are linked;
+audible release playback and live controller activation remain untested.
+The Windows scene passed 840 regression checks.
+
+The duration build adds the original timer and history-distance stop
+checks. The fixture covers continued movement, stopping at the 1.5-unit
+boundary, expiration despite movement, the skid action and speed cap,
+and leaving other modes alone. The separate request and crash branches
+still need integration. The Windows scene passed 840 regression checks.
+
+The scheduled-mode build exercises release, steering and stop in a
+real task scheduler callback. In a fresh process, initialize the
+matrix stack, heap and task pool, then call
+jp_emerald_light_dash_mode_check. The fixture supplies ring and pad
+state and changes position between ticks. Position integration and
+physical controller activation still need to be connected.
+
+This build corrects the earlier duration fixture. That fixture did
+not register the player slot, so the original history getter could
+leave its output unset. The new duration entry rejects an unowned
+slot and both fixtures register and restore their player state.
+
+The movement build uses the existing static floor query to commit
+Light Dash velocity to position and record the committed position in
+player history. The scheduled fixture now checks two real movement
+updates on a flat triangle and then timer expiry. It supplies targets
+and button state. Full stage collision, collision-shape updates,
+animation rendering and physical controller activation remain open.
+
+The shape build runs Sonic's original sphere-position update after
+the floor query accepts movement. The scheduled fixture verifies
+that the center follows both committed positions and that the original
+sphere worker can register a ring contact at the new position. Full
+stage activation, rendering the dash action and wall response remain
+separate integration steps.
+
+The action build leases the original Light Dash and skid actions from
+the Sonic motion bank and shared models bank, respectively. It binds
+them into their original action slots with the pinned playback settings.
+The Windows scene verified both bindings and released both leases.
+It passed 901 checks. Playback through the active dash mode is still open.
+
+The playback build adds an animated movement entry. Run
+verify_native_emerald_light_dash_playback.py against that build.
+The scheduled fixture holds the original stand, dash and skid leases
+while it checks entry to the dash loop, frame advancement on the next
+movement tick, and the skid transition on expiry. It releases animation
+blend storage and all leases. The scene regression passed 843 checks.
+The scheduled playback test does not render the dash to the window.
+
+The pose verifier now captures the leased dash and skid animations
+through the original Sonic renderer and presents both through the
+Windows GPU path. It uses the established walking render fixture to
+sample the two action assets. The captures verify their visible poses.
+The scheduled Light Dash movement test remains a separate check.
+The scene passed 879 checks and all eight earlier captures matched.
+
+The scheduled render build passes the same Sonic task from the movement
+fixture into the original renderer. It presents the active dash frame
+and the skid transition through two Windows GPU jobs, without replacing
+their action slots with a walking action. The fixture uses a flat test
+triangle and supplied button state. The full scene passed 871 checks and
+preserved all eight regression captures. The verifier observes two
+original dash sound requests. Audible dash playback remains unverified.
+
+The current render fixture passes the hash-checked Emerald Coast Act 1
+triangles into the scheduled movement test. Sonic advances from x = -79
+to -71 and -63, sampling the retail floor and moving his collision sphere
+on both updates. The separate dash and skid windows present the same
+task's animation. Targets and input remain scripted and the pose window
+draws Sonic without stage scenery. The scene passed 874 checks.
+
+The charge-to-skid capture now earns the Crystal Ring charge on the same
+scheduled task before releasing and moving over the retail floor. The
+fixture scripts the button and ring targets. It runs after the ordinary
+scene so its pending sounds cannot consume the jump audio test's slots.
+The two pose captures and 874 scene checks passed. Audible charge and
+dash playback still need independent verification.
+
+The rendered charge-to-skid capture now polls the native input provider
+and original pad scanner on each held charge tick and on release.
+It uses the existing controlled provider and restores the capture's
+input override and pad-enable state on return. The scene passed 872
+checks and matched all ten prior captures. Physical controller input
+and ordinary stage activation remain open.
+
+The input build also runs the held and released samples through the
+native provider and the original pad scanner. Run
+verify_native_emerald_light_dash_playback.py with --input to exercise
+this path. The controlled source supplies the Dreamcast B mask and
+then releases it. The scheduled task remains standing while held and
+enters Light Dash on release. The fixture starts with charge already
+set. Charging from normal play and testing a physical controller
+remain open.
+
+The charge build adds the original spin-charge and charged-speed task.
+The native task allocates the full pointer-sized payload and checks
+that it still owns the same player work before accessing it. Sound
+request IDs use the full-width native sound ABI. In a fresh Windows
+process, initialize the heap and task pool, then call
+jp_emerald_light_dash_charge_check. It verifies both 210-step and
+120-step thresholds, release, and top-speed restoration when the
+charged task retires. The charge fixture writes controlled pad records.
+Connecting the full sequence to ordinary stage movement remains open.
+
+The scheduled charge test now uses task levels zero and one and runs
+both charge thresholds through the original pad scanner. Run the
+playback verifier with --input --charge to exercise this path. The
+script supplies 211 held samples and a release with Light Speed Shoes,
+then 121 held samples and a release with the Crystal Ring. These totals
+include the initial spin-entry update. The test verifies the release
+transition and charged-speed retirement in both cases. The retail-floor
+rendering fixture remains separate and starts with charge already set.

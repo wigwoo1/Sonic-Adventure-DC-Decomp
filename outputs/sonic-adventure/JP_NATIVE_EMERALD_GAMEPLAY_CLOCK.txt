@@ -1,0 +1,21 @@
+Original gameplay clock and event query on Windows
+
+The original time_step and event_in_control functions now link into
+the Emerald Coast Frame DLL with the existing boot state owner.
+The gameplay clock advances from simulation calls and shares the
+same counters and running flag as the original reset/start/stop paths.
+The event query uses the same pointer as original event initialization.
+
+Build with build_native_emerald_gameplay_clock.py using the pinned
+checkout and the qualified Emerald stage timer build. Run
+verify_native_emerald_gameplay_clock.py with the new build and a fresh
+private output file. The Windows checks cover Sonic's count-up, stop,
+cap, shared step counter, Gamma's count-down and beep cadence, and
+shared event query state. Beep playback and event execution are outside
+this test. The scene regression passed 876 checks with eight matching
+captures. The stage-step audit finds both newly linked functions.
+
+The original stage step still needs collision, particles, thread
+scheduling and shared game state integration. The test advances the
+gameplay clock directly. Stage timing at different rendering rates
+remains to be verified. Overall completion is about 10 percent.

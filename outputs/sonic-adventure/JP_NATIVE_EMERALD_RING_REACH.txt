@@ -1,0 +1,27 @@
+Original ring reach checks in the Windows stage
+
+The registered stationary ring pass now checks the original task-position
+reach test before it tries the player's sphere shapes. The pinned near-list
+helper records nearby targets even if their collision radii do not reach.
+The diagnostic clears those lists at the start and end of the pass so that
+no caller can traverse stale task references. Other gameplay systems still
+need an owner for near lists that survive the collision phase.
+
+Run build_native_emerald_ring_reach.py with the pinned checkout and the
+verified multi-sphere live-contact build. The new Frame DLL exports
+jp_emerald_ring_reach_check. A zero result verifies a strict tangent
+boundary, an in-range pair, a far pair, and the near-list sentinel and
+cleanup. The multi-sphere regression fixture also returns zero.
+
+Run verify_native_emerald_projection_profile.py with the same local
+geometry, character and disc inputs. Overall project completion is about
+10 percent. The combined diagnostic DLL and generated game code stay local.
+
+Nearby rings now remain available between stage updates in the current
+build. The next collision pass refreshes the list. Ring destruction
+removes every reference to that task before its work is freed, and stage
+close clears the list. A focused check verifies compaction and sentinel
+placement for both player lists. The Windows scene passed 873 checks
+and confirmed the list was populated before teardown and empty afterward.
+All eight prior captures matched by SHA256. Sonic's original nearby-ring
+consumer remains to be connected.

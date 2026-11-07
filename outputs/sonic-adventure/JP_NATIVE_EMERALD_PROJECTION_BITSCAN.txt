@@ -1,0 +1,19 @@
+Leading-zero instruction for Emerald Coast projection
+
+The Windows diagnostic builder accepts --bit-scan. With that option it
+checks the pinned SH-4 header hash, generates a private copy with one
+replacement, and recompiles the projection object. The shipped vendor
+header stays byte-identical. The replacement finds the highest set bit
+of the nonzero dot-product magnitude in one operation. This preserves the
+exponent and rounding inputs. Other linked objects keep their prior code.
+
+Use the same inputs and commands as JP_NATIVE_EMERALD_PROJECTION_XYZ.txt
+with --bit-scan on the builder and fresh private output paths.
+
+The rebuilt projection passed 1,554 comparisons across 192 original
+calls and the Windows scene passed 840 checks. All eight captures
+matched the previous build by SHA256. Across 48 frames, the two prior
+XYZ runs took 10.86 and 10.02 seconds inside the projection loop. The two
+bit-scan experiments took 10.22 and 9.67 seconds. The first experiment used
+the equivalent change directly in a temporary header edit. These timings
+describe the diagnostic workload. Overall completion is about 10 percent.

@@ -1,0 +1,19 @@
+Original sphere collision on Windows
+
+The Emerald Coast Frame DLL now links the original sphere-versus-sphere
+worker and its hit, hurt, push and shape-center helpers. The native
+vector-length adapter uses the existing SH-4 inner product and square
+root services. The scoped worker omits debug marker drawing.
+
+Build with build_native_emerald_collision_spheres.py using the pinned
+checkout and the qualified Emerald collision lists build. In a fresh
+process load the new Frame DLL and call jp_collision_lists_check and
+jp_collision_spheres_check. Both return zero on success. The sphere
+fixture checks tangent and overlapping shapes, reciprocal hit links,
+the keep-hit flag, and coincident centers.
+
+The original full collision translation unit needs generated debug
+marker includes. The sphere worker is linked as a separate scoped
+unit. The live ring diagnostic still uses its earlier contact path.
+Pair dispatch, other shape combinations, and the stage collision
+phase remain open. Overall completion is about 10 percent.

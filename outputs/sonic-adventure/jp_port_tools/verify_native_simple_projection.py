@@ -43,6 +43,8 @@ def main():
             (-4.,0.,2.),(4.,0.,2.),(0.,-3.,2.),(0.,3.,2.),
             (1.,2.,-1.),(-.25,.5,.75),(12.,-14.,20.),(.1,.2,1e-15),
             (1e-20,-1e-20,1e-20),(20.,40.,100.),(-10.,2.,4.),(1.,1.,3.),(0.,0.,2.)]
+    # Identical positions with distinct normals must still write separate records.
+    points.extend((points[4],points[0],points[8]))
     normals=[(float(i),-float(i),.5) for i in range(len(points))]
     rng=random.Random(0x53494d50);checks=0;records=[];masks=set()
     def check(ok,label):
@@ -50,7 +52,7 @@ def main():
         assert ok,label;checks+=1
     stack=C.create_string_buffer(128*64);bind(f,'njInitMatrix',None,P,I,I)(stack,128,0)
     for kind in range(1,5):
-      for count in (0,1,2,3,7,16):
+      for count in (0,1,2,3,7,16,20):
        for parity in (0,1):
         for bank in (0,1):
          for mi,matrix in enumerate(matrices):

@@ -1,0 +1,29 @@
+Live player record in Emerald Coast ring contacts
+
+The post-task ring pass borrows Sonic's current collision record and
+uses its first world-space sphere. The stage checks that the record
+belongs to Sonic before entering the phase. The player record, its
+selected shape, and work flags are restored after each pair. The
+ring keeps its hit flag for the next update and releases its links
+to the borrowed player record before the call returns.
+
+Run build_native_emerald_live_ring_contact.py using the verified sphere
+filter build, then verify_native_emerald_projection_profile.py with the
+same local geometry, character and disc inputs. The Windows build
+passed 871 scene checks. At capture, the live-path count matched the
+total sphere-pair count, the registered list was empty, and all eight
+captures matched the previous build. The player probe initializes the
+owner of its diagnostic record before calling the stage.
+
+The integration covers stationary rings and the first player sphere.
+The complete stage collision dispatcher and mesh updates remain open.
+Overall project completion is about 10 percent.
+
+Follow-up build
+
+The current builder checks every eligible player sphere in record order.
+The stage can now enter the pass with a non-sphere in slot zero. The
+fixture jp_emerald_multi_sphere_check returns zero after confirming that
+the sphere in slot one caused a hit and temporary links were cleared.
+The Windows scene passed 836 checks and reproduced all eight captures.
+The previous first-sphere evidence remains tied to its recorded hashes.

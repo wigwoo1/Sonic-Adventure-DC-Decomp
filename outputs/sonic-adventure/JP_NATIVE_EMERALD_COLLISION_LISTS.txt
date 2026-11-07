@@ -1,0 +1,19 @@
+Original collision registration on Windows
+
+The pinned collision_register, collision_reset, and collision_clear_lists
+bodies now compile into the Emerald Coast Frame DLL with their original
+list storage and limits. Registration observes the shared frame_redrawing
+flag and the original edit-mode flag. The build also preserves the two
+list counters originally defined in the stage source.
+
+Build with build_native_emerald_collision_lists.py using the pinned
+checkout and the qualified Emerald gameplay clock build. The exported
+jp_collision_lists_check returns zero on success when called in a fresh
+process with the new DLL. It passed twice across all nine collision kinds,
+including capacity, reset, clear, redraw, and editor cases. The Emerald
+Coast scene passed 857 regression checks and matched all eight prior
+captures. Scene collision behavior still runs through the prior path.
+
+Pair dispatch, mesh updates, and switching the live stage to the original
+collision pipeline remain open. Overall completion is about 10 percent.
+The generated game source and combined DLL stay local.

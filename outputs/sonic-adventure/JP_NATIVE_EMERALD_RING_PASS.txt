@@ -1,0 +1,18 @@
+Post-task ring collision in Emerald Coast
+
+Waiting rings now use the original registration routine during the
+placement task level. After that level returns, the stage runs the
+original sphere worker over the registered rings and drains the list.
+The ring destructor clears any pending reference before its record is
+freed. The stage still supplies a world-space player sphere snapshot.
+
+Run build_native_emerald_ring_pass.py with the qualified ring sphere
+build, then run verify_native_emerald_projection_profile.py with the
+new build and the same local geometry, character and disc inputs.
+The Windows build passed 839 checks plus the empty-list assertion.
+The pickup, jump and landing audio events stayed on updates 7, 17
+and 33, and all eight prior captures matched by SHA256.
+
+This is the stationary ring portion of the collision phase. The full
+original pair dispatcher and mesh update still need integration.
+Overall completion is about 10 percent.

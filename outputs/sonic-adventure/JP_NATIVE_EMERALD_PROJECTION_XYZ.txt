@@ -1,0 +1,23 @@
+Native Simple projection computes only the three consumed coordinates
+
+The Windows projection loop now snapshots the current matrix once per model
+and uses the same SH-4 dot product and rounding for the three consumed
+coordinates. It drops the unused fourth dot product. Zero-point calls
+still avoid reading the matrix.
+
+Use build_native_emerald_projection_xyz.py with the previous verified
+Emerald projection profile as the baseline and a fresh private output
+directory. Run verify_native_simple_projection.py and
+verify_native_emerald_projection_profile.py on the resulting build with
+the same local inputs as the respective baseline checks.
+
+The build compiled and linked. The comparison with 192 original calls
+passed 1,554 checks, including clip flags, queue bytes and memory guards.
+The Windows scene passed 851 checks and all eight PNGs matched the prior
+run by SHA256. Projection loop time over 48 streamed frames was 10.86 s,
+down from 11.27 s in the previous instrumented run. These are single runs
+and do not establish a frame-rate target. Overall completion is about 10%.
+
+Historical proofs still identify the historical source revision. Use the
+matching Git snapshot to rerun checks that enforce those hashes. Generated
+game code, retail inputs, captures and the diagnostic DLL remain local.

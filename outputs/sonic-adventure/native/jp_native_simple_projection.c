@@ -2,9 +2,11 @@
 #include "jp_native_simple_projection.h"
 #include "jp_native_sprite_numeric.h"
 #include "jp_native_action_numeric.h"
+#include "../third_party/skmp-sh4-fpu/sh4_fpu_approx.h"
 #include <string.h>
 extern NJS_SCREEN _nj_screen_;
 extern Float _nj_near_clip_,_nj_far_clip_;
+float *jp_ninja_current_matrix_storage(void);
 void njSimpleCalcModel_Loop1(struct jp_simple_calc_work *,NJS_MATRIX *);
 void njSimpleCalcModel_Loop2(struct jp_simple_calc_work *,NJS_MATRIX *);
 void njSimpleCalcModel_Loop3(struct jp_simple_calc_work *,NJS_MATRIX *);
@@ -18,8 +20,20 @@ static uint32_t bits(float f){uint32_t word;memcpy(&word,&f,4);return word;}
 void jp_simple_projection_loop(struct jp_simple_calc_work *work,unsigned kind)
 {
     if(work!=active_work || kind!=active_kind || !active_queues){active_error=3;return;}
+    if(!work->count)return;
+    uint32_t matrix[16];
+    memcpy(matrix,jp_ninja_current_matrix_storage(),sizeof matrix);
     for(Sint32 i=0;i<work->count;i++){
-        float p[3];jp_sprite_transform_point((const float *)&work->points[i],p);
+        uint32_t point[4];
+        float p[3];
+        memcpy(point,&work->points[i],12);
+        point[3]=0x3f800000u;
+        /* The projected record uses XYZ. The fourth dot product has no value consumer. */
+        for(unsigned row=0;row<3;row++){
+            uint32_t cause;
+            uint32_t word=sh4_fipr__dot(point,1,matrix+row,4,1,1,&cause);
+            memcpy(&p[row],&word,sizeof word);
+        }
         uint32_t flags=0;float x=p[0],y=p[1],depth;
         if(kind>=3 && jp_sprite_gt(_nj_near_clip_,p[2])){
             depth=p[2];

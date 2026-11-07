@@ -18,6 +18,14 @@ class Draw(C.Structure):
 
 def overlay(context):
     lib = context['f']
+    if 'emerald_ring_sphere' in context['b']:
+        assert bind(lib, 'jp_emerald_ring_sphere_pairs', U)() > 0
+    if 'emerald_ring_pass' in context['b']:
+        assert bind(lib, 'jp_collision_pending_rings', U)() == 0
+    if 'emerald_live_ring_contact' in context['b']:
+        assert bind(lib, 'jp_emerald_live_ring_pairs', U)() == bind(lib, 'jp_emerald_ring_sphere_pairs', U)() > 0
+    if context['b'].get('emerald_ring_reach', {}).get('retain_near_rings'):
+        assert bind(lib, 'jp_emerald_near_ring_count', U)() > 0
     target = bind(lib, 'jp_emerald_placement_task', P,U)(145)
     assert target
     work = same_tick.Task.from_address(target).work.contents
@@ -77,6 +85,8 @@ def collect(context, triangles, draw, track):
     result = namespace['collect'](context, triangles, draw, track)
     lookup = bind(context['f'], 'jp_emerald_stage_ring_texture_list', P,I)
     assert not lookup(0) and not lookup(1)
+    if context['b'].get('emerald_ring_reach', {}).get('retain_near_rings'):
+        assert bind(context['f'], 'jp_emerald_near_ring_count', U)() == 0
     return result
 
 
@@ -96,6 +106,18 @@ def exercise(context, inputs, track):
                     spin, land = View(), View()
                     acquire = bind(motions,'jp_motions_acquire',I,U,C.c_char_p,P)
                     release = bind(motions,'jp_motions_release',I,Q)
+                    if c['b'].get('emerald_light_dash_target',{}).get('actions_bound'):
+                        dash, skid = View(), View()
+                        check(acquire(0,b'sonic_light_dash_action',C.byref(dash))==0,'original Light Dash action leased')
+                        try:
+                            check(acquire(7,b'sonic_skid_action',C.byref(skid))==0,'original skid action leased')
+                            try:
+                                check(bind(f,'jp_emerald_light_dash_actions_check',I,P,P)(dash.data,skid.data)==0,
+                                      'original dash and skid actions bind with their native playback settings')
+                            finally:
+                                check(release(skid.token)==0,'skid action released')
+                        finally:
+                            check(release(dash.token)==0,'Light Dash action released')
                     spin_status = acquire(7,b'sonic_spin_action',C.byref(spin))
                     check(spin_status==0,('original Sonic spin action leased',spin_status))
                     try:
@@ -147,6 +169,36 @@ def exercise(context, inputs, track):
     scope_models = list({entry[0]:entry for entry in models + spin_models}.values())
     registrations=(ModelSpan*len(scope_models))()""")
         raw = raw.replace('enumerate(models):\n        registrations', 'enumerate(scope_models):\n        registrations')
+        anchor = '            ring_walk = collect(c,triangles,lambda: draw(listing,aura_view.data,action_view.data,1,0),track)\n'
+        assert raw.count(anchor) == 1
+        # The full charge fixture queues effects that outlive its capture.
+        # Run it after the ordinary scene has completed its audio checks.
+        charge_capture = context['b'].get('emerald_light_dash_target',{}).get('full_charge_capture')
+        before = '' if charge_capture else anchor
+        after = anchor if charge_capture else ''
+        raw = raw.replace(anchor, after + """            if b.get('emerald_light_dash_target',{}).get('actions_bound'):
+                from verify_native_emerald_projection_profile import capture_light_dash_poses
+                def record_pose(action):
+                    check(draw(listing,aura_view.data,action,0,0)==0,'original Sonic renderer records the leased pose')
+                    pose_frame=Q()
+                    check(bind(f,'jp_frames_submit',I,P)(C.byref(pose_frame))==0,'pose frame retained')
+                    return pose_frame.value
+                def reserve_pose():
+                    check(bind(f,'jp_model_reserve',I,P)(C.byref(bound))==0 and
+                          bind(f,'jp_frames_prepare_textures',I,P,U)(words,len(words))==0,
+                          'next recording reserves buffers and textures after pose capture')
+                if b['emerald_light_dash_target'].get('full_charge_capture'):
+                    reserve_pose()
+                def record_scheduled_pose(task):
+                    check(bind(f,'jp_emerald_light_dash_draw',I,P,P,P)(
+                        task,listing,aura_view.data)==0,'scheduled Sonic task draws its current animation')
+                    pose_frame=Q()
+                    check(bind(f,'jp_frames_submit',I,P)(C.byref(pose_frame))==0,'scheduled pose retained')
+                    return pose_frame.value
+                capture_light_dash_poses(d,b,f,gl,motions,stand.data,record_pose,
+                                         record_scheduled_pose,reserve_pose,check,png,
+                                         triangle_buffer,len(triangles)//TRIANGLE.size)
+""" + before)
         raw = raw.replace('(registrations,len(models))', '(registrations,len(scope_models))')
         marker = '            def draw(textures,aura,walk,charged,hidden):'
         assert raw.count(marker) == 1
@@ -353,8 +405,11 @@ def exercise(context, inputs, track):
                 check(len(set(samples.values()))==6,'ground and airborne sample screenshots differ')
                 for label,pixels in samples.items():
                     png(d/('sonic_emerald_stream_'+label+'.png'),pixels,512,512)
-                check([event[0] for event in audio_events]==[7,17,33] and
-                      [event[2] for event in audio_events][1:]==[1,3],
+                dash_options = b.get('emerald_light_dash_target',{})
+                dash_audio = dash_options.get('scheduled_pose_capture') and not dash_options.get('full_charge_capture')
+                expected_events = [725,1118,7,17,33] if dash_audio else [7,17,33]
+                check([event[0] for event in audio_events]==expected_events and
+                      [event[2] for event in audio_events][-2:]==[1,3],
                       ('pickup, jump and landing reach mixer in order',audio_events))
                 check(audio_ticks==len(ids)+1,'audio clock advances once per streamed update and landing')
                 check(len(readback_counts)==6 and len(ids)==48,
@@ -398,6 +453,93 @@ def exercise(context, inputs, track):
         harness['exercise'](context, inputs, track)
 
 
+def capture_light_dash_poses(out, manifest, frames, gpu, motions, stand, record_pose,
+                            record_scheduled_pose, reserve_pose, check, png, triangles, count):
+    import types
+    from verify_native_motion_store import View
+    from native_gpu_jobs_test_support import Jobs
+    from native_gpu_test_support import Config, Failure, Report
+
+    Q, S = C.c_uint64, C.c_size_t
+    device = C.CDLL(manifest['device_DLL'])
+    handle = bind(device, 'jp_device_gpu', P)()
+    jobs = Jobs(types.SimpleNamespace(lib=gpu, handle=P(handle)))
+    config = Config.make(512, 512)
+    config.logical_width = config.logical_height = 512
+    window, error = P(), Failure()
+    pixels = C.create_string_buffer(512 * 512 * 4)
+    acquire = bind(motions, 'jp_motions_acquire', I, U, C.c_char_p, P)
+    release = bind(motions, 'jp_motions_release', I, Q)
+    close = bind(gpu, 'jp_window_close', None, P)
+    check(bind(gpu, 'jp_window_open', I, P, U, U, I, P, P)(
+        handle, 512, 512, 1, C.byref(window), C.byref(error)) == 0, 'pose capture window opens')
+    images = []
+    actions = ((0, b'sonic_light_dash_action', 'light_dash'),
+               (7, b'sonic_skid_action', 'skid'))
+
+    def capture(source, record, label):
+        frame, job = 0, Q()
+        try:
+            frame = record(source)
+            check(jobs.submit(handle, frame, C.byref(config), C.byref(job),
+                              C.byref(Report()), C.byref(error)) == 0, f'{label} GPU job submits')
+            jobs.wait(job.value)
+            check(jobs.copy(window, job.value, C.byref(error)) == 0, f'{label} reaches the window')
+            check(bind(gpu, 'jp_window_readback', I, P, P, S, P)(
+                window, pixels, len(pixels), C.byref(error)) == 0, f'{label} pixels read back')
+            rgba = pixels.raw
+            check(len(set(zip(rgba[0::4], rgba[1::4], rgba[2::4]))) > 16, f'{label} pose is visible')
+            png(out / f'sonic_emerald_pose_{label}.png', rgba, 512, 512)
+            images.append(rgba)
+            check(bind(gpu, 'jp_window_present', I, P, U, P)(
+                window, 1, C.byref(error)) == 0, f'{label} presented')
+        finally:
+            if job.value:
+                check(jobs.release(handle, job.value, C.byref(error)) == 0, f'{label} GPU result retired')
+            if frame:
+                check(bind(frames, 'jp_frame_release', I, Q)(frame) == 0, f'{label} frame retired')
+        check(bind(frames, 'jp_queue_reset_frame', I)() == 0, f'{label} queue reset')
+        reserve_pose()
+
+    views = []
+    try:
+        for bank, action, label in actions:
+            view = View()
+            check(acquire(bank, action, C.byref(view)) == 0, f'{label} capture lease acquired')
+            views.append(view)
+        if manifest['emerald_light_dash_target'].get('scheduled_pose_capture'):
+            callback = C.CFUNCTYPE(I, P, I)
+            errors = []
+
+            @callback
+            def observe(task, phase):
+                try:
+                    capture(task, record_scheduled_pose, actions[phase][2])
+                    return 0
+                except Exception as exc:
+                    errors.append(repr(exc))
+                    return -1
+
+            args = (stand, views[0].data, views[1].data, observe)
+            if manifest['emerald_light_dash_target'].get('retail_floor_capture'):
+                entry = ('jp_emerald_light_dash_observe_geometry_input'
+                         if manifest['emerald_light_dash_target'].get('native_capture_input')
+                         else 'jp_emerald_light_dash_observe_geometry')
+                status = bind(frames, entry,
+                              I, P, P, P, callback, P, S)(*args, triangles, count)
+            else:
+                status = bind(frames, 'jp_emerald_light_dash_observe', I, P, P, P, callback)(*args)
+            check(status == 0 and not errors, ('scheduled dash and skid captured', status, errors))
+        else:
+            for view, (_, _, label) in zip(views, actions):
+                capture(view.data, record_pose, label)
+        check(images[0] != images[1], 'Light Dash and skid produce distinct poses')
+    finally:
+        for view in reversed(views):
+            check(release(view.token) == 0, 'pose capture lease retired')
+        close(window)
+
+
 if __name__ == '__main__':
     scene = same_tick.terrain.shared.registry.loader.owner.queued.owner.direct.textured.scene
     runner = Path(scene.__file__).read_text().split("if __name__ == '__main__':\n", 1)[1]
@@ -405,7 +547,13 @@ if __name__ == '__main__':
     assert runner.count(anchor) == 1
     runner = runner.replace(anchor, 'from verify_native_emerald_projection_profile import exercise')
     sample = "b'Sample(1,0,-100,-12,0,0,0,0)'"
-    replacement = "b'(lambda phase: Sample(1,4 if phase==2 else 0,0,0,0,0,0,0) if phase else Sample(1,0,-100,-12,0,0,0,0))(bind(f,\"jp_emerald_probe_input_phase\",I)())'"
+    replacement = (
+        "b'(lambda dash, phase: Sample(1,2 if dash==1 else 0,0,0,0,0,0,0) if dash "
+        "else Sample(1,4 if phase==2 else 0,0,0,0,0,0,0) if phase "
+        "else Sample(1,0,-100,-12,0,0,0,0))"
+        "(bind(f,\"jp_emerald_dash_capture_input_phase\",I)() if hasattr(f,\"jp_emerald_dash_capture_input_phase\") else 0,"
+        "bind(f,\"jp_emerald_probe_input_phase\",I)())'"
+    )
     assert runner.count(sample) == 1
     runner = runner.replace(sample, replacement)
     exec(compile('if True:\n' + runner, scene.__file__, 'exec'), dict(vars(scene)))
