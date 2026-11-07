@@ -1,0 +1,17 @@
+Original player animation state machine on Windows
+
+The native player build links the original animation step, transition,
+and key generation functions. It uses the existing Dreamcast
+floating-point adapters and releases generated blend keys through typed
+motion-data records so the cleanup follows the Windows x64 layout.
+
+The fixture creates a native Sonic player record, holds the original
+standing and walking actions, and verifies the standing loop, four-step
+walk transition, 128 walk ticks with frame wraparound, and cleanup.
+The separate walking GPU fixture passed 453 regression checks.
+
+Run build_native_player_animation.py against the pinned checkout and
+qualified Sonic action owner build. The live movement loop and other
+animation transitions, including three-channel blends, need further
+verification. Generated source and combined DLLs stay local.
+Overall project completion is about 10%.

@@ -1,0 +1,18 @@
+Original Sonic input intent on Windows
+
+The native frame build now links the pinned player stick reader and
+Sonic walking-action selector. The test supplies controlled controller
+samples through the Windows input backend and runs the original pad
+scan before the player reads its stick.
+
+Nine cases cover neutral and opposed stick input, disabled input,
+launch suppression, the path exception, event-driven input, and the
+Casinopolis ball fallback. At a prepared walking speed, the original
+selector chooses the walk action and sets its animation pace.
+The scheduled animation and GPU regression passed 457 checks.
+
+Run build_native_sonic_input_intent.py with the pinned checkout and
+qualified Sonic animation task build. The fixture supplies speed and
+uses controlled input samples. Physical controller play, movement
+integration, and live stages remain open. Overall project completion
+is about 10%.

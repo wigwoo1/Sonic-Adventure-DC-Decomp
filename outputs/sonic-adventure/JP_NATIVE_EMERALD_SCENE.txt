@@ -1,0 +1,17 @@
+Emerald Coast land and Sonic in a shared Windows GPU frame
+
+The fixture reads the original drawable land entries near the first
+Emerald Coast start from STG01.PRS. It verifies the module hash,
+expands seven entries into 1,760 source triangles, and sends them to
+the existing native Simple renderer in the same frame as Sonic.
+
+The Windows GPU test passed 462 checks and presented both texture
+modes. Pixel readback confirmed that both the land and Sonic were
+visible. The capture uses diagnostic land colours and a six-unit
+display offset to keep Sonic visible. Collision and player history
+continue to use the original stage coordinates.
+
+Run verify_native_emerald_scene.py against the qualified Emerald task
+build with the supplied Japanese track, character inputs, and local
+collision geometry. Full stage textures, culling, and the original
+world draw dispatcher remain open. Overall completion is about 10%.

@@ -1,0 +1,18 @@
+Scheduled original Emerald Coast land draw callback on Windows
+
+The native frame build links the pinned static land callback,
+visibility selection, and original per-entry matrix setup. A native
+level-zero task dispatches the callback. The bounded consumer records
+its model submissions and matrices. The GPU fixture then renders the
+selected models using that order.
+
+The test verified all 13 submitted entry matrices, the original draw
+order, matrix stack restoration, and no submissions when the land is
+hidden or the frame is on a later step. The existing textured scene
+passed 467 checks with two GPU presentations.
+
+Run build_native_land_dispatch.py against the qualified land visibility
+build, then verify_native_emerald_land_dispatch.py with local Japanese
+inputs. The fixture uses diagnostic lighting and camera placement.
+Direct model rendering inside the callback, moving land, and live
+stage ownership remain open. Overall project completion is about 10%.

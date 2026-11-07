@@ -1,0 +1,27 @@
+Original Sonic player draw callback on Windows
+
+The build extracts the callback from the pinned Japanese source and
+connects it to the native action renderer, retained texture lists, Sonic
+toe owner, and scoped aura draw. The fixture supplies a task and player
+record and samples frame 8.5 of the original updraft action.
+
+The hidden callback emitted zero batches. The visible uncharged
+callback emitted 53 body batches. The charged callback emitted 113
+batches, with 60 additional aura batches. The 512 by 512 GPU fixture
+presented the charged frame twice. Texture Off rendered a distinct
+vertex and material colour image with zero texture and sampler
+bindings and zero texture uploads.
+
+The callback fixture passed 453 checks and six Simple SDK regression
+cases passed. Each new recording reserves its model packet buffers
+and retains the required texture surfaces before calling the renderer.
+
+Build with build_native_sonic_draw.py against the pinned checkout and
+the qualified aura build. Run verify_native_sonic_draw_frames.py with
+the output build, local character inputs, and Japanese track 03.
+Retail inputs, generated original code, combined binaries, and
+screenshots stay local.
+
+This is a prepared callback test. Live player-task scheduling and the
+super, event, blend, and afterimage branches remain unverified here.
+Overall project completion is about 10%.

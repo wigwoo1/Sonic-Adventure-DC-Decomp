@@ -1,0 +1,19 @@
+Stage start positions and player history on Windows
+
+The native frame build now links the original Japanese player history
+reader, writer, and step recorder. The table placement adapter writes
+the starting position to the current history slot of the registered
+player task. It checks that the work record belongs to the player before
+changing either placement or history.
+
+The fixture creates two native tasks and seeds the original Sonic beach
+and Tails Windy Valley starts. It records 257 updates, checks all 256
+history slots after wraparound, and verifies that the other player's
+entry survives. It also checks that an unregistered player cannot read
+or write history. The scheduled Sonic GPU regression passed 453 checks.
+
+Run build_native_player_history.py with the pinned upstream checkout,
+the scheduled draw build, and the qualified stage start build. Generated
+upstream code and the combined DLL stay local. The live stage entry,
+checkpoint restore, and Sonic's gameplay step are separate dependencies.
+Overall project completion is about 10%.

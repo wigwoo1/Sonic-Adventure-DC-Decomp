@@ -1,0 +1,19 @@
+Sonic movement over the original Emerald Coast floor
+
+The Windows scheduler fixture places Sonic at the original Emerald
+Coast start, finds the floor in the locally decoded Japanese stage
+geometry, and samples that floor after each movement tick. It checks
+that the grounded position reaches both the original movement history
+and the scheduled draw callback.
+
+After 24 ticks, each case reached x -9.61122, y 4, z 4 on land entry 42.
+All 460 checks passed. The GPU presented the charged walking pose with
+original textures and with Texture Off. The camera is translated to
+the start for this character capture.
+
+Run build_native_sonic_emerald_task.py against the qualified movement
+task build, then verify_native_sonic_emerald_task.py with the local
+Emerald Coast geometry, Japanese track, and character inputs. The
+fixture uses controlled input and the level movement branch. Walls,
+slopes, moving objects, the original swept collision path, and stage
+rendering remain open. Overall project completion is about 10%.

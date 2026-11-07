@@ -1,0 +1,20 @@
+Sonic action data coverage on Windows
+
+The native motion data recipe now follows the original Sonic action
+table into the main executable data. It includes the standing, walking,
+landing, and other ordinary actions and their original motion and model
+dependencies. The expanded standalone pack gives 106 of 142 action rows
+a unique native data owner. The remaining rows reference 32 distinct
+overlay actions and one action defined in the original Sonic effects
+source. The evidence records the exact overlay for each missing symbol.
+
+The round-trip verifier passed 51,652 checks across 12,892 definitions
+and compared 3,420,366 bytes with the supplied Japanese game. It also
+checked all seven motion-bank PRS files from the local disc.
+
+Run build_native_sonic_action_data.py with the pinned checkout and
+qualified native motion inputs, then verify_native_motion_data.py with
+the local Japanese executable and track. The standalone data build
+still needs integration with the runtime motion owner and player
+animation step. Generated game data and binaries stay local.
+Overall project completion is about 10%.

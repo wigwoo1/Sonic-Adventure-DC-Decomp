@@ -1,0 +1,22 @@
+Native player allocation and registration
+
+The Windows frame build now allocates a player record using the
+original Japanese character constants and upgrade flags. It allocates
+event, contact, and targeting records before publishing the player
+slot, and releases partial allocations if one fails. The pre-animation
+release entry removes the player from the shared slots and frees the
+player-owned records. The native task still owns its work and event
+records.
+
+The fixture created Sonic with the original stage task allocation
+flags, verified shared registration, upgrades, event defaults, and
+animation pointers, then placed him at the Emerald Coast start. It
+rejected duplicate initialization and verified that release cleared
+all four shared player slots. The scheduled Sonic GPU regression
+passed 453 checks.
+
+Run build_native_player_core.py with the pinned checkout and qualified
+action placement build. This is the allocation and registration
+portion of player_init. Bubble effects, character animation and weld
+initialization, and the live gameplay step remain separate work.
+Overall project completion is about 10%.

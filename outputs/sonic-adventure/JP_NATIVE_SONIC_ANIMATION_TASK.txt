@@ -1,0 +1,20 @@
+Scheduled Sonic animation and rendering on Windows
+
+The fixture creates and registers a native Sonic task with a player
+record from the original initialization path. The native task scheduler
+runs 24 updates through the original animation state machine, and the
+draw scheduler renders the resulting pose on the same task. The fixture
+requests the transition from stand to walk on tick 18. The state machine
+produces walk frame 10.2, and the draw callback leaves that frame intact.
+
+The GPU test passed 457 checks across hidden, uncharged, and charged
+cases. It presented the charged result with original textures and with
+texture sampling disabled. The fixture releases the blend data, player
+records, and retained motion views after use.
+
+Run build_native_sonic_animation_task.py using the qualified player
+animation build, then verify_native_sonic_animation_task.py with the
+local Japanese track and character inputs. This fixture uses a prepared
+collision record and a scripted animation request. Controller input,
+movement, and live stage scheduling remain separate work. Overall
+project completion is about 10%.

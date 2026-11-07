@@ -1,0 +1,21 @@
+Native action-stage placement and restart
+
+The Windows frame build now exposes one placement entry for the
+registered primary player in an action stage. A valid checkpoint for the
+current stage and act takes priority. Otherwise the entry uses the
+original stage start table. The path seeds movement history, applies
+the original HUD timer rules, and saves the resulting restart point.
+
+The native fixture verified Emerald Coast's initial start, same-act
+restart, and transition to act two. It verified that the timer resets
+when the loaded and current acts match and carries over when they
+differ. In E-102's stage it verified the three-minute starting clock,
+one-minute minimum on restart, and persistence of the corrected time.
+The entry rejected a field stage. The scheduled Sonic GPU regression
+passed all 453 checks.
+
+Run build_native_action_placement.py with the pinned checkout and
+qualified native action checkpoint build. This entry covers normal
+action starts and checkpoint restarts. Field entrances, return points,
+and the live stage dispatcher remain separate. Combined binaries
+stay local. Overall project completion is about 10%.

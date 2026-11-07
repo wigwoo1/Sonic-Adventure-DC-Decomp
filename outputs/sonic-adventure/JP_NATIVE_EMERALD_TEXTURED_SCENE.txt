@@ -1,0 +1,20 @@
+Original Emerald Coast textures in the Windows Sonic test scene
+
+The diagnostic frame now reads original texture coordinates and
+material slots from STG01 and loads BEACH01 through the Windows
+texture owner. Four land entries emitted stage packets. The decoded
+frame contained seven nonempty stage batches referencing original
+texture surfaces.
+
+The GPU presented the same frame with textures enabled and Off.
+The test found 856 changed pixels in the outer columns of the stage
+capture. The Texture Off backend used zero texture or sampler bindings
+and zero texture uploads. All 463 checks passed.
+
+The fixture uses unlit material rendering and the earlier six-unit
+land display offset. It defers VQ mipmapped and environment-mapped
+materials. The screenshot shows the resulting partial stage scene.
+Run verify_native_emerald_textured_scene.py with the qualified Emerald
+task build, local Japanese track, collision and character inputs.
+Retail archives and screenshots stay local. Overall completion is
+about 10%.

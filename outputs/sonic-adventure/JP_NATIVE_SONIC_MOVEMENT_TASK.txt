@@ -1,0 +1,20 @@
+Controller-driven Sonic movement and animation on Windows
+
+The native scheduler fixture now polls the Windows input owner and runs
+the original pad scan, level-ground acceleration, speed integration,
+and Sonic walk selector on the same task. It starts with gameplay
+input gated, then enables the supplied stick sample on tick 18.
+Horizontal displacement updates the collision center and the original
+movement history. The walk frame is produced by the original animation
+state machine using the resulting speed.
+
+All three hidden, uncharged, and charged cases reached walk frame
+1.33596456 by tick 24. The GPU verifier passed 457 checks and presented
+the charged case with original textures and with Texture Off.
+
+Build with build_native_sonic_movement_task.py against the qualified
+level movement build. Run verify_native_sonic_movement_task.py with
+the local Japanese track and character inputs. This fixture supplies
+a controlled stick sample and a horizontal floor constraint. Live
+stage collision and physical input remain unverified. Overall project
+completion is about 10%.

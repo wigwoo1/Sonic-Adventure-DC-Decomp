@@ -1,0 +1,23 @@
+Action-stage checkpoint restore on Windows
+
+The native frame build links the pinned Japanese checkpoint storage,
+timer accessors, and invincibility task. The restore adapter applies
+the saved position and three angles, restores the HUD timer, resets
+rings, and writes the restored position to player zero's history.
+
+The adapter requires an action stage, a registered player-zero task,
+and a nonnegative ring count. Within that domain the existing ring
+reset produces the same mutation as subtracting the current count.
+Field HUD and extra-life side effects are outside that domain.
+
+The native fixture verified the Emerald Coast position, timer, ring
+reset, history, 120 invincible steps and expiry on step 121. It also
+verified no restore with a missing checkpoint, act-change invalidation,
+and rejection of a missing owner or negative ring count. The scheduled
+Sonic GPU regression passed 453 checks.
+
+Run build_native_action_checkpoint.py using the pinned checkout and
+the qualified native player history build. The live death and respawn
+dispatcher and the checkpoint gate's touch task are separate work.
+Generated upstream code and the combined DLL stay local.
+Overall project completion is about 10%.

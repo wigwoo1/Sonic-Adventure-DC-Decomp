@@ -1,0 +1,20 @@
+Persistent Emerald Coast land task on Windows
+
+The static land owner registers one native scheduler task and borrows
+the decoded entries and texture list until close. Each frame supplies
+its camera, block mask, visibility and step. The frame scope restores
+the caller's land, camera and step state. The destructor retires the
+task's borrowed references.
+
+The fixture dispatched three visible frames through the same task.
+Hidden land and later steps skipped model submissions. Duplicate opens,
+reentrant frames and close during drawing were rejected. An unscoped
+scheduler draw skipped the task, and a fresh owner opened after close.
+The last frame produced the same GPU captures as the direct land
+fixture, with 465 checks passed.
+
+Run build_native_land_task_owner.py against the qualified land dispatch
+build, then verify_native_emerald_land_owner.py with the local Japanese
+inputs. The test still provides the stage resources and camera. The
+live stage loader and moving land are separate work. Overall project
+completion is about 10%.

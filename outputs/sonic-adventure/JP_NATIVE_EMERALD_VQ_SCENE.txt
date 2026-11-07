@@ -1,0 +1,18 @@
+Original VQ mipmapped Emerald Coast textures on Windows
+
+The current GPU module already contains the qualified VQ terminal
+mip decoder. The earlier stage fixture excluded VQ materials. The
+new fixture includes them and checks the three original textures'
+1x1 mip texels against the encoded codebook bytes before drawing.
+
+The retained frame contained three nonempty VQ stage batches and
+ten textured stage batches in total. The Windows GPU presented
+both texture modes, and all 464 checks passed. Texture Off again
+bound and uploaded zero textures. Outer-frame pixels changed at
+1,392 locations between the two modes.
+
+Run verify_native_emerald_vq_scene.py with the qualified Emerald
+task build, local Japanese track, character inputs and collision
+geometry. The diagnostic display offset and unlit stage materials
+remain. Environment-mapped materials and the live world draw
+dispatcher are open. Overall project completion is about 10%.

@@ -1,0 +1,17 @@
+Emerald Coast act-one texture and material verification
+
+The verifier reads the original STG01 and BEACH01 archives directly
+from the supplied Japanese disc. It checks that the stage texture-list
+names agree with the archive's numbered slots, then walks the drawable
+land models to validate material indices, point indices, and UV extents.
+
+The Windows texture owner loaded and released all 97 archive slots.
+The check compared 1,403,158 encoded payload bytes, accounting for the
+four-byte prefix the native owner adds to 16-bit mip chains. The stage
+references 69 slots across 951 textured meshsets and 37,352 UV corners.
+
+Run verify_native_emerald_materials.py against the qualified Emerald
+task build, pinned checkout and local Japanese track. The verifier
+qualifies texture ownership and stage bindings. Applying the original
+UVs and materials in the GPU scene remains open. The archive and pixel
+data stay local. Overall project completion is about 10%.

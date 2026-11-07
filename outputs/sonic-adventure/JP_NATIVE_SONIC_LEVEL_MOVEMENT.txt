@@ -1,0 +1,18 @@
+Original level-ground movement on Windows
+
+The native player build links the original level-ground acceleration,
+heading adjustment, speed integration and speed readback. It uses the
+existing matrix and numeric owners for native execution. The test
+supplies controller samples through the input backend and original pad
+scan, then starts a native Sonic task at rest.
+
+The fixture verifies acceleration on the first tick and under sustained
+input, turning in place before accelerating, deceleration after release,
+and a complete stop. It supplies a horizontal contact constraint in
+place of stage collision. The scheduled animation and GPU regression
+passed 457 checks.
+
+Run build_native_sonic_level_movement.py with the pinned checkout and
+qualified Sonic input intent build. The live stage collision path,
+position integration, and controller-driven animation remain separate.
+Overall project completion is about 10%.

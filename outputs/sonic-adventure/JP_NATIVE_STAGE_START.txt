@@ -1,0 +1,19 @@
+Original stage start tables on Windows
+
+The native placement helper reuses the original Japanese stage and act
+lookup and all six playable characters' start tables. It writes the
+position and yaw into the original task work layout. It preserves pitch
+and roll, and keeps the original zero-position fallback for missing
+stage and act pairs. It rejects an unsupported character without changing
+the position or yaw.
+
+Build and test with build_native_stage_start.py using the pinned upstream
+checkout and the native Sonic draw build as the compiler baseline. The
+Windows DLL passed 2,762 cases, covering every stage and act slot across
+all six characters, boundary values, and unsupported character IDs. The
+test reads expected positions independently from the original tables.
+
+This helper covers the table branch of stage placement. Field-specific
+entrances, checkpoints, return points, player history, and creation and
+update of the live Sonic task are separate dependencies. The generated
+source and DLL stay local. Overall project completion is about 10%.

@@ -1,0 +1,18 @@
+Original land visibility selection on Windows
+
+The native frame build links the pinned Japanese land visibility
+routine with the existing camera matrix and arithmetic providers.
+It returns the selected land indices in the reverse order used by
+the original static draw callback. The bounded adapter restores the
+caller camera, matrix, and clip settings.
+
+The test reads all three original Emerald Coast land tables from
+STG01.PRS. It compares 195 cases covering camera direction, block
+masks, stage and global clip, aspect ratio, and short output capacity.
+The existing Emerald Coast GPU fixture also passed all 466 checks.
+
+Run build_native_land_visibility.py with the pinned checkout,
+qualified Emerald task build, and local Japanese track. The GPU
+regression still uses the earlier diagnostic scene. Connecting the
+selected indices to the live land draw callback is separate work.
+Overall project completion is about 10%.

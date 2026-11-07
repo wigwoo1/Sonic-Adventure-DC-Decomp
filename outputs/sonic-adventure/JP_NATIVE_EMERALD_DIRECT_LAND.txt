@@ -1,0 +1,18 @@
+Direct GPU submission from the original Emerald Coast land callback
+
+The scheduled static land callback now invokes the bounded renderer
+while each original per-entry Ninja matrix is active. The model adapter
+passes local-space vertices and normals, and the fixture checks that
+the model submission preserves the entry matrix. The original callback
+also restores the parent matrix and stack.
+
+The callback visited 13 entries in the original visibility order.
+Six emitted packets. The retained frame contained 13 nonempty textured
+stage batches, including three VQ batches. Both texture modes presented
+and all 465 checks passed.
+
+Run verify_native_emerald_direct_land.py with the qualified land dispatch
+build and local Japanese inputs. The diagnostic fixture keeps its camera,
+unlit materials and six-unit display offset. Environment meshes now
+retain their stage placements. Full stage ownership, live camera and
+moving land remain open. Overall project completion is about 10%.

@@ -1,0 +1,19 @@
+Emerald Coast static collision data and floor queries
+
+The extractor reads STG01.PRS from the supplied Japanese disc and
+decodes all three land tables. It preserves solid non-liquid entry
+flags and triangle winding in local files. The compressed module
+hash matches the verified Japanese baseline. The three acts yielded
+32,967 triangles, with an upward-facing floor below each Sonic start.
+
+The native Windows floor query passed 78 cases across the three
+start areas, including off-stage misses. It returns the highest
+upward-facing triangle at or below the query point. This is a static
+floor query. Object transforms use host floating-point trigonometry.
+The original mesh sweep, walls, dynamic objects, and connection to
+the player task remain separate work.
+
+Run extract_native_emerald_collision.py with the pinned checkout and
+local Japanese track, then verify_native_emerald_floor.py with the
+qualified Sonic movement task build. The extracted triangles and
+retail module stay local. Overall project completion is about 10%.

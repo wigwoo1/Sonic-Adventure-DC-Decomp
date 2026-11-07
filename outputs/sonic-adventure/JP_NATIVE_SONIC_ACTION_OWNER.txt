@@ -1,0 +1,20 @@
+Original Sonic walking action through the Windows motion owner
+
+The runtime model registry now includes 29 original main-executable
+actions from Sonic's action table. The build appends their dependencies
+while preserving all previous registry indices and the existing motion
+selection, toe, and weld owners. The test acquired all 29 action views
+at once, verified their canonical pointers, and confirmed that the
+owner could shut down only after the views were released.
+
+The Windows task and GPU fixture presented frame 8.5 of the original
+32-frame walking action with the original Sonic model. It passed 453
+checks, including the charged aura and Texture Off. This is a prepared
+pose selected by the fixture. The gameplay update and animation state
+machine still need to select and advance the action during play.
+
+Run build_native_sonic_action_owner.py with the pinned checkout, local
+motion inputs, and qualified native player core build. Then run
+verify_native_sonic_walk_frames.py with the supplied Japanese track
+and character inputs. Generated data, binaries and captures stay
+local. Overall project completion is about 10%.

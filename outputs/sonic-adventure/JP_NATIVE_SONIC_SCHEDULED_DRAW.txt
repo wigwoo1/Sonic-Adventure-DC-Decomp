@@ -1,0 +1,21 @@
+Sonic draw dispatch through the Windows task scheduler
+
+The fixture initializes the original heap and task pool in stage boot
+order. It allocates work and motion records through task_create, installs
+Sonic's draw adapter, and dispatches it through task_draw_level(0). It
+requires exactly one callback for each fixture task and destroys that task
+before recording the next case.
+
+The hidden, uncharged, and charged cases emitted zero, 53, and 113
+batches. The charged case presented twice through the real GPU backend.
+Both captures match the equivalent direct callback test byte for byte.
+The comparison includes Texture Off with zero texture or sampler bindings
+and zero texture uploads.
+
+Build with build_native_sonic_scheduled_draw.py against the qualified
+Sonic callback build. Run verify_native_sonic_scheduled_draw.py with the
+local Japanese track and character inputs.
+
+The fixture uses original assets and scheduling with a prepared player
+record. Stage-driven player creation, Sonic's update routine, and the
+live frame loop remain open. Overall project completion is about 10%.
