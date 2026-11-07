@@ -1,0 +1,73 @@
+Original event motion queue: scoped native verification
+
+Whole-project estimate:approximately10% of weighted milestones. Goal active.
+The Japanese matching/GCC source baselines are verified. Native PC gameplay,
+English,enhancements and later platforms remain unfinished. No playable PC EXE.
+
+What changed
+The already linked complete original event_motions_draw is now compared with
+its Japanese machine code using real Frame heap entries,welding,model/action
+references and the actual rendering-state owners. The native build is unchanged
+from the qualified Sonic welding milestone. New authored verification tools and
+evidence qualify the queue behavior;they do not replace the original routine.
+
+1,019,169 new scoped assertions compare288 complete original event calls.
+Ten scenario families cover null event,empty queue,ordinary progression,end
+with next,repeat wrap,repeat with next,blend4,repeat-previous blend4,blend1,and
+previous-without-blending. Cases use both SH4 register banks,normal and Super
+Sonic,and nonplayer actors plus actual player slots0 and7.
+
+The calls execute176 genuine player_weld paths and36 event-owned entry frees.
+The original frame bits,queue links,all visible model matrix words/order,
+palette state,texture-list selection,all canonical model and weld payload
+bytes,live entry bytes,other caller bytes and guards match. Event and weld
+allocations fully retire through the real allocators. Matrix/stack state is
+preserved. Surviving scenario entries are explicitly retired by the diagnostic
+caller;this does not claim original actor task/destructor ownership integration.
+
+The native observer is a passive motion callback. Original instruction tracing
+observes the actual routine;no original game function is replaced by a hook.
+Actual njGetkmPointer/njSetkmPointer run. Model rasterization is skipped using
+the original frame_step policy. Non-null texture selection uses a valid empty
+list;these cases do not claim texture sampling or new GPU images.
+
+The1,431 selected initializer/blended-pose/GPU regressions from the identical
+native build remain applicable and are hash-checked rather than rerun without
+a native change. Existing real GPU captures remain described by the welding
+package. All39 earlier qualification packages retain their hashes. Counts
+overlap and describe repeated calls/assertions,not unique-routine or measured
+whole-game coverage. The native numerical policy is value-only RM=1,DN=1.
+
+What remains
+This is sampled queue coverage,not every duration,speed,invalid input or heap
+exhaustion case. Real loaded-texture event rendering and automatic production
+player/task/texture lifetimes still need integration. Original event_actor_step
+also needs real ground,shadow and collision services. Original Sonic callbacks,
+aura/njSimpleAction,player FSM,main loop,stages and full gameplay remain pending.
+
+The original queue advances as part of drawing. Future60/120/240 FPS work must
+preserve the original logical update schedule while rendering additional
+pictures. This proof does not establish FPS decoupling or full game timing.
+
+Reproduce
+Use the qualified complete parent work/sonic-adventure/jp-native-sonic-weld-v1,
+the pinned upstream25a3d3154dbe657325e97dbe8c5291086f6af5c0,and your own JP inputs.
+See JP_NATIVE_SONIC_WELD.txt for preparing the build,module and motion inputs.
+Choose a fresh output directory;the verifier refuses to overwrite old proofs.
+
+verify_native_event_queue.py takes --workspace --upstream --build --binary
+--numeric-dll --motion-inputs --module-inputs --output. It derives the caller
+from the hash-pinned published welding verifier,records the complete generated
+caller under its private output,and executes both original/native sequences.
+qualify_native_event_queue.py takes --workspace --upstream --build --events
+--output. It audits the actual compiled original body,source/derivation hashes,
+the complete scenario matrix,and the unchanged build/regression evidence.
+
+Public evidence:analysis/jp_native_event_queue_package.json plus events/audit
+JSON files. The exact native-build and selected-regression proofs are referenced
+from the preserved welding package. Generated external C,data,retail inputs,
+combined DLLs and captures remain private. The source-matched research archive
+preserves2,977 unchanged incomplete historical payloads and is not playable.
+
+Recommended model:Sol High for task/render/player integration;Luna Low for
+routine documentation. No goal pause or model switch is required.

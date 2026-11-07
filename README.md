@@ -1,3 +1,28 @@
+Latest scoped original event motion queue qualification.
+1,019,169 new assertions compare288 complete original event calls on the same
+qualified native weld build. Ten scenario families,both register banks,normal
+and Super Sonic,nonplayer actors and player slots0/7 match. Actual paths invoke
+176 player welds and36 entry frees. Queue links,frame bits,pose matrices,
+palette/texture state,all model/weld payloads,other caller/live-entry bytes and
+guards match. All allocated event/weld resources retire through real owners.
+
+The native build is unchanged;1,431 prior regressions for that exact build
+are hash-checked and reused. All39 earlier packages remain intact. Assertions
+overlap and are not unique routines or whole-game coverage. Rasterization is
+skipped by the original frame-step policy;texture selection uses a valid empty
+list. Loaded-texture event GPU rendering and production task ownership remain
+unfinished. Original actor/Sonic callbacks,FSM/mainloop,gameplay,English,
+enhancements and later platforms remain incomplete. No playable PC executable.
+Overall approximately10%;goal active. Additional render FPS must preserve the
+original logical queue-update schedule. Source-matched prereleases preserve
+2,977 unchanged incomplete historical research payloads. External/generated
+source,retail inputs/captures and combined native DLLs remain private.
+
+- [Scope and reproduction](outputs/sonic-adventure/JP_NATIVE_EVENT_QUEUE.txt)
+- [Qualification and hashes](outputs/sonic-adventure/analysis/jp_native_event_queue_package.json)
+
+Earlier milestone notes remain unchanged below.
+
 Latest qualified original Sonic and Super Sonic welding lifecycle.
 465,217 new scoped assertions and1,431 selected regressions pass. Genuine
 make/update/free and direct welding match144 complete original calls with

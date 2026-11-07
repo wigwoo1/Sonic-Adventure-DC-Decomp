@@ -2122,3 +2122,26 @@ pass as regressions. See JP_NATIVE_SONIC_WELD.txt and
 analysis/jp_native_sonic_weld_package.json. External/generated source,retail
 inputs/captures and combined DLLs stay private. Public builds remain incomplete
 research artifacts. Sol High is suitable for the next event/player task.
+
+
+Original event queue milestone (2026-11-06):1,019,169 new scoped assertions
+compare288 complete event_motions_draw calls on the unchanged qualified weld
+build. Ten queue scenario families,both register banks,ordinary/Super Sonic,
+nonplayer actors and player slots0/7 match. Original paths invoke176 player
+welds and36 entry frees;queue links,frame bits,pose matrices,palette/texture
+state,all model/weld payload bytes,other caller/live-entry bytes and guards
+match. Actual heap entries retire. Rasterization uses the original frame-step
+skip policy;texture selection uses a valid empty list. This is not new GPU
+footage or gameplay. The1,431 regressions from the identical native build are
+hash-checked and reused. All39 previous packages remain intact. Assertions
+overlap;they are not unique routines or whole-game coverage. See
+JP_NATIVE_EVENT_QUEUE.txt and analysis/jp_native_event_queue_package.json.
+Next integrate the verified queue/weld path with real task/render ownership,
+then finish original actor/Sonic dependencies. Loaded-texture event rendering,
+event_actor_step ground/shadow/collision,original callbacks/FSM/mainloop and
+gameplay remain incomplete. The queue currently advances during drawing;FPS
+work must preserve original logical updates while rendering extra pictures.
+Overall approximately10%;goal active;no playable PC EXE. English,enhancements
+and later platforms remain pending. External/generated source,retail inputs,
+captures and combined DLLs stay private. Public builds are incomplete research.
+Sol High remains suitable for the next event/player integration.
