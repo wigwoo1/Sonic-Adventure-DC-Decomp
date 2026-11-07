@@ -1,0 +1,62 @@
+Original complete Simple model projection
+
+Overall project approximately10%;goal active. Japanese source baselines are
+verified. Native gameplay,English and later platforms remain unfinished.
+
+The pinned _njSimpleCalcModel body now executes in the same Frame owner with
+28 typed RZ/DN1 arithmetic/comparison operations. Its four loop calls use the
+already qualified bounded projection service. The native source removes the
+Uint32 scratch-pointer truncation and initializes the work structure, including
+the original unused/uninitialized normals pointer on the Loop2 path.
+
+SimpleCalcModelMatrix and SimpleCalcModelLight use the real shared matrix and
+existing SH-4 FTRV/FIPR/FSRRA/arithmetic value models. They preserve sampled
+values and in/out aliasing, including zero/tiny vectors and scaled light.
+FPSCR flags/traps/register-clobber contracts and physical cache/QACR operations
+are not emulated. No game-function hooks replace original reference calls.
+
+The native Simple scratch owner allocates32-byte records with32-byte guards.
+It is distinct from the existing game's16-byte renderer scratch. Each bounded
+model call temporarily lends its buffer to the original function, then restores
+the borrowed _nj_vertex_buf_ and _nj_vertex_num_. Geometry/action data stays
+caller-owned and must remain valid; the caller supplies actual point/normal
+extents and nonoverlapping allocations. Invalid extents/counts/capacity/null
+arguments fail before execution. Damaged scratch guards prevent execution.
+Records persist until the next call or owner shutdown. Persistent queue lines
+retain the prior projection-loop policy. Calls are serialized on the game thread.
+
+3341 new checks compare128 whole original helper calls and512 complete original
+model-projection calls. Helpers cover both SH-4 banks,two matrices,four vectors,
+three light scales,and aliased/separate destinations. Model cases cover both
+banks,two matrices,four control combinations,normals/no normals,four clipping
+scenarios and counts0/1/4/16. They compare the complete32-byte scratch records,
+both queue lines,light/projection/clip state,return values,and vertex counters.
+All input model/point/normal bytes and borrowed scratch bytes remain intact.
+Guard/budget/input-rejection/lifecycle checks also pass.
+
+Regressions on the new build:1554 original projection-loop checks,530 full
+initializer checks,and439 actual event/weld task/GPU checks. These are repeated
+regressions,not additional unique routines. The GPU scene remains the earlier
+event blend. Full Simple material/lighting setup,clipping/mesh emission,
+njSimpleDrawModel,njSimpleAction,aura and original Sonic callbacks remain open.
+There is no playable PC executable or new aura screenshot.
+
+Reproduce using Python from the workspace root:
+
+python -B outputs/sonic-adventure/jp_port_tools/build_native_simple_calc.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --baseline work/sonic-adventure/jp-native-simple-projection-v2 --output work/sonic-adventure/NEW_SIMPLE_CALC
+
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_simple_calc.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --build work/sonic-adventure/NEW_SIMPLE_CALC --binary work/sonic-adventure/jp-ninja-math-reference/1ST_READ.BIN --numeric-dll work/sonic-adventure/build/sh4_vector_numeric.dll --output work/sonic-adventure/NEW_SIMPLE_CALC_CHECK
+
+Initialize scratch with jp_simple_calc_initialize(capacity,byte_budget).
+Call jp_simple_calc_model(model,point_extent,normal_extent,light,scale,result).
+Its status is separate from the original result0/-1. Use
+jp_simple_calc_records/queues only while the owner is alive; close with
+jp_simple_calc_shutdown. Private context diagnostics are for verification.
+The private original entry is not a supported unchecked public draw API.
+
+Keep the remaining SDK renderer's static state in the same owner/translation
+unit when extending this object. Do not duplicate model_clip_or,base lighting,
+projection_x/y,mp or light2 in an independent renderer. Prior sources/proofs
+and matching builds remain preserved. Generated external game C,combined DLLs,
+retail inputs and captures remain private. Public releases remain incomplete
+research artifacts with unchanged historical/authored build payloads.

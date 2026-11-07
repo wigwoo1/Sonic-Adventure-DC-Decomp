@@ -1,3 +1,20 @@
+
+
+Original Ninja Simple model projection qualification (2026-11-06)
+The native build runs the pinned original model projection body with verified
+matrix and light helpers and bounded 32-byte scratch records. It restores the
+shared vertex buffer and count after each call. 3,341 new checks compare 640
+complete original calls; 2,523 selected regressions passed. All 43 prior
+packages remain preserved. Full Simple drawing and gameplay remain unfinished.
+See JP_NATIVE_SIMPLE_CALC.txt and analysis/jp_native_simple_calc_package.json.
+Whole project approximately 10%; goal active. Japanese source baseline verified;
+English localization and later platforms remain open. No playable PC build.
+
+- [Scope and reproduction](outputs/sonic-adventure/JP_NATIVE_SIMPLE_CALC.txt)
+- [Qualification](outputs/sonic-adventure/analysis/jp_native_simple_calc_package.json)
+
+Earlier milestone notes follow.
+
 Latest scoped original Ninja Simple projection-loop qualification.
 Four genuine njSimpleCalcModel_Loop entries now use bounded native value
 translations of their SH-4 bodies.1554 checks compare192 complete original
