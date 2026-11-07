@@ -1,0 +1,105 @@
+Original runtime floor, pose and angle helper milestone
+
+Overall estimate:approximately10% of the whole goal, using weighted milestones.
+The Japanese matching/GCC source baseline is verified. Native PC gameplay,
+English localization, settings/enhancements and later platforms are unfinished.
+There is still no playable PC executable. Goal active.
+
+What changed
+The existing Frame owner now includes the genuine whole/_in_floors/floorf
+runtime bodies, the core pose walker and getters, original angle_difference,
+player_get, player_weld and event_motions_draw. Eleven original source functions
+compile from the pinned external source. Compilation is not proof that every
+linked path works:player_weld and event_motions_draw remain runtime-unqualified.
+The original debug pose-axis drawing functions are outside this selected unit.
+
+The SDK floor code uses an authored integer conversion bridge for its original
+finite |x|<2^32 whole() branch. This preserves SH4 FTRC saturation and FLOAT
+rounding toward zero, signed zero and denormal behavior without undefined host
+float-to-int conversion. Existing scalar RZ services handle its comparison/add.
+The native API is value-only with RM=1,DN=1. FPSCR flags,traps and arbitrary
+host rounding modes are not emulated or qualified by this work.
+
+The SDK's errno data uses the same existing jp_sdk_errno owner already used by
+original print formatting. It is not Windows CRT's _errno() function. No second
+SDK error variable or player_records array is created. The exact original
+player_work BSS declaration is compiled with native pointer width. Its full
+player/task lifetime integration remains unfinished. _NIFONES is the actual
+original32-bit constant definition; host word width is asserted.
+
+Native pose units retain the original matching bodies. Two unused matching
+spelling casts of an angle to an address are explicitly zero-extended before
+forming the native pointer. They remain unused; real model/key pointers retain
+their native width. Only actual COFF COMDAT Any compiler floating constants may
+share definitions. Genuine duplicate state or functions are still rejected.
+
+What actually passed
+194,335 new scoped checks:
+*39,447 checks compare13,148 complete original floorf calls, including genuine
+ _in_floors. They compare exact return bits and SDK errno mutation/preservation.
+ Cases span every sign/exponent class with six fraction patterns, values near
+ integers0..256, random bit patterns, infinities,NaNs,overflow and signed zeros,
+ in both SH4 register banks. This is representative coverage,not all2^32 inputs.
+*23,816 checks compare256 complete pose_action calls,256 pose_get_count calls
+ and1,024 pose_get_matrix calls. Two genuine33-frame Sonic POS/ANG actions run
+ at0,8.5,16,32, with inherited and explicit rotated/translated bases, traversal
+ limits0,8,72,127, and both null and non-null output pointers. All retained
+ nodes'16 matrix words match the original; the full tree has73 nodes. Caller
+ matrix/stack restoration and getter rejection/output guards are checked.
+*131,072 checks compare65,536 complete angle_difference calls, covering every
+ 16-bit delta with varied argument high words and signed short-turn results.
+
+These are overlapping scoped assertions and repeated calls,not unique routines
+or measured whole-game coverage. Native CPU registers/SR/full RAM are not being
+equated to an SH4 ABI. The floor proof does not claim FPSCR/trap emulation.
+
+1,431 selected regressions also pass:530 complete initializer checks,519
+whole-original blended-pose checks and382 real parent/task/GPU checks. The real
+window still Presents nine captured Sonic blends and a tenth Texture Off frame.
+Off uses vertex/material colours with zero texture/sampler bindings/uploads.
+These captures check preservation of existing rendering; they are not new
+gameplay footage. Preview sample duration is not measured game FPS.
+
+Limitations and next work
+Three-factor/scaled pose paths, actual welding mutations, event queue advancement
+and production player/task/texture lifetimes still need runtime qualification.
+Original aura/njSimpleAction dependencies and the original Sonic draw callback,
+player FSM,main loop,stages and full gameplay remain unfinished. Reuse the real
+Frame/Motion state and canonical records; do not replace missing work with stubs.
+
+Reproduce locally
+Use pinned upstream25a3d3154dbe657325e97dbe8c5291086f6af5c0, local Japanese
+HDR-0001 v1.007 inputs, Python and LLVM/Windows build tools. Choose fresh output
+folders; builders/verifiers refuse to overwrite existing evidence.
+
+Run build_native_runtime_floor.py from outputs/sonic-adventure/jp_port_tools/
+with --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review
+--baseline work/sonic-adventure/jp-native-action-link-runtime-v2
+--output work/sonic-adventure/jp-native-runtime-floor-v4.
+Then build_native_event_pose.py uses that floor output as --baseline and
+--output work/sonic-adventure/jp-native-event-pose-v3. Both also take --workspace
+and --upstream. These scripts derive external bodies privately; they do not
+redistribute the upstream game/SDK implementation in the public source tree.
+
+verify_native_runtime_floor.py takes --workspace --build --binary --numeric-dll
+--output. verify_native_event_poses.py additionally takes --upstream and
+--motion-inputs. verify_native_pose_angles.py needs --workspace --build --binary
+--output. Run all against the complete event-pose build. Pinned local numerical
+and motion inputs are documented in JP_NATIVE_ACTION_LINK.txt and earlier guides.
+Run existing verify_native_game_init.py,verify_native_action_link_poses.py and
+verify_native_action_link_frames.py for the selected parent/render regressions.
+qualify_native_event_pose.py lists all audit arguments in --help and freezes
+the package only after source/object/PE/old-owner/evidence checks.
+
+Public evidence:analysis/jp_native_event_pose_package.json and its floor_build,
+build,floor,poses,angles,init,blend,frames,audit JSON files. All37 earlier packages
+retain hashes. Combined native game/SDK DLLs, generated external source,retail
+inputs and captures remain private. The source-matched public research archive
+preserves2,977 historical payloads and is explicitly incomplete/unplayable.
+
+Actual regression captures remain under:
+work/sonic-adventure/jp-native-event-pose-frame-regression-v1/run/
+sonic_original_action_preview.png and sonic_action_16_0.png.
+
+Recommended model:Sol High for welding/event/player integration. Luna Low is
+suitable for routine documentation. No model switch or goal pause is required.

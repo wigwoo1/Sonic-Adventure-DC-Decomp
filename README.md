@@ -1,3 +1,27 @@
+Latest qualified original runtime floor and pose helpers.
+194,335 new scoped checks and1,431 selected regressions pass. Genuine SDK floor
+values and shared SDK errno match13,148 whole original calls. Core pose trees
+match256 original calls plus1,280 complete getter calls;all73 Sonic nodes,
+limits,explicit/inherited bases and null output are covered. Angle difference
+matches65,536 original calls covering every16-bit delta and varied high words.
+
+Existing SDK print errno/player_records owners are reused;original player_work
+BSS is added. All37 previous packages and old Frame objects retain hashes.
+Original welding/event drawing link,but execution/lifetimes remain unverified.
+Scaled pose paths,aura/njSimpleAction,original player/FSM/main loop,gameplay,
+English,enhancements and later platforms remain incomplete. No playable PC EXE.
+Assertions overlap and are not unique routines or whole-game coverage.
+Overall approximately10%;goal active. Native floor is value-only RZ/DN,without
+FPSCR flag/trap emulation. Existing real blended GPU and Texture Off captures
+pass as regressions. 2,977 historical research payloads remain unchanged;
+the new source-matched prerelease is incomplete. External source,retail data,
+captures and combined native game/SDK DLLs remain private.
+
+- [Scope and reproduction](outputs/sonic-adventure/JP_NATIVE_EVENT_POSE.txt)
+- [Qualification and hashes](outputs/sonic-adventure/analysis/jp_native_event_pose_package.json)
+
+Earlier milestone notes remain unchanged below.
+
 Latest qualified original Sonic animation blending.
 The complete original action-link interpreter now builds into the same Frame
 owner:39 source functions and25 genuine missing SDK globals. 519 checks compare
