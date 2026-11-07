@@ -1,0 +1,16 @@
+Stock Windows input on the Emerald Coast render window
+
+After the scripted movement completes, the verifier attaches the
+stock keyboard and XInput provider to the same renderer-owned HWND.
+It polls and runs the native pad scanner on four advancing logical
+ticks, then retires the provider before closing the window and
+restores the scripted provider for the inherited shutdown path.
+
+Run verify_native_emerald_live_window_input.py with the verified
+approach stream build and the same local disc, collision and
+character inputs. The test passed 826 checks, including 48 streamed
+presents and four stock input polls. All capture hashes matched.
+
+The render window was unfocused during the stock polls. The run
+verifies provider attachment and polling. Sonic's movement still
+uses the scripted provider. Overall completion remains about 10%.

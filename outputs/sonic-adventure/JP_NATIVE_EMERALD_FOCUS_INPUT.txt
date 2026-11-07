@@ -1,0 +1,13 @@
+Foreground input gate on the Emerald Coast window
+
+The verifier requests foreground activation for the render window,
+then compares native input focus against the Windows foreground HWND
+before and after each stock input poll. The OS declined the activation
+request. All four polls saw stable foreground ownership elsewhere
+and the native provider reported the window as unfocused.
+
+Run verify_native_emerald_focus_input.py with the verified approach
+stream build and the same local disc, collision and character inputs.
+The run passed 835 checks and reproduced all earlier screenshots.
+Focused physical input and live control of Sonic remain unverified.
+Overall project completion is about 10%.

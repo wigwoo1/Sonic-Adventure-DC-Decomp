@@ -1,0 +1,17 @@
+Native Emerald Coast ring draw sequence
+
+The active stage now submits ring models and pickup sprites through one
+native entry point. The entry point takes the current shared camera and
+borrows the model, texture list and sprite descriptor for the duration
+of the call. It rejects invalid outputs and guards the stage against
+reentrant operations during drawing.
+
+Build with build_native_emerald_stage_rings.py using the verified stage
+terrain build as the baseline. Run verify_native_emerald_stage_rings.py
+with the same local disc, geometry and scene inputs as the same-tick
+check. The Windows build compiled and linked and passed 600 checks.
+Both GPU captures match the prior same-tick captures byte for byte.
+
+The fixture still loads the ring assets and submits terrain and Sonic
+separately. Stage-owned ring assets and the complete native frame draw
+remain integration work. Whole-project completion is about 10%.

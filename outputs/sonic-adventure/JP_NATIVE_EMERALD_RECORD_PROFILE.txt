@@ -1,0 +1,16 @@
+Emerald Coast native packet recording profile
+
+The instrumented frame handoff measures buffer and texture preparation
+separately from the native draw and retained-frame submission call.
+The presentation verifier retains the prior wall-clock audio checks.
+
+Build with build_native_emerald_record_profile.py using the verified
+jump-audio build. Run verify_native_emerald_record_profile.py with
+the same local disc, collision and character inputs. The build linked
+and passed 853 checks across 48 streamed frames. Draw and submission
+took 13.30 seconds in total. Packet preparation took under 1 ms in
+total. The longest individual draw and submission took about 410 ms.
+
+This isolates the large measured cost to the native draw and submit
+call. The individual player, terrain and retention costs still need
+measurement. Overall project completion remains about 10%.

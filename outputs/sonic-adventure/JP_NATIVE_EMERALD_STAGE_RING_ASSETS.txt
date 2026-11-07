@@ -1,0 +1,19 @@
+Native Emerald Coast ring model and pickup animation
+
+The native ring draw uses the model and sparkle animation declarations
+from the verified Japanese source baseline's generated files. The
+builder validates those files, converts the ring strips to the native
+triangle input, and keeps the resulting asset data in the private build.
+The stage loads its textures through the native disc archive provider.
+
+Build with build_native_emerald_stage_ring_assets.py using the verified
+disc-backed ring archive build. Pass the verified Japanese baseline's
+build/gen directory as --generated. Run
+verify_native_emerald_stage_ring_assets.py using the same local inputs
+as the ring archive check. The Windows build linked and passed 600
+scene checks. Eight rings and two pickup sprites were drawn, and both
+captures match the previous check byte for byte.
+
+The fixture still drives the scene and invokes the stage draw passes.
+Combining those passes under the native frame loop remains integration
+work. Overall project completion is about 10%.

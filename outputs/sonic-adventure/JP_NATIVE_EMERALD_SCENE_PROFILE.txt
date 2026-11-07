@@ -1,0 +1,16 @@
+Emerald Coast native draw component timing
+
+The instrumented build records separate wall-clock times for the Sonic
+draw, terrain draw, ring and sparkle draw, and frame retention. The
+verifier checks their sum against the enclosing native frame time.
+
+Build with build_native_emerald_scene_profile.py from the verified
+recording-profile build. Run verify_native_emerald_scene_profile.py
+with the same local disc, collision and character inputs. The build
+compiled, linked and passed 840 checks with 48 streamed frames.
+Terrain took 11.06 seconds of the 12.28 seconds in the native draw
+and submit call. Sonic took 334 ms, rings and sparkles 875 ms, and
+frame retention about 2 ms in total. Audio drained without cancellation.
+
+The next profile should split terrain visibility, mesh conversion and
+packet emission. Overall project completion remains about 10%.

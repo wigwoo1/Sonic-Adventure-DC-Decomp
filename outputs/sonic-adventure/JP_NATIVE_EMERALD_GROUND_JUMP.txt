@@ -1,0 +1,17 @@
+Native Sonic ground jump launch
+
+The launch helper accepts the sampled jump press in ordinary standing
+or walking on static ground. It selects jump mode and the spin action,
+applies Sonic's launch speed, and resets the jump counter.
+
+Build with build_native_emerald_ground_jump.py using the verified
+level-stop build. Run verify_native_emerald_ground_jump.py with the
+same local disc, collision and character inputs. The Windows build
+compiled, linked and passed 600 scene checks. The probe separately
+checks no press, a sampled press and an attempted second launch.
+Both captures show the earlier ring pickup.
+
+The test invokes the helper after the stop sequence and injects the
+sampled press into the pad record. Normal mode dispatch, launch sound,
+air movement and landing remain integration work. Overall completion
+is about 10%.

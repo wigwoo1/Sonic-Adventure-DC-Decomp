@@ -1,0 +1,15 @@
+Sparse screenshot readback during the Emerald Coast audio test
+
+The verifier presents all 48 streamed frames but reads back only
+six for diagnostic screenshots. It retains the two earlier pickup
+comparison captures and the scene-end audio drain.
+
+Run verify_native_emerald_sparse_capture.py with the verified
+jump-audio build and the same local disc, collision and character
+inputs. The run passed 874 checks. It delivered 695,029 audio
+sample frames with no cancellation. Queue-full reports rose from
+132 in the previous run to 191 in this run. These individual runs
+do not establish causality. Sparse readback alone did not resolve
+backpressure in the observed run.
+
+Overall project completion remains about 10%.

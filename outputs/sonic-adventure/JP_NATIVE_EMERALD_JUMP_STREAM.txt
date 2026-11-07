@@ -1,0 +1,16 @@
+Per-tick native Emerald Coast airborne presentation
+
+The scheduled jump records and presents every airborne movement tick.
+The probe hands one retained frame at a time to the Windows renderer.
+It waits for the GPU job, presents, releases the job and then releases
+the retained frame before advancing. The packet budget covers both
+the standing-to-spin transition and the spin model.
+
+Build with build_native_emerald_jump_stream.py using the verified jump
+sequence build. Run verify_native_emerald_jump_stream.py with the same
+local disc, collision and character inputs. The Windows build linked
+and passed 814 checks, with 37 airborne presents and two unchanged
+ground captures. It saves three representative airborne screenshots.
+
+The synchronous test harness uses scripted input. Ground movement
+still uses its earlier capture path. Overall completion is about 10%.

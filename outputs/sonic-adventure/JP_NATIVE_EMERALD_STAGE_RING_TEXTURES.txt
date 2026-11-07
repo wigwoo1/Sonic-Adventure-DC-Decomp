@@ -1,0 +1,20 @@
+Stage-owned Emerald Coast ring and sparkle textures
+
+The native stage loads and owns one ring texture and eight pickup
+sparkle textures from bounded PVM inputs. It binds those textures
+during drawing and releases the lists on stage close. Recorded
+frames retain their texture surfaces for presentation.
+
+Build with build_native_emerald_stage_ring_textures.py using the
+verified stage ring draw build. Run
+verify_native_emerald_stage_ring_textures.py with the same local
+disc, geometry and scene inputs as the previous ring draw check.
+The Windows build compiled and linked and passed 600 scene checks.
+The test rejected a truncated sparkle archive, retried successfully,
+rejected duplicate open and overwrote the original input buffers
+before drawing. Both captures match the previous test byte for byte.
+
+The test fixture still selects the texture entries from the local
+disc and supplies the ring model and sprite animation. Connecting
+the stage to the native archive provider and completing the native
+frame draw remain integration work. Overall completion is about 10%.

@@ -1,0 +1,16 @@
+Emerald Coast scene audio through Windows WASAPI
+
+The verifier borrows the muted audio session already owned by the
+native sound system. It sends the mix to WASAPI as each block is
+generated and waits for the Windows stream clock to pass the last
+submitted samples. The original sound owner performs shutdown.
+
+Run verify_native_emerald_wasapi_audio.py with the verified jump-audio
+build and the same local disc, collision and character inputs.
+The run passed 819 checks. WASAPI consumed all 36,051 submitted
+sample frames in order with no discarded frames. The event order
+and block counts matched the prior PCM test. The PCM hash differed
+between runs. This run does not establish deterministic output.
+
+The session was muted. Audible playback and end-to-end latency
+remain unverified. Overall project completion is about 10%.

@@ -1,0 +1,16 @@
+Native sound clock drives Emerald Coast audio
+
+The verifier advances a controlled 60000/1001 tick source and services
+the effect queue during each streamed update and once after landing.
+The native sound clock owns PCM production and submits it through the
+existing sound owner to muted WASAPI.
+
+Run verify_native_emerald_clock_audio.py with the verified jump-audio
+build and the same local disc, collision and character inputs. The run
+passed 822 checks. The sound clock rendered 36,051 sample frames in 98
+calls without backpressure or outstanding audio. The Windows render
+client consumed all samples. The pickup, jump and landing reached the
+same blocks as in the preceding scene audio test.
+
+The controlled source verifies sample accounting. Real-time pacing
+of this combined scene remains open. Overall completion is about 10%.

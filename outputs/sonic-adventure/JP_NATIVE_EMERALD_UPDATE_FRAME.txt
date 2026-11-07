@@ -1,0 +1,16 @@
+Native Emerald Coast player update and frame
+
+The game-thread entry runs the level-one player scheduler, advances the
+stage and submits the completed frame. It checks that player zero still
+owns the task and its work records after the scheduler returns. The
+caller owns partial-recording cleanup and presentation.
+
+Build with build_native_emerald_update_frame.py using the verified
+step-frame build. Run verify_native_emerald_update_frame.py with the
+same local disc, collision and character inputs. The Windows build
+compiled, linked and passed 600 checks. The probe delegates its final
+player and stage tick to the new entry. It awarded one ring and both
+captures matched the prior test byte for byte.
+
+The test still uses a walking fixture for the player callback and drives
+the preceding ticks and presentation. Overall completion is about 10%.

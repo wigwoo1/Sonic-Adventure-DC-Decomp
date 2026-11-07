@@ -1,0 +1,22 @@
+Emerald Coast airborne draw crash diagnosis
+
+The diagnostic replayed the existing second airborne build with a
+Windows vectored exception handler. The failure was a write to address
+zero at jp_native_frames.dll RVA 0x139e4. The saved register RSI was
+0x20, so the packet writer's first store to RSI minus 0x20 hit zero.
+
+Disassembly places the writer under draw_model. Its caller return
+address is RVA 0x10a4d. That branch calls njStartVertexTexTrans,
+passes its result to the original strip writer, and has no null check.
+
+The verifier reserves space and prepares textures for the pickup
+recording. Successful submission resets the queue's reservation
+limits. The next airborne draw goes through the original model writer
+without a fresh reservation. The next test should preflight the
+airborne model tree, reserve its packet budget, and prepare its
+texture references after the pickup submission. The null return is
+confirmed by the register capture. The reservation fix is untested.
+
+Both earlier draw attempts and the register capture remain private.
+The last verified animation run passed 604 checks. Overall project
+completion remains about 10%.

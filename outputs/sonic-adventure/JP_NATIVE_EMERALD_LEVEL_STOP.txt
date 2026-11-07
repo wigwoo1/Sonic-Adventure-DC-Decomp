@@ -1,0 +1,17 @@
+Native Sonic walk-to-stand transition
+
+The ordinary level-ground walk path keeps moving under ground drag
+when stick input goes neutral. Once speed reaches zero it clears the
+path flag, resets the idle counter and returns to the standing action.
+
+Build with build_native_emerald_level_stop.py using the verified level
+modes build. Run verify_native_emerald_level_stop.py with the same
+local disc, collision and character inputs. The Windows build linked
+and passed 600 scene checks. After recording the pickup frame, the
+probe neutralizes input and checks that speed never increases, Sonic
+returns to stand, and his position stays fixed for three more ticks.
+The captures show the preceding ring pickup and match the prior run.
+
+This covers ordinary unladen walking on level ground. Fast braking,
+jumping and slope handling remain integration work. Overall project
+completion is about 10%.

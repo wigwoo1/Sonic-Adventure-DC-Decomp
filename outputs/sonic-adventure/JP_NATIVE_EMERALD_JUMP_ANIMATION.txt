@@ -1,0 +1,17 @@
+Original Sonic spin and landing animation
+
+The native Emerald Coast jump updates the original spin animation
+while airborne and switches to the original landing animation when
+Sonic reaches the floor. The test leases both assets from the native
+motion store and releases them after the scheduled task returns.
+
+Build with build_native_emerald_jump_animation.py using the verified
+jump-input build. Run verify_native_emerald_jump_animation.py with
+the same local disc, collision and character inputs. The Windows build
+compiled, linked and passed 604 checks plus the native assertions.
+The first run exhausted the 16 motion leases. The verifier starts the
+motion store with 32 leases to accommodate the two extra assets.
+
+The captures still show the earlier ring pickup. Airborne animation
+state is verified. Drawing and presenting the airborne pose remains
+integration work. Overall project completion is about 10%.

@@ -1,0 +1,15 @@
+Native Emerald Coast terrain and ring scene draw
+
+One native stage call submits terrain, rings and pickup sprites using a
+shared camera matrix. It restores the caller's matrix before returning.
+The caller owns the frame recording and must discard it on draw failure,
+since a consumer may already have submitted packets.
+
+Build with build_native_emerald_stage_scene.py using the verified ring
+asset build. Run verify_native_emerald_stage_scene.py using the same local
+disc, collision and character inputs. The Windows build linked and passed
+600 checks, with 77 terrain callbacks, eight rings and two sparkle sprites.
+Both captures matched the previous scene byte for byte.
+
+The test harness still drives Sonic and owns frame recording and
+presentation. Overall project completion is about 10%.

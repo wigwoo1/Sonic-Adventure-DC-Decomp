@@ -1,0 +1,16 @@
+Emerald Coast audio drain at the scene boundary
+
+The verifier uses the Windows wall clock during the scene. At the
+end it holds the last wall-clock count fixed, services outstanding
+audio, stops the native clock without cancellation, and drains
+muted WASAPI. The inherited sound owner still closes the device.
+
+Run verify_native_emerald_audio_drain.py with the verified jump-audio
+build and the same local disc, collision and character inputs. The
+run passed 843 checks. All 655,913 owed sample frames reached WASAPI.
+The test flushed up to 8,972 outstanding frames at the boundary and
+cancelled none. The queue still reported backpressure.
+
+This verifies clean scene-end accounting under the test harness.
+Audible continuity and latency remain open. Overall completion
+remains about 10%.

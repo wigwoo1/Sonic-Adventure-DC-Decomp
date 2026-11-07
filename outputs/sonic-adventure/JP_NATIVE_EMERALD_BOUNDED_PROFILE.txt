@@ -1,0 +1,18 @@
+Bounded model draw timing in Emerald Coast
+
+The instrumented drawer accumulates validation, projection and
+record handling, consumer state setup, and vertex emission times.
+The verifier reads and resets the counters at each streamed frame.
+These counters cover all bounded draws between callbacks, including
+ring draws and any intervening pickup recording.
+
+Build with build_native_emerald_bounded_profile.py from the verified
+terrain profile. Run verify_native_emerald_bounded_profile.py with
+the same local disc, collision and character inputs. The Windows
+build compiled, linked and passed 849 checks. Projection and record
+handling took 10.95 seconds. Vertex emission took 2.19 seconds,
+validation 411 ms, and consumer state and queue setup 54 ms.
+
+The projection measurement also includes record acquisition and
+release. Those costs need separate measurements before changing
+projection arithmetic. Overall completion remains about 10%.

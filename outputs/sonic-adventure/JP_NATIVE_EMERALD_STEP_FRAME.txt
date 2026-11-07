@@ -1,0 +1,16 @@
+Native Emerald Coast stage step and frame
+
+The new entry point accepts a Sonic task after its player simulation
+step. It updates the stage once, draws the player and scene, and submits
+a retained frame for presentation. Simulation remains advanced if
+rendering fails. The caller owns cleanup of a partial recording.
+
+Build with build_native_emerald_step_frame.py using the verified player
+frame build. Run verify_native_emerald_step_frame.py with the same local
+disc, collision and character inputs. The Windows build compiled, linked
+and passed 600 checks. The probe delegates its final stage tick to the
+new entry point. It awarded one ring and produced textured and
+vertex-coloured captures identical to the previous test.
+
+The harness still schedules player simulation and presentation.
+Overall project completion is about 10%.

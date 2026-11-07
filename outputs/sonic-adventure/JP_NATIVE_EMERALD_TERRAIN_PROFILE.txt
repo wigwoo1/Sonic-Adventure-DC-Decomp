@@ -1,0 +1,16 @@
+Emerald Coast terrain mesh timing
+
+The instrumented scene records time in terrain mesh conversion and in
+the bounded model draw. Both measurements are nested inside the total
+terrain draw. The bounded draw covers validation, projection, texture
+handling and packet writes.
+
+Build with build_native_emerald_terrain_profile.py using the recording
+profile baseline. Run verify_native_emerald_terrain_profile.py with
+the same local disc, collision and character inputs. The Windows build
+compiled, linked and passed 842 checks across 48 streamed frames.
+Terrain took 11.34 seconds total. Bounded drawing took 11.21 seconds,
+and mesh conversion took about 9 ms.
+
+The measurements point to profiling inside the bounded drawer before
+changing terrain conversion. Overall project completion is about 10%.

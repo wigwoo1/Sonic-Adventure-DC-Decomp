@@ -1,0 +1,15 @@
+Native Emerald Coast player and stage frame
+
+The native frame entry accepts an already stepped Sonic task and its draw
+assets. It derives the live camera from that task, draws Sonic, terrain,
+rings and pickup sprites, and returns the retained frame. The caller
+prepares the recording and owns cleanup if a draw or submission fails.
+
+Build with build_native_emerald_player_frame.py using the verified stage
+frame build. Run verify_native_emerald_player_frame.py with the same local
+disc, collision and character inputs. The Windows build compiled, linked
+and passed 600 checks. Both captures match the prior stage frame byte for
+byte, and the stage closes before presentation.
+
+The harness still supplies player assets, drives the fixed walking test
+and schedules presentation. Overall project completion is about 10%.

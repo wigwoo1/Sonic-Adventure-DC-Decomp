@@ -1,0 +1,16 @@
+Native Emerald Coast frame submission
+
+After the player draw has recorded its packets, the native stage draws
+terrain, rings and sparkles, then submits the complete recording to the
+existing frame owner. Success returns an immutable frame ID and leaves
+the command queue empty. The caller releases the ID after presentation.
+On draw or submission failure the caller owns recording cleanup.
+
+Build with build_native_emerald_stage_frame.py using the verified stage
+scene build. Run verify_native_emerald_stage_frame.py with the same
+local disc, geometry and character inputs. The Windows build compiled,
+linked and passed 600 checks. The retained frame decoded and presented
+after stage close. Both captures match the previous test byte for byte.
+
+The fixture still drives Sonic, begins the recording and schedules
+presentation. The whole-project estimate remains about 10%.

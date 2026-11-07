@@ -1,0 +1,17 @@
+Scheduled Sonic jump dispatch in Emerald Coast
+
+The native level movement dispatcher reads the sampled jump edge,
+launches Sonic from rest, and routes subsequent scheduler ticks to
+the neutral airborne step until he lands. Ground movement uses the
+verified standing, walking and stopping paths.
+
+Build with build_native_emerald_jump_dispatch.py using the verified
+vertical-jump build. Run verify_native_emerald_jump_dispatch.py with
+the same local disc, collision and character inputs. The Windows
+build compiled, linked and passed 600 scene checks. The probe injects
+one sampled button edge after the pickup recording, then checks
+launch, ascent, descent and landing through the scheduled callback.
+The screenshots show the earlier pickup.
+
+Physical controller jump input and airborne animation playback remain
+unverified. Overall project completion is about 10%.

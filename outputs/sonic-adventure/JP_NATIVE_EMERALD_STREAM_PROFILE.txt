@@ -1,0 +1,17 @@
+Emerald Coast stream timing profile
+
+The verifier measures native wall counts around GPU submission,
+completion polling, window copy, presentation, readback and audio
+service. It also measures the gaps between presentation callbacks.
+Audio-service measurements can overlap GPU-wait measurements.
+
+Run verify_native_emerald_stream_profile.py with the verified
+jump-audio build and the same local disc, collision and character
+inputs. The run passed 852 checks. The 47 callback gaps totalled
+13.95 seconds out of 16.14 seconds of scene audio clock time. The
+longest gap was about 574 ms. GPU submission totalled 1.10 seconds
+and six screenshot readbacks totalled about 4 ms.
+
+The gaps include native simulation, packet recording and other
+work between callbacks. These measurements identify where to
+subdivide the profile. Overall completion remains about 10%.

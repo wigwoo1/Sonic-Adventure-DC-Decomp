@@ -1,0 +1,16 @@
+Native pad polling for the Emerald Coast jump
+
+The test's input provider supplies a neutral stick and a one-poll A
+button press. The native input backend and pad scanner produce the
+press edge and release. Sonic's scheduled update launches and lands
+the jump using those pad records.
+
+Build with build_native_emerald_jump_input.py using the verified jump
+dispatch build. Run verify_native_emerald_jump_input.py with the same
+local disc, collision and character inputs. The Windows build compiled,
+linked and passed 600 scene checks and the native jump assertions.
+The existing captures precede the jump and match the prior test.
+
+The provider is deterministic and synthetic. Physical controller input
+and airborne rendering still need verification. Overall completion
+remains about 10%.

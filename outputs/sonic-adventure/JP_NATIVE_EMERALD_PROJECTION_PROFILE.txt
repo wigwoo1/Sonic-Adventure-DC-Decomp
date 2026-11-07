@@ -1,0 +1,14 @@
+Projection timing in Emerald Coast
+
+The Windows projection diagnostic compiled, linked and passed 849 checks
+over a run with 48 streamed frames. The verifier reads and resets nested
+timers on each callback. At 781,250 wall counts per second, the projection
+loop took 11.27 seconds out of 11.56 seconds inside the original model
+calculation, about 97.5 percent. The difference includes other work in
+the original calculation and timer overhead. The bounded drawer timer has
+a separate scope and includes record handling. Both sets of counters can
+include draws between streamed frames.
+
+The authored builder and verifier are public. Their inputs, generated
+game code, diagnostic DLL and screenshots remain local. This is a
+performance diagnostic. Overall completion remains about 10 percent.

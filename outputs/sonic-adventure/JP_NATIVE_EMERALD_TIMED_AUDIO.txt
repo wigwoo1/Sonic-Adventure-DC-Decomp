@@ -1,0 +1,15 @@
+Emerald Coast audio mixed alongside scene frames
+
+The verifier services the native effect queue and renders one PCM block
+per streamed scene frame, plus a block after landing. It budgets stereo
+samples at 44.1 kHz against the 60000/1001 logical tick rate.
+
+Run verify_native_emerald_timed_audio.py with the verified jump-audio
+build and the same local disc, collision and character inputs. The run
+passed 816 checks and rendered 36,051 sample frames over 49 blocks.
+The native slots reached the mixer in pickup, jump and landing order
+at zero-based blocks 3, 11 and 48. The WAV stays local.
+
+The harness records PCM during the run. Windows audio-device playback
+and measured output latency remain unverified. Overall completion
+remains about 10%.

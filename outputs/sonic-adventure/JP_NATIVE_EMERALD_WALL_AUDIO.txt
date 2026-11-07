@@ -1,0 +1,16 @@
+Windows wall-clock audio during the Emerald Coast stream
+
+The native sound clock uses the Windows wall clock. The scene pumps
+the native wait service during GPU completion polling and at effect
+queue updates. It stops accumulation before draining muted WASAPI.
+
+Run verify_native_emerald_wall_audio.py with the verified jump-audio
+build and the same local disc, collision and character inputs. The
+run passed 825 checks and delivered 675,144 stereo sample frames.
+The pickup, jump and landing reached the same update blocks as
+before. The audio queue reported backpressure 46 times. Shutdown
+accounted for 8,260 unrendered samples as cancelled.
+
+This synchronous research harness verifies real-clock accounting and
+delivery. It does not establish low-latency or uninterrupted audible
+gameplay. Overall project completion remains about 10%.

@@ -1,0 +1,17 @@
+Emerald Coast same-tick rendering check
+
+The Windows test captures Sonic, one terrain pass, visible rings and pickup
+sparkles from the same active stage state and camera. The ring task that
+awarded the pickup has already switched to its sparkle mode, so the ring
+model callback skips it. Eight nearby ring models and two sparkle sprites
+were submitted. The sparkle textures reached two GPU batches.
+
+Run verify_native_emerald_same_tick.py with the same stage-terrain build,
+local disc and scene inputs used by verify_native_emerald_single_terrain.py.
+Use a fresh private output directory. The test passed 600 checks and saved
+textured and vertex-coloured captures. The evidence JSON records their hashes.
+
+The test fixture still sets up Sonic's approach, provides ring model and
+effect textures, and calls the drawing passes. The next integration step is
+to have the native stage own that draw sequence and resource lifetime.
+Overall project completion remains about 10%.

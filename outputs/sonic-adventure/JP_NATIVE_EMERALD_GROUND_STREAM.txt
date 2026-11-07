@@ -1,0 +1,16 @@
+Per-tick ground and airborne presentation after the ring pickup
+
+The native probe now uses one frame handoff for the coast to a stop,
+three stationary ticks, and the subsequent airborne movement. The
+renderer presents each frame before the game thread releases it.
+
+Build with build_native_emerald_ground_stream.py using the verified
+jump stream build. Run verify_native_emerald_ground_stream.py with the
+same local disc, collision and character inputs. The Windows build
+compiled, linked and passed 814 checks. It presented five ground
+ticks and 37 airborne ticks, awarded exactly one ring, and reproduced
+both earlier pickup captures.
+
+The coast and jump run with scripted input and the charged aura off.
+The ring approach still uses its earlier capture path. Overall
+project completion remains about 10%.

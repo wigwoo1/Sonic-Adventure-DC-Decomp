@@ -1,0 +1,18 @@
+Native Emerald Coast airborne capture
+
+The probe captures Sonic's original spin pose during descent. After
+the pickup frame is submitted, it reserves a fresh packet budget from
+the spin model's validated bounds and prepares the frame's texture
+references. The existing native player and stage path then submits
+the airborne frame, which the Windows renderer presents separately.
+
+Build with build_native_emerald_jump_draw.py using the verified jump
+animation build. Run verify_native_emerald_jump_draw.py with the same
+local disc, collision and character inputs. The build linked and the
+test passed 815 checks with three window presents. Both pickup
+captures matched the prior run. The airborne capture is distinct.
+
+The probe uses a synthetic controller and disables the charged aura
+for the airborne capture. It presents one airborne pose. Continuous
+play and airborne animation rendering remain integration work.
+Overall completion remains about 10%.

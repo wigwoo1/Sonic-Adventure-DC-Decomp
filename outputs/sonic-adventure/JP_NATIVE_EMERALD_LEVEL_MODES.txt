@@ -1,0 +1,16 @@
+Native Sonic stand-to-walk transition
+
+The Emerald Coast probe now starts in Sonic's standing mode and runs
+native mode selection on every tick of the ring approach. The native
+code reads the sampled stick to enter walking mode. The fixture still
+supplies the input and checks when the transition occurs.
+
+Build with build_native_emerald_level_modes.py using the verified level
+walk build. Run verify_native_emerald_level_modes.py with the same local
+disc, collision and character inputs. The Windows build compiled,
+linked and passed 600 checks. Sonic collected one ring and both captures
+matched the previous test byte for byte.
+
+The supported path covers stationary standing and level-ground walking.
+Stopping, jumping, slope transitions and general collision still need
+integration. Overall completion remains about 10%.

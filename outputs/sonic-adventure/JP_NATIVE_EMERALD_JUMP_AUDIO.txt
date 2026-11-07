@@ -1,0 +1,16 @@
+Emerald Coast jump and landing audio events
+
+The native Sonic update requests the original jump effect when entering
+jump mode and the original landing effect when returning to stand.
+Audio requests leave movement independent of sound availability.
+
+Build with build_native_emerald_jump_audio.py using the verified
+approach stream build. Run verify_native_emerald_jump_audio.py with
+the same local disc, collision and character inputs. The build
+compiled, linked and passed 814 checks. The verifier observed exactly
+one queued request each for pickup, jump and landing, then rendered
+non-silent mixed PCM. All screenshot hashes matched the baseline.
+
+The test verifies queued events and mixed output. Separate waveform
+verification and live timed playback remain open. Overall project
+completion remains about 10%.

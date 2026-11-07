@@ -1,0 +1,16 @@
+Logical clock pacing in the Emerald Coast frame stream
+
+The Windows verifier reuses the compiled approach-stream build. Its
+presentation callback pumps the existing 60000/1001 logical clock and
+the window messages. It requires the clock to advance before each
+streamed present and stops if the window closes or the clock stalls.
+
+Run verify_native_emerald_paced_stream.py with the verified approach
+stream build and the same local disc, collision and character inputs.
+The test passed 815 checks, including 48 clock-gated presents and one
+ring award. All screenshot hashes matched the previous test.
+
+The synchronous GPU path can span multiple clock ticks between
+presents. This is a clock integration check. Interactive scheduling
+and selectable presentation rates remain future work.
+Overall project completion remains about 10%.
