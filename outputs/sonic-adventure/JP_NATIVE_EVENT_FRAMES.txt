@@ -1,0 +1,57 @@
+Native event queue rendering milestone
+
+Overall project estimate: approximately 10% weighted milestones. Goal active.
+Japanese matching/GCC source baselines are established. Native gameplay,
+localization, enhancements and later platforms remain unfinished.
+
+The same genuine Sonic model/action owners now render through original
+event_motions_draw and player_weld, the real task scheduler, retained frames,
+D3D jobs and Win32 presentation. The owning callback and camera are diagnostic,
+not original sonic_draw/event_actor_step or a playable game loop.
+
+Nine visible samples blend the final standing pose toward running frame zero
+over eight original queue steps, then draw running frame zero normally.
+This is the original event blend policy, not nine running animation keyframes.
+The ninth call advances the next stored frame to 0.5. The eighth call frees
+the previous entry and returns exactly 80 bytes to the real native heap.
+The camera fitting pass uses a separate queue run and fresh real allocations
+before visible rendering, so freed previous entries are never reused.
+
+Original player_update_welds makes fifteen ordinary Sonic weld buffers.
+Actual player_work/player_records slot zero selects original player_weld.
+Only exact configured weld vertex/normal destinations may change during draws.
+Original weld FREE restores all 3,322 canonical records byte-for-byte before
+Motion shutdown. Real event_free retires event entries and event work.
+The diagnostic destructor releases views after event/weld retirement; the
+original task destructor then frees task work and clears callbacks.
+
+A tenth GPU presentation renders the last captured geometry with textures
+disabled. It binds no texture/sampler and uploads no texture payload, leaving
+vertex/material colours visible. Genuine JP Sonic textures and palette are
+used for the other captures. Captures and retail inputs remain private.
+The lossless animated preview uses diagnostic 100ms sample timing, not FPS.
+
+The builder only exposes the already linked original event_free function.
+All prior compiled objects and all non-Frame DLLs retain their hashes.
+There is no new game function implementation or replacement callback hook.
+The new Frame DLL is private; public builds remain incomplete research files.
+
+Reproduction from the workspace root, using Python and locally supplied inputs:
+
+python -B outputs/sonic-adventure/jp_port_tools/build_native_event_frame_cleanup.py --workspace . --baseline work/sonic-adventure/jp-native-sonic-weld-v1 --output work/sonic-adventure/NEW_EVENT_BUILD
+
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_event_queue_frames.py --workspace . --build work/sonic-adventure/NEW_EVENT_BUILD --inputs work/sonic-adventure/jp-native-character-texture-inputs-v1 --track "PATH_TO_JP_TRACK03.BIN" --output work/sonic-adventure/NEW_EVENT_FRAMES
+
+The frame verifier uses the pinned local JP 1ST_READ.BIN at
+work/sonic-adventure/jp-ninja-math-reference/1ST_READ.BIN.
+Refer to the prior event queue and welding guides for prerequisite input
+preparation and instruction-level comparison commands. All old proofs remain.
+
+Qualification records 439 new task/render checks, plus repeated regressions:
+1,019,169 whole-original queue assertions and 530 initializer checks on the new
+linked build. Repeated assertions are not additional unique game routines.
+
+Remaining work includes original Sonic aura/Ninja Simple rendering dependencies,
+production callback/record lifetimes, actor ground/shadow/collision integration,
+player FSM/mainloop/stages, English and all complete-game/platform requirements.
+Additional render FPS must not advance event state faster than original logic.

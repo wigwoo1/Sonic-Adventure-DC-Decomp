@@ -1,3 +1,27 @@
+Latest scoped original event queue/task/GPU rendering qualification.
+Original event_motions_draw and player_weld now execute through the actual
+task scheduler,retained frames,D3D jobs and Win32 presentation. Nine images
+capture the eight-step stand-to-run blend then one normal pose;Texture Off
+is a tenth presentation with no texture/sampler bindings or texture uploads.
+All3322 canonical records restore before Motion shutdown;real event/weld
+heap allocations retire. The owning callback and camera remain diagnostic.
+
+439 new task/render checks and1,019,699 repeated regression checks passed.
+All40 previous packages remain intact. The only native change exposes the
+already compiled original event_free function;all compiled objects and other
+DLL hashes are preserved. Source-matched archives retain2977 unchanged
+historical research payloads. Game data/DLLs and retail captures stay private.
+Assertions overlap and are not unique routines or whole-game coverage.
+
+Original Sonic/actor callbacks,FSM/mainloop/stages,gameplay,English,settings,
+enhancements and later platforms remain unfinished. No playable PC executable.
+Whole-project estimate approximately10%;goal active.
+
+- [Scope and reproduction](outputs/sonic-adventure/JP_NATIVE_EVENT_FRAMES.txt)
+- [Qualification and hashes](outputs/sonic-adventure/analysis/jp_native_event_frames_package.json)
+
+Earlier milestone notes remain unchanged below.
+
 Latest scoped original event motion queue qualification.
 1,019,169 new assertions compare288 complete original event calls on the same
 qualified native weld build. Ten scenario families,both register banks,normal

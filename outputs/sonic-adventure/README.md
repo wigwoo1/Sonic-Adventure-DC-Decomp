@@ -2145,3 +2145,21 @@ Overall approximately10%;goal active;no playable PC EXE. English,enhancements
 and later platforms remain pending. External/generated source,retail inputs,
 captures and combined DLLs stay private. Public builds are incomplete research.
 Sol High remains suitable for the next event/player integration.
+
+
+Native original event queue/task/GPU rendering qualification (2026-11-06)
+Original event_motions_draw and player_weld now execute through the real task
+scheduler, retained frame/D3D jobs and Win32 presentation with genuine JP
+Sonic textures. Nine captures show the eight-step stand-to-run event blend and
+one normal running pose; a tenth presentation verifies Texture Off with zero
+texture/sampler bindings/uploads. Original cleanup restores all3322 canonical
+records and retires actual event/weld heap allocations. Camera/callback are
+diagnostic; production original Sonic/actor callbacks and gameplay remain open.
+The original event_free function is newly exported, with all compiled objects
+and non-Frame DLLs unchanged.439 new checks and1019699 repeated regression
+assertions passed. All40 prior packages remain intact. Overlapping assertions
+are not unique routines or game coverage. No playable EXE. No retail/generated
+source,captures or combined native game DLLs are published.
+See JP_NATIVE_EVENT_FRAMES.txt and analysis/jp_native_event_frames_package.json.
+Whole project approximately10%;goal active. Source baseline verified;native
+gameplay,English,enhancements,VMU and later platforms remain unfinished.
