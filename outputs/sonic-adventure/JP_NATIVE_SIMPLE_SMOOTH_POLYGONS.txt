@@ -1,0 +1,17 @@
+Native Ninja Simple smooth-lit quads and N-gons
+
+The bounded model dispatcher now routes smooth-lit quads and N-gons
+through the pinned original color and texture drawers. Clipping
+retains the original winding decision and interpolates corner
+intensity and signed UVs at the near plane.
+
+Build with build_native_simple_smooth_polygons.py using the pinned
+checkout and jp-native-simple-tex-polygons-v1. Run
+verify_native_simple_smooth_polygons.py against the new build.
+Fifteen cases cover opaque and translucent packets, clipping, and
+rejected input spans. Eight unlit textured polygon cases, two mixed
+model cases, and all 3,341 projection checks passed.
+
+Verification covers CPU queue output. Flat-lit and environment-mapped
+polygon paths and GPU presentation remain open. Whole-project
+completion remains about 10%.

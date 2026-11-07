@@ -1,0 +1,24 @@
+Original Sonic aura on the Windows GPU backend
+
+The pinned aura callback now drives the native Simple renderer. The
+fixture supplies the original aura object from the Sonic motion bank
+and samples frame 8.5 of the original updraft motion. The callback
+draws three layers with the original scale and color changes.
+
+The aura model descriptors declare zero materials, but all twenty
+meshes reference the same compiled material. The scoped SDK bridge
+uses that single proven material extent in a local descriptor copy.
+The original model and motion data remain intact.
+
+Run build_native_sonic_aura.py with jp-native-simple-sdk-v1 and the
+pinned Japanese checkout, then verify_native_sonic_aura_frames.py with
+the local Japanese track and character inputs. The verified run passed
+439 checks, submitted 60 batches and 453 triangles, and presented twice.
+The aura uses untextured materials, so the two captured images are
+identical with texture sampling enabled or disabled. Six SDK action
+regression cases passed as well.
+
+The fixture calls the aura body directly with a prepared player record.
+The original Sonic draw callback and gameplay integration remain open.
+Retail assets, captures and generated binaries stay local. Overall
+project completion remains about 10%.

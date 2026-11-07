@@ -1,0 +1,16 @@
+Native Ninja Simple unlit textured quads and N-gons
+
+The bounded model dispatcher now accepts unlit textured quads and N-gons.
+It checks all UV and index spans before projection. The original clip
+drawers keep texture coordinates paired with each corner and truncate
+interpolated UVs using the shared SH-4 value service.
+
+Build with build_native_simple_tex_polygons.py against the pinned
+checkout and jp-native-simple-color-polygons-v1. Run
+verify_native_simple_tex_polygons.py against the new build. Eight
+packet cases cover opaque and translucent output, clipping and
+malformed inputs. Seven untextured polygon cases, two mixed model cases,
+and all 3,341 original projection checks also passed.
+
+Verification covers CPU queue output. Lit and environment-mapped polygon
+paths and GPU presentation remain open. Overall completion is about 10%.

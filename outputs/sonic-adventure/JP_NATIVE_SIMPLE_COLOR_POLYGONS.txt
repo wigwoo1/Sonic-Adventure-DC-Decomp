@@ -1,0 +1,16 @@
+Native Ninja Simple unlit quads and N-gons
+
+The bounded model dispatcher now supports untextured, unlit quads
+and N-gons. It validates the whole index span and reserves up to four
+output vertices for each constituent triangle. The clipped quad keeps
+the original shared winding decision between its two triangles. The
+N-gon path uses the original strip order.
+
+Build with build_native_simple_color_polygons.py against the pinned
+checkout and jp-native-simple-env-strips-v1. Run
+verify_native_simple_color_polygons.py against the result. Seven cases
+check opaque and translucent packets, clipping, and malformed spans.
+Nine environment-strip cases, two mixed-model cases, and all 3,341
+projection checks passed. Verification covers CPU queue output.
+Textured and lit polygon paths and GPU presentation remain open.
+Overall project completion is about 10%.

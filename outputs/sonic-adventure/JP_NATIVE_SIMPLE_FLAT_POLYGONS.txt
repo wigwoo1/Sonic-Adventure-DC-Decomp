@@ -1,0 +1,17 @@
+Native Ninja Simple flat-lit quads and N-gons
+
+The bounded dispatcher now accepts flat-lit quads and N-gons in color
+and textured formats. The original drawers retain a single face shade
+through near-plane clipping. The port follows the pinned GCC source's
+repair for clipped N-gons, which derives the shade from that polygon's
+own first three corners.
+
+Build with build_native_simple_flat_polygons.py against the pinned
+checkout and jp-native-simple-smooth-polygons-v3. Run
+verify_native_simple_flat_polygons.py. Fifteen cases verify defined
+packet words, clipping, and rejected spans. Fifteen smooth polygon
+cases, four flat textured triangle cases, and all 3,341 projection
+comparisons also passed.
+
+GPU presentation and environment-mapped quads and N-gons remain open.
+Whole-project completion remains about 10%.

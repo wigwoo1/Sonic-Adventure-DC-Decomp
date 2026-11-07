@@ -1171,3 +1171,17 @@ PUBLICATION_MANIFEST.json records selected source/document hashes. Each research
 archive contains BUILD_MANIFEST.json and has a SHA256SUMS companion. Historical
 source/proofs and all previous research builds remain preserved. No project-wide
 license is assigned; existing third-party notices remain with their components.
+
+## Native Sonic rendering research
+
+The Windows renderer presented the original keyed Sonic model and the
+original aura in separate GPU fixtures. The keyed model also presented
+with texture sampling and uploads disabled. The aura is untextured.
+The full player draw callback remains under integration.
+
+- [Keyed Sonic GPU verification](outputs/sonic-adventure/JP_NATIVE_SIMPLE_SDK_FRAMES.txt)
+- [Sonic aura GPU verification](outputs/sonic-adventure/JP_NATIVE_SONIC_AURA.txt)
+
+Overall project completion is about 10%. This snapshot contains incomplete
+research artifacts. There is no playable game build.
+

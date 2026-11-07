@@ -1,0 +1,18 @@
+Native Ninja Simple environment-mapped quads and N-gons
+
+The bounded model dispatcher now routes environment-mapped quads and
+N-gons through the original unlit, smooth and flat drawers. The clipped
+paths preserve the shared winding decision and generate UVs from the
+model normals. Flat N-gons use the pinned GCC repair for corner normals.
+
+Build with build_native_simple_env_polygons.py against the pinned
+checkout and jp-native-simple-flat-polygons-v2. Run
+verify_native_simple_env_polygons.py on the resulting DLL. Twenty-one
+cases verify defined packet fields and rejected geometry spans.
+Fifteen flat polygon cases, nine environment strip cases and all 3,341
+projection comparisons passed.
+
+The bounded dispatcher covers all four Simple mesh encodings and the
+original supported material classes. The original game-facing entry,
+native model span provenance and GPU presentation remain open.
+Overall project completion is about 10%.

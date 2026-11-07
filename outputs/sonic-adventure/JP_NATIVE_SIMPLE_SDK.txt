@@ -1,0 +1,22 @@
+Original Ninja Simple action on the native model dispatcher
+
+The pinned original njMotionS object now links with njSimpleDrawModel.
+The native draw entry resolves model bounds from a caller-owned scope.
+Call jp_simple_model_scope_begin before traversal and
+jp_simple_model_scope_end afterward. The descriptors, spans and model
+storage must stay alive throughout the call on the game thread. The
+scope reports the first draw error. Unregistered model pointers are
+rejected without dereferencing them.
+
+Run build_native_simple_sdk.py with jp-native-simple-env-polygons-v3
+and jp-native-sdk-motion-v6, then verify_native_simple_sdk.py against
+the new DLL. Six cases verify direct draw, original action traversal
+with object translation, hidden and out-of-range nodes, and rejected
+model pointers and spans. The caller's matrix and scratch are restored.
+Twenty-one environment polygon and 3,341 projection regression checks
+passed on the same build.
+
+The fixture supplies its own model extents. Automatic game asset span
+registration, real character motion, shape motion, and GPU presentation
+still need verification. Generated code and the combined DLL stay local.
+Whole-project completion is about 10%.

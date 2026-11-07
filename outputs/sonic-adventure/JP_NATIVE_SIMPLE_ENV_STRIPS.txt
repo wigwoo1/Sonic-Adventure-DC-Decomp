@@ -1,0 +1,19 @@
+Native Ninja Simple environment-mapped strips
+
+The bounded model dispatcher now supports environment-mapped strips
+in unlit, smooth-lit and flat-lit modes. The original strip transform
+uses a local copy of the current matrix, with adjusted rows for UVs
+and lighting. Near-plane clipping uses the original matrix for its
+separate quantized UV calculations.
+
+Build with build_native_simple_env_strips.py against the pinned
+checkout and jp-native-simple-env-triangles-v4. Run
+verify_native_simple_env_strips.py against the resulting DLL. Nine
+cases check regular and clipped strip packets, rejected winding,
+unchanged shared matrix bytes and retained textures after release.
+Twelve environment triangle and two mixed model regressions also
+passed, along with 3,341 original projection comparisons.
+
+Verification covers the CPU queue and frame ownership. GPU
+presentation and direct Dreamcast strip comparison remain open.
+Whole-project completion is about 10%.

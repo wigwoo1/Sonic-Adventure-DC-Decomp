@@ -1,0 +1,22 @@
+Original Ninja Simple action on the Windows GPU backend
+
+The native research build runs frame 8.5 of the original Sonic updraft
+action through njSimpleAction and the bounded njSimpleDrawModel entry.
+The verifier registers model bounds from the canonical compiled arrays,
+retains the original texture inputs, and presents the captured geometry
+in a Windows test window. A second presentation uses the same geometry
+with texture sampling disabled.
+
+Run verify_native_simple_sdk_frames.py with jp-native-simple-sdk-v1,
+the local jp-native-character-texture-inputs-v1 directory, and the
+Japanese track03.bin. The verifier checks dependency hashes and
+loads them from a single DLL directory so all callers use the same
+runtime owners. The first attempt used mixed directories and could
+not acquire the canonical model view.
+
+The successful run passed 270 checks and decoded 53 batches,
+767 vertices and 463 triangles. Both Windows presentations succeeded.
+The texture-off draw bound zero textures and samplers and uploaded no
+texture data. This fixture covers one sampled keyed pose, not a
+gameplay sequence. Retail inputs and captures stay local. Overall
+project completion is about 10%.
