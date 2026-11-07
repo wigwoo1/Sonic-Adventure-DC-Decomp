@@ -1,0 +1,59 @@
+Original Ninja Simple projection loops
+
+Overall project approximately 10%; goal active. Japanese source baselines are
+verified. Native gameplay, English and later platforms remain unfinished.
+
+All four original njSimpleCalcModel_Loop1-4 entry bodies are linked into the
+same Frame owner. Their assembly bodies are translated to authored native
+value operations, using the existing shared matrix and SH-4 FTRV, FSRRA and
+RZ/DN1 arithmetic services. They are not aliases for the game's other renderer.
+
+The bounded caller jp_simple_project accepts the real work structure, byte
+capacity, point/normal extents, one persistent pair of 32-byte queue lines,
+and loop number1-4. Output is 32-byte aligned. The game thread serializes calls.
+Counts must be nonnegative and supplied spans must cover the requested count.
+The caller is responsible for valid, nonoverlapping actual allocations.
+Only loops1/3 consume normals. Zero-count calls accept empty spans.
+
+The original hardware has two store queues. Words a loop never writes remain
+in that queue and are included in the next full32-byte record. Native queues
+preserve both lines: intensity words in all loops, and normal words in2/4.
+All output record bytes and final queue words are checked, not just positions.
+Clip AND/OR and other work bytes are checked against whole original calls.
+The original work is48 bytes; native pointers expand it to64 bytes. Both ABI
+layouts compile independently; no original pointer is truncated to32 bits.
+
+Explicit native policy:
+- Remove the original unused read of the next point beyond the final point.
+- Remove unused prefetches and CPU cache invalidations.
+- Do not emulate hardware QACR/cache operations or FPSCR flags/traps.
+- Preserve sampled numerical results, clip flags and persistent queue words.
+The original reference observes QACR/PREF/OCBI with explicit MMIO/queue values.
+No game-function hooks replace original instructions.
+
+1,554 checks compare192 whole original calls over all four loops, counts
+0/1/2/3/7/16, both queue parities, both SH-4 register banks and two matrices.
+Inputs exercise clipping/depth boundaries, negative and tiny depth, and side
+clipping. Random initial queue words test untouched data preservation.
+Native tests place1 and16 points immediately before a real inaccessible
+Windows memory page: all four loops complete without reading a next point.
+Invalid spans/kinds fail without work or queue mutation.
+
+530 initializer and439 real event/weld task/GPU regression checks also run on
+the new build. Their existing event-blend images are regression captures,
+not Simple/aura footage. There is still no playable PC executable.
+
+Reproduction using Python from the workspace root:
+
+python -B outputs/sonic-adventure/jp_port_tools/build_native_simple_projection.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --baseline work/sonic-adventure/jp-native-sdk-motion-v6 --output work/sonic-adventure/NEW_SIMPLE_PROJECTION
+
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_simple_projection.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --build work/sonic-adventure/NEW_SIMPLE_PROJECTION --binary work/sonic-adventure/jp-ninja-math-reference/1ST_READ.BIN --numeric-dll work/sonic-adventure/build/sh4_vector_numeric.dll --output work/sonic-adventure/NEW_SIMPLE_PROJECTION_CHECK
+
+Remaining work: genuine SimpleCalcModelMatrix/Light, _njSimpleCalcModel and its
+32-byte scratch owner, material/lighting/clipping/mesh emitters and command
+queue integration, njSimpleDrawModel, then njSimpleAction and aura_draw.
+The original full Simple renderer and Sonic callback are not linked/qualified.
+Existing 16-byte renderer scratch must not be used as32-byte records.
+All previous proofs remain preserved. External/generated game source, combined
+DLLs, retail inputs and captures stay private. Public archives remain incomplete
+research artifacts with unchanged prior authored/historical build payloads.

@@ -1,3 +1,26 @@
+Latest scoped original Ninja Simple projection-loop qualification.
+Four genuine njSimpleCalcModel_Loop entries now use bounded native value
+translations of their SH-4 bodies.1554 checks compare192 complete original
+calls,all output bytes and both persistent32-byte queue lines. Actual Windows
+guard-page tests prove unused next-point reads are removed. Both work ABIs
+compile;native pointers are not truncated. Hardware cache/QACR/FPSCR side
+effects are explicitly outside the native policy.
+
+969 initializer and real event/weld task/GPU regressions passed. All42 earlier
+packages,source and proofs remain preserved. Full Simple model rendering,
+aura_draw,original Sonic callbacks and gameplay are still unfinished.
+Source-matched archives retain2977 unchanged historical research payloads.
+Generated game source,combined DLLs,retail assets and captures stay private.
+Overlapping assertions are not unique routines or whole-game coverage.
+
+No playable PC executable. Whole-project estimate approximately10%;goal active.
+English,enhancements and later platforms remain unfinished.
+
+- [Scope and reproduction](outputs/sonic-adventure/JP_NATIVE_SIMPLE_PROJECTION.txt)
+- [Qualification and hashes](outputs/sonic-adventure/analysis/jp_native_simple_projection_package.json)
+
+Earlier milestone notes remain unchanged below.
+
 Latest scoped original Ninja motion-helper qualification.
 The original njMotSrc.c helpers and interpolation tables now link into the
 same Frame owner. Existing original shape/material/global providers are reused.
