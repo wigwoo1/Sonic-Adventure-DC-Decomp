@@ -1,0 +1,89 @@
+Original animation blending: native research milestone
+
+Overall project estimate: approximately 10% of the complete goal, using weighted
+milestones. Goal active. This is still an incomplete native research build,
+without a playable PC executable. The matching JP source baseline is verified;
+PC gameplay, English localization, enhancements and later platforms remain
+unfinished. Source availability is not a measure of native-port completion.
+
+What changed
+The complete pinned src/draw/action_link.c is compiled into the existing Frame
+owner:39 original functions and25 exact missing sdk/ninja/njGlobal.c definitions.
+Existing private Frame definitions count as providers; no state is duplicated
+just because its symbol is absent from the DLL export table. All earlier Frame
+objects remain. Only the Frame DLL changes; other native modules retain hashes.
+
+The derivation uses the existing SH4 round-toward-zero scalar and FIPR/FSRRA
+services. The compiler locates88 arithmetic operations for adaptation; LLVM
+contains no remaining ordinary host fadd/fsub/fmul/fdiv/fcmp instructions in
+this unit. Three original matching-source casts of an explicitly zero pointer
+are replaced with integer zero. Real pointers retain their native width.
+
+What was actually verified
+519 scoped checks compare102 complete original draw_action_link calls with
+the pinned Japanese executable's machine execution. Cases include two actual
+Sonic POS/ANG motions, same/cross banks, fractional frames, blend ratios,
+null motion slots, upper frame/ratio exits and both SH4 floating register banks.
+Visible model order and all16 matrix words match exactly, and the caller's
+matrix/stack restore. These are calls and assertions, not102 different routines
+or a measurement of whole-game coverage.
+
+382 real parent/task/GPU checks capture nine blends from the actual Win32
+backbuffer. Bank0 sonic_updraft_action at8.5 blends into resident bank7
+sonic_full_speed_action at16. Ratios are 0,.125,.265625,.375,.5,.625,.75,.875,1.
+All nine exact inputs are included in machine comparison in both register banks.
+Both action views, canonical tree and actual textures remain held through frame
+and GPU retirement; the actual task destructor releases them. A tenth Present
+checks Texture Off: vertex/material colours with zero texture bindings/uploads.
+The nine-frame APNG is checked losslessly against the opaque-window RGB
+captures. Non-display backbuffer alpha is omitted by the existing PNG writer. Its
+100ms preview samples do not claim gameplay FPS. 530 existing initializer
+regression checks also pass. Assertions overlap and are scope-specific.
+
+Limitations
+Task callbacks, camera and capture setup are diagnostic. Original sonic_draw,
+event-motion/aura dependencies, player FSM, main loop, stages and production
+automatic task/texture ownership remain unfinished. This qualification does
+not cover shape/scaled links, every exported link entrypoint, other characters,
+negative/out-of-contract frames, console hardware or full game timing.
+Toe morphing is qualified separately; this blend diagnostic does not connect
+the original player callback or claim a combined gameplay loop.
+
+Reproduce locally
+Use the pinned upstream25a3d3154dbe657325e97dbe8c5291086f6af5c0, LLVM/Windows
+build tools, Python, and your own Japanese HDR-0001 v1.007 retail inputs.
+All commands run from the project workspace. Choose fresh output directories;
+the scripts deliberately refuse to overwrite existing proofs.
+
+python -B outputs/sonic-adventure/jp_port_tools/build_native_action_link.py
+  --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review
+  --baseline work/sonic-adventure/jp-native-sonic-run-data-v1
+  --output work/sonic-adventure/jp-native-action-link-runtime-v2
+
+Join the displayed lines into one command. Then run:
+verify_native_action_link_poses.py with --workspace --upstream --build --binary
+--numeric-dll --motion-inputs --output, using the pinned local inputs described
+in JP_NATIVE_SONIC_TOES.txt and JP_NATIVE_MOTION_DATA.txt.
+verify_native_action_link_frames.py with --workspace --build --inputs --track
+--output. Its --inputs is the extracted character-texture input directory;
+--track is the local track03.bin. verify_native_game_init.py uses --workspace
+--build --track --output. qualify_native_action_link.py takes --workspace
+--upstream --baseline --build --poses --frames --init --output and freezes
+proofs only after source, object, PE, old-package and captured-image audits.
+
+Private captures from this qualification:
+work/sonic-adventure/jp-native-action-link-frame-check-v2/run/
+  sonic_original_action_preview.png (nine actual captured blends)
+  sonic_action_16_0.png (50% blend)
+  sonic_original_model_tree_textures_off.png (texture sampling disabled)
+
+Public provenance/evidence:analysis/jp_native_action_link_package.json and its
+build,poses,frames,init,audit JSON files. All36 previous packages retain hashes.
+Generated external game/SDK source, combined DLLs, retail inputs and captures
+stay private. Public authored derivation/verifiers/docs and JSON proofs are
+publishable. The source-matched prerelease preserves2,977 historical incomplete
+research payloads; the combined native game DLL is excluded. No new upstream
+source redistribution permission or project-wide license is asserted.
+
+Recommended model:Sol High for original player/render integration; Luna Low
+for routine documentation. No goal pause or model switch is required.

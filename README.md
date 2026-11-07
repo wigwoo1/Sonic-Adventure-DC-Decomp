@@ -1,3 +1,24 @@
+Latest qualified original Sonic animation blending.
+The complete original action-link interpreter now builds into the same Frame
+owner:39 source functions and25 genuine missing SDK globals. 519 checks compare
+102 complete original calls, including all nine rendered blend inputs in both
+SH4 banks. 382 actual parent/task/GPU checks and530 initializer regressions pass.
+Nine real Win32 captures show two genuine animations blending; a tenth Present
+checks Texture Off with vertex/material colours and zero texture bindings.
+
+All36 previous packages retain hashes. Assertions overlap:these are not unique
+routine counts or measured game coverage. Overall approximately10%;goal active.
+Task callbacks/camera remain diagnostic. Original player/FSM/main loop, complete
+gameplay, English, enhancements and later platforms remain unfinished. No
+playable PC executable. External source,retail data/captures and combined native
+game DLLs stay private. 2,977 historical research payloads remain unchanged;
+the new prerelease archive is source-matched and explicitly incomplete.
+
+- [Scope and reproduction](outputs/sonic-adventure/JP_NATIVE_ACTION_LINK.txt)
+- [Qualification and hashes](outputs/sonic-adventure/analysis/jp_native_action_link_package.json)
+
+Earlier milestone notes remain unchanged below.
+
 Latest qualified original Sonic toe control and full-speed rendering.
 The native diagnostic now renders the genuine running action with original
 toe selection, vertex morphing and normal rebuilding. Twelve actual canonical

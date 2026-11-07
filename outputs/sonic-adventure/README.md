@@ -2059,3 +2059,23 @@ The audio work-buffer initializer at `0x8c65bd2c` is recovered in `source/sa_aud
 The sound-stream record allocator at `0x8c65bd46` is recovered in `source/sa_sound_stream_record_allocate_8c65bd46.c`. It searches the 32-entry table at `0x8c8a3d90`, initializes the first free 100-byte record, rounds the initial stream position, invokes the record object's vtable method, and returns the new record; it returns zero if all entries are occupied. Its 64 tests cover each free slot, full-table failure, randomized field bytes, signed position boundaries, callback effects, stack writes, and complete RAM/CPU state. The indirect vtable method is an explicit native callback dependency; the test uses the retail two-argument subtract helper, so other object method behavior remains outside the allocator verifier.
 
 The request-position updater at `0x8c600e7a` is recovered in `source/sa_stream_request_position_update_8c600e7a.c`. It rejects null or inactive requests, supports absolute/current/end-relative positions, checks signed lower and upper bounds, and updates the position only when accepted. All 128 randomized and boundary-focused cases matched complete RAM and CPU state in the retail interpreter, including signed request-status and SR.T behavior. Its callers and the full request lifecycle are still being mapped.
+
+
+Original animation-link milestone (2026-11-06): the complete original
+action_link.c now builds reproducibly into the same Frame owner:39 source
+functions and25 genuine missing SDK state definitions. 519 checks compare102
+complete original-machine calls, including every captured blend input in both
+SH4 banks. 382 actual parent/task/GPU checks render nine two-motion Sonic blends
+and a tenth Texture Off Present;530 initializer regressions pass. Off retains
+vertex/material colours with zero texture/sampler bindings/uploads. All36
+previous qualification packages and existing Frame objects retain hashes.
+These are scoped, overlapping assertions, not unique-routine/game coverage.
+Overall approximately10%;goal active. Original player callbacks/FSM, complete
+gameplay, English, enhancements and later platforms remain incomplete.
+See JP_NATIVE_ACTION_LINK.txt and analysis/jp_native_action_link_package.json.
+Next: genuine event-motion/aura dependencies and original Sonic draw/task
+lifetime integration. Existing task callbacks and camera remain diagnostic;
+shape/scaled/other-character links are not universally qualified. No playable
+PC executable. Generated external source, combined native game DLLs, retail
+inputs and captures stay private. Source-matched prerelease research payloads
+remain incomplete. Sol High is suitable for the next integration task.
