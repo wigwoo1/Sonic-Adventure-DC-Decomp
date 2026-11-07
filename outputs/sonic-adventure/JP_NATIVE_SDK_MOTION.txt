@@ -1,0 +1,54 @@
+Original Ninja motion-helper recovery
+
+Whole project approximately 10%; goal active. Japanese source baselines are
+verified. Native gameplay, English and later platforms remain unfinished.
+
+The original sdk/ninja/njMotSrc.c now links into the same real Frame owner.
+It supplies motion/shape steps and linear/cubic interpolation tables. The
+already recovered original njInitShape is reused, as are shared motion state,
+matrix functions, the callback owner and the original material setter.
+
+The SDK's three inline-assembly helpers are replaced by authored value bridges:
+weighted_sum uses the existing SH-4 FIPR model; weighted_sum_angles also uses
+the existing USA-research FLOAT/FTRC value services; squared_length uses the
+already qualified FIPR-self bridge. These preserve result values, not FPSCR
+flags/traps or the original inline register-clobber contract.
+
+The original arithmetic is adapted through 147 typed RZ/DN1 value operations.
+Signed integer/float casts use explicit FLOAT/FTRC services, including large
+signed angles. LLVM contains no residual host floating arithmetic/comparison.
+Motion info retains real native-width pointers; no LP32 pointer truncation
+is introduced. Previous source/proof/build files remain unchanged.
+
+The 577-check proof compares 144 whole original instruction calls against
+native interpolation table entries: linear/cubic vector and angle helpers,
+plus old short-way linear angles, across both SH-4 banks and eight frames.
+Two vector/angle datasets include large signed angles and varying magnitudes.
+The short-way helper uses ordinary angle ranges; extreme integer subtraction
+overflow, invalid/empty key inputs, shape morphing and complete motion-tree
+draws are not qualified by this proof.
+
+The full njMotionS.c compiles separately, with upstream GCC's explicit
+object-angle repair for NJD_EVAL_SKIP. That object is NOT linked into Frame:
+its remaining renderer dependency is njSimpleDrawModel. Neither full
+njSimpleAction nor aura_draw is implemented/verified by this milestone.
+Do not substitute draw_action for the original Simple model renderer.
+
+Initializer and real event/weld task/GPU regressions run on the new linked
+build: 530 initializer checks and 439 rendering checks. Their animation is
+the previous stand-to-run diagnostic, not new aura footage. There is no
+playable PC executable or verified production Sonic callback.
+
+Reproduce using Python from the workspace root:
+
+python -B outputs/sonic-adventure/jp_port_tools/build_native_sdk_motion.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --baseline work/sonic-adventure/jp-native-event-frame-cleanup-v1 --output work/sonic-adventure/NEW_SDK_MOTION
+
+python -B outputs/sonic-adventure/jp_port_tools/verify_native_sdk_motion.py --workspace . --upstream work/sonic-adventure/reshaped-sonic-adventure-review --build work/sonic-adventure/NEW_SDK_MOTION --binary work/sonic-adventure/jp-ninja-math-reference/1ST_READ.BIN --numeric-dll work/sonic-adventure/build/sh4_vector_numeric.dll --output work/sonic-adventure/NEW_SDK_MOTION_CHECK
+
+All external game source, generated C, combined DLLs, disc inputs and captures
+stay private. The source remains a pinned external dependency. Public research
+archives keep the unchanged earlier authored/historical incomplete payloads.
+
+Next: port the real Ninja Simple model projection/lighting/material/clip/store
+queue paths, then link and qualify njSimpleAction, recover aura geometry and
+aura_draw, and proceed to Sonic's original draw callback and gameplay owners.

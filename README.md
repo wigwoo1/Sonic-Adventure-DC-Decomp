@@ -1,3 +1,26 @@
+Latest scoped original Ninja motion-helper qualification.
+The original njMotSrc.c helpers and interpolation tables now link into the
+same Frame owner. Existing original shape/material/global providers are reused.
+147 arithmetic expressions and signed integer/float casts use SH-4 value
+services. Real inline FIPR helpers use the existing numerical models.
+577 checks compare144 complete original interpolator calls across both banks.
+969 initializer and real event/weld task/GPU regression checks also passed.
+
+The Simple motion object compiles but is NOT linked. njSimpleDrawModel remains
+a real missing renderer;full shape/tree/aura and original Sonic callbacks are
+unfinished. All41 earlier packages,source and proofs remain preserved.
+Source-matched archives preserve2977 unchanged incomplete historical research
+payloads. Game-source/generated/combined DLLs and retail inputs/captures stay
+private. Overlapping assertions are not unique routines or game coverage.
+
+No playable PC executable. Whole-project estimate approximately10%;goal active.
+Native gameplay,English,enhancements and later platforms remain unfinished.
+
+- [Scope and reproduction](outputs/sonic-adventure/JP_NATIVE_SDK_MOTION.txt)
+- [Qualification and hashes](outputs/sonic-adventure/analysis/jp_native_sdk_motion_package.json)
+
+Earlier milestone notes remain unchanged below.
+
 Latest scoped original event queue/task/GPU rendering qualification.
 Original event_motions_draw and player_weld now execute through the actual
 task scheduler,retained frames,D3D jobs and Win32 presentation. Nine images
