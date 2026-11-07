@@ -1,0 +1,123 @@
+Original Sonic toe control and full-speed native rendering qualification
+
+Whole-project estimate: about 10% of weighted milestones; goal active.
+Japanese matching/GCC source baselines are preserved separately from native
+port progress. This is a genuine running-character rendering diagnostic, not
+a playable PC executable, complete player controller or measured FPS result.
+
+What is now connected
+The original sonic_blend_toes function selects and morphs the actual canonical
+toe models. Its original ACTION_FULL_SPEED value is13. Native code retains12
+real model/node/normal-buffer views from the existing Motion/models owner.
+No duplicate character model pack or independent matrix/texture owner exists.
+The creating-thread service binds, steps and closes these views; closing puts
+the actual toe nodes back on their original own models before releasing views.
+Caller-owned player records must remain valid. Task attachment and the rest of
+automatic production task/texture ownership remain caller responsibilities.
+
+The actual player record is600 bytes on Windows x64 and512 in the original
+32-bit layout. Compiler-derived field layouts and complete original execution
+verify both toe weights, every other player-record byte and surrounding guards.
+The original helper body is preserved before numerical adaptation. Its unused
+work/motion parameters receive unused attributes; Windows TRUE/FALSE macros are
+cleared before the original SDK definitions. No unsafe warning is suppressed.
+Fourteen scalar operations/comparisons use existing RZ value services.
+
+Dependencies
+The shared Frame owner provides original-value sine and vector normalization.
+The sound DLL's existing normalization export forwards to that exact function
+address; its previously qualified numerical body is unchanged. Imports remain
+acyclic. All65,536 low16-bit sine values agree with the qualified FSCA model;
+wrapped/signed angles and finite nonzero normalization also execute against the
+complete original Japanese routines. The new normalization machine comparison
+does not cover zero, nonfinite or extreme vectors. No console-chip validation
+is claimed; the existing sound implementation's behavior is preserved.
+
+Six original util functions implement model blending, linear/sine/square point
+blending, face-normal rebuilding and point-normal rebuilding. Original vector
+macros are expanded by the actual compiler before77 scalar adaptations. Three
+point kernels require FMAC(keep,src,RZ(toward*blend)), as confirmed at original
+instruction addresses8c058ea2,8c058ef8,8c058f32. Separate multiply/add produced a
+one-bit mismatch and was corrected through the existing integer FMAC service.
+The generated morph LLVM has no remaining native floating arithmetic/comparison.
+
+The original animation-selected model closure had2,793 records. Player-only
+toe data adds56, including six blend/shape models and the two32-vector normal
+buffers declared by upstream's GCC source. Original full-speed action/key data
+adds another27. All2,876 records remain in one owner; all earlier record indices
+are preserved. The genuine33-frame sonic_full_speed_action is resident first-read
+data, not an s_mot action. It is acquired from canonical bank7. Original data
+declarations, exact float values, pointer relocation and BSS zeros are preserved.
+
+Verification
+  67,586 math/forwarder checks, including65,536 sine model inputs and2,048
+  complete original machine calls across both register banks.
+  1,400 checks over700 complete original morph/normal calls: triangles,quads,
+  positive/reversed/two strips,both banks,and valid in-place point aliases.
+  40,068 canonical-data/owner checks,including12 complete original model blends
+  on genuine toe shapes. Live views block shutdown; actual owner cleanup restores
+  all records and the new normal buffers byte-for-byte.
+  120,913 checks over40 complete original toe-control calls,including every
+  rendered sample,frame8/16/24/32 boundaries,fractional frames and other actions.
+  All canonical data,model-pointer changes,exact weights and player guards match.
+  Partial acquisition rolls back genuine leases and preserves the native error.
+  Wrong-thread operations leave data and caller output unchanged.
+  76 checks over14 complete original full-speed action calls. Every visible
+  model's16 matrix words match original execution at sampled frames/both banks.
+  406 full-parent/task/GPU checks. Nine actual512x512 backbuffers show the real
+  full-speed action with original toe control. A tenth Present renders texture
+  Off with vertex/material colours and no texture/sampler bindings or uploads.
+  All six alternate toe models are preflighted:34 variants for28 visible models.
+  Original toe mutations are intentional; all other model bytes/guards and
+  motion bytes remain intact. Diagnostic task destruction resets the original
+  toe control and closes native views after GPU jobs and retained frames retire.
+  530 selected complete original initializer regressions pass.
+
+There are230,449 newly qualified scoped assertions and530 selected regressions.
+Scopes overlap; these are not routine counts, independent gameplay scenarios
+or measured whole-game completion. All35 previous qualification packages and
+their source/proof hashes remain intact. Every prior Frame object is retained.
+Frame,sound and model-data DLLs change;21 other DLLs retain their hashes.
+
+Captures and limitations
+Captures are actual Win32/DXGI backbuffers,read before Present. The lossless
+nine-frame APNG is verified against every captured RGBA frame. Its100ms sample
+duration is a viewing choice,not game timing or60/120/240FPS verification.
+Camera,lighting,palette,preflight and diagnostic task callbacks are explicit
+test setup. Full sonic_draw,event-motion/aura dependencies,player FSM,main loop,
+gameplay,English/settings/enhancements,VMU Chao emulator/widget and later ports
+remain incomplete. Native toe-view ownership is real; the generic task callback
+and destructor remain diagnostic fixtures,not the original Sonic player task.
+
+Reproduction
+Use Python -B,fresh private outputs,pinned upstream commit
+25a3d3154dbe657325e97dbe8c5291086f6af5c0,and local JP retail/prepared inputs.
+Follow JP_NATIVE_DRAW_CONTROLS.txt and JP_NATIVE_ACTION_RUNTIME.txt prerequisites.
+1. build_native_morph_math.py --workspace --upstream --baseline(draw-controls)
+   --output; verify_native_morph_math.py --workspace --build --upstream --binary
+   --numeric-dll --output.
+2. build_native_model_morph.py --workspace --upstream --baseline(math) --output;
+   verify_native_model_morph.py with the same comparison arguments as above.
+3. build_native_toe_models.py --workspace --upstream --inputs(original prepared
+   motion/model inputs) --baseline(morph) --output; verify_native_toe_models.py
+   with the comparison arguments.
+4. build_native_sonic_toes.py --workspace --upstream --baseline(toe data) --output.
+5. build_native_sonic_run_data.py --workspace --upstream --inputs --baseline
+   (toe control) --output. The remaining current-build verifiers use this build.
+6. verify_native_sonic_toes.py and verify_native_sonic_run_poses.py use comparison
+   arguments; the pose verifier also takes --motion-inputs.
+7. verify_native_sonic_toes_frames.py --workspace --build --inputs(character
+   textures) --track(JP track03.bin) --output. Re-run math and original game-init
+   verification on the final build for shared-provider/startup regressions.
+8. qualify_native_sonic_toes.py --stage audit --workspace --build(final)
+   --math-build --morph-build --toe-build --controller-build --baseline
+   (draw controls) --upstream --inputs(motion data) --output.
+9. Its --stage package takes the same build paths plus --math --morph --data
+   --control --frames --poses --init --audit proof directories and --output.
+   All build/verifier hashes must match their corresponding evidence.
+
+Only authored adapters/derivation tools,this guide and JSON proofs are public.
+Original game/SDK source,generated data/C,retail inputs/captures and combined
+game DLLs remain private. Historical public research payloads are preserved;
+the source-matched prerelease remains incomplete and unplayable.
+Sol High suits further native integration;Luna Low suits routine documentation.

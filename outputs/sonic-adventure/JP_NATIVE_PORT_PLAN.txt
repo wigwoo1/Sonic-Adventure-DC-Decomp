@@ -1,3 +1,23 @@
+Latest qualified original Sonic toe control: JP_NATIVE_SONIC_TOES.txt.
+Overall approximately 10% of weighted milestones; goal active. The native test
+now renders the genuine full-speed running action with original toe selection,
+vertex morphing and normal rebuilding. Native ownership retains twelve actual
+canonical model/node/normal views; diagnostic task destruction retires them
+after GPU jobs and captured frames. Nine actual running captures and a tenth
+texture-Off Present pass; Off retains vertex/material colours without texture
+or sampler bindings or texture uploads. The lossless preview is not measured FPS.
+230,449 new scoped assertions and 530 selected initializer regressions passed,
+including whole original toe control, morphs, sampled action matrices and math.
+All earlier Frame objects and 35 qualification packages retain their hashes;
+21 other DLLs are unchanged. All earlier canonical indices are preserved as
+83 player-only records extend the same model owner to 2,876 records.
+1,302,902 cumulative assertions overlap; they are not routine counts, independent
+game scenarios or measured whole-game coverage. Original player callback/FSM,
+main loop, gameplay, English/settings/enhancements, VMU Chao emulator/widget and
+later ports remain incomplete. Native toe-view ownership is real; the task
+callbacks are diagnostic. No playable PC executable. Sol High suits integration;
+Luna Low suits routine documentation. Earlier milestone notes remain below.
+
 Latest qualified drawing controls and task animation: JP_NATIVE_DRAW_CONTROLS.txt.
 Overall approximately 10% of weighted milestones; goal active. Eight original
 attribute/control helpers now use the existing renderer globals and preserve

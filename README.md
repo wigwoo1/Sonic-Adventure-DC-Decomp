@@ -1,3 +1,30 @@
+Latest qualified original Sonic toe control and full-speed rendering.
+The native diagnostic now renders the genuine running action with original
+toe selection, vertex morphing and normal rebuilding. Twelve actual canonical
+model/node/normal views remain owned through the real task/GPU path. Nine
+Win32 backbuffer captures and a tenth texture-Off Present pass. Off uses
+vertex/material colours with zero texture/sampler bindings or uploads.
+
+230,449 new scoped assertions and 530 selected initializer regressions passed.
+Whole original toe control, morphs, sampled action matrices and shared math
+are compared. All35 earlier qualification packages and Frame objects retain
+their hashes;21 other DLLs are unchanged. Previous canonical indices survive
+as83 player-only records extend the same model owner to2,876 records.
+Assertions overlap; these are not routine counts or measured whole-game
+coverage. Overall approximately10%;goal active. The preview is not measured FPS.
+
+Native toe-view ownership is real;task callbacks remain diagnostic fixtures.
+Original sonic_draw/player FSM,main loop,gameplay,English,enhancements and
+later platforms remain incomplete. No playable PC executable. Original source,
+retail captures/data and combined game/SDK DLLs stay private.
+
+- [Scope, limitations and reproduction](outputs/sonic-adventure/JP_NATIVE_SONIC_TOES.txt)
+- [Immutable qualification and hashes](outputs/sonic-adventure/analysis/jp_native_sonic_toes_package.json)
+- [Earlier original draw controls](outputs/sonic-adventure/JP_NATIVE_DRAW_CONTROLS.txt)
+
+The source-matched prerelease preserves2,977 unchanged incomplete research
+payloads. Earlier milestone notes remain unchanged below.
+
 Latest qualified original draw controls and task-driven animation.
 Eight original attribute/control helpers now use the same renderer state,
 preserving single-slot save behavior. 4,104 complete original Japanese SH-4
