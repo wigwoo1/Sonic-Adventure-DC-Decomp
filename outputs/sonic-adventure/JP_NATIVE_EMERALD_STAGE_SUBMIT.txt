@@ -1,0 +1,17 @@
+Stage-owned terrain mesh submission on Windows
+
+The terrain consumer now accepts the stage's relocated native model
+views. It expands their original primitive indices into triangles,
+preserves strip winding and texture-coordinate corners, and submits
+through the bounded renderer. The per-mesh adapter follows the
+existing terrain material policy.
+
+Build with build_native_emerald_stage_submit.py using the stage mesh
+build. Run verify_native_emerald_stage_submit.py with the prior local
+scene inputs and native land-pass report. All 77 selected callbacks
+completed successfully. Twenty-eight generated packets and together
+committed 172,416 bytes before the comparison terrain draw.
+
+The diagnostic frame still includes the earlier terrain draw as a
+regression check. Stage-owned texture lifetime and a single terrain
+submission per frame remain open. Overall completion is about 10%.

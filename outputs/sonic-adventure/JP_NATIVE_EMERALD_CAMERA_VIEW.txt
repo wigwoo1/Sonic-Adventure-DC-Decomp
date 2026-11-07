@@ -1,0 +1,18 @@
+Emerald Coast POINT camera rendering on Windows
+
+The native Sonic draw now uses the selected POINT mode's unobstructed
+pose. The camera targets Sonic 7.5 units above his feet and sits the
+authored distance away along the direction from the region target.
+The native Ninja view routine builds the matrix in a temporary stack.
+The adapter restores the previous view and matrix stack after setup.
+
+Build with build_native_emerald_camera_view.py against the camera-mode
+and stage-tick builds. Run verify_native_emerald_camera_view.py with the
+same local inputs. It verifies that the eye maps to the view origin,
+that Sonic's target maps to the authored depth, and that the surrounding
+renderer state is restored.
+
+The capture uses POINT for Sonic and the existing diagnostic view for
+land and ring overlays. The full scene still needs a shared camera.
+Camera smoothing, wall sweep, orbit controls and roll remain open.
+Overall completion is about 10%.

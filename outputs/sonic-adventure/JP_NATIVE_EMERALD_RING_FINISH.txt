@@ -1,0 +1,17 @@
+Collected Emerald Coast ring lifetime on Windows
+
+The Windows ring task advances the original three sparkle timers in
+the simulation step. A collected ring finishes even if the player
+leaves its range. Completion disables the placement, and the next
+scheduler destruction clears the live task link. The placement cannot
+spawn again during the same act.
+
+Build with build_native_emerald_ring_finish.py using the pinned source
+checkout and the scheduled ring-draw build. Run
+verify_native_emerald_ring_finish.py with the same local disc and scene
+inputs. The test checks each timer step, deferred task destruction,
+and returning to the placement without a respawn.
+
+The sparkle timers run independently of drawing. Sprite submission,
+pickup audio, and the full stage loop remain open.
+Overall completion is about 10%.

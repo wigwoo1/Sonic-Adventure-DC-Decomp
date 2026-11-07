@@ -1,0 +1,18 @@
+Emerald Coast ring initialization on Windows
+
+The placement registry binds the native ring initialization callback
+to original kind zero. The callback uses the pinned initialization,
+sphere definition, collision allocation and radius calculations. Native
+static floor queries provide the ground height. Allocation failure
+leaves initialization retryable and frees a partial collision record.
+The scheduler owns collision cleanup and runs the pinned range
+retirement path when a ring leaves the active area.
+
+Build with build_native_emerald_ring_init.py against the pinned checkout
+and the placement retirement build. Run verify_native_emerald_ring_init.py
+with the same disc and scene inputs. It verifies the real ring task,
+unique collision records, ground height and next-tick retirement.
+
+The fixture supplies static ground and viewer positions. Ring collision
+registration, collection, attraction, moving ground and drawing remain
+open. Overall project completion is about 10%.

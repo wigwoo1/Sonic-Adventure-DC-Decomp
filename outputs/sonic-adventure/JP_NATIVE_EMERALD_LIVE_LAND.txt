@@ -1,0 +1,20 @@
+Live Emerald Coast terrain selection on Windows
+
+The scene verifier derives the camera eye, yaw and pitch from the
+same POINT matrix used to render Sonic. It passes the live pose
+to the original land visibility routine and native terrain task.
+The test compares that selection with the old diagnostic pose
+using identical clip and aspect settings.
+
+The expanded selection reaches original untextured land meshes.
+The verifier submits those meshes without texture coordinates
+and continues to use the original material settings.
+
+Run verify_native_emerald_live_land.py with the qualified POINT
+camera build and prior disc and scene inputs. The scene passes
+473 checks. The terrain task matches the ordered visibility list,
+and the Windows back buffer shows the added terrain.
+
+This is an Emerald Coast fixture. The native stage loop does not
+yet own the terrain render pass, and the capture layers ring and
+sparkle submissions. Overall completion is about 10%.

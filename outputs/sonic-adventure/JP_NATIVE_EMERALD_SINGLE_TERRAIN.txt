@@ -1,0 +1,15 @@
+Single stage-owned Emerald Coast terrain pass
+
+The Windows capture now uses one terrain submission from the
+native stage session. The ring and sparkle diagnostic still loads
+its placement inputs, but it no longer runs a comparison terrain
+draw. The stage closes before presentation. Each textured terrain
+batch is checked against the retained frame's encoded surfaces.
+
+Run verify_native_emerald_single_terrain.py with the qualified stage
+terrain build and prior disc and scene inputs. The run verifies
+77 terrain callbacks, textured and vertex-coloured presentation,
+and the walking pickup with original audio.
+
+The fixture still drives the frame and layers ring and sparkle
+submissions from different ticks. Overall completion is about 10%.

@@ -1,0 +1,19 @@
+Native Sonic movement collects an Emerald Coast ring
+
+The native Sonic diagnostic now has an optional ring phase. The phase
+uses the original Sonic sphere offset, radius and world transform.
+After the Sonic task moves, the placement and ring phases read his
+current collision shape and falling state. A pickup changes the
+original HUD ring counter without a diagnostic award callback.
+
+Build with build_native_emerald_ring_walk.py using the pinned source,
+ring score baseline and original native Emerald Coast movement build.
+Run verify_native_emerald_ring_walk.py with the prior local scene inputs.
+The test starts Sonic 9.05 units beside original act-zero ring 145,
+outside the combined nine-unit sphere radius. The input sequence moves
+him into contact, verifies that ring 145 enters sparkle mode, and
+checks exactly one ring increment.
+
+This uses a diagnostic start and static ground. The full stage loop,
+general collision pass, ring and sparkle drawing, and audio remain
+open. Overall project completion is about 10%.

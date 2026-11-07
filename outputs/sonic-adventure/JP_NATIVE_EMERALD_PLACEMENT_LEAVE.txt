@@ -1,0 +1,18 @@
+Emerald Coast placement range retirement on Windows
+
+The Windows placement runtime now links the pinned game's two
+placement_try_leave functions. The adapter snapshots camera and player
+positions for the task phase and preserves the redraw guard. The
+original policy schedules a task for destruction on its next tick.
+That destruction clears its live flag so its placement can spawn again.
+
+Build with build_native_emerald_placement_leave.py against the pinned
+checkout and qualified Emerald Coast kind-table build. Run
+verify_native_emerald_placement_leave.py with the local disc and scene
+inputs. Thirteen tasks survived when near the camera or player, during
+redraw, or with unlimited range. All thirteen retired on the next
+scheduler tick when far away and respawned on returning.
+
+The fixture calls the leave functions on real scheduler tasks with
+diagnostic callbacks. The original ring callback, collision,
+collection and drawing remain open. Overall completion is about 10%.

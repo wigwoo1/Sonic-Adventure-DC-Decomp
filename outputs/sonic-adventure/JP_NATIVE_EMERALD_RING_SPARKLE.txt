@@ -1,0 +1,19 @@
+Scheduled Emerald Coast pickup sparkles on Windows
+
+The Windows ring draw callback uses the original sparkle frame and
+transform loop. The fixture reads the eight animation descriptors from
+the verified Japanese executable and loads the eight original texture
+payloads from EFF_REGULAR.PRS into a local PVM list. The renderer borrows
+the list during submission and restores the matrix and texture list.
+
+Build with build_native_emerald_ring_sparkle.py against the pinned
+checkout and ring completion build. Run verify_native_emerald_ring_sparkle.py
+with the same local disc and scene inputs. At the sixth sparkle tick,
+three sprite calls produced two nonempty texture batches. Drawing left
+the task work byte-for-byte unchanged and the fifteen-tick lifetime
+still completed through the scheduler.
+
+The capture layers pre-pickup and later sparkle submissions into one
+diagnostic frame. It uses the current native sprite blend state and
+fixture camera. Stage-owned sprite assets, pickup audio, and the full
+stage loop remain open. Overall completion is about 10%.

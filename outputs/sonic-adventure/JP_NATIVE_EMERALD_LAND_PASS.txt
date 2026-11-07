@@ -1,0 +1,17 @@
+Native Emerald Coast terrain render pass
+
+The Windows runtime now reads the active world-to-view matrix,
+derives the terrain camera's position and angles, and invokes the
+original land scheduler. The caller supplies the active camera and
+an open land task. No separate camera pose is needed for the draw.
+
+Build with build_native_emerald_land_pass.py against the qualified
+POINT camera build. Run verify_native_emerald_land_pass.py with the
+same local disc and scene inputs. The native pass matches all 77
+entries in the independent visibility selection, in order. The
+verifier also checks hidden and later-step skips and renderer
+matrix restoration.
+
+The fixture still opens the land task and supplies the relocated
+models and texture list. The complete stage frame does not yet
+own that setup. Overall project completion is about 10%.

@@ -1,0 +1,17 @@
+Emerald Coast camera region contacts on Windows
+
+The native stage tick checks the current act's camera file from
+the Japanese disc. It uses Sonic's live position and the previous
+two positions from the existing player history. Sphere, oriented
+block, and plane tests return matching rows in authored order.
+Teardown clears the last contact list.
+
+Build with build_native_emerald_camera_contacts.py against the
+pinned checkout and stage tick build. Run the corresponding verifier
+with the prior local disc and scene inputs. It checks known points
+against all three acts' camera volumes, reads the live contact list
+during the Sonic walk, and reruns the pickup audio test.
+
+The contact list is the input to camera mode selection. Priority
+handling, mode callbacks, and control of the visible camera remain
+open. Overall completion is about 10%.

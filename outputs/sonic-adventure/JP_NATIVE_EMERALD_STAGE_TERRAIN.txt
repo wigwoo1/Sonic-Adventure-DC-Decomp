@@ -1,0 +1,17 @@
+Stage-owned Emerald Coast terrain textures and drawing
+
+The native stage loads its texture list from the decoded BEACH01
+archive and registers its relocated models with the native terrain
+consumer. The draw entry uses the active camera, restores the caller's
+texture selection, and reports a failed mesh submission. Stage close
+retires the terrain task before releasing the stage texture list.
+
+Build with build_native_emerald_stage_terrain.py using the stage
+mesh submission build. Run verify_native_emerald_stage_terrain.py
+with the local disc and prior scene inputs. The test checks every
+texture entry loaded, 77 draw callbacks, hidden and duplicate-open
+behavior, and recording texture pins surviving stage close.
+
+The diagnostic capture still contains the earlier comparison
+terrain submission. The full stage frame does not yet own the
+combined draw. Overall completion is about 10%.

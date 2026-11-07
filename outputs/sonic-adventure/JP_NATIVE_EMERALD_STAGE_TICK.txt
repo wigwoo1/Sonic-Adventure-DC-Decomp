@@ -1,0 +1,18 @@
+Emerald Coast stage-owned simulation on Windows
+
+The native stage session now owns the placement and ring update
+phase. The caller supplies the current Sonic task after movement
+and an optional camera. The stage validates the live collision
+sphere, scopes the ring collector and range viewers to the current
+tick, and runs the scheduler's object level. Close rejects a call
+from inside that phase.
+
+Build with build_native_emerald_stage_tick.py using the qualified
+stage-session and ring-walk builds. Run verify_native_emerald_stage_tick.py
+with the same local disc and scene inputs. It verifies that the
+walking pickup still updates the counter and produces the original
+sound. It also checks closed-session and null-player rejection.
+
+The test harness still drives player input and rendering. The new
+entry point covers the placement phase for this native Emerald Coast
+session. Overall project completion is about 10%.

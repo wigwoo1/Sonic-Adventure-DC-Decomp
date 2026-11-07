@@ -1,0 +1,18 @@
+Emerald Coast placement task dispatch on Windows
+
+The native SET registry now runs the pinned single-center placement
+range and creation functions. It accepts a player or fallback camera
+and creates real scheduler tasks for registered object kinds. An act
+change destroys the live placement tasks before replacing their entries.
+Run the registry and dispatch APIs between scheduler ticks.
+
+Build with build_native_emerald_placement_tasks.py using the pinned
+source checkout and the Emerald Coast SET build. Run
+verify_native_emerald_placement_tasks.py with the local Japanese disc
+and prior scene inputs. The test registers a diagnostic callback on
+kind zero, checks its original SET transform, prevents duplicate tasks,
+and confirms destruction when selecting another act.
+
+The test supplies the kind metadata and callback. Original stage kind
+bindings, ring behavior, range-based retirement and the gameplay-owned
+placement manager remain to be integrated. Overall completion is about 10%.

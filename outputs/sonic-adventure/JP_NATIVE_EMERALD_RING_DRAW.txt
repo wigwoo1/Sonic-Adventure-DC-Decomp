@@ -1,0 +1,16 @@
+Scheduled Emerald Coast ring drawing on Windows
+
+Ring initialization installs a native draw callback. During the ring
+draw pass it submits the borrowed retail mesh and reflection texture
+using the live task's position and rotation. Each callback restores the
+current matrix and texture list. Unscoped scheduler draws skip the ring
+callback, as do rings that have entered their collected state.
+
+Build with build_native_emerald_ring_draw.py using the ring-walk and
+ring-score baselines. Run verify_native_emerald_ring_draw.py with the
+local Japanese disc and prior scene inputs. It verifies scheduler
+submission, a collected ring skipping its model, and GPU texture use.
+
+The fixture still provides the asset scope and diagnostic camera.
+Shadow and sparkle drawing, sparkle completion, and integration with
+the full stage renderer remain open. Overall completion is about 10%.

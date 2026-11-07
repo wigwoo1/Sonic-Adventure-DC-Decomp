@@ -1,0 +1,16 @@
+Stationary ring contact on Windows
+
+The placed ring task now checks contact against a supplied Sonic sphere.
+The Windows adapter uses the original strict sphere overlap condition
+and collision reset routine. The next scheduler tick consumes a hit,
+moves the ring into sparkle mode, and emits one award unless Sonic is
+falling.
+
+Build with build_native_emerald_ring_contact.py and the qualified ring
+initialization build. Run verify_native_emerald_ring_contact.py using the
+same local disc and scene inputs. The test covers tangent rejection,
+next-tick pickup, duplicate suppression and the falling case.
+
+The fixture supplies the sphere and award receiver. Full collision
+registration, HUD and audio, sparkle rendering and completion, and
+moving-ring behavior remain open. Overall completion is about 10%.

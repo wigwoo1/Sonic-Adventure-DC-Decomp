@@ -1,0 +1,20 @@
+Queued Emerald Coast stage resources on Windows
+
+The Emerald Coast scene fixture submits STG01.PRS and BEACH01.PRS
+together to the existing native game read queue. The test checks both
+completed reads, the full sector contents against a separate disc reader,
+and guard bytes around each destination. The Windows PRS decoder sizes
+and decodes the queued bytes within fixed limits. Both decoded hashes
+match the earlier Python decoder results.
+
+The decoded stage image feeds the existing land fixture and the decoded
+archive feeds the native PVM loader. The scene passed 663 checks. The
+textured and vertex-coloured captures matched the previous land task
+captures byte for byte.
+
+Run verify_native_emerald_stage_resources.py with the qualified native
+land task build, local collision fixture, character texture inputs and
+Japanese track03.bin. The test harness still initiates the reads and
+provides collision geometry and the diagnostic camera. The next step
+is to move resource ownership into the stage startup and teardown path.
+Overall project completion is about 10%.

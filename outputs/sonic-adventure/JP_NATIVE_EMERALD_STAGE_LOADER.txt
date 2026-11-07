@@ -1,0 +1,20 @@
+Sonic's Emerald Coast stage file schedule on Windows
+
+The build reads the pinned Japanese loader's Emerald Coast branch and
+derives Sonic's file names and read order, including the third camera
+read through the original shared tail. The Windows resource owner
+queues the stage module, three SET files, three camera files, and the
+stage texture archive. The six SET and camera views expose the exact
+file bytes without sector padding. They share the stage owner's lifetime.
+
+Build with build_native_emerald_stage_loader.py using the pinned source
+checkout and qualified stage resource owner. Run
+verify_native_emerald_stage_loader.py with the same local Japanese disc,
+collision fixture and character inputs as the resource owner test.
+The test compares all six views with an independent disc reader and
+checks both archive hashes, close and reopen, and GPU submission.
+
+The fixture still invokes the native loader. SET placement and camera
+evaluation still need to consume these views in gameplay, and the stage
+module still needs native world integration. This schedule covers Sonic
+only. Overall project completion is about 10%.

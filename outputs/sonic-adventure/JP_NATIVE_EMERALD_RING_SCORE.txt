@@ -1,0 +1,17 @@
+Emerald Coast ring and life accounting on Windows
+
+A confirmed stationary ring pickup now calls the pinned HUD ring
+accounting code and updates the existing game ring and life variables.
+The generated action-stage build uses the original hundred-ring rule
+and life cap behavior. Field-specific display tasks and the extra-life
+sound are outside this build.
+
+Build with build_native_emerald_ring_score.py using the pinned checkout
+and the ring contact baseline. Run verify_native_emerald_ring_score.py
+with the local disc and scene inputs. The scheduler test starts at 99
+rings and three lives, then checks 100 rings and four lives after one
+pickup. Repeated ticks and falling contact award no further rings.
+
+The test supplies the collector sphere and reads the variables directly.
+Visible HUD, live player collision integration, audio, and ring sparkle
+rendering remain open. Overall project completion is about 10%.

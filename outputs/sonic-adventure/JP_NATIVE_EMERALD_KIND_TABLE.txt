@@ -1,0 +1,19 @@
+Emerald Coast object kind metadata on Windows
+
+The native placement runtime reads the 84 object-kind rows from the
+stage module already loaded from the user's Japanese disc. The build
+locates the list and table using the pinned source symbol map. Runtime
+checks confirm the table address, row count and file bounds.
+
+Windows callbacks can bind to these rows and inherit the original
+task flags, scheduler level and placement range. The runtime never
+executes Dreamcast pointers. Rows with non-null original parameters
+still require parameter relocation before they can be bound.
+
+Build with build_native_emerald_kind_table.py using the placement
+task build and pinned checkout. Run verify_native_emerald_kind_table.py
+with the local Japanese disc and previous scene inputs. It compares
+all rows to an independent disc read and exercises ring placements
+using the retail metadata and a diagnostic callback. Original ring
+collision, collection, and draw behavior remain to be connected.
+Overall project completion is about 10%.

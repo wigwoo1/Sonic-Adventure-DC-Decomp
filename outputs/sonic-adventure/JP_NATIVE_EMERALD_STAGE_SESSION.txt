@@ -1,0 +1,18 @@
+Emerald Coast stage startup and teardown on Windows
+
+The stage session opens the disc resources, binds the ring task,
+selects the act's SET registry, loads the bank named by the pinned
+Japanese sound loader, and borrows the static floor. Close retires the
+tasks and resource views. If startup fails, the session releases the
+owners it acquired. Run both calls on the game thread between ticks.
+The sound owner retains the bank through replacement or global shutdown.
+
+Build with build_native_emerald_stage_session.py using the pinned source
+and ring audio build. Run verify_native_emerald_stage_session.py with
+the same local disc and scene inputs. It verifies one bank load,
+invalid and duplicate opens, idempotent close, and a walking ring
+pickup producing sound from the loaded bank.
+
+The fixture supplies the floor, diagnostic start, and current disc
+directory. The session is scoped to Emerald Coast and is not yet called
+by the full game stage loop. Overall completion is about 10%.

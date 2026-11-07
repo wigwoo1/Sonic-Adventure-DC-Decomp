@@ -1,0 +1,18 @@
+Emerald Coast pickup audio on Windows
+
+The ring pickup now sends the original effect ID to the existing
+game sound owner. The hundred-ring life award also queues its
+original effect. Sound request failures leave gameplay accounting
+independent of sound availability.
+
+Build with build_native_emerald_ring_audio.py against the sparkle
+build and matching game sound import library. Run
+verify_native_emerald_ring_audio.py with the same local disc and
+scene inputs. The test loads the original Emerald Coast bank,
+checks silence before pickup, walks Sonic into a retail ring, and
+checks the queued effect and nonzero PCM rendered by the existing
+SDK and ARM/AICA runtime.
+
+The test stops the scene's real-time clock and renders PCM manually
+for measurement. Live speaker playback and the extra-life sound
+were outside this test. Overall project completion is about 10%.

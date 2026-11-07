@@ -1,0 +1,17 @@
+Emerald Coast camera mode selection on Windows
+
+The stage tick now selects a camera mode from the original region
+contacts. The build reads mode levels and view types from the pinned
+Japanese mode table. The stage reads the selected camera position,
+target, angles, distance and adjustment ID from the local disc file.
+The default comes from row zero.
+
+Build with build_native_emerald_camera_mode.py against the pinned
+checkout and camera contact build. Run the corresponding verifier
+with the prior local disc and scene inputs. It verifies that the
+Sonic walk selects POINT from region 90, that its view parameters
+match the Japanese disc, and that stage close clears the selection.
+
+The adapter includes area and comp priority handling, which this
+walking route does not exercise. Mode callbacks, camera adjustments
+and visible view control remain open. Overall completion is about 10%.

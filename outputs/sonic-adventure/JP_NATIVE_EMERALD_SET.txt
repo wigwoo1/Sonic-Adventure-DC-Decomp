@@ -1,0 +1,18 @@
+Sonic's Emerald Coast placement registry on Windows
+
+The Windows runtime initializes the active act's placement registry
+from the SET views produced by the native stage loader. The build
+reuses the pinned placement clear and add functions and corrects
+their one-past-end write in the generated native copy. Before replacing
+an act, the adapter checks that its declared entries fit both the file
+and the registry. It owns a copy that survives closing the disc resources.
+
+Build with build_native_emerald_set.py using the pinned source checkout
+and qualified Emerald Coast stage loader. Run verify_native_emerald_set.py
+with the same local disc, collision and character inputs. The verification
+compares every populated placement entry against an independent disc read,
+checks act replacement and rejected selections, and verifies teardown.
+
+The diagnostic scene invokes the registry API. The original placement
+manager's range checks, object callbacks, and task ownership still need
+to be connected. Overall project completion is about 10%.

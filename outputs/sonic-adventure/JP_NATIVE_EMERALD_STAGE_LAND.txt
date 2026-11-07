@@ -1,0 +1,19 @@
+Stage-owned Emerald Coast terrain on Windows
+
+The active stage now reads its land descriptor and draw objects
+from the already loaded Japanese stage module. It allocates native
+entry and object records and registers the original terrain task.
+The renderer supplies a host model resolver and retains the model
+and texture data until stage close. The stage closes the terrain
+task before freeing the relocated records and disc resources.
+
+Build with build_native_emerald_stage_land.py using the native land
+pass and POINT camera builds. Run verify_native_emerald_stage_land.py
+with the local disc and prior scene inputs. The test checks every
+resolved model reference in act zero, dispatches 77 visible entries,
+and verifies retry after resolver failure, duplicate attach rejection,
+and automatic teardown. The previous GPU scene also passes.
+
+The lifetime test uses diagnostic model handles. Full native mesh
+relocation, automatic texture ownership, and moving terrain remain
+open. Overall project completion is about 10%.

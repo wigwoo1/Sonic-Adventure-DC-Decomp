@@ -1,0 +1,20 @@
+Native Emerald Coast resource ownership
+
+The Windows runtime now owns the queue destinations and decoded stage
+and texture archive buffers. Open is a synchronous game-thread operation.
+It requires an idle disc queue and makes both decoded views available
+only after both reads and decodes succeed. Close retires the views
+after their consumers finish. On a queue failure, rollback retains
+destinations if the queue cannot cancel safely.
+
+Build with build_native_stage_resources.py using the qualified native
+land-task build and its matching read-queue import library. Run
+verify_native_emerald_stage_resource_owner.py with the local disc and
+the same collision and character inputs as the prior scene fixture.
+The run verified duplicate-open rejection, decoded hashes, scene
+submission, close and reopen. Both captures match the prior test.
+
+The test still invokes the stage resource API and provides the camera
+and collision fixture. The original stage loader, world relocation,
+other stages and failure injection remain to be integrated or tested.
+Overall project completion is about 10%.

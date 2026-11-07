@@ -1,0 +1,19 @@
+Native Emerald Coast terrain mesh relocation
+
+The stage now builds Windows model and mesh headers directly from
+the loaded Japanese module. Shared model addresses resolve to one
+native header. Points, normals, materials, indices and texture
+coordinates borrow bounded spans from the stage image. Closing the
+terrain task retires the headers before releasing the image.
+
+Build with build_native_emerald_stage_mesh.py using the stage-land
+build. Run verify_native_emerald_stage_mesh.py with the earlier
+native land pass report and the same local scene inputs. The test
+compares 77 visible callbacks, 29 distinct models and 127 meshsets
+against the original bytes, then verifies that their bounds are
+unavailable after stage close.
+
+The verifier checks relocated data and runs the existing GPU scene.
+The GPU scene still uses its existing draw adapter. Native submission
+of the relocated models and stage-owned textures remain open.
+Overall completion is about 10%.

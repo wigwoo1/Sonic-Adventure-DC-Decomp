@@ -1,0 +1,18 @@
+Original Emerald Coast ring model on the Windows GPU
+
+The scene test reads the ring model from the verified Japanese main
+executable and its reflection texture from OBJ_REGULAR.PRS. It expands
+the original strips into indexed triangles and sends the mesh, normals,
+UVs and material to the bounded native renderer. The texture loader
+uses a one-entry PVM with the original encoded texture payload. Its
+local list index replaces the original slot 50 for this test.
+
+Run verify_native_emerald_ring_model.py against the ring-walk build with
+the same local Japanese disc and scene inputs. It uses position and
+rotation from a real placement task and checks that the original ring
+texture appears in a nonempty GPU packet. The test captures both
+textured and vertex-coloured frames.
+
+The fixture invokes model drawing and uses a diagnostic camera rebase.
+Automatic ring draw dispatch, shadow and sparkle rendering remain open.
+The retail model and texture stay local. Overall completion is about 10%.
