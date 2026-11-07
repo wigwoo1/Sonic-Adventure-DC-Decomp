@@ -1,0 +1,16 @@
+Native Ninja Simple flat-lit strips
+
+The bounded model dispatcher now supports original flat-lit strip paths
+for textured and untextured materials. Regular strip vertices use the
+original dot-product intensity under a flat shading mode. When a face
+crosses the near plane, the drawer computes one intensity from its
+combined normal and retains that intensity on the clipped face.
+
+Build with build_native_simple_flat_strips.py using the pinned checkout
+and jp-native-simple-flat-tex-v2. Run verify_native_simple_flat_strips.py
+to check both packet formats. Nine cases cover winding, clipping, and
+invalid index or UV spans. Four flat textured triangle and two mixed
+model cases also passed, as did all 3,341 projection comparisons.
+
+Verification covers defined queue words. Direct SH-4 draw comparisons
+and GPU presentation remain open. Overall project estimate is about 10%.

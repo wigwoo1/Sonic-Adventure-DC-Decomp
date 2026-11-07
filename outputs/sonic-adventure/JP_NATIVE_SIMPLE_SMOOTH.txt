@@ -1,0 +1,20 @@
+Native Ninja Simple smooth-lit color triangles (Windows research)
+
+The native path reads Ninja's first configured light and applies the
+original light and view matrix transform. It projects the mesh using
+the existing scratch owner and feeds the projected normals to the
+original smooth triangle lighting arithmetic. The render queue receives
+per-vertex RGB values and the material's unchanged alpha.
+
+Run build_native_simple_smooth.py with the pinned Japanese checkout and
+jp-native-simple-unlit-tex-strips-v2. Then run verify_native_simple_smooth.py
+against the new build. Ten cases check opaque and translucent packet
+bytes, culling, bad input, and missing light. The fixture rotates the
+light and checks three different vertex intensities. Five textured
+strip regressions and 3,341 original projection checks also passed.
+
+This covers a single untextured smooth-lit triangle mesh with no partial
+clipping. Smooth clipping, textured lighting and full model dispatch
+remain open. The light preparation and drawer were not directly compared
+against SH-4 execution; no GPU frame was presented. Generated upstream
+code and the combined DLL stay local. Overall completion is about 10%.

@@ -1,0 +1,22 @@
+Bounded Ninja Simple model dispatcher (Windows research)
+
+jp_simple_draw_model_bounded validates every mesh before projecting the
+model once. It sends supported triangle and strip meshes to the existing
+original drawers and reserves the full opaque and translucent queue
+capacity before emission. Adjacent meshes sharing a material reuse the
+prepared material and start their own queue packets.
+
+Build with build_native_simple_model.py using
+jp-native-simple-smooth-tex-strips-v1, then run verify_native_simple_model.py.
+The fixture draws four mixed meshsets with one projection and compares both
+queues byte for byte. The captured frame retains the texture after its
+source is released. A malformed final mesh produces no projection or queue
+output. Five strip cases and all 3,341 original projection checks also pass.
+
+This entry requires explicit mesh and UV spans. It supports fixed triangles
+and strips with unlit materials, smooth untextured triangles, and smooth
+textured triangles and strips. Quads, N-gons, smooth untextured strips,
+flat-lit and environment-mapped paths still need providers. Runtime queue
+or resource errors can leave earlier committed packets in the current
+frame. The original game-facing entry and GPU presentation remain open.
+Whole-project completion is approximately 10%.

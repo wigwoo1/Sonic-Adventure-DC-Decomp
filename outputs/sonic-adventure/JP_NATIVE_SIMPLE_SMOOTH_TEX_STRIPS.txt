@@ -1,0 +1,21 @@
+Native Ninja Simple smooth-lit textured strips (Windows research)
+
+The pinned original strip drawers now run through the native scratch
+lease and retained texture queue. Regular strip vertices use the SH-4
+dot-product value service for lighting. Near-plane intersections use
+the original scalar intensity and signed UV interpolation. The entry
+checks index and UV spans and reserves the maximum packet space before
+the drawer writes.
+
+Run build_native_simple_smooth_tex_strips.py with the pinned checkout
+and jp-native-simple-smooth-tex-v1, then run
+verify_native_simple_smooth_tex_strips.py against the new build. Five
+cases compare whole packets for continuous, culled-then-drawn and
+near-clipped strips and check invalid spans. Four smooth textured
+triangle, five unlit textured strip and 3,341 original projection
+regression checks passed.
+
+This is a single smooth-lit textured meshset path. The strip routines
+were not directly compared against SH-4 execution, and no GPU frame was
+presented. Generated upstream code and the combined DLL remain local.
+Whole project remains about 10%.

@@ -1,5 +1,23 @@
 
 
+Native Ninja Simple drawing milestone
+The Windows research build now draws bounded models with multiple meshsets.
+Verified queue paths include unlit, smooth-lit and flat-lit triangles and
+strips, plus environment-mapped triangles. The latest build passed 12
+environment packet cases, 11 drawing regressions and 3,341 projection
+comparisons. This is CPU queue and texture retention evidence. GPU testing
+of these paths, environment-mapped strips and the full game-facing entry
+remain open. The Japanese source baseline is verified. The playable PC
+port, English localization and later platforms are in progress or pending.
+Overall completion is about 10%. See analysis/jp_native_simple_draw_review.json.
+
+- [Drawing scope](outputs/sonic-adventure/JP_NATIVE_SIMPLE_ENV_TRIANGLES.txt)
+- [Verification index](outputs/sonic-adventure/analysis/jp_native_simple_draw_review.json)
+
+Earlier milestones follow.
+
+
+
 Original Ninja Simple model projection qualification (2026-11-06)
 The native build runs the pinned original model projection body with verified
 matrix and light helpers and bounded 32-byte scratch records. It restores the

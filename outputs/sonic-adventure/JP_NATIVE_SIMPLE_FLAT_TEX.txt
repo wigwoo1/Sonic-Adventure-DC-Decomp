@@ -1,0 +1,19 @@
+Native Ninja Simple flat-lit textured triangles
+
+The bounded model dispatcher now draws textured flat-lit triangles with
+the original face intensity and signed UV arithmetic. Near-plane
+clipping interpolates the texture coordinates and keeps the face
+intensity for the resulting triangle or quad.
+
+Build with build_native_simple_flat_tex.py using the pinned Japanese
+checkout and jp-native-simple-flat-color-v1, then run
+verify_native_simple_flat_tex.py. Four cases verify the defined packet
+words and exact texture retention after the source list is released.
+The original drawer leaves intensity untouched on the first two
+vertices. Six flat color cases, two mixed-model cases, and all 3,341
+projection comparisons passed on the same build.
+
+The current verification covers queue output and texture ownership.
+GPU presentation and original SH-4 drawer comparison remain open.
+Generated code and the combined DLL stay local. Overall completion is
+about 10%.

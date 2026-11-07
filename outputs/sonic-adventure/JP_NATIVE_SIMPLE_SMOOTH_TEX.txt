@@ -1,0 +1,23 @@
+Native Ninja Simple smooth-lit textured triangles (Windows research)
+
+The pinned original textured triangle drawer now uses the existing
+first-light setup, projection lease and retained texture queue. It
+writes per-vertex light intensity and signed texture coordinates.
+For a triangle crossing the near plane, it interpolates intensity
+and texture coordinates separately, then truncates the interpolated
+UVs with the existing SH-4 conversion service. The material color and
+alpha remain in the original textured intensity header.
+
+Build with build_native_simple_smooth_tex.py against the pinned
+Japanese checkout and jp-native-simple-smooth-clip-v1, then run
+verify_native_simple_smooth_tex.py. Four complete packet comparisons
+cover an unclipped triangle, two clipping topologies and a culled
+backface. All four submitted frames retain their texture after release.
+Six smooth color and three unlit texture clipping regressions passed,
+along with all 3,341 original projection checks.
+
+Scope is a single smooth-lit textured triangle meshset. No direct
+original SH-4 drawer comparison or GPU presentation was performed.
+Generated source and the combined DLL stay local. Smooth-lit strips,
+flat and environment-mapped materials, and complete model dispatch
+remain open. Overall project estimate: approximately 10%.

@@ -1,0 +1,27 @@
+Native Ninja Simple projection scratch lease (Windows research)
+
+The generated owner extends the verified Simple projection build with
+jp_simple_calc_with_records. A successful, visible projection calls a
+synchronous consumer while the actual shared vertex pointer and capacity
+still refer to the guarded 32-byte Simple records. The consumer receives
+the model, the read-only records, the vertex count, and its context.
+Use the records only during that call. Return zero on success or a
+nonzero status on failure. The original projection-only entry remains
+available and calls the same owner without a consumer.
+
+The caller and consumer run on the game thread. Nested projection and
+scratch reallocation or shutdown are refused during consumption. The
+shared pointer and capacity are restored before returning even when the
+consumer fails or a damaged guard is detected. Culled models skip the
+consumer and report the original projection result.
+
+Run build_native_simple_lease.py with the simple-calc-v4 baseline, the
+verified simple-material-check-v2 directory, and a new work output
+directory. Run verify_native_simple_lease.py with that new build.
+The five cases cover visible success, consumer error, culling, invalid
+span, and guard damage. All 3,341 prior projection checks also pass on
+the resulting DLL. Generated source and the combined DLL stay local.
+
+Next, attach the real material/queue setup and mesh emitter as a
+consumer. This milestone does not submit geometry or verify gameplay.
+Estimated whole-project completion remains about 10%.

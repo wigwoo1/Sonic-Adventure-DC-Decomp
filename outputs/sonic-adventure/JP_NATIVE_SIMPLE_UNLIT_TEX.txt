@@ -1,0 +1,23 @@
+Native Ninja Simple unlit textured triangles (Windows research)
+
+The new jp_simple_draw_unlit_tex_triangles entry joins the pinned original
+unlit textured triangle branch to the existing projection lease, texture
+selector and retained queue. It validates the UV span, skips the UVs of
+culled triangles, and writes signed UVs in units of 1/256. Opaque and
+translucent paths use their original textured intensity headers.
+
+Run build_native_simple_unlit_tex.py with the pinned upstream checkout
+and jp-native-simple-unlit-strips-v2, then run
+verify_native_simple_unlit_tex.py against the result. Four cases check
+opaque and translucent packet bytes, short UVs, and a missing texture.
+Both submitted frames retain their exact synthetic texture bytes after
+the source texture list is released. Eight strip and six fixed-triangle
+regressions pass, along with 3,341 original projection comparisons.
+
+The new path covers one unlit textured triangle meshset without partial
+clipping. Textured clipping, textured strips, lit materials and complete
+model dispatch remain open. No new GPU presentation or direct execution
+comparison against the original SH-4 textured drawer was performed.
+Generated upstream code and the combined DLL stay local.
+
+Overall project estimate: approximately 10%.

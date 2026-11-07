@@ -1,0 +1,21 @@
+Native Ninja Simple smooth-lit clipping (Windows research)
+
+The native smooth-lit triangle entry now runs the pinned original
+clipped triangle branch when projection reports clip flags. The branch
+computes each corner's lighting, interpolates intensity at the near
+plane, and multiplies that intensity into the material RGB. It preserves
+material alpha, original winding checks and strip output order. It uses
+the existing projection scales and reserves room for four output vertices
+per input triangle before writing to the retained queue.
+
+Run build_native_simple_smooth_clip.py with the pinned Japanese checkout
+and jp-native-simple-smooth-v1, then verify_native_simple_smooth_clip.py
+against the resulting build. Six cases compare complete queued packets,
+including a near-plane triangle and quad with independently calculated
+vertex colors. Five textured strip cases and all 3,341 original
+projection checks also passed.
+
+This covers untextured smooth-lit triangle meshes. No original SH-4
+clipping comparison or GPU presentation was performed. Generated code
+and the combined DLL stay local. Textured lighting and full model
+dispatch remain open. Whole-project estimate: approximately 10%.

@@ -1,0 +1,18 @@
+Native Ninja Simple smooth-lit untextured strips
+
+The bounded model dispatcher now routes smooth-lit untextured strips
+through the original strip drawers. Regular vertices use the SH-4 dot
+product value service. The near-plane path interpolates intensity at the
+intersection and applies it to material RGB while preserving alpha.
+
+Run build_native_simple_smooth_color_strips.py against the pinned Japanese
+checkout and jp-native-simple-model-v1, then run
+verify_native_simple_smooth_color_strips.py on the resulting build.
+Five cases cover continuous, culled and clipped strips and invalid
+geometry spans. The mixed model regression and all 3,341 original
+projection comparisons also passed.
+
+Verification covers native queue bytes. Direct comparison with the
+original SH-4 strip execution and GPU presentation remain open.
+Generated upstream source and the combined DLL stay local. Overall
+project estimate remains about 10%.

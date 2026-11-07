@@ -1,0 +1,28 @@
+Native Ninja Simple material stage (Windows research)
+
+The pinned Japanese SDK's per-material setup in _njSimpleDrawModelSub
+now compiles as a callable native stage. It updates the caller's light
+material and returns the effective flags, drawer mask, texture number,
+color mode and queue start request, in that order. An untextured material
+returns 0xffffffff as its texture number. The queue request values are
+1 textured opaque, 2 textured transparent, 3 untextured opaque, and
+4 untextured transparent. The caller supplies valid material, light and
+five-word output buffers. No texture is bound and no geometry is submitted.
+
+Use build_native_simple_material.py with the verified jp-native-simple-calc-v4
+baseline and pinned upstream checkout. Then use verify_native_simple_material.py
+with that baseline and the resulting build directory. Use new directories
+under work/sonic-adventure for each run. Generated upstream C and the combined
+DLL remain local.
+
+Verification: 8,192 native cases compared every output word with an independent
+exact-rational rounding oracle and a dispatch truth table. The cases cover
+all combinations of texture, alpha, environment, flat and unlit flags, four
+control bits, two attribute masks and eight color samples. The linked DLL also
+passed all 3,341 previous comparisons against original projection execution.
+The material stage itself has not yet been compared against SH-4 execution.
+
+Next: consume the returned requests through the real queue provider, maintain
+the projection scratch lease through mesh emission, and recover the original
+drawer bodies. Full model drawing, gameplay, English localization and later
+platforms are not verified. Whole project remains approximately 10%.

@@ -1,0 +1,17 @@
+Native Ninja Simple environment-mapped triangles
+
+The bounded model drawer now supports environment-mapped triangles
+with unlit, smooth and flat materials. The original UV calculation
+uses model normals and columns of the current matrix. The native build
+reads the matrix from the existing matrix owner. Near-plane clipping
+quantizes and interpolates UVs with the shared SH-4 conversion service.
+
+Run build_native_simple_env_triangles.py with the pinned checkout and
+jp-native-simple-flat-strips-v1, then verify_native_simple_env_triangles.py.
+Twelve cases cover the three lighting modes, both clipping topologies,
+backface rejection and unclipped output. All submitted test frames
+retain their texture bytes after release. Nine flat-strip cases, two
+mixed-model cases and all 3,341 projection checks passed.
+
+Environment-mapped strips, GPU presentation and direct original
+drawer execution comparisons remain open. Overall completion is about 10%.

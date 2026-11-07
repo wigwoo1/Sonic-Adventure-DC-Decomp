@@ -1,0 +1,25 @@
+Native Ninja Simple unlit triangle path (Windows research)
+
+The bounded entry jp_simple_draw_unlit_triangles joins the original
+projection, material setup, unclipped unlit triangle branch, and the
+native retained render queue. It preserves the original winding check,
+polygon counters and 32-byte color vertex layout. The pinned SDK supplies
+the original branch at build time; generated upstream C stays private.
+
+This entry accepts one triangle meshset with untextured unlit material.
+It validates material and index spans before dereferencing elements,
+reserves the complete queue bound, and restores the shared vertex buffer
+and light material. Whole-model culling skips emission. Partial clipping
+requires a different drawer and returns 101. Unsupported or malformed
+mesh/material inputs return 100. It is not the full njSimpleDrawModel.
+
+Run build_native_simple_unlit.py with the pinned upstream checkout and
+jp-native-simple-lease-v1. Run verify_native_simple_unlit.py against the
+result. Eight cases check opaque and translucent bytes, winding, whole
+and partial clipping, and rejected inputs. The linked DLL also passed
+3,341 prior projection comparisons. This proof ends at the render queue;
+no new GPU presentation, original SH-4 drawer comparison, or gameplay
+was verified. The combined DLL stays local.
+
+Next extend the original drawer families to clipped meshes, strips,
+and textured and lit materials. Whole project remains about 10%.

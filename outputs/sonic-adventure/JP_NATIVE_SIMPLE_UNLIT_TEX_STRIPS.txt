@@ -1,0 +1,26 @@
+Native Ninja Simple unlit textured strips (Windows research)
+
+The native entry jp_simple_draw_unlit_tex_strips adapts the pinned
+original unclipped and near-plane strip drawers. It validates the packed
+index and per-corner UV spans, uses the existing texture owner, and
+reserves the render queue before emission. The draw keeps the original
+winding and signed UV rules, including advancing past a culled strip
+before reading the next strip's UVs.
+
+The original unused speculative index read is removed. At a strip end
+the port avoids forming a transient UV pointer past the supplied span.
+The replacement packet emitter evaluates the original UV cursor
+increment exactly once per emitted vertex.
+
+Run build_native_simple_unlit_tex_strips.py against the pinned Japanese
+checkout and jp-native-simple-unlit-tex-clip-v1, then run
+verify_native_simple_unlit_tex_strips.py against the new DLL. Five cases
+check continued strips, UV alignment after culling, clipped translucent
+output, and rejected UV/index spans. Three textured fixed-triangle
+and eight untextured strip regression cases passed, together with all
+3,341 original projection checks. Strip verification ends at queue bytes;
+no new GPU presentation or direct SH-4 strip execution was checked.
+
+Generated upstream C and the combined DLL stay local. Whole project
+completion remains about 10%; lit and environment-mapped model paths
+and full model dispatch remain open.

@@ -1,0 +1,23 @@
+Native Ninja Simple unlit triangle clipping (Windows research)
+
+The unlit triangle entry now dispatches partially clipped models to the
+original SDK triangle branch. Triangles crossing the near plane can
+produce three or four queued vertices. The port preserves the original
+view-space culling, intersection order and color packet layout. Side
+flags are handled as in this SDK path: trivially rejected triangles are
+skipped, and partial side crossings do not create CPU-side intersections.
+
+The original clipping code is extracted from the pinned upstream checkout.
+Its projection scales come from the existing projection owner. The native
+queue reserves up to four output vertices per input triangle before drawing.
+The original source and previous build and proof hashes are preserved.
+
+Run build_native_simple_unlit_clip.py against jp-native-simple-unlit-v1,
+then verify_native_simple_unlit_clip.py against the new build. Six cases
+compare complete queued packets, including opaque and translucent near
+crossings, winding, whole near rejection, and partial side crossing.
+All 3,341 prior original projection checks also passed on the linked DLL.
+No new GPU presentation or direct SH-4 execution of the clipping branch
+was verified. This is still a single untextured unlit triangle mesh path.
+
+Overall project estimate: approximately 10%.

@@ -1,0 +1,23 @@
+Native Ninja Simple textured near-plane clipping (Windows research)
+
+The unlit textured triangle entry now runs the original fixed-triangle
+clip branch when the projection owner reports clip flags. It reserves
+room for up to four output vertices per triangle, interpolates UVs,
+and uses the existing SH-4 truncation service for the signed UV words.
+The original winding check and the native retained texture queue are
+preserved.
+
+Run build_native_simple_unlit_tex_clip.py with the pinned Japanese
+checkout and jp-native-simple-unlit-tex-v1, then run
+verify_native_simple_unlit_tex_clip.py against the new DLL. Three
+byte-for-byte packet cases cover one and two near vertices and a clipped
+backface. The UV fixtures include positive and negative fractional
+intersections. All three submitted frames retained their exact texture
+bytes after source release. Four prior textured cases and 3,341 original
+projection checks also passed.
+
+This verifies queue bytes and texture lifetime for a single unlit
+textured triangle meshset. It does not compare the original clip drawer
+by executing it on SH-4, or present a new GPU frame. Textured strips and
+lit materials remain open. Generated upstream code and the DLL stay local.
+Estimated whole-project completion remains approximately 10%.

@@ -1,0 +1,25 @@
+Native Ninja Simple unlit triangle strips (Windows research)
+
+The new jp_simple_draw_unlit_strips entry adapts the pinned original
+unclipped and near-plane unlit strip drawers. It uses the existing
+projection scratch lease and retained queue. It checks the strip count
+words and indices before use, respects the initial winding bit, and
+reserves enough space for clipped output. The original triangle entry
+remains linked. Generated upstream source and the DLL stay local.
+
+The strip packet emitter writes the same eight words as the original
+unlit store-queue helper. The unused speculative next-index read is
+removed. The code retains the SDK's polygon counter arithmetic: its
+draw counter is not necessarily the number of vertices in the queue.
+
+Run build_native_simple_unlit_strips.py against the pinned Japanese
+checkout and jp-native-simple-unlit-clip-v1, then run
+verify_native_simple_unlit_strips.py against the new build. Eight cases
+cover continued strips, reversed winding, multiple strips, near-plane
+clipping, and malformed input. Six fixed-triangle packet regressions
+and 3,341 original projection comparisons also pass. The strip proof
+ends at queue bytes; it does not compare against executed SH-4 strip
+routines or present a new GPU frame.
+
+The whole project remains about 10%. Textured and lit mesh paths and
+full model integration are still open.

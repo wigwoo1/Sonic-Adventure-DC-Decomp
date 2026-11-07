@@ -1,0 +1,19 @@
+Native Ninja Simple flat-lit untextured triangles
+
+The bounded dispatcher now uses the pinned original flat-lit triangle
+drawers for untextured materials. They normalize the sum of the corner
+normals and compute one material color for the face. The near-plane
+drawer keeps that color for the resulting triangle or quad. The queue
+uses flat shading and preserves material alpha.
+
+Build with build_native_simple_flat_color.py using the pinned checkout
+and jp-native-simple-smooth-color-strips-v2, then run
+verify_native_simple_flat_color.py. Six cases verify the defined packet
+fields, including the final face colors and clipped topology. The
+original drawer leaves the color words of the first two vertices
+untouched. Five strip and two mixed-model regression cases passed,
+along with 3,341 original projection checks.
+
+Verification covers CPU queue output. GPU presentation and direct
+SH-4 drawer comparison remain open. Generated code and the combined
+DLL stay local. Whole-project completion remains about 10%.
