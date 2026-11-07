@@ -1,3 +1,27 @@
+Latest qualified original Sonic and Super Sonic welding lifecycle.
+465,217 new scoped assertions and1,431 selected regressions pass. Genuine
+make/update/free and direct welding match144 complete original calls with
+the full32-entry table. Real task-heap buffers retire completely;all canonical
+bytes restore before Motion shutdown. Tree indexing matches5,475 original calls.
+Valid generic variants on real geometry cover both directions,averaging and
+six marker outputs;they are not default Sonic settings or gameplay footage.
+
+The same model owner gains446 records,now3,322,preserving all2,876 old indices.
+Actual supplied JP disc module data and source/object/provider hashes are
+audited. All38 earlier packages remain intact. Assertions overlap and are
+not unique routines or whole-game coverage. Overall approximately10%;goal active.
+Event queue execution,production lifetimes,aura/njSimpleAction,original player
+callbacks/FSM/mainloop,full gameplay,English,enhancements and later platforms
+remain unfinished. No playable PC executable. Existing real blended GPU and
+Texture Off captures pass as regressions. 2,977 unchanged historical payloads
+are included in the new source-matched incomplete research prerelease.
+External/generated source,retail data/captures and combined DLLs stay private.
+
+- [Scope and reproduction](outputs/sonic-adventure/JP_NATIVE_SONIC_WELD.txt)
+- [Qualification and hashes](outputs/sonic-adventure/analysis/jp_native_sonic_weld_package.json)
+
+Earlier milestone notes remain unchanged below.
+
 Latest qualified original runtime floor and pose helpers.
 194,335 new scoped checks and1,431 selected regressions pass. Genuine SDK floor
 values and shared SDK errno match13,148 whole original calls. Core pose trees

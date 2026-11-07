@@ -1,0 +1,97 @@
+Original Sonic and Super Sonic welding lifecycle
+
+Overall whole-project estimate:approximately10% of weighted milestones.
+Japanese matching/GCC source baselines are verified. Native PC gameplay,
+English,enhancements and later platforms remain unfinished. Goal active;
+there is still no playable PC executable.
+
+What changed
+The complete original player_update_welds and tree_node_index/tree_find_node
+now compile reproducibly into the same Frame owner. Original player_weld was
+already linked;its direct pose/mutation path is now compared with the Japanese
+machine code. Nine scalar operations in the lifecycle use existing RZ services;
+the four original private matrix definitions are retained. No fake allocator
+or no-op seam processing replaces the original code.
+
+The canonical model owner gains446 records for the full32-entry Sonic weld
+table,light shoes/ring wrist,Super Sonic and genuine normal/Super stand actions.
+All2,876 earlier record identities and indices are preserved;the owner now has
+3,322 records. Models,points,normals and motion keys share their existing owner,
+not duplicated model instances. New static definitions retain their storage
+class. Actual supplied Japanese B_CHAOS7.PRS bytes are independently checked
+against the preserved WSL original,then decoded locally. Retail/generated data
+and combined DLLs remain private. Original builds and source are not modified.
+
+What actually passed
+465,217 new scoped assertions:
+*454,265 lifecycle checks compare144 complete original calls,including actual
+ heap initialization,player_update_welds and player_weld. The complete32-row
+ table is retained. Ordinary-stage initialization disables Super Sonic seams
+ as sonic.c does;the final-boss configuration enables them. Both SH4 register
+ banks run,with normal and Super Sonic's genuine stand actions at0,4,8.5.
+*The genuine table case tests Sonic's real configuration. Separate valid generic
+ variations on the same real geometry exercise averaging and both one-way weld
+ directions,plus the sixth marker output. They are test inputs for the shared
+ weld API,not claims about Sonic's default configuration or gameplay footage.
+*Every canonical record is packed back into its original LP32 representation
+ and compared with the original main executable/module RAM before and after
+ each phase. Real weld payloads,all weld fields,marker values,unused player
+ bytes,index buffers and caller guards are checked. Fifteen ordinary or27
+ boss-configuration buffers are allocated from the actual Frame task heap.
+ FREE restores all canonical bytes before Motion owner shutdown,and the heap
+ returns to a fully coalesced0x90000-byte free arena. No game-function hooks
+ substitute for original machine calls. Actual model/action views stay held.
+*10,952 tree checks compare5,475 whole original calls:each of73 genuine Sonic
+ nodes as a root,against73 targets plus null/absent targets. Canonical model
+ bytes remain unchanged.
+
+1,431 selected regressions also pass:530 initializer,519 blended-pose and382
+real parent/task/GPU checks. Existing nine actual blended-Sonic captures and
+a tenth Texture Off Present still pass. Off uses vertex/material colours with
+zero texture bindings/uploads. Preview timing is not game FPS. These are
+overlapping scoped assertions/repeated calls,not unique-routine or whole-game
+coverage. All38 prior qualification packages retain their hashes.
+
+Limits and next work
+Fixtures use valid records,real model/action references and a ready task heap.
+The player_anim blending-state branch,heap exhaustion,other characters' full
+tables,production automatic task/texture lifetimes and event queue transitions
+still need qualification. Frame callbacks/camera in the regression capture are
+diagnostic. Original Sonic callback/FSM,main loop,stages and gameplay remain
+unfinished. Aura/njSimpleAction dependencies also remain. The native numerical
+policy is value-only RM=1,DN=1;no FPSCR flags/traps are emulated here.
+
+Reproduce locally
+Use pinned upstream25a3d3154dbe657325e97dbe8c5291086f6af5c0, the preserved WSL
+GCC checkout,LLVM/Windows tools,Python and your own Japanese HDR-0001 v1.007
+disc inputs. Choose fresh output directories. Tools refuse proof overwrites.
+
+prepare_native_sonic_weld_inputs.py takes --workspace --track --output and
+optional --distribution/--checkout. It reads WSL source/data and verifies the
+compressed module against the supplied local track03.bin. It changes neither
+preserved source/build tree and publishes no generated game data.
+build_native_player_weld.py takes --workspace --upstream --baseline --output;
+the qualified baseline is work/sonic-adventure/jp-native-event-pose-v3.
+build_native_sonic_weld_data.py takes --workspace --upstream --inputs
+--module-inputs --binary --baseline --output. Its baseline is the new runtime
+output;--inputs is the existing prepared motion-data input directory.
+The verified outputs here are jp-native-player-weld-v1 and
+jp-native-sonic-weld-v1 under work/sonic-adventure.
+
+verify_native_sonic_weld_lifecycle.py takes --workspace --upstream --build
+--binary --numeric-dll --motion-inputs --module-inputs --output.
+verify_native_weld_tree_index.py takes --workspace --build --binary --output.
+Run the existing initializer/blended-pose/GPU tools against that complete build.
+qualify_native_sonic_weld.py lists its build,input/evidence arguments in --help;
+it audits pinned bodies,generated units,RZ adaptation,layouts,actual providers,
+PE exports/imports,old indices,proof hashes and preserved earlier packages.
+
+Public evidence:analysis/jp_native_sonic_weld_package.json and its runtime_build,
+build,inputs,weld,tree,init,blend,frames,audit JSON files. Public source-matched
+archives preserve2,977 historical incomplete research payloads. They do not
+include the combined new native game/data DLLs or provide a playable game.
+Actual regression captures remain private under
+work/sonic-adventure/jp-native-sonic-weld-frame-regression-v2/run/.
+
+Recommended model:Sol High for event/player integration;Luna Low for routine
+documentation. No model switch or goal pause is required.

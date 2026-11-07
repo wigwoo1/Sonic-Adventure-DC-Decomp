@@ -1,0 +1,76 @@
+{
+  "status": "read_only_original_Super_Sonic_source_data_and_retail_module_extracted",
+  "files": {
+    "super.i": {
+      "bytes": 720763,
+      "sha256": "73161c9dc072adc3b4d3132ff68b9474195287312ef9b4fa28b263f03360ebba"
+    },
+    "super.txt": {
+      "bytes": 18147,
+      "sha256": "efdb39d199c47dc9751a5dd89be96dbb16bb2fb99b979c57412c1d87ca9abee5"
+    },
+    "B_CHAOS7.PRS": {
+      "bytes": 872854,
+      "sha256": "3e85147bb06260869d477a01441793ecb9273b7eecebd7a7b777f665e1090478"
+    },
+    "B_CHAOS7.BIN": {
+      "bytes": 1488068,
+      "sha256": "75f97b182527bd86d28c74520e7ff6addf69a6edcd52c92b72d4d654f7249fd9"
+    },
+    "generated_content.bin": {
+      "bytes": 1423792,
+      "sha256": "5e111d0a0462f27cde636bf61761dc3671cad79eff0f731af1b892acda9cedf5"
+    },
+    "generated_content.c": {
+      "bytes": 4075209,
+      "sha256": "bafa8b5e44f897b1b05b9a2cda8cbb8d8f96bc96907f8ec59cf0a51c6035006b"
+    },
+    "generated_content.txt": {
+      "bytes": 199937,
+      "sha256": "ed59bc19ff868a25998ed2e40f7c4e316ea4c7c17ebd37bdeb65cbf5872586a8"
+    }
+  },
+  "preprocessor_command": [
+    "wsl.exe",
+    "-d",
+    "sa-dc-source-review",
+    "--cd",
+    "/root/sa-native-integration",
+    "--",
+    "tools/sh-elf/bin/sh-elf-gcc",
+    "-E",
+    "-P",
+    "-ml",
+    "-m4-single-only",
+    "-std=gnu17",
+    "-ffreestanding",
+    "-nostdinc",
+    "-isystem",
+    "tools/sh4zam/include",
+    "-iwithprefix",
+    "include",
+    "-DGCC",
+    "-DNDEBUG",
+    "-DSHZ_TLS_MODEL=SHZ_TLS_DISABLED",
+    "-Isdk/include",
+    "-Isrc",
+    "-Imodules",
+    "-Ievents",
+    "-Ibuild/gen/src",
+    "-Ibuild/gen/modules",
+    "-Ibuild/gen/events",
+    "-Ibuild/gen/sdk",
+    "modules/b_chaos7/super.c"
+  ],
+  "upstream_commit": "25a3d3154dbe657325e97dbe8c5291086f6af5c0",
+  "module_load_address": "0x0c900000",
+  "generated_content_is_entire_decompressed_module": false,
+  "source_script_sha256": "17b156e0bd6d245fae54ecf06d7f708d02ec1ab22ceb94a5d39d87a44a358737",
+  "actual_supplied_JP_disc_module_verified": true,
+  "actual_supplied_JP_disc_module_FAD": 538488,
+  "PRS_consumed_bytes": 872854,
+  "original_source_and_builds_modified": false,
+  "retail_or_generated_inputs_publishable": false,
+  "whole_project_completion_percent": 10,
+  "goal_active": true
+}

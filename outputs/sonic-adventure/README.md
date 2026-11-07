@@ -2100,3 +2100,25 @@ GPU/Texture Off captures pass as regressions. See JP_NATIVE_EVENT_POSE.txt and
 analysis/jp_native_event_pose_package.json. External source,combined game DLLs,
 retail inputs and captures stay private;public builds are incomplete research.
 Sol High remains suitable for welding/event/player integration.
+
+
+Original Sonic/Super Sonic welding milestone (2026-11-06):465,217 new scoped
+assertions and1,431 selected regressions pass. Actual make/update/free and
+direct player_weld paths compare144 complete original calls. The genuine32-row
+table,normal/final-boss flags,both register banks and real normal/Super stand
+poses are covered. Separate valid generic variants test every weld kind and
+all six marker outputs on real geometry;they are not default Sonic settings.
+Actual task-heap buffers fully retire and all canonical bytes restore before
+Motion shutdown. Tree indexing compares5,475 original calls. The same model
+owner gains446 records (3,322 total),preserving all2,876 earlier indices. Actual
+supplied JP disc module bytes and old owner/source/proof hashes are audited.
+All38 earlier qualification packages remain intact. Assertions/calls overlap;
+they are not unique-routine or whole-game coverage. Overall approximately10%;
+goal active;no playable PC executable. Event queue execution,blending-state
+world-weld branch,production lifetimes,aura/njSimpleAction,original Sonic/FSM/
+main loop and gameplay remain incomplete. English,enhancements and later
+platforms remain pending. Existing actual blended GPU/Texture Off captures
+pass as regressions. See JP_NATIVE_SONIC_WELD.txt and
+analysis/jp_native_sonic_weld_package.json. External/generated source,retail
+inputs/captures and combined DLLs stay private. Public builds remain incomplete
+research artifacts. Sol High is suitable for the next event/player task.
