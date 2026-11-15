@@ -133,6 +133,94 @@ enters Light Dash on release. The fixture starts with charge already
 set. Charging from normal play and testing a physical controller
 remain open.
 
+The projection profile also runs a separate live stage ring test. It
+opens Emerald Coast Act 1 and starts a precharged Sonic outside pickup
+range of original SET ring 145. The stage initializes the ring, builds
+the nearby ring list, and supplies the target to the Light Dash selector.
+After Sonic moves, the stage awards exactly one ring and closing the
+stage retires its tasks and nearby entries. The Windows scene passed
+877 checks and reproduced the previous ten screenshots. The pose
+screenshots still come from the separate controlled charge fixture.
+
+The Light Dash build now links that movement through the ordinary
+level dispatcher. With Light Speed Shoes equipped, the dispatcher
+handles a charged stand or walk release before the jump branch, and
+routes an active dash through its own movement update. The live-ring
+test now enters through this dispatcher. It uses a precharged player
+and verifies the movement and pickup without animation. The separate
+charge and animation regression passed, and the full Windows profile
+passed 910 checks with the previous ten screenshots reproduced.
+
+The live-ring test now starts uncharged and uses the native input
+provider and original pad scanner for 121 held samples and release.
+The level dispatcher advances stationary spin charge on supported
+ground while the open Act 1 stage updates its own ring tasks. Release
+collects ring 145 and the level-zero charge task restores top speed.
+The Windows scene passed 912 checks with the previous ten screenshots
+reproduced. The live-ring test still uses no action table. Moving
+charge, early-release Spin Dash movement, and ordinary post-pickup
+recovery need additional coverage.
+
+The live route now continues through the transition to skid. For
+stationary floor geometry, the dash adapter supplies zero ground
+velocity to the original roll calculation when no contact record is
+available. The test verified the first pickup separately, counted three
+original rings in total, and confirmed the dash guard flag cleared and
+speed was capped on entry to skid. The scene passed 877 checks and
+reproduced all ten previous screenshots. Braking back to idle remains
+open.
+
+The supported stationary floor path now uses the original Sonic brake
+calculation after entering skid. The live route reaches standing with
+zero speed on all axes and the player's feet on the sampled floor.
+The Windows profile passed 878 checks and reproduced all ten prior
+screenshots. The live route uses a diagnostic player record without
+an action table. The separate animation regression still passes.
+
+The live Act 1 test now leases original stand, spin, uncurl, Light Dash
+and skid actions through the full route. It checks the selected uncurl,
+dash, skid and final stand animations, collects three retail rings, and
+retires the animation blend and action leases. The Windows profile
+passed 884 checks. All ten prior screenshots matched. Those screenshots
+still come from separate render checks.
+
+The live Act 1 route now opens original stage terrain and submits Sonic,
+terrain, rings, and sparkles through the same retained-frame renderer.
+The verifier reads back and presents three distinct frames at dash,
+skid, and idle, then releases them before closing the stage. The Windows
+profile passed 933 checks and reproduced the ten earlier captures.
+These frames sample a controlled route and remain local retail evidence.
+
+The route now uses the same native gameplay tick as the regular
+update-and-render entry. The tick advances the level-zero service,
+the scheduled player, and Emerald Coast in order. After placement
+warm-up, every route update runs this shared tick, including the tick
+that resolves the first ring pickup. Presentation remains optional
+per tick. The Windows profile passed 922 checks, including the three
+ring pickups and the original animated return to idle.
+
+The sampled gameplay entry polls and scans the controller before
+level zero. That allows the charged-speed task to see the release edge
+on the same tick as Sonic, mark itself for deletion, and restore speed
+on the next tick. Polling inside the player callback had delayed that
+edge past level zero. The controlled-input stage route now checks both
+edges and passes 931 scene checks with three rings and a return to idle.
+
+The Windows stage also has a combined sampled-update and retained-frame
+entry. The ordinary beach approach uses the sampled gameplay entry on
+each approach tick and the combined entry for its final pickup frame.
+The scheduled player consumes the sampled pad record without polling
+again on those ticks. The Windows profile passed 918 checks including
+the separate three-ring Light Dash route. The stage verifier uses
+controlled input for both runs.
+
+After the controlled route reaches idle, the verifier temporarily
+attaches the Windows keyboard and XInput provider to the stage window.
+Four stock polls drive four gameplay ticks and one rendered frame.
+The verifier restores the controlled provider before inherited
+shutdown. The profile passed 941 checks. The stock window lacked focus
+during this run, and no physical control was actuated.
+
 The charge build adds the original spin-charge and charged-speed task.
 The native task allocates the full pointer-sized payload and checks
 that it still owns the same player work before accessing it. Sound

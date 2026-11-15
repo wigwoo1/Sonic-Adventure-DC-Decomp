@@ -177,7 +177,7 @@ def exercise(context, inputs, track):
         before = '' if charge_capture else anchor
         after = anchor if charge_capture else ''
         raw = raw.replace(anchor, after + """            if b.get('emerald_light_dash_target',{}).get('actions_bound'):
-                from verify_native_emerald_projection_profile import capture_light_dash_poses
+                from verify_native_emerald_projection_profile import capture_light_dash_poses, check_light_dash_stage_ring
                 def record_pose(action):
                     check(draw(listing,aura_view.data,action,0,0)==0,'original Sonic renderer records the leased pose')
                     pose_frame=Q()
@@ -195,9 +195,28 @@ def exercise(context, inputs, track):
                     pose_frame=Q()
                     check(bind(f,'jp_frames_submit',I,P)(C.byref(pose_frame))==0,'scheduled pose retained')
                     return pose_frame.value
-                capture_light_dash_poses(d,b,f,gl,motions,stand.data,record_pose,
+                def record_stage_pose(task, result, sampled=False):
+                    frame_id = Q()
+                    args = (listing,listing,aura_view.data,C.byref(result),C.byref(frame_id))
+                    if sampled:
+                        status = bind(f,'jp_emerald_update_sampled_and_submit',I,P,P,P,P,P,P,P)(
+                            task,None,*args)
+                    else:
+                        status = bind(f,'jp_emerald_submit_player_frame',I,P,P,P,P,P,P)(task,*args)
+                    check(status==0,
+                        'live route submits Sonic and Emerald Coast together')
+                    return frame_id.value
+                def stage_route(capture, hwnd, idle_window):
+                    return check_light_dash_stage_ring(
+                        f, triangle_buffer, len(triangles)//TRIANGLE.size, check,
+                        b['emerald_light_dash_target'], motions, stand.data,
+                        capture, record_stage_pose, hwnd, c['source'], idle_window)
+                route = capture_light_dash_poses(d,b,f,gl,motions,stand.data,record_pose,
                                          record_scheduled_pose,reserve_pose,check,png,
-                                         triangle_buffer,len(triangles)//TRIANGLE.size)
+                                         triangle_buffer,len(triangles)//TRIANGLE.size,
+                                         stage_route,c['present'])
+                if b['emerald_light_dash_target'].get('stage_ring_capture'):
+                    ring_walk['light_dash_stage_ring'] = route
 """ + before)
         raw = raw.replace('(registrations,len(models))', '(registrations,len(scope_models))')
         marker = '            def draw(textures,aura,walk,charged,hidden):'
@@ -453,8 +472,136 @@ def exercise(context, inputs, track):
         harness['exercise'](context, inputs, track)
 
 
+def check_light_dash_stage_ring(frames, triangles, count, check, capabilities, motions, stand,
+                                capture, record_stage_pose, hwnd, source, idle_window):
+    from verify_native_motion_store import View
+
+    size = C.c_size_t
+    close = bind(frames, 'jp_emerald_stage_close', I)
+    rings = C.c_int16.in_dll(frames, 'rings')
+    lives = C.c_int8.in_dll(frames, 'lives')
+    before, before_lives = rings.value, lives.value
+    index = 145
+    check(bind(frames, 'jp_emerald_stage_open', I, U, P, size)(0, triangles, count) == 0,
+          'Light Dash stage opens with retail Act 1 placements')
+    views = []
+    samples, errors = [], []
+    stock_input = {}
+    callback = C.CFUNCTYPE(I, P, I)
+
+    @callback
+    def observe(task, phase):
+        try:
+            label = ('route_dash', 'route_skid', 'route_idle')[phase]
+            draw = Draw()
+            capture(task, lambda player: record_stage_pose(player, draw), label)
+            check(draw.terrain > 0 and draw.terrain_bytes > 0, f'{label} includes original terrain')
+            samples.append(dict(label=label, terrain=draw.terrain, rings=draw.rings,
+                                sparkles=draw.sparkles))
+            if phase == 2 and hasattr(frames, 'jp_emerald_update_sampled_and_submit'):
+                stock_input.update(check_stock_stage_input(
+                    frames, hwnd, source, task, capture, record_stage_pose, idle_window, check))
+            return 0
+        except Exception as exc:
+            errors.append(repr(exc))
+            return -1
+
+    try:
+        if capabilities.get('stage_ring_animation'):
+            acquire = bind(motions, 'jp_motions_acquire', I, U, C.c_char_p, P)
+            for bank, name in ((7, b'sonic_spin_action'), (7, b'sonic_uncurl_action'),
+                               (0, b'sonic_light_dash_action'), (7, b'sonic_skid_action')):
+                view = View()
+                check(acquire(bank, name, C.byref(view)) == 0, f'live route leases {name!r}')
+                views.append(view)
+            args = (triangles, count, index, stand, *(view.data for view in views))
+            if capabilities.get('stage_ring_render'):
+                check(bind(frames, 'jp_emerald_stage_terrain_open', I)() == 0,
+                      'live route opens the original stage terrain')
+                status = bind(frames, 'jp_emerald_light_dash_stage_ring_observe',
+                              I, P, size, U, P, P, P, P, P, callback)(*args, observe)
+                check(len(samples) == 3 and not errors, ('live route presents three frames', status, errors))
+            else:
+                status = bind(frames, 'jp_emerald_light_dash_stage_ring_animated',
+                              I, P, size, U, P, P, P, P, P)(*args)
+        else:
+            status = bind(frames, 'jp_emerald_light_dash_stage_ring', I, P, size, U)(
+                triangles, count, index)
+        check(status == 0, f'Light Dash selects and moves toward live ring {index} ({status})')
+        awarded = rings.value - before
+        if capabilities.get('stage_ring_recovery'):
+            check(awarded >= 1, f'live Light Dash route awards {awarded} rings')
+        else:
+            check(awarded == 1, 'live Light Dash collision awards one ring')
+    finally:
+        for view in reversed(views):
+            check(bind(motions, 'jp_motions_release', I, C.c_uint64)(view.token) == 0,
+                  'live route action lease retired')
+        rings.value, lives.value = before, before_lives
+        check(close() == 0, 'Light Dash stage resources close')
+    check(not bind(frames, 'jp_emerald_placement_task', P, U)(index) and
+          bind(frames, 'jp_emerald_near_ring_count', U)() == 0,
+          'Light Dash stage ring and nearby entries retire')
+    return dict(original_set_index=index, rings_awarded=awarded,
+                reached_skid=bool(capabilities.get('stage_ring_recovery')),
+                reached_idle=bool(capabilities.get('stage_ring_idle')),
+                original_animation=bool(capabilities.get('stage_ring_animation')),
+                rendered_samples=samples, stock_window_input=stock_input)
+
+
+def check_stock_stage_input(frames, hwnd, source, task, capture, record_stage_pose, idle_window, check):
+    import time
+    from verify_native_input_backend import Info
+
+    initialize = bind(frames, 'jp_input_initialize', I, P, U, P, P)
+    shutdown = bind(frames, 'jp_input_shutdown', I)
+    snapshot = bind(frames, 'jp_input_snapshot', I, P)
+    update = bind(frames, 'jp_emerald_update_sampled', I, P, P)
+    wall = bind(frames, 'jp_clock_wall_counts', C.c_uint64)
+    clock_status = bind(frames, 'jp_clock_status', I)
+    check(bool(hwnd), 'live stage exposes its native Windows handle')
+    check(shutdown() == 0, 'controlled input retires before stock stage input')
+    try:
+        check(initialize(hwnd, 3, None, None) == 0,
+              'Windows keyboard and XInput attach to the active stage window')
+        before, after = Info(), Info()
+        check(snapshot(C.byref(before)) == 0 and before.source_kind == 2,
+              'stage uses the stock Windows provider')
+        ticks, present_interval = 60, 10
+        rate_numerator, rate_denominator = 60000, 1001
+        start, limit = wall(), time.monotonic() + 10
+        presented = 0
+        for tick in range(1, ticks + 1):
+            deadline = start + (tick * 781250 * rate_denominator + rate_numerator - 1) // rate_numerator
+            while wall() < deadline:
+                assert time.monotonic() < limit and clock_status() == 0, 'stage clock stalled'
+                assert idle_window() > 0, 'stage window closed'
+            if tick % present_interval:
+                assert update(task, None) == 0, ('stock stage tick', tick)
+            else:
+                draw = Draw()
+                capture(task, lambda player: record_stage_pose(player, draw, sampled=True),
+                        f'route_windows_input_{tick}', save=tick == ticks)
+                check(draw.terrain > 0, f'stock input frame at tick {tick} includes terrain')
+                presented += 1
+        elapsed = wall() - start
+        check(clock_status() == 0 and elapsed >= deadline - start and
+              snapshot(C.byref(after)) == 0 and after.polls == before.polls + ticks and
+              presented == ticks // present_interval,
+              'sixty paced gameplay ticks consume sixty stock samples and present six frames')
+        return dict(polls=after.polls - before.polls, focused=bool(after.focused),
+                    connected_mask=after.connected_mask, xinput_available=bool(after.xinput_available),
+                    gameplay_ticks=ticks, frames_presented=presented, elapsed_wall_counts=elapsed,
+                    tick_rate=[rate_numerator, rate_denominator])
+    finally:
+        check(shutdown() == 0, 'stock stage input retires before window closure')
+        check(initialize(None, 0, C.cast(source, P), None) == 0,
+              'controlled input restored for inherited shutdown')
+
+
 def capture_light_dash_poses(out, manifest, frames, gpu, motions, stand, record_pose,
-                            record_scheduled_pose, reserve_pose, check, png, triangles, count):
+                            record_scheduled_pose, reserve_pose, check, png, triangles, count,
+                            stage_route, wait_owner):
     import types
     from verify_native_motion_store import View
     from native_gpu_jobs_test_support import Jobs
@@ -477,7 +624,7 @@ def capture_light_dash_poses(out, manifest, frames, gpu, motions, stand, record_
     actions = ((0, b'sonic_light_dash_action', 'light_dash'),
                (7, b'sonic_skid_action', 'skid'))
 
-    def capture(source, record, label):
+    def capture(source, record, label, save=True):
         frame, job = 0, Q()
         try:
             frame = record(source)
@@ -489,8 +636,9 @@ def capture_light_dash_poses(out, manifest, frames, gpu, motions, stand, record_
                 window, pixels, len(pixels), C.byref(error)) == 0, f'{label} pixels read back')
             rgba = pixels.raw
             check(len(set(zip(rgba[0::4], rgba[1::4], rgba[2::4]))) > 16, f'{label} pose is visible')
-            png(out / f'sonic_emerald_pose_{label}.png', rgba, 512, 512)
-            images.append(rgba)
+            if save:
+                png(out / f'sonic_emerald_pose_{label}.png', rgba, 512, 512)
+                images.append(rgba)
             check(bind(gpu, 'jp_window_present', I, P, U, P)(
                 window, 1, C.byref(error)) == 0, f'{label} presented')
         finally:
@@ -534,6 +682,13 @@ def capture_light_dash_poses(out, manifest, frames, gpu, motions, stand, record_
             for view, (_, _, label) in zip(views, actions):
                 capture(view.data, record_pose, label)
         check(images[0] != images[1], 'Light Dash and skid produce distinct poses')
+        if manifest['emerald_light_dash_target'].get('stage_ring_capture'):
+            hwnd = bind(gpu, 'jp_window_native_handle', P, P)(window)
+            idle = bind(wait_owner, 'jp_wait_window_idle', I, P, U)
+            result = stage_route(capture, hwnd, lambda: idle(window, 1))
+            if result['rendered_samples']:
+                check(len(set(images[2:5])) == 3, 'live route frames show distinct states')
+            return result
     finally:
         for view in reversed(views):
             check(release(view.token) == 0, 'pose capture lease retired')

@@ -136,6 +136,8 @@ def main():
         b'    struct collision_shape *shape;\n    NJS_VECTOR to;',
         steering,
         owner_function(player, 'player_accel_roll'),
+        owner_function(player, 'player_turn_toward'),
+        owner_function(player, 'player_accel_brake'),
         b'__declspec(dllexport) int jp_emerald_light_dash_step(struct task_work *work,\n'
         b'    struct task_motion *motion, struct player *record)\n{\n'
         b'    struct near_task *near = PLAYER_VARS(work)->player == 0 ? near_rings : near_rings_player1;\n'
@@ -152,12 +154,62 @@ def main():
         b'#include "jp_emerald_light_dash_charge.inc"',
         b'#include "jp_light_dash_action_fixture.inc"',
         owner_function(raw, 'sonic_move_shape'), b'#include "jp_emerald_light_dash_mode.inc"',
+        b'#include "jp_emerald_light_dash_stage_ring.inc"',
         b'#include "jp_light_dash_target_fixture.inc"',
     ]))
     for dependency in base.glob('*.dll'):
         if dependency.name != dll.name:
             shutil.copyfile(dependency, out / dependency.name)
     link = shlex.split((base / 'link.rsp').read_text())
+    reach = manifest['emerald_ring_reach']
+    player_recipe = reach['commands'][1]
+    previous_player = next(arg for arg in link if Path(arg).name == 'player_frame_probe.obj')
+    player_source = Path(previous_player).with_suffix('.c')
+    assert sha(player_source) == reach['sources_sha256'][player_source.name]
+    player_raw = player_source.read_bytes()
+    replacements = (
+        (b'struct animation_fixture {', b'''
+int jp_emerald_update_sampled(struct task *, struct task_work *);
+int jp_emerald_update_sampled_and_submit(struct task *, struct task_work *,
+    NJS_TEXLIST *, NJS_TEXLIST *, NJS_OBJECT *, struct emerald_scene_draw *, uint64_t *);
+struct animation_fixture {
+    int sampled;'''),
+        (b'    if (++fixture->ticks == 18) pad_enable();\n    if (jp_input_poll()) {\n'
+         b'        fixture->result = 6;\n        return;\n    }\n    pad_scan();',
+         b'    ++fixture->ticks;\n'
+         b'    if (!fixture->sampled) {\n'
+         b'        if (fixture->ticks == 18) pad_enable();\n'
+         b'        if (jp_input_poll()) { fixture->result = 6; return; }\n'
+         b'        pad_scan();\n    }'),
+        (b'        fixture->result = jp_emerald_update_and_submit(task, NULL, fixture->textures,\n'
+         b'            fixture->textures, fixture->aura, fixture->scene, fixture->frame);',
+         b'        fixture->sampled = 1;\n'
+         b'        int status = jp_emerald_update_sampled_and_submit(task, NULL, fixture->textures,\n'
+         b'            fixture->textures, fixture->aura, fixture->scene, fixture->frame);\n'
+         b'        fixture->sampled = 0;\n'
+         b'        if (status) fixture->result = status;'),
+        (b'        task_step_level(1);\n        if (ring_walk_enabled && !fixture.result &&\n'
+         b'            jp_emerald_stage_tick(task, NULL) < 0)\n            fixture.result = 11;',
+         b'        if (ring_walk_enabled && !fixture.result) {\n'
+         b'            if (fixture.ticks == 17) pad_enable();\n'
+         b'            fixture.sampled = 1;\n'
+         b'            if (jp_emerald_update_sampled(task, NULL)) fixture.result = 11;\n'
+         b'            fixture.sampled = 0;\n'
+         b'        } else task_step_level(1);'),
+    )
+    for old, new in replacements:
+        assert player_raw.count(old) == 1, old
+        player_raw = player_raw.replace(old, new)
+    player_source = out / player_source.name
+    player_source.write_bytes(player_raw)
+    player_obj = out / 'player_frame_probe.obj'
+    link[link.index(previous_player)] = player_obj.as_posix()
+    terrain_recipe = reach['commands'][0]
+    previous_terrain = next(arg for arg in link if Path(arg).name == 'terrain_profile.obj')
+    terrain_source = Path(previous_terrain).with_suffix('.c')
+    assert sha(terrain_source) == reach['sources_sha256'][terrain_source.name]
+    terrain_obj = out / 'terrain_profile.obj'
+    link[link.index(previous_terrain)] = terrain_obj.as_posix()
     assert link[-2] == '-o'
     link[-2:] = [obj.as_posix(), '-o', dll.as_posix()]
     rsp = out / 'link.rsp'
@@ -168,13 +220,18 @@ def main():
                          capture_output=True)
     assert ast.returncode == 0 and not ast.stderr, ast.stderr.decode(errors='replace')
     adapted, arithmetic = rewrite(source.read_bytes(), json.loads(ast.stdout),
-                                  ['player_accel_roll', 'njDistanceP2P', 'jp_emerald_light_dash_duration',
+                                  ['player_accel_roll', 'player_turn_toward', 'player_accel_brake',
+                                   'njDistanceP2P', 'jp_emerald_light_dash_duration',
                                    'sonic_spin_charge'])
     native = out / 'light_dash_target_rz.c'
     native.write_bytes(adapted)
     commands = [flags + ['-c', str(native), '-o', str(obj)],
+                player_recipe[:player_recipe.index('-c')] +
+                ['-DJP_EMERALD_LEVEL_LIGHT_DASH', '-c', str(player_source), '-o', str(player_obj)],
+                terrain_recipe[:terrain_recipe.index('-c')] +
+                ['-DJP_EMERALD_SHARED_UPDATE', '-c', str(terrain_source), '-o', str(terrain_obj)],
                 [driver[0], '@' + str(rsp)]]
-    for phase, command in zip(('compile', 'link'), commands):
+    for phase, command in zip(('compile', 'player', 'terrain', 'link'), commands):
         run = subprocess.run(command, capture_output=True)
         (out / (phase + '.stderr')).write_bytes(run.stderr)
         assert run.returncode == 0 and not run.stderr, run.stderr.decode(errors='replace')
@@ -186,6 +243,12 @@ def main():
                                                    retail_floor_capture=True,
                                                    full_charge_capture=True,
                                                    native_capture_input=True,
+                                                   stage_ring_capture=True,
+                                                   stage_ring_recovery=True,
+                                                   stage_ring_idle=True,
+                                                   stage_ring_animation=True,
+                                                   stage_ring_render=True,
+                                                   level_dispatch_light_dash=True,
                                                    commands=commands))
     (out / 'build_verification.json').write_text(json.dumps(manifest, indent=2) + '\n', encoding='utf-8')
     print('Original light-dash target selection compiled and linked')

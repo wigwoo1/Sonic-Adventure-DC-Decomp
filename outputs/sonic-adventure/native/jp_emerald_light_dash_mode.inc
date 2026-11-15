@@ -27,6 +27,27 @@ int jp_stage_floor_below(const struct jp_stage_triangle *, size_t, Float, Float,
 void player_note_history(Uint8 player);
 Float jp_collision_sphere_pair(struct collision_work *, struct collision_work *);
 
+static int light_dash_commit_floor(struct task *task,
+    const struct jp_stage_triangle *triangles, size_t count, struct jp_stage_floor *floor)
+{
+    struct task_work *work = task->work;
+    struct task_motion *motion = task->motion;
+    struct player *record = motion->record;
+    NJS_POINT3 next = work->pos;
+    motion->speed.y = 0;
+    njAddVector(&next, &motion->speed);
+    struct jp_stage_floor contact;
+    if (!jp_stage_floor_below(triangles, count, next.x, next.y + 4, next.z, &contact) ||
+        contact.height < next.y - 4) return -1;
+    next.y = contact.height;
+    work->pos = next;
+    player_take_speed(work, motion, record);
+    sonic_move_shape(work, motion, record);
+    player_note_history(PLAYER_VARS(work)->player);
+    *floor = contact;
+    return 1;
+}
+
 /* Static level-ground adapter. A rejected floor leaves position and history
  * intact, but the caller must not retry the already evaluated mode tick. */
 __declspec(dllexport) int jp_emerald_light_dash_move(
@@ -44,21 +65,15 @@ __declspec(dllexport) int jp_emerald_light_dash_move(
         (work->collision->shapes[0].flags & (SHAPE_KIND | SHAPE_IN_WORLD)) !=
             (SHAPE_SPHERE | SHAPE_IN_WORLD))
         return -1;
+    /* This floor provider models stationary ground. Supply its zero
+     * normal velocity for the original roll step when no ring is nearby. */
+    struct polygon_ball stationary_ground = {0};
+    struct polygon_ball *previous_contact = record->contact;
+    if (!previous_contact && record->consts.gravity > 0 && record->consts.top_speed > 0)
+        record->contact = &stationary_ground;
     int result = jp_emerald_light_dash_mode(task);
-    if (result != 1) return result;
-    NJS_POINT3 next = work->pos;
-    motion->speed.y = 0;
-    njAddVector(&next, &motion->speed);
-    struct jp_stage_floor contact;
-    if (!jp_stage_floor_below(triangles, count, next.x, next.y + 4, next.z, &contact) ||
-        contact.height < next.y - 4) return -1;
-    next.y = contact.height;
-    work->pos = next;
-    player_take_speed(work, motion, record);
-    sonic_move_shape(work, motion, record);
-    player_note_history(PLAYER_VARS(work)->player);
-    *floor = contact;
-    return 1;
+    record->contact = previous_contact;
+    return result == 1 ? light_dash_commit_floor(task, triangles, count, floor) : result;
 }
 
 /* The caller holds leases for the initialized action table through this tick. */
@@ -71,6 +86,54 @@ __declspec(dllexport) int jp_emerald_light_dash_move_animated(
     int result = jp_emerald_light_dash_move(task, triangles, count, floor);
     if (result == 1 || result == 2) player_anim_step(&task->motion->record->anim);
     return result;
+}
+
+/* The level dispatcher owns the tick. A handled dash must not also run
+ * ordinary walking or jumping. Its action table must include charge,
+ * uncurl, dash and skid. */
+int jp_sonic_level_light_dash(struct task *task, const struct jp_stage_triangle *triangles,
+                             size_t count, struct jp_stage_floor *floor)
+{
+    struct task_work *work = task->work;
+    struct player *record = task->motion->record;
+    unsigned slot = PLAYER_VARS(work)->player;
+    if (work->mode == SONIC_STOP) {
+        if ((work->flags & (PLAYER_ON_GROUND | PLAYER_EVENT_DRIVEN)) != PLAYER_ON_GROUND ||
+            (record->ground_flags & (WORLD_NO_SLOPE | WORLD_CLING)) != WORLD_NO_SLOPE ||
+            player_work[slot] != work || !work->collision || !work->collision->count ||
+            !work->collision->shapes) return -1;
+        player_accel_brake(work, task->motion, record);
+        player_apply_accel(work, task->motion, record);
+        if (light_dash_commit_floor(task, triangles, count, floor) < 0) return -1;
+        if (record->anim.actions) player_anim_step(&record->anim);
+        if (!record->speed.x && !record->speed.z &&
+            (!record->anim.actions || record->anim.action != ACTION_SKID)) {
+            work->mode = SONIC_STAND;
+            record->idle_steps = 0;
+            record->anim.action = ACTION_STAND;
+        }
+        return 1;
+    }
+    if (slot == 0 && player_work[0] == work &&
+        (work->flags & (PLAYER_ON_GROUND | PLAYER_EVENT_DRIVEN | PLAYER_HOLDING)) ==
+            PLAYER_ON_GROUND &&
+        (record->ground_flags & (WORLD_NO_SLOPE | WORLD_CLING)) == WORLD_NO_SLOPE &&
+        (record->upgrades & PLAYER_SONIC_LIGHT_SHOES) &&
+        (work->mode == SONIC_SPIN_CHARGE ||
+         (work->mode == SONIC_STAND && !(work->flags & SONIC_CHARGED) &&
+          !(pad_records[slot].press & pad_jump_buttons) &&
+          !record->speed.x && !record->speed.y && !record->speed.z))) {
+        int charge = jp_emerald_light_dash_charge(task);
+        if (charge && record->anim.actions) player_anim_step(&record->anim);
+        if (charge) return charge;
+    }
+    if (work->mode != SONIC_LIGHT_DASH &&
+        ((work->mode != SONIC_STAND && work->mode != SONIC_WALK) ||
+         !(record->upgrades & PLAYER_SONIC_LIGHT_SHOES) ||
+         !(work->flags & SONIC_CHARGED))) return 0;
+    return record->anim.actions
+        ? jp_emerald_light_dash_move_animated(task, triangles, count, floor)
+        : jp_emerald_light_dash_move(task, triangles, count, floor);
 }
 
 struct light_dash_mode_fixture {

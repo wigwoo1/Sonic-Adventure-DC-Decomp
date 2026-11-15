@@ -1,3 +1,8 @@
+#ifdef JP_EMERALD_LEVEL_LIGHT_DASH
+int jp_sonic_level_light_dash(struct task *, const struct jp_stage_triangle *,
+                             size_t, struct jp_stage_floor *);
+#endif
+
 /* Dispatch ordinary level movement and neutral jumps from sampled input. */
 __declspec(dllexport) int jp_sonic_step_level_dispatch(
     struct task *task, const struct jp_stage_triangle *triangles, size_t count,
@@ -12,6 +17,10 @@ __declspec(dllexport) int jp_sonic_step_level_dispatch(
 
     unsigned slot = PLAYER_VARS(work)->player;
     if (slot >= PLAYER_COUNT) return -1;
+#ifdef JP_EMERALD_LEVEL_LIGHT_DASH
+    int dash = jp_sonic_level_light_dash(task, triangles, count, floor);
+    if (dash) return dash < 0 ? -1 : 0;
+#endif
     if (pad_records[slot].press & pad_jump_buttons) {
         if (player->speed.x || player->speed.z || player_read_stick(work, 0, 0) ||
             !work->collision || !work->collision->shapes) return -1;
