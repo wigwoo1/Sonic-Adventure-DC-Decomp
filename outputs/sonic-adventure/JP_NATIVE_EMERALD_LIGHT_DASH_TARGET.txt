@@ -221,6 +221,20 @@ The verifier restores the controlled provider before inherited
 shutdown. The profile passed 941 checks. The stock window lacked focus
 during this run, and no physical control was actuated.
 
+Stage loading now has a follow-on build that replaces the fixed 100,000
+poll limit with a 30-second Windows wall-clock deadline and a one
+millisecond wait between incomplete queue polls. Build it with
+build_native_emerald_loader_wait.py using --workspace, --baseline and
+--output. The baseline must be a Light Dash build with the stage disc
+archive loader. This keeps the existing cancellation and rollback path.
+
+Two fresh Windows processes loaded directly from the original F: disc
+track and passed 999 and 997 scene checks. Both completed the animated
+three-ring route, returned to idle, and exercised 60 stock-input ticks
+with six presented frames. Their route screenshots matched. The focused
+charge and animation regression also passed. An intentionally stalled
+30-second load has further verification pending.
+
 The charge build adds the original spin-charge and charged-speed task.
 The native task allocates the full pointer-sized payload and checks
 that it still owns the same player work before accessing it. Sound
